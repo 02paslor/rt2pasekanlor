@@ -25,13 +25,18 @@
            ====================================================================== */
         :root {
             /* 1. Ukuran besar kecilnya logo di tengah saat awal */
-            --ukuran-logo: 290px; 
+            --ukuran-logo: 220px; 
             
             /* 2. Ukuran logo setelah di scroll */
-            --ukuran-logo-scrolled: 60pt;
+            --ukuran-logo-scrolled: 50pt;
 
             /* 3. Jarak tinggi slider dari area hero di atasnya */
-            --jarak-atas-slider: 30px; 
+            --jarak-atas-slider: 2px; 
+
+            /* 4. Warna Latar Header saat di-scroll (Gunakan format rgba untuk mengatur transparansi, nilai terakhir 0.0 - 1.0) 
+                  Contoh Hitam Transparan: rgba(0, 0, 0, 0.85) 
+                  Contoh Biru Transparan: rgba(17, 85, 204, 0.9) */
+            --warna-bg-header-scrolled: rgba(0, 0, 0, 0.85);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
@@ -64,8 +69,9 @@
             flex-direction: column;
         }
 
-        /* --- HOVER WARNA KONTRAS UNTUK SEMUA LINK/TOMBOL KECUALI DARURAT & LEBAH --- */
-        a:not(.link-lebah):hover, button:not(.btn-darurat-caution):hover, .arsip-item:hover, .emergency-item:hover, .nav-item:hover, .btn-kas-small:hover {
+        /* --- HOVER WARNA KONTRAS UNTUK KOMPONEN TERTENTU SAJA --- */
+        .arsip-item:hover, .emergency-item:hover, .nav-item:not(.btn-home-active):hover, .btn-kas-small:hover, 
+        .btn-inventaris-more:hover, .btn-read-more:hover, .btn-list-trigger:hover, .btn-doc-footer:hover, .btn-share-wa:hover {
             background-color: #FF5722 !important;
             color: #FFFFFF !important;
             border-color: #FF5722 !important;
@@ -73,7 +79,9 @@
             transition: all 0.2s ease !important;
         }
         
-        a:not(.link-lebah):hover *, button:not(.btn-darurat-caution):hover *, .arsip-item:hover *, .emergency-item:hover *, .nav-item:hover * {
+        .arsip-item:hover *, .emergency-item:hover *, .nav-item:not(.btn-home-active):hover *, 
+        .btn-kas-small:hover *, .btn-inventaris-more:hover *, .btn-read-more:hover *, 
+        .btn-list-trigger:hover *, .btn-doc-footer:hover *, .btn-share-wa:hover * {
             color: #FFFFFF !important;
             stroke: #FFFFFF !important;
         }
@@ -81,6 +89,13 @@
         .btn-inventaris:hover, .btn-pengurus:hover, .btn-ronda:hover, .btn-warga:hover, .btn-galeri:hover, .btn-scanner:hover, .btn-tatatertib:hover, .btn-disabled:hover {
             background: linear-gradient(145deg, #FF5722, #E64A19) !important;
             box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4) !important;
+        }
+
+        /* Hover khusus tombol mata kas tanpa background oranye */
+        #toggleSaldoBtn:hover {
+            transform: scale(1.15);
+            opacity: 0.8;
+            transition: transform 0.2s ease, opacity 0.2s ease;
         }
 
         /* --- HEADER FIXED --- */
@@ -104,7 +119,7 @@
             width: var(--ukuran-logo); 
             max-width: none;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9));
             transform-origin: center;
         }
 
@@ -146,7 +161,7 @@
 
         /* STATE KETIKA DI-SCROLL */
         .header-fixed-container.scrolled {
-            background: rgba(0, 0, 0, 0.85);
+            background: var(--warna-bg-header-scrolled); /* Menggunakan Variabel CSS */
             padding-top: 10px;
             padding-bottom: 10px;
             flex-direction: row;
@@ -238,7 +253,7 @@
             box-shadow: 0 0 0 #383838;
         }
         
-        .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 2000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 2000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
         .em-modal-overlay.active { opacity: 1; pointer-events: auto; }
         .em-modal-content { background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(15px); transition: transform 0.3s ease; }
         .em-modal-overlay.active .em-modal-content { transform: translateY(0); }
@@ -487,7 +502,7 @@
         .btn-doc-footer { background-color: #dbeafe; color: #1e40af; box-shadow: 0 2px 6px rgba(30, 64, 175, 0.15); }
         .btn-share-wa { background-color: #dcfce7; color: #166534; box-shadow: 0 2px 6px rgba(22, 101, 52, 0.15); }
         
-        .btn-list-trigger { display: none; width: 60%; margin: 20px auto 10px auto; text-align: center; background-color: #FFFFFF; color: #1155CC; border: none; padding: 12px 14px; border-radius: 20px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(17, 85, 204, 0.15); justify-content: center; align-items: center; gap: 8px; }
+        .btn-list-trigger { display: flex; width: 60%; margin: 20px auto 10px auto; text-align: center; background-color: #FFFFFF; color: #1155CC; border: none; padding: 12px 14px; border-radius: 20px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(17, 85, 204, 0.15); justify-content: center; align-items: center; gap: 8px; }
 
         .list-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 16px; }
         .list-modal-overlay.active { opacity: 1; pointer-events: auto; }
@@ -548,7 +563,7 @@
         .article-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); display: flex; justify-content: center; align-items: flex-start; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; overflow-y: auto; padding: 60px 16px 30px 16px; }
         .article-modal-overlay.active { opacity: 1; pointer-events: auto; }
         .article-modal-wrapper { width: 100%; max-width: 440px; background-color: #ffffff; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); overflow: hidden; margin: auto; padding-bottom: 10px; }
-        .btn-close-article { fixed; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: background-color 0.2s; }
+        .btn-close-article { position: fixed; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: background-color 0.2s; }
         .btn-close-article:hover { background: rgba(0, 0, 0, 0.8); }
         .article-content-area { padding: 24px 20px 10px 20px; display: flex; flex-direction: column; }
         .article-title-detail { font-size: 18px; font-weight: 600; line-height: 1.4; color: #1155CC; margin-bottom: 10px; text-align: center; }
@@ -574,7 +589,7 @@
 
 <div class="app-wrapper">
 
-    <!-- HEADER FIXED BARU BERISI LOGO DAN TEKS -->
+    <!-- HEADER FIXED BERISI LOGO DAN TEKS -->
     <header class="header-fixed-container" id="mainHeader">
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-spin">
         

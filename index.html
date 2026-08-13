@@ -55,8 +55,8 @@
             /* BACKGROUND GAMBAR FULL DENGAN TRANSPARANSI HALUS WARNA LATAR & PARALLAX */
             background-image: 
                 linear-gradient(to bottom, rgba(245, 245, 245, 0.1) 100%, rgba(245, 245, 245, 0.8) 100%, rgba(245, 245, 245, 1) 10%),
-                url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEfasm9EBhXSUFpFSvye69fUws1xuKWm5taA5dH3ADmOX0OPk9k7QyqStSAmsP6z0zmhqs0NdiuO-VOephyphenhyphenx6kXjHy_6gmFDzbCjZ2Bpm1EqoQJNngnFgGSo-Rd3YH1wNjQazr6KKV-Z2jrg9Ad95Xp40hBL-WLfWjasEADh9QD7WET3RlBoR0ik7SAWM/s1600/MERAPI.png');
-            background-position: top center;
+                url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOFJqp0jv0xOVscATo92XPYJX53pKdhy2V9GeR_5hlUW0BQ7ZrJAzDTkLb0d-6Mqy92MCpI8534FwNjhZUz5bmm955O0c2f8CtQQ4uJB4Iq11mjM6l9vlH7LgZS9FaYzlApPwKd5s1vJ4YzROzyLWz5rV92evzoie1WRSf9EEmYeC7UxgZCVf2pgjREKk/s1600/header_paslor%20600px.png');
+            background-position: top;
             background-size: 100% auto; /* Tetap fit lebar segitu */
             background-attachment: sticky; /* Parallax effect */
             background-repeat: no-repeat;
@@ -112,13 +112,13 @@
             align-items: center;
             z-index: 1000;
             background: transparent;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            transition: all 0.3s ease; 
         }
         
         .header-logo-anim {
             width: var(--ukuran-logo); 
             max-width: none;
-            transition: all 0.25s ease-in-out; /* Mengubah animasi jadi fast & smooth zoom in */
+            transition: all 0.3s ease;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9));
             transform-origin: center;
         }
@@ -129,7 +129,14 @@
             font-size: 8pt;
             text-align: center;
             margin-top: 10px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Penambahan outline putih & latar biru tua transparan */
+            background-color: rgba(0, 52, 143, 0.8);
+            border: 1px solid #ffffff;
+            padding: 6px 14px;
+            border-radius: 20px;
+
+            transition: all 0.3s ease;
             transform: scale(1);
             opacity: 1;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
@@ -154,9 +161,20 @@
             color: #ffffff;
             font-size: 11px;
             white-space: nowrap;
-            transition: opacity 0.3s ease;
+            
+            /* Penambahan outline putih & latar biru tua transparan */
+            background-color: rgba(0, 52, 143, 0.8);
+            border: 1px solid #ffffff;
+            padding: 4px 10px;
+            border-radius: 15px;
+
+            transition: all 0.3s ease;
             display: none;
             margin-left: 12px;
+        }
+        .header-text-scrolled strong {
+            font-weight: 700;
+            font-size: 13px;
         }
 
         /* STATE KETIKA DI-SCROLL */
@@ -187,10 +205,6 @@
         .header-fixed-container.scrolled .header-text-scrolled {
             opacity: 1;
             display: block;
-        }
-        .header-text-scrolled strong {
-            font-weight: 700;
-            font-size: 13px;
         }
 
         /* Pendorong konten di bawah Header */
@@ -474,7 +488,7 @@
         .thumb-icon-overlay svg { width: 12px; height: 12px; }
         .card-right-content { flex-grow: 1; display: flex; flex-direction: column; gap: 2px; }
         
-        .info-card-title { font-size: 15px; font-weight: 700; line-height: 1.4; color: #383838; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .info-card-title { font-size: 17px; font-weight: 600; line-height: 1.4; color: #383838; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         
         .agenda-details-box { background-color: transparent; padding: 10px 12px; border-bottom: 1.5px solid #edf2f7; display: flex; flex-direction: column; gap: 0; }
         .agenda-row { display: grid; grid-template-columns: 80px 12px 1fr; line-height: 1.4; align-items: flex-start; padding: 6px 12px; border-radius: 8px; }
@@ -963,6 +977,9 @@
     <a href="https://sites.google.com/view/rt02pasekanlor/data-warga" target="_blank" rel="noopener noreferrer" class="link-lebah" style="position: relative; z-index: 2;">
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiya0ghKMImhXBX9dzFBDE_JUUH0Ub8fJFdCSRlYRPUB0iB3PK0Yq29CjfTEPRyoDqdur3vqtDpkbxHUZggHN1qb4-DLIRszqygidj10d848bgmNSYbEvWa-LGHW4xgGThzaKDwSLZAiYpbXwI_nDeYl9EPtPMbP2q1CaWlPKGOBimWcYseznSvz5bvBwo/s1600/lebah%20-%20senter%20-%20small.png" alt="RT 2 Pasekan Lor" style="display: block; margin-top: 10px; margin-left: auto; margin-right: auto; margin-bottom: 1px; width: 10%;">
     </a>
+    
+    <!-- GAMBAR FOOTER MENTOK BAWAH SESUAI PERINTAH -->
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhNWaQOKzNxOXXJdKcaQvz89f58rx2eEzukj1SlZSmW7p8O_1jmGXpAOjGU_bz-7qBdJ-p52OkTdaZTTa3HzEIbSLTZ78DjnSLFzY_1VvVjELq0UhWvN9I1J-OgZLo8yIzUwvKKrVZcJI8fIvSo2uC0hsxto0DLTAYgnLc2ZlNi0VuH9S2qHCgbWkgrhGk/s1600/Footer%20Paslor%20600px.png" style="width: 100%; display: block; margin-top: auto; margin-bottom: -40px; position: relative; z-index: 2;" alt="Footer RT 2">
 
 </div> 
 

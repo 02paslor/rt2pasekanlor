@@ -142,7 +142,7 @@
         
         .sec-icon-badge { width: 40px; height: 40px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 8px rgba(17,85,204,0.25); }
         .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
-        .sec-title { font-size: 16px; font-weight: 600; color: #1155CC; text-transform: uppercase; }
+        .sec-title { font-size: 16px; font-weight: 700; color: #1155CC; text-transform: uppercase; }
         .sec-subtitle { font-size: 12px; font-weight: 400; color: #64748B; margin-top: 2px; }
 
         /* Scanner Reader Customization */
@@ -151,12 +151,12 @@
         #reader button { background: #1155CC; color: white; border: none; padding: 10px 16px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; margin-top: 10px;}
         #reader select { padding: 8px; border-radius: 8px; border: 1px solid #CBD5E1; font-family: 'Poppins', sans-serif; font-size: 13px; margin-bottom: 10px; width: 80%;}
         
-        .result-textarea { width: 100%; padding: 14px; font-size: 14px; font-weight: 500; color: #0F172A; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; resize: none; min-height: 120px; line-height: 1.6; outline: none; transition: border-color 0.2s;}
+        .result-textarea { width: 100%; padding: 14px; font-size: 14px; font-weight: 500; color: #0F172A; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; resize: 15px; min-height: 120px; line-height: 1.6; outline: none; transition: border-color 0.2s;}
         .result-textarea:focus { border-color: #1155CC; }
         .result-textarea.success-flash { border-color: #22C55E; background-color: #F0FDF4; }
 
         .btn-primary-custom { 
-            width: 100%; padding: 14px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #2563EB; color: white; transition: all 0.3s ease; 
+            width: 100%; padding: 14px 16px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #2563EB; color: white; transition: all 0.3s ease; 
         }
         .btn-primary-custom:active { transform: scale(0.97); }
         .btn-primary-custom:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 99, 235, 0.25); filter: brightness(1.1); }
@@ -174,8 +174,7 @@
     <div class="fixed-top-bar" id="fixedTopBar">
         <header class="glass-header" id="mainHeader">
             <div class="header-left">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPzuOgR5dsQ_xdP1YjzmFJfgaPXu54pqxRl2Locivy3HcnsiDzTo1_Yt6Hk4Xa4AkhYIHWHBh-jf5JknNHyGTouUjvCYxQgFlTmi_OYD3C6h78yQ6YNj4szEAiVaYWToknonyiK_uFAwiuvpZVldr5TehzF5-L6LynLFdCpphSzCHtUQFmXP6__78qw28/s1600-rw/Logo%20RT%202%20Pasekan%20Lor%20(300%20Px).png" alt="Logo RT 2 Paslor"> 
-                <p class="header-slogan">Warga Kreatif, Mandiri & Berbudaya</p>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg47-MPnRbJCKU6vW-8U3U8-rs01D7_58RuwVJ9uqeGD2JUuN5eYOMj7J2x0x8IA1NHV7sFryy1ThWJ0Yozvt_Ueoew1tn289v3wu7nbwtFpYPXZN9T-cZgaXgey0DB8tDkazRwbXgzGV6549SynuIE70KNDd1nURitNJCroUp_C8qNWNXTa4B0kGlw5kc/s1600/Logo%20RT%202%20Pasekan%20Lor%202.png" alt="Logo RT 2 Paslor"> 
             </div>
             <div class="header-right">
                 <button class="btn-darurat" id="openEmModalBtn">
@@ -190,7 +189,7 @@
                 <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/>
                 </svg>
-                Scanner Kamera
+                Kamera Pemindai
             </div>
             <div class="title-card-right">
                 Menu
@@ -250,16 +249,6 @@
 
     <div class="main-content-area">
         <div class="main-card">
-            
-            <div class="header-fancy">
-                <div class="dt-col">
-                    <span class="dt-val-title">Scanner RT 2 Paslor</span>
-                    <span class="dt-val-subtitle">Wacana scan jimpitan ronda</span>
-                </div>
-                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2">
-                    <path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/>
-                </svg>
-            </div>
 
             <!-- 1. KAMERA SCANNER -->
             <div class="form-section">
@@ -284,7 +273,7 @@
                     </div>
                     <div class="sec-text-group">
                         <span class="sec-title">Data Ditemukan</span>
-                        <span class="sec-subtitle">Teks hasil tangkapan scanner</span>
+                        <span class="sec-subtitle">Hasil data tangkapan kamera pemindai</span>
                     </div>
                 </div>
                 

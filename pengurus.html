@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6G930LME8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-V6G930LME8');
+    </script>
+    
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1600/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Struktur Pengurus RT 2 - RW 3, Pasekan Lor. Warga Kreatif, Mandiri & Berbudaya.">
+    <title>Struktur Pengurus - Warga RT 2 Paslor</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ================= CSS MASTER TEMPLATE ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
+        body { background-color: #B4C3D4; display: flex; justify-content: center; }
+        button, input, textarea, select, a { font-family: 'Poppins', sans-serif !important; }
+
+        .app-wrapper {
+            width: 100%; max-width: 480px;
+            background-color: #F2F2F2; 
+            min-height: 100vh; position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            padding-top: 175px; 
+            padding-bottom: 30px; overflow-x: hidden;
+            transition: padding-bottom 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        svg { display: inline-block; vertical-align: middle; }
+
+        .fixed-top-bar { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 999; display: flex; flex-direction: column; }
+        .glass-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background-color: #1155CC; box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); transition: all 0.3s ease; }
+        .header-left img { height: 40px; width: auto; transition: height 0.3s ease; }
+        .header-left { display: flex; flex-direction: column; max-width: 60%; }
+        .header-slogan { font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 2px; transition: all 0.3s ease; overflow: hidden; }
+        .header-right { display: flex; align-items: center; }
+
+        .title-card-panel { background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); color: #ffffff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; cursor: pointer; z-index: 2; position: relative; }
+        .title-card-panel.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: none; }
+        .title-card-left { font-size: 15px; font-weight: 700; display: flex; align-items: center; letter-spacing: 0.5px; }
+        .title-card-left .svg-icon { margin-right: 8px; }
+        .title-card-right { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+        .accordion-icon { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        .nav-accordion-wrapper { position: relative; z-index: 1; background: #FFFFFF; max-height: 0; overflow: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; padding: 0 16px; opacity: 0; visibility: hidden; }
+        .nav-accordion-wrapper.open { max-height: 500px; padding: 16px 16px 20px 16px; opacity: 1; visibility: visible; }
+
+        .fixed-top-bar.shrink .glass-header { padding: 8px 20px; }
+        .fixed-top-bar.shrink .header-left img { height: 25px; }
+        .fixed-top-bar.shrink .header-slogan { font-size: 0; opacity: 0; margin-top: 0; height: 0; }
+        .fixed-top-bar.shrink .title-card-panel { padding: 10px 20px; }
+        
+        .btn-darurat { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: #ffffff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; gap: 6px; transition: all 0.3s ease; letter-spacing: 0.5px; }
+        .btn-darurat:active { transform: translateY(1px) scale(0.95); }
+        .btn-darurat:hover { transform: translateY(0) scale(1.03); filter: brightness(1.1); }
+        .fixed-top-bar.shrink .btn-darurat { padding: 3px 8px; font-size: 9px; }
+        
+        .blink-light { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: blinkAnimation 2.4s infinite ease-in-out; }
+        @keyframes blinkAnimation { 0%, 33% { background-color: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 4px #22c55e; } 67%, 100% { background-color: #ffffff; box-shadow: 0 0 10px #ffffff, 0 0 4px #ffffff; } }
+
+        .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+        
+        .nav-item { background: linear-gradient(145deg, #2563eb, #1d4ed8); color: #FFFFFF; text-decoration: none; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 4px; text-align: center; line-height: 1.2; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; }
+        .nav-item.nav-active { background: linear-gradient(145deg, #64748b, #475569); box-shadow: 0 6px 15px rgba(100, 116, 139, 0.25); }
+        .nav-item:active { transform: scale(0.95); }
+        .nav-item:hover { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(37, 99, 235, 0.3); filter: brightness(1.15); }
+        .nav-item svg { width: 20px; height: 20px; margin-bottom: 6px; stroke-width: 2 !important; }
+
+        /* MODALS */
+        .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .em-modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .em-modal-content { background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(15px); transition: transform 0.3s ease; }
+        .em-modal-overlay.active .em-modal-content { transform: translateY(0); }
+        .em-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; }
+        .em-modal-title { font-size: 16px; font-weight: 700; color: #0f172a; }
+        .em-btn-close { background: none; border: none; cursor: pointer; color: #ef4444; }
+        .emergency-list { display: flex; flex-direction: column; gap: 14px; }
+        .emergency-item { display: flex; align-items: center; background-color: #EDEDED; padding: 12px 14px; border-radius: 12px; text-decoration: none; border: 1px solid #b5b5b5; gap: 14px; color:#333; transition: all 0.2s ease; }
+        .emergency-item:hover { filter: brightness(0.95); transform: translateY(-2px); }
+        .logo-wrapper { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; border: 1px solid #a8a8a8; color:#1155CC; }
+        .contact-details { display: flex; flex-direction: column; flex-grow: 1; }
+        .emergency-label { font-size: 11px; color: #334155; font-weight: 500; }
+        .emergency-value { font-size: 14px; font-weight: 700; margin-top: 1px; }
+        .call-icon { width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color:#1155CC; }
+        .emergency-item.wa { border-left: 5px solid #22c55e; }
+        .emergency-item.wa .call-icon, .emergency-item.wa .logo-wrapper { color: #22c55e; border-color:#22c55e; }
+
+        .main-content-space { flex: 1; }
+        .main-footer { width: 100%; margin: auto auto 0 auto; padding: 16px 16px; text-align: center; border-top: 1px solid #e2e8f0; display: block; }
+        .footer-line { color: #64748b; line-height: 1.3; margin-bottom: 2px; }
+        .f-bold { font-size: 11px; font-weight: 600; }
+        .f-reg { font-size: 10px; font-weight: 400; }
+        
+        .main-content-area { width: 100%; }
+
+        /* ================= KONTEN PENGURUS ================= */
+        .main-card { background: transparent; border-radius: 0; padding: 0 16px; box-shadow: none; border: none; display: flex; flex-direction: column; gap: 14px; margin-top: 5px; }
+
+        /* View Toggle (Fast Smooth Icons Only) */
+        .view-toggle-wrapper {
+            display: flex; justify-content: flex-end; align-items: center;
+            margin-bottom: 4px;
+        }
+        .view-controls { 
+            display: flex; gap: 6px; 
+            background: #FFFFFF; padding: 6px; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
+        }
+        .view-btn {
+            background: #F1F5F9; border: none; padding: 8px; border-radius: 8px;
+            color: #94A3B8; cursor: pointer; transition: all 0.2s ease;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .view-btn:hover { background: #E2E8F0; color: #475569; }
+        .view-btn.active { background: #1155CC; color: #FFFFFF; box-shadow: 0 2px 6px rgba(17,85,204,0.3); }
+
+        /* Container Pengurus (Dinamis dengan Transisi Fast Smooth) */
+        .pengurus-container {
+            display: flex;
+            /* Transisi cepat dan mulus saat toggle view diklik via JS */
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        /* Desain Kartu Base */
+        .pg-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+            cursor: default;
+            display: flex;
+        }
+
+        /* Efek Hover Melayang */
+        .pg-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(17, 85, 204, 0.1);
+            border-color: rgba(17, 85, 204, 0.25);
+        }
+
+        /* Avatar Gambar */
+        .pg-avatar {
+            border-radius: 12px; 
+            overflow: hidden;
+            flex-shrink: 0;
+            background-color: #F1F5F9; 
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid #E2E8F0;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .pg-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .pg-card:hover .pg-avatar {
+            transform: scale(1.05) rotate(3deg);
+            border-color: #1155CC;
+        }
+
+        /* Info Text */
+        .pg-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        
+        .pg-name { 
+            font-size: 15px; font-weight: 700; color: #1E293B; 
+            transition: color 0.3s ease; line-height: 1.3;
+        }
+        .pg-card:hover .pg-name { color: #1155CC; }
+
+        /* Jabatan Soft Badge */
+        .pg-role {
+            display: inline-block;
+            font-size: 11px; font-weight: 600; color: #475569;
+            background: #F1F5F9; padding: 4px 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .pg-card:hover .pg-role { background: #EFF6FF; color: #1D4ED8; }
+
+        /* ================= MODE: LIST (Default) ================= */
+        .pengurus-container.list-mode {
+            flex-direction: column; gap: 14px;
+        }
+        .pengurus-container.list-mode .pg-card {
+            flex-direction: row; align-items: center; padding: 14px 16px; gap: 16px;
+        }
+        .pengurus-container.list-mode .pg-avatar {
+            width: 55px; height: 55px;
+        }
+        .pengurus-container.list-mode .pg-role {
+            align-self: flex-start;
+        }
+
+        /* ================= MODE: GRID ================= */
+        .pengurus-container.grid-mode {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+        }
+        .pengurus-container.grid-mode .pg-card {
+            flex-direction: column; text-align: center; align-items: center; 
+            padding: 20px 12px; gap: 12px; justify-content: center;
+        }
+        .pengurus-container.grid-mode .pg-avatar {
+            width: 65px; height: 65px; margin: 0 auto;
+        }
+        .pengurus-container.grid-mode .pg-name {
+            font-size: 14px; /* Sedikit lebih kecil agar muat */
+        }
+        .pengurus-container.grid-mode .pg-role {
+            align-self: center;
+        }
+
+        /* Staggered Animation Delay for Initial Load */
+        .pg-card:nth-child(1) { animation-delay: 0.05s; }
+        .pg-card:nth-child(2) { animation-delay: 0.15s; }
+        .pg-card:nth-child(3) { animation-delay: 0.25s; }
+        .pg-card:nth-child(4) { animation-delay: 0.35s; }
+        .pg-card:nth-child(5) { animation-delay: 0.45s; }
+        .pg-card:nth-child(6) { animation-delay: 0.55s; }
+        .pg-card:nth-child(7) { animation-delay: 0.65s; }
+        .pg-card:nth-child(8) { animation-delay: 0.75s; }
+        .pg-card:nth-child(9) { animation-delay: 0.85s; }
+
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(25px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+    <!-- HEADER & MENU NAVIGASI TETAP DARI TEMPLATE MASTER -->
+    <div class="fixed-top-bar" id="fixedTopBar">
+        <header class="glass-header" id="mainHeader">
+            <div class="header-left">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPzuOgR5dsQ_xdP1YjzmFJfgaPXu54pqxRl2Locivy3HcnsiDzTo1_Yt6Hk4Xa4AkhYIHWHBh-jf5JknNHyGTouUjvCYxQgFlTmi_OYD3C6h78yQ6YNj4szEAiVaYWToknonyiK_uFAwiuvpZVldr5TehzF5-L6LynLFdCpphSzCHtUQFmXP6__78qw28/s1600-rw/Logo%20RT%202%20Pasekan%20Lor%20(300%20Px).png" alt="Logo RT 2 Paslor"> 
+                <p class="header-slogan">Warga Kreatif, Mandiri & Berbudaya</p>
+            </div>
+            <div class="header-right">
+                <button class="btn-darurat" id="openEmModalBtn">
+                    <span>Darurat</span>
+                    <div class="blink-light"></div>
+                </button>
+            </div>
+        </header>
+
+        <div class="title-card-panel" id="accordionMenuToggle" title="Ketuk untuk membuka menu">
+            <div class="title-card-left">
+                <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                Struktur Pengurus
+            </div>
+            <div class="title-card-right">
+                Menu
+                <svg id="accordionIcon" class="accordion-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+        </div>
+
+        <div class="nav-accordion-wrapper" id="navAccordionWrapper">
+            <div class="nav-grid">
+                <a href="index.html" class="nav-item" title="Home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                </a>
+                
+                <a href="#" class="nav-item btn-inventaris disabled" title="Pengurus" style="pointer-events: none; cursor: not-allowed; opacity: 1; filter: grayscale(100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Pengurus</span>        
+                </a>
+                
+                <a href="inventaris.html" class="nav-item" title="Inventaris">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>Inventaris</span>
+                </a>
+                
+                <a href="scanner.html" class="nav-item" title="Scanner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
+                    <span>Scanner</span>
+                </a>
+                
+                <a href="tatatertib.html" class="nav-item" title="Tata Tertib">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>Tata Tertib</span>
+                </a>
+                
+                <a href="galeri.html" class="nav-item" title="Galeri">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>Galeri</span>
+                </a>
+                
+                <a href="warga.html" class="nav-item" title="Warga">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    <span>Warga</span>
+                </a>
+                
+                <a href="agustusan.html" class="nav-item" title="Agustusan">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
+                    <span>Agustusan</span>
+                </a>
+                
+                <a href="ronda.html" class="nav-item" title="Ronda">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Ronda</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div class="main-card">
+            
+            <!-- VIEW CONTROLS (Hanya Ikon, Float Kanan) -->
+            <div class="view-toggle-wrapper">
+                <div class="view-controls">
+                    <button class="view-btn active" id="btnList" onclick="setViewMode('list')" title="Mode List">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    </button>
+                    <button class="view-btn" id="btnGrid" onclick="setViewMode('grid')" title="Mode Grid">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONTAINER DAFTAR PENGURUS -->
+            <div class="pengurus-container list-mode" id="pengurusContainer">
+                
+                <div class="pg-card">
+                    <div class="pg-avatar">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    </div>
+                    <div class="pg-info">
+                        <div class="pg-name">Andri Septiyanto, S.H.</div>
+                        <div class="pg-role">Lurah Balecatur</div>
+                    </div>
+                </div>
+                
+                <div class="pg-card">
+                    <div class="pg-avatar">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    </div>
+                    <div class="pg-info">
+                        <div class="pg-name">Hafizh Anshori, S.E.</div>
+                        <div class="pg-role">Dukuh Pasekan</div>
+                    </div>
+                </div>
+
+                <div class="pg-card">
+                    <div class="pg-avatar">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    </div>
+                    <div class="pg-info">
+                        <div class="pg-name">Bambang Purwono</div>
+                        <div class="pg-role">Penasehat RT 2</div>
+                    </div>
+                </div>
+
+                <div class="pg-card">
+                    <div class="pg-avatar">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    </div>
+                    <div class="pg-info">
+                        <div class="pg-name">Fajar Yunianto</div>
+                        <div class="pg-role">Ketua RW 3</div>
+                    </div>
+                </div>
+
+                <div class="pg-card">
+                    <div class="pg-avatar">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    </div>
+                    <div class="pg-info">
+                        <div class="pg-name">Katri Nurjani</div>
+                        <div class="pg-role">Ketua RT 2</div>
+                    </div>
+                </div>
+
+                <div class="pg-card">
+                    <div class="pg-avatar">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    </div>
+                    <div class="pg-info">
+                        <div class="pg-name">Ari Suprianto</div>
+                        <div class="pg-role">Sekretaris RT 2</div>
+                    </div>
+                </div>
+
+                <div class="pg-card">
+                    <div class="pg-avatar">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    </div>
+                    <div class="pg-info">
+                        <div class="pg-name">Twenty Aprilian</div>
+                        <div class="pg-role">Bendahara RT 2</div>
+                    </div>
+                </div>
+
+                <div class="pg-card">
+                    <div class="pg-avatar">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    </div>
+                    <div class="pg-info">
+                        <div class="pg-name">Samijoko</div>
+                        <div class="pg-role">Keamanan RT 2</div>
+                    </div>
+                </div>
+
+                <div class="pg-card">
+                    <div class="pg-avatar">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    </div>
+                    <div class="pg-info">
+                        <div class="pg-name">Agustinus Yuna</div>
+                        <div class="pg-role">Keamanan RT 2</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content-space"></div>
+
+    <!-- MODAL DARURAT -->
+    <div class="em-modal-overlay" id="emModalOverlay">
+        <div class="em-modal-content">
+            <div class="em-modal-header">
+                <span class="em-modal-title">Nomor Kontak Darurat</span>
+                <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="emergency-list">
+                <a href="tel:110" target="_blank" class="emergency-item">
+                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
+                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER TETAP -->
+    <footer class="main-footer">
+        <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All Rights Reserved.</div>
+        <div class="footer-line f-reg">Dikerjakan Secara Mandiri Oleh Warga RT 2 Paslor. AdW.</div>
+    </footer>
+</div> 
+
+<script>
+    /* ==========================================================
+       1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header)
+       ========================================================== */
+    const topBar = document.getElementById('fixedTopBar');
+    const accordionToggle = document.getElementById('accordionMenuToggle');
+    const navAccordionWrapper = document.getElementById('navAccordionWrapper');
+    const accordionIcon = document.getElementById('accordionIcon');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 30) {
+            topBar.classList.add('shrink');
+        } else {
+            topBar.classList.remove('shrink');
+        }
+    });
+
+    accordionToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navAccordionWrapper.classList.toggle('open');
+        accordionToggle.classList.toggle('open');
+        
+        if (isOpen) {
+            accordionIcon.style.transform = 'rotate(180deg)';
+        } else {
+            accordionIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navAccordionWrapper.contains(e.target) && e.target !== accordionToggle) {
+            navAccordionWrapper.classList.remove('open');
+            accordionToggle.classList.remove('open');
+            accordionIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    /* MODAL DARURAT */
+    const emModalOverlay = document.getElementById('emModalOverlay');
+    document.getElementById('openEmModalBtn').addEventListener('click', () => { 
+        emModalOverlay.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    });
+    document.getElementById('closeEmModalBtn').addEventListener('click', () => { 
+        emModalOverlay.classList.remove('active'); 
+        document.body.style.overflow = 'auto'; 
+    });
+    emModalOverlay.addEventListener('click', (e) => { 
+        if (e.target === emModalOverlay) { 
+            emModalOverlay.classList.remove('active'); 
+            document.body.style.overflow = 'auto'; 
+        } 
+    });
+
+    /* ==========================================================
+       2. SCRIPT VIEW TOGGLE (List / Grid) Fast Smooth
+       ========================================================== */
+    function setViewMode(mode) {
+        const container = document.getElementById('pengurusContainer');
+        const btnList = document.getElementById('btnList');
+        const btnGrid = document.getElementById('btnGrid');
+
+        // Mencegah trigger jika mode yang sama diklik
+        if ((mode === 'grid' && container.classList.contains('grid-mode')) || 
+            (mode === 'list' && container.classList.contains('list-mode'))) {
+            return;
+        }
+
+        // 1. Animasi fade out cepat
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(10px)';
+
+        // 2. Tunggu sebentar, ubah class, lalu fade in
+        setTimeout(() => {
+            if (mode === 'grid') {
+                container.classList.remove('list-mode');
+                container.classList.add('grid-mode');
+                btnGrid.classList.add('active');
+                btnList.classList.remove('active');
+            } else {
+                container.classList.remove('grid-mode');
+                container.classList.add('list-mode');
+                btnList.classList.add('active');
+                btnGrid.classList.remove('active');
+            }
+            
+            // Animasi fade in cepat
+            container.style.opacity = '1';
+            container.style.transform = 'translateY(0)';
+        }, 150); // Kecepatan transisi yang sangat mulus (150ms)
+    }
+</script>
+</body>
+</html>

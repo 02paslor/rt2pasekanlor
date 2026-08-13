@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6G930LME8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-V6G930LME8');
+    </script>
+    
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1600/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Scanner Warga RT 2 - RW 3, Pasekan Lor. Warga Kreatif, Mandiri & Berbudaya.">
+    <title>Scanner - Warga RT 2 Paslor</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Library HTML5 QR Code Scanner -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+        /* ================= CSS MASTER TEMPLATE ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
+        body { background-color: #B4C3D4; display: flex; justify-content: center; }
+        button, input, textarea, select, a { font-family: 'Poppins', sans-serif !important; }
+
+        .app-wrapper {
+            width: 100%; max-width: 480px;
+            background-color: #F2F2F2; 
+            min-height: 100vh; position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            padding-top: 175px; 
+            padding-bottom: 30px; overflow-x: hidden;
+            transition: padding-bottom 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        svg { display: inline-block; vertical-align: middle; }
+
+        .fixed-top-bar { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 999; display: flex; flex-direction: column; }
+        .glass-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background-color: #1155CC; box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); transition: all 0.3s ease; }
+        .header-left img { height: 40px; width: auto; transition: height 0.3s ease; }
+        .header-left { display: flex; flex-direction: column; max-width: 60%; }
+        .header-slogan { font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 2px; transition: all 0.3s ease; overflow: hidden; }
+        .header-right { display: flex; align-items: center; }
+
+        .title-card-panel { background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); color: #ffffff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; cursor: pointer; z-index: 2; position: relative; }
+        .title-card-panel.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: none; }
+        .title-card-left { font-size: 15px; font-weight: 700; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; }
+        .title-card-left .svg-icon { margin-right: 8px; }
+        .title-card-right { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+        .accordion-icon { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        .nav-accordion-wrapper { position: relative; z-index: 1; background: #FFFFFF; max-height: 0; overflow: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; padding: 0 16px; opacity: 0; visibility: hidden; }
+        .nav-accordion-wrapper.open { max-height: 500px; padding: 16px 16px 20px 16px; opacity: 1; visibility: visible; }
+
+        .fixed-top-bar.shrink .glass-header { padding: 8px 20px; }
+        .fixed-top-bar.shrink .header-left img { height: 25px; }
+        .fixed-top-bar.shrink .header-slogan { font-size: 0; opacity: 0; margin-top: 0; height: 0; }
+        .fixed-top-bar.shrink .title-card-panel { padding: 10px 20px; }
+        
+        .btn-darurat { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: #ffffff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; gap: 6px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-darurat:active { transform: translateY(1px) scale(0.95); }
+        .btn-darurat:hover { transform: translateY(0) scale(1.03); filter: brightness(1.1); }
+        .fixed-top-bar.shrink .btn-darurat { padding: 3px 8px; font-size: 9px; }
+        
+        .blink-light { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: blinkAnimation 2.4s infinite ease-in-out; }
+        @keyframes blinkAnimation { 0%, 33% { background-color: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 4px #22c55e; } 67%, 100% { background-color: #ffffff; box-shadow: 0 0 10px #ffffff, 0 0 4px #ffffff; } }
+
+        .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+        
+        .nav-item { 
+            background: linear-gradient(145deg, #2563eb, #1d4ed8); 
+            color: #FFFFFF; text-decoration: none; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 4px; text-align: center; line-height: 1.2; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; 
+        }
+        .nav-item.btn-scanner { background: linear-gradient(145deg, #64748b, #475569); box-shadow: 0 6px 15px rgba(100, 116, 139, 0.25); }
+        .nav-item:active { transform: scale(0.95); }
+        .nav-item:hover { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(37, 99, 235, 0.3); filter: brightness(1.15); }
+        .nav-item svg { width: 20px; height: 20px; margin-bottom: 6px; stroke-width: 2 !important; }
+
+        /* MODALS (Darurat & Univ) */
+        .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .em-modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .em-modal-content { background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(15px); transition: transform 0.3s ease; }
+        .em-modal-overlay.active .em-modal-content { transform: translateY(0); }
+        .em-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; }
+        .em-modal-title { font-size: 16px; font-weight: 700; color: #0f172a; }
+        .em-btn-close { background: none; border: none; cursor: pointer; color: #ef4444; }
+        .emergency-list { display: flex; flex-direction: column; gap: 14px; }
+        .emergency-item { display: flex; align-items: center; background-color: #EDEDED; padding: 12px 14px; border-radius: 12px; text-decoration: none; border: 1px solid #b5b5b5; gap: 14px; color:#333; transition: all 0.2s ease; }
+        .emergency-item:hover { filter: brightness(0.95); transform: translateY(-2px); }
+        .logo-wrapper { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; border: 1px solid #a8a8a8; color:#1155CC; }
+        .contact-details { display: flex; flex-direction: column; flex-grow: 1; }
+        .emergency-label { font-size: 11px; color: #334155; font-weight: 500; text-transform: uppercase; }
+        .emergency-value { font-size: 14px; font-weight: 700; margin-top: 1px; }
+        .call-icon { width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color:#1155CC; }
+        .emergency-item.wa { border-left: 5px solid #22c55e; }
+        .emergency-item.wa .call-icon, .emergency-item.wa .logo-wrapper { color: #22c55e; border-color:#22c55e; }
+
+        .univ-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s; padding: 16px; }
+        .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
+        .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
+        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 700; color: #1e293b; }
+        .univ-modal-title { font-size: 16px; text-transform: uppercase; }
+        .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;}
+        .btn-close-univ:hover { background: #FEE2E2; }
+        .univ-modal-body { flex: 1; width: 100%; height: 100%; background: #f1f5f9; }
+        .univ-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
+
+        .main-content-space { flex: 1; }
+        .main-footer { width: 100%; margin: auto auto 0 auto; padding: 16px 16px; text-align: center; border-top: 1px solid #e2e8f0; display: block; }
+        .footer-line { color: #64748b; line-height: 1.3; margin-bottom: 2px; }
+        .f-bold { font-size: 11px; font-weight: 600; }
+        .f-reg { font-size: 10px; font-weight: 400; }
+        
+        .main-content-area { width: 100%; }
+
+        /* ================= SCANNER STYLES ================= */
+        .main-card {
+            background: transparent; border-radius: 0; padding: 0 16px; box-shadow: none; border: none; display: flex; flex-direction: column; gap: 24px;
+        }
+
+        .header-fancy {
+            background: #1155CC;
+            border-radius: 16px; padding: 20px; color: #FFFFFF; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden;
+        }
+
+        .dt-col { display: flex; flex-direction: column; gap: 4px; z-index: 2; }
+        .dt-val-title { font-size: 18px; font-weight: 700; color: #FFFFFF; text-transform: uppercase; }
+        .dt-val-subtitle { font-size: 13px; font-weight: 400; color: #FFFFFF; }
+
+        .form-section { display: flex; flex-direction: column; gap: 12px; border-bottom: 2px solid rgba(17, 85, 204, 0.2); padding-bottom: 24px; }
+        .form-section:last-child { border-bottom: none; padding-bottom: 0; }
+        .section-label { font-size: 14px; font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 10px; }
+        
+        .sec-icon-badge { width: 40px; height: 40px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 8px rgba(17,85,204,0.25); }
+        .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
+        .sec-title { font-size: 16px; font-weight: 600; color: #1155CC; text-transform: uppercase; }
+        .sec-subtitle { font-size: 12px; font-weight: 400; color: #64748B; margin-top: 2px; }
+
+        /* Scanner Reader Customization */
+        #reader { width: 100%; border-radius: 16px; overflow: hidden; border: 2px solid #CBD5E1; background: #E2E8F0; min-height: 250px; position: relative; }
+        #reader img { display: none !important; /* hide default html5-qrcode logo */ }
+        #reader button { background: #1155CC; color: white; border: none; padding: 10px 16px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; margin-top: 10px;}
+        #reader select { padding: 8px; border-radius: 8px; border: 1px solid #CBD5E1; font-family: 'Poppins', sans-serif; font-size: 13px; margin-bottom: 10px; width: 80%;}
+        
+        .result-textarea { width: 100%; padding: 14px; font-size: 14px; font-weight: 500; color: #0F172A; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; resize: none; min-height: 120px; line-height: 1.6; outline: none; transition: border-color 0.2s;}
+        .result-textarea:focus { border-color: #1155CC; }
+        .result-textarea.success-flash { border-color: #22C55E; background-color: #F0FDF4; }
+
+        .btn-primary-custom { 
+            width: 100%; padding: 14px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #2563EB; color: white; transition: all 0.3s ease; 
+        }
+        .btn-primary-custom:active { transform: scale(0.97); }
+        .btn-primary-custom:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 99, 235, 0.25); filter: brightness(1.1); }
+        .btn-primary-custom:disabled { background: #CBD5E1 !important; color: #64748B !important; cursor: not-allowed; box-shadow: none; transform: none; opacity: 0.8; }
+        
+        .btn-secondary { background: #10B981; margin-top: 8px; }
+        .btn-secondary:hover:not(:disabled) { box-shadow: 0 6px 15px rgba(16, 185, 129, 0.25); }
+
+    </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+    <!-- HEADER & MENU NAVIGASI TETAP DARI TEMPLATE MASTER -->
+    <div class="fixed-top-bar" id="fixedTopBar">
+        <header class="glass-header" id="mainHeader">
+            <div class="header-left">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPzuOgR5dsQ_xdP1YjzmFJfgaPXu54pqxRl2Locivy3HcnsiDzTo1_Yt6Hk4Xa4AkhYIHWHBh-jf5JknNHyGTouUjvCYxQgFlTmi_OYD3C6h78yQ6YNj4szEAiVaYWToknonyiK_uFAwiuvpZVldr5TehzF5-L6LynLFdCpphSzCHtUQFmXP6__78qw28/s1600-rw/Logo%20RT%202%20Pasekan%20Lor%20(300%20Px).png" alt="Logo RT 2 Paslor"> 
+                <p class="header-slogan">Warga Kreatif, Mandiri & Berbudaya</p>
+            </div>
+            <div class="header-right">
+                <button class="btn-darurat" id="openEmModalBtn">
+                    <span>Darurat</span>
+                    <div class="blink-light"></div>
+                </button>
+            </div>
+        </header>
+
+        <div class="title-card-panel" id="accordionMenuToggle" title="Ketuk untuk membuka menu">
+            <div class="title-card-left">
+                <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/>
+                </svg>
+                Scanner Kamera
+            </div>
+            <div class="title-card-right">
+                Menu
+                <svg id="accordionIcon" class="accordion-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+        </div>
+
+        <div class="nav-accordion-wrapper" id="navAccordionWrapper">
+            <div class="nav-grid">
+                <a href="index.html" class="nav-item" title="Home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>HOME</span>
+                </a>
+                
+                <a href="pengurus.html" class="nav-item" title="Pengurus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>PENGURUS</span>        
+                </a>
+                
+                <a href="inventaris.html" class="nav-item" title="Inventaris">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>INVENTARIS</span>
+                </a>
+                
+                <a href="#" class="nav-item btn-scanner disabled" title="Scanner" style="pointer-events: none; cursor: not-allowed; opacity: 1; filter: grayscale(100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
+                    <span>SCANNER</span>
+                </a>
+                
+                <a href="tatatertib.html" class="nav-item" title="Tata Tertib">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>TATA TERTIB</span>
+                </a>
+                
+                <a href="galeri.html" class="nav-item" title="Galeri">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>GALERI</span>
+                </a>
+                
+                <a href="warga.html" class="nav-item" title="Warga">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    <span>WARGA</span>
+                </a>
+                
+                <a href="agustusan.html" class="nav-item" title="Agustusan">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
+                    <span>AGUSTUSAN</span>
+                </a>
+                
+                <a href="ronda.html" class="nav-item" title="Ronda">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>RONDA</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content-area">
+        <div class="main-card">
+            
+            <div class="header-fancy">
+                <div class="dt-col">
+                    <span class="dt-val-title">Scanner RT 2 Paslor</span>
+                    <span class="dt-val-subtitle">Wacana scan jimpitan ronda</span>
+                </div>
+                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2">
+                    <path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/>
+                </svg>
+            </div>
+
+            <!-- 1. KAMERA SCANNER -->
+            <div class="form-section">
+                <div class="section-label">
+                    <div class="sec-icon-badge">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    </div>
+                    <div class="sec-text-group">
+                        <span class="sec-title">Kamera Langsung</span>
+                        <span class="sec-subtitle">Gunakan kamera belakang</span>
+                    </div>
+                </div>
+                <!-- Box Kamera -->
+                <div id="reader"></div>
+            </div>
+
+            <!-- 2. HASIL SCAN -->
+            <div class="form-section">
+                <div class="section-label">
+                    <div class="sec-icon-badge">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </div>
+                    <div class="sec-text-group">
+                        <span class="sec-title">Data Ditemukan</span>
+                        <span class="sec-subtitle">Teks hasil tangkapan scanner</span>
+                    </div>
+                </div>
+                
+                <textarea id="scan-result" class="result-textarea" readonly placeholder="Menunggu hasil scan... Teks akan otomatis muncul di sini."></textarea>
+                
+                <button type="button" id="btn-copy" class="btn-primary-custom" disabled>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span>Salin Teks ke Clipboard</span>
+                </button>
+                <button type="button" id="btn-clear" class="btn-primary-custom btn-secondary" disabled>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    <span>Bersihkan & Scan Ulang</span>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Ruang kosong untuk mendorong footer ke bawah -->
+    <div class="main-content-space"></div>
+
+    <!-- MODAL DARURAT -->
+    <div class="em-modal-overlay" id="emModalOverlay">
+        <div class="em-modal-content">
+            <!-- (Isi Modal Darurat sama dengan template) -->
+            <div class="em-modal-header">
+                <span class="em-modal-title">Nomor Kontak Darurat</span>
+                <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="emergency-list">
+                <!-- Links Darurat -->
+                <a href="tel:110" target="_blank" class="emergency-item">
+                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
+                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL UNIVERSAL -->
+    <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
+        <div class="univ-modal-box" onclick="event.stopPropagation()">
+            <div class="univ-modal-header">
+                <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
+                <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
+                    <svg viewBox="0 0 24 24" class="svg-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="univ-modal-body">
+                <iframe id="univModalIframe" src="" loading="lazy" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER TETAP -->
+    <footer class="main-footer">
+        <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
+        <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
+    </footer>
+</div> 
+
+<script>
+    /* ==========================================================
+       1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header)
+       ========================================================== */
+    const topBar = document.getElementById('fixedTopBar');
+    const accordionToggle = document.getElementById('accordionMenuToggle');
+    const navAccordionWrapper = document.getElementById('navAccordionWrapper');
+    const accordionIcon = document.getElementById('accordionIcon');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 30) {
+            topBar.classList.add('shrink');
+        } else {
+            topBar.classList.remove('shrink');
+        }
+    });
+
+    accordionToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navAccordionWrapper.classList.toggle('open');
+        accordionToggle.classList.toggle('open');
+        
+        if (isOpen) {
+            accordionIcon.style.transform = 'rotate(180deg)';
+        } else {
+            accordionIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navAccordionWrapper.contains(e.target) && e.target !== accordionToggle) {
+            navAccordionWrapper.classList.remove('open');
+            accordionToggle.classList.remove('open');
+            accordionIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    /* MODAL DARURAT */
+    const emModalOverlay = document.getElementById('emModalOverlay');
+    document.getElementById('openEmModalBtn').addEventListener('click', () => { 
+        emModalOverlay.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    });
+    document.getElementById('closeEmModalBtn').addEventListener('click', () => { 
+        emModalOverlay.classList.remove('active'); 
+        document.body.style.overflow = 'auto'; 
+    });
+    emModalOverlay.addEventListener('click', (e) => { 
+        if (e.target === emModalOverlay) { 
+            emModalOverlay.classList.remove('active'); 
+            document.body.style.overflow = 'auto'; 
+        } 
+    });
+
+    /* UNIVERSAL MODAL */
+    const univModal = document.getElementById('univModalOverlay');
+    const univTitle = document.getElementById('univModalTitle');
+    const univIframe = document.getElementById('univModalIframe');
+    
+    function openUnivModal(title, docUrl) {
+        univTitle.innerText = title;
+        univIframe.src = docUrl;
+        univModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeUnivModal() {
+        univModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        setTimeout(() => { univIframe.src = ""; }, 350); 
+    }
+    function closeUnivModalOutside(e) { 
+        if (e.target === univModal) closeUnivModal(); 
+    }
+
+    /* ==========================================================
+       2. SCRIPT SCANNER (HTML5-QRCode)
+       ========================================================== */
+    document.addEventListener("DOMContentLoaded", function() {
+        const resultTextarea = document.getElementById("scan-result");
+        const btnCopy = document.getElementById("btn-copy");
+        const btnClear = document.getElementById("btn-clear");
+        
+        let html5QrCode;
+
+        // Inisialisasi Scanner
+        function startScanner() {
+            html5QrCode = new Html5Qrcode("reader");
+            
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            
+            // Preferensi kamera belakang: { facingMode: "environment" }
+            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess)
+            .catch((err) => {
+                console.error("Kesalahan inisialisasi kamera:", err);
+                resultTextarea.value = "Gagal mengakses kamera belakang. Pastikan Anda telah memberikan izin kamera pada browser Anda.";
+            });
+        }
+
+        // Dijalankan ketika berhasil mendeteksi kode
+        function onScanSuccess(decodedText, decodedResult) {
+            // Tampilkan teks ke textarea
+            resultTextarea.value = decodedText;
+            
+            // Memberikan efek visual (flash hijau)
+            resultTextarea.classList.add('success-flash');
+            setTimeout(() => {
+                resultTextarea.classList.remove('success-flash');
+            }, 800);
+
+            // Aktifkan tombol-tombol
+            btnCopy.disabled = false;
+            btnClear.disabled = false;
+
+            // (Opsional) Hentikan scanner otomatis jika ingin satu kali scan.
+            // html5QrCode.stop();
+        }
+
+        // Tombol Copy Teks
+        btnCopy.addEventListener("click", () => {
+            const textToCopy = resultTextarea.value;
+            if (textToCopy && textToCopy.trim() !== "") {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = btnCopy.innerHTML;
+                    btnCopy.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> <span>Tersalin!</span>`;
+                    setTimeout(() => { btnCopy.innerHTML = originalText; }, 2000);
+                }).catch(err => {
+                    alert("Gagal menyalin teks.");
+                });
+            }
+        });
+
+        // Tombol Bersihkan dan Ulangi
+        btnClear.addEventListener("click", () => {
+            resultTextarea.value = "";
+            btnCopy.disabled = true;
+            btnClear.disabled = true;
+        });
+
+        // Jalankan saat pertama kali dirender
+        startScanner();
+    });
+</script>
+</body>
+</html>

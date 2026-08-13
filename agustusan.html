@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6G930LME8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-V6G930LME8');
+    </script>
+    
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1600/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Informasi untuk Warga RT 2 Paslor yang lebih terhubung dan transparan, Warga Kreatif, Mandiri & Berbudaya.">
+    <title>Sistem Informasi Warga RT 2 Paslor - Edisi HUT RI 81</title> 
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Script untuk Efek Pita Kertas (Confetti) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        /* ================= CSS MASTER TEMPLATE ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
+        body { background-color: #B4C3D4; display: flex; justify-content: center; }
+        button, input, textarea, select, a { font-family: 'Poppins', sans-serif !important; }
+
+        .app-wrapper {
+            width: 100%; max-width: 480px;
+            background-color: #DFE8F5; 
+            min-height: 100vh; position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            padding-top: 175px; 
+            padding-bottom: 30px; overflow-x: hidden;
+            transition: padding-bottom 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        svg { display: inline-block; vertical-align: middle; }
+
+        .fixed-top-bar { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 999; display: flex; flex-direction: column; }
+        .glass-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background-color: #1155CC; box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); transition: all 0.3s ease; }
+        .header-left img { height: 40px; width: auto; transition: height 0.3s ease; }
+        .header-left { display: flex; flex-direction: column; max-width: 60%; }
+        .header-slogan { font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 2px; transition: all 0.3s ease; overflow: hidden; }
+        .header-right { display: flex; align-items: center; }
+
+        .title-card-panel { background: linear-gradient(135deg, #D62222 0%, #FF0000 100%); color: #ffffff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; cursor: pointer; z-index: 2; position: relative; }
+        .title-card-panel.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: none; }
+        .title-card-left { font-size: 15px; font-weight: 700; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; }
+        .title-card-left .svg-icon { margin-right: 8px; }
+        .title-card-right { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+        .accordion-icon { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        .nav-accordion-wrapper { position: relative; z-index: 1; background: #FFFFFF; max-height: 0; overflow: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; padding: 0 16px; opacity: 0; visibility: hidden; }
+        .nav-accordion-wrapper.open { max-height: 500px; padding: 16px 16px 20px 16px; opacity: 1; visibility: visible; }
+
+        .fixed-top-bar.shrink .glass-header { padding: 8px 20px; }
+        .fixed-top-bar.shrink .header-left img { height: 25px; }
+        .fixed-top-bar.shrink .header-slogan { font-size: 0; opacity: 0; margin-top: 0; height: 0; }
+        .fixed-top-bar.shrink .title-card-panel { padding: 10px 20px; }
+        
+        .btn-darurat { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: #ffffff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; gap: 6px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-darurat:active { transform: translateY(1px) scale(0.95); }
+        .fixed-top-bar.shrink .btn-darurat { padding: 3px 8px; font-size: 9px; }
+        .blink-light { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: blinkAnimation 2.4s infinite ease-in-out; }
+        @keyframes blinkAnimation { 0%, 33% { background-color: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 4px #22c55e; } 67%, 100% { background-color: #ffffff; box-shadow: 0 0 10px #ffffff, 0 0 4px #ffffff; } }
+
+        .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+        
+        .nav-item { 
+            background: linear-gradient(145deg, #2563eb, #1d4ed8); 
+            color: #FFFFFF; text-decoration: none; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 4px; text-align: center; line-height: 1.2; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); transition: all 0.2s ease; border: none;
+        }
+        .nav-item:active { transform: scale(0.95); }
+        .nav-item svg { width: 20px; height: 20px; margin-bottom: 6px; stroke-width: 2 !important; }
+        .nav-item.btn-agustusan { background: linear-gradient(145deg, #64748b, #475569); box-shadow: 0 6px 15px rgba(100, 116, 139, 0.25); }
+
+        .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .em-modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .em-modal-content { background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(15px); transition: transform 0.3s ease; }
+        .em-modal-overlay.active .em-modal-content { transform: translateY(0); }
+        .em-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; }
+        .em-modal-title { font-size: 16px; font-weight: 700; color: #0f172a; }
+        .em-btn-close { background: none; border: none; cursor: pointer; color: #ef4444; }
+        .emergency-list { display: flex; flex-direction: column; gap: 14px; }
+        .emergency-item { display: flex; align-items: center; background-color: #EDEDED; padding: 12px 14px; border-radius: 12px; text-decoration: none; border: 1px solid #b5b5b5; gap: 14px; color:#333; }
+        .logo-wrapper { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; border: 1px solid #a8a8a8; color:#1155CC; }
+        .contact-details { display: flex; flex-direction: column; flex-grow: 1; }
+        .emergency-label { font-size: 11px; color: #334155; font-weight: 500; text-transform: uppercase; }
+        .emergency-value { font-size: 14px; font-weight: 700; margin-top: 1px; }
+        .call-icon { width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color:#1155CC; }
+        .emergency-item.wa { border-left: 5px solid #22c55e; }
+        .emergency-item.wa .call-icon, .emergency-item.wa .logo-wrapper { color: #22c55e; border-color:#22c55e; }
+
+        .univ-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s; padding: 16px; }
+        .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
+        .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
+        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 700; color: #1e293b; }
+        .univ-modal-title { font-size: 16px; text-transform: uppercase; }
+        .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .univ-modal-body { flex: 1; width: 100%; height: 100%; background: #f1f5f9; }
+        .univ-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
+
+        .main-content-space { flex: 1; }
+        .main-footer { width: 100%; margin: auto auto 0 auto; padding: 16px 16px; text-align: center; border-top: 1px solid #e2e8f0; display: block; }
+        .footer-line { color: #64748b; line-height: 1.3; margin-bottom: 2px; }
+        .f-bold { font-size: 11px; font-weight: 600; }
+        .f-reg { font-size: 10px; font-weight: 400; }
+
+        .main-content-area { width: 100%; }
+
+        /* ================= CSS KHUSUS HALAMAN AGUSTUSAN ================= */
+        .agustusan-wrapper {
+            background: linear-gradient(135deg, #D62222, #FF0000);
+            border-radius: 20px;
+            padding: 20px 10px;
+            margin: 10px 16px 20px 16px;
+            box-shadow: 0 10px 25px rgba(214, 34, 34, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-kas-container { width: 100%; }
+        
+        .greeting-container {
+            text-align: center; margin-bottom: 15px; min-height: 24px;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .greeting-text {
+            font-size: 14px; font-weight: 700; color: #ffffff;
+            letter-spacing: 0.5px; text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .typing-cursor { color: #ffffff; display: inline-block; }
+        .typing-cursor::after { content: '|'; animation: blinkCursor 0.7s infinite; }
+        @keyframes blinkCursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .kas-card { 
+            background: #ffffff; border-radius: 18px; padding: 16px; 
+            display: flex; flex-direction: column; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); 
+            position: relative; overflow: hidden; align-items: center; 
+            border: none; margin: 0 10px 20px 10px;
+        }
+        .kas-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; border-radius: 50%; background: rgba(214, 34, 34, 0.04); pointer-events: none; }
+        .kas-body-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; z-index: 2; }
+        .kas-left { display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; gap: 10px;}
+        .time-item { display: flex; align-items: center; justify-content: center; gap: 8px; flex: 1; }
+        .time-item.bordered { border-right: 1.5px dashed rgba(214, 34, 34, 0.2); padding-right: 10px; }
+        .time-item svg { width: 13px; height: 20px; opacity: 1; stroke: #D62222; stroke-width: 2.2; }
+        .date-text, .clock-text { font-size: 12px; line-height: 1.2; font-weight: 500; color: #1e293b; letter-spacing: 0.2px;}
+
+        .agus-nav-grid { 
+            display: grid; grid-template-columns: repeat(3, 1fr); 
+            gap: 10px; width: 100%; padding: 0 10px; margin-bottom: 15px;
+        }
+        .agus-nav-item { 
+            background: linear-gradient(90deg, #ffffff, #E6E6E6); color: #D62222; 
+            border-radius: 14px; font-size: 11px; font-weight: 600; 
+            letter-spacing: 0.3px; cursor: pointer; text-decoration: none; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: transform 0.2s, box-shadow 0.2s; text-align: center; 
+            padding: 12px 4px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); 
+            line-height: 1.2; border: none;
+        }
+        .agus-nav-item:active { transform: scale(0.95); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); }
+        .agus-nav-item svg { width: 22px; height: 22px; margin-bottom: 6px; display: block; stroke: currentColor; }
+
+        .sub-footer-section { padding: 0 10px; display: flex; flex-direction: column; align-items: center; margin-top: 10px; }
+        .himbauan-text { font-size: 13px; font-weight: 700; line-height: 1.4; text-transform: uppercase; color: #ffffff; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.3); min-height: 38px;}
+
+        .pn-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 16px; }
+        .pn-modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .pn-modal-box { width: 100%; max-width: 390px; background: #ffffff; padding: 20px 8px; border-radius: 24px; position: relative; max-height: 85vh; display: flex; flex-direction: column; transform: scale(0.95) translateY(15px); transition: transform 0.4s; box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+        .pn-modal-overlay.active .pn-modal-box { transform: scale(1) translateY(0); }
+        .pn-btn-close-icon { position: absolute; top: 10px; right: 10px; background: #f1f5f9; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #64748b; cursor: pointer; font-size: 14px; transition: transform 0.2s, color 0.2s; z-index: 10; }
+        .pn-btn-close-icon:hover { color: #D62222; }
+        .pn-btn-close-icon:active { transform: scale(0.9); }
+        .pn-modal-title { font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 20px; padding-left: 12px; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+        .pn-content-scroll { overflow-y: auto; display: flex; flex-direction: column; padding: 0 12px; gap: 10px;}
+        
+        .panitia-item { padding: 16px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; border-left: 4px solid #D62222; display:flex; flex-direction:column; gap:6px; }
+        .panitia-title { font-weight: 700; font-size: 14px; color: #D62222; border-bottom: 1px dashed #e2e8f0; padding-bottom: 6px; margin-bottom: 4px; }
+        .panitia-body { font-size: 13px; color: #334155; line-height: 1.5; }
+        .panitia-body p { margin-bottom: 6px; }
+        .panitia-body p:last-child { margin-bottom: 0; }
+        .panitia-body ul, .panitia-body ol { padding-left: 20px; margin-top: 4px; margin-bottom: 8px; }
+
+        .info-dashboard-container { padding: 0 16px 20px 16px; }
+        .cards-list { display: flex; flex-direction: column; gap: 16px; }
+        .info-card { background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; width: 100%; border: none; }
+        
+        .card-header { padding: 9px 16px; color: #ffffff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .card-header .agenda-label-top { font-size: 8px; font-weight: 400; letter-spacing: 0.5px; text-transform: uppercase; background-color: rgba(255, 255, 255, 0.2); padding: 3px 8px; border-radius: 20px; }
+        .card-header .category-text { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.15); display: block; color: #FFFFFF; }
+
+        .pub-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 15000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 16px; }
+        .pub-modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .pub-modal-box { width: 100%; max-width: 480px; background: transparent; padding: 0; position: relative; max-height: 95vh; display: flex; flex-direction: column; transform: scale(0.95) translateY(15px); transition: transform 0.4s; box-shadow: none; border-radius: 0; }
+        .pub-modal-overlay.active .pub-modal-box { transform: scale(1) translateY(0); }
+        .pub-btn-close-icon { position: absolute; top: -15px; right: -10px; background: #ffffff; border: 2px solid #D62222; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #D62222; cursor: pointer; transition: transform 0.2s; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .pub-btn-close-icon:active { transform: scale(0.9); }
+        .pub-content-scroll { overflow-y: auto; display: flex; flex-direction: column; align-items: center; }
+        .pub-content-scroll::-webkit-scrollbar { display: none; }
+
+        .loading-text { text-align: center; color: #64748b; padding: 20px; font-size: 13px; width: 100%; }
+        
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .spinner { animation: spin 1s linear infinite; }
+    </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+    
+    <!-- HEADER & MENU NAVIGASI TETAP -->
+    <div class="fixed-top-bar" id="fixedTopBar">
+        <header class="glass-header" id="mainHeader">
+            <div class="header-left">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPzuOgR5dsQ_xdP1YjzmFJfgaPXu54pqxRl2Locivy3HcnsiDzTo1_Yt6Hk4Xa4AkhYIHWHBh-jf5JknNHyGTouUjvCYxQgFlTmi_OYD3C6h78yQ6YNj4szEAiVaYWToknonyiK_uFAwiuvpZVldr5TehzF5-L6LynLFdCpphSzCHtUQFmXP6__78qw28/s1600-rw/Logo%20RT%202%20Pasekan%20Lor%20(300%20Px).png" alt="Logo RT 2 Paslor"> 
+                <p class="header-slogan">Warga Kreatif, Mandiri & Berbudaya</p>
+            </div>
+            <div class="header-right">
+                <button class="btn-darurat" id="openEmModalBtn">
+                    <span>Darurat</span>
+                    <div class="blink-light"></div>
+                </button>
+            </div>
+        </header>
+
+        <div class="title-card-panel" id="accordionMenuToggle" title="Ketuk untuk membuka menu">
+            <div class="title-card-left">
+                <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
+                Agustusan & Perayaan HUT RI
+            </div>
+            <div class="title-card-right">
+                Menu
+                <svg id="accordionIcon" class="accordion-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+        </div>
+
+        <div class="nav-accordion-wrapper" id="navAccordionWrapper">
+            <div class="nav-grid">
+                
+                <a href="index.html" class="nav-item" title="Home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>HOME</span>
+                </a>
+                
+                <a href="pengurus.html" class="nav-item" title="Pengurus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>PENGURUS</span>        
+                </a>
+                
+                <a href="inventaris.html" class="nav-item" title="Inventaris">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>INVENTARIS</span>
+                </a>
+                
+                <a href="scanner.html" class="nav-item" title="Scanner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
+                    <span>SCANNER</span>
+                </a>
+                
+                <a href="tatatertib.html" class="nav-item" title="Tata Tertib">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>TATA TERTIB</span>
+                </a>
+                
+                <a href="galeri.html" class="nav-item" title="Galeri">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>GALERI</span>
+                </a>
+                
+                <a href="warga.html" class="nav-item" title="Warga">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    <span>WARGA</span>
+                </a>
+                
+                <a href="#" class="nav-item btn-agustusan disabled" title="Agustusan" style="pointer-events: none; cursor: not-allowed; opacity: 1; filter: grayscale(100%);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
+                    <span>AGUSTUSAN</span>
+                </a>
+                
+                <a href="ronda.html" class="nav-item" title="Ronda">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>RONDA</span>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- ===================== RUANG KONTEN HALAMAN DI SINI ====================== -->
+    <!-- ========================================================================= -->
+    
+    <div class="main-content-area">
+        
+        <!-- WRAPPER KONTEN KHUSUS AGUSTUSAN -->
+        <div class="agustusan-wrapper">
+            <section class="hero-kas-container">
+                <div class="greeting-container">
+                    <span class="greeting-text typing-cursor" id="liveWeather"></span>
+                </div>
+
+                <div class="kas-card">
+                    <div class="kas-body-wrapper">
+                        <div class="kas-left">
+                            <div class="time-item bordered">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                <span class="date-text" id="liveDate">Memuat...</span>
+                            </div>
+                            <div class="time-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                <span class="clock-text" id="liveClock">00:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="agus-nav-grid">
+                <a href="galeri.html" target="_self" class="agus-nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>GALERI</span>
+                </a>
+                <div class="agus-nav-item" onclick="openPnModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>PANITIA</span>
+                </div>
+                <a href="javascript:void(0)" class="agus-nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>PENTAS SENI</span>
+                </a>
+            </div>
+
+            <div class="sub-footer-section">
+                <div class="himbauan-text" id="himbauanAnim"></div>
+            </div>
+        </div>
+
+        <!-- DAFTAR KARTU POSTER AGENDA -->
+        <div class="info-dashboard-container">
+            <div class="cards-list" id="infoCardsContainer">
+                <div class="loading-text">
+                    <svg class="spinner" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                    Menyinkronkan poster agenda...
+                </div>
+            </div>
+        </div>
+
+        <!-- Bagian Logo Bawah Spesial Agustusan -->
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirfRQ33UlIW0c9QKIjwJt9uFe2OGF6hyqwBcCIg6pWZYNmPib1xwUUQGERD1kk_9fCal8kEV-b0DZiB6qqM8UH9gmOPwDmHgWg8rnkPS95bPUwkR4TIjsIXQuzCyh7QB6tKOFO2bCrXXjyqMM2X7cYTMR7dN81_tp85gMsbnlIbnPIlo6zEXCLwT9rmz4/s320/lebah%20-%20merah%20putih%20(small).png" alt="Lebah Merah Putih" style="display: block; margin-top: 10px; margin-bottom: 10px; margin-left: auto; margin-right: auto; width: 200px;">
+        
+    </div>
+
+    <!-- Ruang kosong untuk mendorong footer ke bawah -->
+    <div class="main-content-space"></div>
+
+    <!-- MODAL DARURAT & UNIVERSAL TETAP -->
+    <div class="em-modal-overlay" id="emModalOverlay">
+        <div class="em-modal-content">
+            <div class="em-modal-header">
+                <span class="em-modal-title">Nomor Kontak Darurat</span>
+                <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="emergency-list">
+                <a href="tel:110" target="_blank" class="emergency-item">
+                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
+                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                </a>
+                <a href="tel:085173171912" target="blank" class="emergency-item">
+                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><line x1="8" y1="9.5" x2="12" y2="9.5"/><line x1="10" y1="7.5" x2="10" y2="11.5"/></svg></div>
+                    <div class="contact-details"><span class="emergency-label">Ambulan PKU Gamping</span><span class="emergency-value">0851 7317 1912</span></div>
+                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                </a>
+                <a href="tel:02742821346" target="_blank" class="emergency-item">
+                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-3.3 0-6 2.7-6 6 0 5 6 14 6 14s6-9 6-14c0-3.3-2.7-6-6-6z"/><path d="M12 12c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/></svg></div>
+                    <div class="contact-details"><span class="emergency-label">Damkar Godean Sleman</span><span class="emergency-value">(0274) 2821346</span></div>
+                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                </a>
+                <a href="https://chat.whatsapp.com/31APr2lKc826zA46hGzoZK?s=sh&p=a&mlu=4&ilr=0" target="_blank" class="emergency-item wa">
+                    <div class="logo-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div>
+                    <div class="contact-details"><span class="emergency-label">WhatsApp</span><span class="emergency-value">GRUP WHATSAPP RT 2</span></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
+        <div class="univ-modal-box" onclick="event.stopPropagation()">
+            <div class="univ-modal-header">
+                <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
+                <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
+                    <svg viewBox="0 0 24 24" class="svg-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="univ-modal-body">
+                <iframe id="univModalIframe" src="" loading="lazy" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL KHUSUS PANITIA AGUSTUSAN -->
+    <div class="pn-modal-overlay" id="pnModalOverlay" onclick="closePnModalOutside(event)">
+        <div class="pn-modal-box" onclick="event.stopPropagation()">
+            <button class="pn-btn-close-icon" onclick="closePnModal()">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+            <h2 class="pn-modal-title">PANITIA KEGIATAN HUT RI 81 TH</h2>
+            <div class="pn-content-scroll" id="pnModalContent">
+                <div class="loading-text">Menyinkronkan data panitia...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POSTER PUBLIKASI AGUSTUSAN -->
+    <div class="pub-modal-overlay" id="pubModalOverlay" onclick="closePubModalOutside(event)">
+        <div class="pub-modal-box" onclick="event.stopPropagation()">
+            <button class="pub-btn-close-icon" onclick="closePubModal()">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+            <div class="pub-content-scroll" id="pubModalContent">
+                <img id="pubModalImg" src="" style="width:100%; border-radius:0; object-fit:contain; background:transparent; margin: 0; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER TETAP -->
+    <footer class="main-footer">
+        <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
+        <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
+    </footer>
+</div> 
+
+<script>
+    // ==========================================================
+    // 1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header)
+    // ==========================================================
+    const GLOBAL_BLOG_URL = "https://rt2paslor.blogspot.com";
+    const GLOBAL_STATIC_WEB_URL = "https://sites.google.com/view/rt02pasekanlor/";
+
+    const topBar = document.getElementById('fixedTopBar');
+    const accordionToggle = document.getElementById('accordionMenuToggle');
+    const navAccordionWrapper = document.getElementById('navAccordionWrapper');
+    const accordionIcon = document.getElementById('accordionIcon');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 30) {
+            topBar.classList.add('shrink');
+        } else {
+            topBar.classList.remove('shrink');
+        }
+    });
+
+    accordionToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navAccordionWrapper.classList.toggle('open');
+        accordionToggle.classList.toggle('open');
+        
+        if (isOpen) {
+            accordionIcon.style.transform = 'rotate(180deg)';
+        } else {
+            accordionIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navAccordionWrapper.contains(e.target) && e.target !== accordionToggle) {
+            navAccordionWrapper.classList.remove('open');
+            accordionToggle.classList.remove('open');
+            accordionIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    const emModalOverlay = document.getElementById('emModalOverlay');
+    document.getElementById('openEmModalBtn').addEventListener('click', () => { 
+        emModalOverlay.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    });
+    document.getElementById('closeEmModalBtn').addEventListener('click', () => { 
+        emModalOverlay.classList.remove('active'); 
+        document.body.style.overflow = 'auto'; 
+    });
+    emModalOverlay.addEventListener('click', (e) => { 
+        if (e.target === emModalOverlay) { 
+            emModalOverlay.classList.remove('active'); 
+            document.body.style.overflow = 'auto'; 
+        } 
+    });
+
+    const univModal = document.getElementById('univModalOverlay');
+    const univTitle = document.getElementById('univModalTitle');
+    const univIframe = document.getElementById('univModalIframe');
+    
+    function openUnivModal(title, docUrl) {
+        univTitle.innerText = title;
+        univIframe.src = docUrl;
+        univModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeUnivModal() {
+        univModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        setTimeout(() => { univIframe.src = ""; }, 350); 
+    }
+    function closeUnivModalOutside(e) { 
+        if (e.target === univModal) closeUnivModal(); 
+    }
+
+    // ==========================================================
+    // 2. SCRIPT KHUSUS KONTEN AGUSTUSAN
+    // ==========================================================
+    
+    function updateDateTime() {
+        const now = new Date();
+        document.getElementById('liveDate').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        document.getElementById('liveClock').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    }
+    
+    const greetings = ["Sugeng Rawuh Warga RT2-RW3", "Agenda Kegiatan Kemerdekaan RI"];
+    const greetingEl = document.getElementById("liveWeather");
+    let greetPhraseIdx = 0, greetCharIdx = 0, isGreetDeleting = false;
+
+    function playGreetingTyping() {
+        const currentText = greetings[greetPhraseIdx];
+        if (isGreetDeleting) {
+            greetingEl.innerHTML = currentText.substring(0, greetCharIdx);
+            greetCharIdx--;
+        } else {
+            greetingEl.innerHTML = currentText.substring(0, greetCharIdx);
+            greetCharIdx++;
+        }
+
+        let typeSpeed = isGreetDeleting ? 25 : 45;
+
+        if (!isGreetDeleting && greetCharIdx > currentText.length) {
+            typeSpeed = 2500; isGreetDeleting = true;
+        } else if (isGreetDeleting && greetCharIdx === 0) {
+            isGreetDeleting = false;
+            greetPhraseIdx = (greetPhraseIdx + 1) % greetings.length;
+            typeSpeed = 500;
+        }
+        setTimeout(playGreetingTyping, typeSpeed);
+    }
+
+    const himbauanTextFull = "Mari Bangkitkan Semangat Gotong Royong. MERDEKAAA!!";
+    const himbauanEl = document.getElementById("himbauanAnim");
+    let typeIdx = 0;
+
+    function playHimbauanTyping() {
+        if (typeIdx <= himbauanTextFull.length) {
+            himbauanEl.innerHTML = `<span class="typing-cursor">${himbauanTextFull.substring(0, typeIdx)}</span>`;
+            typeIdx++;
+            setTimeout(playHimbauanTyping, 45); 
+        } else {
+            setTimeout(() => { typeIdx = 0; playHimbauanTyping(); }, 4000); 
+        }
+    }
+
+    const pnModal = document.getElementById('pnModalOverlay');
+    let pnLoaded = false;
+    function openPnModal() { 
+        pnModal.classList.add('active'); document.body.style.overflow = 'hidden'; 
+        if(!pnLoaded) appendScript(`${GLOBAL_BLOG_URL}/feeds/posts/default/-/panitia?alt=json-in-script&max-results=10&callback=parsePanitiaFeed`);
+    }
+    function closePnModal() { pnModal.classList.remove('active'); document.body.style.overflow = 'auto'; }
+    function closePnModalOutside(e) { if (e.target === pnModal) closePnModal(); }
+
+    function parsePanitiaFeed(json) {
+        const c = document.getElementById('pnModalContent'); c.innerHTML = '';
+        const entries = json.feed.entry || [];
+        if(entries.length === 0) { c.innerHTML = '<div class="loading-text">Belum ada data panitia.</div>'; return; }
+        
+        entries.forEach(entry => {
+            const title = entry.title.$t;
+            const body = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : "");
+            
+            const div = document.createElement('div');
+            div.className = 'panitia-item';
+            
+            const doc = new DOMParser().parseFromString(body, 'text/html');
+            doc.querySelectorAll('*').forEach(el => el.removeAttribute('style'));
+            doc.querySelectorAll('p').forEach(p => { if(!p.innerHTML.trim().replace(/&nbsp;/g, '')) p.remove(); });
+            
+            div.innerHTML = `<div class="panitia-title">${title}</div><div class="panitia-body">${doc.body.innerHTML}</div>`;
+            c.appendChild(div);
+        });
+        pnLoaded = true;
+    }
+
+    function parseInfoFeed(json) {
+        const mainContainer = document.getElementById('infoCardsContainer');
+        mainContainer.innerHTML = '';
+        const entries = json.feed.entry || [];
+        if(entries.length === 0) { mainContainer.innerHTML = '<div class="loading-text">Belum ada info poster saat ini.</div>'; return; }
+        entries.forEach(entry => mainContainer.appendChild(createInfoCardHtml(entry)));
+    }
+    
+    function createInfoCardHtml(entry) {
+        const bodyText = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : "");
+        const allImgs = extractInfoImages(bodyText, entry.media$thumbnail?.url);
+        const thumbImg = allImgs[0] || "https://placeholder.pics/svg/400x300/eaeaea/999999/No%20Image";
+        
+        let labels = [];
+        if (entry.category) { labels = entry.category.map(c => c.term.toLowerCase()); }
+
+        let cat = "AGENDA";
+        let headerBg = "linear-gradient(135deg, #1e293b, #334155)"; 
+        
+        if (labels.includes("kerja bakti")) {
+            cat = "KERJA BAKTI"; headerBg = "linear-gradient(135deg, #059669, #10b981)";
+        } else if (labels.includes("lomba")) {
+            cat = "LOMBA"; headerBg = "linear-gradient(135deg, #2563eb, #3b82f6)";
+        } else if (labels.includes("malam tirakatan")) {
+            cat = "MALAM TIRAKATAN"; headerBg = "linear-gradient(135deg, #7f1d1d, #991b1b)"; 
+        } else if (labels.includes("jalan sehat")) {
+            cat = "JALAN SEHAT"; headerBg = "linear-gradient(135deg, #7c3aed, #8b5cf6)";
+        }
+        
+        const imgString = encodeURIComponent(JSON.stringify(allImgs));
+        
+        const div = document.createElement('div');
+        div.innerHTML = `
+        <div class="info-card">
+            <div class="card-header" style="background: ${headerBg};">
+                <span class="agenda-label-top">Peringatan HUT RI 81 TH</span>
+                <span class="category-text">${cat}</span>
+            </div>
+            <div onclick="openPubModal('${imgString}')" style="width: 100%; cursor: pointer; background: #fff; padding: 16px; box-sizing: border-box;">
+                <img src="${thumbImg}" alt="Poster Kegiatan" style="width: 100%; display: block; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+        `;
+        return div.firstElementChild;
+    }
+    
+    function extractInfoImages(html, fallback) {
+        let imgs = [];
+        new DOMParser().parseFromString(html, 'text/html').querySelectorAll('img').forEach(img => {
+            let src = img.getAttribute('src'); if (src && !src.includes('pixel')) imgs.push(src.replace(/\/s72\-c/, '/s1600').replace(/\/w\d+-h\d+/, '/s1600'));
+        });
+        if (imgs.length === 0 && fallback) imgs.push(fallback.replace(/\/s72\-c/, '/s1600'));
+        return imgs;
+    }
+
+    const pubModal = document.getElementById('pubModalOverlay');
+    function openPubModal(imgStr) {
+        const imgs = JSON.parse(decodeURIComponent(imgStr));
+        const imgEl = document.getElementById('pubModalImg');
+        if (imgs.length > 0 && !imgs[0].includes('No%20Image')) {
+            imgEl.src = imgs[0]; imgEl.style.display = 'block';
+        } else {
+            imgEl.style.display = 'none';
+        }
+        pubModal.classList.add('active'); document.body.style.overflow = 'hidden';
+    }
+    function closePubModal() { pubModal.classList.remove('active'); document.body.style.overflow = 'auto'; }
+    function closePubModalOutside(e) { if(e.target === pubModal) closePubModal(); }
+
+    function shootConfetti() {
+        const duration = 3000; const end = Date.now() + duration;
+        (function frame() {
+            confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ffffff', '#ffdf00'], zIndex: 9999 });
+            confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ffffff', '#ffdf00'], zIndex: 9999 });
+            if (Date.now() < end) requestAnimationFrame(frame);
+        }());
+    }
+
+    function appendScript(url) {
+        const s = document.createElement('script'); s.src = url; document.body.appendChild(s);
+    }
+
+    // ==========================================================
+    // 3. EVENT KETIKA HALAMAN SELESAI DIMUAT
+    // ==========================================================
+    document.addEventListener("DOMContentLoaded", () => {
+        updateDateTime(); setInterval(updateDateTime, 60000); 
+        appendScript(`${GLOBAL_BLOG_URL}/feeds/posts/default/-/agustusan?alt=json-in-script&max-results=10&callback=parseInfoFeed`);
+        playGreetingTyping();
+        playHimbauanTyping();
+        shootConfetti();
+    });
+
+</script>
+</body>
+</html>

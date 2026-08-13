@@ -33,10 +33,10 @@
             /* 3. Jarak tinggi slider dari area hero di atasnya */
             --jarak-atas-slider: 2px; 
 
-            /* 4. Warna Latar Header saat di-scroll (Gunakan format rgba untuk mengatur transparansi, nilai terakhir 0.0 - 1.0) 
+            /* 4. Warna Latar Header saat di-scroll (Gunakan format rgba untuk mengatur transparansi, nilai terakhir 0.0 - 1.0) jangan lupa gaes wkwkwk 
                   Contoh Hitam Transparan: rgba(0, 0, 0, 0.85) 
                   Contoh Biru Transparan: rgba(17, 85, 204, 0.9) */
-            --warna-bg-header-scrolled: rgba(0, 0, 0, 0.85);
+            --warna-bg-header-scrolled: rgba(17, 85, 204, 0.8);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
@@ -115,10 +115,10 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
         }
         
-        .header-logo-spin {
+        .header-logo-anim {
             width: var(--ukuran-logo); 
             max-width: none;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            transition: all 0.25s ease-in-out; /* Mengubah animasi jadi fast & smooth zoom in */
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9));
             transform-origin: center;
         }
@@ -161,7 +161,7 @@
 
         /* STATE KETIKA DI-SCROLL */
         .header-fixed-container.scrolled {
-            background: var(--warna-bg-header-scrolled); /* Menggunakan Variabel CSS */
+            background: var(--warna-bg-header-scrolled);
             padding-top: 10px;
             padding-bottom: 10px;
             flex-direction: row;
@@ -169,9 +169,9 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .header-fixed-container.scrolled .header-logo-spin {
+        .header-fixed-container.scrolled .header-logo-anim {
             width: var(--ukuran-logo-scrolled); 
-            transform: rotate(-360deg); 
+            /* Rotasi (spin) dihapus, hanya merubah ukuran dengan transisi */
             filter: drop-shadow(0 0px 0px rgba(0,0,0,0));
             margin-bottom: 0;
         }
@@ -591,7 +591,7 @@
 
     <!-- HEADER FIXED BERISI LOGO DAN TEKS -->
     <header class="header-fixed-container" id="mainHeader">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-spin">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-anim">
         
         <!-- Teks Tampil Besar di Depan (Hilang saat scroll) -->
         <div class="header-hero-text">

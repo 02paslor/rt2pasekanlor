@@ -24,18 +24,9 @@
            AREA PENGATURAN TAMPILAN DEPAN (SILAKAN UBAH NILAINYA DI SINI)
            ====================================================================== */
         :root {
-            /* 1. Ukuran besar kecilnya logo di tengah saat awal */
-            --ukuran-logo: 220px; 
-            
-            /* 2. Ukuran logo setelah di scroll */
-            --ukuran-logo-scrolled: 50pt;
-
-            /* 3. Jarak tinggi slider dari area hero di atasnya */
+            --ukuran-logo: 180px; 
+            --ukuran-logo-scrolled: 60pt;
             --jarak-atas-slider: 2px; 
-
-            /* 4. Warna Latar Header saat di-scroll (Gunakan format rgba untuk mengatur transparansi, nilai terakhir 0.0 - 1.0) jangan lupa gaes wkwkwk 
-                  Contoh Hitam Transparan: rgba(0, 0, 0, 0.85) 
-                  Contoh Biru Transparan: rgba(0, 52, 143, 0.9) biru tua*/
             --warna-bg-header-scrolled: rgba(0, 52, 143, 0.9);
         }
 
@@ -57,9 +48,12 @@
                 linear-gradient(to bottom, rgba(245, 245, 245, 0.1) 100%, rgba(245, 245, 245, 0.8) 100%, rgba(245, 245, 245, 1) 10%),
                 url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOFJqp0jv0xOVscATo92XPYJX53pKdhy2V9GeR_5hlUW0BQ7ZrJAzDTkLb0d-6Mqy92MCpI8534FwNjhZUz5bmm955O0c2f8CtQQ4uJB4Iq11mjM6l9vlH7LgZS9FaYzlApPwKd5s1vJ4YzROzyLWz5rV92evzoie1WRSf9EEmYeC7UxgZCVf2pgjREKk/s1600/header_paslor%20600px.png');
             background-position: top;
-            background-size: 100% auto; /* Tetap fit lebar segitu */
-            background-attachment: sticky; /* Parallax effect */
+            background-size: 100% auto;
+            background-attachment: sticky;
             background-repeat: no-repeat;
+            
+            /* Transisi dipercepat dan tetap smooth untuk efek scroll mentok bawah */
+            transition: background-position 0.5s ease-out;
 
             min-height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15);
@@ -69,34 +63,50 @@
             flex-direction: column;
         }
 
-        /* --- HOVER WARNA KONTRAS UNTUK KOMPONEN TERTENTU SAJA --- */
-        .arsip-item:hover, .emergency-item:hover, .nav-item:not(.btn-home-active):hover, .btn-kas-small:hover, 
-        .btn-inventaris-more:hover, .btn-read-more:hover, .btn-list-trigger:hover, .btn-doc-footer:hover, .btn-share-wa:hover {
-            background-color: #FF5722 !important;
-            color: #FFFFFF !important;
-            border-color: #FF5722 !important;
-            box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4) !important;
-            transition: all 0.2s ease !important;
-        }
-        
-        .arsip-item:hover *, .emergency-item:hover *, .nav-item:not(.btn-home-active):hover *, 
-        .btn-kas-small:hover *, .btn-inventaris-more:hover *, .btn-read-more:hover *, 
-        .btn-list-trigger:hover *, .btn-doc-footer:hover *, .btn-share-wa:hover * {
-            color: #FFFFFF !important;
-            stroke: #FFFFFF !important;
-        }
-        
-        .btn-inventaris:hover, .btn-pengurus:hover, .btn-ronda:hover, .btn-warga:hover, .btn-galeri:hover, .btn-scanner:hover, .btn-tatatertib:hover, .btn-disabled:hover {
-            background: linear-gradient(145deg, #FF5722, #E64A19) !important;
-            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4) !important;
+        /* Saat di-scroll mentok bawah (animasi header ke bawah gabung dgn footer) */
+        .app-wrapper.at-bottom {
+            background-position: center bottom !important;
         }
 
-        /* Hover khusus tombol mata kas tanpa background oranye */
-        #toggleSaldoBtn:hover {
-            transform: scale(1.15);
-            opacity: 0.8;
-            transition: transform 0.2s ease, opacity 0.2s ease;
+        /* --- HOVER EFEK WARNA SENADA --- */
+        .nav-item:not(.btn-home-active):hover {
+            background: linear-gradient(145deg, #1d4ed8, #1e3a8a) !important;
+            box-shadow: 0 8px 20px rgba(29, 78, 216, 0.4) !important;
+            transform: translateY(-2px);
         }
+        .btn-kas-small:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+            border-color: rgba(255, 255, 255, 0.6) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important;
+        }
+        .btn-inventaris-more:hover {
+            background: #0369a1 !important;
+            box-shadow: 0 6px 15px rgba(2, 132, 199, 0.4) !important;
+            transform: translateY(-2px);
+        }
+        .btn-read-more:hover {
+            background-color: #dbeafe !important;
+            transform: translateY(-2px);
+        }
+        .btn-doc-footer:hover { background-color: #bfdbfe !important; color: #1e3a8a !important; transform: translateY(-2px); }
+        .btn-share-wa:hover { background-color: #bbf7d0 !important; color: #14532d !important; transform: translateY(-2px); }
+        .btn-list-trigger:hover {
+            background-color: #f8fafc !important;
+            box-shadow: 0 6px 12px rgba(17, 85, 204, 0.2) !important;
+            transform: translateY(-2px);
+        }
+        .emergency-item:hover { background-color: #e2e8f0 !important; border-color:#94a3b8 !important;}
+        .emergency-item.wa:hover { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .arsip-item:hover { background-color: #f1f5f9 !important; border-color: #94a3b8 !important; }
+        .slider-nav-btn:hover { background: rgba(255, 255, 255, 1) !important; transform: translateY(-50%) scale(1.05) !important; }
+        
+        .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-scanner, .btn-tatatertib, .btn-disabled {
+            background: linear-gradient(145deg, #2563eb, #1d4ed8);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        #toggleSaldoBtn:hover { transform: scale(1.15); opacity: 0.8; transition: transform 0.2s ease, opacity 0.2s ease; }
 
         /* --- HEADER FIXED --- */
         .header-fixed-container {
@@ -112,160 +122,90 @@
             align-items: center;
             z-index: 1000;
             background: transparent;
-            transition: all 0.3s ease; 
+            transition: all 0.2s ease-in-out;
         }
         
+        /* LOGO 3D BEVEL EFEK BIRU TUA (SUDAH DITIPISKAN) */
         .header-logo-anim {
             width: var(--ukuran-logo); 
             max-width: none;
-            transition: all 0.3s ease;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9));
+            transition: all 0.2s ease-in-out;
+            /* Ketebalan bevel & shadow disesuaikan agar tidak terlalu tebal */
+            filter: drop-shadow(0px 2px 0px rgba(0, 31, 84, 0.7)) drop-shadow(0px 4px 6px rgba(0, 31, 84, 0.4)); 
             transform-origin: center;
         }
 
-        /* Teks Utama di Bawah Logo saat belum discroll */
         .header-hero-text {
             color: #ffffff;
             font-size: 8pt;
             text-align: center;
             margin-top: 10px;
             
-            /* Penambahan outline putih & latar biru tua transparan */
-            background-color: rgba(0, 52, 143, 0.8);
-            border: 1px solid #ffffff;
-            padding: 6px 14px;
+            background-color: rgba(0, 52, 143, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(10px);
+            border: none;
+            padding: 6px 12px;
             border-radius: 20px;
 
-            transition: all 0.3s ease;
-            transform: scale(1);
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+            transform: translateY(0);
             opacity: 1;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
-        .header-hero-text h1 {
-            color: #ffffff;
-            font-size: 11pt;
-            font-weight: 700;
-            line-height: 1.2;
-            margin: 0;
-        }
-        .header-hero-text p {
-            color: #ffffff;
-            font-size: 9pt;
-            font-weight: 500;
-            margin: 2px 0 0 0;
-        }
+        .header-hero-text h1 { color: #ffffff; font-size: 11pt; font-weight: 700; line-height: 1.2; margin: 0; }
+        .header-hero-text p { color: #ffffff; font-size: 9pt; font-weight: 500; margin: 2px 0 0 0; }
 
-        /* Teks Mini di Kanan Logo saat discroll */
         .header-text-scrolled {
-            opacity: 0;
-            color: #ffffff;
-            font-size: 11px;
-            white-space: nowrap;
-            
-            /* Penambahan outline putih & latar biru tua transparan */
-            background-color: rgba(0, 52, 143, 0.8);
-            border: 1px solid #ffffff;
-            padding: 4px 10px;
-            border-radius: 15px;
-
-            transition: all 0.3s ease;
-            display: none;
-            margin-left: 12px;
+            opacity: 0; color: #ffffff; font-size: 11px; white-space: nowrap;
+            background-color: rgba(0, 52, 143, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(8px);
+            border: none; padding: 4px 10px; border-radius: 15px;
+            transition: opacity 0.2s ease-in-out; display: none; margin-left: 12px;
         }
-        .header-text-scrolled strong {
-            font-weight: 700;
-            font-size: 13px;
-        }
+        .header-text-scrolled strong { font-weight: 700; font-size: 13px; }
 
-        /* STATE KETIKA DI-SCROLL */
         .header-fixed-container.scrolled {
             background: var(--warna-bg-header-scrolled);
-            padding-top: 10px;
-            padding-bottom: 10px;
-            flex-direction: row;
-            padding-left: 20px;
+            padding-top: 10px; padding-bottom: 10px;
+            flex-direction: row; padding-left: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
+        /* Saat discroll, bevel logo makin ditipiskan */
         .header-fixed-container.scrolled .header-logo-anim {
             width: var(--ukuran-logo-scrolled); 
-            /* Rotasi (spin) dihapus, hanya merubah ukuran dengan transisi */
-            filter: drop-shadow(0 0px 0px rgba(0,0,0,0));
+            filter: drop-shadow(0px 1px 0px rgba(0, 31, 84, 0.2)) drop-shadow(0px 2px 3px rgba(0, 31, 84, 0.2));
             margin-bottom: 0;
         }
 
-        /* Efek Zoom in & menghilang ke atas untuk Teks Hero */
-        .header-fixed-container.scrolled .header-hero-text {
-            opacity: 0;
-            transform: scale(0.8) translateY(-20px);
-            position: absolute;
-            pointer-events: none;
-        }
+        .header-fixed-container.scrolled .header-hero-text { opacity: 0; transform: translateY(-10px); position: absolute; pointer-events: none; }
+        .header-fixed-container.scrolled .header-text-scrolled { opacity: 1; display: block; }
 
-        .header-fixed-container.scrolled .header-text-scrolled {
-            opacity: 1;
-            display: block;
-        }
-
-        /* Pendorong konten di bawah Header */
-        .spacer-header {
-            height: 190px;
-            width: 100%;
-            position: relative;
-            z-index: 2;
-        }
-
+        .spacer-header { height: 190px; width: 100%; position: relative; z-index: 2; }
         svg { display: inline-block; vertical-align: middle; }
 
         @keyframes fadeInIframe { to { opacity: 1; } }
         .yt-iframe-delayed { opacity: 0; animation: fadeInIframe 0.5s 1.2s forwards; }
 
         .section-title-neumorph {
-            background-color: rgba(229, 229, 229, 0.85);
-            backdrop-filter: blur(1px);
-            color: #383838;
+            background-color: rgba(229, 229, 229, 0.85); backdrop-filter: blur(1px); color: #383838;
             padding: 14px 16px; border-radius: 12px; margin: 0 16px 16px 16px;
             font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;
             box-shadow: inset 4px 4px 8px rgba(196,196,196,0.6), inset -4px -4px 8px rgba(255,255,255,0.6);
-            letter-spacing: 0.5px; text-align: center;
-            position: relative;
-            z-index: 2;
+            letter-spacing: 0.5px; text-align: center; position: relative; z-index: 2;
         }
         .section-title-neumorph.red-text { color: #383838; }
 
-        /* --- DESAIN TOMBOL DARURAT CAUTION BLOCK --- */
         .btn-darurat-caution {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
             background-color: #ffcc00;
-            background-image: repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 5px,
-                rgba(0, 0, 0, 0.1) 10px,
-                rgba(0, 0, 0, 0.1) 20px
-            );
-            color: #383838;
-            border: 1px solid #383838;
-            padding: 10px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            width: 80%;
-            max-width: 220px;
-            box-shadow: 4px 4px 0 #7D7D7D;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-            margin: 0 auto;
+            background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 0, 0, 0.1) 10px, rgba(0, 0, 0, 0.1) 20px);
+            color: #383838; border: 1px solid #383838; padding: 10px 18px; border-radius: 12px;
+            font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+            cursor: pointer; width: 80%; max-width: 220px; box-shadow: 4px 4px 0 #7D7D7D;
+            transition: transform 0.1s ease, box-shadow 0.1s ease; margin: 0 auto;
         }
-        .btn-darurat-caution:active {
-            transform: translate(4px, 4px);
-            box-shadow: 0 0 0 #383838;
-        }
+        .btn-darurat-caution:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #383838; }
         
         .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 2000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
         .em-modal-overlay.active { opacity: 1; pointer-events: auto; }
@@ -287,13 +227,38 @@
         .emergency-item.wa .logo-wrapper { color: #22c55e; border-color:#22c55e;}
         .emergency-item.wa { border-left: 5px solid #22c55e; }
 
-        /* --- SLIDER BANNER --- */
-        .slider-section { background-color: transparent; padding: 0; position: relative; margin-top: var(--jarak-atas-slider); z-index: 2; }
+        /* --- SLIDER BANNER & ACCORDION --- */
+        .slider-wrapper-accordion { position: relative; z-index: 2; width: 100%; }
+        /* Tombol Toggle Warna Kontras (Oranye) dengan Shadow */
+        .slider-toggle-btn {
+            background: #61B5FF; 
+            color: #ffffff; 
+            width: 38px; height: 38px;
+            border-radius: 50%; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            border: none;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 87, 34, 0.4);
+        }
+        .slider-toggle-btn:hover { background: #99CFFF; transform: scale(1.05); box-shadow: 0 6px 14px rgba(255, 87, 34, 0.5); }
+        .slider-toggle-btn:active { transform: scale(0.95); }
+        
+        .slider-section { 
+            background-color: transparent; padding: 0; position: relative; margin-top: var(--jarak-atas-slider);
+            max-height: 500px; overflow: hidden;
+            transition: max-height 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 1;
+        }
+        .slider-section.collapsed { max-height: 0; margin-top: 0; opacity: 0; pointer-events: none; }
         .slider-container { position: relative; padding: 0 16px !important; }
         .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 16px; padding: 10px 0 20px 0; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
         .ps-slider-container::-webkit-scrollbar { display: none; }
         .slide { flex: 0 0 100%; width: 100%; aspect-ratio: 21 / 9; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-color: #ffffff; cursor: pointer; }
-        .slide img, .slide video { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; }
+        .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 600; z-index:-1;}
 
         .slider-nav-btn {
@@ -316,28 +281,18 @@
         .ps-close-btn { position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid #ffffff; color: #ffffff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; z-index: 110; transition: transform 0.2s, background-color 0.2s; }
         .ps-close-btn:hover { transform: scale(1.1); background-color: #ff4a4a; }
         .ps-modal-body { width: 100%; height: auto; overflow-y: auto; padding: 0; -webkit-overflow-scrolling: touch; }
-        .ps-modal-body img, .ps-modal-body video { width: 100%; height: auto; display: block; background-color: #000; }
+        .ps-modal-body img, .ps-modal-body video, .ps-modal-body iframe { width: 100%; height: auto; display: block; background-color: #000; }
 
-        /* --- KOTAK KAS (DIKEMBALIKAN KE BAWAH SLIDER) --- */
-        .hero-kas-container { 
-            padding: 0 16px 20px 16px; 
-            width: 100%; 
-            z-index: 2; 
-            position: relative; 
-        } 
+        /* --- KOTAK KAS --- */
+        .hero-kas-container { padding: 0 16px 20px 16px; width: 100%; z-index: 2; position: relative; } 
         .kas-card.new-kas-design { 
-            background: rgba(17, 85, 204, 100);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(17, 85, 204, 100); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             color: #ffffff; border-radius: 18px; padding: 14px 16px; 
-            display: flex; flex-direction: column; 
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); 
-            position: relative; overflow: hidden; 
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); 
+            position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .kas-card.new-kas-design::before { 
-            content: ''; position: absolute; top: -40px; right: -40px; 
-            width: 150px; height: 150px; border-radius: 50%; 
+            content: ''; position: absolute; top: -40px; right: -40px; width: 150px; height: 150px; border-radius: 50%; 
             background: rgba(255, 255, 255, 0.1); pointer-events: none; 
         }
         .kas-weather-top { display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 10px; margin-bottom: 12px; width: 100%; z-index: 2; }
@@ -357,65 +312,24 @@
         .kas-right { display: flex; flex-direction: column; align-items: flex-end; flex: 0.9; text-align: right; }
         .saldo-label { font-size: 11px; font-weight: 500; line-height: 1; margin-bottom: 6px; color: #FFFFFF; display: flex; align-items: center; justify-content: flex-end; gap: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         
-        @keyframes blinkDot {
-            0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(204, 255, 0, 0.8); transform: scale(1); }
-            50% { opacity: 0.4; box-shadow: 0 0 2px rgba(204, 255, 0, 0.2); transform: scale(0.85); }
-        }
+        @keyframes blinkDot { 0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(204, 255, 0, 0.8); transform: scale(1); } 50% { opacity: 0.4; box-shadow: 0 0 2px rgba(204, 255, 0, 0.2); transform: scale(0.85); } }
         .saldo-dot { width: 7px; height: 7px; background-color: #ccff00; border-radius: 50%; animation: blinkDot 1.5s infinite ease-in-out; }
         .saldo-value { font-size: 12pt; font-weight: 600; line-height: 1; margin-bottom: 0; color: #ccff00; text-shadow: 0 1px 3px rgba(0,0,0,0.4); } 
         
         .kas-action-buttons { display: flex; gap: 10px; margin-top: 14px; z-index: 2; justify-content: center; }
-        .btn-kas-small { flex: 1; padding: 4px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(4px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        .btn-kas-small { flex: 1; padding: 4px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(4px); color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
 
-        /* =========================================================
-           NAVIGASI MENU UTAMA GRID
-           ========================================================= */
-        #navWrapper {
-            padding: 0 16px 20px 16px;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-nav-container { 
-            width: 100%;
-        }
-        .nav-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 12px; 
-            width: 100%; 
-        }
-        .nav-item { 
-            color: #FFFFFF; 
-            text-decoration: none; 
-            border-radius: 16px; 
-            font-size: 12px; 
-            font-weight: 600; 
-            letter-spacing: 0.3px; 
-            cursor: pointer; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            transition: transform 0.2s, box-shadow 0.2s, background 0.3s; 
-            text-align: center; 
-            padding: 12px 4px; 
-            border: none; 
-            line-height: 1.2; 
-        }
+        /* NAVIGASI MENU UTAMA GRID */
+        #navWrapper { padding: 0 16px 20px 16px; position: relative; z-index: 2; }
+        .hero-nav-container { width: 100%; }
+        .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
+        .nav-item { color: #FFFFFF; text-decoration: none; border-radius: 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.3px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; padding: 12px 4px; border: none; line-height: 1.2; }
         .nav-item:active { transform: scale(0.95); }
         .nav-item svg { width: 24px; height: 24px; margin-bottom: 8px; display: block; stroke: currentColor; stroke-width: 2 !important; }
         .nav-item span { display: block; }
             
         .btn-home-active { background: #64748b !important; box-shadow: none !important; cursor: default !important; pointer-events: none; }
-        .btn-inventaris { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
-        .btn-pengurus { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
-        .btn-ronda { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
-        .btn-warga { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
-        .btn-galeri { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
-        .btn-disabled { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
-        .btn-scanner { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
-        .btn-tatatertib { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
-
+        
         .keuangan-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 16px; }
         .keuangan-modal-overlay.active { opacity: 1; pointer-events: auto; }
         .keuangan-modal-box { width: 100%; max-width: 480px; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); overflow: hidden; transform: translateY(20px); transition: transform 0.3s ease; display: flex; flex-direction: column; }
@@ -467,9 +381,7 @@
         .univ-modal-body { flex: 1; width: 100%; height: 100%; background: #f1f5f9; position: relative; }
         .univ-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
 
-        /* =========================================================
-           KOTAK INFO AGENDA & LIST NORMAL
-           ========================================================= */
+        /* KOTAK INFO AGENDA & LIST NORMAL */
         .info-dashboard-container { padding: 0 16px 20px 16px; position: relative; z-index: 2; }
         .cards-list { display: flex; flex-direction: column; gap: 16px; }
         .info-card { background-color: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; }
@@ -511,12 +423,12 @@
         @keyframes pulse-status-fast { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.3); opacity: 1; } }
 
         .info-card-footer { padding: 12px 16px; display: flex; gap: 10px; background-color: transparent; align-items: center; }
-        .btn-footer-action { flex: 1; padding: 10px 10px; border-radius: 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; border: none; }
+        .btn-footer-action { flex: 1; padding: 10px 10px; border-radius: 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; border: none; transition: all 0.2s ease; }
         .btn-footer-action svg { width: 14px; height: 14px; }
         .btn-doc-footer { background-color: #dbeafe; color: #1e40af; box-shadow: 0 2px 6px rgba(30, 64, 175, 0.15); }
         .btn-share-wa { background-color: #dcfce7; color: #166534; box-shadow: 0 2px 6px rgba(22, 101, 52, 0.15); }
         
-        .btn-list-trigger { display: flex; width: 60%; margin: 20px auto 10px auto; text-align: center; background-color: #FFFFFF; color: #1155CC; border: none; padding: 12px 14px; border-radius: 20px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(17, 85, 204, 0.15); justify-content: center; align-items: center; gap: 8px; }
+        .btn-list-trigger { display: flex; width: 60%; margin: 20px auto 10px auto; text-align: center; background-color: #FFFFFF; color: #1155CC; border: none; padding: 12px 14px; border-radius: 20px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(17, 85, 204, 0.15); justify-content: center; align-items: center; gap: 8px; transition: all 0.2s; }
 
         .list-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 16px; }
         .list-modal-overlay.active { opacity: 1; pointer-events: auto; }
@@ -529,7 +441,7 @@
         .btn-close-sheet svg { width: 18px; height: 18px; }
         .list-modal-body { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; background-color: #ffffff; }
 
-        .arsip-item { background-color: #ffffff; border: 1px solid #cbd5e1; padding: 14px 16px; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); position: relative; }
+        .arsip-item { background-color: #ffffff; border: 1px solid #cbd5e1; padding: 14px 16px; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); position: relative; transition: all 0.2s; }
         .arsip-item::after { content: '>'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-weight: 700; color: #94a3b8; font-size: 16px; }
         .arsip-title { font-size: 14px; font-weight: 600; color: #383838; padding-right: 20px; }
         .arsip-date { font-size: 10px; font-weight: 600; color: #1155CC; }
@@ -566,8 +478,7 @@
         
         .news-snippet { font-size: 12px; font-weight: 400; line-height: 1.5; color: #383838; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .news-footer { padding: 0 16px 16px 16px; display: flex; background-color: transparent; }
-        .btn-read-more { background-color: #e8f0fe; color: #1155CC; width: 100%; border: none; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 0.2s; }
-        .btn-read-more:hover { background-color: #d2e3fc; }
+        .btn-read-more { background-color: #e8f0fe; color: #1155CC; width: 100%; border: none; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 0.2s, transform 0.2s; }
 
         .news-nav-controls { width: 100%; display: flex; justify-content: center; gap: 16px; padding-bottom: 15px; margin-top: -5px; }
         .news-btn-bottom { background: #ffffff; border: 1px solid #cbd5e1; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.08); color: #1155CC; transition: all 0.2s ease; }
@@ -616,7 +527,7 @@
         <div class="header-text-scrolled"><strong>RT 2 Online</strong> | Informasi Warga RT 2 Pasekan Lor</div>
     </header>
 
-    <!-- Spacer untuk mendorong konten ke bawah area header yang mengambang (seolah2 ada background gambar) -->
+    <!-- Spacer untuk mendorong konten ke bawah area header yang mengambang -->
     <div class="spacer-header"></div>
 
     <div class="em-modal-overlay" id="emModalOverlay">
@@ -651,22 +562,29 @@
         </div>
     </div>
 
-    <!-- SLIDER BANNER -->
-    <div class="slider-section">
-        <div class="slider-container">
-            <div class="status-msg" id="ps-status-loading">Memuat konten banner...</div>
-            <div class="ps-slider-container" id="ps-slider-track"></div>
-            
-            <button class="slider-nav-btn prev-btn" id="psPrevBtn" aria-label="Previous">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    <!-- ACCORDION SLIDER BANNER -->
+    <div class="slider-wrapper-accordion">
+        <div style="text-align: center; margin-bottom: 5px;">
+            <button class="slider-toggle-btn" id="toggleSliderBtn" title="Tutup/Buka Banner">
+                <svg id="sliderToggleIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
             </button>
-            <button class="slider-nav-btn next-btn" id="psNextBtn" aria-label="Next">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </button>
+        </div>
+        <div class="slider-section" id="sliderSection">
+            <div class="slider-container">
+                <div class="status-msg" id="ps-status-loading">Memuat konten banner...</div>
+                <div class="ps-slider-container" id="ps-slider-track"></div>
+                
+                <button class="slider-nav-btn prev-btn" id="psPrevBtn" aria-label="Previous">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="slider-nav-btn next-btn" id="psNextBtn" aria-label="Next">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- KOTAK KAS (DIKEMBALIKAN KE BAWAH SLIDER) -->
+    <!-- KOTAK KAS -->
     <section class="hero-kas-container" id="kotakKas">
         <div class="kas-card new-kas-design">
             <div class="kas-weather-top">
@@ -724,8 +642,7 @@
         </div>
     </div>
 
-
-    <!-- MENU UTAMA GRID (TIDAK LAGI MELAYANG) -->
+    <!-- MENU UTAMA GRID -->
     <div id="navWrapper">
         <nav class="hero-nav-container" id="mainNav">
             <div class="nav-grid">
@@ -733,35 +650,35 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <span>HOME</span>
                 </a>
-                <a href="pengurus.html" class="nav-item btn-pengurus" title="Pengurus">
+                <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     <span>PENGURUS</span>         
                 </a>
-                <a href="inventaris.html" class="nav-item btn-inventaris" title="Inventaris">
+                <a href="inventaris" class="nav-item btn-inventaris" title="Inventaris">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                     <span>INVENTARIS</span>
                 </a>
-                <a href="scanner.html" class="nav-item btn-scanner" title="Scanner">
+                <a href="scanner" class="nav-item btn-scanner" title="Scanner">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
                     <span>SCANNER</span>
                 </a>
-                <a href="tatatertib.html" class="nav-item btn-tatatertib" title="Tata Tertib">
+                <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                     <span>TATA TERTIB</span>
                 </a>
-                <a href="galeri.html" class="nav-item btn-galeri" title="Galeri">
+                <a href="galeri" class="nav-item btn-galeri" title="Galeri">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                     <span>GALERI</span>
                 </a>
-                <a href="warga.html" class="nav-item btn-warga" title="Warga">
+                <a href="warga" class="nav-item btn-warga" title="Warga">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                     <span>WARGA</span>
                 </a>
-                <a href="agustusan.html" class="nav-item btn-disabled" title="Agustusan">
+                <a href="agustusan" class="nav-item btn-disabled" title="Agustusan">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal-icon lucide-medal"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
                     <span>AGUSTUSAN</span>
                 </a>
-                <a href="ronda.html" class="nav-item btn-ronda" title="Ronda">
+                <a href="ronda" class="nav-item btn-ronda" title="Ronda">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     <span>RONDA</span>
                 </a>
@@ -784,7 +701,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
         <div class="univ-modal-box" onclick="event.stopPropagation()">
@@ -955,7 +871,7 @@
     </div>
     
     <p></p>
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBIimC0Xev6ow-nDTXPpolimwYDqlypCgbUV04-8-79QYVhWTXHXgLGMunKdy1BNHaF9eXICfCtLlx1Q9gx_IjLSin16GKO85ak1v31Djd25v9qtlB2wi9KiYb7ylC9_4JYalJ8ha4-BhouHrjoScOGaWYjCXeQHzz2G4sfwblWTLrB7yIjNxlfd7XrVM/s1600/Thumb%20-%20Abu%2060.png" alt="RT 2 Pasekan Lor" style="display: block; margin-top: 10px; margin-left: auto; margin-right: auto; width: 70%; position: relative; z-index: 2;">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBIimC0Xev6ow-nDTXPpolimwYDqlypCgbUV04-8-79QYVhWTXHXgLGMunKdy1BNHaF9eXICfCtLlx1Q9gx_IjLSin16GKO85ak1v31Djd25v9qtlB2wi9KiYb7ylC9_4JYalJ8ha4-BhouHrjoScOGaWYjCXeQHzz2G4sfwblWTLrB7yIjNxlfd7XrVM/s1600/Thumb%20-%20Abu%2060.png" alt="RT 2 Pasekan Lor" style="display: block; margin-top: 10px; margin-left: auto; margin-right: auto; width: 50%; position: relative; z-index: 2;">
     <p></p>
     
     <footer class="main-footer">
@@ -990,13 +906,22 @@
     // ========================================== SCROLL ANIMASI HEADER ==========================================
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
-        
-        // Logika kemunculan Fixed Header & zoom teks
         const header = document.getElementById('mainHeader');
+        
+        // Logika kemunculan Fixed Header & transisi
         if (currentScrollY > 40) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
+        }
+
+        // Efek transisi menyatu mentok bawah (Super Smooth & Snappy)
+        const atBottom = (window.innerHeight + currentScrollY) >= document.body.offsetHeight - 15;
+        const appWrapper = document.querySelector('.app-wrapper');
+        if (atBottom) {
+            appWrapper.classList.add('at-bottom');
+        } else {
+            appWrapper.classList.remove('at-bottom');
         }
     });
 
@@ -1010,6 +935,30 @@
     });
     emModalOverlay.addEventListener('click', (e) => { 
         if (e.target === emModalOverlay) { emModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; } 
+    });
+
+    // ========================================== ACCORDION SLIDER ==========================================
+    const toggleSliderBtn = document.getElementById('toggleSliderBtn');
+    const sliderSection = document.getElementById('sliderSection');
+    let isSliderOpen = true;
+
+    toggleSliderBtn.addEventListener('click', () => {
+        isSliderOpen = !isSliderOpen;
+        const icon = document.getElementById('sliderToggleIcon');
+        if(isSliderOpen) {
+            sliderSection.classList.remove('collapsed');
+            icon.innerHTML = `<polyline points="18 15 12 9 6 15"></polyline>`;
+            // Lanjutkan pemutaran video jika ada
+            document.querySelectorAll('.slide video').forEach(v => {
+                v.muted = true; // Tetap paksa mute saat kembali jalan
+                v.play().catch(()=>{});
+            });
+        } else {
+            sliderSection.classList.add('collapsed');
+            icon.innerHTML = `<polyline points="6 9 12 15 18 9"></polyline>`;
+            // Stop/Pause video saat accordion ditutup untuk mematikan suara 
+            document.querySelectorAll('.slide video').forEach(v => v.pause());
+        }
     });
 
     // ========================================== SLIDER POSTER ==========================================
@@ -1028,18 +977,22 @@
         if (entries.length === 0) { psLoading.textContent = "Tidak ada banner."; return; }
 
         psPostsData = entries.map(entry => {
-            let imgUrl = ""; let isVideo = false; let isYoutube = false; let youtubeId = "";
-            const videoMatch = entry.content && entry.content.$t ? entry.content.$t.match(/(https?:\/\/[^"']+\.mp4)/i) : null;
-            const ytMatch = entry.content && entry.content.$t ? entry.content.$t.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/) : null;
+            let imgUrl = ""; let isVideo = false; let isYoutube = false; let youtubeId = ""; let isWave = false; let waveUrl = "";
+            const contentText = entry.content && entry.content.$t ? entry.content.$t : "";
+            
+            const videoMatch = contentText.match(/(https?:\/\/[^"']+\.mp4)/i);
+            const ytMatch = contentText.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+            const waveMatch = contentText.match(/(https?:\/\/(?:embed\.)?wave\.(?:video|studio)\/[\w-]+)/i);
             
             if (videoMatch) { imgUrl = videoMatch[1]; isVideo = true; } 
             else if (ytMatch) { youtubeId = ytMatch[1]; imgUrl = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`; isYoutube = true; } 
+            else if (waveMatch) { isWave = true; waveUrl = waveMatch[1]; imgUrl = ''; }
             else if (entry.media$thumbnail) { imgUrl = entry.media$thumbnail.url.replace(/\/[swh][0-9]+(-[cp])?\//, '/s1600/').replace(/=[swh][0-9]+(-[cp])?/, '=s1600'); } 
-            else if (entry.content && entry.content.$t) { 
-                const match = entry.content.$t.match(/<img[^>]+src="([^">]+)"/); 
+            else { 
+                const match = contentText.match(/<img[^>]+src="([^">]+)"/); 
                 if (match) imgUrl = match[1]; 
             }
-            return { title: entry.title.$t, media: imgUrl || 'https://via.placeholder.com/800', isVideo, isYoutube, youtubeId };
+            return { title: entry.title.$t, media: imgUrl || 'https://via.placeholder.com/800', isVideo, isYoutube, youtubeId, isWave, waveUrl };
         });
         renderPosterSlider();
     }
@@ -1050,17 +1003,25 @@
             const slide = document.createElement('div');
             slide.className = 'slide';
             let mediaHtml = '';
+            
+            /* TAMPILAN DEPAN SLIDER: Auto play, WAJIB MUTED, No Controls, Fit Cover No Scroll */
             if (post.isYoutube) {
-                mediaHtml = `<div style="position:relative; width:100%; height:100%; overflow:hidden; background: #000 url('${post.media}') center/cover no-repeat;"><iframe class="yt-iframe-delayed" style="position:absolute; top:-18%; left:0; width:100%; height:136%; pointer-events:none; border:none;" src="https://www.youtube.com/embed/${post.youtubeId}?autoplay=1&mute=1&controls=0&rel=0&loop=1&playsinline=1&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playlist=${post.youtubeId}" allow="autoplay; encrypted-media" tabindex="-1"></iframe></div>`;
+                mediaHtml = `<div style="position:relative; width:100%; height:100%; overflow:hidden; background: #000 url('${post.media}') center/cover no-repeat;"><iframe class="yt-iframe-delayed" style="position:absolute; top:-18%; left:0; width:100%; height:136%; pointer-events:none; border:none; overflow:hidden;" src="https://www.youtube.com/embed/${post.youtubeId}?autoplay=1&mute=1&controls=0&rel=0&loop=1&playsinline=1&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playlist=${post.youtubeId}" allow="autoplay; encrypted-media" tabindex="-1"></iframe></div>`;
+            } else if (post.isWave) {
+                mediaHtml = `<iframe style="width:100%; height:100%; border:none; pointer-events:none; overflow:hidden; object-fit:cover;" src="${post.waveUrl}?autoplay=1&muted=1&loop=1&controls=0" allow="autoplay" tabindex="-1"></iframe>`;
             } else if (post.isVideo) {
-                mediaHtml = `<video src="${post.media}" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; pointer-events:none;"></video>`;
+                mediaHtml = `<video src="${post.media}" autoplay muted playsinline loop style="width:100%; height:100%; object-fit:cover; pointer-events:none;"></video>`;
             } else {
                 mediaHtml = `<img src="${post.media}" alt="${post.title}" style="width:100%; height:100%; object-fit:cover; pointer-events:none;">`;
             }
             slide.innerHTML = mediaHtml;
+            
+            /* KETIKA DI KLIK: MODAL FULLSCREEN BERSUARA AKTIF (UNMUTED) */
             slide.addEventListener('click', () => { 
                 if (post.isYoutube) {
                     psModalBody.innerHTML = `<iframe style="width:100%; aspect-ratio:16/9; border:none; display:block; background:#000;" src="https://www.youtube.com/embed/${post.youtubeId}?autoplay=1&mute=0&controls=1&rel=0&playsinline=1&modestbranding=1&iv_load_policy=3&fs=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+                } else if (post.isWave) {
+                    psModalBody.innerHTML = `<iframe style="width:100%; aspect-ratio:16/9; border:none; display:block; background:#000;" src="${post.waveUrl}?autoplay=1&controls=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
                 } else {
                     psModalBody.innerHTML = post.isVideo ? `<video src="${post.media}" controls autoplay playsinline style="width:100%; height:auto; display:block; background:#000;"></video>` : `<img src="${post.media}" alt="${post.title}" style="width:100%; height:auto; display:block; background:#000;">`;
                 }
@@ -1069,7 +1030,14 @@
             psTrack.appendChild(slide);
         });
         
-        setTimeout(() => { document.querySelectorAll('.slide video').forEach(vid => { vid.play().catch(e => console.log('Autoplay prevented', e)); }); }, 300);
+        // Memastikan ulang (force mute) video html5 biasa
+        setTimeout(() => { 
+            document.querySelectorAll('.slide video').forEach(vid => { 
+                vid.muted = true; 
+                vid.defaultMuted = true;
+                vid.play().catch(e => console.log('Autoplay prevented', e)); 
+            }); 
+        }, 300);
         initPosterDrag();
     }
 
@@ -1083,8 +1051,18 @@
 
     psPrevBtn.addEventListener('click', () => { psTrack.scrollBy({ left: -psTrack.offsetWidth, behavior: 'smooth' }); });
     psNextBtn.addEventListener('click', () => { psTrack.scrollBy({ left: psTrack.offsetWidth, behavior: 'smooth' }); });
-    document.getElementById('psCloseModal').addEventListener('click', () => { psModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; psModalBody.innerHTML = ''; });
-    psModalOverlay.addEventListener('click', (e) => { if (e.target === psModalOverlay) { psModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; psModalBody.innerHTML = ''; } });
+    
+    document.getElementById('psCloseModal').addEventListener('click', () => { 
+        psModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; 
+        psModalBody.innerHTML = ''; // Membersihkan tag iframe/video saat modal ditutup agar suaranya mati
+    });
+    
+    psModalOverlay.addEventListener('click', (e) => { 
+        if (e.target === psModalOverlay) { 
+            psModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; 
+            psModalBody.innerHTML = ''; 
+        } 
+    });
 
     // ========================================== KAS SALDO ==========================================
     function updateDateTime() {
@@ -1374,7 +1352,6 @@
             const title = entry.title.$t, body = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : ""), date = new Date(entry.published.$t).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             const doc = new DOMParser().parseFromString(body, 'text/html'), img = doc.querySelector('img');
             
-            // --- THUMBNAIL KUALITAS TINGGI ---
             const thumb = img ? img.getAttribute('src').replace(/\/[swh][0-9]+(-[cp])?\//, '/s1600/').replace(/=[swh][0-9]+(-[cp])?/, '=s1600') : (entry.media$thumbnail?.url.replace(/\/[swh][0-9]+(-[cp])?\//, '/s1600/').replace(/=[swh][0-9]+(-[cp])?/, '=s1600') || 'https://via.placeholder.com/500');
             
             const snippet = (doc.body.textContent || "").replace(/\s+/g, ' ').trim().substring(0, 95) + "...";

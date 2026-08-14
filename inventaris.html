@@ -54,7 +54,7 @@
 
         .title-card-panel { background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); color: #ffffff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; cursor: pointer; z-index: 2; position: relative; }
         .title-card-panel.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: none; }
-        .title-card-left { font-size: 15px; font-weight: 700; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; }
+        .title-card-left { font-size: 15px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; }
         .title-card-left i { font-size: 18px; }
         .title-card-right { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
         .accordion-icon { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -91,7 +91,7 @@
         .em-modal-content { background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(15px); transition: transform 0.3s ease; }
         .em-modal-overlay.active .em-modal-content { transform: translateY(0); }
         .em-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; }
-        .em-modal-title { font-size: 16px; font-weight: 700; color: #0f172a; }
+        .em-modal-title { font-size: 16px; font-weight: 60; color: #0f172a; }
         .em-btn-close { background: none; border: none; cursor: pointer; color: #ef4444; }
         .emergency-list { display: flex; flex-direction: column; gap: 14px; }
         .emergency-item { display: flex; align-items: center; background-color: #EDEDED; padding: 12px 14px; border-radius: 12px; text-decoration: none; border: 1px solid #b5b5b5; gap: 14px; color:#333; transition: all 0.2s ease; }
@@ -108,7 +108,7 @@
         .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
         .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
         .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
-        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 700; color: #1e293b; }
+        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 600; color: #1e293b; }
         .univ-modal-title { font-size: 16px; text-transform: uppercase; }
         .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;}
         .btn-close-univ:hover { background: #FEE2E2; }
@@ -258,12 +258,12 @@
 
         <div class="nav-accordion-wrapper" id="navAccordionWrapper">
             <div class="nav-grid">
-                <a href="index.html" class="nav-item" title="Home">
+                <a href="index" class="nav-item" title="Home">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <span>HOME</span>
                 </a>
                 
-                <a href="pengurus.html" class="nav-item" title="Pengurus">
+                <a href="pengurus" class="nav-item" title="Pengurus">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     <span>PENGURUS</span>        
                 </a>
@@ -273,32 +273,32 @@
                     <span>INVENTARIS</span>
                 </a>         
 
-                <a href="scanner.html" class="nav-item" title="Scanner">
+                <a href="scanner" class="nav-item" title="Scanner">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
                     <span>SCANNER</span>
                 </a>
                 
-                <a href="tatatertib.html" class="nav-item btn-tatatertib" title="Tata Tertib">
+                <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                     <span>TATA TERTIB</span>
                 </a>
                 
-                <a href="galeri.html" class="nav-item" title="Galeri">
+                <a href="galeri" class="nav-item" title="Galeri">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                     <span>GALERI</span>
                 </a>
                 
-                <a href="warga.html" class="nav-item" title="Warga">
+                <a href="warga" class="nav-item" title="Warga">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                     <span>WARGA</span>
                 </a>
                 
-                <a href="agustusan.html" class="nav-item" title="Agustusan">
+                <a href="agustusan" class="nav-item" title="Agustusan">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
                     <span>AGUSTUSAN</span>
                 </a>
                 
-                <a href="ronda.html" class="nav-item" title="Ronda">
+                <a href="ronda" class="nav-item" title="Ronda">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     <span>RONDA</span>
                 </a>

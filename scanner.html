@@ -151,9 +151,16 @@
         #reader button { background: #1155CC; color: white; border: none; padding: 10px 16px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; margin-top: 10px;}
         #reader select { padding: 8px; border-radius: 8px; border: 1px solid #CBD5E1; font-family: 'Poppins', sans-serif; font-size: 13px; margin-bottom: 10px; width: 80%;}
         
-        .result-textarea { width: 100%; padding: 14px; font-size: 14px; font-weight: 500; color: #0F172A; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; resize: 15px; min-height: 120px; line-height: 1.6; outline: none; transition: border-color 0.2s;}
-        .result-textarea:focus { border-color: #1155CC; }
-        .result-textarea.success-flash { border-color: #22C55E; background-color: #F0FDF4; }
+        /* Hasil Pemindaian: Tampilan Kolom Modern */
+        .result-placeholder { width: 100%; padding: 14px; font-size: 13px; font-weight: 500; color: #64748B; border: 1.5px dashed #CBD5E1; border-radius: 12px; background-color: #F8FAFC; text-align: center; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+        .result-details { width: 100%; border: 1.5px solid #22C55E; border-radius: 12px; background-color: #F0FDF4; overflow: hidden; display: flex; flex-direction: column; transition: background-color 0.3s; }
+        .detail-row { display: flex; border-bottom: 1px solid #DCFCE7; padding: 12px 14px; align-items: flex-start; }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { width: 40%; font-size: 11px; font-weight: 600; color: #166534; text-transform: uppercase; margin-top: 2px; }
+        .detail-value { width: 60%; font-size: 13px; font-weight: 500; color: #0F172A; word-break: break-word; }
+        .font-mono { font-family: monospace !important; font-size: 12px; background: #e2e8f0; padding: 4px 6px; border-radius: 6px; display: inline-block; color: #1e293b; }
+        .scan-link { color: #2563EB; text-decoration: underline; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; background-color: #DBEAFE; padding: 6px 10px; border-radius: 8px; margin-top: 4px; transition: all 0.2s;}
+        .scan-link:hover { filter: brightness(0.95); }
 
         .btn-primary-custom { 
             width: 100%; padding: 14px 16px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #2563EB; color: white; transition: all 0.3s ease; 
@@ -199,17 +206,17 @@
 
         <div class="nav-accordion-wrapper" id="navAccordionWrapper">
             <div class="nav-grid">
-                <a href="index.html" class="nav-item" title="Home">
+                <a href="index" class="nav-item" title="Home">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <span>HOME</span>
                 </a>
                 
-                <a href="pengurus.html" class="nav-item" title="Pengurus">
+                <a href="pengurus" class="nav-item" title="Pengurus">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     <span>PENGURUS</span>        
                 </a>
                 
-                <a href="inventaris.html" class="nav-item" title="Inventaris">
+                <a href="inventaris" class="nav-item" title="Inventaris">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                     <span>INVENTARIS</span>
                 </a>
@@ -219,27 +226,27 @@
                     <span>SCANNER</span>
                 </a>
                 
-                <a href="tatatertib.html" class="nav-item" title="Tata Tertib">
+                <a href="tatatertib" class="nav-item" title="Tata Tertib">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                     <span>TATA TERTIB</span>
                 </a>
                 
-                <a href="galeri.html" class="nav-item" title="Galeri">
+                <a href="galeri" class="nav-item" title="Galeri">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                     <span>GALERI</span>
                 </a>
                 
-                <a href="warga.html" class="nav-item" title="Warga">
+                <a href="warga" class="nav-item" title="Warga">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                     <span>WARGA</span>
                 </a>
                 
-                <a href="agustusan.html" class="nav-item" title="Agustusan">
+                <a href="agustusan" class="nav-item" title="Agustusan">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
                     <span>AGUSTUSAN</span>
                 </a>
                 
-                <a href="ronda.html" class="nav-item" title="Ronda">
+                <a href="ronda" class="nav-item" title="Ronda">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     <span>RONDA</span>
                 </a>
@@ -257,8 +264,8 @@
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                     </div>
                     <div class="sec-text-group">
-                        <span class="sec-title">Kamera Langsung</span>
-                        <span class="sec-subtitle">Gunakan kamera belakang</span>
+                        <span class="sec-title">Kamera Langsung (demo)</span>
+                        <span class="sec-subtitle">Arahkan pada QR Code atau Barcode</span>
                     </div>
                 </div>
                 <!-- Box Kamera -->
@@ -273,11 +280,42 @@
                     </div>
                     <div class="sec-text-group">
                         <span class="sec-title">Data Ditemukan</span>
-                        <span class="sec-subtitle">Hasil data tangkapan kamera pemindai</span>
+                        <span class="sec-subtitle">Hasil analisis tangkapan kamera</span>
                     </div>
                 </div>
                 
-                <textarea id="scan-result" class="result-textarea" readonly placeholder="Menunggu hasil scan... Teks akan otomatis muncul di sini."></textarea>
+                <!-- Placeholder Menunggu -->
+                <div id="scan-placeholder" class="result-placeholder">
+                    Menunggu hasil scan... Arahkan kamera pada kode batang.
+                </div>
+
+                <!-- Box Detail Data -->
+                <div id="scan-details" class="result-details" style="display: none;">
+                    <div class="detail-row">
+                        <div class="detail-label">Format Kode</div>
+                        <div class="detail-value" id="val-format">-</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Tipe Konten</div>
+                        <div class="detail-value" id="val-type">-</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Hasil Data</div>
+                        <div class="detail-value font-mono" id="val-data">-</div>
+                    </div>
+                    <div class="detail-row" id="row-link" style="display: none;">
+                        <div class="detail-label">Aksi Tautan</div>
+                        <div class="detail-value">
+                            <a href="#" id="val-link" target="_blank" class="scan-link">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                Buka Tautan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hidden textarea untuk kebutuhan copy ke clipboard -->
+                <textarea id="scan-result" style="display:none;"></textarea>
                 
                 <button type="button" id="btn-copy" class="btn-primary-custom" disabled>
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -298,7 +336,6 @@
     <!-- MODAL DARURAT -->
     <div class="em-modal-overlay" id="emModalOverlay">
         <div class="em-modal-content">
-            <!-- (Isi Modal Darurat sama dengan template) -->
             <div class="em-modal-header">
                 <span class="em-modal-title">Nomor Kontak Darurat</span>
                 <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
@@ -416,48 +453,127 @@
        2. SCRIPT SCANNER (HTML5-QRCode)
        ========================================================== */
     document.addEventListener("DOMContentLoaded", function() {
-        const resultTextarea = document.getElementById("scan-result");
+        // Elemen DOM untuk Scanner
+        const placeholder = document.getElementById("scan-placeholder");
+        const detailsBox = document.getElementById("scan-details");
+        
+        const valFormat = document.getElementById("val-format");
+        const valType = document.getElementById("val-type");
+        const valData = document.getElementById("val-data");
+        const rowLink = document.getElementById("row-link");
+        const valLink = document.getElementById("val-link");
+        
+        const hiddenTextarea = document.getElementById("scan-result");
         const btnCopy = document.getElementById("btn-copy");
         const btnClear = document.getElementById("btn-clear");
         
         let html5QrCode;
 
+        // Fungsi Memainkan Suara Beep Keras
+        function playBeep() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const audioCtx = new AudioContext();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                oscillator.type = 'square'; // 'square' menghasilkan suara kasar/keras (beep)
+                oscillator.frequency.setValueAtTime(850, audioCtx.currentTime); // Frekuensi 850 Hz
+                
+                gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15); // Durasi Beep
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.15);
+            } catch (e) {
+                console.log("Audio not supported or blocked.");
+            }
+        }
+
         // Inisialisasi Scanner
         function startScanner() {
             html5QrCode = new Html5Qrcode("reader");
             
-            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            // Konfigurasi agar membaca barcode lain selain QR Code (EAN, UPC, CODE128, dll)
+            const config = { 
+                fps: 10, 
+                qrbox: { width: 250, height: 250 },
+                formatsToSupport: [
+                    Html5QrcodeSupportedFormats.QR_CODE,
+                    Html5QrcodeSupportedFormats.CODE_128,
+                    Html5QrcodeSupportedFormats.CODE_39,
+                    Html5QrcodeSupportedFormats.EAN_13,
+                    Html5QrcodeSupportedFormats.EAN_8,
+                    Html5QrcodeSupportedFormats.UPC_A,
+                    Html5QrcodeSupportedFormats.UPC_E,
+                    Html5QrcodeSupportedFormats.ITF,
+                ]
+            };
             
-            // Preferensi kamera belakang: { facingMode: "environment" }
+            // Preferensi kamera belakang
             html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess)
             .catch((err) => {
                 console.error("Kesalahan inisialisasi kamera:", err);
-                resultTextarea.value = "Gagal mengakses kamera belakang. Pastikan Anda telah memberikan izin kamera pada browser Anda.";
+                placeholder.innerText = "Gagal mengakses kamera. Pastikan Anda telah memberikan izin kamera pada browser Anda.";
             });
         }
 
         // Dijalankan ketika berhasil mendeteksi kode
         function onScanSuccess(decodedText, decodedResult) {
-            // Tampilkan teks ke textarea
-            resultTextarea.value = decodedText;
+            // Mainkan Suara Beep
+            playBeep();
+
+            // Dapatkan jenis format barcode
+            const formatName = decodedResult?.result?.format?.formatName || "Tidak Diketahui";
+            valFormat.innerText = formatName.replace(/_/g, " "); // Hapus underscore agar rapi
+
+            // Analisis teks untuk mendeteksi URL
+            const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i;
+            let isUrl = false;
+            let finalUrl = decodedText;
+
+            if (urlPattern.test(decodedText) || decodedText.startsWith("http://") || decodedText.startsWith("https://")) {
+                isUrl = true;
+                if (!decodedText.startsWith("http")) {
+                    finalUrl = "https://" + decodedText;
+                }
+            }
+
+            // Tampilkan data di kolom tabel modern
+            if (isUrl) {
+                valType.innerText = "Tautan (URL)";
+                rowLink.style.display = "flex";
+                valLink.href = finalUrl;
+            } else {
+                valType.innerText = "Teks / Angka";
+                rowLink.style.display = "none";
+            }
+
+            valData.innerText = decodedText;
+            hiddenTextarea.value = decodedText; // Simpan untuk copy
             
-            // Memberikan efek visual (flash hijau)
-            resultTextarea.classList.add('success-flash');
+            // Switch layout
+            placeholder.style.display = "none";
+            detailsBox.style.display = "flex";
+
+            // Animasi transisi hijau sebentar
+            detailsBox.style.backgroundColor = "#bbf7d0";
             setTimeout(() => {
-                resultTextarea.classList.remove('success-flash');
-            }, 800);
+                detailsBox.style.backgroundColor = "#F0FDF4";
+            }, 400);
 
             // Aktifkan tombol-tombol
             btnCopy.disabled = false;
             btnClear.disabled = false;
-
-            // (Opsional) Hentikan scanner otomatis jika ingin satu kali scan.
-            // html5QrCode.stop();
         }
 
         // Tombol Copy Teks
         btnCopy.addEventListener("click", () => {
-            const textToCopy = resultTextarea.value;
+            const textToCopy = hiddenTextarea.value;
             if (textToCopy && textToCopy.trim() !== "") {
                 navigator.clipboard.writeText(textToCopy).then(() => {
                     const originalText = btnCopy.innerHTML;
@@ -471,7 +587,14 @@
 
         // Tombol Bersihkan dan Ulangi
         btnClear.addEventListener("click", () => {
-            resultTextarea.value = "";
+            hiddenTextarea.value = "";
+            valData.innerText = "-";
+            valFormat.innerText = "-";
+            valType.innerText = "-";
+            
+            detailsBox.style.display = "none";
+            placeholder.style.display = "flex";
+            
             btnCopy.disabled = true;
             btnClear.disabled = true;
         });

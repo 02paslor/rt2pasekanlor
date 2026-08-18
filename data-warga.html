@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Warga RT 2 Paslor</title>
+    <title>Aplikasi Data Warga Terpadu RT 2 Pasekan Lor</title>
     
     <!-- Script Library -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,7 +28,7 @@
         .fade-enter-from, .fade-leave-to { opacity: 0; }
 
         .btn-primary { background-color: #1155CC; color: #FFFFFF; transition: all 0.3s ease; }
-        .btn-primary:hover { background-color: #0C3D96; transform: scale(1.02); box-shadow: 0 8px 15px -3px rgba(17, 85, 204, 0.25); }
+        .btn-primary:hover { background-color: #F77D00; transform: scale(1.02); box-shadow: 0 8px 15px -3px rgba(17, 85, 204, 0.25); }
         
         .spinner { border: 3px solid rgba(17, 85, 204, 0.1); border-radius: 50%; border-top: 3px solid #1155CC; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -99,7 +99,7 @@
                         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirfRQ33UlIW0c9QKIjwJt9uFe2OGF6hyqwBcCIg6pWZYNmPib1xwUUQGERD1kk_9fCal8kEV-b0DZiB6qqM8UH9gmOPwDmHgWg8rnkPS95bPUwkR4TIjsIXQuzCyh7QB6tKOFO2bCrXXjyqMM2X7cYTMR7dN81_tp85gMsbnlIbnPIlo6zEXCLwT9rmz4/s320/lebah%20-%20merah%20putih%20(small).png" class="h-14 w-auto object-contain drop-shadow-md">
                         <div>
     <!-- Judul Utama (20px / Bold 700) -->
-    <h2 class="text-[17px] sm:text-[20px] font-[600] tracking-tight leading-tight drop-shadow-sm">Data Warga RT 2 Paslor</h2>
+    <h2 class="text-[17px] sm:text-[20px] font-[600] tracking-tight leading-tight drop-shadow-sm">Data Warga RT 2 Pasekan Lor</h2>
     
     <!-- Tulisan Baru di Bawah Titel (10px / Semibold 600) -->
     <p class="text-[10px] font-[500] tracking-wide text-white-500 mt-1">Aplikasi Data Warga Terpadu</p></div>
@@ -119,14 +119,14 @@
                     <div class="flex items-center gap-2 sm:gap-3 w-full lg:w-auto">
                         <!-- PENCARIAN (Kiri) -->
                         <div class="relative flex-1 sm:w-[220px] sm:flex-none group" v-show="activeMenu === 'list'">
-                            <input type="text" v-model="searchQuery" placeholder="Cari warga, NIK..." class="w-full pl-10 pr-3 py-2.5 rounded-xl bg-white/15 border border-white/20 text-white placeholder-white/80 focus:bg-[#FFFFFF] focus:text-[#374151] outline-none text-[13px] transition-all shadow-inner">
+                            <input type="text" v-model="searchQuery" placeholder="Pencarian cepat" class="w-full pl-10 pr-3 py-2.5 rounded-xl bg-white/15 border border-white/20 text-white placeholder-white/80 focus:bg-[#FFFFFF] focus:text-[#374151] outline-none text-[13px] transition-all shadow-inner">
                             <i class="fas fa-search absolute left-3.5 top-3 text-white/80 group-focus-within:text-[#8711CC] text-[14px] transition-colors"></i>
                         </div>
 
                         <!-- VIEW MODE (Kiri) -->
                         <div class="flex items-center gap-1 bg-black/10 p-1 rounded-xl shrink-0 shadow-inner" v-show="activeMenu === 'list'">
-                            <button @click="viewMode = 'card'" :class="viewMode === 'card' ? 'text-[#8711CC] bg-[#FFFFFF] shadow-sm font-[600]' : 'text-white/80 hover:text-white font-[500]'" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-2 text-[13px]"><i class="fas fa-th-large text-[14px]"></i> <span class="hidden sm:inline">Grid</span></button>
-                            <button @click="viewMode = 'table'" :class="viewMode === 'table' ? 'text-[#8711CC] bg-[#FFFFFF] shadow-sm font-[600]' : 'text-white/80 hover:text-white font-[500]'" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-2 text-[13px]"><i class="fas fa-list text-[14px]"></i> <span class="hidden sm:inline">Tabel</span></button>
+                            <button @click="viewMode = 'card'" :class="viewMode === 'card' ? 'text-[#8711CC] bg-[#FFFFFF] shadow-sm font-[600]' : 'text-white/80 hover:text-white font-[500]'" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-2 text-[13px]"><i class="fas fa-th-large text-[14px]"></i> <span class="hidden sm:inline">Kartu</span></button>
+                            <button @click="viewMode = 'table'" :class="viewMode === 'table' ? 'text-[#8711CC] bg-[#FFFFFF] shadow-sm font-[600]' : 'text-white/80 hover:text-white font-[500]'" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-2 text-[13px]"><i class="fas fa-list text-[14px]"></i> <span class="hidden sm:inline">Baris</span></button>
                         </div>
                     </div>
 
@@ -397,7 +397,7 @@
                             
                             <div class="space-y-4">
                                 <div class="hidden sm:grid grid-cols-[40px_1fr_1fr_1fr_40px] gap-2 px-2 text-[12px] font-[600] text-[#6B7280] text-center">
-                                    <div>No</div><div>Pertemuan RT</div><div>Sosial (Dansos & Bansos)</div><div>Zakat / Kurban</div><div></div>
+                                    <div>No</div><div>Pertemuan RT</div><div>Sosial</div><div>Lain-lain</div><div></div>
                                 </div>
                                 
                                 <div v-for="(ket, index) in form.KeteranganList" :key="index" class="flex flex-col sm:flex-row items-start sm:items-center gap-2 pb-4 border-b border-[#F3F4F6] border-dashed last:border-b-0 last:pb-0">
@@ -563,8 +563,8 @@
                                         <tr>
                                             <th class="py-2 pr-2 w-[40px] text-center align-top">No</th>
                                             <th class="py-2 px-3 align-top">Pertemuan RT</th>
-                                            <th class="py-2 px-3 align-top">Sosial (Dansos & Bansos)</th>
-                                            <th class="py-2 px-3 align-top">Zakat / Kurban</th>
+                                            <th class="py-2 px-3 align-top">Sosial</th>
+                                            <th class="py-2 px-3 align-top">Lain-lain</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-[#DDD6FE]">

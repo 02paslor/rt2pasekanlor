@@ -12,8 +12,8 @@
     <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1600/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Informasi Warga RT 2 - RW 3, Pasekan Lor. Warga Kreatif, Mandiri & Berbudaya.">
-    <title>Informasi Warga RT 2 Pasekan Lor</title>
+    <title>Informasi Warga RT 2-RW 3, Pasekan Lor, Balecatur, Gamping, Sleman</title>
+    <meta name="description" content="Portal Informasi Warga RT 2 RW 3, Pasekan Lor, Balecatur, Gamping, Sleman | Warga Kreatif, Mandiri, dan Berbudaya | Designer: Arga DW - Coder: Feri & Ari (Tim Developer RT 2 Paslor) | Domain: RumahWeb">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,36 +21,60 @@
     
     <style>
         /* ======================================================================
-           AREA PENGATURAN TAMPILAN DEPAN (SILAKAN UBAH NILAINYA DI SINI)
+           AREA PENGATURAN TAMPILAN (SILAKAN UBAH NILAINYA DI SINI)
            ====================================================================== */
         :root {
+            /* PENGATURAN HEADER & LOGO */
             --ukuran-logo: 180px; 
             --ukuran-logo-scrolled: 60pt;
             --jarak-atas-slider: 2px; 
-            --warna-bg-header-scrolled: rgba(0, 52, 143, 0.9);
+            --warna-bg-header-scrolled: rgba(0, 52, 143, 0.95);
+
+            /* PENGATURAN LATAR SLIDER */
+            --slider-bg-color: transparent; 
+            --slider-bg-image: none;
+            --slider-bg-radius: 10px;
+            --slider-bg-shadow: none;
+            --slider-padding-luar: 0px 0px;
+
+            /* PENGATURAN TOMBOL GULUNG SLIDER */
+            --posisi-tombol-gulung: flex-end; 
+
+            /* PENGATURAN GUNUNGAN (POSISI AWAL) - DIREVISI TURUN LEBIH DALAM */
+            --gn-ukuran: 120%; 
+            --gn-bottom: -20%; 
+            --gn-posisi-x-kiri: 10%; 
+            --gn-posisi-x-kanan: 10%; 
+            --gn-rotasi-tengah: -20deg; 
+
+            /* PENGATURAN ANIMASI GUNUNGAN (SAAT SCROLL / KELUAR) */
+            --gn-scroll-x-kiri: -150%; 
+            --gn-scroll-y-kiri: 0%; 
+            --gn-scroll-rotasi-kiri: -10deg; 
+
+            --gn-scroll-x-kanan: -150%; 
+            --gn-scroll-y-kanan: 0%; 
+            --gn-scroll-rotasi-kanan: -10deg; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
         body { 
-            background-color: #f0f0f0; 
+            background-color: #FFFFFF; 
             background-attachment: fixed;
             min-height: 100vh;
             display: flex; 
             justify-content: center; 
         }
 
+        /* --- BACKGROUND GUNUNG FIXED DI APP-WRAPPER --- */
         .app-wrapper {
             width: 100%; max-width: 480px;
-            background-color: #F5F5F5; 
-            
-            /* BACKGROUND GAMBAR FULL DENGAN TRANSPARANSI HALUS WARNA LATAR & PARALLAX */
-            background-image: 
-                linear-gradient(to bottom, rgba(245, 245, 245, 0.1) 100%, rgba(245, 245, 245, 0.8) 100%, rgba(245, 245, 245, 1) 10%),
-                url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOFJqp0jv0xOVscATo92XPYJX53pKdhy2V9GeR_5hlUW0BQ7ZrJAzDTkLb0d-6Mqy92MCpI8534FwNjhZUz5bmm955O0c2f8CtQQ4uJB4Iq11mjM6l9vlH7LgZS9FaYzlApPwKd5s1vJ4YzROzyLWz5rV92evzoie1WRSf9EEmYeC7UxgZCVf2pgjREKk/s1600/header_paslor%20600px.png');
-            background-position: top;
-            background-size: 100% auto;
+            background-color: transparent; 
+            background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjc1qNdNveM4_safp4Ah6JA-Xbg8KjiFWK-Mo6hk5ggiUAuZ4HlC5q3Lo0k7Zoky8uyx_6QlHlTm8dUQdZLPkFD4zTa_9ECLOm8PZLDyB31QBi1Y-S85sEeigj2onHujKI5Fq3h6LEoJooXGVgvkTwzRBeQ2JCDFAnX6cs54dL-UPrLu9Au2NWb0PbAm-M/s1600/BG-Gunung.png');
+            background-attachment: fixed;
+            background-position: center top;
+            background-size: contain;
             background-repeat: no-repeat;
-            
             min-height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15);
             padding-bottom: 40px; 
@@ -59,170 +83,63 @@
             flex-direction: column;
         }
 
-        /* Elemen gambar yang muncul slide up dari bawah ketika mentok */
-        .app-wrapper::before {
-            content: '';
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%) translateY(100%);
-            width: 100%;
-            max-width: 480px;
-            height: 250px;
-            background-image: 
-                linear-gradient(to top, rgba(245, 245, 245, 1) 10%, rgba(245, 245, 245, 0.7) 50%, rgba(245, 245, 245, 0) 100%),
-                url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOFJqp0jv0xOVscATo92XPYJX53pKdhy2V9GeR_5hlUW0BQ7ZrJAzDTkLb0d-6Mqy92MCpI8534FwNjhZUz5bmm955O0c2f8CtQQ4uJB4Iq11mjM6l9vlH7LgZS9FaYzlApPwKd5s1vJ4YzROzyLWz5rV92evzoie1WRSf9EEmYeC7UxgZCVf2pgjREKk/s1600/header_paslor%20600px.png');
-            background-position: bottom;
-            background-size: 100% auto;
-            background-repeat: no-repeat;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 1;
-            pointer-events: none;
+        /* --- HEADER FIXED (GARIS ATAS MUNCUL SAAT SCROLL) --- */
+        .header-fixed-container {
+            position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 480px; z-index: 1000; opacity: 0; pointer-events: none;
+            background: var(--warna-bg-header-scrolled);
+            padding-top: 10px; padding-bottom: 10px; display: flex; flex-direction: row; padding-left: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: opacity 0.3s ease-in-out; align-items: center;
         }
+        .header-fixed-container.scrolled { opacity: 1; pointer-events: auto; }
+        .header-fixed-container .header-logo-anim { width: var(--ukuran-logo-scrolled); filter: drop-shadow(0px 1px 0px rgba(0, 31, 84, 0.2)) drop-shadow(0px 2px 3px rgba(0, 31, 84, 0.2)); margin-bottom: 0; }
+        .header-fixed-container .header-text-scrolled { opacity: 1; color: #ffffff; font-size: 10px; white-space: nowrap; background-color: rgba(0, 52, 143, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(8px); display: block; margin-left: 8px; padding: 4px 8px; border-radius: 12px; }
+        .header-fixed-container .header-text-scrolled strong { font-weight: 700; font-size: 13px; }
 
-        /* Saat di-scroll mentok bawah (animasi header ke bawah gabung dgn footer) */
-        .app-wrapper.at-bottom::before {
-            transform: translateX(-50%) translateY(0);
-        }
+        /* HEADER ART ANIMATION - overflow diubah jadi visible agar tangkai tidak terpotong */
+        .header-art-wrapper { position: relative; width: 100%; height: 300px; overflow: visible; background: transparent; }
+        
+        .art-gunungan-container { position: absolute; bottom: 0; left: 0; right: 0; top: 0; z-index: 2; pointer-events: none; }
+        .art-gunungan { position: absolute; bottom: var(--gn-bottom); height: var(--gn-ukuran); width: auto; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)); }
+        .art-gunungan.left { left: var(--gn-posisi-x-kiri); transform-origin: bottom center; transform: rotate(var(--gn-rotasi-tengah)); transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.15s; }
+        .art-gunungan.right { right: var(--gn-posisi-x-kanan); transform-origin: bottom center; transform: scaleX(-1) rotate(var(--gn-rotasi-tengah)); transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.15s; }
+        
+        .header-art-wrapper.scrolled .art-gunungan.left { transform: translate(var(--gn-scroll-x-kiri), var(--gn-scroll-y-kiri)) rotate(var(--gn-scroll-rotasi-kiri)); transition: transform 0.4s ease-in 0s; }
+        .header-art-wrapper.scrolled .art-gunungan.right { transform: scaleX(-1) translate(var(--gn-scroll-x-kanan), var(--gn-scroll-y-kanan)) rotate(var(--gn-scroll-rotasi-kanan)); transition: transform 0.4s ease-in 0s; }
 
-        /* --- HOVER EFEK WARNA SENADA --- */
-        .nav-item:not(.btn-home-active):hover {
-            background: linear-gradient(145deg, #1d4ed8, #1e3a8a) !important;
-            box-shadow: 0 8px 20px rgba(29, 78, 216, 0.4) !important;
-            transform: translateY(-2px);
-        }
-        .btn-kas-small:hover {
-            background: rgba(255, 255, 255, 0.3) !important;
-            border-color: rgba(255, 255, 255, 0.6) !important;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important;
-        }
-        .btn-inventaris-more:hover {
-            background: #0369a1 !important;
-            box-shadow: 0 6px 15px rgba(2, 132, 199, 0.4) !important;
-            transform: translateY(-2px);
-        }
-        .btn-read-more:hover {
-            background-color: #dbeafe !important;
-            transform: translateY(-2px);
-        }
+        .art-frame-container { position: absolute; top: 2%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 350px; z-index: 3; transition: opacity 0.4s ease-out; display: flex; align-items: center; justify-content: center; }
+        .art-frame { width: 110%; height: auto; display: block; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4)); }
+        .art-logo { position: absolute; width: 55%; height: auto; z-index: 1; }
+        .header-art-wrapper.scrolled .art-frame-container { opacity: 8; }
+
+        /* MAIN CONTENT BOARD (LATAR TRANSPARAN) */
+        .main-content-board { background-color: transparent; border-radius: 25px 25px 0 0; padding-top: 10px; margin-top: -30px; position: relative; z-index: 10; display: flex; flex-direction: column; box-shadow: none; min-height: calc(100vh - 300px); } 
+
+        /* HOVER EFEK WARNA SENADA */
+        .nav-item:not(.btn-home-active):hover { background: linear-gradient(145deg, #1d4ed8, #1e3a8a) !important; box-shadow: 0 8px 20px rgba(29, 78, 216, 0.4) !important; transform: translateY(-2px); }
+        .btn-kas-small:hover { background: rgba(255, 255, 255, 0.3) !important; border-color: rgba(255, 255, 255, 0.6) !important; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important; }
+        .btn-inventaris-more:hover { background: #0369a1 !important; box-shadow: 0 6px 15px rgba(2, 132, 199, 0.4) !important; transform: translateY(-2px); }
+        .btn-read-more:hover { background-color: #dbeafe !important; transform: translateY(-2px); }
         .btn-doc-footer:hover { background-color: #bfdbfe !important; color: #1e3a8a !important; transform: translateY(-2px); }
         .btn-share-wa:hover { background-color: #bbf7d0 !important; color: #14532d !important; transform: translateY(-2px); }
-        .btn-list-trigger:hover {
-            background-color: #f8fafc !important;
-            box-shadow: 0 6px 12px rgba(17, 85, 204, 0.2) !important;
-            transform: translateY(-2px);
-        }
+        .btn-list-trigger:hover { background-color: #f8fafc !important; box-shadow: 0 6px 12px rgba(17, 85, 204, 0.2) !important; transform: translateY(-2px); }
         .emergency-item:hover { background-color: #e2e8f0 !important; border-color:#94a3b8 !important;}
         .emergency-item.wa:hover { background-color: #dcfce7 !important; border-color: #16a34a !important; }
         .arsip-item:hover { background-color: #f1f5f9 !important; border-color: #94a3b8 !important; }
-        .slider-nav-btn:hover { background: rgba(255, 255, 255, 1) !important; transform: translateY(-50%) scale(1.05) !important; }
+        .slider-nav-btn:hover { background: rgba(255, 255, 255, 1) !important; transform: translateY(-50%) scale(1) !important; }
         
-        .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-scanner, .btn-tatatertib, .btn-disabled {
-            background: linear-gradient(145deg, #2563eb, #1d4ed8);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
-        }
-
+        .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-scanner, .btn-tatatertib, .btn-disabled { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
         #toggleSaldoBtn:hover { transform: scale(1.15); opacity: 0.8; transition: transform 0.2s ease, opacity 0.2s ease; }
-
-        /* --- HEADER FIXED --- */
-        .header-fixed-container {
-            position: fixed;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            padding-top: 25px; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 1000;
-            background: transparent;
-            transition: all 0.2s ease-in-out;
-        }
-        
-        /* LOGO 3D BEVEL EFEK BIRU TUA (SUDAH DITIPISKAN) */
-        .header-logo-anim {
-            width: var(--ukuran-logo); 
-            max-width: none;
-            transition: all 0.2s ease-in-out;
-            /* Ketebalan bevel & shadow disesuaikan agar tidak terlalu tebal */
-            filter: drop-shadow(0px 2px 0px rgba(0, 31, 84, 0.7)) drop-shadow(0px 4px 6px rgba(0, 31, 84, 0.4)); 
-            transform-origin: center;
-        }
-
-        .header-hero-text {
-            color: #ffffff;
-            font-size: 8pt;
-            text-align: center;
-            margin-top: 10px;
-            
-            background-color: rgba(0, 52, 143, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(10px);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-
-            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-            transform: translateY(0);
-            opacity: 1;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-        .header-hero-text h1 { color: #ffffff; font-size: 11pt; font-weight: 700; line-height: 1.2; margin: 0; }
-        .header-hero-text p { color: #ffffff; font-size: 9pt; font-weight: 500; margin: 2px 0 0 0; }
-
-        .header-text-scrolled {
-            opacity: 0; color: #ffffff; font-size: 10px; white-space: nowrap;
-            background-color: rgba(0, 52, 143, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(8px);
-            transition: opacity 0.2s ease-in-out; display: none; margin-left: 0.5px;
-        }
-        .header-text-scrolled strong { font-weight: 700; font-size: 13px; }
-
-        .header-fixed-container.scrolled {
-            background: var(--warna-bg-header-scrolled);
-            padding-top: 10px; padding-bottom: 10px;
-            flex-direction: row; padding-left: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        /* Saat discroll, bevel logo makin ditipiskan */
-        .header-fixed-container.scrolled .header-logo-anim {
-            width: var(--ukuran-logo-scrolled); 
-            filter: drop-shadow(0px 1px 0px rgba(0, 31, 84, 0.2)) drop-shadow(0px 2px 3px rgba(0, 31, 84, 0.2));
-            margin-bottom: 0;
-        }
-
-        .header-fixed-container.scrolled .header-hero-text { opacity: 0; transform: translateY(-10px); position: absolute; pointer-events: none; }
-        .header-fixed-container.scrolled .header-text-scrolled { opacity: 1; display: block; }
-
-        .spacer-header { height: 190px; width: 100%; position: relative; z-index: 2; }
         svg { display: inline-block; vertical-align: middle; }
-
         @keyframes fadeInIframe { to { opacity: 1; } }
         .yt-iframe-delayed { opacity: 0; animation: fadeInIframe 0.5s 1.2s forwards; }
 
-        .section-title-neumorph {
-            background-color: rgba(229, 229, 229, 0.85); backdrop-filter: blur(1px); color: #383838;
-            padding: 14px 16px; border-radius: 12px; margin: 0 16px 16px 16px;
-            font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;
-            box-shadow: inset 4px 4px 8px rgba(196,196,196,0.6), inset -4px -4px 8px rgba(255,255,255,0.6);
-            letter-spacing: 1px; text-align: center; position: relative; z-index: 2;
-        }
+        .section-title-neumorph { background-color: rgba(229, 229, 229, 0.85); backdrop-filter: blur(1px); color: #383838; padding: 14px 16px; border-radius: 12px; margin: 0 16px 16px 16px; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: inset 4px 4px 8px rgba(196,196,196,0.6), inset -4px -4px 8px rgba(255,255,255,0.6); letter-spacing: 1px; text-align: center; position: relative; z-index: 2; }
         .section-title-neumorph.red-text { color: #383838; }
-
-        .btn-darurat-caution {
-            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-            background-color: #ffcc00;
-            background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 0, 0, 0.1) 10px, rgba(0, 0, 0, 0.1) 20px);
-            color: #383838; border: 1px solid #383838; padding: 10px 18px; border-radius: 12px;
-            font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-            cursor: pointer; width: 80%; max-width: 220px; box-shadow: 4px 4px 0 #7D7D7D;
-            transition: transform 0.1s ease, box-shadow 0.1s ease; margin: 0 auto;
-        }
+        .btn-darurat-caution { display: inline-flex; align-items: center; justify-content: center; gap: 12px; background-color: #ffcc00; background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 0, 0, 0.1) 10px, rgba(0, 0, 0, 0.1) 20px); color: #383838; border: 1px solid #383838; padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; width: 80%; max-width: 220px; box-shadow: 4px 4px 0 #7D7D7D; transition: transform 0.1s ease, box-shadow 0.1s ease; margin: 0 auto; }
         .btn-darurat-caution:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #383838; }
-        
+
+        /* EM Modal */
         .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 2000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
         .em-modal-overlay.active { opacity: 1; pointer-events: auto; }
         .em-modal-content { background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(15px); transition: transform 0.3s ease; }
@@ -244,47 +161,24 @@
         .emergency-item.wa { border-left: 5px solid #22c55e; }
 
         /* --- SLIDER BANNER & ACCORDION --- */
-        .slider-wrapper-accordion { position: relative; z-index: 2; width: 100%; }
-        /* Tombol Toggle Warna Kontras (Oranye) dengan Shadow */
-        .slider-toggle-btn {
-            background: #61B5FF; 
-            color: #ffffff; 
-            width: 38px; height: 38px;
-            border-radius: 50%; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            border: none;
-            margin: 0 auto;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(255, 87, 34, 0.4);
-        }
-        .slider-toggle-btn:hover { background: #99CFFF; transform: scale(1.05); box-shadow: 0 6px 14px rgba(255, 87, 34, 0.5); }
+        .slider-wrapper-accordion { position: relative; z-index: 2; width: 100%; margin-bottom: 20px; }
+        .slider-toggle-wrapper { display: flex; justify-content: var(--posisi-tombol-gulung); padding: 0 11px; margin-bottom: 5px; }
+        
+        .slider-toggle-btn { background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); color: #A3A2A2; width: auto; height: auto; border-radius: 50%; padding: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.6); transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .slider-toggle-btn:hover { background: rgba(255, 255, 255, 0.6); color: #7D7D7D; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .slider-toggle-btn:active { transform: scale(0.95); }
         
-        .slider-section { 
-            background-color: transparent; padding: 0; position: relative; margin-top: var(--jarak-atas-slider);
-            max-height: 500px; overflow: hidden;
-            transition: max-height 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            opacity: 1;
-        }
-        .slider-section.collapsed { max-height: 0; margin-top: 0; opacity: 0; pointer-events: none; }
+        .slider-section { background: transparent; border-radius: 0; box-shadow: none; padding: 0; position: relative; margin-top: var(--jarak-atas-slider); max-height: 500px; overflow: hidden; transition: max-height 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out; opacity: 1; }
+        .slider-section.collapsed { max-height: 0; margin-top: 0; opacity: 0; pointer-events: none; padding: 0; }
         .slider-container { position: relative; padding: 0 !important; }
-        .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 16px; padding: 10px 5% 20px 5%; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
+        
+        .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 12px; padding: 0 5%; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
         .ps-slider-container::-webkit-scrollbar { display: none; }
-        .slide { flex: 0 0 90%; width: 90%; aspect-ratio: 16 / 9; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-color: #ffffff; cursor: pointer; }
+        .slide { flex: 0 0 100%; width: 100%; aspect-ratio: 16 / 9; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-color: #ffffff; cursor: pointer; }
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
-        .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 600; z-index:-1;}
+        .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 500; z-index:-1;}
 
-        .slider-nav-btn {
-            position: absolute; top: 48%; transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(4px);
-            border: none; width: 34px; height: 34px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            color: #1155CC; z-index: 10; transition: all 0.2s ease; opacity: 0.9;
-        }
+        .slider-nav-btn { position: absolute; top: 48%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(4px); border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); color: #1155CC; z-index: 10; transition: all 0.2s ease; opacity: 0.9; }
         .slider-nav-btn:active { transform: translateY(-50%) scale(0.9); opacity: 1; }
         .slider-nav-btn svg { width: 18px; height: 18px; stroke-width: 2.5; }
         .prev-btn { left: 24px; }
@@ -301,20 +195,11 @@
 
         /* --- KOTAK KAS --- */
         .hero-kas-container { padding: 0 16px 20px 16px; width: 100%; z-index: 2; position: relative; } 
-        .kas-card.new-kas-design { 
-            background: rgba(17, 85, 204, 100); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            color: #ffffff; border-radius: 18px; padding: 14px 16px; 
-            display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); 
-            position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .kas-card.new-kas-design::before { 
-            content: ''; position: absolute; top: -40px; right: -40px; width: 150px; height: 150px; border-radius: 50%; 
-            background: rgba(255, 255, 255, 0.1); pointer-events: none; 
-        }
+        .kas-card.new-kas-design { background: rgba(17, 85, 204, 100); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: #ffffff; border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .kas-card.new-kas-design::before { content: ''; position: absolute; top: -40px; right: -40px; width: 150px; height: 150px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); pointer-events: none; }
         .kas-weather-top { display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 10px; margin-bottom: 12px; width: 100%; z-index: 2; }
         .welcome-text-container { width: 100%; text-align: center; display: flex; justify-content: center; }
         .static-welcome { font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 0.3px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
-
         .kas-body-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2; }
         .kas-left { display: flex; flex-direction: column; justify-content: center; gap: 6px; flex: 1.1; }
         .calendar-display { display: flex; align-items: flex-start; gap: 8px; }
@@ -327,11 +212,9 @@
         .clock-display .clock-text { font-size: 11.5px; font-weight: 500; color: #e2e8f0; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .kas-right { display: flex; flex-direction: column; align-items: flex-end; flex: 0.9; text-align: right; }
         .saldo-label { font-size: 11px; font-weight: 500; line-height: 1; margin-bottom: 6px; color: #FFFFFF; display: flex; align-items: center; justify-content: flex-end; gap: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        
         @keyframes blinkDot { 0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(204, 255, 0, 0.8); transform: scale(1); } 50% { opacity: 0.4; box-shadow: 0 0 2px rgba(204, 255, 0, 0.2); transform: scale(0.85); } }
         .saldo-dot { width: 7px; height: 7px; background-color: #ccff00; border-radius: 50%; animation: blinkDot 1.5s infinite ease-in-out; }
         .saldo-value { font-size: 12pt; font-weight: 600; line-height: 1; margin-bottom: 0; color: #ccff00; text-shadow: 0 1px 3px rgba(0,0,0,0.4); } 
-        
         .kas-action-buttons { display: flex; gap: 10px; margin-top: 14px; z-index: 2; justify-content: center; }
         .btn-kas-small { flex: 1; padding: 4px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(4px); color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
 
@@ -339,61 +222,48 @@
         #navWrapper { padding: 0 16px 20px 16px; position: relative; z-index: 2; }
         .hero-nav-container { width: 100%; }
         .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
-        .nav-item { color: #FFFFFF; text-decoration: none; border-radius: 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.3px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; padding: 12px 4px; border: none; line-height: 1.2; }
+        .nav-item { color: #FFFFFF; text-decoration: none; border-radius: 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.3px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; padding: 12px 4px; border: none; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .nav-item:active { transform: scale(0.95); }
-        .nav-item svg { width: 24px; height: 24px; margin-bottom: 8px; display: block; stroke: currentColor; stroke-width: 2 !important; }
+        .nav-item svg { width: 24px; height: 24px; margin-bottom: 8px; display: block; stroke: currentColor; stroke-width: 2 !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
         .nav-item span { display: block; }
-            
         .btn-home-active { background: #64748b !important; box-shadow: none !important; cursor: default !important; pointer-events: none; }
         
+        /* Modal Keuangan */
         .keuangan-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 16px; }
         .keuangan-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .keuangan-modal-box { width: 100%; max-width: 480px; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); overflow: hidden; transform: translateY(20px); transition: transform 0.3s ease; display: flex; flex-direction: column; }
+        .keuangan-modal-box { width: 100%; max-width: 400px; background: #ffffff; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); overflow: hidden; transform: translateY(20px); transition: transform 0.3s ease; display: flex; flex-direction: column; }
         .keuangan-modal-overlay.active .keuangan-modal-box { transform: translateY(0); }
-        .keuangan-header { background: #1155CC; padding: 20px 24px; color: #fff; position: relative; }
-        .keuangan-header h2 { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
-        .keuangan-header p { font-size: 12px; color: #FFFFFF; margin-top: 4px; font-weight: 400; }
-        .btn-close-keuangan { position: absolute; top: 18px; right: 20px; background: #1155CC; border: 3px solid rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+        .keuangan-header { background: #1155CC; padding: 16px 20px; color: #fff; position: relative; }
+        .keuangan-header h2 { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
+        .keuangan-header p { font-size: 11px; color: #FFFFFF; margin-top: 4px; font-weight: 400; }
+        .btn-close-keuangan { position: absolute; top: 12px; right: 16px; background: #1155CC; border: 2px solid rgba(255,255,255,0.2); width: 28px; height: 28px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, transform 0.2s; }
         .btn-close-keuangan:active { background: rgba(255, 255, 255, 0.25); transform: scale(0.9); }
-        .keuangan-body { padding: 20px 12px; display: flex; flex-direction: column; max-height: 65vh; overflow-y: auto; overflow-x: hidden; }
-        .keuangan-body::-webkit-scrollbar { width: 5px; }
-        .keuangan-body::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
+        .btn-close-keuangan svg { width: 14px; height: 14px; }
+        .keuangan-body { padding: 16px 12px; display: flex; flex-direction: column; max-height: 65vh; overflow-y: auto; overflow-x: hidden; }
         
-        .trx-table-wrapper { width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background-color: #ffffff; border: 1px solid #e2e8f0; overflow: hidden; }
+        .trx-table-wrapper { width: 100%; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background-color: #ffffff; border: 1px solid #e2e8f0; overflow: hidden; }
         .trx-table { width: 100%; border-collapse: collapse; table-layout: auto; }
-        .trx-table th { font-size: 9pt; font-weight: 600; color: #ffffff; padding: 10px 4px; text-align: center; vertical-align: middle; letter-spacing: 0.2px; white-space: nowrap; }
-        .trx-table th svg { width: 12px; height: 12px; margin-right: 2px; }
-        .trx-table td { font-size: 9pt; font-weight: 500; padding: 8px 4px; border-bottom: 1px dashed #e2e8f0; text-align: right; vertical-align: middle; }
+        .trx-table th { font-size: 8pt; font-weight: 600; color: #ffffff; padding: 8px 4px; text-align: center; vertical-align: middle; letter-spacing: 0.2px; white-space: nowrap; }
+        .trx-table th svg { width: 12px; height: 12px; }
+        .trx-table td { font-size: 8pt; font-weight: 500; padding: 6px 4px; border-bottom: 1px dashed #e2e8f0; text-align: right; vertical-align: middle; }
         .trx-table td:first-child { text-align: left; padding-left: 9px; white-space: normal; line-height: 1.3; }
-        .trx-table td:last-child { padding-right: 10px; text-align: right; }
-        .trx-table tr:last-child td { border-bottom: none; }
-        
         .bg-th-deskripsi { background-color: #8b5cf6; width: 35%; }
         .bg-th-masuk     { background-color: #10b981; }
         .bg-th-keluar    { background-color: #ef4444; }
         .bg-th-saldo     { background-color: #3b82f6; }
-
         .trx-td-ket { color: #383838; font-weight: 500; display: block; word-break: break-word; }
-        .trx-td-tgl { font-size: 8pt; font-weight: 400; color: #383838; margin-top: 2px; display: block; }
+        .trx-td-tgl { font-size: 7.5pt; font-weight: 400; color: #383838; margin-top: 2px; display: block; }
         .trx-val-masuk  { color: #10b981; white-space: nowrap; }
         .trx-val-keluar { color: #ef4444; white-space: nowrap; }
         .trx-val-saldo  { color: #2563eb; white-space: nowrap; font-weight: 600; }
 
-        .univ-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none;
-            transition: opacity 0.3s ease, visibility 0.3s; padding: 16px;
-        }
+        .univ-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s; padding: 16px; }
         .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
         .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
         .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
         .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; font-weight: 700; color: #383838; }
         .univ-modal-title { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-        .btn-close-univ:active { background: #fee2e2; }
-        .btn-close-univ svg { width: 18px; height: 18px; }
         .univ-modal-body { flex: 1; width: 100%; height: 100%; background: #f1f5f9; position: relative; }
         .univ-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
 
@@ -438,23 +308,22 @@
         @keyframes pulse-status { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
         @keyframes pulse-status-fast { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.3); opacity: 1; } }
 
-        .info-card-footer { padding: 12px 16px; display: flex; gap: 10px; background-color: transparent; align-items: center; }
-        .btn-footer-action { flex: 1; padding: 10px 10px; border-radius: 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; border: none; transition: all 0.2s ease; }
-        .btn-footer-action svg { width: 14px; height: 14px; }
+        /* Revisi Ikon & Tombol Footer Agenda Dikecilkan dan diletakkan ke tepi */
+        .info-card-footer { padding: 12px 16px; display: flex; gap: 10px; background-color: transparent; align-items: center; justify-content: space-between; }
+        .btn-footer-action { padding: 8px 12px; border-radius: 10px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; border: none; transition: all 0.2s ease; width: 48%; }
         .btn-doc-footer { background-color: #dbeafe; color: #1e40af; box-shadow: 0 2px 6px rgba(30, 64, 175, 0.15); }
         .btn-share-wa { background-color: #dcfce7; color: #166534; box-shadow: 0 2px 6px rgba(22, 101, 52, 0.15); }
+        .btn-footer-action svg { width: 14px; height: 14px; }
         
         .btn-list-trigger { display: flex; width: 60%; margin: 20px auto 10px auto; text-align: center; background-color: #FFFFFF; color: #1155CC; border: none; padding: 12px 14px; border-radius: 20px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(17, 85, 204, 0.15); justify-content: center; align-items: center; gap: 8px; transition: all 0.2s; }
 
         .list-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 16px; }
         .list-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .list-modal-sheet { width: 100%; max-width: 460px; background-color: #ffffff; border-radius: 24px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.3); overflow: hidden; transform: translateY(20px); transition: transform 0.3s ease; display: flex; flex-direction: column; }
+        .list-modal-sheet { width: 100%; max-width: 460px; background-color: #ffffff; border-radius: 24px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.3); overflow: hidden; transform: translateY(20px); transition: transform 0.3s ease; }
         .list-modal-overlay.active .list-modal-sheet { transform: translateY(0); }
         .list-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; background-color: #ffffff; }
         .list-modal-header h2 { font-size: 16px; font-weight: 700; color: #383838; }
         .btn-close-sheet { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-        .btn-close-sheet:active { background: #fee2e2; }
-        .btn-close-sheet svg { width: 18px; height: 18px; }
         .list-modal-body { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; background-color: #ffffff; }
 
         .arsip-item { background-color: #ffffff; border: 1px solid #cbd5e1; padding: 14px 16px; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); position: relative; transition: all 0.2s; }
@@ -468,7 +337,6 @@
         .agenda-detail-overlay.active .agenda-detail-box { transform: translateY(0); }
         .btn-close-agenda { position: absolute; top: -15px; right: -10px; background: #ef4444; color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10011; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); transition: background 0.2s; }
         .btn-close-agenda:hover { background: #b91c1c; }
-        .btn-close-agenda svg { width: 18px; height: 18px; }
 
         /* MODAL HASIL KEGIATAN & LIGHTBOX */
         .doc-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: flex-start; z-index: 10030; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; overflow-y: auto; padding: 40px 16px; }
@@ -499,30 +367,30 @@
         .news-nav-controls { width: 100%; display: flex; justify-content: center; gap: 16px; padding-bottom: 15px; margin-top: -5px; }
         .news-btn-bottom { background: #ffffff; border: 1px solid #cbd5e1; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.08); color: #1155CC; transition: all 0.2s ease; }
         .news-btn-bottom:active { transform: scale(0.9); background-color: #e8f0fe; }
-        .news-btn-bottom svg { width: 20px; height: 20px; stroke-width: 2.5; }
 
+        /* Modal Berita Dikecilkan */
         .article-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); display: flex; justify-content: center; align-items: flex-start; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; overflow-y: auto; padding: 60px 16px 30px 16px; }
         .article-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .article-modal-wrapper { width: 100%; max-width: 440px; background-color: #ffffff; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); overflow: hidden; margin: auto; padding-bottom: 10px; }
-        .btn-close-article { position: fixed; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: background-color 0.2s; }
+        .article-modal-wrapper { width: 100%; max-width: 400px; background-color: #ffffff; border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); overflow: hidden; margin: auto; padding-bottom: 10px; }
+        .btn-close-article { position: fixed; top: 12px; right: 12px; background: rgba(0, 0, 0, 0.6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: background-color 0.2s; }
+        .btn-close-article svg { width: 14px; height: 14px; }
         .btn-close-article:hover { background: rgba(0, 0, 0, 0.8); }
-        .article-content-area { padding: 24px 20px 10px 20px; display: flex; flex-direction: column; }
-        .article-title-detail { font-size: 18px; font-weight: 600; line-height: 1.4; color: #1155CC; margin-bottom: 10px; text-align: center; }
-        .article-meta { font-size: 11.5px; color: #383838; font-weight: 500; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.3px; display:flex; align-items:center; justify-content: center; gap:6px;}
-        .article-meta svg { width: 12px; height: 12px; }
-        .article-body-text { font-size: 10pt; color: #383838; line-height: 1.6; white-space: pre-line; word-break: break-word; font-weight: 400; }
+        .article-content-area { padding: 20px 16px 10px 16px; display: flex; flex-direction: column; }
+        .article-title-detail { font-size: 16px; font-weight: 600; line-height: 1.4; color: #1155CC; margin-bottom: 8px; text-align: center; }
+        .article-meta { font-size: 11px; color: #383838; font-weight: 500; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.3px; display:flex; align-items:center; justify-content: center; gap:6px;}
+        .article-body-text { font-size: 9.5pt; color: #383838; line-height: 1.6; white-space: pre-line; word-break: break-word; font-weight: 400; }
         .article-body-text a { color: #1155CC; text-decoration: none; pointer-events: none; cursor: default; }
         .article-body-text a strong, .article-body-text a span { pointer-events: auto; cursor: pointer; }
         .article-body-text img { width: 100% !important; height: auto !important; border-radius: 12px; margin: 12px 0; display: block; pointer-events: none; }
 
         .sub-footer-section { padding: 0 16px; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top:10px; position: relative; z-index: 2;}
         .himbauan-box { width: 100%; background: transparent; border: none; padding: 0; text-align: center; margin-top: 5px; }
-        .himbauan-text { color: #383838; font-size: 13px; font-weight: 500; line-height: 1.4; text-transform: none; min-height: 48px; display: flex; align-items: center; justify-content: center; text-align: center; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
+        .himbauan-text { color: #ffffff; font-size: 13px; font-weight: 600; line-height: 1.4; text-transform: none; min-height: 48px; display: flex; align-items: center; justify-content: center; text-align: center; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
         
-        .main-footer { width: 100%; margin: 15px auto 0 auto; padding: 16px 16px; text-align: center; border-top: 1px solid rgba(0,0,0,0.1); display: block; position: relative; z-index: 2; }
-        .footer-line { color: #383838; line-height: 1.3; margin-bottom: 2px; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
-        .f-bold { font-size: 11px; font-weight: 500; }
-        .f-reg { font-size: 10px; font-weight: 400; }
+        .main-footer { width: 100%; margin: 10px auto 0 auto; padding: 16px 16px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
+        .footer-line { color: #ffffff; line-height: 1.3; margin-bottom: 2px; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+        .f-bold { font-size: 11px; font-weight: 600; }
+        .f-reg { font-size: 10px; font-weight: 500; }
 
     </style>
 </head>
@@ -530,389 +398,401 @@
 
 <div class="app-wrapper">
 
-    <!-- HEADER FIXED BERISI LOGO DAN TEKS -->
+    <!-- HEADER FIXED BERISI LOGO KECIL (GARIS ATAS) -->
     <header class="header-fixed-container" id="mainHeader">
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-anim">
-        
-        <!-- Teks Tampil Besar di Depan (Hilang saat scroll) -->
-        <div class="header-hero-text">
-            <strong>RT 2 Online</strong> | Informasi Warga RT 2 Pasekan Lor
-        </div>
-
-        <!-- Teks Tampil Kecil di Kanan (Muncul saat scroll) -->
-        <div class="header-text-scrolled"><strong>RT 2 Online</strong> | Informasi Warga RT 2 Pasekan Lor</div>
+        <div class="header-text-scrolled"><strong>RT 2 Online</strong> | Informasi Warga RT 2-RW 3, Pasekan Lor</div>
     </header>
 
-    <!-- Spacer untuk mendorong konten ke bawah area header yang mengambang -->
-    <div class="spacer-header"></div>
+    <!-- HEADER ART TERPISAH (GUNUNG, GUNUNGAN, BINGKAI KAYU) -->
+    <div class="header-art-wrapper" id="headerArt">
+        
+        <div class="art-gunungan-container">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjP3ru-IWOsGY0XlDZroRXlZEI_HVOa1AYMUUTlWal2JXhPHYxJdjlBHnkL66Q7H8UZeXGV_kLvZvCpLWg1YcSeMY5rEgawpSHhzNaKqzcz16y6D1XGhfEx2I5eh0-0y2BhqevhxUY5o9Ataz9IgChES9-cgQpwyqCGe6DBUS0UVIhaWlY2PbG_-fZVdqM/s1600/Gunungan%20(web%20small).png" class="art-gunungan left" alt="Gunungan Kiri">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjP3ru-IWOsGY0XlDZroRXlZEI_HVOa1AYMUUTlWal2JXhPHYxJdjlBHnkL66Q7H8UZeXGV_kLvZvCpLWg1YcSeMY5rEgawpSHhzNaKqzcz16y6D1XGhfEx2I5eh0-0y2BhqevhxUY5o9Ataz9IgChES9-cgQpwyqCGe6DBUS0UVIhaWlY2PbG_-fZVdqM/s1600/Gunungan%20(web%20small).png" class="art-gunungan right" alt="Gunungan Kanan">
+        </div>
 
-    <div class="em-modal-overlay" id="emModalOverlay">
-        <div class="em-modal-content">
-            <div class="em-modal-header">
-                <span class="em-modal-title">Nomor Kontak Darurat</span>
-                <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div class="emergency-list">
-                <a href="tel:110" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                </a>
-                <a href="tel:085173171912" target="blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><line x1="8" y1="9.5" x2="12" y2="9.5"/><line x1="10" y1="7.5" x2="10" y2="11.5"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">Ambulan PKU Gamping</span><span class="emergency-value">0851 7317 1912</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                </a>
-                <a href="tel:02742821346" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-3.3 0-6 2.7-6 6 0 5 6 14 6 14s6-9 6-14c0-3.3-2.7-6-6-6z"/><path d="M12 12c-1.7 0-3-1.3-3-3s1.3-3 3-3-3 1.3 3 3-1.3 3-3 3z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">Damkar Godean Sleman</span><span class="emergency-value">(0274) 2821346</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                </a>
-                <a href="https://chat.whatsapp.com/31APr2lKc826zA46hGzoZK?s=sh&p=a&mlu=4&ilr=0" target="_blank" class="emergency-item wa">
-                    <div class="logo-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">WhatsApp</span><span class="emergency-value">GRUP WHATSAPP RT 2</span></div>
-                </a>
-            </div>
+        <div class="art-frame-container">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9-nZXgnRRIwpLvLIHJGI83maYdK4gTMazokEt1PKCSJ-JbuwuNOW-WAASSmTMfg4RbAV_m6kDxZKP3z70pFEK8eZU7OrKPORCqoEq1dG9CM8CPlQSG7UMYY1gwK5bODiAcjn0pm-xcQGzjF8uo5WCRO07Gi-Dl6bYWLQA5JDTV3JXAIP5Bg9o59wDLgo/s1600/Elips%20Kayu%20(web%20small).png" class="art-frame" alt="Bingkai Kayu">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8eSMNHnUn8L-YgkkN9FICx7uSgnlO7Z3WcO6444IMFh_H6xW9xTVr3SPGjg92i2n5YSA4cd6EYvOnTe-zLxl3_nh7gMUjAmrBEBM6zmhwn-0RnlV2Herpa4FRo_A-D5tb0fcod2boBwa25Txp9mdrVWPxJSHZjQI27qf-DXJi7NyjeQRVcMoRbJKWUHc/s1600/Thumb%20-%20Biru.png" class="art-logo" alt="Logo RT 2">
         </div>
     </div>
 
-    <!-- ACCORDION SLIDER BANNER -->
-    <div class="slider-wrapper-accordion">
-        <div style="text-align: center; margin-bottom: 5px;">
-            <button class="slider-toggle-btn" id="toggleSliderBtn" title="Tutup/Buka Banner">
-                <svg id="sliderToggleIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
-            </button>
+
+    <!-- MAIN CONTENT BOARD -->
+    <div class="main-content-board">
+
+        <!-- EM Modal -->
+        <div class="em-modal-overlay" id="emModalOverlay">
+            <div class="em-modal-content">
+                <div class="em-modal-header">
+                    <span class="em-modal-title">Nomor Kontak Darurat</span>
+                    <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div class="emergency-list">
+                    <a href="tel:110" target="_blank" class="emergency-item">
+                        <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                        <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
+                        <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                    </a>
+                    <a href="tel:085173171912" target="blank" class="emergency-item">
+                        <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><line x1="8" y1="9.5" x2="12" y2="9.5"/><line x1="10" y1="7.5" x2="10" y2="11.5"/></svg></div>
+                        <div class="contact-details"><span class="emergency-label">Ambulan PKU Gamping</span><span class="emergency-value">0851 7317 1912</span></div>
+                        <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                    </a>
+                    <a href="tel:02742821346" target="_blank" class="emergency-item">
+                        <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-3.3 0-6 2.7-6 6 0 5 6 14 6 14s6-9 6-14c0-3.3-2.7-6-6-6z"/><path d="M12 12c-1.7 0-3-1.3-3-3s1.3-3 3-3-3 1.3 3 3-1.3 3-3 3z"/></svg></div>
+                        <div class="contact-details"><span class="emergency-label">Damkar Godean Sleman</span><span class="emergency-value">(0274) 2821346</span></div>
+                        <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                    </a>
+                    <a href="https://chat.whatsapp.com/31APr2lKc826zA46hGzoZK?s=sh&p=a&mlu=4&ilr=0" target="_blank" class="emergency-item wa">
+                        <div class="logo-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div>
+                        <div class="contact-details"><span class="emergency-label">WhatsApp</span><span class="emergency-value">GRUP WHATSAPP RT 2</span></div>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="slider-section" id="sliderSection">
-            <div class="slider-container">
-                <div class="status-msg" id="ps-status-loading">Memuat konten slider banner</div>
-                <div class="ps-slider-container" id="ps-slider-track"></div>
+
+        <!-- ACCORDION SLIDER BANNER -->
+        <div class="slider-wrapper-accordion">
+            <div class="slider-toggle-wrapper">
+                <button class="slider-toggle-btn" id="toggleSliderBtn" title="Tutup/Buka Banner">
+                    <svg id="sliderToggleIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                </button>
+            </div>
+            <div class="slider-section" id="sliderSection">
+                <div class="slider-container">
+                    <div class="status-msg" id="ps-status-loading">Memuat konten slider banner</div>
+                    <div class="ps-slider-container" id="ps-slider-track"></div>
+                    
+                    <button class="slider-nav-btn prev-btn" id="psPrevBtn" aria-label="Previous">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <button class="slider-nav-btn next-btn" id="psNextBtn" aria-label="Next">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KOTAK KAS -->
+        <section class="hero-kas-container" id="kotakKas">
+            <div class="kas-card new-kas-design">
+                <div class="kas-weather-top">
+                    <div class="welcome-text-container">
+                        <span class="static-welcome" id="liveWeather">Selamat Datang Warga RT 2 Pasekan Lor</span>
+                    </div>
+                </div>
+                <div class="kas-body-wrapper">
+                    <div class="kas-left">
+                        <div class="calendar-display">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            <div class="date-block">
+                                <span class="date-day" id="liveDayName">Memuat...</span>
+                                <span class="date-full" id="liveDateFull"></span>
+                            </div>
+                        </div>
+                        <div class="clock-display">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            <span class="clock-text" id="liveClock">00:00 WIB</span>
+                        </div>
+                    </div>
+                    <div class="kas-right">
+                        <div>
+                            <div class="saldo-label">Saldo Kas RT 2 <div class="saldo-dot"></div></div>
+                            <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                <div class="saldo-value" id="saldoKas">Rp...</div>
+                                <button id="toggleSaldoBtn" style="background:none; border:none; color:#ccff00; cursor:pointer; padding: 0; display:flex; align-items:center;" aria-label="Toggle Saldo Visibility">
+                                    <svg id="eyeIconOpen" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <svg id="eyeIconClosed" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
-                <button class="slider-nav-btn prev-btn" id="psPrevBtn" aria-label="Previous">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <div class="kas-action-buttons">
+                    <button class="btn-kas-small btn-kas-trx" onclick="openModalKeuangan()">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Transaksi Terakhir
+                    </button>
+                    <a href="https://docs.google.com/spreadsheets/d/15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68/edit?gid=0#gid=0" target="_blank" class="btn-kas-small btn-kas-detail">
+                        Buku Kas RT 2
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="ps-modal-overlay" id="psModalOverlay">
+            <div class="ps-modal-content">
+                <button class="ps-close-btn" id="psCloseModal" aria-label="Tutup">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
-                <button class="slider-nav-btn next-btn" id="psNextBtn" aria-label="Next">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
+                <div class="ps-modal-body" id="psModalBody"></div>
             </div>
         </div>
-    </div>
 
-    <!-- KOTAK KAS -->
-    <section class="hero-kas-container" id="kotakKas">
-        <div class="kas-card new-kas-design">
-            <div class="kas-weather-top">
-                <div class="welcome-text-container">
-                    <span class="static-welcome" id="liveWeather">Selamat Datang Warga RT 2 Pasekan Lor</span>
+        <!-- MENU UTAMA GRID -->
+        <div id="navWrapper">
+            <nav class="hero-nav-container" id="mainNav">
+                <div class="nav-grid">
+                    <a class="nav-item btn-home-active" title="Home">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span>HOME</span>
+                    </a>
+                    <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        <span>PENGURUS</span>         
+                    </a>
+                    <a href="inventaris" class="nav-item btn-inventaris" title="Inventaris">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                        <span>INVENTARIS</span>
+                    </a>
+                    <a href="scanner" class="nav-item btn-scanner" title="Scanner">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
+                        <span>SCANNER</span>
+                    </a>
+                    <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        <span>TATA TERTIB</span>
+                    </a>
+                    <a href="galeri" class="nav-item btn-galeri" title="Galeri">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>GALERI</span>
+                    </a>
+                    <a href="warga" class="nav-item btn-warga" title="Warga">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                        <span>WARGA</span>
+                    </a>
+                    <a href="agustusan" class="nav-item btn-disabled" title="Agustusan">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal-icon lucide-medal"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
+                        <span>AGUSTUSAN</span>
+                    </a>
+                    <a href="ronda" class="nav-item btn-ronda" title="Ronda">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>RONDA</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Modal Keuangan -->
+        <div class="keuangan-modal-overlay" id="keuanganModalOverlay" onclick="closeModalKeuanganOutside(event)">
+            <div class="keuangan-modal-box" onclick="event.stopPropagation()">
+                <div class="keuangan-header">
+                    <h2>Transaksi Terakhir</h2>
+                    <p>3 transaksi dibulan terakhir</p>
+                    <button class="btn-close-keuangan" onclick="closeModalKeuangan()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div class="keuangan-body" id="keuanganListContainer">
+                    <div class="loading-text" style="color: #666;">Menarik data dari Spreadsheet...</div>
                 </div>
             </div>
-            <div class="kas-body-wrapper">
-                <div class="kas-left">
-                    <div class="calendar-display">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        <div class="date-block">
-                            <span class="date-day" id="liveDayName">Memuat...</span>
-                            <span class="date-full" id="liveDateFull"></span>
-                        </div>
-                    </div>
-                    <div class="clock-display">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                        <span class="clock-text" id="liveClock">00:00 WIB</span>
-                    </div>
+        </div>
+
+        <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
+            <div class="univ-modal-box" onclick="event.stopPropagation()">
+                <div class="univ-modal-header">
+                    <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
+                    <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    </button>
                 </div>
-                <div class="kas-right">
-                    <div>
-                        <div class="saldo-label">Saldo Kas RT 2 <div class="saldo-dot"></div></div>
-                        <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
-                            <div class="saldo-value" id="saldoKas">Rp...</div>
-                            <button id="toggleSaldoBtn" style="background:none; border:none; color:#ccff00; cursor:pointer; padding: 0; display:flex; align-items:center;" aria-label="Toggle Saldo Visibility">
-                                <svg id="eyeIconOpen" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                <svg id="eyeIconClosed" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                            </button>
-                        </div>
-                    </div>
+                <div class="univ-modal-body">
+                    <iframe id="univModalIframe" src="" loading="lazy" allowfullscreen></iframe>
                 </div>
+            </div>
+        </div>
+
+
+        <!-- ==================== BAGIAN AGENDA WARGA ==================== -->
+        <div class="section-title-neumorph">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
+            KEGIATAN WARGA RT 2
+        </div>
+
+        <div class="info-dashboard-container">
+            <div class="cards-list" id="infoCardsContainer">
+                <div class="loading-text" style="color: #ffffff;">Menyinkronkan info agenda...</div>
             </div>
             
-            <div class="kas-action-buttons">
-                <button class="btn-kas-small btn-kas-trx" onclick="openModalKeuangan()">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Transaksi Terakhir
+            <button class="btn-list-trigger" id="btnOpenListModal" onclick="openListModal()" style="display: none;">
+                Arsip Kegiatan Lainnya
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+
+        <!-- Modal List untuk menampilkan Teks Arsip -->
+        <div class="list-modal-overlay" id="listModal" onclick="closeListModalOutside(event)">
+            <div class="list-modal-sheet" onclick="event.stopPropagation()">
+                <div class="list-modal-header">
+                    <h2>Arsip Kegiatan Terdahulu</h2>
+                    <button class="btn-close-sheet" onclick="closeListModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div class="list-modal-body" id="modalCardsListContainer"></div>
+            </div>
+        </div>
+
+        <!-- Modal Detail Kegiatan -->
+        <div class="agenda-detail-overlay" id="agendaDetailModal" onclick="closeAgendaDetailOutside(event)">
+            <div class="agenda-detail-box" onclick="event.stopPropagation()">
+                <button class="btn-close-agenda" onclick="closeAgendaDetail()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
-                <a href="https://docs.google.com/spreadsheets/d/15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68/edit?gid=0#gid=0" target="_blank" class="btn-kas-small btn-kas-detail">
-                    Buku Kas RT 2
+                <div id="agendaDetailContent"></div>
+            </div>
+        </div>
+
+        <!-- Lightbox Hasil Kegiatan & Info Usaha Gambar -->
+        <div class="doc-modal-overlay" id="docModalOverlay" onclick="closeDocModalOutside(event)">
+            <button class="doc-btn-close-icon" onclick="closeDocModal()">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+            <div class="doc-modal-wrapper" id="docImagesContainer"></div>
+        </div>
+
+
+        <!-- ==================== BAGIAN INVENTARIS ==================== -->
+        <div class="section-title-neumorph" style="background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%); color: #ffffff; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3); border: none;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+            INVENTARIS RT 2
+        </div>
+
+        <div class="info-dashboard-container">
+            <div class="info-card" style="padding: 16px; display: flex; flex-direction: column; gap: 14px; background: linear-gradient(135deg, rgba(224, 242, 254, 0.95) 0%, rgba(186, 230, 253, 0.95) 100%); border: 1px solid rgba(255,255,255,0.5);">
+                
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <span style="font-size: 14px; font-weight: 700; color: #0c4a6e;">Data Aset Inventaris RT 2</span>
+                    <span style="font-size: 11px; color: #0369a1; line-height: 1.4;">Berdasarkan data: 7 September 2025</span>
+                </div>
+
+                <div style="overflow-x: auto; border-radius: 8px; border: 1px solid #7dd3fc; background-color: rgba(255, 255, 255, 0.7);">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
+                        <thead>
+                            <tr style="background-color: rgba(255, 255, 255, 0.9); color: #0c4a6e; border-bottom: 2px solid #7dd3fc;">
+                                <th style="padding: 8px 10px; font-weight: 600;">Nama Barang</th>
+                                <th style="padding: 8px 10px; font-weight: 600; text-align: center;">Jumlah</th>
+                                <th style="padding: 8px 10px; font-weight: 600;">Kondisi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #bae6fd;">
+                                <td style="padding: 8px 10px; color: #383838; font-weight: 500;">Kursi Baru (Olymplast)</td>
+                                <td style="padding: 8px 10px; text-align: center; color: #383838;">100</td>
+                                <td style="padding: 8px 10px; color: #059669; font-weight: 500;">Baik</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #bae6fd;">
+                                <td style="padding: 8px 10px; color: #383838; font-weight: 500;">Tikar (Panjang)</td>
+                                <td style="padding: 8px 10px; text-align: center; color: #383838;">4</td>
+                                <td style="padding: 8px 10px; color: #059669; font-weight: 500;">Baik</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #bae6fd;">
+                                <td style="padding: 8px 10px; color: #383838; font-weight: 500;">Kompor (Rinnai)</td>
+                                <td style="padding: 8px 10px; text-align: center; color: #383838;">1</td>
+                                <td style="padding: 8px 10px; color: #d97706; font-weight: 500;">Servis</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 10px; color: #383838; font-weight: 500;">Motor Tossa</td>
+                                <td style="padding: 8px 10px; text-align: center; color: #383838;">1</td>
+                                <td style="padding: 8px 10px; color: #d97706; font-weight: 500;">Servis</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a href="inventaris" class="btn-inventaris-more" style="background: #0284c7; color: #ffffff; text-decoration: none; padding: 10px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); transition: all 0.3s ease;">
+                    Data Inventaris Selengkapnya
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
             </div>
         </div>
-    </section>
 
-    <div class="ps-modal-overlay" id="psModalOverlay">
-        <div class="ps-modal-content">
-            <button class="ps-close-btn" id="psCloseModal" aria-label="Tutup">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <div class="ps-modal-body" id="psModalBody"></div>
-        </div>
-    </div>
 
-    <!-- MENU UTAMA GRID -->
-    <div id="navWrapper">
-        <nav class="hero-nav-container" id="mainNav">
-            <div class="nav-grid">
-                <a class="nav-item btn-home-active" title="Home">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    <span>HOME</span>
-                </a>
-                <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>PENGURUS</span>         
-                </a>
-                <a href="inventaris" class="nav-item btn-inventaris" title="Inventaris">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    <span>INVENTARIS</span>
-                </a>
-                <a href="scanner" class="nav-item btn-scanner" title="Scanner">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
-                    <span>SCANNER</span>
-                </a>
-                <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    <span>TATA TERTIB</span>
-                </a>
-                <a href="galeri" class="nav-item btn-galeri" title="Galeri">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    <span>GALERI</span>
-                </a>
-                <a href="warga" class="nav-item btn-warga" title="Warga">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                    <span>WARGA</span>
-                </a>
-                <a href="agustusan" class="nav-item btn-disabled" title="Agustusan">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal-icon lucide-medal"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
-                    <span>AGUSTUSAN</span>
-                </a>
-                <a href="ronda" class="nav-item btn-ronda" title="Ronda">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span>RONDA</span>
-                </a>
+        <!-- ==================== BAGIAN BERITA ==================== -->
+        <div class="section-title-neumorph red-text" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5M18 10h-8"/>
+                </svg>
+                BERITA WARGA RT 2
             </div>
-        </nav>
-    </div>
+        </div>
 
-    <!-- Modal Keuangan -->
-    <div class="keuangan-modal-overlay" id="keuanganModalOverlay" onclick="closeModalKeuanganOutside(event)">
-        <div class="keuangan-modal-box" onclick="event.stopPropagation()">
-            <div class="keuangan-header">
-                <h2>Transaksi Terakhir</h2>
-                <p>3 transaksi dibulan terakhir</p>
-                <button class="btn-close-keuangan" onclick="closeModalKeuangan()">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <div class="news-dashboard-container">
+            <div class="news-slider-container" id="newsCardsContainer">
+                <div class="loading-text" style="color: #ffffff;">Menyinkronkan berita warga...</div>
+            </div>
+            
+            <div class="news-nav-controls" id="newsNavContainer" style="display: none;">
+                <button class="news-btn-bottom" id="newsPrevBtn" aria-label="Previous">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="news-btn-bottom" id="newsNextBtn" aria-label="Next">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
             </div>
-            <div class="keuangan-body" id="keuanganListContainer">
-                <div class="loading-text">Menarik data dari Spreadsheet...</div>
-            </div>
         </div>
-    </div>
 
-    <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
-        <div class="univ-modal-box" onclick="event.stopPropagation()">
-            <div class="univ-modal-header">
-                <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
-                <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div class="univ-modal-body">
-                <iframe id="univModalIframe" src="" loading="lazy" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- ==================== BAGIAN AGENDA WARGA ==================== -->
-    <div class="section-title-neumorph">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
-        KEGIATAN WARGA RT 2
-    </div>
-
-    <div class="info-dashboard-container">
-        <div class="cards-list" id="infoCardsContainer">
-            <div class="loading-text">Menyinkronkan info agenda...</div>
-        </div>
-        
-        <button class="btn-list-trigger" id="btnOpenListModal" onclick="openListModal()">
-            Arsip Kegiatan Lainnya
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-    </div>
-
-    <!-- Modal List untuk menampilkan Teks Arsip -->
-    <div class="list-modal-overlay" id="listModal" onclick="closeListModalOutside(event)">
-        <div class="list-modal-sheet" onclick="event.stopPropagation()">
-            <div class="list-modal-header">
-                <h2>Arsip Kegiatan Terdahulu</h2>
-                <button class="btn-close-sheet" onclick="closeListModal()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div class="list-modal-body" id="modalCardsListContainer"></div>
-        </div>
-    </div>
-
-    <!-- Modal Detail Kegiatan -->
-    <div class="agenda-detail-overlay" id="agendaDetailModal" onclick="closeAgendaDetailOutside(event)">
-        <div class="agenda-detail-box" onclick="event.stopPropagation()">
-            <button class="btn-close-agenda" onclick="closeAgendaDetail()">
+        <div class="article-modal-overlay" id="articleModal" onclick="closeArticleModalOutside(event)">
+            <button class="btn-close-article" onclick="closeArticleModal()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
-            <div id="agendaDetailContent"></div>
-        </div>
-    </div>
-
-    <!-- Lightbox Hasil Kegiatan & Info Usaha Gambar -->
-    <div class="doc-modal-overlay" id="docModalOverlay" onclick="closeDocModalOutside(event)">
-        <button class="doc-btn-close-icon" onclick="closeDocModal()">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-        </button>
-        <div class="doc-modal-wrapper" id="docImagesContainer"></div>
-    </div>
-
-
-    <!-- ==================== BAGIAN INVENTARIS ==================== -->
-    <div class="section-title-neumorph" style="background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%); color: #ffffff; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3); border: none;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-            <line x1="12" y1="22.08" x2="12" y2="12"/>
-        </svg>
-        INVENTARIS RT 2
-    </div>
-
-    <div class="info-dashboard-container">
-        <div class="info-card" style="padding: 16px; display: flex; flex-direction: column; gap: 14px; background: linear-gradient(135deg, rgba(224, 242, 254, 0.95) 0%, rgba(186, 230, 253, 0.95) 100%); border: 1px solid rgba(255,255,255,0.5);">
-            
-            <div style="display: flex; flex-direction: column; gap: 4px;">
-                <span style="font-size: 14px; font-weight: 700; color: #0c4a6e;">Data Aset Inventaris RT 2</span>
-                <span style="font-size: 11px; color: #0369a1; line-height: 1.4;">Berdasarkan data: 7 September 2025</span>
+            <div class="article-modal-wrapper" onclick="event.stopPropagation()">
+                <div class="article-content-area">
+                    <h2 class="article-title-detail" id="articleModalTitle"></h2>
+                    <div class="article-meta" id="articleModalMeta"></div>
+                    <div class="article-body-text" id="articleModalBody"></div>
+                </div>
             </div>
+        </div>
 
-            <div style="overflow-x: auto; border-radius: 8px; border: 1px solid #7dd3fc; background-color: rgba(255, 255, 255, 0.7);">
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-                    <thead>
-                        <tr style="background-color: rgba(255, 255, 255, 0.9); color: #0c4a6e; border-bottom: 2px solid #7dd3fc;">
-                            <th style="padding: 8px 10px; font-weight: 600;">Nama Barang</th>
-                            <th style="padding: 8px 10px; font-weight: 600; text-align: center;">Jumlah</th>
-                            <th style="padding: 8px 10px; font-weight: 600;">Kondisi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid #bae6fd;">
-                            <td style="padding: 8px 10px; color: #383838; font-weight: 500;">Kursi Baru (Olymplast)</td>
-                            <td style="padding: 8px 10px; text-align: center; color: #383838;">100</td>
-                            <td style="padding: 8px 10px; color: #059669; font-weight: 500;">Baik</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #bae6fd;">
-                            <td style="padding: 8px 10px; color: #383838; font-weight: 500;">Tikar (Panjang)</td>
-                            <td style="padding: 8px 10px; text-align: center; color: #383838;">4</td>
-                            <td style="padding: 8px 10px; color: #059669; font-weight: 500;">Baik</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #bae6fd;">
-                            <td style="padding: 8px 10px; color: #383838; font-weight: 500;">Kompor (Rinnai)</td>
-                            <td style="padding: 8px 10px; text-align: center; color: #383838;">1</td>
-                            <td style="padding: 8px 10px; color: #d97706; font-weight: 500;">Servis</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 8px 10px; color: #383838; font-weight: 500;">Motor Tossa</td>
-                            <td style="padding: 8px 10px; text-align: center; color: #383838;">1</td>
-                            <td style="padding: 8px 10px; color: #d97706; font-weight: 500;">Servis</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- Area Footer Revised -->
+        <div class="sub-footer-section">
+            <div class="himbauan-box">
+                <div class="himbauan-text" id="himbauanAnim">Mari Kita Jaga Keamanan, Ketertiban, Kebersihan dan Kenyamanan di Lingkungan Sekitar Kita</div>
             </div>
-
-            <a href="inventaris" class="btn-inventaris-more" style="background: #0284c7; color: #ffffff; text-decoration: none; padding: 10px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); transition: all 0.3s ease;">
-                Data Inventaris Selengkapnya
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-        </div>
-    </div>
-
-
-    <!-- ==================== BAGIAN BERITA ==================== -->
-    <div class="section-title-neumorph red-text" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px;">
-        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5M18 10h-8"/>
-            </svg>
-            BERITA WARGA RT 2
-        </div>
-    </div>
-
-    <div class="news-dashboard-container">
-        <div class="news-slider-container" id="newsCardsContainer">
-            <div class="loading-text">Menyinkronkan agenda warga...</div>
         </div>
         
-        <div class="news-nav-controls" id="newsNavContainer" style="display: none;">
-            <button class="news-btn-bottom" id="newsPrevBtn" aria-label="Previous">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <div style="text-align: center; margin: 20px 0 20px 0; position: relative; z-index: 2;">
+            <button class="btn-darurat-caution" id="openEmModalBtn">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                <span>Nomor Darurat</span>
             </button>
-            <button class="news-btn-bottom" id="newsNextBtn" aria-label="Next">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </button>
         </div>
-    </div>
 
-    <div class="article-modal-overlay" id="articleModal" onclick="closeArticleModalOutside(event)">
-        <button class="btn-close-article" onclick="closeArticleModal()">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-        </button>
-        <div class="article-modal-wrapper" onclick="event.stopPropagation()">
-            <div class="article-content-area">
-                <h2 class="article-title-detail" id="articleModalTitle"></h2>
-                <div class="article-meta" id="articleModalMeta"></div>
-                <div class="article-body-text" id="articleModalBody"></div>
-            </div>
+        <footer class="main-footer">
+            <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
+            <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
+        </footer>
+
+        <!-- Wadah Relative untuk Gambar-gambar Area Footer -->
+        <div style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: auto; z-index: 2;">
+            
+            <a href="https://sites.google.com/view/rt02pasekanlor/data-warga" target="_blank" rel="noopener noreferrer" class="link-lebah" style="position: absolute; bottom: 50px; right: 40%; z-index: 4; width: 15%;">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiya0ghKMImhXBX9dzFBDE_JUUH0Ub8fJFdCSRlYRPUB0iB3PK0Yq29CjfTEPRyoDqdur3vqtDpkbxHUZggHN1qb4-DLIRszqygidj10d848bgmNSYbEvWa-LGHW4xgGThzaKDwSLZAiYpbXwI_nDeYl9EPtPMbP2q1CaWlPKGOBimWcYseznSvz5bvBwo/s1600/lebah%20-%20senter%20-%20small.png" alt="Lebah" style="width: 100%; display: block;">
+            </a>
+
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBIimC0Xev6ow-nDTXPpolimwYDqlypCgbUV04-8-79QYVhWTXHXgLGMunKdy1BNHaF9eXICfCtLlx1Q9gx_IjLSin16GKO85ak1v31Djd25v9qtlB2wi9KiYb7ylC9_4JYalJ8ha4-BhouHrjoScOGaWYjCXeQHzz2G4sfwblWTLrB7yIjNxlfd7XrVM/s1600/Thumb%20-%20Abu%2060.png" alt="RT 2 Pasekan Lor" style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); width: 50%; z-index: 3;">
+
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhNWaQOKzNxOXXJdKcaQvz89f58rx2eEzukj1SlZSmW7p8O_1jmGXpAOjGU_bz-7qBdJ-p52OkTdaZTTa3HzEIbSLTZ78DjnSLFzY_1VvVjELq0UhWvN9I1J-OgZLo8yIzUwvKKrVZcJI8fIvSo2uC0hsxto0DLTAYgnLc2ZlNi0VuH9S2qHCgbWkgrhGk/s1600/Footer%20Paslor%20600px.png" style="width: 100%; display: block; margin-bottom: -40px; position: relative; z-index: 2;" alt="Footer RT 2">
         </div>
-    </div>
 
-    <div class="sub-footer-section">
-        <div class="himbauan-box">
-            <div class="himbauan-text" id="himbauanAnim">Mari Kita Jaga Keamanan, Ketertiban, Kebersihan dan Kenyamanan di Lingkungan Sekitar Kita</div>
-        </div>
-    </div>
-    
-    <p></p>
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBIimC0Xev6ow-nDTXPpolimwYDqlypCgbUV04-8-79QYVhWTXHXgLGMunKdy1BNHaF9eXICfCtLlx1Q9gx_IjLSin16GKO85ak1v31Djd25v9qtlB2wi9KiYb7ylC9_4JYalJ8ha4-BhouHrjoScOGaWYjCXeQHzz2G4sfwblWTLrB7yIjNxlfd7XrVM/s1600/Thumb%20-%20Abu%2060.png" alt="RT 2 Pasekan Lor" style="display: block; margin-top: 10px; margin-left: auto; margin-right: auto; width: 50%; position: relative; z-index: 2;">
-    <p></p>
-    
-    <footer class="main-footer">
-        <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
-        <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
-    </footer>
-
-    <div style="text-align: center; margin: 1px 0 30px 0; padding-bottom: 1px; position: relative; z-index: 2;">
-        <button class="btn-darurat-caution" id="openEmModalBtn">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                <line x1="12" y1="9" x2="12" y2="13"/>
-                <line x1="12" y1="17" x2="12.01" y2="17"/>
-            </svg>
-            <span>Nomor Darurat</span>
-        </button>
-    </div>
-
-    <a href="https://sites.google.com/view/rt02pasekanlor/data-warga" target="_blank" rel="noopener noreferrer" class="link-lebah" style="position: relative; z-index: 2;">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiya0ghKMImhXBX9dzFBDE_JUUH0Ub8fJFdCSRlYRPUB0iB3PK0Yq29CjfTEPRyoDqdur3vqtDpkbxHUZggHN1qb4-DLIRszqygidj10d848bgmNSYbEvWa-LGHW4xgGThzaKDwSLZAiYpbXwI_nDeYl9EPtPMbP2q1CaWlPKGOBimWcYseznSvz5bvBwo/s1600/lebah%20-%20senter%20-%20small.png" alt="RT 2 Pasekan Lor" style="display: block; margin-top: 10px; margin-left: auto; margin-right: auto; margin-bottom: 1px; width: 10%;">
-    </a>
-    
-    <!-- GAMBAR FOOTER MENTOK BAWAH SESUAI PERINTAH -->
-    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhNWaQOKzNxOXXJdKcaQvz89f58rx2eEzukj1SlZSmW7p8O_1jmGXpAOjGU_bz-7qBdJ-p52OkTdaZTTa3HzEIbSLTZ78DjnSLFzY_1VvVjELq0UhWvN9I1J-OgZLo8yIzUwvKKrVZcJI8fIvSo2uC0hsxto0DLTAYgnLc2ZlNi0VuH9S2qHCgbWkgrhGk/s1600/Footer%20Paslor%20600px.png" style="width: 100%; display: block; margin-top: auto; margin-bottom: -40px; position: relative; z-index: 2;" alt="Footer RT 2">
-
+    </div> <!-- Batas Penutup main-content-board -->
 </div> 
 
 <script>
@@ -923,21 +803,15 @@
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
         const header = document.getElementById('mainHeader');
+        const headerArt = document.getElementById('headerArt');
         
         // Logika kemunculan Fixed Header & transisi
         if (currentScrollY > 40) {
             header.classList.add('scrolled');
+            if (headerArt) headerArt.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
-        }
-
-        // Efek transisi menyatu mentok bawah (Super Smooth & Snappy)
-        const atBottom = (window.innerHeight + currentScrollY) >= document.body.offsetHeight - 15;
-        const appWrapper = document.querySelector('.app-wrapper');
-        if (atBottom) {
-            appWrapper.classList.add('at-bottom');
-        } else {
-            appWrapper.classList.remove('at-bottom');
+            if (headerArt) headerArt.classList.remove('scrolled');
         }
     });
 
@@ -961,6 +835,7 @@
     toggleSliderBtn.addEventListener('click', () => {
         isSliderOpen = !isSliderOpen;
         const icon = document.getElementById('sliderToggleIcon');
+        
         if(isSliderOpen) {
             sliderSection.classList.remove('collapsed');
             icon.innerHTML = `<polyline points="18 15 12 9 6 15"></polyline>`;
@@ -1020,7 +895,6 @@
             slide.className = 'slide';
             let mediaHtml = '';
             
-            /* TAMPILAN DEPAN SLIDER: Auto play, WAJIB MUTED, No Controls, Fit Cover No Scroll */
             if (post.isYoutube) {
                 mediaHtml = `<div style="position:relative; width:100%; height:100%; overflow:hidden; background: #000 url('${post.media}') center/cover no-repeat;"><iframe class="yt-iframe-delayed" style="position:absolute; top:-18%; left:0; width:100%; height:136%; pointer-events:none; border:none; overflow:hidden;" src="https://www.youtube.com/embed/${post.youtubeId}?autoplay=1&mute=1&controls=0&rel=0&loop=1&playsinline=1&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playlist=${post.youtubeId}" allow="autoplay; encrypted-media" tabindex="-1"></iframe></div>`;
             } else if (post.isWave) {
@@ -1032,7 +906,6 @@
             }
             slide.innerHTML = mediaHtml;
             
-            /* KETIKA DI KLIK: MODAL FULLSCREEN BERSUARA AKTIF (UNMUTED) */
             slide.addEventListener('click', () => { 
                 if (post.isYoutube) {
                     psModalBody.innerHTML = `<iframe style="width:100%; aspect-ratio:16/9; border:none; display:block; background:#000;" src="https://www.youtube.com/embed/${post.youtubeId}?autoplay=1&mute=0&controls=1&rel=0&playsinline=1&modestbranding=1&iv_load_policy=3&fs=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
@@ -1046,7 +919,6 @@
             psTrack.appendChild(slide);
         });
         
-        // Memastikan ulang (force mute) video html5 biasa
         setTimeout(() => { 
             document.querySelectorAll('.slide video').forEach(vid => { 
                 vid.muted = true; 
@@ -1070,7 +942,7 @@
     
     document.getElementById('psCloseModal').addEventListener('click', () => { 
         psModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; 
-        psModalBody.innerHTML = ''; // Membersihkan tag iframe/video saat modal ditutup agar suaranya mati
+        psModalBody.innerHTML = ''; 
     });
     
     psModalOverlay.addEventListener('click', (e) => { 
@@ -1110,7 +982,7 @@
     async function fetchKeuanganUpdate() {
         if(isKeuanganLoaded) return;
         const c = document.getElementById('keuanganListContainer');
-        c.innerHTML = '<div class="loading-text">Memuat data transaksi...</div>';
+        c.innerHTML = '<div class="loading-text" style="color: #666;">Memuat data transaksi...</div>';
         try {
             const res = await fetch(`https://docs.google.com/spreadsheets/d/15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68/export?format=csv&gid=0`);
             const csvText = await res.text();
@@ -1136,7 +1008,7 @@
                 }
             }
             const last4 = transactions.slice(-3);
-            if(last4.length === 0) { c.innerHTML = '<div class="loading-text">Tidak ada data transaksi ditemukan.</div>'; return; }
+            if(last4.length === 0) { c.innerHTML = '<div class="loading-text" style="color: #666;">Tidak ada data transaksi ditemukan.</div>'; return; }
             
             const iconKet = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
             const iconIn = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>`;
@@ -1147,7 +1019,7 @@
             last4.forEach(trx => { tableHtml += `<tr><td><div class="trx-td-ket">${trx.ket}</div><div class="trx-td-tgl">${trx.tgl}</div></td><td class="trx-val-masuk">${trx.masuk > 0 ? trx.masuk.toLocaleString('id-ID') : '-'}</td><td class="trx-val-keluar">${trx.keluar > 0 ? trx.keluar.toLocaleString('id-ID') : '-'}</td><td class="trx-val-saldo">${trx.saldo !== 0 ? trx.saldo.toLocaleString('id-ID') : '-'}</td></tr>`; });
             tableHtml += `</tbody></table></div>`;
             c.innerHTML = tableHtml; isKeuanganLoaded = true;
-        } catch (error) { c.innerHTML = '<div class="loading-text">Gagal memuat data keuangan.</div>'; }
+        } catch (error) { c.innerHTML = '<div class="loading-text" style="color: #666;">Gagal memuat data keuangan.</div>'; }
     }
 
     function openModalKeuangan() { document.getElementById('keuanganModalOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; fetchKeuanganUpdate(); }
@@ -1255,7 +1127,7 @@
             return hasLabel || html.toLowerCase().includes('hari/tgl') || html.toLowerCase().includes('acara');
         });
 
-        if (agendaEntriesData.length === 0) { mainContainer.innerHTML = '<div class="loading-text">Tidak ada info agenda saat ini.</div>'; return; }
+        if (agendaEntriesData.length === 0) { mainContainer.innerHTML = '<div class="loading-text" style="color:#666;">Tidak ada info agenda saat ini.</div>'; return; }
 
         globalAgendaEntries = agendaEntriesData.map(entry => {
             const parsed = parseBlogspotAgenda(entry.content ? entry.content.$t : '');
@@ -1319,8 +1191,12 @@
                 <div class="agenda-row" style="align-items: center;"><span class="agenda-label">Status</span><span class="agenda-colon">:</span><div class="agenda-value" style="display: flex; align-items: center;">${statusRender.bodyHtml}</div></div>
             </div>
             <div class="info-card-footer">
-                <a href="https://api.whatsapp.com/send?text=${textWa}" target="_blank" class="btn-footer-action btn-share-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>Undangan WA</a>
-                <button class="btn-footer-action btn-doc-footer" onclick="openDocLightbox('${imgString}', '${notulenString}', '${dateString}', '${encodeURIComponent(hexColor).replace(/'/g, "%27")}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Hasil Kegiatan</button>
+                <a href="https://api.whatsapp.com/send?text=${textWa}" target="_blank" class="btn-footer-action btn-share-wa">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>Undangan WA
+                </a>
+                <button class="btn-footer-action btn-doc-footer" onclick="openDocLightbox('${imgString}', '${notulenString}', '${dateString}', '${encodeURIComponent(hexColor).replace(/'/g, "%27")}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Hasil Kegiatan
+                </button>
             </div>
         </div>`;
         return div.firstElementChild;
@@ -1363,7 +1239,7 @@
         if (entries.length > 1) document.getElementById('newsNavContainer').style.display = 'flex';
         else document.getElementById('newsNavContainer').style.display = 'none';
 
-        if(entries.length === 0) { c.innerHTML = '<div class="loading-text">Tidak ada kabar terbit.</div>'; return; }
+        if(entries.length === 0) { c.innerHTML = '<div class="loading-text" style="color:#666;">Tidak ada kabar terbit.</div>'; return; }
         entries.forEach((entry, i) => {
             const title = entry.title.$t, body = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : ""), date = new Date(entry.published.$t).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             const doc = new DOMParser().parseFromString(body, 'text/html'), img = doc.querySelector('img');
@@ -1385,7 +1261,7 @@
         const doc = new DOMParser().parseFromString(body, 'text/html');
         doc.querySelectorAll('a img').forEach(img => { const p = img.closest('a'); if(p) { p.parentNode.insertBefore(img, p); p.parentNode.removeChild(p); } });
         
-        document.getElementById('articleModalMeta').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${new Date(entry.published.$t).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+        document.getElementById('articleModalMeta').innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${new Date(entry.published.$t).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`;
         document.getElementById('articleModalTitle').innerText = entry.title.$t;
         document.getElementById('articleModalBody').innerHTML = doc.body.innerHTML;
         document.getElementById('articleModal').classList.add('active'); document.body.style.overflow = 'hidden';

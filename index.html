@@ -49,12 +49,8 @@
                 url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOFJqp0jv0xOVscATo92XPYJX53pKdhy2V9GeR_5hlUW0BQ7ZrJAzDTkLb0d-6Mqy92MCpI8534FwNjhZUz5bmm955O0c2f8CtQQ4uJB4Iq11mjM6l9vlH7LgZS9FaYzlApPwKd5s1vJ4YzROzyLWz5rV92evzoie1WRSf9EEmYeC7UxgZCVf2pgjREKk/s1600/header_paslor%20600px.png');
             background-position: top;
             background-size: 100% auto;
-            background-attachment: sticky;
             background-repeat: no-repeat;
             
-            /* Transisi dipercepat dan tetap smooth untuk efek scroll mentok bawah */
-            transition: background-position 0.5s ease-out;
-
             min-height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15);
             padding-bottom: 40px; 
@@ -63,9 +59,30 @@
             flex-direction: column;
         }
 
+        /* Elemen gambar yang muncul slide up dari bawah ketika mentok */
+        .app-wrapper::before {
+            content: '';
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 480px;
+            height: 250px;
+            background-image: 
+                linear-gradient(to top, rgba(245, 245, 245, 1) 10%, rgba(245, 245, 245, 0.7) 50%, rgba(245, 245, 245, 0) 100%),
+                url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOFJqp0jv0xOVscATo92XPYJX53pKdhy2V9GeR_5hlUW0BQ7ZrJAzDTkLb0d-6Mqy92MCpI8534FwNjhZUz5bmm955O0c2f8CtQQ4uJB4Iq11mjM6l9vlH7LgZS9FaYzlApPwKd5s1vJ4YzROzyLWz5rV92evzoie1WRSf9EEmYeC7UxgZCVf2pgjREKk/s1600/header_paslor%20600px.png');
+            background-position: bottom;
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+            pointer-events: none;
+        }
+
         /* Saat di-scroll mentok bawah (animasi header ke bawah gabung dgn footer) */
-        .app-wrapper.at-bottom {
-            background-position: center bottom !important;
+        .app-wrapper.at-bottom::before {
+            transform: translateX(-50%) translateY(0);
         }
 
         /* --- HOVER EFEK WARNA SENADA --- */
@@ -157,10 +174,9 @@
         .header-hero-text p { color: #ffffff; font-size: 9pt; font-weight: 500; margin: 2px 0 0 0; }
 
         .header-text-scrolled {
-            opacity: 0; color: #ffffff; font-size: 11px; white-space: nowrap;
+            opacity: 0; color: #ffffff; font-size: 10px; white-space: nowrap;
             background-color: rgba(0, 52, 143, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(8px);
-            border: none; padding: 4px 10px; border-radius: 15px;
-            transition: opacity 0.2s ease-in-out; display: none; margin-left: 12px;
+            transition: opacity 0.2s ease-in-out; display: none; margin-left: 0.5px;
         }
         .header-text-scrolled strong { font-weight: 700; font-size: 13px; }
 
@@ -192,7 +208,7 @@
             padding: 14px 16px; border-radius: 12px; margin: 0 16px 16px 16px;
             font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;
             box-shadow: inset 4px 4px 8px rgba(196,196,196,0.6), inset -4px -4px 8px rgba(255,255,255,0.6);
-            letter-spacing: 0.5px; text-align: center; position: relative; z-index: 2;
+            letter-spacing: 1px; text-align: center; position: relative; z-index: 2;
         }
         .section-title-neumorph.red-text { color: #383838; }
 
@@ -254,10 +270,10 @@
             opacity: 1;
         }
         .slider-section.collapsed { max-height: 0; margin-top: 0; opacity: 0; pointer-events: none; }
-        .slider-container { position: relative; padding: 0 16px !important; }
-        .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 16px; padding: 10px 0 20px 0; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
+        .slider-container { position: relative; padding: 0 !important; }
+        .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 16px; padding: 10px 5% 20px 5%; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
         .ps-slider-container::-webkit-scrollbar { display: none; }
-        .slide { flex: 0 0 100%; width: 100%; aspect-ratio: 21 / 9; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-color: #ffffff; cursor: pointer; }
+        .slide { flex: 0 0 90%; width: 90%; aspect-ratio: 16 / 9; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-color: #ffffff; cursor: pointer; }
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 600; z-index:-1;}
 
@@ -387,7 +403,7 @@
         .info-card { background-color: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; }
         .card-header { padding: 12px 16px; color: #ffffff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
         .card-header .agenda-label-top { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 14px; }
-        .card-header .category-text { font-size: 18px; font-weight: 600; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.15); display: block; }
+        .card-header .category-text { font-size: 15px; font-weight: 600; letter-spacing: 0.1px; text-shadow: 0 1px 2px rgba(0,0,0,0.15); display: block; }
         .bg-pertemuan { background: linear-gradient(135deg, #059669, #00734B); }
         .bg-kerjabakti { background: linear-gradient(135deg, #2563eb, #194B9E); }
         .bg-ronda      { background: linear-gradient(135deg, #7c3aed, #5530A6); }
@@ -414,7 +430,7 @@
         .list-content { flex: 1; }
         .normal-text-item { font-size: 14.5px; color: #383838; line-height: 1.5; margin-bottom: 2px; }
         .f-regular-10  { font-weight: 400; font-size: 14.5px; color: #383838; }     
-        .status-text-container { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; line-height: 1.2; text-transform: capitalize; font-weight: 600 !important; color: #383838 !important; }
+        .status-text-container { display: inline-flex; align-items: center; gap: 3px; font-size: 14.5px; line-height: 1.2; text-transform: capitalize; font-weight: 500 !important; color: #383838 !important; }
         .agenda-label-top span { text-transform: capitalize; font-weight: 600 !important; }
         
         .status-dot-blink { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: pulse-status 1s infinite alternate; }
@@ -571,7 +587,7 @@
         </div>
         <div class="slider-section" id="sliderSection">
             <div class="slider-container">
-                <div class="status-msg" id="ps-status-loading">Memuat konten banner...</div>
+                <div class="status-msg" id="ps-status-loading">Memuat konten slider banner</div>
                 <div class="ps-slider-container" id="ps-slider-track"></div>
                 
                 <button class="slider-nav-btn prev-btn" id="psPrevBtn" aria-label="Previous">
@@ -818,7 +834,7 @@
                 </table>
             </div>
 
-            <a href="inventaris.html" class="btn-inventaris-more" style="background: #0284c7; color: #ffffff; text-decoration: none; padding: 10px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); transition: all 0.3s ease;">
+            <a href="inventaris" class="btn-inventaris-more" style="background: #0284c7; color: #ffffff; text-decoration: none; padding: 10px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); transition: all 0.3s ease;">
                 Data Inventaris Selengkapnya
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
@@ -1200,8 +1216,8 @@
         else icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="${statusData.type === 'ongoing' ? 'M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01' : 'M3 4h18v18H3z"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10'}"/></svg>`;
         
         return {
-            bodyHtml: `<div class="status-text-container" style="color:${statusData.color}; display:flex; align-items:center; gap:6px;">${icon} ${statusData.text}</div>`,
-            headerHtml: `<span class="agenda-label-top" style="background-color:#ffffff; color:${statusData.color}; box-shadow:0 2px 10px rgba(0,0,0,0.1); display:inline-flex; align-items:center; gap:6px;">${icon} <span style="font-weight:600; margin-top:1px;">${statusData.text}</span></span>`
+            bodyHtml: `<div class="status-text-container" style="color:${statusData.color}; display:flex; align-items:center; gap:1px;">${icon} ${statusData.text}</div>`,
+            headerHtml: `<span class="agenda-label-top" style="background-color:#EDEDED; color:${statusData.color}; box-shadow:0 2px 10px rgba(0,0,0,0.1); display:inline-flex; align-items:center; gap:2px;">${icon} <span style="font-weight:500; margin-top:1px;">${statusData.text}</span></span>`
         };
     }
 
@@ -1282,7 +1298,7 @@
         else if (catLower.includes('ronda') || titleLower.includes('ronda')) { cat = "Ronda"; hClass = "bg-ronda"; hexColor = "#613ABA"; }
         else if (item.category !== "" && item.category !== "-") { cat = item.category.toUpperCase(); hClass = "bg-lainnya"; hexColor = "#f97316"; }
         
-        const textWa = encodeURIComponent(`*UNDANGAN*\n*Kegiatan Warga RT 2 Pasekan Lor*\n\n*Hari, Tgl. :*\n${meta.hariTgl}\n\n*Acara :* \n${meta.acara}\n\n*Pukul :* \n${meta.pukul}\n\n*Tempat :* \n${meta.tempat}\n\n*Catatan :*\n${meta.catatan}\n${meta.notulen && meta.notulen !== '-' ? `\n*Hasil Kegiatan* : \n${meta.notulen}\n` : ''}\n..........................\n*Informasi RT 2 Pasekan Lor*\n${GLOBAL_STATIC_WEB_URL}`);
+        const textWa = encodeURIComponent(`*Undangan Kegiatan*\n*Warga RT 2 Pasekan Lor*\n\n*Hari, Tgl. :*\n${meta.hariTgl}\n\n*Tempat :*\n${meta.tempat}\n\n*Acara :*\n${meta.acara}\n\n*Pukul :*\n${meta.pukul}\n\n*Catatan :*\n${meta.catatan}\n\nhttps://rt2pasekanlor.id/`);
 
         const div = document.createElement('div');
         div.innerHTML = `<div class="info-card">

@@ -21,40 +21,16 @@
     
     <style>
         /* ======================================================================
-           AREA PENGATURAN TAMPILAN (SILAKAN UBAH NILAINYA DI SINI)
+           AREA PENGATURAN TAMPILAN
            ====================================================================== */
         :root {
             /* PENGATURAN HEADER & LOGO */
             --ukuran-logo: 180px; 
-            --ukuran-logo-scrolled: 60pt;
-            --jarak-atas-slider: 2px; 
+            --jarak-atas-slider: 1px; 
             --warna-bg-header-scrolled: rgba(0, 52, 143, 0.95);
-
-            /* PENGATURAN LATAR SLIDER */
-            --slider-bg-color: transparent; 
-            --slider-bg-image: none;
-            --slider-bg-radius: 10px;
-            --slider-bg-shadow: none;
-            --slider-padding-luar: 0px 0px;
 
             /* PENGATURAN TOMBOL GULUNG SLIDER */
             --posisi-tombol-gulung: flex-end; 
-
-            /* PENGATURAN GUNUNGAN (POSISI AWAL) - DIREVISI TURUN LEBIH DALAM */
-            --gn-ukuran: 120%; 
-            --gn-bottom: -20%; 
-            --gn-posisi-x-kiri: 10%; 
-            --gn-posisi-x-kanan: 10%; 
-            --gn-rotasi-tengah: -20deg; 
-
-            /* PENGATURAN ANIMASI GUNUNGAN (SAAT SCROLL / KELUAR) */
-            --gn-scroll-x-kiri: -150%; 
-            --gn-scroll-y-kiri: 0%; 
-            --gn-scroll-rotasi-kiri: -10deg; 
-
-            --gn-scroll-x-kanan: -150%; 
-            --gn-scroll-y-kanan: 0%; 
-            --gn-scroll-rotasi-kanan: -10deg; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
@@ -66,14 +42,14 @@
             justify-content: center; 
         }
 
-        /* --- BACKGROUND GUNUNG FIXED DI APP-WRAPPER --- */
+        /* --- APP WRAPPER DENGAN BACKGROUND GUNUNG SCROLL --- */
         .app-wrapper {
             width: 100%; max-width: 480px;
             background-color: transparent; 
-            background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjc1qNdNveM4_safp4Ah6JA-Xbg8KjiFWK-Mo6hk5ggiUAuZ4HlC5q3Lo0k7Zoky8uyx_6QlHlTm8dUQdZLPkFD4zTa_9ECLOm8PZLDyB31QBi1Y-S85sEeigj2onHujKI5Fq3h6LEoJooXGVgvkTwzRBeQ2JCDFAnX6cs54dL-UPrLu9Au2NWb0PbAm-M/s1600/BG-Gunung.png');
-            background-attachment: fixed;
-            background-position: center top;
-            background-size: contain;
+            background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifYHz0rGu_N8HhLXtmX2qlsoKoTkxYn4sPnxLXt6ynVJBGJoQfvJt7i_oOCsSgakZfZ-KqojNnvP0D1sD0cTruIGfQRba1GLISjI5TS_JB8dRz-R2OIb4SlGUSvdE4ly-DSHJFgCfPcJ634GGQAtCDsHDBTNX8jg_SAwW9hX4arrmbpdRWAXoO8lvVcHM/s1600/header%20gunung%20BARU%20PENDEK.png');
+            background-attachment: auto;
+            background-position: top;
+            background-size: contain; /* Agar presisi menutupi layer */
             background-repeat: no-repeat;
             min-height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15);
@@ -81,36 +57,64 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+            z-index: 1;
         }
 
-        /* --- HEADER FIXED (GARIS ATAS MUNCUL SAAT SCROLL) --- */
+        /* --- HEADER FIXED MUNCUL SLIDE DOWN FAST SMOOTH --- */
         .header-fixed-container {
-            position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+            position: fixed; top: 0; left: 50%; transform: translate(-50%, -100%);
             width: 100%; max-width: 480px; z-index: 1000; opacity: 0; pointer-events: none;
             background: var(--warna-bg-header-scrolled);
             padding-top: 10px; padding-bottom: 10px; display: flex; flex-direction: row; padding-left: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: opacity 0.3s ease-in-out; align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+            /* Transisi fast & smooth slide down & fade in */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease-in-out; 
+            align-items: center;
         }
-        .header-fixed-container.scrolled { opacity: 1; pointer-events: auto; }
-        .header-fixed-container .header-logo-anim { width: var(--ukuran-logo-scrolled); filter: drop-shadow(0px 1px 0px rgba(0, 31, 84, 0.2)) drop-shadow(0px 2px 3px rgba(0, 31, 84, 0.2)); margin-bottom: 0; }
-        .header-fixed-container .header-text-scrolled { opacity: 1; color: #ffffff; font-size: 10px; white-space: nowrap; background-color: rgba(0, 52, 143, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(8px); display: block; margin-left: 8px; padding: 4px 8px; border-radius: 12px; }
-        .header-fixed-container .header-text-scrolled strong { font-weight: 700; font-size: 13px; }
-
-        /* HEADER ART ANIMATION - overflow diubah jadi visible agar tangkai tidak terpotong */
-        .header-art-wrapper { position: relative; width: 100%; height: 300px; overflow: visible; background: transparent; }
+        .header-fixed-container.scrolled { 
+            transform: translate(-50%, 0); /* Meluncur turun */
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+        /* Logo Header Scrolled dibesarkan */
+        .header-fixed-container .header-logo-anim { width: 90px; filter: drop-shadow(0px 1px 0px rgba(0, 31, 84, 0.2)) drop-shadow(0px 2px 3px rgba(0, 31, 84, 0.2)); margin-bottom: 0; flex-shrink: 0; }
         
-        .art-gunungan-container { position: absolute; bottom: 0; left: 0; right: 0; top: 0; z-index: 2; pointer-events: none; }
-        .art-gunungan { position: absolute; bottom: var(--gn-bottom); height: var(--gn-ukuran); width: auto; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)); }
-        .art-gunungan.left { left: var(--gn-posisi-x-kiri); transform-origin: bottom center; transform: rotate(var(--gn-rotasi-tengah)); transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.15s; }
-        .art-gunungan.right { right: var(--gn-posisi-x-kanan); transform-origin: bottom center; transform: scaleX(-1) rotate(var(--gn-rotasi-tengah)); transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.15s; }
-        
-        .header-art-wrapper.scrolled .art-gunungan.left { transform: translate(var(--gn-scroll-x-kiri), var(--gn-scroll-y-kiri)) rotate(var(--gn-scroll-rotasi-kiri)); transition: transform 0.4s ease-in 0s; }
-        .header-art-wrapper.scrolled .art-gunungan.right { transform: scaleX(-1) translate(var(--gn-scroll-x-kanan), var(--gn-scroll-y-kanan)) rotate(var(--gn-scroll-rotasi-kanan)); transition: transform 0.4s ease-in 0s; }
+        /* Teks Scrolled Header Membagi 2 Baris */
+        .header-fixed-container .header-text-scrolled { 
+            color: #ffffff; 
+            display: flex; 
+            flex-direction: column;
+            margin-left: 10px; 
+            line-height: 1.3;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Tambahan bayangan agar teks tetap terbaca */
+        }
+        .header-fixed-container .header-text-scrolled strong { font-weight: 700; font-size: 13px; margin-bottom: 2px;}
+        .header-fixed-container .header-text-scrolled span { font-size: 10px; font-weight: 400; opacity: 0.9; }
 
-        .art-frame-container { position: absolute; top: 2%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 350px; z-index: 3; transition: opacity 0.4s ease-out; display: flex; align-items: center; justify-content: center; }
-        .art-frame { width: 110%; height: auto; display: block; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4)); }
-        .art-logo { position: absolute; width: 55%; height: auto; z-index: 1; }
-        .header-art-wrapper.scrolled .art-frame-container { opacity: 8; }
+        /* HEADER ART UTAMA */
+        .header-art-wrapper {
+            width: 100%; text-align: center; padding: 8px 20px 45px 20px; z-index: 1; position: relative;
+        }
+        /* Logo Utama Header Dibesarkan */
+        .header-art-wrapper .main-logo-white {
+            width: 300px; height: auto; filter: drop-shadow(1px 3px 3px rgba(10, 25, 80)); margin-bottom: 8px;
+        }
+        
+        /* Teks Main Header Radius 30 Transparan #1155CC */
+        .header-art-wrapper .main-header-text {
+            color: #ffffff; 
+            font-size: 10px; 
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5); 
+            letter-spacing: 0.3px;
+            background-color: rgba(17, 85, 204, 0.5); /* #1155CC transparan */
+            padding: 8px 18px;
+            border-radius: 20px; /* Radius 30 */
+            display: inline-block;
+            backdrop-filter: blur(2px);
+        }
+        .header-art-wrapper .main-header-text strong {
+            font-size: 12px; font-weight: 700; color: #ffffff;
+        }
 
         /* MAIN CONTENT BOARD (LATAR TRANSPARAN) */
         .main-content-board { background-color: transparent; border-radius: 25px 25px 0 0; padding-top: 10px; margin-top: -30px; position: relative; z-index: 10; display: flex; flex-direction: column; box-shadow: none; min-height: calc(100vh - 300px); } 
@@ -308,7 +312,7 @@
         @keyframes pulse-status { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
         @keyframes pulse-status-fast { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.3); opacity: 1; } }
 
-        /* Revisi Ikon & Tombol Footer Agenda Dikecilkan dan diletakkan ke tepi */
+        /* Revisi Ikon & Tombol Footer Agenda */
         .info-card-footer { padding: 12px 16px; display: flex; gap: 10px; background-color: transparent; align-items: center; justify-content: space-between; }
         .btn-footer-action { padding: 8px 12px; border-radius: 10px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; border: none; transition: all 0.2s ease; width: 48%; }
         .btn-doc-footer { background-color: #dbeafe; color: #1e40af; box-shadow: 0 2px 6px rgba(30, 64, 175, 0.15); }
@@ -365,7 +369,7 @@
         .btn-read-more { background-color: #e8f0fe; color: #1155CC; width: 100%; border: none; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 0.2s, transform 0.2s; }
 
         .news-nav-controls { width: 100%; display: flex; justify-content: center; gap: 16px; padding-bottom: 15px; margin-top: -5px; }
-        .news-btn-bottom { background: #ffffff; border: 1px solid #cbd5e1; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.08); color: #1155CC; transition: all 0.2s ease; }
+        .news-btn-bottom { background: #ffffff; border: 1px solid #cbd5e1; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.08); color: #1155CC; transition: all 0.2s ease; }
         .news-btn-bottom:active { transform: scale(0.9); background-color: #e8f0fe; }
 
         /* Modal Berita Dikecilkan */
@@ -385,10 +389,10 @@
 
         .sub-footer-section { padding: 0 16px; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top:10px; position: relative; z-index: 2;}
         .himbauan-box { width: 100%; background: transparent; border: none; padding: 0; text-align: center; margin-top: 5px; }
-        .himbauan-text { color: #ffffff; font-size: 13px; font-weight: 600; line-height: 1.4; text-transform: none; min-height: 48px; display: flex; align-items: center; justify-content: center; text-align: center; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+        .himbauan-text { color: #1155CC; font-size: 13px; font-weight: 600; line-height: 1.4; text-transform: none; min-height: 48px; display: flex; align-items: center; justify-content: center; text-align: center;}
         
         .main-footer { width: 100%; margin: 10px auto 0 auto; padding: 16px 16px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
-        .footer-line { color: #ffffff; line-height: 1.3; margin-bottom: 2px; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+        .footer-line { color: #999999; line-height: 1.3; margin-bottom: 2px;}
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 500; }
 
@@ -398,23 +402,23 @@
 
 <div class="app-wrapper">
 
-    <!-- HEADER FIXED BERISI LOGO KECIL (GARIS ATAS) -->
+    <!-- HEADER FIXED BERISI LOGO BESAR & TEKS (GARIS ATAS MUNCUL SAAT SCROLL FAST SMOOTH) -->
     <header class="header-fixed-container" id="mainHeader">
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-anim">
-        <div class="header-text-scrolled"><strong>RT 2 Online</strong> | Informasi Warga RT 2-RW 3, Pasekan Lor</div>
+        <!-- Teks dibagi 2 baris agar tidak terpotong di HP -->
+        <div class="header-text-scrolled">
+            <strong>RT 2 Online</strong>
+            <span>Informasi Warga RT 2-RW 3, Pasekan Lor</span>
+        </div>
     </header>
 
-    <!-- HEADER ART TERPISAH (GUNUNG, GUNUNGAN, BINGKAI KAYU) -->
+    <!-- HEADER ART UTAMA (Teks Radius 30) -->
     <div class="header-art-wrapper" id="headerArt">
-        
-        <div class="art-gunungan-container">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjP3ru-IWOsGY0XlDZroRXlZEI_HVOa1AYMUUTlWal2JXhPHYxJdjlBHnkL66Q7H8UZeXGV_kLvZvCpLWg1YcSeMY5rEgawpSHhzNaKqzcz16y6D1XGhfEx2I5eh0-0y2BhqevhxUY5o9Ataz9IgChES9-cgQpwyqCGe6DBUS0UVIhaWlY2PbG_-fZVdqM/s1600/Gunungan%20(web%20small).png" class="art-gunungan left" alt="Gunungan Kiri">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjP3ru-IWOsGY0XlDZroRXlZEI_HVOa1AYMUUTlWal2JXhPHYxJdjlBHnkL66Q7H8UZeXGV_kLvZvCpLWg1YcSeMY5rEgawpSHhzNaKqzcz16y6D1XGhfEx2I5eh0-0y2BhqevhxUY5o9Ataz9IgChES9-cgQpwyqCGe6DBUS0UVIhaWlY2PbG_-fZVdqM/s1600/Gunungan%20(web%20small).png" class="art-gunungan right" alt="Gunungan Kanan">
-        </div>
-
-        <div class="art-frame-container">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9-nZXgnRRIwpLvLIHJGI83maYdK4gTMazokEt1PKCSJ-JbuwuNOW-WAASSmTMfg4RbAV_m6kDxZKP3z70pFEK8eZU7OrKPORCqoEq1dG9CM8CPlQSG7UMYY1gwK5bODiAcjn0pm-xcQGzjF8uo5WCRO07Gi-Dl6bYWLQA5JDTV3JXAIP5Bg9o59wDLgo/s1600/Elips%20Kayu%20(web%20small).png" class="art-frame" alt="Bingkai Kayu">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8eSMNHnUn8L-YgkkN9FICx7uSgnlO7Z3WcO6444IMFh_H6xW9xTVr3SPGjg92i2n5YSA4cd6EYvOnTe-zLxl3_nh7gMUjAmrBEBM6zmhwn-0RnlV2Herpa4FRo_A-D5tb0fcod2boBwa25Txp9mdrVWPxJSHZjQI27qf-DXJi7NyjeQRVcMoRbJKWUHc/s1600/Thumb%20-%20Biru.png" class="art-logo" alt="Logo RT 2">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="main-logo-white"> 
+        <div>
+            <div class="main-header-text">
+                <strong style="color: #ffffff;">RT 2 Online</strong> | Informasi Warga RT 2-RW 3, Pasekan Lor
+            </div>
         </div>
     </div>
 
@@ -775,20 +779,18 @@
             </button>
         </div>
 
+        <!-- Footer Utama Beserta Logo Besar -->
         <footer class="main-footer">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBIimC0Xev6ow-nDTXPpolimwYDqlypCgbUV04-8-79QYVhWTXHXgLGMunKdy1BNHaF9eXICfCtLlx1Q9gx_IjLSin16GKO85ak1v31Djd25v9qtlB2wi9KiYb7ylC9_4JYalJ8ha4-BhouHrjoScOGaWYjCXeQHzz2G4sfwblWTLrB7yIjNxlfd7XrVM/s1600/Thumb%20-%20Abu%2060.png" alt="RT 2 Pasekan Lor" style="width: 200px; margin: 0 auto 10px auto; display: block; opacity: 0.9;">
             <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
             <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
         </footer>
 
-        <!-- Wadah Relative untuk Gambar-gambar Area Footer -->
+        <!-- Wadah Relative untuk Gambar-gambar Area Footer Bawah -->
         <div style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: auto; z-index: 2;">
-            
             <a href="https://sites.google.com/view/rt02pasekanlor/data-warga" target="_blank" rel="noopener noreferrer" class="link-lebah" style="position: absolute; bottom: 50px; right: 40%; z-index: 4; width: 15%;">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiya0ghKMImhXBX9dzFBDE_JUUH0Ub8fJFdCSRlYRPUB0iB3PK0Yq29CjfTEPRyoDqdur3vqtDpkbxHUZggHN1qb4-DLIRszqygidj10d848bgmNSYbEvWa-LGHW4xgGThzaKDwSLZAiYpbXwI_nDeYl9EPtPMbP2q1CaWlPKGOBimWcYseznSvz5bvBwo/s1600/lebah%20-%20senter%20-%20small.png" alt="Lebah" style="width: 100%; display: block;">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiya0ghKMImhXBX9dzFBDE_JUUH0Ub8fJFdCSRlYRPUB0iB3PK0Yq29CjfTEPRyoDqdur3vqtDpkbxHUZggHN1qb4-DLIRszqygidj10d848bgmNSYbEvWa-LGHW4xgGThzaKDwSLZAiYpbXwI_nDeYl9EPtPMbP2q1CaWlPKGOBimWcYseznSvz5bvBwo/s1600/lebah%20-%20senter%20-%20small.png" alt="Lebah" style="width: 80%; display: block;">
             </a>
-
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBIimC0Xev6ow-nDTXPpolimwYDqlypCgbUV04-8-79QYVhWTXHXgLGMunKdy1BNHaF9eXICfCtLlx1Q9gx_IjLSin16GKO85ak1v31Djd25v9qtlB2wi9KiYb7ylC9_4JYalJ8ha4-BhouHrjoScOGaWYjCXeQHzz2G4sfwblWTLrB7yIjNxlfd7XrVM/s1600/Thumb%20-%20Abu%2060.png" alt="RT 2 Pasekan Lor" style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); width: 50%; z-index: 3;">
-
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhNWaQOKzNxOXXJdKcaQvz89f58rx2eEzukj1SlZSmW7p8O_1jmGXpAOjGU_bz-7qBdJ-p52OkTdaZTTa3HzEIbSLTZ78DjnSLFzY_1VvVjELq0UhWvN9I1J-OgZLo8yIzUwvKKrVZcJI8fIvSo2uC0hsxto0DLTAYgnLc2ZlNi0VuH9S2qHCgbWkgrhGk/s1600/Footer%20Paslor%20600px.png" style="width: 100%; display: block; margin-bottom: -40px; position: relative; z-index: 2;" alt="Footer RT 2">
         </div>
 
@@ -803,15 +805,12 @@
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
         const header = document.getElementById('mainHeader');
-        const headerArt = document.getElementById('headerArt');
         
-        // Logika kemunculan Fixed Header & transisi
+        // Logika kemunculan Fixed Header Transparan (Slide Down saat scroll kebawah, Slide Up menghilang saat di puncak)
         if (currentScrollY > 40) {
             header.classList.add('scrolled');
-            if (headerArt) headerArt.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
-            if (headerArt) headerArt.classList.remove('scrolled');
         }
     });
 

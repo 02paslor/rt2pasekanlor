@@ -717,22 +717,22 @@
     <script>
         const { createApp, ref, computed, onMounted, nextTick } = Vue;
 
-// PASTIKAN URL INI SUDAH DIGANTI DENGAN URL WEB APP ANDA YANG ASLI
-const GAS_URL = "https://script.google.com/macros/s/AKfycbwg4K-JvsrvxL0-CgC515KWTsOfKj38I0qO_YzY1Lagay9ce7TbEpU8flal6N0_okRN3A/exec";
+// Ganti dengan URL /exec milik Anda yang TERBARU
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwim54BhNtmtSYoPMWdGUE1ekvtRclD9Sp5-6ZownrYOqev0c4qf8EIcUfWzb4KlqRqyA/exec";
 
 const runGas = async (funcName, ...args) => {
     try {
+        // Kita ubah data menjadi URLSearchParams (Form Data) agar kebal dari blokir CORS browser
+        const formData = new URLSearchParams();
+        formData.append('action', funcName);
+        if (args[0]) {
+            formData.append('payload', JSON.stringify(args[0]));
+        }
+
         const response = await fetch(GAS_URL, {
             method: 'POST',
-            redirect: 'follow', // WAJIB: Google selalu melakukan redirect 302
-            headers: {
-                // WAJIB text/plain agar browser tidak mengirim CORS Preflight (OPTIONS request) yang ditolak Google
-                "Content-Type": "text/plain;charset=utf-8", 
-            },
-            body: JSON.stringify({
-                action: funcName,
-                payload: args[0]
-            })
+            body: formData
+            // Tidak perlu tambahan headers apa-apa lagi di sini
         });
         
         const result = await response.json();
@@ -743,7 +743,7 @@ const runGas = async (funcName, ...args) => {
             throw new Error(result.message);
         }
     } catch (error) {
-        console.error("Detail Error:", error);
+        console.error("Gagal menghubungi server:", error);
         throw error;
     }
 };

@@ -21,7 +21,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    
     <style>
         /* Font Poppins Terkunci (Maksimal ketebalan 600) */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -128,7 +127,7 @@
                 </div>
             </header>
 
-            <!-- NAVIGASI & PENCARIAN REPOSISI (Latar Berubah Warna Dinamis #8711CC / #007346) -->
+            <!-- NAVIGASI & PENCARIAN REPOSISI -->
             <div class="sticky top-0 z-40 shadow-md border-b w-full transition-colors duration-300" :class="activeMenu === 'list' ? 'bg-[#8711CC] border-[#650B99]' : 'bg-[#007346] border-[#005534]'">
                 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap lg:flex-nowrap items-center gap-3 w-full justify-between">
                     
@@ -717,12 +716,32 @@
     <script>
         const { createApp, ref, computed, onMounted, nextTick } = Vue;
 
-        const runGas = (funcName, ...args) => {
-            return new Promise((resolve, reject) => {
-                if (typeof google !== 'undefined' && google.script) {
-                    google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[funcName](...args);
+        // 🔴 GANTI URL INI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby2gN3oyK5CG5eHW_aepXRD3reXjwAAMxENy19nyc7LYX8hMV6NXIa9zw8-JaO4-287hw/exec'; 
+
+        // Fungsi baru untuk koneksi Fetch API ke Google Apps Script (Web App)
+        const runGas = async (funcName, ...args) => {
+            return new Promise(async (resolve, reject) => {
+                if (SCRIPT_URL && SCRIPT_URL.startsWith('http')) {
+                    try {
+                        const response = await fetch(SCRIPT_URL, {
+                            method: 'POST',
+                            // Menggunakan text/plain agar tidak memicu CORS preflight di GAS
+                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                            body: JSON.stringify({ funcName: funcName, args: args })
+                        });
+                        const result = await response.json();
+                        
+                        if (result.status === 'success') {
+                            resolve(result.data);
+                        } else {
+                            reject(new Error(result.message || "Gagal menghubungi server."));
+                        }
+                    } catch (error) {
+                        reject(error);
+                    }
                 } else {
-                    // Mocking untuk preview lokal
+                    // Fallback (Mock DB) jika SCRIPT URL belum diisi
                     setTimeout(() => {
                         if (!window.mockDB) window.mockDB = [];
                         if (funcName === 'getWargaData') resolve(JSON.parse(JSON.stringify(window.mockDB)));
@@ -999,7 +1018,6 @@
                     const el = document.getElementById(elementId);
                     if(!el) return;
                     try {
-                        // Di-scale agar hasil gambar tajam
                         const canvas = await html2canvas(el, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#FFFFFF' });
                         const link = document.createElement('a');
                         let cleanName = (wargaName || 'Warga').replace(/[^a-zA-Z0-9]/g, '_');

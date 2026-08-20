@@ -717,36 +717,25 @@
     <script>
         const { createApp, ref, computed, onMounted, nextTick } = Vue;
 
-// Ganti dengan URL /exec milik Anda yang TERBARU
-const GAS_URL = "https://script.google.com/macros/s/AKfycbwim54BhNtmtSYoPMWdGUE1ekvtRclD9Sp5-6ZownrYOqev0c4qf8EIcUfWzb4KlqRqyA/exec";
-
-const runGas = async (funcName, ...args) => {
-    try {
-        // Kita ubah data menjadi URLSearchParams (Form Data) agar kebal dari blokir CORS browser
-        const formData = new URLSearchParams();
-        formData.append('action', funcName);
-        if (args[0]) {
-            formData.append('payload', JSON.stringify(args[0]));
-        }
-
-        const response = await fetch(GAS_URL, {
-            method: 'POST',
-            body: formData
-            // Tidak perlu tambahan headers apa-apa lagi di sini
-        });
-        
-        const result = await response.json();
-        
-        if (result.status === 'success') {
-            return result.data;
-        } else {
-            throw new Error(result.message);
-        }
-    } catch (error) {
-        console.error("Gagal menghubungi server:", error);
-        throw error;
-    }
-};
+        const runGas = (funcName, ...args) => {
+            return new Promise((resolve, reject) => {
+                if (typeof google !== 'undefined' && google.script) {
+                    google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[funcName](...args);
+                } else {
+                    // Mocking untuk preview lokal
+                    setTimeout(() => {
+                        if (!window.mockDB) window.mockDB = [];
+                        if (funcName === 'getWargaData') resolve(JSON.parse(JSON.stringify(window.mockDB)));
+                        if (funcName === 'saveWargaData') { 
+                            const idx = window.mockDB.findIndex(w => (args[0].Nama && w.Nama === args[0].Nama) || (args[0].NIK && w.NIK === args[0].NIK));
+                            if (idx > -1) { window.mockDB[idx] = args[0]; resolve("Sukses: Data Warga otomatis diperbarui!"); }
+                            else { window.mockDB.push(args[0]); resolve("Sukses: Warga baru berhasil ditambahkan!"); }
+                        }
+                        if (funcName === 'deleteWargaData') { window.mockDB = window.mockDB.filter(w => w.Nama !== args[0]); resolve("Sukses menghapus data dari sistem."); }
+                    }, 500);
+                }
+            });
+        };
 
         createApp({
             setup() {

@@ -104,16 +104,21 @@
         <div v-if="isLoggedIn" class="min-h-screen flex flex-col w-full">
             
             <!-- HEADER UTAMA (Biru Statis) -->
-            <header class="bg-[#1155CC] text-[#FFFFFF] w-full border-b border-[#0C3D96]">
-                <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center w-full">
-                    <div class="flex items-center gap-3">
-                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhM9iDuOb9IqVnRCSfKa78jx2GNzZ0ZdsvWuryW0xbaW-8pZm77VA1MuCxEIbYe5m4nbW5RIb45sHsS6ZK1LluWLdbNwv16to5ewVbpEXesl2lFl0S73ePCjMWsL-LYbcjjNENh5pjIAXoDi8p2bIRoS9At5xYa-rgg046GCzC2JOlmnJi6IYM0im_VASY/w640-h344/Logo%20RT%202%20Pasekan%20Lor%20FULL.png" class="h-14 w-auto object-contain drop-shadow-md">
-                        <div>
-    <!-- Judul Utama (20px / Bold 700) -->
-    <h2 class="text-[17px] sm:text-[20px] font-[600] tracking-tight leading-tight drop-shadow-sm">Data Warga RT 2 Paslor</h2>
+<header class="bg-[#1155CC] text-[#FFFFFF] w-full border-b border-[#0C3D96]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center w-full">
+        <div class="flex items-center gap-3">
+            
+            <!-- Logo dengan Link -->
+            <a href="https://rt2pasekanlor.id/" target="_blank" class="shrink-0 transition-transform hover:scale-105">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhM9iDuOb9IqVnRCSfKa78jx2GNzZ0ZdsvWuryW0xbaW-8pZm77VA1MuCxEIbYe5m4nbW5RIb45sHsS6ZK1LluWLdbNwv16to5ewVbpEXesl2lFl0S73ePCjMWsL-LYbcjjNENh5pjIAXoDi8p2bIRoS9At5xYa-rgg046GCzC2JOlmnJi6IYM0im_VASY/w640-h344/Logo%20RT%202%20Pasekan%20Lor%20FULL.png" class="h-14 w-auto object-contain drop-shadow-md">
+            </a>
+            
+            <div>
+<!-- Judul Utama (20px / Bold 700) -->
+<h2 class="text-[17px] sm:text-[20px] font-[600] tracking-tight leading-tight drop-shadow-sm">Data Warga</h2>
     
     <!-- Tulisan Baru di Bawah Titel (10px / Semibold 600) -->
-    <p class="text-[10px] font-[500] tracking-wide text-white-500 mt-1">Aplikasi Data Warga Terpadu</p></div>
+    <p class="text-[11px] font-[500] tracking-wide text-white-500 mt-1">RT 2 - RW 3, Pasekan Lor</p></div>
 
                     </div>
                     <div class="flex gap-2 shrink-0">
@@ -712,25 +717,36 @@
     <script>
         const { createApp, ref, computed, onMounted, nextTick } = Vue;
 
-        const runGas = (funcName, ...args) => {
-            return new Promise((resolve, reject) => {
-                if (typeof google !== 'undefined' && google.script) {
-                    google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[funcName](...args);
-                } else {
-                    // Mocking untuk preview lokal
-                    setTimeout(() => {
-                        if (!window.mockDB) window.mockDB = [];
-                        if (funcName === 'getWargaData') resolve(JSON.parse(JSON.stringify(window.mockDB)));
-                        if (funcName === 'saveWargaData') { 
-                            const idx = window.mockDB.findIndex(w => (args[0].Nama && w.Nama === args[0].Nama) || (args[0].NIK && w.NIK === args[0].NIK));
-                            if (idx > -1) { window.mockDB[idx] = args[0]; resolve("Sukses: Data Warga otomatis diperbarui!"); }
-                            else { window.mockDB.push(args[0]); resolve("Sukses: Warga baru berhasil ditambahkan!"); }
-                        }
-                        if (funcName === 'deleteWargaData') { window.mockDB = window.mockDB.filter(w => w.Nama !== args[0]); resolve("Sukses menghapus data dari sistem."); }
-                    }, 500);
-                }
-            });
-        };
+// PASTIKAN URL INI SUDAH DIGANTI DENGAN URL WEB APP ANDA YANG ASLI
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwg4K-JvsrvxL0-CgC515KWTsOfKj38I0qO_YzY1Lagay9ce7TbEpU8flal6N0_okRN3A/exec";
+
+const runGas = async (funcName, ...args) => {
+    try {
+        const response = await fetch(GAS_URL, {
+            method: 'POST',
+            redirect: 'follow', // WAJIB: Google selalu melakukan redirect 302
+            headers: {
+                // WAJIB text/plain agar browser tidak mengirim CORS Preflight (OPTIONS request) yang ditolak Google
+                "Content-Type": "text/plain;charset=utf-8", 
+            },
+            body: JSON.stringify({
+                action: funcName,
+                payload: args[0]
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            return result.data;
+        } else {
+            throw new Error(result.message);
+        }
+    } catch (error) {
+        console.error("Detail Error:", error);
+        throw error;
+    }
+};
 
         createApp({
             setup() {

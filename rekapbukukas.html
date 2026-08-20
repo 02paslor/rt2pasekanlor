@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap Buku Kas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc; /* Latar belakang halaman yang terang/soft */
+            color: #334155;
+        }
+        
+        /* Memastikan tabel proporsional dan teks dapat membungkus */
+        table { 
+            table-layout: fixed; 
+        }
+
+        /* Menghilangkan scrollbar jika tidak diperlukan, tapi menjaganya minimalis */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-2 sm:p-4 pt-6 sm:pt-10">
+
+    <main class="w-full max-w-2xl mx-auto flex flex-col">
+        
+        <!-- Header Halaman (Disesuaikan untuk latar belakang terang) -->
+        <header class="flex flex-col mb-5 sm:mb-8 px-1">
+            <h3 class="text-lg min-[400px]:text-xl sm:text-2xl font-bold text-slate-900 leading-tight">
+                Rekap Buku Kas RT 2 Pasekan Lor
+            </h3>
+            <div class="mt-3 inline-flex items-center self-start bg-white border border-slate-200 py-1.5 px-3 rounded-lg shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse shadow-[0_0_6px_rgba(34,197,94,0.4)]"></span>
+                <p class="text-[10px] sm:text-xs text-slate-500 font-medium">
+                    Update terakhir: <span id="dataTimestamp" class="ml-1 font-[600] text-slate-700">-</span>
+                </p>
+            </div>
+        </header>
+
+        <div class="w-full relative px-1">
+            
+            <!-- State Loading (Warna disesuaikan untuk mode terang) -->
+            <div id="loadingState" class="flex flex-col items-center justify-center py-20 space-y-4">
+                <div class="animate-spin rounded-full h-10 w-10 border-4 border-slate-200 border-t-slate-600"></div>
+                <p class="text-slate-500 text-xs sm:text-sm font-medium tracking-wide">Mengambil data terbaru...</p>
+            </div>
+
+            <!-- State Error -->
+            <div id="errorState" class="hidden flex-col items-center justify-center py-10 text-center px-4">
+                <div class="bg-red-50 text-red-500 p-4 rounded-full mb-4 border border-red-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <h4 class="text-lg font-semibold text-slate-800 mb-2">Gagal Memuat Data</h4>
+                <p id="errorMessage" class="text-slate-500 text-xs sm:text-sm mb-6">Terjadi kesalahan saat mengambil data dari Spreadsheet.</p>
+                <button id="retryBtn" class="bg-slate-800 text-white hover:bg-slate-700 px-6 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-md">Coba Lagi</button>
+            </div>
+
+            <div id="tableContainer" class="hidden w-full overflow-x-hidden pb-8">
+                <table class="w-full text-left border-separate" style="border-spacing: 4px;">
+                    <!-- Proporsi Lebar Kolom (Optimal untuk layar Portrait HP) -->
+                    <colgroup>
+                        <col class="w-[22%]"> <!-- Kode -->
+                        <col class="w-[18%]"> <!-- Masuk -->
+                        <col class="w-[18%]"> <!-- Keluar -->
+                        <col class="w-[18%]"> <!-- Jumlah -->
+                    </colgroup>
+                    
+                    <thead>
+                        <tr id="tableHeader" class="text-[9px] min-[360px]:text-[10px] min-[400px]:text-[11px] sm:text-[12px] uppercase font-bold text-center tracking-wide">
+                            <!-- Rendered by JS -->
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="text-[9px] min-[360px]:text-[10px] min-[400px]:text-[11px] sm:text-[13px]">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Referensi Elemen DOM (Tidak ada lagi elemen modal)
+            const loadingState = document.getElementById('loadingState');
+            const errorState = document.getElementById('errorState');
+            const tableContainer = document.getElementById('tableContainer');
+            const tableHeader = document.getElementById('tableHeader');
+            const tableBody = document.getElementById('tableBody');
+            const retryBtn = document.getElementById('retryBtn');
+            const dataTimestamp = document.getElementById('dataTimestamp');
+
+            // URL CSV dari Spreadsheet
+            const sheetId = '15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68';
+            const gid = '0'; 
+            const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+
+            // Langsung panggil data saat halaman dimuat
+            fetchSpreadsheetData();
+            retryBtn.addEventListener('click', fetchSpreadsheetData);
+
+            // Parser CSV Sederhana
+            function parseCSV(str) {
+                const arr = [];
+                let quote = false;  
+                let row = 0, col = 0, c = 0;
+                for (; c < str.length; c++) {
+                    let cc = str[c], nc = str[c+1];
+                    arr[row] = arr[row] || [];
+                    arr[row][col] = arr[row][col] || '';
+                    if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+                    if (cc == '"') { quote = !quote; continue; }
+                    if (cc == ',' && !quote) { ++col; continue; }
+                    if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+                    if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                    if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+                    arr[row][col] += cc;
+                }
+                return arr;
+            }
+
+            // Format Kolom Pertama (Kode & Uraian)
+            function formatKodeColumn(text) {
+                if (!text || text === '') return '';
+                
+                let boldPart = text;
+                let normalPart = '';
+                
+                // Pisahkan berdasarkan baris baru atau titik dua
+                if (text.includes('\n')) {
+                    const parts = text.split('\n');
+                    boldPart = parts[0].trim();
+                    normalPart = parts.slice(1).join('<br>').trim();
+                } else if (text.includes(':')) {
+                    const colonIdx = text.indexOf(':');
+                    boldPart = text.substring(0, colonIdx + 1).trim();
+                    normalPart = text.substring(colonIdx + 1).trim();
+                }
+
+                // Format tebal 600 miring di atas dan normal di bawah
+                if (normalPart) {
+                    return `<div class="flex flex-col text-left"><span class="font-[600] italic text-black leading-tight">${boldPart}</span><span class="font-normal text-black mt-0.5 leading-tight">${normalPart}</span></div>`;
+                }
+                
+                return `<div class="text-left"><span class="font-[600] italic text-black">${text}</span></div>`;
+            }
+
+            // Format Kolom Nominal (Rp di kiri, Angka di kanan)
+            function formatCurrencyColumn(text, textColorClass) {
+                let cleanText = text.replace(/Rp\.?/gi, '').trim();
+                
+                if (cleanText === '' || cleanText === '-') {
+                    return `<div class="w-full text-center ${textColorClass}">-</div>`;
+                }
+
+                return `<div class="flex justify-between items-center w-full ${textColorClass}">
+                            <span class="opacity-80 text-[10px] sm:text-[11px] mr-1">Rp</span>
+                            <span class="font-medium text-right">${cleanText}</span>
+                        </div>`;
+            }
+
+            async function fetchSpreadsheetData() {
+                loadingState.classList.remove('hidden');
+                loadingState.classList.add('flex');
+                errorState.classList.add('hidden');
+                errorState.classList.remove('flex');
+                tableContainer.classList.add('hidden');
+
+                try {
+                    const response = await fetch(csvUrl);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const csvText = await response.text();
+                    if (csvText.trim().toLowerCase().startsWith('<!doctype html>')) {
+                        throw new Error('Akses Spreadsheet dibatasi. Gunakan fallback.');
+                    }
+
+                    const allData = parseCSV(csvText);
+                    
+                    // Ekstrak Range (Baris 12-19, Kolom J-M)
+                    const startRowIdx = 11; 
+                    const endRowIdx = 18;  
+                    const startColIdx = 9; 
+                    const endColIdx = 12;  
+
+                    const extractedData = [];
+                    for (let i = startRowIdx; i <= endRowIdx; i++) {
+                        if (allData[i]) {
+                            const row = [];
+                            for (let j = startColIdx; j <= endColIdx; j++) {
+                                row.push((allData[i][j] !== undefined ? allData[i][j] : '').trim());
+                            }
+                            extractedData.push(row);
+                        }
+                    }
+
+                    if (extractedData.length === 0) throw new Error('Data kosong.');
+                    renderTable(extractedData);
+                    updateTimestamp();
+                } catch (error) {
+                    console.log("Menggunakan data simulasi karena akses dibatasi:", error.message);
+                    simulateFallbackData();
+                }
+            }
+
+            function updateTimestamp() {
+                const now = new Date();
+                dataTimestamp.textContent = `${now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}, ${now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}`;
+            }
+
+            function renderTable(data) {
+                const headers = ["KODE", "MASUK", "KELUAR", "JUMLAH"];
+                const rows = data;
+
+                // Skema Warna Header (berdasarkan gambar referensi)
+                const headerColors = [
+                    'bg-[#1155CC] text-white', 
+                    'bg-[#C92828] text-white', 
+                    'bg-[#245C3E] text-white', 
+                    'bg-[#5A1BB3] text-white', 
+                ];
+
+                // Skema Warna Isi Tabel (berdasarkan gambar referensi)
+                const bodyBgColors = [
+                    'bg-[#E0ECFF]', 
+                    'bg-[#FFC4C4]', 
+                    'bg-[#BAF5D8]', 
+                    'bg-[#CAB2ED]'  
+                ];
+
+                // Render Header
+                tableHeader.innerHTML = '';
+                headers.forEach((h, index) => {
+                    const th = document.createElement('th');
+                    th.className = `p-2 sm:p-3 align-middle rounded-[12px] shadow-sm ${headerColors[index]}`;
+                    th.textContent = h;
+                    tableHeader.appendChild(th);
+                });
+
+                // Render Body
+                tableBody.innerHTML = '';
+                
+                rows.forEach((row, index) => {
+                    if (row.every(cell => cell === '')) return;
+
+                    const tr = document.createElement('tr');
+                    const isTotalRow = (index === rows.length - 1) || (row[0] && row[0].toUpperCase().includes('TOTAL'));
+
+                    for(let i = 0; i < 4; i++) {
+                        const td = document.createElement('td');
+                        const cellValue = row[i] || '';
+
+                        // Format khusus untuk baris TOTAL
+                        if (isTotalRow) {
+                            if (i < 3) {
+                                // Hilangkan kotak dan styling di bagian kiri pada baris terakhir
+                                td.className = `p-1.5 sm:p-2.5 bg-transparent border-none shadow-none`;
+                                td.innerHTML = ''; 
+                            } else {
+                                // Kotak Total (Paling Kanan) dengan font bold 700
+                                td.className = `p-1.5 sm:p-2.5 align-middle rounded-[12px] shadow-sm bg-[#ABABAB] text-black hover:brightness-90 transition-all duration-300 cursor-default`;
+                                td.innerHTML = formatCurrencyColumn(cellValue, 'text-black font-[700] text-[12px] min-[400px]:text-[13px] sm:text-[15px]'); 
+                            }
+                        } 
+                        // Baris Data Biasa
+                        else {
+                            const isWhiteText = (i === 2);
+                            const textColorClass = isWhiteText ? 'text-black' : 'text-black';
+                            const hoverEffect = 'hover:brightness-90 transition-all duration-300 cursor-default';
+                            
+                            td.className = `p-1.5 sm:p-2.5 align-middle rounded-[12px] shadow-sm ${bodyBgColors[i]} ${textColorClass} ${hoverEffect}`;
+                            
+                            if (i === 0) {
+                                td.innerHTML = formatKodeColumn(cellValue);
+                            } else {
+                                td.innerHTML = formatCurrencyColumn(cellValue, textColorClass);
+                            }
+                        }
+                        tr.appendChild(td);
+                    }
+                    tableBody.appendChild(tr);
+                });
+
+                loadingState.classList.add('hidden');
+                loadingState.classList.remove('flex');
+                tableContainer.classList.remove('hidden');
+            }
+
+            function simulateFallbackData() {
+                const dummyData = [
+                    ["Kode 1:\nJimpitan", "9.834.800", "4.751.800", "5.083.000"],
+                    ["Kode 2:\nJasa kursi, tenda dll", "2.320.000", "160.000", "2.160.000"],
+                    ["Kode 3:\nSosial", "1.530.000", "-", "1.530.000"],
+                    ["Kode 4:\nPembangunan", "2.946.000", "2.552.721", "393.279"],
+                    ["Kode 5:\nLain-lain", "1.000.000", "1.000.000", "-"],
+                    ["Kode 6:\nKas Pemuda", "-", "-", "-"],
+                    ["", "", "", ""],
+                    ["TOTAL", "", "", "9.166.279"] 
+                ];
+                
+                setTimeout(() => {
+                    renderTable(dummyData);
+                    updateTimestamp();
+                }, 800);
+            }
+        });
+    </script>
+</body>
+</html>

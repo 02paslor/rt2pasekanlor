@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi RT 02 Pasekan Lor</title>
+    
+    <!-- KETERANGAN: Mengimpor Font Poppins (Maksimal ketebalan 700 seperti yang direquest) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- KETERANGAN: Mengimpor Ikon untuk Menu -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- KETERANGAN: Menggunakan Tailwind CSS untuk tata letak yang cepat & responsif (Desktop, Tablet, Mobile) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        // KETERANGAN PENGATURAN WARNA: 
+        // Anda bisa mengedit kode hex di bawah ini untuk mengubah warna utama website
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#1155CC',  // Warna aksen 1
+                        'brand-tosca': '#11B9CC', // Warna aksen 2
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* KETERANGAN DESAIN GLASSMORPHISM */
+        body {
+            /* Background gradien menggunakan warna brand */
+            background: linear-gradient(135deg, #1155CC 0%, #0d3d99 40%, #11B9CC 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        /* Kelas utama pembuat efek kaca (Glass) */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* Input form style di dalam glass */
+        .glass-input {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #11B9CC;
+            box-shadow: 0 0 10px rgba(17, 185, 204, 0.5);
+        }
+        .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* KETERANGAN: Ubah transisi ukuran teks & tombol */
+        .nav-btn {
+            transition: all 0.3s;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #11B9CC;
+            transform: translateX(5px);
+        }
+
+        /* Scrollbar kustom */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(17, 185, 204, 0.5); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(17, 185, 204, 0.8); }
+
+        .hide { display: none !important; }
+        
+        /* Animasi Transisi Halaman */
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="font-poppins text-sm md:text-base">
+
+    <!-- ========================================== -->
+    <!-- HALAMAN LOGIN (Sesuai Request: 0203 / 0203)-->
+    <!-- ========================================== -->
+    <div id="loginSection" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1155CC]/40 backdrop-blur-sm">
+        <div class="glass-panel rounded-2xl p-8 max-w-sm w-full text-center">
+            <!-- Logo / Icon -->
+            <div class="w-20 h-20 mx-auto bg-gradient-to-tr from-brand-blue to-brand-tosca rounded-full flex items-center justify-center mb-6 shadow-lg border-2 border-white/30">
+                <i class="fas fa-users text-3xl"></i>
+            </div>
+            
+            <!-- KETERANGAN: Ubah Teks Judul Login Di Sini -->
+            <h2 class="text-2xl font-bold mb-2">Login RT 02</h2>
+            <p class="text-white/70 mb-6 text-sm">Pasekan Lor</p>
+            
+            <div class="space-y-4">
+                <input type="text" id="username" placeholder="Username" class="glass-input w-full px-4 py-3 rounded-lg text-white font-medium" />
+                <input type="password" id="password" placeholder="Password" class="glass-input w-full px-4 py-3 rounded-lg text-white font-medium" />
+                
+                <p id="loginError" class="text-red-300 text-sm hidden font-medium">Username atau Password salah!</p>
+                
+                <button onclick="prosesLogin()" class="w-full py-3 rounded-lg font-bold shadow-lg transition-transform hover:scale-105 active:scale-95 text-white" style="background: linear-gradient(90deg, #1155CC, #11B9CC);">
+                    MASUK SEKARANG
+                </button>
+            </div>
+            <p class="mt-6 text-xs text-white/50">Internal Access Only &copy; 2026</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- APLIKASI UTAMA (Setelah Login)             -->
+    <!-- ========================================== -->
+    <div id="mainApp" class="hide flex flex-col md:flex-row h-screen overflow-hidden">
+        
+        <!-- SIDEBAR / NAVBAR (Mirip Skema Central Print tapi Vertikal di Desktop, Top di Mobile) -->
+        <aside class="glass-panel w-full md:w-64 flex-shrink-0 flex flex-col md:h-full z-40 border-r border-white/20">
+            <!-- Header Sidebar -->
+            <div class="p-4 flex items-center justify-between md:justify-center border-b border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-brand-tosca">
+                        <i class="fas fa-leaf text-brand-tosca"></i>
+                    </div>
+                    <!-- KETERANGAN: Ubah Teks Header Web Di Sini -->
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight tracking-wide">RT 02</h1>
+                        <p class="text-xs text-brand-tosca font-medium">Pasekan Lor</p>
+                    </div>
+                </div>
+                <!-- Tombol Menu Mobile -->
+                <button id="mobileMenuBtn" class="md:hidden text-2xl p-2 rounded-lg hover:bg-white/10" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- MENU NAVIGASI (12 Halaman) -->
+            <nav id="navMenu" class="hidden md:flex flex-col gap-1 p-3 overflow-y-auto h-[calc(100vh-80px)]">
+                <!-- KETERANGAN: Ubah Teks Menu atau Ikon FontAwesome di sini -->
+                <button onclick="bukaHalaman('home')" class="nav-btn active flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-home w-5 text-center"></i> 1. HOME
+                </button>
+                <button onclick="bukaHalaman('keuangan')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-wallet w-5 text-center"></i> 2. KEUANGAN
+                </button>
+                <button onclick="bukaHalaman('pengurus')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-sitemap w-5 text-center"></i> 3. PENGURUS
+                </button>
+                <button onclick="bukaHalaman('inventaris')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-box-open w-5 text-center"></i> 4. INVENTARIS
+                </button>
+                <button onclick="bukaHalaman('tatatertib')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-balance-scale w-5 text-center"></i> 5. TATA TERTIB
+                </button>
+                <button onclick="bukaHalaman('informasi')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-bullhorn w-5 text-center"></i> 6. INFORMASI
+                </button>
+                <button onclick="bukaHalaman('galeri')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-images w-5 text-center"></i> 7. GALERI
+                </button>
+                <button onclick="bukaHalaman('formwarga')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-file-signature w-5 text-center"></i> 8. FORM WARGA
+                </button>
+                <button onclick="bukaHalaman('ronda')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-user-shield w-5 text-center"></i> 9. RONDA
+                </button>
+                <button onclick="bukaHalaman('scanner')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-qrcode w-5 text-center"></i> 10. SCANNER
+                </button>
+                <button onclick="bukaHalaman('usaha')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-store w-5 text-center"></i> 11. USAHA WARGA
+                </button>
+                <button onclick="bukaHalaman('agustusan')" class="nav-btn flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm">
+                    <i class="fas fa-flag text-red-500 w-5 text-center"></i> 12. AGUSTUSAN
+                </button>
+
+                <div class="mt-8 pt-4 border-t border-white/10">
+                    <button onclick="logout()" class="w-full flex items-center gap-3 p-3 rounded-lg text-left font-medium text-sm hover:bg-red-500/20 text-red-200">
+                        <i class="fas fa-sign-out-alt w-5 text-center"></i> Keluar
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- AREA KONTEN HALAMAN UTAMA -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 relative">
+            
+            <!-- 1. HALAMAN HOME -->
+            <section id="page-home" class="page-section fade-in">
+                <!-- KETERANGAN: Ubah Ukuran Teks (text-3xl) dan Teks Judul -->
+                <h2 class="text-3xl font-bold mb-6">Dashboard RT 02</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-panel p-6 rounded-xl border-l-4 border-l-brand-tosca">
+                        <h3 class="text-white/70 text-sm font-semibold mb-1">Total Warga</h3>
+                        <p class="text-4xl font-bold">124 <span class="text-sm font-normal text-white/50">Jiwa</span></p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-xl border-l-4 border-l-brand-blue">
+                        <h3 class="text-white/70 text-sm font-semibold mb-1">Kas RT Saat Ini</h3>
+                        <p class="text-3xl font-bold">Rp 2.450.000</p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-xl border-l-4 border-l-yellow-400">
+                        <h3 class="text-white/70 text-sm font-semibold mb-1">Agenda Terdekat</h3>
+                        <p class="text-lg font-semibold mt-1">Kerja Bakti (Minggu)</p>
+                    </div>
+                </div>
+                
+                <div class="glass-panel mt-8 p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4 border-b border-white/20 pb-2">Selamat Datang Pengurus</h3>
+                    <p class="text-white/80 leading-relaxed text-sm md:text-base">
+                        Sistem informasi web RT 02 Pasekan Lor. Gunakan menu di samping untuk mengelola keuangan, inventaris, hingga data warga. Aplikasi ini terhubung langsung secara 2 arah dengan Google Sheets.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 2. HALAMAN KEUANGAN (Contoh 2 Arah Google Sheets) -->
+            <section id="page-keuangan" class="page-section hide fade-in">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                    <h2 class="text-3xl font-bold">Data Keuangan</h2>
+                    <button onclick="bukaModal('modalTambahKeuangan')" class="bg-brand-tosca hover:bg-brand-blue text-white px-5 py-2 rounded-lg font-semibold transition-colors shadow-lg">
+                        <i class="fas fa-plus mr-2"></i> Tambah Kas
+                    </button>
+                </div>
+                
+                <div class="glass-panel rounded-xl overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-black/20 text-white/90 text-sm">
+                                    <th class="p-4 font-semibold border-b border-white/10">Tanggal</th>
+                                    <th class="p-4 font-semibold border-b border-white/10">Keterangan</th>
+                                    <th class="p-4 font-semibold border-b border-white/10">Pemasukan</th>
+                                    <th class="p-4 font-semibold border-b border-white/10">Pengeluaran</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-keuangan" class="text-sm">
+                                <!-- Data akan dimuat dari Google Sheets di sini -->
+                                <tr>
+                                    <td colspan="4" class="p-6 text-center text-white/60">
+                                        <i class="fas fa-spinner fa-spin mr-2"></i> Mengambil data dari Spreadsheet...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. HALAMAN FORM WARGA (Contoh Input Form) -->
+            <section id="page-formwarga" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">Pendataan Warga Baru</h2>
+                <div class="glass-panel p-6 rounded-xl max-w-2xl">
+                    <form id="formWarga" onsubmit="simpanDataWarga(event)">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm mb-1 text-white/80">Nama Lengkap</label>
+                                <input type="text" id="warga_nama" required class="glass-input w-full p-2.5 rounded-lg" placeholder="Contoh: Budi Santoso">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-1 text-white/80">Nomor KK / NIK</label>
+                                <input type="number" id="warga_nik" required class="glass-input w-full p-2.5 rounded-lg" placeholder="340xxxx">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-1 text-white/80">Blok / Nomor Rumah</label>
+                                <input type="text" id="warga_blok" required class="glass-input w-full p-2.5 rounded-lg" placeholder="Blok A No. 12">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-1 text-white/80">Status Tempat Tinggal</label>
+                                <select id="warga_status" class="glass-input w-full p-2.5 rounded-lg bg-transparent">
+                                    <option value="Milik Sendiri" class="text-black">Milik Sendiri</option>
+                                    <option value="Kontrak/Kos" class="text-black">Kontrak/Kos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" id="btnSubmitWarga" class="w-full bg-brand-blue hover:bg-brand-tosca py-3 rounded-lg font-bold transition-colors">
+                            Simpan Data ke Spreadsheet
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- HALAMAN-HALAMAN LAINNYA (Struktur Dasar siap dikembangkan) -->
+            <!-- 3. PENGURUS -->
+            <section id="page-pengurus" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">Struktur Pengurus RT 02</h2>
+                <div class="glass-panel p-8 rounded-xl text-center">
+                    <i class="fas fa-tools text-5xl mb-4 text-white/50"></i>
+                    <p>Halaman Pengurus (Siap disambungkan ke Spreadsheet Sheet "Pengurus")</p>
+                </div>
+            </section>
+            
+            <!-- 4. INVENTARIS -->
+            <section id="page-inventaris" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">Data Inventaris</h2>
+                <div class="glass-panel p-8 rounded-xl text-center">
+                    <i class="fas fa-boxes text-5xl mb-4 text-white/50"></i>
+                    <p>Data barang-barang milik RT (Tenda, Kursi, Sound System).</p>
+                </div>
+            </section>
+
+            <!-- 5. TATA TERTIB -->
+            <section id="page-tatatertib" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">Tata Tertib Lingkungan</h2>
+                <div class="glass-panel p-6 rounded-xl space-y-4">
+                    <!-- KETERANGAN: Edit Teks Tata Tertib -->
+                    <div class="p-4 bg-black/10 rounded-lg border-l-4 border-brand-tosca">
+                        <h4 class="font-bold mb-1">1. Wajib Lapor 2x24 Jam</h4>
+                        <p class="text-sm text-white/80">Tamu yang menginap wajib dilaporkan kepada ketua RT atau petugas keamanan.</p>
+                    </div>
+                    <div class="p-4 bg-black/10 rounded-lg border-l-4 border-brand-blue">
+                        <h4 class="font-bold mb-1">2. Iuran Wajib</h4>
+                        <p class="text-sm text-white/80">Membayar iuran kebersihan dan kas RT selambat-lambatnya tanggal 10 setiap bulan.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. INFORMASI -->
+            <section id="page-informasi" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">Papan Informasi</h2>
+                <div class="glass-panel p-8 rounded-xl text-center">
+                    <p>Pengumuman dan berita terbaru warga RT 02.</p>
+                </div>
+            </section>
+
+            <!-- 7. GALERI -->
+            <section id="page-galeri" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">Galeri Kegiatan</h2>
+                <div class="glass-panel p-6 rounded-xl">
+                    <p class="text-sm mb-4">Catatan: Untuk menampilkan gambar dari folder Google Drive Anda secara langsung, Anda perlu mengubah permission gambar menjadi Public dan menggunakan URL khusus.</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <!-- Placeholder Gambar -->
+                        <div class="aspect-square bg-white/10 rounded-lg flex items-center justify-center border border-white/20">
+                            <i class="fas fa-image text-3xl text-white/30"></i>
+                        </div>
+                        <div class="aspect-square bg-white/10 rounded-lg flex items-center justify-center border border-white/20">
+                            <i class="fas fa-image text-3xl text-white/30"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. RONDA -->
+            <section id="page-ronda" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">Jadwal Siskamling / Ronda</h2>
+                <div class="glass-panel p-8 rounded-xl text-center">
+                    <p>Jadwal jaga malam warga.</p>
+                </div>
+            </section>
+
+            <!-- 10. SCANNER -->
+            <section id="page-scanner" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">Scanner Kehadiran/QR</h2>
+                <div class="glass-panel p-8 rounded-xl flex flex-col items-center">
+                    <div class="w-48 h-48 bg-white/5 border-2 border-dashed border-white/40 flex items-center justify-center rounded-xl mb-4">
+                        <i class="fas fa-qrcode text-5xl text-white/50"></i>
+                    </div>
+                    <button class="bg-brand-tosca px-6 py-2 rounded-lg font-bold">Aktifkan Kamera</button>
+                </div>
+            </section>
+
+            <!-- 11. USAHA WARGA -->
+            <section id="page-usaha" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">UMKM & Usaha Warga</h2>
+                <div class="glass-panel p-8 rounded-xl text-center">
+                    <p>Katalog produk jualan dari warga RT 02 Pasekan Lor.</p>
+                </div>
+            </section>
+
+            <!-- 12. AGUSTUSAN -->
+            <section id="page-agustusan" class="page-section hide fade-in">
+                <h2 class="text-3xl font-bold mb-6">Panitia HUT RI (Agustusan)</h2>
+                <div class="glass-panel p-8 rounded-xl text-center border border-red-500/30">
+                    <i class="fas fa-flag text-5xl mb-4 text-red-500/80"></i>
+                    <p>Khusus kepanitiaan, lomba, dan anggaran 17 Agustus.</p>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- MODAL POPUP (Contoh untuk Tambah Kas)      -->
+            <!-- ========================================== -->
+            <div id="modalTambahKeuangan" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm hide">
+                <div class="glass-panel rounded-2xl p-6 w-full max-w-md relative border border-brand-tosca">
+                    <button onclick="tutupModal('modalTambahKeuangan')" class="absolute top-4 right-4 text-white/60 hover:text-white">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                    <h3 class="text-xl font-bold mb-4">Tambah Data Kas</h3>
+                    
+                    <form onsubmit="simpanKas(event)">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm mb-1">Tanggal</label>
+                                <input type="date" id="kas_tgl" required class="glass-input w-full p-2.5 rounded-lg text-black">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-1">Keterangan</label>
+                                <input type="text" id="kas_ket" required placeholder="Contoh: Iuran Warga Blok A" class="glass-input w-full p-2.5 rounded-lg">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm mb-1">Pemasukan (Rp)</label>
+                                    <input type="number" id="kas_in" value="0" class="glass-input w-full p-2.5 rounded-lg">
+                                </div>
+                                <div>
+                                    <label class="block text-sm mb-1">Pengeluaran (Rp)</label>
+                                    <input type="number" id="kas_out" value="0" class="glass-input w-full p-2.5 rounded-lg">
+                                </div>
+                            </div>
+                            <button type="submit" id="btnSimpanKas" class="w-full bg-brand-tosca hover:bg-brand-blue py-3 mt-2 rounded-lg font-bold transition-colors">
+                                Simpan Kas
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LOGIKA JAVASCRIPT                          -->
+    <!-- ========================================== -->
+    <script>
+        // ==========================================
+        // KETERANGAN: KONFIGURASI URL GOOGLE APPS SCRIPT
+        // MASUKKAN URL WEB APP ANDA DI SINI SETELAH DEPLOY SCRIPT .gs
+        // ==========================================
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbz_XXXXXXXXXX_CONTOH_SAJA/exec'; 
+        
+        // --- LOGIKA LOGIN (Sesuai Permintaan: 0203 / 0203) ---
+        function prosesLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const errorMsg = document.getElementById('loginError');
+
+            if (user === '0203' && pass === '0203') {
+                document.getElementById('loginSection').classList.add('hide');
+                document.getElementById('mainApp').classList.remove('hide');
+            } else {
+                errorMsg.classList.remove('hidden');
+                setTimeout(() => errorMsg.classList.add('hidden'), 3000);
+            }
+        }
+
+        function logout() {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('mainApp').classList.add('hide');
+            document.getElementById('loginSection').classList.remove('hide');
+            bukaHalaman('home'); // Reset ke home saat logout
+        }
+
+        // --- LOGIKA NAVIGASI 12 HALAMAN ---
+        function bukaHalaman(pageId) {
+            // Sembunyikan semua section
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.add('hide'));
+            
+            // Tampilkan section yang dituju
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.remove('hide');
+            }
+
+            // Ubah state aktif di tombol sidebar
+            const btns = document.querySelectorAll('.nav-btn');
+            btns.forEach(btn => btn.classList.remove('active', 'border-l-4', 'border-brand-tosca', 'bg-white/10'));
+            
+            // Cari tombol yang diklik berdasarkan atribut onclick (Simpel matching)
+            const activeBtn = Array.from(btns).find(b => b.getAttribute('onclick').includes(pageId));
+            if(activeBtn) {
+                activeBtn.classList.add('active', 'border-l-4', 'border-brand-tosca', 'bg-white/10');
+            }
+
+            // Tutup menu mobile jika sedang terbuka
+            const navMenu = document.getElementById('navMenu');
+            if (window.innerWidth < 768 && !navMenu.classList.contains('hidden')) {
+                navMenu.classList.add('hidden');
+            }
+
+            // Jika membuka Keuangan, otomatis ambil data
+            if (pageId === 'keuangan') {
+                bacaDataKeuangan();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- LOGIKA MODAL ---
+        function bukaModal(id) {
+            document.getElementById(id).classList.remove('hide');
+        }
+        function tutupModal(id) {
+            document.getElementById(id).classList.add('hide');
+        }
+
+        // ==========================================
+        // FUNGSI 2 ARAH (BACA & TULIS KE GOOGLE SHEETS)
+        // ==========================================
+
+        // Fungsi Generik untuk mengirim POST request ke GS
+        async function fetchGoogleSheets(payload) {
+            if (GAS_URL.includes('CONTOH_SAJA')) {
+                alert("PERHATIAN: URL Google Apps Script belum diisi. Anda harus mendeploy backend.gs terlebih dahulu dan memasukkan URL-nya ke baris const GAS_URL.");
+                return null;
+            }
+            try {
+                const response = await fetch(GAS_URL, {
+                    method: 'POST',
+                    headers: {
+                        // Header text/plain SANGAT PENTING untuk mencegah error blokir CORS dari browser
+                        'Content-Type': 'text/plain;charset=utf-8', 
+                    },
+                    body: JSON.stringify(payload),
+                    // Google Apps Script selalu melakukan redirect internal, ini wajib diaktifkan
+                    redirect: 'follow' 
+                });
+                return await response.json();
+            } catch (error) {
+                console.error("Error GS:", error);
+                alert("Terjadi kesalahan koneksi ke Spreadsheet.");
+                return null;
+            }
+        }
+
+        // CONTOH BACA DATA (Halaman Keuangan)
+        async function bacaDataKeuangan() {
+            const tbody = document.getElementById('tabel-keuangan');
+            tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-white/60"><i class="fas fa-spinner fa-spin mr-2"></i> Sinkronisasi Data...</td></tr>`;
+            
+            // Nama sheet harus sama persis dengan yang ada di Spreadsheet Anda (Contoh: "Keuangan")
+            const payload = { action: "read", sheetName: "Keuangan" }; 
+            
+            const res = await fetchGoogleSheets(payload);
+            
+            if (res && res.status === 'success') {
+                if (res.data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center">Belum ada data keuangan.</td></tr>`;
+                    return;
+                }
+                
+                tbody.innerHTML = '';
+                res.data.forEach(row => {
+                    // Asumsi kolom Spreadsheet: Tanggal | Keterangan | Pemasukan | Pengeluaran
+                    // Pastikan Header baris ke-1 di Spreadsheet sama persis namanya.
+                    let html = `
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                            <td class="p-4">${row.Tanggal || '-'}</td>
+                            <td class="p-4">${row.Keterangan || '-'}</td>
+                            <td class="p-4 text-green-300">Rp ${row.Pemasukan ? Number(row.Pemasukan).toLocaleString('id-ID') : '0'}</td>
+                            <td class="p-4 text-red-300">Rp ${row.Pengeluaran ? Number(row.Pengeluaran).toLocaleString('id-ID') : '0'}</td>
+                        </tr>
+                    `;
+                    tbody.insertAdjacentHTML('beforeend', html);
+                });
+            }
+        }
+
+        // CONTOH TULIS DATA (Modal Keuangan)
+        async function simpanKas(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btnSimpanKas');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            btn.disabled = true;
+
+            const tgl = document.getElementById('kas_tgl').value;
+            const ket = document.getElementById('kas_ket').value;
+            const ins = document.getElementById('kas_in').value;
+            const outs = document.getElementById('kas_out').value;
+
+            // Pastikan urutan array data sama dengan urutan kolom di Sheet "Keuangan"
+            const payload = {
+                action: "insert",
+                sheetName: "Keuangan",
+                data: [tgl, ket, ins, outs]
+            };
+
+            const res = await fetchGoogleSheets(payload);
+            
+            if (res && res.status === 'success') {
+                alert("Data berhasil disimpan ke Spreadsheet!");
+                tutupModal('modalTambahKeuangan');
+                document.getElementById('kas_ket').value = ''; // Reset
+                bacaDataKeuangan(); // Refresh tabel
+            }
+            
+            btn.innerHTML = 'Simpan Kas';
+            btn.disabled = false;
+        }
+
+        // CONTOH TULIS DATA (Form Warga)
+        async function simpanDataWarga(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btnSubmitWarga');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim Data...';
+            btn.disabled = true;
+
+            const nama = document.getElementById('warga_nama').value;
+            const nik = document.getElementById('warga_nik').value;
+            const blok = document.getElementById('warga_blok').value;
+            const status = document.getElementById('warga_status').value;
+
+            // Sheet "DataWarga" harus dibuat di Spreadsheet
+            const payload = {
+                action: "insert",
+                sheetName: "DataWarga", 
+                data: [nama, nik, blok, status]
+            };
+
+            const res = await fetchGoogleSheets(payload);
+            
+            if (res && res.status === 'success') {
+                alert("Data Warga berhasil masuk ke Spreadsheet!");
+                document.getElementById('formWarga').reset();
+            }
+            
+            btn.innerHTML = 'Simpan Data ke Spreadsheet';
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

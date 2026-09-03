@@ -1,6 +1,54 @@
-<iframe 
-  src="https://script.google.com/macros/s/AKfycbzBkCtylvSySnkagg3iWxJ0xPvoUtBvfCY57UwJRBGS0hrOlGiI0D5XdJ6adom_SbWevw/exec" 
-  style="position: fixed; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none; margin: 0; padding: 0; overflow: hidden; z-index: 999999;"
-  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
-  allow="geolocation; microphone; camera">
-</iframe>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V6G930LME8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V6G930LME8');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Title Web -->
+    <title>Aplikasi Data Warga Terpadu </title>
+    
+    <!-- Deskripsi Web (SEO) -->
+    <meta name="description" content="Portal sistem informasi, direktori, jadwal ronda, dan manajemen kas warga RT 2 Pasekan Lor.">
+    
+    <!-- Favicon (Ikon Web) -->
+    <!-- Anda harus mengunggah file favicon.ico atau logo.png ke repository GitHub Anda -->
+    <link rel="icon" type="image/x-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_aGLFljfJjLunDqRD8YAheBNctXSfd0pVdKhQHhkVXpHIlv6h7XrVhLFjeojr_i1xdjvM3y7c2ieYkbrck3QEhZbQwX1vF2vv1jxzTkA2iOPggys3GvtG1YFqXTcj-9NGSd1PWn7Gs5IPlMnAlLfW03WOhfTi_TNhjbIFWblNx2H_I1eAYbOQXfoAE8Y/s1600/Thumb%20-%20Biru%20Putih.png">
+    <!-- Jika ikon Anda formatnya PNG, gunakan baris di bawah ini dan hapus baris atas: -->
+    <!-- <link rel="icon" type="image/png" href="logo.png"> -->
+
+    <style>
+        /* CSS untuk membuat iframe memenuhi seluruh layar tanpa margin */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Mencegah munculnya scrollbar ganda */
+            background-color: #f4f6f9;
+        }
+
+        #app-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- URL Exec dari Google Apps Script dimasukkan di sini -->
+    <iframe 
+        id="app-frame" 
+        src="https://script.google.com/macros/s/AKfycbzBkCtylvSySnkagg3iWxJ0xPvoUtBvfCY57UwJRBGS0hrOlGiI0D5XdJ6adom_SbWevw/exec" 
+        allowfullscreen>
+    </iframe>
+</body>
+</html>

@@ -61,14 +61,6 @@
         .fixed-top-bar.shrink .header-left img { height: 25px; }
         .fixed-top-bar.shrink .header-slogan { font-size: 0; opacity: 0; margin-top: 0; height: 0; }
         .fixed-top-bar.shrink .title-card-panel { padding: 10px 20px; }
-        
-        .btn-darurat { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: #ffffff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; gap: 6px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-darurat:active { transform: translateY(1px) scale(0.95); }
-        .btn-darurat:hover { transform: translateY(0) scale(1.03); filter: brightness(1.1); }
-        .fixed-top-bar.shrink .btn-darurat { padding: 3px 8px; font-size: 9px; }
-        
-        .blink-light { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: blinkAnimation 2.4s infinite ease-in-out; }
-        @keyframes blinkAnimation { 0%, 33% { background-color: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 4px #22c55e; } 67%, 100% { background-color: #ffffff; box-shadow: 0 0 10px #ffffff, 0 0 4px #ffffff; } }
 
         .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
         
@@ -161,7 +153,7 @@
         .input-icon-wrapper { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 15px; font-weight: 600; color: #1155CC; z-index: 10; }
         .nominal-input { width: 100%; padding: 14px 16px 14px 48px; font-size: 16px; font-weight: 600; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; transition: all 0.3s; }
         .nominal-input:focus { outline: none; border-color: #1155CC; box-shadow: 0 0 0 3px rgba(17,85,204,0.12); }
-        .nominal-confirmed-badge { display: none; font-size: 13px; font-weight: 500; color: #15803D; background-color: #F0FDF4; padding: 10px 12px; border-radius: 8px; border-left: 3px solid #22C55E; }
+        .nominal-confirmed-badge { display: none; font-size: 13px; font-weight: 500; color: #16A34A; margin-top: 6px; padding-left: 4px; }
         
         .day-select, .catatan-dropdown { width: 100%; padding: 14px 14px; font-size: 14px; font-weight: 500; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; cursor: pointer; outline: none; transition: border-color 0.2s; }
         .day-select:focus, .catatan-dropdown:focus { border-color: #1155CC; }
@@ -216,49 +208,52 @@
         /* ================= AREA EXPORT STRUK TEMA TERBARU ================= */
         #laporan-export {
             position: fixed; left: 0px; top: 0px; width: 450px; 
-            background: #F4F4F4; padding: 40px 30px;
+            background: #F9FAFB; padding: 40px 30px;
             box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
             visibility: hidden; opacity: 0; pointer-events: none; z-index: -99999; 
         }
         .exp-header-main { text-align: center; margin-bottom: 20px; width: 100%; }
-        .exp-main-title { font-size: 34px; font-weight: 600; color: #1155CC; margin-bottom: 4px; }
+        .exp-main-title { font-size: 34px; font-weight: 700; color: #1155CC; margin-bottom: 4px; }
         .exp-sub-title { font-size: 14px; font-weight: 400; color: #64748B; }
         
         .exp-blue-banner { background: #1155CC; border-radius: 16px; padding: 20px 24px; width: 100%; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 25px; box-sizing: border-box; }
-        .exp-banner-date { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+        .exp-banner-date { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
         .exp-banner-time { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
-        .exp-banner-amount { font-size: 42px; font-weight: 600; }
+        .exp-banner-amount { font-size: 42px; font-weight: 700; }
         
-        .exp-section-day-title { font-size: 18px; font-weight: 600; color: #64748B; text-align: center; width: 100%; margin-bottom: 12px; }
+        .exp-section-day-title { font-size: 18px; font-weight: 700; color: #64748B; text-align: center; width: 100%; margin-bottom: 12px; }
         .exp-section-day-title span { color: #DC2626; }
         
-        .exp-list-kehadiran { width: 100%; display: flex; flex-direction: column; margin-bottom: 25px; border-radius: 12px; overflow: hidden; background: #FFF; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .exp-list-kehadiran { width: 100%; display: flex; flex-direction: column; margin-bottom: 20px; border-radius: 12px; overflow: hidden; }
         
-        .exp-warga-row { width: 100%; padding: 14px 20px; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; border-bottom: 2px solid #FFF; }
+        .exp-warga-row { width: 100%; padding: 12px 16px; font-size: 16px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; border-bottom: 2px solid #FFF; }
         .exp-warga-row:last-child { border-bottom: none; }
         .exp-warga-left { display: flex; align-items: center; gap: 14px; }
-        .exp-number-circle { width: 28px; height: 28px; background: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .exp-number-circle { width: 28px; height: 28px; background: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
         
-        .exp-warga-row.status-hadir { background-color: #D1F2D9; color: #059669; }
-        .exp-warga-row.status-hadir .exp-number-circle { color: #059669; }
-        .exp-warga-row.status-izin { background-color: #DBEAFE; color: #2563EB; } 
-        .exp-warga-row.status-izin .exp-number-circle { color: #2563EB; }
-        .exp-warga-row.status-absen { background-color: #FCD5CE; color: #C0392B; } 
-        .exp-warga-row.status-absen .exp-number-circle { color: #C0392B; }
-        .exp-status-text { font-size: 15px; font-weight: 600; }
+        .exp-warga-row.status-hadir { background-color: #D1F2D9; color: #065F46; }
+        .exp-warga-row.status-hadir .exp-number-circle { color: #065F46; }
+        .exp-warga-row.status-izin { background-color: #DBEAFE; color: #1E3A8A; } 
+        .exp-warga-row.status-izin .exp-number-circle { color: #1E3A8A; }
+        .exp-warga-row.status-absen { background-color: #FCD5CE; color: #991B1B; } 
+        .exp-warga-row.status-absen .exp-number-circle { color: #991B1B; }
+        .exp-status-text { font-size: 15px; font-weight: 700; }
         
-        .exp-catatan-section { width: 100%; display: flex; flex-direction: column; align-items: center; }
-        .exp-catatan-container { width: 100%; background: #FFFFFF; border-radius: 16px; padding: 20px 24px; min-height: 120px; box-sizing: border-box; background-image: repeating-linear-gradient(transparent, transparent 31px, #CBD5E1 31px, #CBD5E1 32px); line-height: 32px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .exp-summary-pills { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; width: 100%; }
+        .exp-pill { padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 600; color: #333; }
+        .pill-hadir { background: #D1F2D9; }
+        .pill-izin { background: #DBEAFE; }
+        .pill-alpha { background: #FCD5CE; }
+        .pill-tot { background: #D1D5DB; }
+
+        .exp-catatan-section { width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+        .exp-catatan-container { width: 100%; background: transparent; border: 1px solid #94A3B8; border-radius: 12px; padding: 16px 20px; min-height: 120px; box-sizing: border-box; }
         .exp-catatan-content { font-size: 15px; font-weight: 600; color: #334155; white-space: pre-wrap; margin-top: -4px; min-height: 80px; }
 
-        .exp-footer-info { display: flex; flex-direction: column; align-items: center; margin-top: 25px; width: 100%; gap: 6px; }
-        .exp-footer-label { font-size: 16px; font-weight: 500; color: #64748B; }
-        .exp-summary-text { font-size: 18px; font-weight: 600; }
-        .exp-summary-text .h { color: #059669; }
-        .exp-summary-text .i { color: #2563EB; }
-        .exp-summary-text .a { color: #DC2626; }
-        .exp-id-string { font-size: 16px; font-weight: 500; color: #64748B; margin-bottom: 12px; }
-        .exp-thanks-badge { background: #1155CC; color: #FFF; font-size: 14px; font-weight: 600; padding: 12px 24px; border-radius: 30px; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(17,85,204,0.3); }
+        .exp-footer-info { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 4px; }
+        .exp-id-laporan-label { font-size: 14px; color: #64748B; font-weight: 400; text-align: center; }
+        .exp-id-laporan-val { font-size: 15px; color: #475569; font-weight: 700; margin-bottom: 16px; text-align: center; }
+        .exp-thanks-btn { background: #1155CC; color: #FFF; font-size: 15px; font-weight: 700; padding: 14px 20px; border-radius: 10px; width: 100%; text-align: center; box-sizing: border-box; letter-spacing: 0.5px; }
 
         /* ================= CSS ALTRUIS & CUSTOM INPUT ================= */
         .altruis-banner {
@@ -294,12 +289,6 @@
             <div class="header-left">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg47-MPnRbJCKU6vW-8U3U8-rs01D7_58RuwVJ9uqeGD2JUuN5eYOMj7J2x0x8IA1NHV7sFryy1ThWJ0Yozvt_Ueoew1tn289v3wu7nbwtFpYPXZN9T-cZgaXgey0DB8tDkazRwbXgzGV6549SynuIE70KNDd1nURitNJCroUp_C8qNWNXTa4B0kGlw5kc/s1600/Logo%20RT%202%20Pasekan%20Lor%202.png" alt="Logo RT 2 Paslor"> 
             </div>
-            <div class="header-right">
-                <button class="btn-darurat" id="openEmModalBtn">
-                    <span>Darurat</span>
-                    <div class="blink-light"></div>
-                </button>
-            </div>
         </header>
 
         <div class="title-card-panel" id="accordionMenuToggle" title="Ketuk untuk membuka menu">
@@ -322,39 +311,39 @@
                     <span>HOME</span>
                 </a>
                 
-                <a href="pengurus.html" class="nav-item" title="Pengurus">
+                <a href="pengurus" class="nav-item" title="Pengurus">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     <span>PENGURUS</span>        
                 </a>
                 
-                <a href="inventaris.html" class="nav-item" title="Inventaris">
+                <a href="inventaris" class="nav-item" title="Inventaris">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                     <span>INVENTARIS</span>
                 </a>
                 
-                <a href="scanner.html" class="nav-item" title="Scanner">
+                <a href="scanner" class="nav-item" title="Scanner">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
                     <span>SCANNER</span>
                 </a>
                 
-                <a href="tatatertib.html" class="nav-item" title="Tata Tertib">
+                <a href="tatatertib" class="nav-item" title="Tata Tertib">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                     <span>TATA TERTIB</span>
                 </a>
                 
-                <a href="galeri.html" class="nav-item" title="Galeri">
+                <a href="galeri" class="nav-item" title="Galeri">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                     <span>GALERI</span>
                 </a>
                 
-                <a href="warga.html" class="nav-item" title="Warga">
+                <a href="warga" class="nav-item" title="Warga">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                     <span>WARGA</span>
                 </a>
                 
-                <a href="agustusan.html" class="nav-item" title="Agustusan">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
-                    <span>AGUSTUSAN</span>
+                <a href="#" class="nav-item btn-ronda disabled" title="POLING" style="pointer-events: none; cursor: not-allowed; opacity: 1; filter: grayscale(100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="M12 16v-4"/><path d="M8 16v-2"/><path d="M16 16v-6"/></svg>
+                    <span>POLING</span>
                 </a>
                 
                 <a href="#" class="nav-item btn-ronda disabled" title="Ronda" style="pointer-events: none; cursor: not-allowed; opacity: 1; filter: grayscale(100%);">
@@ -477,48 +466,12 @@
         </div>
     </div>
 
-    <!-- Ruang kosong untuk mendorong footer ke bawah -->
-    <div class="main-content-space"></div>
-
-    <!-- MODAL DARURAT -->
-    <div class="em-modal-overlay" id="emModalOverlay">
-        <div class="em-modal-content">
-            <div class="em-modal-header">
-                <span class="em-modal-title">Nomor Kontak Darurat</span>
-                <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div class="emergency-list">
-                <a href="tel:110" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                </a>
-                <a href="tel:085173171912" target="blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><line x1="8" y1="9.5" x2="12" y2="9.5"/><line x1="10" y1="7.5" x2="10" y2="11.5"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">Ambulan PKU Gamping</span><span class="emergency-value">0851 7317 1912</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                </a>
-                <a href="tel:02742821346" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-3.3 0-6 2.7-6 6 0 5 6 14 6 14s6-9 6-14c0-3.3-2.7-6-6-6z"/><path d="M12 12c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">Damkar Godean Sleman</span><span class="emergency-value">(0274) 2821346</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                </a>
-                <a href="https://chat.whatsapp.com/31APr2lKc826zA46hGzoZK?s=sh&p=a&mlu=4&ilr=0" target="_blank" class="emergency-item wa">
-                    <div class="logo-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">WhatsApp</span><span class="emergency-value">GRUP WHATSAPP RT 2</span></div>
-                </a>
-            </div>
-        </div>
-    </div>
-
     <!-- MODAL UNIVERSAL -->
-    <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
-        <div class="univ-modal-box" onclick="event.stopPropagation()">
+    <div class="univ-modal-overlay" id="univModalOverlay">
+        <div class="univ-modal-box" id="univModalBox">
             <div class="univ-modal-header">
                 <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
-                <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
+                <button class="btn-close-univ" id="btn-close-univ-modal" title="Tutup">
                     <svg viewBox="0 0 24 24" class="svg-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
@@ -535,7 +488,7 @@
     </footer>
 </div> 
 
-<!-- AREA EXPORT STRUK (TEMA TERBARU RONDA.png) -->
+<!-- AREA EXPORT STRUK (TEMA TERBARU RONDA_2.png) -->
 <div id="laporan-export">
     <div class="exp-header-main">
         <div class="exp-main-title">Laporan Ronda</div>
@@ -550,6 +503,8 @@
 
     <div class="exp-section-day-title" id="exp-judul">Kehadiran Hari <span>-</span></div>
     <div class="exp-list-kehadiran" id="exp-grid-target"></div>
+    
+    <div class="exp-summary-pills" id="exp-summary-pills"></div>
 
     <div class="exp-catatan-section">
         <div class="exp-section-day-title" id="exp-catatan-judul">Catatan Hari <span>-</span></div>
@@ -559,14 +514,23 @@
     </div>
     
     <div class="exp-footer-info">
-        <div class="exp-footer-label">Id Laporan Ronda :</div>
-        <div class="exp-summary-text" id="exp-summary-text">
-            <span class="h">Hadir : 0</span> - <span class="i">Izin : 0</span> - <span class="a">Alpha: 0</span>
-        </div>
-        <div class="exp-id-string" id="exp-id-string">id_laporan</div>
-        <div class="exp-thanks-badge">TERIMA KASIH. TETAP SEMANGAT!</div>
+        <div class="exp-id-laporan-label">Id Laporan Ronda :</div>
+        <div class="exp-id-laporan-val" id="exp-id-string">id_laporan</div>
+        <div class="exp-thanks-btn">TERIMA KASIH. TETAP SEMANGAT!</div>
     </div>
 </div>
+
+<!-- SCRIPT PERLINDUNGAN DASAR (Mencegah Klik Kanan & Inspect Element) -->
+<script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function (e) {
+        if (e.keyCode == 123 || 
+           (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) || 
+           (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+            return false;
+        }
+    };
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -575,73 +539,78 @@
        1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header)
        ========================================================== */
     const topBar = document.getElementById('fixedTopBar');
+    if (topBar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) {
+                topBar.classList.add('shrink');
+            } else {
+                topBar.classList.remove('shrink');
+            }
+        });
+    }
+
     const accordionToggle = document.getElementById('accordionMenuToggle');
     const navAccordionWrapper = document.getElementById('navAccordionWrapper');
     const accordionIcon = document.getElementById('accordionIcon');
 
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 30) {
-            topBar.classList.add('shrink');
-        } else {
-            topBar.classList.remove('shrink');
-        }
-    });
+    if (accordionToggle && navAccordionWrapper && accordionIcon) {
+        accordionToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = navAccordionWrapper.classList.toggle('open');
+            accordionToggle.classList.toggle('open');
+            
+            if (isOpen) {
+                accordionIcon.style.transform = 'rotate(180deg)';
+            } else {
+                accordionIcon.style.transform = 'rotate(0deg)';
+            }
+        });
 
-    accordionToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = navAccordionWrapper.classList.toggle('open');
-        accordionToggle.classList.toggle('open');
-        
-        if (isOpen) {
-            accordionIcon.style.transform = 'rotate(180deg)';
-        } else {
-            accordionIcon.style.transform = 'rotate(0deg)';
-        }
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!navAccordionWrapper.contains(e.target) && e.target !== accordionToggle) {
-            navAccordionWrapper.classList.remove('open');
-            accordionToggle.classList.remove('open');
-            accordionIcon.style.transform = 'rotate(0deg)';
-        }
-    });
-
-    /* MODAL DARURAT */
-    const emModalOverlay = document.getElementById('emModalOverlay');
-    document.getElementById('openEmModalBtn').addEventListener('click', () => { 
-        emModalOverlay.classList.add('active'); 
-        document.body.style.overflow = 'hidden'; 
-    });
-    document.getElementById('closeEmModalBtn').addEventListener('click', () => { 
-        emModalOverlay.classList.remove('active'); 
-        document.body.style.overflow = 'auto'; 
-    });
-    emModalOverlay.addEventListener('click', (e) => { 
-        if (e.target === emModalOverlay) { 
-            emModalOverlay.classList.remove('active'); 
-            document.body.style.overflow = 'auto'; 
-        } 
-    });
+        document.addEventListener('click', (e) => {
+            if (!navAccordionWrapper.contains(e.target) && e.target !== accordionToggle) {
+                navAccordionWrapper.classList.remove('open');
+                accordionToggle.classList.remove('open');
+                accordionIcon.style.transform = 'rotate(0deg)';
+            }
+        });
+    }
 
     /* UNIVERSAL MODAL */
     const univModal = document.getElementById('univModalOverlay');
+    const univModalBox = document.getElementById('univModalBox');
     const univTitle = document.getElementById('univModalTitle');
     const univIframe = document.getElementById('univModalIframe');
+    const btnCloseUnivModal = document.getElementById('btn-close-univ-modal');
     
     function openUnivModal(title, docUrl) {
+        if (!univModal || !univTitle || !univIframe) return;
         univTitle.innerText = title;
         univIframe.src = docUrl;
         univModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
+    
     function closeUnivModal() {
+        if (!univModal || !univIframe) return;
         univModal.classList.remove('active');
         document.body.style.overflow = 'auto';
         setTimeout(() => { univIframe.src = ""; }, 350); 
     }
-    function closeUnivModalOutside(e) { 
-        if (e.target === univModal) closeUnivModal(); 
+    
+    if (univModalBox) {
+        univModalBox.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+    if (univModal) {
+        univModal.addEventListener('click', function(e) {
+            if (e.target === univModal) closeUnivModal(); 
+        });
+    }
+
+    if (btnCloseUnivModal) {
+        btnCloseUnivModal.addEventListener('click', closeUnivModal);
     }
 
     /* ==========================================================
@@ -659,25 +628,30 @@
     };
 
     let dataRonda = {};
-    let originalDataRonda = {}; // Digunakan untuk menandai data warga bawaan (tanpa X)
+    let originalDataRonda = {}; 
     const namaHariID = ["MINGGU", "SENIN", "SELASA", "RABU", "KAMIS", "JUM'AT", "SABTU", "JUMAT", "ALTRUIS"]; 
     let attendanceState = {}; 
+    
     const daySelect = document.getElementById('day-select');
     
     const sunSvg = `<svg class="icon-sun" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
     const moonSvg = `<svg class="icon-moon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
 
     function updateDateTime() {
+        const headerBox = document.getElementById('header-suasana-box');
+        const iconContainer = document.getElementById('time-icon-container');
+        const dateSpan = document.getElementById('current-date');
+        const timeSpan = document.getElementById('current-time');
+        const starsContainer = document.querySelectorAll('.twinkle-star');
+
+        if (!headerBox || !iconContainer || !dateSpan || !timeSpan) return;
+
         const now = new Date();
         const hours = now.getHours();
         
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('current-date').textContent = now.toLocaleDateString('id-ID', options);
-        document.getElementById('current-time').textContent = `${String(hours).padStart(2, '0')} : ${String(now.getMinutes()).padStart(2, '0')} WIB`;
-
-        const headerBox = document.getElementById('header-suasana-box');
-        const iconContainer = document.getElementById('time-icon-container');
-        const starsContainer = document.querySelectorAll('.twinkle-star');
+        dateSpan.textContent = now.toLocaleDateString('id-ID', options);
+        timeSpan.textContent = `${String(hours).padStart(2, '0')} : ${String(now.getMinutes()).padStart(2, '0')} WIB`;
 
         headerBox.className = "header-fancy"; 
         
@@ -693,16 +667,13 @@
             headerBox.classList.add('header-sore');
             iconContainer.innerHTML = moonSvg; 
             starsContainer.forEach(star => star.style.display = 'block');
-        } else if (hours >= 18 || hours < 3) {
-            headerBox.classList.add('header-malam');
-            iconContainer.innerHTML = moonSvg; 
-            starsContainer.forEach(star => star.style.display = 'block');
         } else {
             headerBox.classList.add('header-malam');
             iconContainer.innerHTML = moonSvg; 
             starsContainer.forEach(star => star.style.display = 'block');
         }
     }
+    
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
@@ -726,7 +697,7 @@
 
     async function fetchSheetData() {
         const loadingIndicator = document.getElementById('loading-warga');
-        loadingIndicator.style.display = 'block';
+        if (loadingIndicator) loadingIndicator.style.display = 'block';
         
         namaHariID.forEach(h => { dataRonda[h] = []; originalDataRonda[h] = []; });
 
@@ -778,19 +749,23 @@
                 }
                 if(!hasData) throw new Error("Format tidak dikenali.");
             }
-            loadingIndicator.style.display = 'none';
+            if(loadingIndicator) loadingIndicator.style.display = 'none';
         } catch (error) {
             dataRonda = JSON.parse(JSON.stringify(fallbackData)); 
             originalDataRonda = JSON.parse(JSON.stringify(fallbackData));
-            loadingIndicator.innerHTML = `<svg style="margin-right: 4px; vertical-align: middle;" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Menggunakan data Offline.`;
-            loadingIndicator.style.color = '#DC2626';
+            if(loadingIndicator) {
+                loadingIndicator.innerHTML = `<svg style="margin-right: 4px; vertical-align: middle;" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Menggunakan data Offline.`;
+                loadingIndicator.style.color = '#DC2626';
+            }
         }
         
-        daySelect.disabled = false;
-        const hariIniString = namaHariID[new Date().getDay()];
-        daySelect.value = hariIniString;
-        attendanceState = {}; 
-        renderWargaList(hariIniString);
+        if (daySelect) {
+            daySelect.disabled = false;
+            const hariIniString = namaHariID[new Date().getDay()];
+            daySelect.value = hariIniString;
+            attendanceState = {}; 
+            renderWargaList(hariIniString);
+        }
     }
 
     window.addEventListener('DOMContentLoaded', fetchSheetData);
@@ -798,30 +773,40 @@
     const nominalField = document.getElementById('nominal-field');
     const btnLanjut = document.getElementById('btn-lanjut');
 
-    nominalField.addEventListener('input', function() {
-        let cleanVal = this.value.replace(/[^0-9]/g, '');
-        this.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('id-ID') : '';
-        
-        if(this.value.trim().length > 0 && this.value !== '0') {
-            btnLanjut.disabled = false;
-        } else {
-            btnLanjut.disabled = true;
-        }
-        validateForm();
-    });
+    if (nominalField) {
+        nominalField.addEventListener('input', function() {
+            let cleanVal = this.value.replace(/[^0-9]/g, '');
+            this.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('id-ID') : '';
+            
+            if (btnLanjut) {
+                if(this.value.trim().length > 0 && this.value !== '0') {
+                    btnLanjut.disabled = false;
+                } else {
+                    btnLanjut.disabled = true;
+                }
+            }
+            validateForm();
+        });
+    }
 
-    btnLanjut.addEventListener('click', function() {
-        if(!nominalField.value.trim() || nominalField.value === '0') return alert("Masukkan nominal!");
-        const badge = document.getElementById('nominal-confirmed');
-        badge.innerHTML = `<svg style="margin-right: 4px; vertical-align: middle;" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Tercetak: <strong>Rp ${nominalField.value}</strong>`;
-        badge.style.display = 'block';
-        validateForm();
-    });
+    if (btnLanjut) {
+        btnLanjut.addEventListener('click', function() {
+            if(!nominalField.value.trim() || nominalField.value === '0') return alert("Masukkan nominal!");
+            const badge = document.getElementById('nominal-confirmed');
+            if (badge) {
+                badge.innerHTML = `<div style="display:flex; align-items:center; gap:6px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Tercetak: <strong>Rp ${nominalField.value}</strong></span></div>`;
+                badge.style.display = 'block';
+            }
+            validateForm();
+        });
+    }
 
-    daySelect.addEventListener('change', function() { 
-        attendanceState = {};
-        renderWargaList(this.value); 
-    });
+    if (daySelect) {
+        daySelect.addEventListener('change', function() { 
+            attendanceState = {};
+            renderWargaList(this.value); 
+        });
+    }
 
     /* Fungsi Remove Warga Secara General (Termasuk custom) */
     window.removeWarga = function(wargaName, day) {
@@ -847,7 +832,8 @@
         
         wargaHariIni.forEach((warga, idx) => {
             const isOriginal = originalDataRonda[day] && originalDataRonda[day].includes(warga);
-            let btnHapus = isOriginal ? '' : `<button type="button" style="background:#FEE2E2; border:none; color:#EF4444; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="removeWarga('${warga}', '${day}')" title="Hapus"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>`;
+            let showDelete = !isOriginal || day === 'ALTRUIS'; 
+            let btnHapus = showDelete ? `<button type="button" style="background:#FEE2E2; border:none; color:#EF4444; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="removeWarga('${warga}', '${day}')" title="Hapus"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>` : '';
 
             if(day === 'ALTRUIS') {
                 attendanceState[warga] = 'Hadir'; 
@@ -894,10 +880,17 @@
     function renderWargaList(selectedDay) {
         const listTarget = document.getElementById('warga-list-target');
         const containerBlock = document.getElementById('warga-container-block');
+
+        if (!listTarget || !containerBlock) return;
+
         if(selectedDay === "JUMAT") selectedDay = "JUM'AT";
 
         if(!selectedDay || !dataRonda[selectedDay]) {
-            containerBlock.classList.remove('show'); listTarget.innerHTML = ''; attendanceState = {}; validateForm(); return;
+            containerBlock.classList.remove('show'); 
+            listTarget.innerHTML = ''; 
+            attendanceState = {}; 
+            validateForm(); 
+            return;
         }
 
         let htmlContent = '';
@@ -929,15 +922,15 @@
             `;
         }
 
-        // Form penambahan manual tersedia untuk semua hari (Altruis dan Regular)
+        // Form penambahan manual diletakkan di bawah list warga
         htmlContent += `
-            <div class="altruis-input-group" style="${selectedDay !== 'ALTRUIS' ? 'padding-top: 14px;' : ''}">
+            <div id="dynamic-warga-list"></div>
+            <div class="altruis-input-group" style="padding-top: 14px; border-bottom: none; border-top: 1.5px solid rgba(17, 85, 204, 0.2);">
                 <input type="text" id="custom-name-input" class="altruis-input" placeholder="Isi nama tambahan..." autocomplete="off">
                 <button type="button" id="btn-add-custom" class="btn-add-altruis" title="Tambah Warga">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
             </div>
-            <div id="dynamic-warga-list"></div>
         `;
 
         listTarget.innerHTML = htmlContent;
@@ -960,10 +953,15 @@
             }
         };
         
-        btnAdd.addEventListener('click', addName);
-        inputName.addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') { e.preventDefault(); addName(); }
-        });
+        if (btnAdd) {
+            btnAdd.addEventListener('click', addName);
+        }
+        
+        if (inputName) {
+            inputName.addEventListener('keypress', (e) => {
+                if(e.key === 'Enter') { e.preventDefault(); addName(); }
+            });
+        }
 
         containerBlock.classList.add('show'); 
         validateForm();
@@ -972,198 +970,259 @@
     window.setPresensi = function(wargaName, index, status) {
         attendanceState[wargaName] = status;
         const card = document.getElementById(`warga-card-${index}`);
-        card.classList.remove('state-hadir', 'state-izin', 'state-absen');
-        card.querySelectorAll('.pres-btn').forEach(btn => btn.classList.remove('active'));
+        if (card) {
+            card.classList.remove('state-hadir', 'state-izin', 'state-absen');
+            card.querySelectorAll('.pres-btn').forEach(btn => btn.classList.remove('active'));
 
-        if (status === 'Hadir') { card.classList.add('state-hadir'); card.querySelector('.pres-btn-hadir').classList.add('active'); }
-        else if (status === 'Izin') { card.classList.add('state-izin'); card.querySelector('.pres-btn-izin').classList.add('active'); }
-        else if (status === 'Absen') { card.classList.add('state-absen'); card.querySelector('.pres-btn-absen').classList.add('active'); }
+            if (status === 'Hadir') { card.classList.add('state-hadir'); card.querySelector('.pres-btn-hadir').classList.add('active'); }
+            else if (status === 'Izin') { card.classList.add('state-izin'); card.querySelector('.pres-btn-izin').classList.add('active'); }
+            else if (status === 'Absen') { card.classList.add('state-absen'); card.querySelector('.pres-btn-absen').classList.add('active'); }
+        }
         validateForm(); 
     };
 
     const catatanTextarea = document.getElementById('catatan-text');
-    document.getElementById('catatan-dropdown').addEventListener('change', function() {
-        if(this.value !== "") {
-            catatanTextarea.value = catatanTextarea.value.trim() === '' ? "- " + this.value : catatanTextarea.value.trim() + "\n- " + this.value;
-            this.value = ""; validateForm();
-        }
-    });
-    catatanTextarea.addEventListener('input', validateForm);
+    const catatanDropdown = document.getElementById('catatan-dropdown');
+    
+    if (catatanDropdown) {
+        catatanDropdown.addEventListener('change', function() {
+            if(this.value !== "") {
+                if (catatanTextarea) {
+                    catatanTextarea.value = catatanTextarea.value.trim() === '' ? "- " + this.value : catatanTextarea.value.trim() + "\n- " + this.value;
+                }
+                this.value = ""; 
+                validateForm();
+            }
+        });
+    }
+    
+    if (catatanTextarea) {
+        catatanTextarea.addEventListener('input', validateForm);
+    }
 
-    const btnDownload = document.getElementById('btn-download'), btnWa = document.getElementById('btn-wa');
+    const btnDownload = document.getElementById('btn-download');
+    const btnWa = document.getElementById('btn-wa');
+    
     function validateForm() {
+        if (!nominalField || !daySelect || !catatanTextarea) return;
+
         const hasNominal = nominalField.value.trim().length > 0 && nominalField.value !== '0';
-        const hasConfirmed = document.getElementById('nominal-confirmed').style.display === 'block';
+        const badge = document.getElementById('nominal-confirmed');
+        const hasConfirmed = badge && badge.style.display === 'block';
         const hasDay = daySelect.value !== "";
         const hasCatatan = catatanTextarea.value.trim().length >= 3;
         
         const wargaTerdaftar = Object.values(attendanceState);
         const allWargaFilled = wargaTerdaftar.length > 0 && wargaTerdaftar.every(status => status !== null);
 
-        if (hasNominal && hasConfirmed && hasDay && hasCatatan && allWargaFilled) {
-            btnDownload.disabled = false; 
-            btnWa.disabled = false;
-        } else {
-            btnDownload.disabled = true; 
-            btnWa.disabled = true;
+        if (btnDownload && btnWa) {
+            if (hasNominal && hasConfirmed && hasDay && hasCatatan && allWargaFilled) {
+                btnDownload.disabled = false; 
+                btnWa.disabled = false;
+            } else {
+                btnDownload.disabled = true; 
+                btnWa.disabled = true;
+            }
         }
     }
 
     // ==========================================
     // TOMBOL "BAGIKAN STRUK JPG" (API SHARE/DOWNLOAD)
     // ==========================================
-    btnDownload.addEventListener('click', async function() {
-        let selectedDay = daySelect.value; if(selectedDay === "JUMAT") selectedDay = "JUM'AT";
-        
-        const now = new Date();
-        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-        const shortMonthNames = ["jan", "feb", "mar", "apr", "mei", "jun", "jul", "agu", "sep", "okt", "nov", "des"];
-        
-        let cleanDay = selectedDay.replace("'", ""); // Handle JUM'AT jadi JUMAT
-        cleanDay = cleanDay === 'ALTRUIS' ? 'ALTRUIS' : cleanDay.charAt(0).toUpperCase() + cleanDay.slice(1).toLowerCase();
-
-        // Banner Data Update
-        document.getElementById('exp-tanggal').textContent = `${cleanDay}, ${now.getDate()} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
-        document.getElementById('exp-waktu').textContent = `${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} WIB`;
-        document.getElementById('exp-total-jimpitan').textContent = `Rp${nominalField.value}`;
-        
-        // Judul Bagian Update
-        document.getElementById('exp-judul').innerHTML = selectedDay === 'ALTRUIS' ? 'Daftar <span>ALTRUIS</span>' : `Kehadiran Hari <span>${cleanDay}</span>`;
-        document.getElementById('exp-catatan-judul').innerHTML = selectedDay === 'ALTRUIS' ? 'Catatan <span>ALTRUIS</span>' : `Catatan Hari <span>${cleanDay}</span>`;
-        document.getElementById('exp-catatan-target').textContent = catatanTextarea.value;
-
-        const gridTarget = document.getElementById('exp-grid-target');
-        gridTarget.innerHTML = '';
-
-        const listWarga = dataRonda[selectedDay] || [];
-        let jmlHadir = 0, jmlIzin = 0, jmlAbsen = 0;
-
-        listWarga.forEach(warga => {
-            const status = attendanceState[warga];
-            let rowClass = '', statusLabel = '';
-
-            if(status === 'Hadir') { rowClass = 'status-hadir'; statusLabel = '(HADIR)'; jmlHadir++; } 
-            else if(status === 'Izin') { rowClass = 'status-izin'; statusLabel = '(IZIN)'; jmlIzin++; } 
-            else if(status === 'Absen') { rowClass = 'status-absen'; statusLabel = '(ALPHA)'; jmlAbsen++; }
-
-            const item = document.createElement('div');
-            item.className = `exp-warga-row ${rowClass}`;
-            item.innerHTML = `
-                <div class="exp-warga-left">
-                    <span class="exp-number-circle">${++gridTarget.children.length}</span>
-                    <span>${warga}</span>
-                </div>
-                <span class="exp-status-text">${statusLabel}</span>
-            `;
-            gridTarget.appendChild(item);
-        });
-
-        // Summary Data Update
-        document.getElementById('exp-summary-text').innerHTML = `<span class="h">Hadir : ${jmlHadir}</span> - <span class="i">Izin : ${jmlIzin}</span> - <span class="a">Alpha: ${jmlAbsen}</span>`;
-        
-        // ID String Laporan Update (contoh: jumat_4sept2026_50.000)
-        const idString = `${cleanDay.toLowerCase()}_${now.getDate()}${shortMonthNames[now.getMonth()]}${now.getFullYear()}_${nominalField.value}`;
-        document.getElementById('exp-id-string').textContent = idString;
-
-        const exportTarget = document.getElementById('laporan-export');
-        exportTarget.style.visibility = 'visible'; exportTarget.style.opacity = '1';
-
-        try {
-            const canvas = await html2canvas(exportTarget, { scale: 2, backgroundColor: '#F4F4F4', logging: false, useCORS: true });
-            exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
+    if (btnDownload) {
+        btnDownload.addEventListener('click', async function() {
+            if (!daySelect || !nominalField || !catatanTextarea) return;
             
-            canvas.toBlob(async (blob) => {
-                const fileName = `Laporan_Ronda_${cleanDay}.jpg`;
-                const file = new File([blob], fileName, { type: 'image/jpeg' });
-                
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    try {
-                        await navigator.share({
-                            title: 'Struk Ronda',
-                            text: 'Berikut adalah Laporan Ronda. Terima kasih dan Tetap Semangat!',
-                            files: [file]
-                        });
-                    } catch (error) {
-                        console.log('Share dibatalkan atau error:', error);
-                    }
-                } else {
-                    const link = document.createElement('a');
-                    link.download = fileName;
-                    link.href = canvas.toDataURL('image/jpeg', 0.98); 
-                    link.click();
+            let selectedDay = daySelect.value; if(selectedDay === "JUMAT") selectedDay = "JUM'AT";
+            
+            const now = new Date();
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const shortMonthNames = ["jan", "feb", "mar", "apr", "mei", "jun", "jul", "agu", "sep", "okt", "nov", "des"];
+            const actualDayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const actualDay = actualDayNames[now.getDay()];
+            
+            let cleanDay = selectedDay.replace("'", ""); // Handle JUM'AT jadi JUMAT
+            cleanDay = cleanDay === 'ALTRUIS' ? 'ALTRUIS' : cleanDay.charAt(0).toUpperCase() + cleanDay.slice(1).toLowerCase();
+
+            const displayDay = selectedDay === 'ALTRUIS' ? actualDay : cleanDay;
+
+            // Banner Data Update
+            const expTanggal = document.getElementById('exp-tanggal');
+            const expWaktu = document.getElementById('exp-waktu');
+            const expTotalJimpitan = document.getElementById('exp-total-jimpitan');
+            
+            if (expTanggal) expTanggal.textContent = `${displayDay}, ${now.getDate()} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+            if (expWaktu) expWaktu.textContent = `${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} WIB`;
+            if (expTotalJimpitan) expTotalJimpitan.textContent = `Rp${nominalField.value}`;
+            
+            // Judul Bagian Update
+            const expJudul = document.getElementById('exp-judul');
+            const expCatatanJudul = document.getElementById('exp-catatan-judul');
+            const expCatatanTarget = document.getElementById('exp-catatan-target');
+
+            if (expJudul) expJudul.innerHTML = selectedDay === 'ALTRUIS' ? 'Daftar Kehadiran <span>Altruis</span>' : `Kehadiran Hari <span>${cleanDay}</span>`;
+            if (expCatatanJudul) expCatatanJudul.innerHTML = selectedDay === 'ALTRUIS' ? `Catatan Hari <span>${actualDay}</span>` : `Catatan Hari <span>${cleanDay}</span>`;
+            if (expCatatanTarget) expCatatanTarget.textContent = catatanTextarea.value;
+
+            const gridTarget = document.getElementById('exp-grid-target');
+            if (gridTarget) {
+                gridTarget.innerHTML = '';
+
+                const listWarga = dataRonda[selectedDay] || [];
+                let jmlHadir = 0, jmlIzin = 0, jmlAbsen = 0;
+
+                listWarga.forEach(warga => {
+                    const status = attendanceState[warga];
+                    let rowClass = '', statusLabel = '';
+
+                    if(status === 'Hadir') { rowClass = 'status-hadir'; statusLabel = '(HADIR)'; jmlHadir++; } 
+                    else if(status === 'Izin') { rowClass = 'status-izin'; statusLabel = '(IZIN)'; jmlIzin++; } 
+                    else if(status === 'Absen') { rowClass = 'status-absen'; statusLabel = '(ALPHA)'; jmlAbsen++; }
+
+                    const item = document.createElement('div');
+                    item.className = `exp-warga-row ${rowClass}`;
+                    item.innerHTML = `
+                        <div class="exp-warga-left">
+                            <span class="exp-number-circle">${++gridTarget.children.length}</span>
+                            <span>${warga}</span>
+                        </div>
+                        <span class="exp-status-text">${statusLabel}</span>
+                    `;
+                    gridTarget.appendChild(item);
+                });
+
+                // Summary Data Update
+                const expSummaryPills = document.getElementById('exp-summary-pills');
+                if (expSummaryPills) {
+                    let total = jmlHadir + jmlIzin + jmlAbsen;
+                    expSummaryPills.innerHTML = `
+                        <div class="exp-pill pill-hadir">HADIR : ${jmlHadir}</div>
+                        <div class="exp-pill pill-izin">IZIN : ${jmlIzin}</div>
+                        <div class="exp-pill pill-alpha">ALPHA : ${jmlAbsen}</div>
+                        <div class="exp-pill pill-tot">TOT : ${total}</div>
+                    `;
                 }
-            }, 'image/jpeg', 0.98);
+            }
             
-        } catch (error) {
-            exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
-            console.error("Gagal membuat gambar struk:", error);
-            alert("Terjadi kesalahan saat memproses gambar.");
-        }
-    });
+            // ID String Laporan Update (contoh: jumat_4sept2026_50.000)
+            const reportDayStr = displayDay.toLowerCase();
+            const cleanNominal = nominalField.value.replace(/\./g, '');
+            const idString = `${reportDayStr}_${now.getDate()}${shortMonthNames[now.getMonth()]}${now.getFullYear()}_${cleanNominal}`;
+            
+            const expIdString = document.getElementById('exp-id-string');
+            if (expIdString) expIdString.textContent = idString;
+
+            const exportTarget = document.getElementById('laporan-export');
+            if (exportTarget) {
+                exportTarget.style.visibility = 'visible'; exportTarget.style.opacity = '1';
+
+                try {
+                    const canvas = await html2canvas(exportTarget, { scale: 2, backgroundColor: '#F9FAFB', logging: false, useCORS: true });
+                    exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
+                    
+                    canvas.toBlob(async (blob) => {
+                        const fileName = `Laporan_Ronda_${displayDay}.jpg`;
+                        const file = new File([blob], fileName, { type: 'image/jpeg' });
+                        
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            try {
+                                await navigator.share({
+                                    title: 'Struk Ronda',
+                                    text: 'Berikut adalah Laporan Ronda. Terima kasih dan Tetap Semangat!',
+                                    files: [file]
+                                });
+                            } catch (error) {
+                                console.log('Share dibatalkan atau error:', error);
+                            }
+                        } else {
+                            const link = document.createElement('a');
+                            link.download = fileName;
+                            link.href = canvas.toDataURL('image/jpeg', 0.98); 
+                            link.click();
+                        }
+                    }, 'image/jpeg', 0.98);
+                    
+                } catch (error) {
+                    exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
+                    console.error("Gagal membuat gambar struk:", error);
+                    alert("Terjadi kesalahan saat memproses gambar.");
+                }
+            }
+        });
+    }
 
     // ==========================================
     // TOMBOL "KIRIM TEKS KE GRUP WA" (API SEND TEXT)
     // ==========================================
-    btnWa.addEventListener('click', function() {
-        let selectedDay = daySelect.value; 
-        if(selectedDay === "JUMAT") selectedDay = "JUM'AT";
+    if (btnWa) {
+        btnWa.addEventListener('click', function() {
+            if (!daySelect || !nominalField || !catatanTextarea) return;
 
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-        const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WIB`;
-        const nominal = nominalField.value;
-        
-        let catatan = catatanTextarea.value.trim();
-        if (!catatan) catatan = "-";
+            let selectedDay = daySelect.value; 
+            if(selectedDay === "JUMAT") selectedDay = "JUM'AT";
 
-        let hadirList = [], izinList = [], absenList = [];
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WIB`;
+            const nominal = nominalField.value;
+            
+            let catatan = catatanTextarea.value.trim();
+            if (!catatan) catatan = "-";
 
-        const listWarga = dataRonda[selectedDay] || [];
-        listWarga.forEach(warga => {
-            const status = attendanceState[warga];
-            if(status === 'Hadir') hadirList.push(warga);
-            else if(status === 'Izin') izinList.push(warga);
-            else if(status === 'Absen') absenList.push(warga);
+            let hadirList = [], izinList = [], absenList = [];
+
+            const listWarga = dataRonda[selectedDay] || [];
+            listWarga.forEach(warga => {
+                const status = attendanceState[warga];
+                if(status === 'Hadir') hadirList.push(warga);
+                else if(status === 'Izin') izinList.push(warga);
+                else if(status === 'Absen') absenList.push(warga);
+            });
+
+            // Bintang dihapus agar tidak tebal berlebihan di WA
+            let text = `LAPORAN RONDA RT 2\n`;
+            text += `RT 2-RW 3, Pasekan Lor\n`;
+            text += `--------------\n`;
+            text += `🗓️ Tanggal: ${dateStr}\n`;
+            text += `⏰ Waktu: ${timeStr}\n`;
+            text += `👤 Tim: ${selectedDay === 'ALTRUIS' ? 'ALTRUIS' : 'Hari ' + selectedDay}\n`;
+            text += `💰 Jimpitan: Rp ${nominal}\n`;
+            text += `--------------\n\n`;
+
+            text += `✅ HADIR (${hadirList.length})\n`;
+            if(hadirList.length > 0) { hadirList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
+            else { text += `  (Tidak ada)\n`; }
+            text += `\n`;
+
+            text += `⏸️ IZIN (${izinList.length})\n`;
+            if(izinList.length > 0) { izinList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
+            else { text += `  (Tidak ada)\n`; }
+            text += `\n`;
+
+            text += `❌ TDK HDR/ALPHA (${absenList.length})\n`;
+            if(absenList.length > 0) { absenList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
+            else { text += `  (Tidak ada)\n`; }
+            text += `\n`;
+
+            text += `📝 CATATAN KEGIATAN:\n${catatan}\n\n`;
+            text += `_Terima kasih atas partisipasinya!_\n`;
+            text += `🌐 Sumber: https://rt2pasekanlor.id/`;
+
+            const encodedText = encodeURIComponent(text);
+            const waUrl = `https://wa.me/?text=${encodedText}`;
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).catch(err => {});
+            }
+
+            const link = document.createElement('a');
+            link.href = waUrl;
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
-
-        // Bintang dihapus agar tidak tebal berlebihan di WA
-        let text = `LAPORAN RONDA RT 2\n`;
-        text += `RT 2-RW 3, Pasekan Lor\n`;
-        text += `--------------\n`;
-        text += `🗓️ Tanggal: ${dateStr}\n`;
-        text += `⏰ Waktu: ${timeStr}\n`;
-        text += `👤 Tim: ${selectedDay === 'ALTRUIS' ? 'ALTRUIS' : 'Hari ' + selectedDay}\n`;
-        text += `💰 Jimpitan: Rp ${nominal}\n`;
-        text += `--------------\n\n`;
-
-        text += `✅ HADIR (${hadirList.length})\n`;
-        if(hadirList.length > 0) { hadirList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
-        else { text += `  (Tidak ada)\n`; }
-        text += `\n`;
-
-        text += `⏸️ IZIN (${izinList.length})\n`;
-        if(izinList.length > 0) { izinList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
-        else { text += `  (Tidak ada)\n`; }
-        text += `\n`;
-
-        text += `❌ TDK HDR/ALPHA (${absenList.length})\n`;
-        if(absenList.length > 0) { absenList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
-        else { text += `  (Tidak ada)\n`; }
-        text += `\n`;
-
-        text += `📝 CATATAN KEGIATAN:\n${catatan}\n\n`;
-        text += `_Terima kasih atas partisipasinya!_\n`;
-        text += `🌐 Sumber: https://rt2paslor.netlify.app/`;
-
-        const encodedText = encodeURIComponent(text);
-        const waUrl = `https://api.whatsapp.com/send?text=${encodedText}`;
-        
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).catch(err => {});
-        }
-
-        window.open(waUrl, '_blank');
-    });
+    }
 </script>
 </body>
 </html>

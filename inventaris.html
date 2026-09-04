@@ -67,13 +67,6 @@
         .fixed-top-bar.shrink .header-slogan { font-size: 0; opacity: 0; margin-top: 0; height: 0; }
         .fixed-top-bar.shrink .title-card-panel { padding: 10px 20px; }
         
-        .btn-darurat { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: #ffffff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; gap: 6px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-darurat:active { transform: translateY(1px) scale(0.95); }
-        .btn-darurat:hover { transform: translateY(0) scale(1.03); filter: brightness(1.1); }
-        .fixed-top-bar.shrink .btn-darurat { padding: 3px 8px; font-size: 9px; }
-        
-        .blink-light { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: blinkAnimation 2.4s infinite ease-in-out; }
-        @keyframes blinkAnimation { 0%, 33% { background-color: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 4px #22c55e; } 67%, 100% { background-color: #ffffff; box-shadow: 0 0 10px #ffffff, 0 0 4px #ffffff; } }
 
         .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
         
@@ -236,13 +229,7 @@
         <header class="glass-header" id="mainHeader">
             <div class="header-left">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg47-MPnRbJCKU6vW-8U3U8-rs01D7_58RuwVJ9uqeGD2JUuN5eYOMj7J2x0x8IA1NHV7sFryy1ThWJ0Yozvt_Ueoew1tn289v3wu7nbwtFpYPXZN9T-cZgaXgey0DB8tDkazRwbXgzGV6549SynuIE70KNDd1nURitNJCroUp_C8qNWNXTa4B0kGlw5kc/s1600/Logo%20RT%202%20Pasekan%20Lor%202.png" alt="Logo RT 2 Paslor"> 
-            </div>
-            <div class="header-right">
-                <button class="btn-darurat" id="openEmModalBtn">
-                    <span>Darurat</span>
-                    <div class="blink-light"></div>
-                </button>
-            </div>
+
         </header>
 
         <div class="title-card-panel" id="accordionMenuToggle" title="Ketuk untuk membuka menu">
@@ -293,9 +280,9 @@
                     <span>WARGA</span>
                 </a>
                 
-                <a href="agustusan" class="nav-item" title="Agustusan">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
-                    <span>AGUSTUSAN</span>
+                <a href="#" class="nav-item btn-ronda disabled" title="POLING" style="pointer-events: none; cursor: not-allowed; opacity: 1; filter: grayscale(100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="M12 16v-4"/><path d="M8 16v-2"/><path d="M16 16v-6"/></svg>
+                    <span>POLING</span>
                 </a>
                 
                 <a href="ronda" class="nav-item" title="Ronda">
@@ -338,39 +325,7 @@
     </div>
 
     <!-- Ruang kosong untuk mendorong footer ke bawah -->
-    <div class="main-content-space"></div>
-
-    <!-- MODAL DARURAT -->
-    <div class="em-modal-overlay" id="emModalOverlay">
-        <div class="em-modal-content">
-            <div class="em-modal-header">
-                <span class="em-modal-title">Nomor Kontak Darurat</span>
-                <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div class="emergency-list">
-                <a href="tel:110" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                </a>
-                <a href="tel:085173171912" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><line x1="8" y1="9.5" x2="12" y2="9.5"/><line x1="10" y1="7.5" x2="10" y2="11.5"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">Ambulan PKU Gamping</span><span class="emergency-value">0851 7317 1912</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                </a>
-                <a href="tel:02742821346" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-3.3 0-6 2.7-6 6 0 5 6 14 6 14s6-9 6-14c0-3.3-2.7-6-6-6z"/><path d="M12 12c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">Damkar Godean Sleman</span><span class="emergency-value">(0274) 2821346</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                </a>
-                <a href="https://chat.whatsapp.com/31APr2lKc826zA46hGzoZK?s=sh&p=a&mlu=4&ilr=0" target="_blank" class="emergency-item wa">
-                    <div class="logo-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">WhatsApp</span><span class="emergency-value">GRUP WHATSAPP RT 2</span></div>
-                </a>
-            </div>
-        </div>
+    <div class="main-content-space">
     </div>
 
     <!-- MODAL UNIVERSAL -->
@@ -450,22 +405,6 @@
         }
     });
 
-    /* MODAL DARURAT */
-    const emModalOverlay = document.getElementById('emModalOverlay');
-    document.getElementById('openEmModalBtn').addEventListener('click', () => { 
-        emModalOverlay.classList.add('active'); 
-        document.body.style.overflow = 'hidden'; 
-    });
-    document.getElementById('closeEmModalBtn').addEventListener('click', () => { 
-        emModalOverlay.classList.remove('active'); 
-        document.body.style.overflow = 'auto'; 
-    });
-    emModalOverlay.addEventListener('click', (e) => { 
-        if (e.target === emModalOverlay) { 
-            emModalOverlay.classList.remove('active'); 
-            document.body.style.overflow = 'auto'; 
-        } 
-    });
 
     /* UNIVERSAL MODAL */
     const univModal = document.getElementById('univModalOverlay');

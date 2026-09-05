@@ -24,8 +24,6 @@
            AREA PENGATURAN TAMPILAN
            ====================================================================== */
         :root {
-            --ukuran-logo: 180px; 
-            --jarak-atas-slider: 1px; 
             --warna-bg-header-scrolled: rgba(0, 52, 143, 0.95);
             --posisi-tombol-gulung: flex-end; 
         }
@@ -37,18 +35,14 @@
             min-height: 100vh;
             display: flex; 
             justify-content: center; 
-            transition: background-color 0.3s;
         }
 
         /* --- APP WRAPPER DENGAN BACKGROUND GUNUNG NAIK LAGI --- */
         .app-wrapper {
             width: 100%; max-width: 480px;
             background-color: transparent; 
-            /* REVISI: Header gunung sementara diganti gradasi biru langit ke abu-abu muda */
-            /* background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifYHz0rGu_N8HhLXtmX2qlsoKoTkxYn4sPnxLXt6ynVJBGJoQfvJt7i_oOCsSgakZfZ-KqojNnvP0D1sD0cTruIGfQRba1GLISjI5TS_JB8dRz-R2OIb4SlGUSvdE4ly-DSHJFgCfPcJ634GGQAtCDsHDBTNX8jg_SAwW9hX4arrmbpdRWAXoO8lvVcHM/s1600/header%20gunung%20BARU%20PENDEK.png'); */
             background-image: linear-gradient(to bottom, #0083E0 0.5%, #FFFFFF 10%, #F0FAFF 20%);
             background-attachment: auto;
-            /* background-position: center top -180px; */
             background-size: cover;
             background-repeat: no-repeat;
             min-height: 3vh; position: relative;
@@ -60,81 +54,61 @@
             z-index: 1;
         }
 
-        /* ================== REVISI HEADER MORPHING ================== */
+        /* ================== HEADER MORPHING ================== */
         .morph-header-container {
             position: fixed; top: 0; left: 50%; transform: translateX(-50%);
-            width: 100%; max-width: 480px; height: 110px; z-index: 1000;
+            width: 100%; max-width: 480px; height: 90px; z-index: 1000;
             transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease;
             background: transparent; pointer-events: none;
         }
         .morph-header-container.scrolled {
-            height: 65px; background: var(--warna-bg-header-scrolled);
+            height: 60px; background: var(--warna-bg-header-scrolled);
             box-shadow: 0 4px 15px rgba(0,0,0,0.3); pointer-events: auto;
         }
         
         .morph-text {
-            position: absolute; left: 30px; top: 28px;
+            position: absolute; left: 145px; top: 20px;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            transform-origin: left center; pointer-events: auto;
+            transform-origin: left top; pointer-events: auto;
         }
         .main-header-text {
             color: #ffffff; font-size: 11px; text-shadow: 0 0px 0px rgba(0,0,0,0.0), 0 0px 0px rgba(0,0,0,0.0);
-            line-height: 1.3; display: inline-block;
-        }
-        .morph-header-container.scrolled .main-header-text {
-            text-shadow: 0 0px 0px rgba(0,0,0,0.0);
+            line-height: 1.3; display: inline-block; white-space: nowrap;
         }
 
         .morph-logo-wrapper {
-            position: absolute; left: calc(78% - 70px); top: 8px; /* Standby di Kanan */
+            position: absolute; left: 20px; top: 15px;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); pointer-events: auto;
         }
         .header-logo-img {
-            width: 150px; height: auto; filter: drop-shadow(0 0px 0px rgba(0,0,0,0.5));
+            width: 110px; height: auto; filter: drop-shadow(0 0px 0px rgba(0,0,0,0.5));
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             transform-origin: left top;
         }
 
-        /* Saat Scrolled: Logo ke Kiri, Teks ke Kanan, Logo diKecilkan Masuk Kotak */
-        .morph-header-container.scrolled .morph-logo-wrapper {
-            left: 20px; top: 12px;
-        }
-        .morph-header-container.scrolled .header-logo-img {
-            transform: scale(0.50); filter: drop-shadow(0 0px 0px rgba(0,0,0,0.3));
-        }
-        .morph-header-container.scrolled .morph-text {
-            left: 110px; top: 15px; transform: scale(0.9);
-        }
+        .morph-header-container.scrolled .morph-logo-wrapper { left: 15px; top: 15px; }
+        .morph-header-container.scrolled .header-logo-img { transform: scale(0.65); filter: drop-shadow(0 0px 0px rgba(0,0,0,0.3)); }
+        .morph-header-container.scrolled .morph-text { left: 100px; top: 15px; transform: scale(0.85); }
 
-        /* ================== REVISI SLIDER & BUTTON ================== */
-        .main-content-board { background-color: transparent; border-radius: 25px 25px 0 0; padding-top: 100px; position: relative; z-index: 10; display: flex; flex-direction: column; box-shadow: none; min-height: calc(100vh - 100px); } 
+        /* ================== MAIN BOARD & SLIDER ================== */
+        .main-content-board { background-color: transparent; border-radius: 25px 25px 0 0; padding-top: 80px; position: relative; z-index: 10; display: flex; flex-direction: column; box-shadow: none; min-height: calc(100vh - 80px); } 
 
-        .slider-wrapper-accordion { position: relative; z-index: 2; width: 100%; margin-bottom: 20px; }
+        .slider-wrapper-accordion { position: relative; z-index: 2; width: 100%; margin: 0 auto 15px auto; }
         .slider-toggle-wrapper { display: flex; justify-content: var(--posisi-tombol-gulung); padding: 0 16px; margin-bottom: 5px; }
-        
-        .slider-toggle-icon-btn {
-            background-color: #ffffff; color: #383838; border: none; width: 26px; height: 26px; 
-            border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: all 0.2s;
-        }
+        .slider-toggle-icon-btn { background-color: #ffffff; color: #383838; border: none; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: all 0.2s; }
         .slider-toggle-icon-btn:active { transform: scale(0.9); background-color: #f1f5f9; }
         
-        .slider-section { background: transparent; border-radius: 0; box-shadow: none; padding: 0; position: relative; margin-top: var(--jarak-atas-slider); max-height: 500px; overflow: hidden; transition: max-height 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out; opacity: 1; }
-        .slider-section.collapsed { max-height: 0; margin-top: 0; opacity: 0; pointer-events: none; padding: 0; }
+        .slider-section { background: transparent; border-radius: 0; box-shadow: none; padding: 0; position: relative; max-height: 500px; overflow: hidden; transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; opacity: 1; }
+        .slider-section.collapsed { max-height: 0; opacity: 0; pointer-events: none; padding: 0; }
         .slider-container { position: relative; padding: 0 !important; }
-        .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 12px; padding: 0 5%; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
+        
+        .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 12px; padding: 0 16px; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
         .ps-slider-container::-webkit-scrollbar { display: none; }
-        .slide { flex: 0 0 100%; width: 100%; aspect-ratio: 16 / 9; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-color: #ffffff; cursor: pointer; }
+        .slide { flex: 0 0 230px; width: 230px; height: 140px; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-color: #ffffff; cursor: pointer; }
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 500; z-index:-1;}
-        .slider-nav-btn { position: absolute; top: 48%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(4px); border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); color: #1155CC; z-index: 10; transition: all 0.2s ease; opacity: 0.9; }
-        .slider-nav-btn:active { transform: translateY(-50%) scale(0.9); opacity: 1; }
-        .slider-nav-btn svg { width: 18px; height: 18px; stroke-width: 2.5; }
-        .prev-btn { left: 24px; }
-        .next-btn { right: 24px; }
 
-
-        /* ================== REVISI MENU (FIXED FOOTER #1155CC) ================== */
+        /* ================== MENU FOOTER ================== */
         .bottom-nav-bar {
             position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
             width: 100%; max-width: 480px; background: #1155CC;
@@ -153,182 +127,101 @@
         .bottom-nav-item.active-menu svg { stroke: #fbbf24; }
         
         .bottom-nav-item.bottom-nav-center {
-            position: static; width: auto; height: auto; border-radius: 12px;
-            background: #f97316; padding: 6px 12px; margin: 0;
+            position: static; width: 50px; height: auto; border-radius: 12px;
+            background: #f97316; padding: 4px 0; margin: 0;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: #ffffff; font-size: 10px; font-weight: 700; box-shadow: 0 4px 10px rgba(249,115,22,0.4);
+            color: #ffffff; font-size: 8.5px; font-weight: 700; box-shadow: 0 4px 10px rgba(249,115,22,0.4);
             flex-shrink: 0; border: none; z-index: 2; text-decoration: none;
         }
-        .bottom-nav-item.bottom-nav-center svg { stroke: #ffffff; margin-bottom: 2px; }
+        .bottom-nav-item.bottom-nav-center svg { width: 18px; height: 18px; margin-bottom: 2px; stroke: #ffffff; }
 
-        /* ================== REVISI Hamburger Modal (Dekat Tombol Footer) ================== */
+        /* ================== MODAL ANIMASI SLIDE UP (BOTTOM SHEET UTUH) ================== */
+        .slide-up-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+            z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+            padding: 0; 
+        }
+        .slide-up-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .slide-up-content {
+            background: #ffffff; width: 100%; max-width: 480px; height: 90vh; 
+            display: flex; flex-direction: column; overflow: hidden;
+            border-radius: 24px 24px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
+            position: relative; 
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .slide-up-overlay.active .slide-up-content { transform: translateY(0); }
+
+        /* ================== MODAL ANIMASI SLIDE DOWN (IMAGE VIEWER) ================== */
+        .slide-down-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(4px);
+            z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+        }
+        .slide-down-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .slide-down-content {
+            background: transparent; width: 100%; max-width: 480px; 
+            display: flex; flex-direction: column; position: relative;
+            transform: translateY(-100vh); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .slide-down-overlay.active .slide-down-content { transform: translateY(15vh); }
+
+        /* Area Scroll Internal Modal (Agar batas layar bisa gulung leluasa) */
+        .modal-scroll-area { flex: 1; overflow-y: auto; width: 100%; padding: 60px 20px 20px 20px; }
+        .modal-scroll-area.no-padding { padding: 0; }
+
+        /* Tombol Mengambang Modal */
+        .modal-close-btn-absolute {
+            position: absolute; top: 16px; right: 16px;
+            background: #fef2f2; color: #ef4444; border: none;
+            width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s;
+        }
+        .modal-back-btn-absolute {
+            position: absolute; top: 16px; left: 16px;
+            background: #f1f5f9; color: #1155cc; border: none;
+            width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s;
+        }
+
+        /* ================== MENU HAMBURGER (KEMBALI MENJADI MODAL CARD DEKAT FOOTER) ================== */
         .hamburger-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); display: flex; 
             align-items: flex-end; justify-content: flex-end;
-            padding: 0 15px 80px 0; /* Hindari footer */
-            z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.15s ease;
+            padding: 0 15px 85px 15px; /* Jarak aman di atas footer menu */
+            z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
         }
         .hamburger-modal.active { opacity: 1; pointer-events: auto; }
-        .hamburger-content {
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
-            border-radius: 24px; padding: 25px 20px; width: 90%; max-width: 320px;
-            transform: scale(0.8); transform-origin: bottom right; opacity: 0;
-            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 2px solid #e2e8f0;
-        }
-        .hamburger-modal.active .hamburger-content { transform: scale(1); opacity: 1; border-radius: 24px; }
         
-        .hamburger-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%;
+        .hamburger-content {
+            background: rgba(255,255,255,0.98); backdrop-filter: blur(10px);
+            border-radius: 24px; padding: 25px 20px; width: 100%; max-width: 340px; 
+            transform: scale(0.8); transform-origin: bottom right; opacity: 0;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 2px solid #e2e8f0;
+            position: relative; margin-left: auto;
         }
+        .hamburger-modal.active .hamburger-content { transform: scale(1); opacity: 1; }
+
+        .hamburger-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; margin-top: 30px;}
         .nav-item { color: #FFFFFF; text-decoration: none; border-radius: 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.3px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; padding: 12px 4px; border: none; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .nav-item:active { transform: scale(0.95); }
         .nav-item svg { width: 22px; height: 22px; margin-bottom: 8px; display: block; stroke: currentColor; stroke-width: 2 !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
         
-        /* ================== REVISI KOTAK SETTING (Ganti Warna Orange) ================== */
-        .hamburger-settings-box {
-            background: #ffedd5;
-            border-radius: 12px; padding: 12px 16px; margin-bottom: 20px;
-            display: flex; flex-direction: column; gap: 10px;
-            border: 1px solid #fed7aa; box-shadow: inset 0 2px 4px rgba(255,255,255,0.5);
-        }
-        .settings-compact-row {
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .settings-label { 
-            font-size: 11px; font-weight: 700; color: #c2410c; text-transform: uppercase; letter-spacing: 0.5px; 
-        }
-        .settings-group { display: flex; gap: 6px; }
-        .settings-btn {
-            background: #ffffff; border: 1px solid #fdba74; padding: 4px 10px; border-radius: 6px;
-            font-size: 10.5px; font-weight: 600; color: #c2410c; cursor: pointer; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
-        .settings-btn.active { background: #f97316; color: white; border-color: #f97316; box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3); }
-        
-        /* Class Asli Menu */
-        .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-scanner, .btn-tatatertib, .btn-disabled { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
+        .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-datawarga, .btn-tatatertib, .btn-disabled { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
         .btn-disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
         .btn-home-active { background: #64748b !important; box-shadow: none !important; cursor: default !important; pointer-events: none; }
 
-        /* ================== CSS BAWAAN & UKURAN HURUF ================== */
-        body.font-large .info-card-title { font-size: 19px; }
-        body.font-large .agenda-value, body.font-large .normal-text-item { font-size: 16px; }
-        body.font-large .news-title { font-size: 18px; }
-        body.font-large .news-snippet { font-size: 14px; }
-
-        /* ================== REVISI DARK MODE (Teks terang, background disesuaikan) ================== */
-        body.dark-mode { background-color: #121212; color: #ffffff; }
-        
-        /* Modals & Cards Background */
-        body.dark-mode .info-card, body.dark-mode .news-card, body.dark-mode .kas-card.new-kas-design { background-color: #1e293b !important; border: 1px solid #334155 !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        body.dark-mode .em-modal-content, body.dark-mode .list-modal-sheet, body.dark-mode .agenda-detail-box, 
-        body.dark-mode .doc-modal-wrapper, body.dark-mode .article-modal-wrapper, body.dark-mode .univ-modal-box, 
-        body.dark-mode .hamburger-content { background-color: #1e293b !important; border-color: #334155 !important; }
-        body.dark-mode .list-modal-header, body.dark-mode .univ-modal-header, body.dark-mode .em-modal-header { background-color: #1e293b !important; border-bottom: 1px solid #334155 !important; }
-        
-        /* Force Text Colors to Light/White */
-        body.dark-mode .main-header-text, body.dark-mode .static-welcome, body.dark-mode .date-day, body.dark-mode .clock-text,
-        body.dark-mode .saldo-label, body.dark-mode .info-card-title, body.dark-mode .agenda-label, body.dark-mode .agenda-colon,
-        body.dark-mode .agenda-value, body.dark-mode .normal-text-item, body.dark-mode .custom-list-item, body.dark-mode .list-marker,
-        body.dark-mode .status-text-container, body.dark-mode .f-regular-10, body.dark-mode .news-title, body.dark-mode .news-snippet,
-        body.dark-mode .article-title-detail, body.dark-mode .article-meta, body.dark-mode .article-body-text, body.dark-mode .univ-modal-title,
-        body.dark-mode .arsip-title, body.dark-mode .em-modal-title, body.dark-mode .emergency-label, body.dark-mode .emergency-value,
-        body.dark-mode .himbauan-text, body.dark-mode .footer-line, body.dark-mode .btn-list-trigger, body.dark-mode .btn-darurat-caution,
-        body.dark-mode .section-title-neumorph, body.dark-mode .arsip-date, body.dark-mode .nav-item span { color: #f8fafc !important; }
-        
-        /* REVISI: Teks Hasil Kegiatan (termasuk hijau/warna lainnya) dipaksa menjadi putih pada mode gelap */
-        body.dark-mode .doc-modal-text span { color: #f8fafc !important; }
-
-        /* Icons & Details Overrides */
-        body.dark-mode .nav-item svg { stroke: #f8fafc !important; }
-        body.dark-mode svg { stroke: currentColor; }
-        body.dark-mode .agenda-row:nth-child(odd) { background-color: rgba(255,255,255,0.06); }
-        body.dark-mode .agenda-details-box, body.dark-mode .card-header { border-bottom-color: #334155 !important; }
-        body.dark-mode .section-title-neumorph { background: rgba(50,50,50,0.85) !important; color: #fff !important; box-shadow: inset 4px 4px 8px rgba(0,0,0,0.6), inset -4px -4px 8px rgba(255,255,255,0.1) !important; border: none !important; }
-        body.dark-mode .btn-darurat-caution { background-color: #b45309 !important; border-color: #f8fafc !important; box-shadow: 4px 4px 0 #000000 !important; }
-        body.dark-mode .news-btn-bottom { background-color: #334155 !important; border-color: #475569 !important; color: #f8fafc !important; }
-        
-        /* Footer Navigation in Dark Mode (Tetap Biru) */
-        body.dark-mode .bottom-nav-bar { background-color: #1155CC !important; border-top: 1px solid #0f4eb8 !important; }
-        body.dark-mode .bottom-nav-item:not(.active-menu):not(.bottom-nav-center) { color: #f8fafc !important; }
-        body.dark-mode .bottom-nav-item:not(.active-menu):not(.bottom-nav-center) svg { stroke: #f8fafc !important; }
-        body.dark-mode .bottom-nav-item.bottom-nav-center { color: #ffffff !important; }
-        body.dark-mode .bottom-nav-item.bottom-nav-center svg { stroke: #ffffff !important; }
-        body.dark-mode .bottom-nav-item.active-menu { color: #fbbf24 !important; }
-        body.dark-mode .bottom-nav-item.active-menu svg { stroke: #fbbf24 !important; }
-
-        /* Dark Mode Kotak Setting (Orange) */
-        body.dark-mode .hamburger-settings-box { background: #431407 !important; border-color: #7c2d12 !important; box-shadow: inset 0 2px 4px rgba(255,255,255,0.05); }
-        body.dark-mode .settings-label { color: #fdba74 !important; }
-        body.dark-mode .settings-btn { background: #7c2d12 !important; color: #fed7aa !important; border-color: #9a3412 !important; }
-        body.dark-mode .settings-btn.active { background: #ea580c !important; border-color: #ea580c !important; color: #ffffff !important; }
-
-        body.dark-mode .btn-close-sheet, body.dark-mode .btn-close-univ, body.dark-mode .btn-close-agenda { background: #334155 !important; color: #ef4444 !important; }
-        body.dark-mode .doc-modal-text { background: #1e293b !important; color: #f8fafc !important; border-color:#334155 !important; }
-        
-        /* Lapak Warga Dark Mode overrides */
-        body.dark-mode #lapakWargaCard { background: #1e293b !important; border: 1px solid #334155 !important; }
-        body.dark-mode #lapakWargaCard span { color: #f8fafc !important; }
-        body.dark-mode #lapakWargaCard .btn-inventaris-more { background: #0284c7 !important; color: #ffffff !important; }
-        body.dark-mode table { background-color: transparent !important; }
-        body.dark-mode table tr { border-bottom: 1px solid #475569 !important; }
-        body.dark-mode table th { background-color: rgba(255, 255, 255, 0.1) !important; color: #f8fafc !important; border-bottom: 2px solid #475569 !important; }
-        body.dark-mode table td { color: #f8fafc !important; }
-        
-        body.dark-mode .emergency-item { background-color: #334155 !important; border-color: #475569 !important; }
-        body.dark-mode .logo-wrapper, body.dark-mode .call-icon { background-color: #1e293b !important; border-color: #475569 !important; color: #f8fafc !important; }
-        body.dark-mode .emergency-item.wa .logo-wrapper, body.dark-mode .emergency-item.wa .call-icon { color: #22c55e !important; }
-        body.dark-mode .arsip-item { background-color: #1e293b !important; border-color: #334155 !important; }
-
-        .btn-kas-small:hover { background: rgba(255, 255, 255, 0.3) !important; border-color: rgba(255, 255, 255, 0.6) !important; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important; }
-        .btn-inventaris-more:hover { background: #0369a1 !important; box-shadow: 0 6px 15px rgba(2, 132, 199, 0.4) !important; transform: translateY(-2px); }
-        .btn-read-more:hover { background-color: #dbeafe !important; transform: translateY(-2px); }
-        .btn-doc-footer:hover { background-color: #bfdbfe !important; color: #1e3a8a !important; transform: translateY(-2px); }
-        .btn-share-wa:hover { background-color: #bbf7d0 !important; color: #14532d !important; transform: translateY(-2px); }
-        .btn-list-trigger:hover { background-color: #f8fafc !important; box-shadow: 0 6px 12px rgba(17, 85, 204, 0.2) !important; transform: translateY(-2px); }
-        .emergency-item:hover { background-color: #e2e8f0 !important; border-color:#94a3b8 !important;}
-        .emergency-item.wa:hover { background-color: #dcfce7 !important; border-color: #16a34a !important; }
-        .arsip-item:hover { background-color: #f1f5f9 !important; border-color: #94a3b8 !important; }
-        .slider-nav-btn:hover { background: rgba(255, 255, 255, 1) !important; transform: translateY(-50%) scale(1) !important; }
-        #toggleSaldoBtn:hover { transform: scale(1.15); opacity: 0.8; transition: transform 0.2s ease, opacity 0.2s ease; }
-        svg { display: inline-block; vertical-align: middle; }
-        @keyframes fadeInIframe { to { opacity: 1; } }
-        .yt-iframe-delayed { opacity: 0; animation: fadeInIframe 0.5s 1.2s forwards; }
-
-        .section-title-neumorph { background-color: rgba(229, 229, 229, 0.85); backdrop-filter: blur(1px); color: #383838; padding: 14px 16px; border-radius: 12px; margin: 0 16px 16px 16px; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: inset 4px 4px 8px rgba(196,196,196,0.6), inset -4px -4px 8px rgba(255,255,255,0.6); letter-spacing: 1px; text-align: center; position: relative; z-index: 2; }
-        .section-title-neumorph.red-text { color: #383838; }
-        .btn-darurat-caution { display: inline-flex; align-items: center; justify-content: center; gap: 12px; background-color: #ffcc00; background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 0, 0, 0.1) 10px, rgba(0, 0, 0, 0.1) 20px); color: #383838; border: 1px solid #383838; padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; width: 80%; max-width: 220px; box-shadow: 4px 4px 0 #7D7D7D; transition: transform 0.1s ease, box-shadow 0.1s ease; margin: 0 auto; }
-        .btn-darurat-caution:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #383838; }
-
-        /* Sisa Komponen UI Lainnya dipertahankan... */
-        .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 2000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
-        .em-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .em-modal-content { background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(15px); transition: transform 0.3s ease; }
-        .em-modal-overlay.active .em-modal-content { transform: translateY(0); }
-        .em-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; }
-        .em-modal-title { font-size: 16px; font-weight: 700; color: #383838; display: flex; align-items: center; gap: 8px; }
-        .em-btn-close { background: none; border: none; cursor: pointer; color: #ef4444; display: flex; align-items: center; justify-content: center; transition: transform 0.1s ease; }
-        .emergency-list { display: flex; flex-direction: column; gap: 14px; }
-        .emergency-item { display: flex; align-items: center; background-color: #EDEDED; padding: 12px 14px; border-radius: 12px; text-decoration: none; border: 1px solid #b5b5b5; gap: 14px; box-shadow: 0 5px 6px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.1); transition: all 0.2s; }
-        .logo-wrapper { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); border: 1px solid #a8a8a8; color:#1155CC; }
-        .contact-details { display: flex; flex-direction: column; flex-grow: 1; }
-        .emergency-label { font-size: 11px; color: #383838; font-weight: 500; text-transform: uppercase; }
-        .emergency-value { font-size: 14px; color: #383838; font-weight: 700; margin-top: 1px; }
-        .call-icon { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); color:#1155CC;}
-        .emergency-item.wa .call-icon { color: #22c55e; }
-        .emergency-item.wa .logo-wrapper { color: #22c55e; border-color:#22c55e;}
-        .emergency-item.wa { border-left: 5px solid #22c55e; }
-
-        .ps-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .ps-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .ps-modal-content { width: calc(100% - 30px); max-width: 450px; max-height: 85vh; background-color: #000000; border-radius: 20px; border: 4px solid #ffffff; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9); position: relative; display: flex; flex-direction: column; overflow: hidden; transform: scale(0.9); transition: transform 0.3s ease; }
-        .ps-modal-overlay.active .ps-modal-content { transform: scale(1); }
-        .ps-close-btn { position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid #ffffff; color: #ffffff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; z-index: 110;}
-        .ps-modal-body { width: 100%; height: auto; overflow-y: auto; padding: 0; }
-        
+        /* ================== KOTAK KAS SALDO ================== */
         .hero-kas-container { padding: 0 16px 20px 16px; width: 100%; z-index: 2; position: relative; } 
-        .kas-card.new-kas-design { background: rgba(17, 85, 204, 100); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: #ffffff; border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .kas-card.new-kas-design { background: linear-gradient(135deg, #1155CC, #00328C); color: #ffffff; border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2); }
         .kas-weather-top { display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 10px; margin-bottom: 12px; width: 100%; z-index: 2; }
         .welcome-text-container { width: 100%; text-align: center; display: flex; justify-content: center; }
         .static-welcome { font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 0.3px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
@@ -348,13 +241,63 @@
         .saldo-dot { width: 7px; height: 7px; background-color: #ccff00; border-radius: 50%; animation: blinkDot 1.5s infinite ease-in-out; }
         .saldo-value { font-size: 12pt; font-weight: 600; line-height: 1; margin-bottom: 0; color: #ccff00; text-shadow: 0 1px 3px rgba(0,0,0,0.4); } 
         .kas-action-buttons { display: flex; gap: 10px; margin-top: 14px; z-index: 2; justify-content: center; }
-        .btn-kas-small { flex: 1; padding: 4px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.2); color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        
+        .btn-kas-small { flex: 1; padding: 6px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .btn-kas-detail { background: linear-gradient(135deg, #10b981, #059669) !important; border: none !important; color: white !important; }
+        .btn-kas-trx { background: linear-gradient(135deg, #f97316, #ea580c) !important; border: none !important; color: white !important; }
 
-        .info-dashboard-container { padding: 0 16px 20px 16px; position: relative; z-index: 2; }
+        /* ================== KARTU LUAR (DASHBOARD SECTION CARD - CARDS.PNG) ================== */
+        .dashboard-section-card {
+            background-color: #555555;
+            border-radius: 24px;
+            margin: 0 16px 24px 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 2;
+        }
+        .ds-header {
+            padding: 16px 10px;
+            text-align: center;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .ds-content {
+            background-color: #f1f5f9;
+            padding: 20px 16px;
+            border-radius: 20px;
+        }
+        .ds-footer {
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #555555;
+        }
+        .ds-pill-btn {
+            background-color: #ffffff; color: #383838; border: none; padding: 10px 24px;
+            border-radius: 50px; font-size: 13px; font-weight: 600; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s;
+        }
+        .ds-pill-btn:active { transform: scale(0.95); }
+        .nav-circle-btn {
+            background: #ffffff; border: none; width: 34px; height: 34px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: #555555; 
+            cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        /* ================== ELEMEN DALAM KARTU AGENDA (KEGIATAN WARGA) ================== */
         .cards-list { display: flex; flex-direction: column; gap: 16px; }
-        .info-card { background-color: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; }
+        .info-card { background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; border: 1px solid #e2e8f0; }
         .card-header { padding: 12px 16px; color: #ffffff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-        .card-header .agenda-label-top { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 14px; }
+        
+        .neumorph-status { background: #ffffff; box-shadow: 2px 2px 4px rgba(0,0,0,0.15), -1px -1px 3px rgba(255,255,255,1); border-radius: 8px; padding: 2px 8px; font-size: 10px; }
+        
         .card-header .category-text { font-size: 15px; font-weight: 600; letter-spacing: 0.1px; text-shadow: 0 1px 2px rgba(0,0,0,0.15); display: block; }
         .bg-pertemuan { background: linear-gradient(135deg, #059669, #00734B); }
         .bg-kerjabakti { background: linear-gradient(135deg, #2563eb, #194B9E); }
@@ -378,8 +321,7 @@
         .custom-list-item { display: flex; align-items: flex-start; gap: 6px; font-size: 14.5px; color: #383838; line-height: 1.5; }
         .list-marker { font-weight: 400; color: #383838; min-width: 14px; text-align: right; }
         .list-content { flex: 1; }
-        .normal-text-item { font-size: 14.5px; color: #383838; line-height: 1.5; margin-bottom: 2px; }
-        .f-regular-10  { font-weight: 400; font-size: 14.5px; color: #383838; }      
+        .normal-text-item { font-size: 14.5px; color: #383838; line-height: 1.5; margin-bottom: 2px; }   
         .status-text-container { display: inline-flex; align-items: center; gap: 3px; font-size: 14.5px; line-height: 1.2; text-transform: capitalize; font-weight: 500 !important; color: #383838 !important; }
         
         .status-dot-blink { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: pulse-status 1s infinite alternate; }
@@ -392,65 +334,54 @@
         .btn-doc-footer { background-color: #dbeafe; color: #1e40af; box-shadow: 0 2px 6px rgba(30, 64, 175, 0.15); }
         .btn-share-wa { background-color: #dcfce7; color: #166534; box-shadow: 0 2px 6px rgba(22, 101, 52, 0.15); }
         .btn-footer-action svg { width: 14px; height: 14px; }
-        
-        .btn-list-trigger { display: flex; width: 60%; margin: 20px auto 10px auto; text-align: center; background-color: #FFFFFF; color: #1155CC; border: none; padding: 12px 14px; border-radius: 20px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(17, 85, 204, 0.15); justify-content: center; align-items: center; gap: 8px; transition: all 0.2s; }
 
-        .list-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 16px; }
-        .list-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .list-modal-sheet { width: 100%; max-width: 460px; background-color: #ffffff; border-radius: 24px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.3); overflow: hidden; transform: translateY(20px); transition: transform 0.3s ease; }
-        .list-modal-overlay.active .list-modal-sheet { transform: translateY(0); }
-        .list-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; background-color: #ffffff; }
-        .list-modal-header h2 { font-size: 16px; font-weight: 700; color: #383838; }
-        .btn-close-sheet { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-        .list-modal-body { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; background-color: #ffffff; }
-
-        .arsip-item { background-color: #ffffff; border: 1px solid #cbd5e1; padding: 14px 16px; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); position: relative; transition: all 0.2s; }
+        .arsip-item { background-color: #f1f5f9; border: 1px solid #cbd5e1; padding: 14px 16px; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); position: relative; transition: all 0.2s; }
         .arsip-item::after { content: '>'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-weight: 700; color: #94a3b8; font-size: 16px; }
         .arsip-title { font-size: 14px; font-weight: 600; color: #383838; padding-right: 20px; }
         .arsip-date { font-size: 10px; font-weight: 600; color: #1155CC; }
 
-        .agenda-detail-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 10010; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 16px; }
-        .agenda-detail-overlay.active { opacity: 1; pointer-events: auto; }
-        .agenda-detail-box { width: 100%; max-width: 440px; position: relative; transform: translateY(20px); transition: transform 0.3s ease; }
-        .agenda-detail-overlay.active .agenda-detail-box { transform: translateY(0); }
-        .btn-close-agenda { position: absolute; top: -15px; right: -10px; background: #ef4444; color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10011; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); transition: background 0.2s; }
-        .btn-close-agenda:hover { background: #b91c1c; }
-
-        .doc-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: flex-start; z-index: 10030; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; overflow-y: auto; padding: 40px 16px; }
-        .doc-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .doc-modal-wrapper { width: 100%; max-width: 450px; background: #ffffff; border-radius: 24px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 20px; margin: auto; }
-        .doc-modal-img { width: 100%; height: auto; object-fit: contain; border-radius: 12px; display: block; }
-        .doc-btn-close-icon { position: fixed; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.6); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10031; }
+        .doc-modal-img { width: 100%; height: auto; object-fit: contain; border-radius: 12px; display: block; margin-bottom: 16px;}
         .doc-modal-text { background: #F8FAFC; color: #383838; padding: 20px; border-radius: 20px; width: 100%; border: 1px solid #e2e8f0; margin-top: 10px; }
-        .loading-text { text-align: center; color: #fff; padding: 40px; font-size: 14px; width: 100%; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+        .loading-text { text-align: center; color: #64748b; padding: 40px; font-size: 14px; width: 100%; text-shadow: none; }
 
-        .news-dashboard-container { width: 100%; padding-bottom: 10px; position: relative; z-index: 2;}
-        .news-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 16px; padding: 0 16px 20px 16px; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        /* ================== ELEMEN DALAM KARTU LAPAK WARGA ================== */
+        .lapak-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 12px; padding: 0 0 10px 0; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        .lapak-slider-container::-webkit-scrollbar { display: none; }
+        .lapak-card { flex: 0 0 47%; height: 240px; background-color: #ffffff; border-radius: 16px; border: 1px solid #cbd5e1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0; scroll-snap-align: start; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
+        .lapak-title { font-size: 16px; font-weight: 700; color: #383838; }
+
+        /* ================== ELEMEN DALAM KARTU BERITA & INTERMEZO ================== */
+        .news-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 16px; padding: 0 0 10px 0; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
         .news-slider-container::-webkit-scrollbar { display: none; }
-        .news-card { flex: 0 0 100%; width: 100%; background-color: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column; flex-shrink: 0; scroll-snap-align: center; }
+        .news-card { flex: 0 0 100%; width: 100%; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; flex-shrink: 0; scroll-snap-align: center; border: 1px solid #e2e8f0; }
         .news-thumb-wrapper { position: relative; width: 100%; height: 180px; background-color: #eaeaea; overflow: hidden; }
         .news-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
         .news-body-main { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
-        .news-title { font-size: 16px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; color: #1155cc; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.2s; }
+        .news-title { font-size: 16px; font-weight: 600; line-height: 1.4; color: #1155cc; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.2s; }
         .card-clickable-area { cursor: pointer; display: flex; flex-direction: column; flex-grow: 1; }
         .card-clickable-area:hover .news-title { color: #383838; }
         .news-snippet { font-size: 12px; font-weight: 400; line-height: 1.5; color: #383838; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .news-footer { padding: 0 16px 16px 16px; display: flex; background-color: transparent; }
-        .btn-read-more { background-color: #e8f0fe; color: #1155CC; width: 100%; border: none; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 0.2s, transform 0.2s; }
-        .news-nav-controls { width: 100%; display: flex; justify-content: center; gap: 16px; padding-bottom: 15px; margin-top: -5px; }
-        .news-btn-bottom { background: #ffffff; border: 1px solid #cbd5e1; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.08); color: #1155CC; transition: all 0.2s ease; }
         
-        .article-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); display: flex; justify-content: center; align-items: flex-start; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; overflow-y: auto; padding: 60px 16px 30px 16px; }
-        .article-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .article-modal-wrapper { width: 100%; max-width: 400px; background-color: #ffffff; border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); overflow: hidden; margin: auto; padding-bottom: 10px; }
-        .btn-close-article { position: fixed; top: 12px; right: 12px; background: rgba(0, 0, 0, 0.6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: background-color 0.2s; }
-        .article-content-area { padding: 20px 16px 10px 16px; display: flex; flex-direction: column; }
-        .article-title-detail { font-size: 16px; font-weight: 600; line-height: 1.4; color: #1155CC; margin-bottom: 8px; text-align: center; }
-        .article-meta { font-size: 11px; color: #383838; font-weight: 500; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.3px; display:flex; align-items:center; justify-content: center; gap:6px;}
+        .article-title-detail { font-size: 18px; font-weight: 600; line-height: 1.4; color: #1155CC; margin-bottom: 14px; text-align: left; }
         .article-body-text { font-size: 9.5pt; color: #383838; line-height: 1.6; white-space: pre-line; word-break: break-word; font-weight: 400; }
         .article-body-text a { color: #1155CC; text-decoration: none; pointer-events: none; cursor: default; }
         .article-body-text a strong, .article-body-text a span { pointer-events: auto; cursor: pointer; }
         .article-body-text img { width: 100% !important; height: auto !important; border-radius: 12px; margin: 12px 0; display: block; pointer-events: none; }
+
+        /* ================== KOMPONEN BAWAH ================== */
+        .btn-darurat-caution { display: inline-flex; align-items: center; justify-content: center; gap: 12px; background-color: #ffcc00; background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 0, 0, 0.1) 10px, rgba(0, 0, 0, 0.1) 20px); color: #383838; border: 1px solid #383838; padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; width: 80%; max-width: 220px; box-shadow: 4px 4px 0 #7D7D7D; transition: transform 0.1s ease, box-shadow 0.1s ease; margin: 0 auto; }
+        .btn-darurat-caution:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #383838; }
+
+        .emergency-list { display: flex; flex-direction: column; gap: 14px; }
+        .emergency-item { display: flex; align-items: center; background-color: #EDEDED; padding: 12px 14px; border-radius: 12px; text-decoration: none; border: 1px solid #b5b5b5; gap: 14px; box-shadow: 0 5px 6px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.1); transition: all 0.2s; }
+        .logo-wrapper { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); border: 1px solid #a8a8a8; color:#1155CC; }
+        .contact-details { display: flex; flex-direction: column; flex-grow: 1; }
+        .emergency-label { font-size: 11px; color: #383838; font-weight: 500; text-transform: uppercase; }
+        .emergency-value { font-size: 14px; color: #383838; font-weight: 700; margin-top: 1px; }
+        .call-icon { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); color:#1155CC;}
+        .emergency-item.wa .call-icon { color: #22c55e; }
+        .emergency-item.wa .logo-wrapper { color: #22c55e; border-color:#22c55e;}
+        .emergency-item.wa { border-left: 5px solid #22c55e; }
 
         .sub-footer-section { padding: 0 16px; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top:10px; position: relative; z-index: 2;}
         .himbauan-box { width: 100%; background: transparent; border: none; padding: 0; text-align: center; margin-top: 5px; }
@@ -461,32 +392,33 @@
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 500; }
 
-        /* Modal Universal (Universal Iframe) */
-        .univ-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s; padding: 16px; }
-        .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
-        .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
-        .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
-        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; font-weight: 700; color: #383838; }
-        .univ-modal-title { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-        .univ-modal-body { flex: 1; width: 100%; height: 100%; background: #f1f5f9; position: relative; }
-        .univ-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
+        /* General Hover Effects */
+        .btn-doc-footer:hover { background-color: #bfdbfe !important; color: #1e3a8a !important; transform: translateY(-2px); }
+        .btn-share-wa:hover { background-color: #bbf7d0 !important; color: #14532d !important; transform: translateY(-2px); }
+        .emergency-item:hover { background-color: #e2e8f0 !important; border-color:#94a3b8 !important;}
+        .emergency-item.wa:hover { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .arsip-item:hover { background-color: #e2e8f0 !important; border-color: #94a3b8 !important; }
+        #toggleSaldoBtn:hover { transform: scale(1.15); opacity: 0.8; transition: transform 0.2s ease, opacity 0.2s ease; }
+        svg { display: inline-block; vertical-align: middle; }
+        @keyframes fadeInIframe { to { opacity: 1; } }
+        .yt-iframe-delayed { opacity: 0; animation: fadeInIframe 0.5s 1.2s forwards; }
+
     </style>
 </head>
 <body>
 
 <div class="app-wrapper">
 
-    <!-- REVISI HEADER MORPHING (LOGO KANAN -> KIRI, MASUK KOTAK KETIKA SCROLL) -->
+    <!-- HEADER MORPHING -->
     <header class="morph-header-container" id="mainHeader">
+        <div class="morph-logo-wrapper">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-img">
+        </div>
         <div class="morph-text">
             <div class="main-header-text">
                 <strong style="color: #ffffff; font-size: 16px;">RT 2 Online</strong><br>
                 Informasi Warga RT 2-RW 3, Pasekan Lor
             </div>
-        </div>
-        <div class="morph-logo-wrapper">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-img">
         </div>
     </header>
 
@@ -494,35 +426,33 @@
     <div class="main-content-board">
 
         <!-- EM Modal -->
-        <div class="em-modal-overlay" id="emModalOverlay">
-            <div class="em-modal-content">
-                <div class="em-modal-header">
-                    <span class="em-modal-title">Nomor Kontak Darurat</span>
-                    <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
-                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                    </button>
-                </div>
-                <div class="emergency-list">
-                    <!-- List darurat tetap sama -->
-                    <a href="tel:110" target="_blank" class="emergency-item">
-                        <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                        <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
-                        <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                    </a>
-                    <a href="tel:085173171912" target="blank" class="emergency-item">
-                        <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><line x1="8" y1="9.5" x2="12" y2="9.5"/><line x1="10" y1="7.5" x2="10" y2="11.5"/></svg></div>
-                        <div class="contact-details"><span class="emergency-label">Ambulan PKU Gamping</span><span class="emergency-value">0851 7317 1912</span></div>
-                        <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                    </a>
-                    <a href="tel:02742821346" target="_blank" class="emergency-item">
-                        <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-3.3 0-6 2.7-6 6 0 5 6 14 6 14s6-9 6-14c0-3.3-2.7-6-6-6z"/><path d="M12 12c-1.7 0-3-1.3-3-3s1.3-3 3-3-3 1.3 3 3-1.3 3-3 3z"/></svg></div>
-                        <div class="contact-details"><span class="emergency-label">Damkar Godean Sleman</span><span class="emergency-value">(0274) 2821346</span></div>
-                        <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                    </a>
-                    <a href="https://chat.whatsapp.com/31APr2lKc826zA46hGzoZK?s=sh&p=a&mlu=4&ilr=0" target="_blank" class="emergency-item wa">
-                        <div class="logo-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div>
-                        <div class="contact-details"><span class="emergency-label">WhatsApp</span><span class="emergency-value">GRUP WHATSAPP RT 2</span></div>
-                    </a>
+        <div class="em-modal-overlay slide-up-overlay" id="emModalOverlay" onclick="closeEmModalOutside(event)">
+            <div class="em-modal-content slide-up-content" onclick="event.stopPropagation()">
+                <button class="modal-close-btn-absolute" id="closeEmModalBtn" title="Keluar">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+                <div class="modal-scroll-area">
+                    <div class="emergency-list">
+                        <a href="tel:110" target="_blank" class="emergency-item">
+                            <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                            <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
+                            <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                        </a>
+                        <a href="tel:085173171912" target="blank" class="emergency-item">
+                            <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><line x1="8" y1="9.5" x2="12" y2="9.5"/><line x1="10" y1="7.5" x2="10" y2="11.5"/></svg></div>
+                            <div class="contact-details"><span class="emergency-label">Ambulan PKU Gamping</span><span class="emergency-value">0851 7317 1912</span></div>
+                            <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                        </a>
+                        <a href="tel:02742821346" target="_blank" class="emergency-item">
+                            <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-3.3 0-6 2.7-6 6 0 5 6 14 6 14s6-9 6-14c0-3.3-2.7-6-6-6z"/><path d="M12 12c-1.7 0-3-1.3-3-3s1.3-3 3-3-3 1.3 3 3-1.3 3-3 3z"/></svg></div>
+                            <div class="contact-details"><span class="emergency-label">Damkar Godean Sleman</span><span class="emergency-value">(0274) 2821346</span></div>
+                            <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                        </a>
+                        <a href="https://chat.whatsapp.com/31APr2lKc826zA46hGzoZK?s=sh&p=a&mlu=4&ilr=0" target="_blank" class="emergency-item wa">
+                            <div class="logo-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div>
+                            <div class="contact-details"><span class="emergency-label">WhatsApp</span><span class="emergency-value">GRUP WHATSAPP RT 2</span></div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -538,13 +468,6 @@
                 <div class="slider-container">
                     <div class="status-msg" id="ps-status-loading">Memuat konten slider banner</div>
                     <div class="ps-slider-container" id="ps-slider-track"></div>
-                    
-                    <button class="slider-nav-btn prev-btn" id="psPrevBtn" aria-label="Previous">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    </button>
-                    <button class="slider-nav-btn next-btn" id="psNextBtn" aria-label="Next">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </button>
                 </div>
             </div>
         </div>
@@ -590,7 +513,7 @@
                         Buku Kas Besar
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
-                    <button class="btn-kas-small btn-kas-trx" onclick="openUnivModal('Transaksi Terakhir & Rekap Kas', 'https://rt2pasekanlor.id/rekapbukukas.html')">
+                    <button class="btn-kas-small btn-kas-trx" onclick="openUnivModal('https://rt2pasekanlor.id/rekapbukukas.html')">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         Transaksi & Rekap Kas
                     </button>
@@ -598,148 +521,117 @@
             </div>
         </section>
 
-        <div class="ps-modal-overlay" id="psModalOverlay">
-            <div class="ps-modal-content">
-                <button class="ps-close-btn" id="psCloseModal" aria-label="Tutup">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <!-- SLIDER MODAL SLIDE DOWN PURE IMAGE -->
+        <div class="slide-down-overlay" id="psModalOverlay" onclick="closePsModalOutside(event)">
+            <div class="slide-down-content" onclick="event.stopPropagation()">
+                <button class="modal-close-btn-absolute" id="psCloseModal" aria-label="Tutup" style="background: rgba(255,255,255,0.85); color:#ef4444; border:none; top: 16px;">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
-                <div class="ps-modal-body" id="psModalBody"></div>
+                <div id="psModalBody" style="width: 100%; height: auto; display: flex; align-items: center; justify-content: center;"></div>
             </div>
         </div>
 
-        <!-- UNIV MODAL -->
-        <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
-            <div class="univ-modal-box" onclick="event.stopPropagation()">
-                <div class="univ-modal-header">
-                    <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
-                    <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                    </button>
-                </div>
-                <div class="univ-modal-body">
-                    <iframe id="univModalIframe" src="" loading="lazy" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== BAGIAN AGENDA WARGA ==================== -->
-        <div class="section-title-neumorph">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
-            KEGIATAN WARGA RT 2
-        </div>
-
-        <div class="info-dashboard-container">
-            <div class="cards-list" id="infoCardsContainer">
-                <div class="loading-text" style="color: #64748b;">Menyinkronkan info agenda...</div>
-            </div>
-            
-            <button class="btn-list-trigger" id="btnOpenListModal" onclick="openListModal()" style="display: none;">
-                Arsip Kegiatan Lainnya
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </button>
-        </div>
-
-        <!-- Modal List Arsip -->
-        <div class="list-modal-overlay" id="listModal" onclick="closeListModalOutside(event)">
-            <div class="list-modal-sheet" onclick="event.stopPropagation()">
-                <div class="list-modal-header">
-                    <h2>Arsip Kegiatan Terdahulu</h2>
-                    <button class="btn-close-sheet" onclick="closeListModal()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                    </button>
-                </div>
-                <div class="list-modal-body" id="modalCardsListContainer"></div>
-            </div>
-        </div>
-
-        <!-- Modal Detail Kegiatan -->
-        <div class="agenda-detail-overlay" id="agendaDetailModal" onclick="closeAgendaDetailOutside(event)">
-            <div class="agenda-detail-box" onclick="event.stopPropagation()">
-                <button class="btn-close-agenda" onclick="closeAgendaDetail()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <!-- UNIV MODAL TRANSAKSI KAS BOTTOM SHEET UTUH -->
+        <div class="slide-up-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
+            <div class="slide-up-content" onclick="event.stopPropagation()">
+                <button class="modal-close-btn-absolute" onclick="closeUnivModal()" title="Tutup" style="z-index: 100; background: #fef2f2;">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
-                <div id="agendaDetailContent"></div>
-            </div>
-        </div>
-
-        <!-- Lightbox Hasil Kegiatan & Info -->
-        <div class="doc-modal-overlay" id="docModalOverlay" onclick="closeDocModalOutside(event)">
-            <button class="doc-btn-close-icon" onclick="closeDocModal()">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
-            <div class="doc-modal-wrapper" id="docImagesContainer"></div>
-        </div>
-
-
-        <!-- ==================== BAGIAN LAPAK WARGA (REVISI) ==================== -->
-        <div class="section-title-neumorph" style="background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%); color: #ffffff; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3); border: none;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                <line x1="12" y1="22.08" x2="12" y2="12"/>
-            </svg>
-            LAPAK WARGA
-        </div>
-
-        <div class="info-dashboard-container">
-            <div class="info-card" id="lapakWargaCard" style="padding: 16px; display: flex; flex-direction: column; gap: 14px; background: linear-gradient(135deg, rgba(224, 242, 254, 0.95) 0%, rgba(186, 230, 253, 0.95) 100%); border: 1px solid rgba(255,255,255,0.5);">
-                
-                <div style="display: flex; flex-direction: column; gap: 4px;">
-                    <span style="font-size: 14px; font-weight: 700; color: #0c4a6e;">Data Lapak Warga RT 2</span>
+                <div class="modal-scroll-area no-padding" style="height: 100%; width: 100%;">
+                    <iframe id="univModalIframe" src="" loading="lazy" allowfullscreen style="width: 100%; height: 100%; border: none; display: block; border-radius: 24px 24px 0 0;"></iframe>
                 </div>
+            </div>
+        </div>
 
-                <div style="overflow-x: auto; border-radius: 8px; border: 1px solid #7dd3fc; background-color: rgba(255, 255, 255, 0.7);">
-                    <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-                        <tbody>
-                            <!-- Baris tabel dikosongkan dan diganti status Under Maintenance -->
-                            <tr>
-                                <td colspan="3" style="padding: 30px 10px; text-align: center; color: #d97706; font-weight: 700; font-size: 14px;">Under Maintenance</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <!-- ==================== BAGIAN AGENDA WARGA (Dashboard Card Design) ==================== -->
+        <div class="dashboard-section-card">
+            <div class="ds-header">KEGIATAN WARGA RT 2</div>
+            <div class="ds-content">
+                <div class="cards-list" id="infoCardsContainer">
+                    <div class="loading-text" style="color: #64748b;">Menyinkronkan info agenda...</div>
                 </div>
-
-                <a href="javascript:void(0)" class="btn-inventaris-more" style="background: #0284c7; color: #ffffff; text-decoration: none; padding: 10px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); transition: all 0.3s ease;">
-                    Lapak Warga Selengkapnya
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
+            </div>
+            <div class="ds-footer" id="footerBtnArsipLain" style="display: none;">
+                <button class="ds-pill-btn" onclick="openListModal()">Arsip Lain</button>
             </div>
         </div>
 
-
-        <!-- ==================== BAGIAN BERITA ==================== -->
-        <div class="section-title-neumorph red-text" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px;">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5M18 10h-8"/>
-                </svg>
-                BERITA WARGA RT 2
-            </div>
-        </div>
-
-        <div class="news-dashboard-container">
-            <div class="news-slider-container" id="newsCardsContainer">
-                <div class="loading-text" style="color: #64748b;">Menyinkronkan berita warga...</div>
-            </div>
-            
-            <div class="news-nav-controls" id="newsNavContainer" style="display: none;">
-                <button class="news-btn-bottom" id="newsPrevBtn" aria-label="Previous">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <!-- Modal List Arsip BOTTOM SHEET -->
+        <div class="slide-up-overlay" id="listModal" onclick="closeListModalOutside(event)">
+            <div class="slide-up-content" onclick="event.stopPropagation()">
+                <button class="modal-close-btn-absolute" onclick="closeListModal()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
-                <button class="news-btn-bottom" id="newsNextBtn" aria-label="Next">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
+                <div class="modal-scroll-area" id="modalCardsListContainer" style="display: flex; flex-direction: column; gap: 12px; background-color: transparent;"></div>
             </div>
         </div>
 
-        <div class="article-modal-overlay" id="articleModal" onclick="closeArticleModalOutside(event)">
-            <button class="btn-close-article" onclick="closeArticleModal()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
-            <div class="article-modal-wrapper" onclick="event.stopPropagation()">
-                <div class="article-content-area">
-                    <h2 class="article-title-detail" id="articleModalTitle"></h2>
-                    <div class="article-meta" id="articleModalMeta"></div>
+        <!-- Modal Detail Kegiatan BOTTOM SHEET -->
+        <div class="slide-up-overlay" id="agendaDetailModal" onclick="closeAgendaDetailOutside(event)">
+            <div class="slide-up-content" onclick="event.stopPropagation()">
+                <!-- Tombol Kembali ke Arsip -->
+                <button class="modal-back-btn-absolute" onclick="goBackToArsipList()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <button class="modal-close-btn-absolute" onclick="closeAgendaDetail()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+                <div class="modal-scroll-area" id="agendaDetailContent" style="padding-top: 10px;"></div>
+            </div>
+        </div>
+
+        <!-- Lightbox Hasil Kegiatan BOTTOM SHEET -->
+        <div class="slide-up-overlay" id="docModalOverlay" onclick="closeDocModalOutside(event)">
+            <div class="slide-up-content" onclick="event.stopPropagation()">
+                <button class="modal-close-btn-absolute" onclick="closeDocModal()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+                <div class="modal-scroll-area" id="docImagesContainer"></div>
+            </div>
+        </div>
+
+        <!-- ==================== BAGIAN LAPAK WARGA (Dashboard Card Design) ==================== -->
+        <div class="dashboard-section-card">
+            <div class="ds-header">LAPAK WARGA</div>
+            <div class="ds-content">
+                <div class="lapak-slider-container" id="lapakContainer">
+                    <div class="lapak-card"><span class="lapak-title">Toko 1</span></div>
+                    <div class="lapak-card"><span class="lapak-title">Toko 2</span></div>
+                    <div class="lapak-card"><span class="lapak-title">Toko 3</span></div>
+                    <div class="lapak-card"><span class="lapak-title">Toko 4</span></div>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 12px; margin-top: 15px;">
+                    <button class="nav-circle-btn" id="lapakPrevBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                    <button class="nav-circle-btn" id="lapakNextBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                </div>
+            </div>
+            <div class="ds-footer">
+                <button class="ds-pill-btn" onclick="window.location.href='javascript:void(0)'">Toko Lain</button>
+            </div>
+        </div>
+
+        <!-- ==================== BAGIAN BERITA & INTERMEZO (Dashboard Card Design) ==================== -->
+        <div class="dashboard-section-card">
+            <div class="ds-header">BERITA & INTERMEZO</div>
+            <div class="ds-content">
+                <div class="news-slider-container" id="newsCardsContainer">
+                    <div class="loading-text" style="color: #64748b;">Menyinkronkan berita warga...</div>
+                </div>
+            </div>
+            <div class="ds-footer" id="newsNavContainer" style="display: none; gap: 12px;">
+                <button class="nav-circle-btn" id="newsPrevBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                <button class="nav-circle-btn" id="newsNextBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+            </div>
+        </div>
+
+        <!-- Berita Artikel BOTTOM SHEET -->
+        <div class="slide-up-overlay" id="articleModal" onclick="closeArticleModalOutside(event)">
+            <div class="slide-up-content" onclick="event.stopPropagation()">
+                <button class="modal-close-btn-absolute" onclick="closeArticleModal()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+                <div class="modal-scroll-area">
+                    <h2 class="article-title-detail" id="articleModalTitle" style="margin-top: 5px;"></h2>
                     <div class="article-body-text" id="articleModalBody"></div>
                 </div>
             </div>
@@ -777,30 +669,29 @@
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhNWaQOKzNxOXXJdKcaQvz89f58rx2eEzukj1SlZSmW7p8O_1jmGXpAOjGU_bz-7qBdJ-p52OkTdaZTTa3HzEIbSLTZ78DjnSLFzY_1VvVjELq0UhWvN9I1J-OgZLo8yIzUwvKKrVZcJI8fIvSo2uC0hsxto0DLTAYgnLc2ZlNi0VuH9S2qHCgbWkgrhGk/s1600/Footer%20Paslor%20600px.png" style="width: 100%; display: block; margin-bottom: -40px; position: relative; z-index: 2;" alt="Footer RT 2">
         </div>
         
-        <!-- REVISI: Gambar Footer Animasi Slide Up (Dipusatkan & Layer Paling Belakang) -->
         <div id="footerSlideImg" style="position: fixed; bottom: 70px; left: 0; right: 0; margin: 0 auto; z-index: 0; transform: translateY(150%); transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); width: 100%; max-width: 480px; pointer-events: none;">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEVrUepmKaBK9pBc1CnFkks7LLH4BXmgKOFv2WHgAO7yyG_JOlvXUpFhcQCsdFrUHaFYcwS532g9zKq9OzbWJe2rp8YytlJgsy27plTIrrfDGpYkJ-Bx8_nTF-fi3OzEBwtzh7hZtN4I3m094rg1cqHsFvwzXocbJtYlH2arEdkFSAqDxZCvFCYPKF03o/s1600/image1786676021" style="width: 100%; display: block;" alt="Animasi Footer">
         </div>
 
-    </div> <!-- Batas Penutup main-content-board -->
+    </div> 
 </div> 
 
 <!-- ==================== MENU FOOTER FIXED ==================== -->
 <nav class="bottom-nav-bar">
     <a href="#" class="bottom-nav-item active-menu">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         HOME
     </a>
     <a href="inventaris" class="bottom-nav-item">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
         INVENTARIS
     </a>
     <a href="ronda" class="bottom-nav-item bottom-nav-center">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         RONDA
     </a>
     <a href="tatatertib" class="bottom-nav-item">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         TATA TERTIB
     </a>
     <button class="bottom-nav-item" id="btnHamburger" style="background:none; border:none; padding:0; font-family:inherit;">
@@ -810,26 +701,12 @@
 </nav>
 
 <!-- ==================== MODAL HAMBURGER ALL MENU ==================== -->
-<div class="hamburger-modal" id="hamburgerModal">
-    <div class="hamburger-content">
+<div class="hamburger-modal" id="hamburgerModal" onclick="closeHamburgerOutside(event)">
+    <div class="hamburger-content" onclick="event.stopPropagation()">
         
-        <!-- REVISI KOTAK SETTING SIMPEL DI ATAS MENU -->
-        <div class="hamburger-settings-box">
-            <div class="settings-compact-row">
-                <span class="settings-label">Tema</span>
-                <div class="settings-group">
-                    <button class="settings-btn active" id="btnThemeLight">Terang</button>
-                    <button class="settings-btn" id="btnThemeDark">Gelap</button>
-                </div>
-            </div>
-            <div class="settings-compact-row">
-                <span class="settings-label">Teks</span>
-                <div class="settings-group">
-                    <button class="settings-btn active" id="btnFontNormal">Normal</button>
-                    <button class="settings-btn" id="btnFontLarge">Besar</button>
-                </div>
-            </div>
-        </div>
+        <button id="closeHamburgerBtn" class="modal-close-btn-absolute">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
 
         <div class="hamburger-grid">
             <a class="nav-item btn-home-active" title="Home">
@@ -844,10 +721,12 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                 <span>INVENTARIS</span>
             </a>
-            <a href="scanner" class="nav-item btn-scanner" title="Scanner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
-                <span>SCANNER</span>
+            
+            <a href="https://rt2pasekanlor.id/data-warga" class="nav-item btn-datawarga" title="Data Warga">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                <span>DATA WARGA</span>
             </a>
+            
             <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                 <span>TATA TERTIB</span>
@@ -874,7 +753,6 @@
 
 <script>
     const GLOBAL_BLOG_URL = "https://rt2paslor.blogspot.com";
-    const GLOBAL_STATIC_WEB_URL = "https://sites.google.com/view/rt02pasekanlor/";
 
     // ========================================== SCROLL ANIMASI HEADER MORPHING ==========================================
     window.addEventListener('scroll', () => {
@@ -888,7 +766,7 @@
         }
     });
 
-    // REVISI: Listener Animasi Gambar Footer
+    // Listener Animasi Gambar Footer
     window.addEventListener('scroll', () => {
         const docHeight = document.documentElement.scrollHeight;
         const scrollPos = window.scrollY + window.innerHeight;
@@ -902,43 +780,22 @@
         }
     });
 
-    // ========================================== SETTING TEMA & HURUF ==========================================
-    // Fitur Dark Mode
-    document.getElementById('btnThemeLight').addEventListener('click', () => {
-        document.body.classList.remove('dark-mode');
-        document.getElementById('btnThemeLight').classList.add('active');
-        document.getElementById('btnThemeDark').classList.remove('active');
-    });
-    document.getElementById('btnThemeDark').addEventListener('click', () => {
-        document.body.classList.add('dark-mode');
-        document.getElementById('btnThemeDark').classList.add('active');
-        document.getElementById('btnThemeLight').classList.remove('active');
-    });
-
-    // Fitur Ukuran Huruf
-    const fontBtns = [document.getElementById('btnFontNormal'), document.getElementById('btnFontLarge')];
-    fontBtns[0].addEventListener('click', () => { setFontSize('', 0); });
-    fontBtns[1].addEventListener('click', () => { setFontSize('font-large', 1); });
-
-    function setFontSize(className, activeIndex) {
-        document.body.classList.remove('font-large');
-        if (className) document.body.classList.add(className);
-        fontBtns.forEach((btn, i) => { if (i === activeIndex) btn.classList.add('active'); else btn.classList.remove('active'); });
-    }
-
     // ========================================== HAMBURGER ALL MENU MODAL ==========================================
     const hamburgerModal = document.getElementById('hamburgerModal');
     document.getElementById('btnHamburger').addEventListener('click', () => {
         hamburgerModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
     });
-    hamburgerModal.addEventListener('click', (e) => {
-        if(e.target === hamburgerModal) hamburgerModal.classList.remove('active');
+    document.getElementById('closeHamburgerBtn').addEventListener('click', () => {
+        hamburgerModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
     });
-    window.addEventListener('scroll', () => {
-        if(hamburgerModal.classList.contains('active')) {
+    function closeHamburgerOutside(e) {
+        if(e.target === hamburgerModal) {
             hamburgerModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
-    });
+    }
 
     // ========================================== HEADER DARURAT MODAL ==========================================
     const emModalOverlay = document.getElementById('emModalOverlay');
@@ -948,11 +805,11 @@
     document.getElementById('closeEmModalBtn').addEventListener('click', () => { 
         emModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; 
     });
-    emModalOverlay.addEventListener('click', (e) => { 
+    function closeEmModalOutside(e) { 
         if (e.target === emModalOverlay) { emModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; } 
-    });
+    }
 
-    // ========================================== ACCORDION SLIDER (Ikon Burger-Arrow) ==========================================
+    // ========================================== ACCORDION SLIDER ==========================================
     const toggleSliderBtn = document.getElementById('toggleSliderBtn');
     const sliderSection = document.getElementById('sliderSection');
     let isSliderOpen = true;
@@ -963,14 +820,14 @@
         
         if(isSliderOpen) {
             sliderSection.classList.remove('collapsed');
-            icon.innerHTML = `<polyline points="18 15 12 9 6 15"></polyline>`; // chevron down
+            icon.innerHTML = `<polyline points="18 15 12 9 6 15"></polyline>`; 
             document.querySelectorAll('.slide video').forEach(v => {
                 v.muted = true;
                 v.play().catch(()=>{});
             });
         } else {
             sliderSection.classList.add('collapsed');
-            icon.innerHTML = `<polyline points="6 9 12 15 18 9"></polyline>`; // chevron up
+            icon.innerHTML = `<polyline points="6 9 12 15 18 9"></polyline>`; 
             document.querySelectorAll('.slide video').forEach(v => v.pause());
         }
     });
@@ -980,14 +837,11 @@
     const psLoading = document.getElementById('ps-status-loading');
     const psModalOverlay = document.getElementById('psModalOverlay');
     const psModalBody = document.getElementById('psModalBody');
-    const psPrevBtn = document.getElementById('psPrevBtn');
-    const psNextBtn = document.getElementById('psNextBtn');
     let psPostsData = [];
 
     function handlePosterFeed(data) {
         psLoading.style.display = 'none';
         const entries = data.feed.entry || [];
-        if (entries.length <= 1) { psPrevBtn.style.display = 'none'; psNextBtn.style.display = 'none'; }
         if (entries.length === 0) { psLoading.textContent = "Tidak ada banner."; return; }
 
         psPostsData = entries.map(entry => {
@@ -1035,7 +889,7 @@
                 } else if (post.isWave) {
                     psModalBody.innerHTML = `<iframe style="width:100%; aspect-ratio:16/9; border:none; display:block; background:#000;" src="${post.waveUrl}?autoplay=1&controls=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
                 } else {
-                    psModalBody.innerHTML = post.isVideo ? `<video src="${post.media}" controls autoplay playsinline style="width:100%; height:auto; display:block; background:#000;"></video>` : `<img src="${post.media}" alt="${post.title}" style="width:100%; height:auto; display:block; background:#000;">`;
+                    psModalBody.innerHTML = post.isVideo ? `<video src="${post.media}" controls autoplay playsinline style="width:100%; height:auto; display:block; background:#000;"></video>` : `<img src="${post.media}" alt="${post.title}" style="width:100%; height:auto; max-height:80vh; object-fit:contain; display:block; background:transparent;">`;
                 }
                 psModalOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; 
             });
@@ -1060,20 +914,17 @@
         psTrack.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const walk = (e.pageX - psTrack.offsetLeft - startX) * 1.3; psTrack.scrollLeft = scrollLeft - walk; });
     }
 
-    psPrevBtn.addEventListener('click', () => { psTrack.scrollBy({ left: -psTrack.offsetWidth, behavior: 'smooth' }); });
-    psNextBtn.addEventListener('click', () => { psTrack.scrollBy({ left: psTrack.offsetWidth, behavior: 'smooth' }); });
-    
     document.getElementById('psCloseModal').addEventListener('click', () => { 
         psModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; 
         psModalBody.innerHTML = ''; 
     });
     
-    psModalOverlay.addEventListener('click', (e) => { 
+    function closePsModalOutside(e) { 
         if (e.target === psModalOverlay) { 
             psModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; 
             psModalBody.innerHTML = ''; 
         } 
-    });
+    }
 
     // ========================================== KAS SALDO ==========================================
     function updateDateTime() {
@@ -1101,16 +952,16 @@
         document.getElementById('eyeIconClosed').style.display = isSaldoVisible ? 'none' : 'block';
     });
 
-    // UNIVERSAL MODAL FIX (UNTUK TOMBOL TRANSAKSI & REKAP KAS)
+    // UNIVERSAL MODAL TRANSAKSI KAS
     const univModal = document.getElementById('univModalOverlay');
-    const univTitle = document.getElementById('univModalTitle');
     const univIframe = document.getElementById('univModalIframe');
-    function openUnivModal(title, docUrl) { univTitle.innerText = title; univIframe.src = docUrl; univModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function openUnivModal(docUrl) { univIframe.src = docUrl; univModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
     function closeUnivModal() { univModal.classList.remove('active'); document.body.style.overflow = 'auto'; setTimeout(() => { univIframe.src = ""; }, 350); }
     function closeUnivModalOutside(e) { if (e.target === univModal) closeUnivModal(); }
 
     // ========================================== INFO AGENDA ==========================================
     let globalAgendaEntries = [];
+    let openedFromList = false;
 
     function formatListLines(text) {
         if (!text || text === '-' || text.trim() === '') return '-';
@@ -1165,7 +1016,7 @@
         
         return {
             bodyHtml: `<div class="status-text-container" style="color:${statusData.color}; display:flex; align-items:center; gap:1px;">${icon} ${statusData.text}</div>`,
-            headerHtml: `<span class="agenda-label-top" style="background-color:#EDEDED; color:${statusData.color}; box-shadow:0 2px 10px rgba(0,0,0,0.1); display:inline-flex; align-items:center; gap:2px;">${icon} <span style="font-weight:500; margin-top:1px;">${statusData.text}</span></span>`
+            headerHtml: `<span class="agenda-label-top neumorph-status" style="color:${statusData.color}; display:inline-flex; align-items:center; gap:4px;">${icon} <span style="font-weight:600; margin-top:1px;">${statusData.text}</span></span>`
         };
     }
 
@@ -1214,22 +1065,38 @@
         globalAgendaEntries.slice(0, 4).forEach(item => mainContainer.appendChild(createInfoCardHtml(item)));
         if (globalAgendaEntries.length > 4) {
             globalAgendaEntries.slice(4).forEach((item, index) => { modalListContainer.appendChild(createArsipTextHtml(item, index + 4)); });
-            document.getElementById('btnOpenListModal').style.display = 'flex';
-        } else { document.getElementById('btnOpenListModal').style.display = 'none'; }
+            document.getElementById('footerBtnArsipLain').style.display = 'flex';
+        } else { document.getElementById('footerBtnArsipLain').style.display = 'none'; }
     }
 
     function createArsipTextHtml(item, globalIndex) {
         const div = document.createElement('div');
-        div.innerHTML = `<div class="arsip-item" onclick="openAgendaDetail(${globalIndex})"><span class="arsip-title">${item.title || "-"}</span><span class="arsip-date">${item.meta.hariTgl || "-"}</span></div>`;
+        div.innerHTML = `<div class="arsip-item" onclick="openAgendaDetail(${globalIndex}, true)"><span class="arsip-title">${item.title || "-"}</span><span class="arsip-date">${item.meta.hariTgl || "-"}</span></div>`;
         return div.firstElementChild;
     }
 
-    function openAgendaDetail(index) {
+    function openAgendaDetail(index, fromList = false) {
+        openedFromList = fromList;
+        if(openedFromList) { document.getElementById('listModal').classList.remove('active'); }
+        
         const container = document.getElementById('agendaDetailContent'); container.innerHTML = '';
         container.appendChild(createInfoCardHtml(globalAgendaEntries[index]));
         document.getElementById('agendaDetailModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        document.querySelector('.modal-back-btn-absolute').style.display = openedFromList ? 'flex' : 'none';
     }
-    function closeAgendaDetail() { document.getElementById('agendaDetailModal').classList.remove('active'); }
+    
+    function closeAgendaDetail() { 
+        document.getElementById('agendaDetailModal').classList.remove('active'); 
+        document.body.style.overflow = 'auto'; 
+    }
+    
+    function goBackToArsipList() {
+        closeAgendaDetail();
+        setTimeout(openListModal, 300);
+    }
+    
     function closeAgendaDetailOutside(e) { if(e.target === document.getElementById('agendaDetailModal')) closeAgendaDetail(); }
 
     function createInfoCardHtml(item) {
@@ -1301,6 +1168,14 @@
     function closeDocModal() { docModal.classList.remove('active'); if(!document.getElementById('listModal').classList.contains('active') && !document.getElementById('agendaDetailModal').classList.contains('active')) document.body.style.overflow = 'auto'; }
     function closeDocModalOutside(e) { if(e.target === docModal) closeDocModal(); }
 
+    // ========================================== LAPAK WARGA NAV ==========================================
+    const lapakPrevBtn = document.getElementById('lapakPrevBtn');
+    const lapakNextBtn = document.getElementById('lapakNextBtn');
+    const lapakTrack = document.getElementById('lapakContainer');
+    lapakPrevBtn.addEventListener('click', () => { lapakTrack.scrollBy({ left: -lapakTrack.offsetWidth, behavior: 'smooth' }); });
+    lapakNextBtn.addEventListener('click', () => { lapakTrack.scrollBy({ left: lapakTrack.offsetWidth, behavior: 'smooth' }); });
+
+
     // ========================================== BERITA WARGA ==========================================
     const newsPrevBtn = document.getElementById('newsPrevBtn');
     const newsNextBtn = document.getElementById('newsNextBtn');
@@ -1317,16 +1192,27 @@
 
         if(entries.length === 0) { c.innerHTML = '<div class="loading-text" style="color:#64748b;">Tidak ada kabar terbit.</div>'; return; }
         entries.forEach((entry, i) => {
-            const title = entry.title.$t, body = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : ""), date = new Date(entry.published.$t).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const title = entry.title.$t, body = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : "");
             const doc = new DOMParser().parseFromString(body, 'text/html'), img = doc.querySelector('img');
             
             const thumb = img ? img.getAttribute('src').replace(/\/[swh][0-9]+(-[cp])?\//, '/s1600/').replace(/=[swh][0-9]+(-[cp])?/, '=s1600') : (entry.media$thumbnail?.url.replace(/\/[swh][0-9]+(-[cp])?\//, '/s1600/').replace(/=[swh][0-9]+(-[cp])?/, '=s1600') || 'https://via.placeholder.com/500');
             
             const snippet = (doc.body.textContent || "").replace(/\s+/g, ' ').trim().substring(0, 95) + "...";
-            const dateHtml = `<div style="font-size:11px; color:#383838; font-weight:600; margin-top:4px; display:flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${date}</div>`;
             
             const div = document.createElement('div');
-            div.innerHTML = `<div class="news-card"><div class="card-clickable-area" onclick="openArticleModal(${i})"><div class="news-thumb-wrapper"><img src="${thumb}" class="news-thumb"></div><div class="news-body-main"><h3 class="news-title">${title}</h3><p class="news-snippet">${snippet}</p>${dateHtml}</div></div><div class="news-footer"><button type="button" class="btn-read-more btn-footer-action" onclick="openArticleModal(${i})" style="width:100%; border-radius:12px;"> Selengkapnya</button></div></div>`;
+            div.innerHTML = `
+            <div class="news-card">
+                <div class="card-clickable-area" onclick="openArticleModal(${i})">
+                    <div class="news-thumb-wrapper"><img src="${thumb}" class="news-thumb"></div>
+                    <div class="news-body-main">
+                        <h3 class="news-title">${title}</h3>
+                        <p class="news-snippet">${snippet}</p>
+                        <div style="margin-top: 10px;">
+                            <span style="background: #a1a1aa; color: #fff; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 500;">Baca Selengkapnya</span>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
             c.appendChild(div.firstElementChild);
         });
     }
@@ -1337,7 +1223,6 @@
         const doc = new DOMParser().parseFromString(body, 'text/html');
         doc.querySelectorAll('a img').forEach(img => { const p = img.closest('a'); if(p) { p.parentNode.insertBefore(img, p); p.parentNode.removeChild(p); } });
         
-        document.getElementById('articleModalMeta').innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${new Date(entry.published.$t).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`;
         document.getElementById('articleModalTitle').innerText = entry.title.$t;
         document.getElementById('articleModalBody').innerHTML = doc.body.innerHTML;
         document.getElementById('articleModal').classList.add('active'); document.body.style.overflow = 'hidden';

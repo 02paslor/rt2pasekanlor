@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Katalog Lapak Warga</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- PENGATURAN GLOBAL --- */
+    #widget-umkm-rt2, #modal-umkm { font-family: 'Poppins', sans-serif; color: #333; box-sizing: border-box; text-align: left; }
+    #widget-umkm-rt2 { width: 100%; max-width: 800px; margin: 0 auto; padding: 10px 0; }
+    .loading-teks { font-weight: 500; text-align: center; padding: 25px; color: #666; font-size: 11px; border: 1px dashed #ccc; border-radius: 8px; grid-column: span 2; }
+
+    /* --- FILTER KATEGORI --- */
+    .filter-container { display: flex; overflow-x: auto; gap: 8px; margin-bottom: 15px; scrollbar-width: none; -ms-overflow-style: none; }
+    .filter-container::-webkit-scrollbar { display: none; }
+    .filter-btn { 
+      background: #f0f0f0; color: #555; border: none; padding: 5px 12px; border-radius: 15px; 
+      font-size: 11px; font-family: 'Poppins', sans-serif; font-weight: 500; cursor: pointer; 
+      white-space: nowrap; transition: background 0.2s, color 0.2s; 
+    }
+    .filter-btn.active { background: #1155cc; color: #fff; }
+
+    /* --- DESAIN CARD DEPAN (2 GRID) --- */
+    .umkm-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    
+    .umkm-card {
+      background: #fff; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      overflow: hidden; cursor: pointer; border: 1px solid #eaeaea; height: 100%; 
+      display: flex; flex-direction: column; transition: transform 0.2s;
+    }
+    .umkm-card:hover { transform: translateY(-2px); }
+    .card-thumb { width: 100%; height: 140px; object-fit: cover; background: #f8f9fa; border-bottom: 1px solid #f0f0f0; display: block; }
+    .card-body { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; }
+    
+    .kategori-badge {
+      display: inline-block; background: #f0f0f0; color: #555; font-size: 8px; 
+      padding: 3px 6px; border-radius: 4px; font-weight: 500; margin: 0;
+    }
+    
+    .nama-toko { font-size: 13px; font-weight: 600; margin: 0 0 6px 0; color: #1155CC; line-height: 1.3; }
+    
+    /* Teks Deskripsi Ukuran 9pt */
+    .teks-deskripsi-depan { font-size: 9pt; color: #444; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
+    .teks-deskripsi-modal { font-size: 9pt; color: #444; margin-bottom: 12px; line-height: 1.5; }
+
+    .icon-text { display: flex; align-items: flex-start; gap: 6px; font-size: 11px; color: #555; margin-bottom: 6px; line-height: 1.4; }
+    .icon-text svg { width: 12px; height: 12px; flex-shrink: 0; margin-top: 1px; color: #777; }
+    
+    /* --- DESAIN MODAL (POPUP) --- */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(2px);
+    }
+    .modal-content {
+      background: #fff; width: 92%; max-width: 500px; max-height: 85vh; border-radius: 10px; 
+      overflow-y: auto; position: relative; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    /* Tombol Exit Bulat #1155cc */
+    .close-modal { 
+      position: absolute; top: 12px; right: 15px; font-size: 20px; cursor: pointer; color: #fff; 
+      background: #1155cc; width: 26px; height: 26px; border-radius: 50%; display: flex; 
+      align-items: center; justify-content: center; z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    }
+    
+    .modal-toko-thumb { width: 100%; height: 160px; border-radius: 6px; object-fit: cover; border: 1px solid #eaeaea; display: block; margin-bottom: 8px; }
+    
+    /* Kotak WA rounded kecil warna hijau tua */
+    .text-wa { 
+      display: inline-flex; align-items: center; gap: 4px; background: #e8f5e9; color: #0b6623; 
+      padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; text-decoration: none; 
+      margin-top: 4px; margin-bottom: 12px; border: 1px solid #c8e6c9; 
+    }
+    .text-wa svg { width: 12px; height: 12px; }
+
+    /* --- ETALASE PRODUK --- */
+    .produk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px dashed #ddd; padding-top: 15px; }
+    
+    .produk-card { 
+      background: #fff; border: 1px solid #eaeaea; border-radius: 6px; overflow: hidden; 
+      display: flex; flex-direction: column; box-shadow: 0 3px 8px rgba(0,0,0,0.06); transition: transform 0.2s; 
+    }
+    .produk-card:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0,0,0,0.1); }
+    .produk-card img { width: 100%; height: 130px; object-fit: cover; background: #fafafa; display: block; border-bottom: 1px solid #f5f5f5;}
+    .produk-card-body { padding: 10px; }
+    .produk-nama { font-size: 12px; font-weight: 600; color: #222; margin: 0; display: flex; align-items: flex-start; gap: 4px; line-height: 1.3;}
+    .produk-nama svg { width: 11px; height: 11px; color: #666; margin-top: 2px; flex-shrink: 0; }
+    
+    /* Teks Harga Biru tanpa kotak di bawah gambar */
+    .produk-harga { font-size: 12px; color: #1155cc; font-weight: 600; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+    .produk-harga svg { width: 12px; height: 12px; }
+
+    .zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; }
+    .zoom-overlay img { max-width: 90%; max-height: 90%; border-radius: 8px; }
+    .close-zoom { position: absolute; color: #fff; top: 20px; right: 25px; font-size: 40px; cursor: pointer; font-weight: 400; line-height: 1; }
+  </style>
+</head>
+<body>
+
+  <div id="widget-umkm-rt2">
+    <!-- Area Filter Kategori -->
+    <div class="filter-container" id="filter-kategori"></div>
+    
+    <!-- Area Grid UMKM -->
+    <div class="umkm-grid" id="umkm-wrapper">
+      <div class="loading-teks">Memuat Data Lapak Warga...</div>
+    </div>
+  </div>
+
+  <!-- Modal / Popup Identitas -->
+  <div id="modal-umkm" class="modal-overlay">
+    <div class="modal-content" id="modal-body"></div>
+  </div>
+
+  <!-- Zoom Overlay -->
+  <div id="zoom-overlay" class="zoom-overlay">
+    <span class="close-zoom">&times;</span>
+    <img id="zoom-img" src="" alt="Zoom Image">
+  </div>
+
+  <script>
+    const svgMap = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`;
+    const svgWa = `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>`;
+    const svgBox = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>`;
+    const svgWallet = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 7.28V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-2.28A2 2 0 0 0 22 15V9a2 2 0 0 0-1-1.72zM20 9v6h-2V9h2zM5 19V5h14v2h-6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h6v2H5z"/></svg>`;
+
+    let storesData = [];
+    let allCategories = new Set();
+    const allLabels = ['Nama Lapak', 'Nama Toko', 'Kategori', 'Alamat', 'Deskripsi', 'Detail', 'No\\.? WhatsApp', 'WhatsApp', 'WA', 'Harga', 'Nama Produk'];
+
+    // 1. Fungsi Utama Menarik Data JSON Blogger
+    window.tampilkanWidgetUMKM = function(data) {
+      const entries = data.feed.entry;
+      if(!entries) return;
+
+      entries.forEach((entry, index) => {
+        const isiHtml = entry.content ? entry.content.$t : (entry.summary ? entry.summary.$t : '');
+        const doc = new DOMParser().parseFromString(isiHtml, 'text/html');
+        const images = Array.from(doc.querySelectorAll('img')).map(img => img.src);
+        const thumbToko = images.length > 0 ? images[0] : 'https://via.placeholder.com/400x300?text=Tanpa+Gambar';
+
+        doc.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+        doc.querySelectorAll('div, p').forEach(el => { el.insertAdjacentText('beforebegin', '\n'); el.insertAdjacentText('afterend', '\n'); });
+
+        let cleanText = (doc.body.textContent || "").split('\n')
+          .map(line => line.trim()).filter(line => line.length > 0)
+          .filter(line => !/(foto toko di bawah|foto produk di bawah|\(upload)/i.test(line))
+          .join('\n');
+
+        const blocks = cleanText.split(/={3,}/);
+        const tokoText = blocks[0] || '';
+
+        const extract = (text, key) => {
+           const regex = new RegExp(`(?:${key})\\s*[:\\-]?\\s*([\\s\\S]*?)(?=(?:${allLabels.join('|')})\\s*[:\\-]|Foto|$)`, 'i');
+           const match = text.match(regex);
+           return match ? match[1].trim() : '';
+        };
+
+        const namaToko = extract(tokoText, 'Nama Lapak|Nama Toko') || entry.title.$t;
+        
+        let kategoriArr = entry.category ? entry.category.map(c => c.term) : [];
+        if(kategoriArr.length === 0) {
+          const kText = extract(tokoText, 'Kategori');
+          if(kText && !kText.includes('Pilih')) kategoriArr = kText.split(',').map(s=>s.trim());
+          else kategoriArr = ['Umum'];
+        }
+        
+        // Simpan kategori unik untuk Filter
+        kategoriArr.forEach(kat => allCategories.add(kat));
+        
+        const badgeHTML = kategoriArr.map(k => `<span class="kategori-badge">${k}</span>`).join('');
+        const alamat = extract(tokoText, 'Alamat') || '-';
+        const deskripsi = extract(tokoText, 'Deskripsi');
+        
+        let waText = extract(tokoText, 'No\\.? WhatsApp|WhatsApp|WA');
+        let waLink = waText ? waText.replace(/[^0-9]/g, '') : '';
+        if(waLink.startsWith('0')) waLink = '62' + waLink.substring(1);
+
+        let produkArray = [];
+        for(let i = 1; i < blocks.length; i++) {
+          let pText = blocks[i];
+          let pNama = extract(pText, 'Nama Produk');
+          if(pNama) {
+            let pHarga = extract(pText, 'Harga');
+            let pThumb = images.length > i ? images[i] : thumbToko;
+            produkArray.push({ thumb: pThumb, nama: pNama, harga: pHarga });
+          }
+        }
+
+        // Simpan kategori original berupa array murni ke JSON database lokal (storesData)
+        storesData[index] = { namaToko, kategoriArr, badgeHTML, thumbToko, alamat, deskripsi, waText, waLink, produkArray };
+      });
+
+      renderFilter();
+      renderCards('Semua');
+    };
+
+    // 2. Fungsi Render Filter Cerdas
+    function renderFilter() {
+      const filterContainer = document.getElementById('filter-kategori');
+      let filterHTML = `<button class="filter-btn active" onclick="filterData('Semua', this)">Semua</button>`;
+      
+      allCategories.forEach(kat => {
+        filterHTML += `<button class="filter-btn" onclick="filterData('${kat}', this)">${kat}</button>`;
+      });
+      
+      filterContainer.innerHTML = filterHTML;
+    }
+
+    // 3. Fungsi JS untuk Filter (Tombol Diklik)
+    window.filterData = function(kat, element) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+      renderCards(kat);
+    };
+
+    // 4. Fungsi Menampilkan Grid Tampilan Depan
+    function renderCards(filter) {
+      const wrapper = document.getElementById('umkm-wrapper');
+      wrapper.innerHTML = '';
+      let adaData = false;
+
+      storesData.forEach((data, index) => {
+        // Cek jika kategori cocok atau filter adalah "Semua"
+        if(filter === 'Semua' || data.kategoriArr.includes(filter)) {
+          adaData = true;
+          wrapper.innerHTML += `
+            <div class="umkm-card" onclick="bukaModal(${index})">
+              <div style="position: relative;">
+                <div style="position: absolute; top: 8px; left: 8px; display: flex; gap: 4px; z-index: 10; flex-wrap: wrap;">
+                  ${data.badgeHTML}
+                </div>
+                <img src="${data.thumbToko}" class="card-thumb" alt="${data.namaToko}">
+              </div>
+              <div class="card-body">
+                <h3 class="nama-toko">${data.namaToko}</h3>
+                ${data.deskripsi ? `<div class="teks-deskripsi-depan">${data.deskripsi}</div>` : ''}
+                <div class="icon-text">${svgMap} <span>${data.alamat}</span></div>
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      if(!adaData) {
+        wrapper.innerHTML = '<div class="loading-teks">Tidak ada data untuk kategori ini.</div>';
+      }
+    }
+
+    // 5. Inisialisasi DOM & Modal
+    document.addEventListener("DOMContentLoaded", function() {
+      // Panggil Data
+      const scriptApi = document.createElement('script');
+      scriptApi.src = 'https://rt2-usahawarga.blogspot.com/feeds/posts/default?alt=json-in-script&callback=tampilkanWidgetUMKM&max-results=20';
+      document.body.appendChild(scriptApi);
+
+      const modal = document.getElementById('modal-umkm');
+      const modalBody = document.getElementById('modal-body');
+      const zoomOverlay = document.getElementById('zoom-overlay');
+
+      window.bukaModal = function(index) {
+        const data = storesData[index];
+        
+        let produkHTML = data.produkArray.length > 0 ? data.produkArray.map(p => `
+            <div class="produk-card">
+              <img src="${p.thumb}" onclick="bukaZoom('${p.thumb}')" alt="${p.nama}">
+              <div class="produk-card-body">
+                <h4 class="produk-nama">${svgBox} ${p.nama}</h4>
+                ${p.harga ? `<div class="produk-harga">${svgWallet} ${p.harga}</div>` : ''}
+              </div>
+            </div>
+          `).join('') : '<div style="font-size:11px; color:#777; grid-column: span 2;">Belum ada etalase produk.</div>';
+
+        modalBody.innerHTML = `
+          <div class="close-modal">&times;</div>
+          <img src="${data.thumbToko}" class="modal-toko-thumb" onclick="bukaZoom('${data.thumbToko}')">
+          
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px;">
+            ${data.badgeHTML}
+          </div>
+          
+          <h2 class="nama-toko" style="font-size:16px;">${data.namaToko}</h2>
+          
+          ${data.deskripsi ? `<div class="teks-deskripsi-modal">${data.deskripsi}</div>` : ''}
+          
+          <div class="icon-text">${svgMap} <span>${data.alamat}</span></div>
+          ${data.waText ? `<a href="tel:+${data.waLink}" class="text-wa" title="Panggil/Telepon WA">${svgWa} ${data.waText}</a>` : ''}
+          
+          <div class="produk-grid">${produkHTML}</div>
+        `;
+        modal.style.display = 'flex';
+      };
+
+      const tutupModal = () => modal.style.display = 'none';
+      const tutupZoom = () => zoomOverlay.style.display = 'none';
+
+      modal.addEventListener('click', e => { if (e.target === modal || e.target.classList.contains('close-modal')) tutupModal(); });
+      zoomOverlay.addEventListener('click', tutupZoom);
+      window.bukaZoom = function(src) { event.stopPropagation(); document.getElementById('zoom-img').src = src; zoomOverlay.style.display = 'flex'; };
+    });
+  </script>
+</body>
+</html>

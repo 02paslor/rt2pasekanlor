@@ -376,13 +376,13 @@
         @keyframes fadeInIframe { to { opacity: 1; } }
         .yt-iframe-delayed { opacity: 0; animation: fadeInIframe 0.5s 1.2s forwards; }
 
-        /* ================== TOMBOL KEMBALI KE ATAS (SCROLL TO TOP) ================== */
+        /* ================== TOMBOL KEMBALI KE ATAS (ANTI-LAG) ================== */
         .scroll-to-top-btn {
             position: fixed;
-            bottom: -60px; /* Posisi awal tersembunyi di bawah layar */
+            bottom: 65px; /* Posisi akhir tombol (sudah agak turun) */
             right: 20px;
-            width: 30px;
-            height: 30px;
+            width: 38px; /* Ukuran tombol lebih kecil */
+            height: 38px;
             background: linear-gradient(135deg, #1155CC, #059669);
             color: #ffffff;
             border: none;
@@ -393,19 +393,21 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.25);
             cursor: pointer;
             z-index: 9999;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            /* Animasi dipindah ke Transform GPU (Sangat Mulus) */
+            transform: translateY(150px); 
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s;
             opacity: 0;
             pointer-events: none;
         }
         
         .scroll-to-top-btn.show {
-            bottom: 15px; /* Meluncur naik ke posisi ini */
+            transform: translateY(0); /* Meluncur naik */
             opacity: 1;
             pointer-events: auto;
         }
         
         .scroll-to-top-btn:active {
-            transform: scale(0.9);
+            transform: translateY(0) scale(0.85);
         }
 
     </style>

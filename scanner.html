@@ -313,7 +313,7 @@
         // =========================================================================
         // MASUKKAN URL HASIL DEPLOYMENT WEB APP ANDA DI SINI
         // =========================================================================
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbziSKnpiQBxWwr-2OdM80Ztb02VNwV_B1yYPghyuDfEYcK3VWmqiG5dEKpG0eidTV8RTA/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycby-AooZcVuqM8gh2N86o_ZDuWcLVBNvmvWWlrLmCoQ2kbGwc56itw5-hkLUqWj637QIGQ/exec';
         
         let html5QrCode;
         let currentScannedData = null;
@@ -554,7 +554,7 @@
         });
 
         // =========================================================================
-        // PENGIRIMAN DATA ASLI DENGAN FETCH URLSearchParams KE GAS
+        // PENGIRIMAN DATA SUPER AMAN (METODE GET) UNTUK GITHUB PAGES
         // =========================================================================
         btnKirim.addEventListener("click", () => {
             btnKirim.disabled = true;
@@ -566,21 +566,24 @@
             let iuranValue = selectedNominalValue === "0" ? "0" : selectedNominalValue;
             let targetData = currentScannedData || { idRumah: selectIdRumah.value, namaWarga: infoNamaWarga.textContent };
 
-            // Menggunakan URLSearchParams agar data lancar menembus keamanan Google Apps Script
-            const params = new URLSearchParams();
-            params.append("id_rumah", targetData.idRumah);
-            params.append("nama_warga", targetData.namaWarga);
-            params.append("hari_tanggal", window.currentLaporanWaktu);
-            params.append("iuran", iuranValue);
-            params.append("petugas", selectPetugas.value);
-            params.append("hari_tugas", selectHari.value);
+            // Jadikan parameter URL
+            const params = new URLSearchParams({
+                id_rumah: targetData.idRumah,
+                nama_warga: targetData.namaWarga,
+                hari_tanggal: window.currentLaporanWaktu,
+                iuran: iuranValue,
+                petugas: selectPetugas.value,
+                hari_tugas: selectHari.value
+            });
 
-            fetch(scriptURL, {
-                method: 'POST',
-                body: params
-                // Hapus mode: 'no-cors' karena URLSearchParams sudah aman (Simple Request)
+            // Gabungkan URL Web App dengan Parameter
+            const urlDenganParameter = scriptURL + "?" + params.toString();
+
+            fetch(urlDenganParameter, {
+                method: 'GET',
+                mode: 'no-cors' // Super penting agar diizinkan oleh Github & Google
             })
-            .then(response => {
+            .then(() => {
                 statusDatabaseNotif.textContent = "Berhasil, sudah tersimpan.";
                 statusDatabaseNotif.className = "status-notif-box success";
                 

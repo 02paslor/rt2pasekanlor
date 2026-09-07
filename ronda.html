@@ -19,6 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ================= CSS MASTER TEMPLATE ================= */
@@ -31,7 +32,7 @@
             background-color: #F2F2F2; 
             min-height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15);
-            padding-top: 175px; 
+            padding-top: 135px; /* Jarak untuk header oranye saat fixed */
             padding-bottom: 30px; overflow-x: hidden;
             transition: padding-bottom 0.3s ease;
             display: flex;
@@ -40,62 +41,174 @@
 
         svg { display: inline-block; vertical-align: middle; }
 
-        .fixed-top-bar { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 999; display: flex; flex-direction: column; }
-        .glass-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background-color: #1155CC; box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); transition: all 0.3s ease; }
-        .header-left img { height: 40px; width: auto; transition: height 0.3s ease; }
-        .header-left { display: flex; flex-direction: column; max-width: 60%; }
-        .header-slogan { font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 2px; transition: all 0.3s ease; overflow: hidden; }
-        .header-right { display: flex; align-items: center; }
+        /* Animasi Loading Muter untuk Ikon SVG */
+        @keyframes spinAnim { 100% { transform: rotate(360deg); } }
+        .spin-icon { animation: spinAnim 1s linear infinite; display: inline-block; vertical-align: middle; }
 
-        .title-card-panel { background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); color: #ffffff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; cursor: pointer; z-index: 2; position: relative; }
-        .title-card-panel.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: none; }
-        .title-card-left { font-size: 15px; font-weight: 700; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; }
-        .title-card-left .svg-icon { margin-right: 8px; }
-        .title-card-right { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
-        .accordion-icon { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* Kontainer Utama Wrapper Header */
+        .fixed-top-bar { 
+            position: absolute; 
+            top: 0; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 100%; 
+            max-width: 480px; 
+            z-index: 999; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        /* Ketika scroll, area ini menjadi fixed di atas layar */
+        .fixed-top-bar.scrolled { 
+            position: fixed; 
+        }
+        
+        /* Header Biru #1155cc ikut naik ke atas saat discroll */
+        .glass-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 3px 12px; 
+            background-color: #1155CC; 
+            box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); 
+            z-index: 1; 
+            position: relative;
+            transition: transform 0.3s ease, opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .fixed-top-bar.scrolled .glass-header { 
+            transform: translateY(-100%);
+            opacity: 0;
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            pointer-events: none;
+        }
 
-        .nav-accordion-wrapper { position: relative; z-index: 1; background: #FFFFFF; max-height: 0; overflow: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; padding: 0 16px; opacity: 0; visibility: hidden; }
-        .nav-accordion-wrapper.open { max-height: 500px; padding: 16px 16px 20px 16px; opacity: 1; visibility: visible; }
+        .header-left { display: flex; align-items: center; gap: 8px; max-width: 100%; }
+        .header-logo { width: 70px; height: 70px; object-fit: contain; flex-shrink: 0; }
+        .header-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; white-space: normal; }
+        .header-title-text { font-size: 11pt; font-weight: 600; color: #ffffff; line-height: 1.2; }
+        .header-slogan { font-size: 8pt; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 0; overflow: hidden; text-overflow: ellipsis; }
+        .header-logo + .header-text { flex: 1; }
 
-        .fixed-top-bar.shrink .glass-header { padding: 8px 20px; }
-        .fixed-top-bar.shrink .header-left img { height: 25px; }
-        .fixed-top-bar.shrink .header-slogan { font-size: 0; opacity: 0; margin-top: 0; height: 0; }
-        .fixed-top-bar.shrink .title-card-panel { padding: 10px 20px; }
+        /* Tombol Ikon Menu */
+        .btn-menu-dots { background: #1155CC; border: 0px solid rgba(255, 255, 255, 0.4); color: #ffffff; border-radius: 8px; height: 32px; padding: 0 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; transition: all 0.2s; backdrop-filter: blur(4px); }
+        .btn-menu-dots:active { transform: scale(0.92); filter: brightness(0.9); }
 
-        .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+        /* Header Oranye Judul Halaman yang Fixed */
+        .title-card-panel { 
+            background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
+            color: #ffffff; 
+            padding: 12px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-radius: 0; 
+            box-shadow: none; 
+            z-index: 2; 
+            position: relative; 
+            flex-shrink: 0;
+            transition: padding 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fixed-top-bar.scrolled .title-card-panel {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            padding: 12px 20px;
+        }
+
+        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; min-width: 0; }
+        .title-card-left i { font-size: 18px; }
+        .title-card-right { display: flex; align-items: center; margin-left: auto; }
+        .scroll-logo { width: 0; height: 0; object-fit: contain; opacity: 0; transform: scale(0.7); transition: width 0.22s ease, height 0.22s ease, opacity 0.18s ease, transform 0.22s ease; }
+        .fixed-top-bar.scrolled .scroll-logo { width: 60px; height: 60px; opacity: 1; transform: scale(1); flex-shrink: 0; margin-right: 4px; }
+        
+        /* ================== MENU MODAL FAST CONTAINER ================== */
+        .menu-modal-overlay { 
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px); 
+            display: flex; justify-content: center; align-items: center; 
+            padding: 16px; z-index: 25000; opacity: 0; visibility: hidden; 
+            transition: all 0.2s ease; 
+        }
+        .menu-modal-overlay.active { opacity: 1; visibility: visible; }
+        
+        .menu-modal-content { 
+            background: transparent; 
+            box-shadow: none; 
+            border: none; 
+            padding: 0; 
+            width: 100%; 
+            max-width: 440px; 
+            transform: scale(0.92); 
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+        .menu-modal-overlay.active .menu-modal-content { transform: scale(1); }
+
+        /* =========================================================
+            MENU UTAMA — BENTUK TOMBOL PERSEGI PANJANG (ORANGE)
+            ========================================================= */
+        :root {
+            --bg-primary: #1155CC;
+            --bg-white: #FFFFFF;
+            --text-white: #FFFFFF;
+            --btn-blue: #0047BF;
+            --btn-active: #A1A1A1;
+            --shadow-inset: #000000;
+        }
+
+        .main-menu-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 0 4px;
+            width: 100%;
+        }
         
         .nav-item { 
-            background: linear-gradient(145deg, #2563eb, #1d4ed8); 
-            color: #FFFFFF; text-decoration: none; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 4px; text-align: center; line-height: 1.2; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; 
+            color: var(--text-white); text-decoration: none; border-radius: 12px; 
+            font-size: 11px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; 
+            width: 100%; min-height: 84px; padding: 12px 4px; border: none; line-height: 1.2;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
         }
-        .nav-item.btn-ronda { background: linear-gradient(145deg, #64748b, #475569); box-shadow: 0 6px 15px rgba(100, 116, 139, 0.25); }
-        .nav-item:active { transform: scale(0.95); }
-        .nav-item:hover { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(37, 99, 235, 0.3); filter: brightness(1.15); }
-        .nav-item svg { width: 20px; height: 20px; margin-bottom: 6px; stroke-width: 2 !important; }
+        
+        .nav-item:active { transform: scale(0.94); }
+        
+        .nav-item svg { width: 26px; height: 26px; margin-bottom: 6px; display: block; stroke: currentColor; stroke-width: 2 !important; } 
+        
+        /* WARNA TOMBOL ALL MENU JADI ORANGE */
+        .btn-home, .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-datawarga, .btn-tatatertib, .btn-lapak { background: #FA6800; }
 
-        .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .em-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .em-modal-content { background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(15px); transition: transform 0.3s ease; }
-        .em-modal-overlay.active .em-modal-content { transform: translateY(0); }
-        .em-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; }
-        .em-modal-title { font-size: 16px; font-weight: 700; color: #0f172a; }
-        .em-btn-close { background: none; border: none; cursor: pointer; color: #ef4444; }
-        .emergency-list { display: flex; flex-direction: column; gap: 14px; }
-        .emergency-item { display: flex; align-items: center; background-color: #EDEDED; padding: 12px 14px; border-radius: 12px; text-decoration: none; border: 1px solid #b5b5b5; gap: 14px; color:#333; transition: all 0.2s ease; }
-        .emergency-item:hover { filter: brightness(0.95); transform: translateY(-2px); }
-        .logo-wrapper { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; border: 1px solid #a8a8a8; color:#1155CC; }
-        .contact-details { display: flex; flex-direction: column; flex-grow: 1; }
-        .emergency-label { font-size: 11px; color: #334155; font-weight: 500; text-transform: uppercase; }
-        .emergency-value { font-size: 14px; font-weight: 700; margin-top: 1px; }
-        .call-icon { width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color:#1155CC; }
-        .emergency-item.wa { border-left: 5px solid #22c55e; }
-        .emergency-item.wa .call-icon, .emergency-item.wa .logo-wrapper { color: #22c55e; border-color:#22c55e; }
+        /* EFEK TOMBOL AKTIF */
+        .nav-item.menu-tertekan {
+            background: var(--btn-active) !important; 
+            box-shadow: inset 0 6px 10px var(--shadow-inset) !important; 
+            transform: scale(0.95); 
+            color: var(--text-white) !important; 
+            pointer-events: none; 
+            cursor: default;
+        }
+        .nav-item.menu-tertekan svg {
+            filter: none !important; 
+            opacity: 0.7;
+        }
+
+        @media (max-width: 380px) {
+            .main-menu-wrapper { gap: 8px; padding: 0 2px; }
+            .nav-item { font-size: 9.5px; min-height: 72px; padding: 10px 2px; border-radius: 10px; }
+            .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; }
+        }
 
         .univ-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s; padding: 16px; }
         .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
         .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
         .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
-        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 700; color: #1e293b; }
+        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 600; color: #1e293b; }
         .univ-modal-title { font-size: 16px; text-transform: uppercase; }
         .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;}
         .btn-close-univ:hover { background: #FEE2E2; }
@@ -103,20 +216,36 @@
         .univ-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
 
         .main-content-space { flex: 1; }
-        .main-footer { width: 100%; margin: auto auto 0 auto; padding: 16px 16px; text-align: center; border-top: 1px solid #e2e8f0; display: block; }
+        
+        .main-footer { 
+            width: 100%; 
+            margin: auto auto 0 auto; 
+            padding: 16px 16px; 
+            text-align: center; 
+            border-top: none !important; 
+            display: block; 
+        }
         .footer-line { color: #64748b; line-height: 1.3; margin-bottom: 2px; }
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 400; }
         
-        .main-content-area { width: 100%; }
+        .main-content-area { width: 100%; margin-top: 15px; }
 
-        /* ================= RONDA STYLES ================= */
-        .main-card {
-            background: transparent; border-radius: 0; padding: 0 16px; box-shadow: none; border: none; display: flex; flex-direction: column; gap: 24px;
+        /* ================= CSS KHUSUS HALAMAN RONDA ================= */
+        .main-card { 
+            background: #FFFFFF; 
+            border-radius: 16px; 
+            padding: 16px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04); 
+            border: 1px solid #e2e8f0; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            margin: 0 16px; 
         }
 
         .header-fancy {
-            border-radius: 16px; padding: 20px; color: #FFFFFF; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease;
+            border-radius: 14px; padding: 16px; color: #FFFFFF; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease;
         }
         .header-pagi { background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%); }    
         .header-siang { background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%); }   
@@ -124,10 +253,10 @@
         .header-malam { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); }   
 
         .dt-col { display: flex; flex-direction: column; gap: 4px; z-index: 2; }
-        .dt-val-date { font-size: 16px; font-weight: 600; color: #FFFFFF; }
-        .dt-val-time { font-size: 14px; font-weight: 500; color: #FFFFFF; }
+        .dt-val-date { font-size: 15px; font-weight: 600; color: #FFFFFF; }
+        .dt-val-time { font-size: 13px; font-weight: 500; color: #FFFFFF; }
 
-        .time-icon-container { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; position: relative; z-index: 2; }
+        .time-icon-container { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; position: relative; z-index: 2; }
         .icon-sun { color: #FEF08A; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
         .icon-moon { color: #FDE047; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
 
@@ -141,28 +270,28 @@
             100% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 6px #FFFFFF; }
         }
 
-        .form-section { display: flex; flex-direction: column; gap: 12px; border-bottom: 2px solid rgba(17, 85, 204, 0.2); padding-bottom: 24px; }
+        .form-section { display: flex; flex-direction: column; gap: 12px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.15); padding-bottom: 16px; }
         .form-section:last-child { border-bottom: none; padding-bottom: 0; }
         .section-label { font-size: 14px; font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 10px; }
-        .sec-number-badge { width: 40px; height: 40px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; box-shadow: 0 3px 8px rgba(17,85,204,0.25); }
+        .sec-number-badge { width: 34px; height: 34px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; box-shadow: 0 3px 8px rgba(17,85,204,0.25); }
         .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
-        .sec-title { font-size: 16px; font-weight: 600; color: #1155CC; text-transform: uppercase; }
-        .sec-subtitle { font-size: 12px; font-weight: 400; color: #64748B; margin-top: 2px; }
+        .sec-title { font-size: 14.5px; font-weight: 600; color: #1155CC; text-transform: uppercase; }
+        .sec-subtitle { font-size: 11.5px; font-weight: 400; color: #64748B; margin-top: 2px; }
 
         .input-group { position: relative; }
-        .input-icon-wrapper { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 15px; font-weight: 600; color: #1155CC; z-index: 10; }
-        .nominal-input { width: 100%; padding: 14px 16px 14px 48px; font-size: 16px; font-weight: 600; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; transition: all 0.3s; }
+        .input-icon-wrapper { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 600; color: #1155CC; z-index: 10; }
+        .nominal-input { width: 100%; padding: 12px 14px 12px 44px; font-size: 15px; font-weight: 600; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; transition: all 0.3s; }
         .nominal-input:focus { outline: none; border-color: #1155CC; box-shadow: 0 0 0 3px rgba(17,85,204,0.12); }
-        .nominal-confirmed-badge { display: none; font-size: 13px; font-weight: 500; color: #16A34A; margin-top: 6px; padding-left: 4px; }
+        .nominal-confirmed-badge { display: none; font-size: 12.5px; font-weight: 500; color: #16A34A; margin-top: 6px; padding-left: 4px; }
         
-        .day-select, .catatan-dropdown { width: 100%; padding: 14px 14px; font-size: 14px; font-weight: 500; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; cursor: pointer; outline: none; transition: border-color 0.2s; }
+        .day-select, .catatan-dropdown { width: 100%; padding: 12px 14px; font-size: 13.5px; font-weight: 500; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; cursor: pointer; outline: none; transition: border-color 0.2s; }
         .day-select:focus, .catatan-dropdown:focus { border-color: #1155CC; }
         
-        .note-textarea { width: 100%; padding: 14px; font-size: 14px; font-weight: 400; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; resize: none; min-height: 90px; line-height: 1.6; outline: none; transition: border-color 0.2s;}
+        .note-textarea { width: 100%; padding: 12px; font-size: 13.5px; font-weight: 400; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; resize: none; min-height: 80px; line-height: 1.5; outline: none; transition: border-color 0.2s;}
         .note-textarea:focus { border-color: #1155CC; }
 
         .btn-primary-custom, .btn-download, .btn-wa { 
-            width: 100%; padding: 14px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #25D366; color: white; transition: all 0.3s ease; 
+            width: 100%; padding: 12px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #25D366; color: white; transition: all 0.3s ease; 
         }
         .btn-primary-custom:active, .btn-download:active, .btn-wa:active { transform: scale(0.97); }
         
@@ -177,26 +306,26 @@
             background: #CBD5E1 !important; color: #64748B !important; cursor: not-allowed; box-shadow: none; transform: none; opacity: 0.8;
         }
 
-        .loading-warga { font-size: 13px; font-weight: 500; color: #1155CC; text-align: center; padding: 10px; display: none; background: #EFF6FF; border-radius: 8px;}
+        .loading-warga { font-size: 12.5px; font-weight: 500; color: #1155CC; text-align: center; padding: 10px; display: none; background: #EFF6FF; border-radius: 8px;}
         .warga-container-direct { display: none; margin-top: 6px; border: 1.5px solid #CBD5E1; border-radius: 12px; overflow: hidden; background: #FFFFFF; }
         .warga-container-direct.show { display: block; }
         
-        .warga-card { padding: 14px 14px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.2); display: flex; flex-direction: column; gap: 10px; background: #FFFFFF; }
-        .warga-card:nth-child(even) { background-color: #F1F5F9; }
+        .warga-card { padding: 12px 14px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.15); display: flex; flex-direction: column; gap: 8px; background: #FFFFFF; }
+        .warga-card:nth-child(even) { background-color: #F8FAFC; }
         .warga-card:last-child { border-bottom: none; }
-        .warga-name { font-size: 14.5px; font-weight: 600; color: #0F172A; }
+        .warga-name { font-size: 14px; font-weight: 600; color: #0F172A; }
         
         .presence-buttons-group { display: flex; gap: 6px; }
-        .pres-btn { flex: 1; border: 1.5px solid rgba(17, 85, 204, 0.3); background: #FFFFFF; padding: 8px 4px; font-size: 12px; font-weight: 500; border-radius: 8px; cursor: pointer; color: #334155; transition: all 0.2s ease; }
+        .pres-btn { flex: 1; border: 1.5px solid rgba(17, 85, 204, 0.3); background: #FFFFFF; padding: 7px 4px; font-size: 11.5px; font-weight: 500; border-radius: 8px; cursor: pointer; color: #334155; transition: all 0.2s ease; }
         
         .pres-btn:hover { background-color: #F8FAFC; border-color: #94A3B8; }
         .pres-btn-hadir:hover:not(.active) { color: #16A34A; border-color: #22C55E; background-color: #DCFCE7; }
         .pres-btn-izin:hover:not(.active) { color: #2563EB; border-color: #60A5FA; background-color: #DBEAFE; }
         .pres-btn-absen:hover:not(.active) { color: #DC2626; border-color: #EF4444; background-color: #FEE2E2; }
         
-        .pres-btn-hadir.active { background-color: #22C55E; border-color: #22C55E; color: white; font-weight: 600; box-shadow: 0 4px 8px rgba(34,197,94,0.25); }
-        .pres-btn-izin.active { background-color: #60A5FA; border-color: #60A5FA; color: white; font-weight: 600; box-shadow: 0 4px 8px rgba(96,165,250,0.25); } 
-        .pres-btn-absen.active { background-color: #EF4444; border-color: #EF4444; color: white; font-weight: 600; box-shadow: 0 4px 8px rgba(239,68,68,0.25); }
+        .pres-btn-hadir.active { background-color: #22C55E; border-color: #22C55E; color: white; font-weight: 600; box-shadow: 0 3px 6px rgba(34,197,94,0.25); }
+        .pres-btn-izin.active { background-color: #60A5FA; border-color: #60A5FA; color: white; font-weight: 600; box-shadow: 0 3px 6px rgba(96,165,250,0.25); } 
+        .pres-btn-absen.active { background-color: #EF4444; border-color: #EF4444; color: white; font-weight: 600; box-shadow: 0 3px 6px rgba(239,68,68,0.25); }
         
         .warga-card.state-hadir { background-color: #F0FDF4 !important; }
         .warga-card.state-izin { background-color: #EFF6FF !important; } 
@@ -258,24 +387,24 @@
         /* ================= CSS ALTRUIS & CUSTOM INPUT ================= */
         .altruis-banner {
             background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-            color: #FFFFFF; padding: 14px; border-radius: 12px; margin: 14px;
+            color: #FFFFFF; padding: 12px 14px; border-radius: 12px; margin-bottom: 12px;
             display: flex; align-items: center; gap: 12px;
             box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
         }
-        .altruis-banner svg { width: 32px; height: 32px; flex-shrink: 0; }
+        .altruis-banner svg { width: 28px; height: 28px; flex-shrink: 0; }
         .altruis-banner-text { display: flex; flex-direction: column; }
-        .altruis-banner-title { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
-        .altruis-banner-desc { font-size: 11px; font-weight: 500; opacity: 0.9; }
+        .altruis-banner-title { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
+        .altruis-banner-desc { font-size: 10.5px; font-weight: 500; opacity: 0.9; }
 
         .altruis-input-group {
-            display: flex; gap: 8px; padding: 0 14px 14px 14px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.2);
+            display: flex; gap: 8px; margin-top: 10px;
         }
         .altruis-input {
-            flex: none; width: 70%; padding: 12px 14px; border: 1.5px solid #CBD5E1; border-radius: 10px; font-size: 14px; font-weight: 500; color: #1E293B; outline: none; transition: border-color 0.2s;
+            flex: 1; padding: 11px 14px; border: 1.5px solid #CBD5E1; border-radius: 10px; font-size: 13.5px; font-weight: 500; color: #1E293B; outline: none; transition: border-color 0.2s;
         }
         .altruis-input:focus { border-color: #F59E0B; }
         .btn-add-altruis {
-            background: #1155CC; color: white; border: none; padding: 0; width: 46px; height: 46px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 10px; cursor: pointer; transition: all 0.2s ease;
+            background: #1155CC; color: white; border: none; padding: 0; width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 10px; cursor: pointer; transition: all 0.2s ease;
         }
         .btn-add-altruis:hover { background: #0F47A1; }
     </style>
@@ -283,77 +412,41 @@
 <body>
 
 <div class="app-wrapper">
-    <!-- HEADER & MENU NAVIGASI TETAP DARI TEMPLATE MASTER -->
+    <!-- HEADER & NAVIGASI -->
     <div class="fixed-top-bar" id="fixedTopBar">
         <header class="glass-header" id="mainHeader">
             <div class="header-left">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg47-MPnRbJCKU6vW-8U3U8-rs01D7_58RuwVJ9uqeGD2JUuN5eYOMj7J2x0x8IA1NHV7sFryy1ThWJ0Yozvt_Ueoew1tn289v3wu7nbwtFpYPXZN9T-cZgaXgey0DB8tDkazRwbXgzGV6549SynuIE70KNDd1nURitNJCroUp_C8qNWNXTa4B0kGlw5kc/s1600/Logo%20RT%202%20Pasekan%20Lor%202.png" alt="Logo RT 2 Paslor"> 
+                <img class="header-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2">
+                <div class="header-text">
+                    <div class="header-title-text">RT 2 Online</div>
+                    <div class="header-slogan">Aplikasi Warga RT 2-RW 3, Pasekan Lor</div>
+                </div>
             </div>
         </header>
 
-        <div class="title-card-panel" id="accordionMenuToggle" title="Ketuk untuk membuka menu">
+        <div class="title-card-panel" title="Halaman Ronda">
             <div class="title-card-left">
-                <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-                Ronda RT 2
+                <img class="scroll-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Ronda RT 2</span>
             </div>
+            
             <div class="title-card-right">
-                Menu
-                <svg id="accordionIcon" class="accordion-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </div>
-        </div>
-
-        <div class="nav-accordion-wrapper" id="navAccordionWrapper">
-            <div class="nav-grid">
-                <a href="index.html" class="nav-item" title="Home">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    <span>HOME</span>
-                </a>
-                
-                <a href="pengurus" class="nav-item" title="Pengurus">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>PENGURUS</span>        
-                </a>
-                
-                <a href="inventaris" class="nav-item" title="Inventaris">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    <span>INVENTARIS</span>
-                </a>
-                
-                <a href="scanner" class="nav-item" title="Scanner">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
-                    <span>SCANNER</span>
-                </a>
-                
-                <a href="tatatertib" class="nav-item" title="Tata Tertib">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    <span>TATA TERTIB</span>
-                </a>
-                
-                <a href="galeri" class="nav-item" title="Galeri">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    <span>GALERI</span>
-                </a>
-                
-                <a href="warga" class="nav-item" title="Warga">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                    <span>WARGA</span>
-                </a>
-                
-                <a href="#" class="nav-item btn-ronda disabled" title="POLING" style="pointer-events: none; cursor: not-allowed; opacity: 1; filter: grayscale(100%);">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="M12 16v-4"/><path d="M8 16v-2"/><path d="M16 16v-6"/></svg>
-                    <span>POLING</span>
-                </a>
-                
-                <a href="#" class="nav-item btn-ronda disabled" title="Ronda" style="pointer-events: none; cursor: not-allowed; opacity: 1; filter: grayscale(100%);">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span>RONDA</span>
-                </a>
+                <!-- Tombol Trigger Menu Modal Fast -->
+                <button id="btnMenuToggle" class="btn-menu-dots" title="Menu Utama">
+                    <span>Menu</span>
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                        <circle cx="7" cy="7" r="2.5"></circle>
+                        <circle cx="17" cy="7" r="2.5"></circle>
+                        <circle cx="7" cy="17" r="2.5"></circle>
+                        <circle cx="17" cy="17" r="2.5"></circle>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- KONTEN UTAMA RONDA -->
     <div class="main-content-area">
         <div class="main-card">
             <!-- HEADER DENGAN SUASANA WAKTU OTOMATIS -->
@@ -466,12 +559,72 @@
         </div>
     </div>
 
+    <!-- Ruang kosong untuk mendorong footer ke bawah -->
+    <div class="main-content-space">
+    </div>
+
+    <!-- MODAL MENU FAST -->
+    <div class="menu-modal-overlay" id="menuFastModal" onclick="closeMenuModal(event)">
+        <div class="menu-modal-content" onclick="event.stopPropagation()">
+            <!-- MENU UTAMA -->
+            <div class="main-menu-wrapper">
+                <!-- HOME -->
+                <a href="index" class="nav-item btn-home" title="Home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>HOME</span>
+                </a>
+                
+                <!-- WARGA -->
+                <a href="data-warga" class="nav-item btn-warga" title="Warga">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    <span>WARGA</span>
+                </a>
+                
+                <!-- INVENTARIS -->
+                <a href="inventaris" class="nav-item btn-inventaris" title="Inventaris">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>INVENTARIS</span>
+                </a>
+
+                <!-- LAPAK -->
+                <a href="lapak-warga" class="nav-item btn-lapak" title="Lapak">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span>LAPAK</span>
+                </a>
+
+                <!-- PENGURUS -->
+                <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>PENGURUS</span>        
+                </a>
+                
+                <!-- GALERI -->
+                <a href="galeri" class="nav-item btn-galeri" title="Galeri">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>GALERI</span>
+                </a>
+
+                <!-- TATA TERTIB -->
+                <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>TATA TERTIB</span>
+                </a>
+
+                <!-- RONDA -->
+                <a href="ronda" class="nav-item btn-ronda" title="Ronda">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>RONDA</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL UNIVERSAL -->
-    <div class="univ-modal-overlay" id="univModalOverlay">
-        <div class="univ-modal-box" id="univModalBox">
+    <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
+        <div class="univ-modal-box" onclick="event.stopPropagation()">
             <div class="univ-modal-header">
                 <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
-                <button class="btn-close-univ" id="btn-close-univ-modal" title="Tutup">
+                <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
                     <svg viewBox="0 0 24 24" class="svg-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
@@ -481,7 +634,7 @@
         </div>
     </div>
 
-    <!-- FOOTER TETAP -->
+    <!-- FOOTER TETAP (TANPA GARIS) -->
     <footer class="main-footer">
         <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
         <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
@@ -520,18 +673,6 @@
     </div>
 </div>
 
-<!-- SCRIPT PERLINDUNGAN DASAR (Mencegah Klik Kanan & Inspect Element) -->
-<script>
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    document.onkeydown = function (e) {
-        if (e.keyCode == 123 || 
-           (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) || 
-           (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
-            return false;
-        }
-    };
-</script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
@@ -539,82 +680,80 @@
        1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header)
        ========================================================== */
     const topBar = document.getElementById('fixedTopBar');
-    if (topBar) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 30) {
-                topBar.classList.add('shrink');
-            } else {
-                topBar.classList.remove('shrink');
-            }
-        });
+    const menuFastModal = document.getElementById('menuFastModal');
+    const btnMenuToggle = document.getElementById('btnMenuToggle');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 30) {
+            topBar.classList.add('scrolled');
+        } else {
+            topBar.classList.remove('scrolled');
+        }
+        
+        if (menuFastModal.classList.contains('active')) {
+            closeMenuModal();
+        }
+    });
+
+    menuFastModal.addEventListener('touchmove', closeMenuModal, { passive: true });
+    menuFastModal.addEventListener('wheel', closeMenuModal, { passive: true });
+
+    btnMenuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuFastModal.classList.add('active');
+    });
+
+    function closeMenuModal(e) {
+        menuFastModal.classList.remove('active');
     }
 
-    const accordionToggle = document.getElementById('accordionMenuToggle');
-    const navAccordionWrapper = document.getElementById('navAccordionWrapper');
-    const accordionIcon = document.getElementById('accordionIcon');
-
-    if (accordionToggle && navAccordionWrapper && accordionIcon) {
-        accordionToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = navAccordionWrapper.classList.toggle('open');
-            accordionToggle.classList.toggle('open');
-            
-            if (isOpen) {
-                accordionIcon.style.transform = 'rotate(180deg)';
-            } else {
-                accordionIcon.style.transform = 'rotate(0deg)';
-            }
+    document.querySelectorAll('.main-menu-wrapper .nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            closeMenuModal();
         });
+    });
 
-        document.addEventListener('click', (e) => {
-            if (!navAccordionWrapper.contains(e.target) && e.target !== accordionToggle) {
-                navAccordionWrapper.classList.remove('open');
-                accordionToggle.classList.remove('open');
-                accordionIcon.style.transform = 'rotate(0deg)';
-            }
-        });
+    const halamanAktifSaatIni = 'ronda'; 
+    const mapMenu = {
+        'home': 'btn-home',
+        'warga': 'btn-warga',
+        'inventaris': 'btn-inventaris',
+        'lapak': 'btn-lapak',
+        'pengurus': 'btn-pengurus',
+        'galeri': 'btn-galeri',
+        'tatatertib': 'btn-tatatertib',
+        'ronda': 'btn-ronda'
+    };
+
+    if (mapMenu[halamanAktifSaatIni]) {
+        const tombolAktif = document.querySelector('.' + mapMenu[halamanAktifSaatIni]);
+        if (tombolAktif) {
+            tombolAktif.classList.add('menu-tertekan');
+        }
     }
 
     /* UNIVERSAL MODAL */
     const univModal = document.getElementById('univModalOverlay');
-    const univModalBox = document.getElementById('univModalBox');
     const univTitle = document.getElementById('univModalTitle');
     const univIframe = document.getElementById('univModalIframe');
-    const btnCloseUnivModal = document.getElementById('btn-close-univ-modal');
     
     function openUnivModal(title, docUrl) {
-        if (!univModal || !univTitle || !univIframe) return;
         univTitle.innerText = title;
         univIframe.src = docUrl;
         univModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
-    
     function closeUnivModal() {
-        if (!univModal || !univIframe) return;
         univModal.classList.remove('active');
         document.body.style.overflow = 'auto';
         setTimeout(() => { univIframe.src = ""; }, 350); 
     }
-    
-    if (univModalBox) {
-        univModalBox.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-
-    if (univModal) {
-        univModal.addEventListener('click', function(e) {
-            if (e.target === univModal) closeUnivModal(); 
-        });
-    }
-
-    if (btnCloseUnivModal) {
-        btnCloseUnivModal.addEventListener('click', closeUnivModal);
+    function closeUnivModalOutside(e) { 
+        if (e.target === univModal) closeUnivModal(); 
     }
 
     /* ==========================================================
-       2. RONDA LOGIC
+       2. SCRIPT KHUSUS KONTEN & LOGIC RONDA
        ========================================================== */
     const fallbackData = {
         "SENIN": ["TRI MADIYANTO", "WISNU PRABOWO", "ANANG DHIAN K.", "CUCU SUKMANA", "KARYADI", "RONI"],
@@ -634,8 +773,8 @@
     
     const daySelect = document.getElementById('day-select');
     
-    const sunSvg = `<svg class="icon-sun" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
-    const moonSvg = `<svg class="icon-moon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+    const sunSvg = `<svg class="icon-sun" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+    const moonSvg = `<svg class="icon-moon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
 
     function updateDateTime() {
         const headerBox = document.getElementById('header-suasana-box');
@@ -808,7 +947,6 @@
         });
     }
 
-    /* Fungsi Remove Warga Secara General (Termasuk custom) */
     window.removeWarga = function(wargaName, day) {
         if(dataRonda[day]) {
             dataRonda[day] = dataRonda[day].filter(n => n !== wargaName);
@@ -818,7 +956,6 @@
         validateForm();
     }
 
-    /* Render Items (Regular & Altruis) */
     window.renderWargaItems = function(day) {
         const container = document.getElementById('dynamic-warga-list');
         if(!container) return;
@@ -827,13 +964,13 @@
         const wargaHariIni = dataRonda[day] || [];
         
         if (wargaHariIni.length === 0) {
-             container.innerHTML = '<div style="padding:20px; text-align:center; color:#64748B; font-size:13px; font-weight:500;">Belum ada nama warga.</div>';
+             container.innerHTML = '<div style="padding:16px; text-align:center; color:#64748B; font-size:13px; font-weight:500;">Belum ada nama warga.</div>';
         }
         
         wargaHariIni.forEach((warga, idx) => {
             const isOriginal = originalDataRonda[day] && originalDataRonda[day].includes(warga);
             let showDelete = !isOriginal || day === 'ALTRUIS'; 
-            let btnHapus = showDelete ? `<button type="button" style="background:#FEE2E2; border:none; color:#EF4444; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="removeWarga('${warga}', '${day}')" title="Hapus"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>` : '';
+            let btnHapus = showDelete ? `<button type="button" style="background:#FEE2E2; border:none; color:#EF4444; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="removeWarga('${warga}', '${day}')" title="Hapus"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>` : '';
 
             if(day === 'ALTRUIS') {
                 attendanceState[warga] = 'Hadir'; 
@@ -898,7 +1035,7 @@
         if (selectedDay === 'ALTRUIS') {
             htmlContent += `
                 <div class="altruis-banner">
-                    <svg width="32" height="32" viewBox="0 0 24 24" style="filter: drop-shadow(0 3px 4px rgba(0,0,0,0.4));">
+                    <svg viewBox="0 0 24 24" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));">
                         <defs>
                             <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stop-color="#FFDF73" />
@@ -922,10 +1059,9 @@
             `;
         }
 
-        // Form penambahan manual diletakkan di bawah list warga
         htmlContent += `
             <div id="dynamic-warga-list"></div>
-            <div class="altruis-input-group" style="padding-top: 14px; border-bottom: none; border-top: 1.5px solid rgba(17, 85, 204, 0.2);">
+            <div class="altruis-input-group">
                 <input type="text" id="custom-name-input" class="altruis-input" placeholder="Isi nama tambahan..." autocomplete="off">
                 <button type="button" id="btn-add-custom" class="btn-add-altruis" title="Tambah Warga">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -1027,7 +1163,7 @@
     }
 
     // ==========================================
-    // TOMBOL "BAGIKAN STRUK JPG" (API SHARE/DOWNLOAD)
+    // TOMBOL "BAGIKAN STRUK JPG"
     // ==========================================
     if (btnDownload) {
         btnDownload.addEventListener('click', async function() {
@@ -1041,12 +1177,11 @@
             const actualDayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
             const actualDay = actualDayNames[now.getDay()];
             
-            let cleanDay = selectedDay.replace("'", ""); // Handle JUM'AT jadi JUMAT
+            let cleanDay = selectedDay.replace("'", "");
             cleanDay = cleanDay === 'ALTRUIS' ? 'ALTRUIS' : cleanDay.charAt(0).toUpperCase() + cleanDay.slice(1).toLowerCase();
 
             const displayDay = selectedDay === 'ALTRUIS' ? actualDay : cleanDay;
 
-            // Banner Data Update
             const expTanggal = document.getElementById('exp-tanggal');
             const expWaktu = document.getElementById('exp-waktu');
             const expTotalJimpitan = document.getElementById('exp-total-jimpitan');
@@ -1055,7 +1190,6 @@
             if (expWaktu) expWaktu.textContent = `${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} WIB`;
             if (expTotalJimpitan) expTotalJimpitan.textContent = `Rp${nominalField.value}`;
             
-            // Judul Bagian Update
             const expJudul = document.getElementById('exp-judul');
             const expCatatanJudul = document.getElementById('exp-catatan-judul');
             const expCatatanTarget = document.getElementById('exp-catatan-target');
@@ -1091,7 +1225,6 @@
                     gridTarget.appendChild(item);
                 });
 
-                // Summary Data Update
                 const expSummaryPills = document.getElementById('exp-summary-pills');
                 if (expSummaryPills) {
                     let total = jmlHadir + jmlIzin + jmlAbsen;
@@ -1104,7 +1237,6 @@
                 }
             }
             
-            // ID String Laporan Update (contoh: jumat_4sept2026_50.000)
             const reportDayStr = displayDay.toLowerCase();
             const cleanNominal = nominalField.value.replace(/\./g, '');
             const idString = `${reportDayStr}_${now.getDate()}${shortMonthNames[now.getMonth()]}${now.getFullYear()}_${cleanNominal}`;
@@ -1152,7 +1284,7 @@
     }
 
     // ==========================================
-    // TOMBOL "KIRIM TEKS KE GRUP WA" (API SEND TEXT)
+    // TOMBOL "KIRIM TEKS KE GRUP WA"
     // ==========================================
     if (btnWa) {
         btnWa.addEventListener('click', function() {
@@ -1179,34 +1311,33 @@
                 else if(status === 'Absen') absenList.push(warga);
             });
 
-            // Bintang dihapus agar tidak tebal berlebihan di WA
             let text = `LAPORAN RONDA RT 2\n`;
             text += `RT 2-RW 3, Pasekan Lor\n`;
             text += `--------------\n`;
-            text += `🗓️ Tanggal: ${dateStr}\n`;
-            text += `⏰ Waktu: ${timeStr}\n`;
-            text += `👤 Tim: ${selectedDay === 'ALTRUIS' ? 'ALTRUIS' : 'Hari ' + selectedDay}\n`;
-            text += `💰 Jimpitan: Rp ${nominal}\n`;
+            text += `Tanggal: ${dateStr}\n`;
+            text += `Waktu: ${timeStr}\n`;
+            text += `Tim: ${selectedDay === 'ALTRUIS' ? 'ALTRUIS' : 'Hari ' + selectedDay}\n`;
+            text += `Jimpitan: Rp ${nominal}\n`;
             text += `--------------\n\n`;
 
-            text += `✅ HADIR (${hadirList.length})\n`;
+            text += `HADIR (${hadirList.length})\n`;
             if(hadirList.length > 0) { hadirList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
             else { text += `  (Tidak ada)\n`; }
             text += `\n`;
 
-            text += `⏸️ IZIN (${izinList.length})\n`;
+            text += `IZIN (${izinList.length})\n`;
             if(izinList.length > 0) { izinList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
             else { text += `  (Tidak ada)\n`; }
             text += `\n`;
 
-            text += `❌ TDK HDR/ALPHA (${absenList.length})\n`;
+            text += `TDK HDR/ALPHA (${absenList.length})\n`;
             if(absenList.length > 0) { absenList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
             else { text += `  (Tidak ada)\n`; }
             text += `\n`;
 
-            text += `📝 CATATAN KEGIATAN:\n${catatan}\n\n`;
+            text += `CATATAN KEGIATAN:\n${catatan}\n\n`;
             text += `_Terima kasih atas partisipasinya!_\n`;
-            text += `🌐 Sumber: https://rt2pasekanlor.id/`;
+            text += `Sumber: https://rt2pasekanlor.id/`;
 
             const encodedText = encodeURIComponent(text);
             const waUrl = `https://wa.me/?text=${encodedText}`;

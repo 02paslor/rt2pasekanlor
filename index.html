@@ -28,15 +28,15 @@
             --posisi-tombol-gulung: flex-end; 
         }
 
-        /* Sembunyikan scrollbar global untuk performa scroll yang lebih smooth (menghilangkan kesan berat) */
-        ::-webkit-scrollbar {
-            display: none;
-            width: 0;
-            height: 0;
+        /* Sembunyikan scrollbar global untuk SEMUA ELEMEN (body, modal, slider, dll) */
+        * {
+            scrollbar-width: none !important; /* Firefox */
+            -ms-overflow-style: none !important; /* IE and Edge */
         }
-        html, body {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+        *::-webkit-scrollbar {
+            display: none !important; /* Chrome, Safari, Opera */
+            width: 0 !important;
+            height: 0 !important;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }

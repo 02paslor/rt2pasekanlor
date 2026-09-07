@@ -18,13 +18,13 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ================= CSS MASTER TEMPLATE ================= */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
-        body { background-color: #B4C3D4; display: flex; justify-content: center; text-transform: uppercase; }
+        body { background-color: #B4C3D4; display: flex; justify-content: center; }
         button, input, textarea, select, a { font-family: 'Poppins', sans-serif !important; }
 
         .app-wrapper {
@@ -32,7 +32,7 @@
             background-color: #F2F2F2; 
             min-height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15);
-            padding-top: 175px; 
+            padding-top: 135px; /* Jarak untuk header oranye saat fixed */
             padding-bottom: 30px; overflow-x: hidden;
             transition: padding-bottom 0.3s ease;
             display: flex;
@@ -45,83 +45,192 @@
         @keyframes spinAnim { 100% { transform: rotate(360deg); } }
         .spin-icon { animation: spinAnim 1s linear infinite; display: inline-block; vertical-align: middle; }
 
-        .fixed-top-bar { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 999; display: flex; flex-direction: column; }
-        .glass-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background-color: #1155CC; box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); transition: all 0.3s ease; }
-        .header-left img { height: 40px; width: auto; transition: height 0.3s ease; }
-        .header-left { display: flex; flex-direction: column; max-width: 60%; }
-        .header-slogan { font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 2px; transition: all 0.3s ease; overflow: hidden; }
-        .header-right { display: flex; align-items: center; }
+        /* Kontainer Utama Wrapper Header */
+        .fixed-top-bar { 
+            position: absolute; 
+            top: 0; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 100%; 
+            max-width: 480px; 
+            z-index: 999; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        /* Ketika scroll, area ini menjadi fixed di atas layar */
+        .fixed-top-bar.scrolled { 
+            position: fixed; 
+        }
+        
+        /* Header Biru #1155cc ikut naik ke atas saat discroll */
+        .glass-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 3px 12px; 
+            background-color: #1155CC; 
+            box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); 
+            z-index: 1; 
+            position: relative;
+            transition: transform 0.3s ease, opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .fixed-top-bar.scrolled .glass-header { 
+            transform: translateY(-100%);
+            opacity: 0;
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            pointer-events: none;
+        }
 
-        .title-card-panel { background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); color: #ffffff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; cursor: pointer; z-index: 2; position: relative; }
-        .title-card-panel.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: none; }
-        .title-card-left { font-size: 15px; font-weight: 700; display: flex; align-items: center; letter-spacing: 0.5px; gap: 8px; }
+        .header-left { display: flex; align-items: center; gap: 8px; max-width: 100%; }
+        .header-logo { width: 70px; height: 70px; object-fit: contain; flex-shrink: 0; }
+        .header-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; white-space: normal; }
+        .header-title-text { font-size: 11pt; font-weight: 600; color: #ffffff; line-height: 1.2; }
+        .header-slogan { font-size: 8pt; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 0; overflow: hidden; text-overflow: ellipsis; }
+        .header-logo + .header-text { flex: 1; }
+
+        /* Tombol Ikon Menu */
+        .btn-menu-dots { background: #1155CC; border: 0px solid rgba(255, 255, 255, 0.4); color: #ffffff; border-radius: 8px; height: 32px; padding: 0 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; transition: all 0.2s; backdrop-filter: blur(4px); }
+        .btn-menu-dots:active { transform: scale(0.92); filter: brightness(0.9); }
+
+        /* Header Oranye Judul Halaman yang Fixed */
+        .title-card-panel { 
+            background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
+            color: #ffffff; 
+            padding: 12px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-radius: 0; 
+            box-shadow: none; 
+            z-index: 2; 
+            position: relative; 
+            flex-shrink: 0;
+            transition: padding 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fixed-top-bar.scrolled .title-card-panel {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            padding: 12px 20px;
+        }
+
+        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; min-width: 0; }
         .title-card-left i { font-size: 18px; }
-        .title-card-right { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
-        .accordion-icon { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-
-        .nav-accordion-wrapper { position: relative; z-index: 1; background: #FFFFFF; max-height: 0; overflow: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; padding: 0 16px; opacity: 0; visibility: hidden; }
-        .nav-accordion-wrapper.open { max-height: 500px; padding: 16px 16px 20px 16px; opacity: 1; visibility: visible; }
-
-        .fixed-top-bar.shrink .glass-header { padding: 8px 20px; }
-        .fixed-top-bar.shrink .header-left img { height: 25px; }
-        .fixed-top-bar.shrink .header-slogan { font-size: 0; opacity: 0; margin-top: 0; height: 0; }
-        .fixed-top-bar.shrink .title-card-panel { padding: 10px 20px; }
+        .title-card-right { display: flex; align-items: center; margin-left: auto; }
+        .scroll-logo { width: 0; height: 0; object-fit: contain; opacity: 0; transform: scale(0.7); transition: width 0.22s ease, height 0.22s ease, opacity 0.18s ease, transform 0.22s ease; }
+        .fixed-top-bar.scrolled .scroll-logo { width: 60px; height: 60px; opacity: 1; transform: scale(1); flex-shrink: 0; margin-right: 4px; }
         
-        .btn-darurat { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: #ffffff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4), inset 0 2px 4px rgba(255,255,255,0.2); display: flex; align-items: center; gap: 6px; transition: all 0.3s ease; letter-spacing: 0.5px; }
-        .btn-darurat:active { transform: translateY(1px) scale(0.95); }
-        .btn-darurat:hover { transform: translateY(0) scale(1.03); filter: brightness(1.1); }
-        .fixed-top-bar.shrink .btn-darurat { padding: 3px 8px; font-size: 9px; }
+        /* ================== MENU MODAL FAST CONTAINER ================== */
+        .menu-modal-overlay { 
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px); 
+            display: flex; justify-content: center; align-items: center; 
+            padding: 16px; z-index: 25000; opacity: 0; visibility: hidden; 
+            transition: all 0.2s ease; 
+        }
+        .menu-modal-overlay.active { opacity: 1; visibility: visible; }
         
-        .blink-light { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: blinkAnimation 2.4s infinite ease-in-out; }
-        @keyframes blinkAnimation { 0%, 33% { background-color: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 4px #22c55e; } 67%, 100% { background-color: #ffffff; box-shadow: 0 0 10px #ffffff, 0 0 4px #ffffff; } }
+        .menu-modal-content { 
+            background: transparent; 
+            box-shadow: none; 
+            border: none; 
+            padding: 0; 
+            width: 100%; 
+            max-width: 440px; 
+            transform: scale(0.92); 
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+        .menu-modal-overlay.active .menu-modal-content { transform: scale(1); }
 
-        .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+        /* =========================================================
+            MENU UTAMA — BENTUK TOMBOL PERSEGI PANJANG (ORANGE)
+            ========================================================= */
+        :root {
+            --bg-primary: #1155CC;
+            --bg-white: #FFFFFF;
+            --text-white: #FFFFFF;
+            --btn-blue: #0047BF;
+            --btn-active: #A1A1A1;
+            --shadow-inset: #000000;
+        }
+
+        .main-menu-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 0 4px;
+            width: 100%;
+        }
         
         .nav-item { 
-            background: linear-gradient(145deg, #2563eb, #1d4ed8); 
-            color: #FFFFFF; text-decoration: none; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 4px; text-align: center; line-height: 1.2; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; 
+            color: var(--text-white); text-decoration: none; border-radius: 12px; 
+            font-size: 11px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; 
+            width: 100%; min-height: 84px; padding: 12px 4px; border: none; line-height: 1.2;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
         }
-        .nav-item.btn-galeri { background: linear-gradient(145deg, #64748b, #475569); box-shadow: 0 6px 15px rgba(100, 116, 139, 0.25); }
-        .nav-item:active { transform: scale(0.95); }
-        .nav-item:hover { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(37, 99, 235, 0.3); filter: brightness(1.15); }
-        .nav-item svg { width: 20px; height: 20px; margin-bottom: 6px; stroke-width: 2 !important; }
+        
+        .nav-item:active { transform: scale(0.94); }
+        
+        .nav-item svg { width: 26px; height: 26px; margin-bottom: 6px; display: block; stroke: currentColor; stroke-width: 2 !important; } 
+        
+        /* WARNA TOMBOL ALL MENU JADI ORANGE */
+        .btn-home, .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-datawarga, .btn-tatatertib, .btn-lapak { background: #FA6800; }
 
-        .em-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .em-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .em-modal-content { background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(15px); transition: transform 0.3s ease; }
-        .em-modal-overlay.active .em-modal-content { transform: translateY(0); }
-        .em-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; }
-        .em-modal-title { font-size: 16px; font-weight: 700; color: #0f172a; }
-        .em-btn-close { background: none; border: none; cursor: pointer; color: #ef4444; }
-        .emergency-list { display: flex; flex-direction: column; gap: 14px; }
-        .emergency-item { display: flex; align-items: center; background-color: #EDEDED; padding: 12px 14px; border-radius: 12px; text-decoration: none; border: 1px solid #b5b5b5; gap: 14px; color:#333; transition: all 0.2s ease; }
-        .emergency-item:hover { filter: brightness(0.95); transform: translateY(-2px); }
-        .logo-wrapper { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; border: 1px solid #a8a8a8; color:#1155CC; }
-        .contact-details { display: flex; flex-direction: column; flex-grow: 1; }
-        .emergency-label { font-size: 11px; color: #334155; font-weight: 500; }
-        .emergency-value { font-size: 14px; font-weight: 700; margin-top: 1px; }
-        .call-icon { width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color:#1155CC; }
-        .emergency-item.wa { border-left: 5px solid #22c55e; }
-        .emergency-item.wa .call-icon, .emergency-item.wa .logo-wrapper { color: #22c55e; border-color:#22c55e; }
+        /* EFEK TOMBOL AKTIF */
+        .nav-item.menu-tertekan {
+            background: var(--btn-active) !important; 
+            box-shadow: inset 0 6px 10px var(--shadow-inset) !important; 
+            transform: scale(0.95); 
+            color: var(--text-white) !important; 
+            pointer-events: none; 
+            cursor: default;
+        }
+        .nav-item.menu-tertekan svg {
+            filter: none !important; 
+            opacity: 0.7;
+        }
+
+        @media (max-width: 380px) {
+            .main-menu-wrapper { gap: 8px; padding: 0 2px; }
+            .nav-item { font-size: 9.5px; min-height: 72px; padding: 10px 2px; border-radius: 10px; }
+            .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; }
+        }
 
         .univ-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s; padding: 16px; }
         .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
         .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
         .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
-        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 700; color: #1e293b; }
-        .univ-modal-title { font-size: 16px; }
+        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 600; color: #1e293b; }
+        .univ-modal-title { font-size: 16px; text-transform: uppercase; }
         .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;}
         .btn-close-univ:hover { background: #FEE2E2; }
         .univ-modal-body { flex: 1; width: 100%; height: 100%; background: #f1f5f9; }
         .univ-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
 
         .main-content-space { flex: 1; }
-        .main-footer { width: 100%; margin: auto auto 0 auto; padding: 16px 16px; text-align: center; border-top: 1px solid #e2e8f0; display: block; }
+        
+        /* Garis border atas footer dihilangkan */
+        .main-footer { 
+            width: 100%; 
+            margin: auto auto 0 auto; 
+            padding: 16px 16px; 
+            text-align: center; 
+            border-top: none !important; 
+            display: block; 
+        }
         .footer-line { color: #64748b; line-height: 1.3; margin-bottom: 2px; }
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 400; }
         
-        .main-content-area { width: 100%; }
+        .main-content-area { width: 100%; margin-top: 15px; }
 
         /* ================= STYLE GALERI UTAMA ================= */
         .info-dashboard-container { padding: 0 16px 20px 16px; }
@@ -270,86 +379,45 @@
 <body>
 
 <div class="app-wrapper">
-    <!-- HEADER & MENU NAVIGASI TETAP DARI TEMPLATE MASTER -->
+    <!-- HEADER & NAVIGASI -->
     <div class="fixed-top-bar" id="fixedTopBar">
         <header class="glass-header" id="mainHeader">
             <div class="header-left">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg47-MPnRbJCKU6vW-8U3U8-rs01D7_58RuwVJ9uqeGD2JUuN5eYOMj7J2x0x8IA1NHV7sFryy1ThWJ0Yozvt_Ueoew1tn289v3wu7nbwtFpYPXZN9T-cZgaXgey0DB8tDkazRwbXgzGV6549SynuIE70KNDd1nURitNJCroUp_C8qNWNXTa4B0kGlw5kc/s1600/Logo%20RT%202%20Pasekan%20Lor%202.png" alt="Logo RT 2 Paslor"> 
-            </div>
-            <div class="header-right">
-                <button class="btn-darurat" id="openEmModalBtn">
-                    <span>DARURAT</span>
-                    <div class="blink-light"></div>
-                </button>
+                <img class="header-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2">
+                <div class="header-text">
+                    <div class="header-title-text">RT 2 Online</div>
+                    <div class="header-slogan">Aplikasi Warga RT 2-RW 3, Pasekan Lor</div>
+                </div>
             </div>
         </header>
 
-        <div class="title-card-panel" id="accordionMenuToggle" title="Ketuk untuk membuka menu">
+        <div class="title-card-panel" title="Halaman Galeri">
             <div class="title-card-left">
+                <img class="scroll-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                GALERI WARGA RT 2
+                <span>Galeri Warga RT 2</span>
             </div>
+            
             <div class="title-card-right">
-                MENU
-                <svg id="accordionIcon" class="accordion-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </div>
-        </div>
-
-        <div class="nav-accordion-wrapper" id="navAccordionWrapper">
-            <div class="nav-grid">
-                <a href="/" class="nav-item" title="Home">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    <span>HOME</span>
-                </a>
-                
-                <a href="pengurus" class="nav-item" title="Pengurus">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>PENGURUS</span>        
-                </a>
-                
-                <a href="inventaris" class="nav-item" title="Inventaris">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    <span>INVENTARIS</span>
-                </a>
-                
-                <a href="scanner" class="nav-item" title="Scanner">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
-                    <span>SCANNER</span>
-                </a>
-                
-                <a href="tatatertib" class="nav-item" title="Tata Tertib">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    <span>TATA TERTIB</span>
-                </a>
-                
-                <a href="#" class="nav-item btn-galeri disabled" title="Galeri" style="pointer-events: none; cursor: not-allowed; opacity: 1; filter: grayscale(100%);">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    <span>GALERI</span>
-                </a>
-                
-                <a href="warga" class="nav-item" title="Warga">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                    <span>WARGA</span>
-                </a>
-                
-                <a href="agustusan" class="nav-item" title="Agustusan">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
-                    <span>AGUSTUSAN</span>
-                </a>
-                
-                <a href="ronda" class="nav-item" title="Ronda">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span>RONDA</span>
-                </a>
+                <!-- Tombol Trigger Menu Modal Fast -->
+                <button id="btnMenuToggle" class="btn-menu-dots" title="Menu Utama">
+                    <span>Menu</span>
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                        <circle cx="7" cy="7" r="2.5"></circle>
+                        <circle cx="17" cy="7" r="2.5"></circle>
+                        <circle cx="7" cy="17" r="2.5"></circle>
+                        <circle cx="17" cy="17" r="2.5"></circle>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- KONTEN UTAMA GALERI -->
     <div class="main-content-area">
-        <!-- KONTEN UTAMA GALERI -->
         <div class="info-dashboard-container">
             
-            <!-- Tambahan Pemberitahuan Kirim Foto -->
+            <!-- Pemberitahuan Kirim Foto -->
             <div style="font-size: 11px; font-weight: 600; color: #d97706; background: #fef3c7; padding: 10px 12px; border-radius: 8px; margin-bottom: 14px; text-align: center; border: 1px solid #fde68a;">
                 BAGI YANG MEMILIKI DOKUMENTASI FOTO, KIRIMKAN KE ADMIN. TERIMA KASIH.
             </div>
@@ -370,7 +438,7 @@
             </div>
             
             <div class="filter-group">
-                <input type="text" id="gallerySearchInput" class="search-input" placeholder="CARI KEGIATAN..." onkeyup="filterGalleryList()">
+                <input type="text" id="gallerySearchInput" class="search-input" placeholder="Cari Kegiatan..." onkeyup="filterGalleryList()">
                 <select id="yearFilter" class="year-select" onchange="filterGalleryList()">
                     <option value="">SEMUA TAHUN</option>
                 </select>
@@ -379,43 +447,67 @@
             <!-- Wadah Daftar Album -->
             <div class="gallery-grid grid-mode" id="galleryListBody">
                 <div class="loading-text">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" class="spin-icon"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> MEMUAT GALERI TERBARU...
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" class="spin-icon"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Memuat galeri terbaru...
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Ruang kosong untuk mendorong footer ke bawah -->
-    <div class="main-content-space"></div>
+    <div class="main-content-space">
+    </div>
 
-    <!-- MODAL DARURAT -->
-    <div class="em-modal-overlay" id="emModalOverlay">
-        <div class="em-modal-content">
-            <div class="em-modal-header">
-                <span class="em-modal-title">NOMOR KONTAK DARURAT</span>
-                <button class="em-btn-close" id="closeEmModalBtn" title="Keluar">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div class="emergency-list">
-                <a href="tel:110" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">CALL CENTER POLRI</span><span class="emergency-value">110</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+    <!-- MODAL MENU FAST -->
+    <div class="menu-modal-overlay" id="menuFastModal" onclick="closeMenuModal(event)">
+        <div class="menu-modal-content" onclick="event.stopPropagation()">
+            <!-- MENU UTAMA -->
+            <div class="main-menu-wrapper">
+                <!-- HOME -->
+                <a href="https://rt2pasekanlor.id/" class="nav-item btn-home" title="Home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>HOME</span>
                 </a>
-                <a href="tel:085173171912" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><line x1="8" y1="9.5" x2="12" y2="9.5"/><line x1="10" y1="7.5" x2="10" y2="11.5"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">AMBULAN PKU GAMPING</span><span class="emergency-value">0851 7317 1912</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                
+                <!-- WARGA -->
+                <a href="data-warga" class="nav-item btn-warga" title="Warga">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    <span>WARGA</span>
                 </a>
-                <a href="tel:02742821346" target="_blank" class="emergency-item">
-                    <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-3.3 0-6 2.7-6 6 0 5 6 14 6 14s6-9 6-14c0-3.3-2.7-6-6-6z"/><path d="M12 12c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">DAMKAR GODEAN SLEMAN</span><span class="emergency-value">(0274) 2821346</span></div>
-                    <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                
+                <!-- INVENTARIS -->
+                <a href="inventaris" class="nav-item btn-inventaris" title="Inventaris">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>INVENTARIS</span>
                 </a>
-                <a href="https://chat.whatsapp.com/31APr2lKc826zA46hGzoZK?s=sh&p=a&mlu=4&ilr=0" target="_blank" class="emergency-item wa">
-                    <div class="logo-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div>
-                    <div class="contact-details"><span class="emergency-label">WHATSAPP</span><span class="emergency-value">GRUP WHATSAPP RT 2</span></div>
+
+                <!-- LAPAK -->
+                <a href="lapak-warga" class="nav-item btn-lapak" title="Lapak">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span>LAPAK</span>
+                </a>
+
+                <!-- PENGURUS -->
+                <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>PENGURUS</span>        
+                </a>
+                
+                <!-- GALERI -->
+                <a href="galeri" class="nav-item btn-galeri" title="Galeri">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>GALERI</span>
+                </a>
+
+                <!-- TATA TERTIB -->
+                <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>TATA TERTIB</span>
+                </a>
+
+                <!-- RONDA -->
+                <a href="ronda" class="nav-item btn-ronda" title="Ronda">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>RONDA</span>
                 </a>
             </div>
         </div>
@@ -425,7 +517,7 @@
     <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
         <div class="univ-modal-box" onclick="event.stopPropagation()">
             <div class="univ-modal-header">
-                <h2 class="univ-modal-title" id="univModalTitle">JUDUL</h2>
+                <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
                 <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
                     <svg viewBox="0 0 24 24" class="svg-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
@@ -454,10 +546,10 @@
         </div>
     </div>
 
-    <!-- FOOTER TETAP -->
+    <!-- FOOTER TETAP (TANPA GARIS) -->
     <footer class="main-footer">
-        <div class="footer-line f-bold">COPYRIGHT © 2026 RT 2 PASLOR. ALL RIGHTS RESERVED.</div>
-        <div class="footer-line f-reg">DIKERJAKAN SECARA MANDIRI OLEH WARGA RT 2 PASLOR. ADW</div>
+        <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
+        <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
     </footer>
 </div> 
 
@@ -466,54 +558,57 @@
        1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header)
        ========================================================== */
     const topBar = document.getElementById('fixedTopBar');
-    const accordionToggle = document.getElementById('accordionMenuToggle');
-    const navAccordionWrapper = document.getElementById('navAccordionWrapper');
-    const accordionIcon = document.getElementById('accordionIcon');
-
+    const menuFastModal = document.getElementById('menuFastModal');
+    const btnMenuToggle = document.getElementById('btnMenuToggle');
+    
     window.addEventListener('scroll', () => {
         if (window.scrollY > 30) {
-            topBar.classList.add('shrink');
+            topBar.classList.add('scrolled');
         } else {
-            topBar.classList.remove('shrink');
+            topBar.classList.remove('scrolled');
         }
-    });
-
-    accordionToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = navAccordionWrapper.classList.toggle('open');
-        accordionToggle.classList.toggle('open');
         
-        if (isOpen) {
-            accordionIcon.style.transform = 'rotate(180deg)';
-        } else {
-            accordionIcon.style.transform = 'rotate(0deg)';
+        if (menuFastModal.classList.contains('active')) {
+            closeMenuModal();
         }
     });
 
-    document.addEventListener('click', (e) => {
-        if (!navAccordionWrapper.contains(e.target) && e.target !== accordionToggle) {
-            navAccordionWrapper.classList.remove('open');
-            accordionToggle.classList.remove('open');
-            accordionIcon.style.transform = 'rotate(0deg)';
-        }
+    menuFastModal.addEventListener('touchmove', closeMenuModal, { passive: true });
+    menuFastModal.addEventListener('wheel', closeMenuModal, { passive: true });
+
+    btnMenuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuFastModal.classList.add('active');
     });
 
-    /* MODAL DARURAT */
-    const emModalOverlay = document.getElementById('emModalOverlay');
-    document.getElementById('openEmModalBtn').addEventListener('click', () => { 
-        emModalOverlay.classList.add('active'); 
-        document.body.style.overflow = 'hidden'; 
+    function closeMenuModal(e) {
+        menuFastModal.classList.remove('active');
+    }
+
+    document.querySelectorAll('.main-menu-wrapper .nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            closeMenuModal();
+        });
     });
-    document.getElementById('closeEmModalBtn').addEventListener('click', () => { 
-        emModalOverlay.classList.remove('active'); 
-        document.body.style.overflow = 'auto'; 
-    });
-    emModalOverlay.addEventListener('click', (e) => { 
-        if (e.target === emModalOverlay) { 
-            emModalOverlay.classList.remove('active'); 
-            document.body.style.overflow = 'auto'; 
-        } 
-    });
+
+    const halamanAktifSaatIni = 'galeri'; 
+    const mapMenu = {
+        'home': 'btn-home',
+        'warga': 'btn-warga',
+        'inventaris': 'btn-inventaris',
+        'lapak': 'btn-lapak',
+        'pengurus': 'btn-pengurus',
+        'galeri': 'btn-galeri',
+        'tatatertib': 'btn-tatatertib',
+        'ronda': 'btn-ronda'
+    };
+
+    if (mapMenu[halamanAktifSaatIni]) {
+        const tombolAktif = document.querySelector('.' + mapMenu[halamanAktifSaatIni]);
+        if (tombolAktif) {
+            tombolAktif.classList.add('menu-tertekan');
+        }
+    }
 
     /* UNIVERSAL MODAL */
     const univModal = document.getElementById('univModalOverlay');
@@ -565,7 +660,6 @@
                 images.push(match[1]);
             }
 
-            // Ambil URL gambar (prioritaskan dari isi konten karena lebih akurat)
             let coverFoto = '';
             if (images.length > 0) {
                 coverFoto = images[0];
@@ -573,11 +667,8 @@
                 coverFoto = item.media$thumbnail.url;
             }
 
-            // Perbesar resolusi gambar agar tidak pecah (Mendukung URL Blogger Lama & Baru)
             if (coverFoto) {
-                // Perbaiki URL gaya lama (contoh: /s72-c/ atau /w200-h300/ menjadi /s1000/)
                 coverFoto = coverFoto.replace(/\/[swh]\d+(-[a-zA-Z0-9-]+)?\//gi, '/s1000/');
-                // Perbaiki URL gaya baru (contoh: =s72-c atau =w200-h300 menjadi =s1000)
                 coverFoto = coverFoto.replace(/\=[swh]\d+(-[a-zA-Z0-9-]+)?/gi, '=s1000');
             }
 
@@ -601,7 +692,7 @@
                 cover: coverFoto,
                 jumlahFoto: images.length, 
                 kontenAsli: htmlContent,   
-                judul: item.title.$t || 'TANPA JUDUL',
+                judul: item.title.$t || 'Tanpa Judul',
                 tanggal: tanggalStr,
                 tahun: tahun,
                 deskripsi: deskripsi.trim()
@@ -621,7 +712,7 @@
             if (yr !== 'UNKNOWN') {
                 let option = document.createElement('option');
                 option.value = yr;
-                option.textContent = "TAHUN " + yr;
+                option.textContent = "Tahun " + yr;
                 select.appendChild(option);
             }
         });
@@ -634,11 +725,9 @@
 
     function toTitleCase(str) {
         if(!str) return '';
-        // Diubah menjadi upper case sesuai instruksi
-        return str.toUpperCase();
+        return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
     }
 
-    /* Fungsi Mengubah Mode Tampilan (Grid / List) */
     function setViewMode(mode) {
         const gridBody = document.getElementById('galleryListBody');
         const btnGrid = document.getElementById('btnGridMode');
@@ -662,15 +751,14 @@
         container.innerHTML = '';
         
         if(data.length === 0) {
-            container.innerHTML = '<div class="loading-text" style="grid-column: span 2;">ALBUM TIDAK DITEMUKAN.</div>';
+            container.innerHTML = '<div class="loading-text" style="grid-column: span 2;">Album tidak ditemukan.</div>';
             return;
         }
 
         data.forEach((item, index) => {
-            // SVG Icon fallback jika cover tidak ada
             let thumbHtml = item.cover ? `<img src="${item.cover}" loading="lazy" alt="Cover">` : `<div style="padding:40px; text-align:center; color:#cbd5e1;"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`;
             
-            let upperCaseName = toTitleCase(item.judul);
+            let formattedTitle = toTitleCase(item.judul);
 
             const card = document.createElement('div');
             card.className = 'gallery-item';
@@ -687,7 +775,7 @@
                     </div>
                 </div>
                 <div class="gallery-info">
-                    <div class="gallery-title">${upperCaseName}</div>
+                    <div class="gallery-title">${formattedTitle}</div>
                     <div class="gallery-date">
                         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                         ${item.tanggal}
@@ -713,12 +801,12 @@
 
     function openAlbumModal(albumData) {
         document.getElementById('albumModalTitle').innerText = toTitleCase(albumData.judul);
-        document.getElementById('albumModalSubtitle').innerText = `${albumData.tanggal} • ${albumData.jumlahFoto} FOTO`;
+        document.getElementById('albumModalSubtitle').innerText = `${albumData.tanggal} • ${albumData.jumlahFoto} Foto`;
 
         const bodyContainer = document.getElementById('albumModalBody');
         
         if (!albumData.kontenAsli || albumData.kontenAsli.trim() === '') {
-            bodyContainer.innerHTML = '<p style="text-align:center; color:#64748b; font-size:12px; padding: 20px;">TIDAK ADA KONTEN TERDETEKSI DI DALAM POSTINGAN INI.</p>';
+            bodyContainer.innerHTML = '<p style="text-align:center; color:#64748b; font-size:12px; padding: 20px;">Tidak ada konten terdeteksi di dalam postingan ini.</p>';
         } else {
             bodyContainer.innerHTML = albumData.kontenAsli;
         }
@@ -727,8 +815,6 @@
         modal.style.display = 'flex';
         setTimeout(() => { modal.classList.add('show'); }, 10);
         document.body.style.overflow = 'hidden';
-        
-        document.getElementById('fixedTopBar').style.display = 'none';
     }
 
     function closeAlbumModal() {
@@ -737,7 +823,6 @@
         setTimeout(() => { 
             modal.style.display = 'none'; 
             document.body.style.overflow = 'auto';
-            document.getElementById('fixedTopBar').style.display = 'flex';
         }, 300);
     }
 

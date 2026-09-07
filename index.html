@@ -28,10 +28,20 @@
             --posisi-tombol-gulung: flex-end; 
         }
 
+        /* Sembunyikan scrollbar global untuk performa scroll yang lebih smooth (menghilangkan kesan berat) */
+        ::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+        html, body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
         body { 
             background-color: #FFFFFF; 
-            background-attachment: fixed;
             min-height: 100vh;
             display: flex; 
             justify-content: center; 
@@ -103,7 +113,6 @@
         .slider-container { position: relative; padding: 0 !important; }
         
         .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 12px; padding: 0 16px; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
-        .ps-slider-container::-webkit-scrollbar { display: none; }
         .slide { flex: 0 0 230px; width: 230px; height: 140px; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-color: #ffffff; cursor: pointer; }
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 500; z-index:-1;}
@@ -124,26 +133,27 @@
         .nav-item:active { transform: scale(0.95); }
         .nav-item svg { width: 20px; height: 20px; margin-bottom: 6px; display: block; stroke: currentColor; stroke-width: 2 !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
         
-        .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-datawarga, .btn-tatatertib, .btn-lapak, .btn-disabled { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
+        /* ================== WARNA TOMBOL AKTIF ================== */
+
+        .btn-home, .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-datawarga, .btn-tatatertib, .btn-lapak, .btn-disabled { background: #0047BF;}
         .btn-disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
-        .btn-home-active { background: #64748b !important; box-shadow: none !important; cursor: default !important; pointer-events: none; }
 
         /* ================== KOTAK KAS SALDO ================== */
         .hero-kas-container { padding: 0 16px 16px 16px; width: 100%; z-index: 2; position: relative; } 
-        .kas-card.new-kas-design { background: linear-gradient(135deg, #1155CC, #00328C); color: #ffffff; border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .kas-card.new-kas-design { background: #1155CC; color: #ffffff; border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; position: relative; overflow: hidden;}
         .kas-weather-top { display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 10px; margin-bottom: 12px; width: 100%; z-index: 2; }
         .welcome-text-container { width: 100%; text-align: center; display: flex; justify-content: center; }
         .static-welcome { font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 0.3px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
         .kas-body-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2; }
         .kas-left { display: flex; flex-direction: column; justify-content: center; gap: 6px; flex: 1.1; }
         .calendar-display { display: flex; align-items: flex-start; gap: 8px; }
-        .calendar-display svg { width: 18px; height: 18px; opacity: 0.9; color: #e0e7ff; margin-top: 1px; flex-shrink: 0; }
-        .calendar-display .date-block { display: flex; flex-direction: column; line-height: 1.25; }
-        .calendar-display .date-day { font-size: 13px; font-weight: 600; color: #ffffff; }
-        .calendar-display .date-full { font-size: 11px; font-weight: 400; color: #e2e8f0; }
+        .calendar-display svg { width: 18px; height: 18px; opacity: 0.9; color: #ffffff; margin-top: 1px; flex-shrink: 0; }
+        .calendar-display .date-block { display: flex; flex-direction: column; line-height: 1.5; }
+        .calendar-display .date-day { font-size: 13px; font-weight: 500; color: #ffffff; }
+        .calendar-display .date-full { font-size: 13px; font-weight: 500; color: #ffffff; }
         .clock-display { display: flex; align-items: center; gap: 8px; }
-        .clock-display svg { width: 15px; height: 15px; opacity: 0.85; color: #e0e7ff; flex-shrink: 0; }
-        .clock-display .clock-text { font-size: 11.5px; font-weight: 500; color: #e2e8f0; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        .clock-display svg { width: 15px; height: 15px; opacity: 0.85; color: #ffffff; flex-shrink: 0; }
+        .clock-display .clock-text { font-size: 11px; font-weight: 500; color: #ffffff; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .kas-right { display: flex; flex-direction: column; align-items: flex-end; flex: 0.9; text-align: right; }
         .saldo-label { font-size: 11px; font-weight: 500; line-height: 1; margin-bottom: 6px; color: #FFFFFF; display: flex; align-items: center; justify-content: flex-end; gap: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         @keyframes blinkDot { 0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(204, 255, 0, 0.8); transform: scale(1); } 50% { opacity: 0.4; box-shadow: 0 0 2px rgba(204, 255, 0, 0.2); transform: scale(0.85); } }
@@ -222,16 +232,14 @@
             position: relative;
             z-index: 2;
         }
-        
-        .card-kegiatan { background: linear-gradient(90deg, #4777ED, #0FBD76); }
-        .card-kegiatan .ds-footer { background: linear-gradient(90deg, #4777ED, #0FBD76); }
+        /* ================== WARNA KARTU LUAR ================== */
+        .card-kegiatan { background: linear-gradient(90deg, #0FBD76, #4777ED); }
+        .card-kegiatan .ds-footer { background: linear-gradient(90deg, #0FBD76, #4777ED); }
         
         .card-lapak { background: linear-gradient(90deg, #9D4BDE, #5789F2); }
         .card-lapak .ds-footer { background: linear-gradient(90deg, #9D4BDE, #5789F2); }
-        
-        .card-berita { background: linear-gradient(90deg, #4777ED, #0FBD76); }
-        .card-berita .ds-footer { background: linear-gradient(90deg, #4777ED, #0FBD76); }
 
+        /* ================== WARNA FONT KARTU LUAR ================== */
         .ds-header {
             padding: 16px 10px;
             text-align: center;
@@ -253,10 +261,11 @@
             align-items: center;
         }
         
+        /* ================== WARNA FONT KARTU DALAM ================== */
         .dashboard-section-card.ds-agenda .ds-content {
             padding: 12px 10px;
             border-radius: 20px;
-            background-color: #f1f5f9;
+            background-color: #ffffff;
         }
 
         .ds-pill-btn {
@@ -273,16 +282,17 @@
 
         /* ================== ELEMEN DALAM KARTU AGENDA (KEGIATAN WARGA) ================== */
         .cards-list { display: flex; flex-direction: column; gap: 16px; }
-        .info-card { background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; border: 1px solid #e2e8f0; }
+        .info-card { background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; border: 1px solid #D4D4D4; }
         .card-header { padding: 12px 16px; color: #ffffff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
         
-        .neumorph-status { background: rgba(255, 255, 255, 0.95); box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 12px; padding: 4px 10px; font-size: 10.5px; border: 1px solid rgba(255, 255, 255, 0.6); }
+        /* ================== KOTAK STATUS ================== */
+        .neumorph-status { background: #FFFFFF; border-radius: 9px; padding: 4px 10px; font-size: 10.5px;}
         
         .card-header .category-text { font-size: 15px; font-weight: 600; letter-spacing: 0.1px; text-shadow: 0 1px 2px rgba(0,0,0,0.15); display: block; }
-        .bg-pertemuan { background: linear-gradient(135deg, #059669, #00734B); }
-        .bg-kerjabakti { background: linear-gradient(135deg, #2563eb, #194B9E); }
-        .bg-ronda      { background: linear-gradient(135deg, #7c3aed, #5530A6); }
-        .bg-lainnya    { background: linear-gradient(135deg, #ea580c, #E65D00); } 
+        .bg-pertemuan { background: #1155CC; }
+        .bg-kerjabakti { background: #BF1CD6; }
+        .bg-ronda      { background: #5530A6; }
+        .bg-lainnya    { background: #00997C; } 
         
         .info-card-body { display: flex; padding: 14px 16px; gap: 14px; align-items: center; border-bottom: 1.5px dashed #e2e8f0; }
         .card-thumb-wrapper { position: relative; cursor: pointer; flex-shrink: 0; }
@@ -308,16 +318,17 @@
         @keyframes pulse-status { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
         @keyframes pulse-status-fast { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.3); opacity: 1; } }
 
+        /* ================== WARNA TOMBOL WA - HASIL================== */
         .info-card-footer { padding: 12px 16px; display: flex; gap: 10px; background-color: transparent; align-items: center; justify-content: space-between; }
         .btn-footer-action { padding: 8px 12px; border-radius: 10px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; border: none; transition: all 0.2s ease; width: 48%; }
-        .btn-doc-footer { background-color: #dbeafe; color: #1e40af; box-shadow: 0 2px 6px rgba(30, 64, 175, 0.15); }
-        .btn-share-wa { background-color: #dcfce7; color: #166534; box-shadow: 0 2px 6px rgba(22, 101, 52, 0.15); }
+        .btn-doc-footer { background-color: #dbeafe; color: #1e40af; }
+        .btn-share-wa { background-color: #dcfce7; color: #166534;}
         .btn-footer-action svg { width: 14px; height: 14px; }
 
-        .arsip-item { background-color: #f1f5f9; border: 1px solid #cbd5e1; padding: 14px 16px; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); position: relative; transition: all 0.2s; }
-        .arsip-item::after { content: '>'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-weight: 700; color: #94a3b8; font-size: 16px; }
-        .arsip-title { font-size: 14px; font-weight: 600; color: #383838; padding-right: 20px; }
-        .arsip-date { font-size: 10px; font-weight: 600; color: #1155CC; }
+        .arsip-item { background-color: #f1f5f9; border: 1px solid #cbd5e1; padding: 10px 10px; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); position: relative; transition: all 0.2s; }
+        .arsip-item::after { content: '>'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-weight: 600; color: #94a3b8; font-size: 13px; }
+        .arsip-title { font-size: 14px; font-weight: 500; color: #383838; padding-right: 20px; }
+        .arsip-date { font-size: 10px; font-weight: 500; color: #1155CC; }
 
         .doc-modal-img { width: 100%; height: auto; object-fit: contain; border-radius: 12px; display: block; margin-bottom: 16px;}
         .doc-modal-text { background: #F8FAFC; color: #383838; padding: 20px; border-radius: 20px; width: 100%; border: 1px solid #e2e8f0; margin-top: 10px; }
@@ -325,8 +336,7 @@
 
         /* ================== ELEMEN DALAM KARTU BERITA & INTERMEZO ================== */
         .news-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 16px; padding: 0 0 10px 0; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-        .news-slider-container::-webkit-scrollbar { display: none; }
-        .news-card { flex: 0 0 100%; width: 100%; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; flex-shrink: 0; scroll-snap-align: center; border: 1px solid #e2e8f0; }
+        .news-card { flex: 0 0 85%; width: 85%; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; flex-shrink: 0; scroll-snap-align: center; border: 1px solid #e2e8f0; }
         .news-thumb-wrapper { position: relative; width: 100%; height: 180px; background-color: #eaeaea; overflow: hidden; }
         .news-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
         .news-body-main { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
@@ -388,12 +398,11 @@
 
         /* --- FILTER KATEGORI --- */
         .filter-container { display: flex; overflow-x: auto; gap: 8px; scrollbar-width: none; -ms-overflow-style: none; }
-        .filter-container::-webkit-scrollbar { display: none; }
         .filter-btn { 
           background: #e2e8f0; color: #475569; border: none; 
-          padding: 6px 12px; border-radius: 20px; 
+          padding: 6px 12px; border-radius: 10px; 
           font-size: 11px; 
-          font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; 
+          font-family: 'Poppins', sans-serif; font-weight: 500; cursor: pointer; 
           white-space: nowrap; transition: background 0.2s, color 0.2s; 
         }
         .filter-btn.active { background: #1155cc; color: #fff; }
@@ -409,7 +418,6 @@
           padding-bottom: 10px;
           width: 100%;
         }
-        .umkm-slider::-webkit-scrollbar { display: none; }
 
         @keyframes zoomInFilter {
           0% { transform: scale(0.6); opacity: 0; }
@@ -480,6 +488,58 @@
 <!-- ======================================================================
      END AREA EDIT WIDGET LAPAK WARGA 
      ====================================================================== -->
+
+<!-- ======================================================================
+     START AREA PENGATURAN MENU AKTIF (EDIT DI SINI SAJA) 
+     ====================================================================== -->
+<style>
+    /* Efek tombol pasif/tertekan (embos ke dalam) */
+    .nav-item.menu-tertekan {
+        background: #A1A1A1 !important; /* Warna biru lebih gelap/tenggelam */
+        box-shadow: inset 0 6px 10px rgba(0,0,0,0.5) !important; /* Shadow di dalam (tertekan) */
+        transform: scale(0.95); /* Sedikit mengecil */
+        color: #FFFFFF !important; /* Teks meredup */
+        pointer-events: none; /* Tidak bisa diklik lagi */
+        cursor: default;
+    }
+    .nav-item.menu-tertekan svg {
+        filter: none !important; /* Hilangkan shadow luar pada svg */
+        opacity: 0.7;
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // --- EDIT HALAMAN AKTIF DI BAWAH INI ---
+        // Ganti teks di dalam tanda kutip dengan nama halaman saat ini.
+        // Pilihan: 'home', 'warga', 'inventaris', 'lapak', 'pengurus', 'galeri', 'tatatertib', 'ronda'
+        
+        const halamanAktifSaatIni = 'home'; 
+        
+        // ---------------------------------------
+        
+        const mapMenu = {
+            'home': 'btn-home',
+            'warga': 'btn-warga',
+            'inventaris': 'btn-inventaris',
+            'lapak': 'btn-lapak',
+            'pengurus': 'btn-pengurus',
+            'galeri': 'btn-galeri',
+            'tatatertib': 'btn-tatatertib',
+            'ronda': 'btn-ronda'
+        };
+
+        if (mapMenu[halamanAktifSaatIni]) {
+            const tombolAktif = document.querySelector('.' + mapMenu[halamanAktifSaatIni]);
+            if (tombolAktif) {
+                tombolAktif.classList.add('menu-tertekan');
+            }
+        }
+    });
+</script>
+<!-- ======================================================================
+     END AREA PENGATURAN MENU AKTIF
+     ====================================================================== -->
+
 </head>
 <body>
 
@@ -529,21 +589,6 @@
                             <div class="contact-details"><span class="emergency-label">WhatsApp</span><span class="emergency-value">GRUP WHATSAPP RT 2</span></div>
                         </a>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ACCORDION SLIDER -->
-        <div class="slider-wrapper-accordion">
-            <div class="slider-toggle-wrapper">
-                <button class="slider-toggle-icon-btn" id="toggleSliderBtn" title="Sembunyikan/Pulihkan Banner">
-                    <svg id="sliderToggleIcon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                </button>
-            </div>
-            <div class="slider-section" id="sliderSection">
-                <div class="slider-container">
-                    <div class="status-msg" id="ps-status-loading">Memuat konten slider banner</div>
-                    <div class="ps-slider-container" id="ps-slider-track"></div>
                 </div>
             </div>
         </div>
@@ -600,7 +645,7 @@
         <!-- MENU UTAMA) -->
 <div class="main-menu-wrapper">
             <!-- HOME -->
-            <a href="#" class="nav-item btn-home-active" title="Home">
+            <a href="#" class="nav-item btn-home" title="Home">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 <span>HOME</span>
             </a>
@@ -717,17 +762,13 @@
             </div>
         </div>
 
-        <!-- ==================== BAGIAN BERITA & INTERMEZO (Dashboard Card Design) ==================== -->
-        <div class="dashboard-section-card card-berita ds-agenda">
-            <div class="ds-header">BERITA & INTERMEZO</div>
-            <div class="ds-content">
-                <div class="news-slider-container" id="newsCardsContainer">
-                    <div class="loading-text" style="color: #64748b;">Menyinkronkan berita warga...</div>
-                </div>
+        <!-- ==================== BAGIAN BERITA & INTERMEZO (Simple Slider) ==================== -->
+        <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
+            <div style="background: linear-gradient(135deg, #1155CC, #059669); color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                BERITA & INTERMEZO
             </div>
-            <div class="ds-footer" id="newsNavContainer" style="display: none; gap: 12px;">
-                <button class="nav-circle-btn" id="newsPrevBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                <button class="nav-circle-btn" id="newsNextBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+            <div class="news-slider-container" id="newsCardsContainer" style="padding-bottom: 10px;">
+                <div class="loading-text" style="color: #64748b;">Menyinkronkan berita warga...</div>
             </div>
         </div>
 
@@ -790,6 +831,22 @@
              END AREA EDIT WIDGET LAPAK WARGA 
              ====================================================================== -->
 
+        <!-- ACCORDION SLIDER (DIPINDAH KE BAWAH LAPAK WARGA) -->
+        <div class="slider-wrapper-accordion" style="margin-top: 10px;">
+            <div class="slider-toggle-wrapper">
+                <button class="slider-toggle-icon-btn" id="toggleSliderBtn" title="Sembunyikan/Pulihkan Banner">
+                    <svg id="sliderToggleIcon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                </button>
+            </div>
+            <div class="slider-section" id="sliderSection">
+                <div class="slider-container">
+                    <div class="status-msg" id="ps-status-loading">Memuat konten slider banner</div>
+                    <div class="ps-slider-container" id="ps-slider-track"></div>
+                </div>
+            </div>
+        </div>
+        <!-- END ACCORDION SLIDER -->
+
         <!-- Area Footer -->
         <div class="sub-footer-section">
             <div class="himbauan-box">
@@ -833,31 +890,45 @@
 <script>
     const GLOBAL_BLOG_URL = "https://rt2paslor.blogspot.com";
 
-    // ========================================== SCROLL ANIMASI HEADER MORPHING ==========================================
+    // ========================================== SCROLL ANIMASI (DIOPTIMASI UNTUK MENCEGAH LAG) ==========================================
+    let isScrolling = false;
+    
     window.addEventListener('scroll', () => {
-        const currentScrollY = window.scrollY;
-        const header = document.getElementById('mainHeader');
-        
-        if (currentScrollY > 40) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                
+                // --- FASE READ (BACA NILAI DOM SEKALIGUS UNTUK MENCEGAH LAYOUT THRASHING) ---
+                const currentScrollY = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight;
+                const winHeight = window.innerHeight;
+                const scrollPos = currentScrollY + winHeight;
+                
+                const header = document.getElementById('mainHeader');
+                const slideImg = document.getElementById('footerSlideImg');
 
-    window.addEventListener('scroll', () => {
-        // Listener Animasi Gambar Footer Asli
-        const docHeight = document.documentElement.scrollHeight;
-        const scrollPos = window.scrollY + window.innerHeight;
-        const slideImg = document.getElementById('footerSlideImg');
-        if (slideImg) {
-            if (docHeight - scrollPos < 100) {
-                slideImg.style.transform = 'translateY(0)';
-            } else {
-                slideImg.style.transform = 'translateY(150%)';
-            }
+                // --- FASE WRITE (EKSEKUSI PERUBAHAN DOM BERSAMAAN) ---
+                
+                // 1. Header Morphing
+                if (currentScrollY > 40) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+
+                // 2. Animasi Gambar Footer
+                if (slideImg) {
+                    if (docHeight - scrollPos < 100) {
+                        slideImg.style.transform = 'translateY(0)';
+                    } else {
+                        slideImg.style.transform = 'translateY(150%)';
+                    }
+                }
+
+                isScrolling = false;
+            });
+            isScrolling = true;
         }
-    });
+    }, { passive: true }); // Penambahan { passive: true } mengurangi beban lag browser secara signifikan saat scroll
 
     // ========================================== HEADER DARURAT MODAL ==========================================
     const emModalOverlay = document.getElementById('emModalOverlay');
@@ -1169,11 +1240,13 @@
         const statusRender = renderStatusHtml(getStatusInfo(meta.hariTgl, meta.pukul, meta.status));
         let cat = "RONDA", hClass = "bg-ronda", hexColor = "#8b5cf6";
         const titleLower = (item.title || "").toLowerCase(), catLower = (item.category || "").toLowerCase();
-        
-        if (catLower.includes('pertemuan') || titleLower.includes('pertemuan')) { cat = "Pertemuan RT 2"; hClass = "bg-pertemuan"; hexColor = "#00573B"; }
-        else if (catLower.includes('bakti') || catLower.includes('kerja') || titleLower.includes('bakti') || titleLower.includes('kerja')) { cat = "Kerja Bakti"; hClass = "bg-kerjabakti"; hexColor = "#16428C"; }
-        else if (catLower.includes('ronda') || titleLower.includes('ronda')) { cat = "Ronda"; hClass = "bg-ronda"; hexColor = "#613ABA"; }
-        else if (item.category !== "" && item.category !== "-") { cat = item.category.toUpperCase(); hClass = "bg-lainnya"; hexColor = "#f97316"; }
+
+      // ========================================== WARNA TEKS HARI TEMPAT ========================================== 
+
+        if (catLower.includes('pertemuan') || titleLower.includes('pertemuan')) { cat = "Pertemuan RT 2"; hClass = "bg-pertemuan"; hexColor = "#000000"; }
+else if (catLower.includes('bakti') || catLower.includes('kerja') || titleLower.includes('bakti') || titleLower.includes('kerja')) { cat = "Kerja Bakti"; hClass = "bg-kerjabakti"; hexColor = "#16428C"; }
+else if (catLower.includes('ronda') || titleLower.includes('ronda')) { cat = "Ronda"; hClass = "bg-ronda"; hexColor = "#000000"; }
+else if (item.category !== "" && item.category !== "-") { cat = item.category.toUpperCase(); hClass = "bg-lainnya"; hexColor = "#000000"; }
         
         const textWa = encodeURIComponent(`*Undangan Kegiatan*\n*Warga RT 2 Pasekan Lor*\n\n*Hari, Tgl. :*\n${meta.hariTgl}\n\n*Tempat :*\n${meta.tempat}\n\n*Acara :*\n${meta.acara}\n\n*Pukul :*\n${meta.pukul}\n\n*Catatan :*\n${meta.catatan}\n\nhttps://rt2pasekanlor.id/`);
 
@@ -1237,18 +1310,12 @@
     function closeDocModalOutside(e) { if(e.target === docModal) closeDocModal(); }
 
     // ========================================== BERITA WARGA ==========================================
-    const newsPrevBtn = document.getElementById('newsPrevBtn');
-    const newsNextBtn = document.getElementById('newsNextBtn');
     const newsTrack = document.getElementById('newsCardsContainer');
-    newsPrevBtn.addEventListener('click', () => { newsTrack.scrollBy({ left: -newsTrack.offsetWidth, behavior: 'smooth' }); });
-    newsNextBtn.addEventListener('click', () => { newsTrack.scrollBy({ left: newsTrack.offsetWidth, behavior: 'smooth' }); });
 
     let newsDataStore = [];
     function parseNewsFeed(json) {
         const c = document.getElementById('newsCardsContainer'); c.innerHTML = '';
         const entries = json.feed.entry || []; newsDataStore = entries;
-        if (entries.length > 1) document.getElementById('newsNavContainer').style.display = 'flex';
-        else document.getElementById('newsNavContainer').style.display = 'none';
 
         if(entries.length === 0) { c.innerHTML = '<div class="loading-text" style="color:#64748b;">Tidak ada kabar terbit.</div>'; return; }
         entries.forEach((entry, i) => {

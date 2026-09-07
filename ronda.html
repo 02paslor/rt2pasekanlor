@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Ronda Warga RT 2 - RW 3, Pasekan Lor. Warga Kreatif, Mandiri & Berbudaya.">
-    <title>Ronda Warga RT 2 Paslor</title>
+    <title>Ronda Warga RT 2 Pasekan Lor</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -244,8 +244,14 @@
             margin: 0 16px; 
         }
 
+        .ronda-top-container {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
         .header-fancy {
-            border-radius: 14px; padding: 16px; color: #FFFFFF; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease;
+            border-radius: 14px; padding: 12px; color: #FFFFFF; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease; flex: 1;
         }
         .header-pagi { background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%); }    
         .header-siang { background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%); }   
@@ -253,10 +259,10 @@
         .header-malam { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); }   
 
         .dt-col { display: flex; flex-direction: column; gap: 4px; z-index: 2; }
-        .dt-val-date { font-size: 15px; font-weight: 600; color: #FFFFFF; }
-        .dt-val-time { font-size: 13px; font-weight: 500; color: #FFFFFF; }
+        .dt-val-date { font-size: 13px; font-weight: 600; color: #FFFFFF; }
+        .dt-val-time { font-size: 11px; font-weight: 500; color: #FFFFFF; }
 
-        .time-icon-container { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; position: relative; z-index: 2; }
+        .time-icon-container { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; position: relative; z-index: 2; }
         .icon-sun { color: #FEF08A; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
         .icon-moon { color: #FDE047; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
 
@@ -269,6 +275,23 @@
             0% { opacity: 0.1; transform: scale(0.6); }
             100% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 6px #FFFFFF; }
         }
+        
+        .btn-qr-scanner {
+            background: #F527DD;
+            border-radius: 14px;
+            width: 66px;
+            height: 66px;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+        .btn-qr-scanner:hover { background: #0F47A1; border-color: #0F47A1; }
+        .btn-qr-scanner:active { transform: scale(0.95); }
 
         .form-section { display: flex; flex-direction: column; gap: 12px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.15); padding-bottom: 16px; }
         .form-section:last-child { border-bottom: none; padding-bottom: 0; }
@@ -300,7 +323,7 @@
         }
         
         .btn-download { margin-bottom: 8px; background: #1155CC; }
-        .btn-wa { text-decoration: none; }
+        .btn-wa { text-decoration: none; display: none !important; } /* Menyembunyikan tombol WA teks */
         
         .btn-primary-custom:disabled, .btn-download:disabled, .btn-wa:disabled { 
             background: #CBD5E1 !important; color: #64748B !important; cursor: not-allowed; box-shadow: none; transform: none; opacity: 0.8;
@@ -397,14 +420,14 @@
         .altruis-banner-desc { font-size: 10.5px; font-weight: 500; opacity: 0.9; }
 
         .altruis-input-group {
-            display: flex; gap: 8px; margin-top: 10px;
+            display: flex; gap: 6px; margin: 10px 12px;
         }
         .altruis-input {
-            flex: 1; padding: 11px 14px; border: 1.5px solid #CBD5E1; border-radius: 10px; font-size: 13.5px; font-weight: 500; color: #1E293B; outline: none; transition: border-color 0.2s;
+            flex: 1; padding: 6px 10px; border: 1.5px solid #CBD5E1; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #1E293B; outline: none; transition: border-color 0.2s; height: 30px;
         }
         .altruis-input:focus { border-color: #F59E0B; }
         .btn-add-altruis {
-            background: #1155CC; color: white; border: none; padding: 0; width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 10px; cursor: pointer; transition: all 0.2s ease;
+            background: #1155CC; color: white; border: none; padding: 0; width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;
         }
         .btn-add-altruis:hover { background: #0F47A1; }
     </style>
@@ -449,20 +472,33 @@
     <!-- KONTEN UTAMA RONDA -->
     <div class="main-content-area">
         <div class="main-card">
-            <!-- HEADER DENGAN SUASANA WAKTU OTOMATIS -->
-            <div class="header-fancy" id="header-suasana-box">
-                <div class="twinkle-star star-1"></div>
-                <div class="twinkle-star star-2"></div>
-                <div class="twinkle-star star-3"></div>
+            <!-- HEADER DENGAN SUASANA WAKTU OTOMATIS & QR -->
+            <div class="ronda-top-container">
+                <div class="header-fancy" id="header-suasana-box">
+                    <div class="twinkle-star star-1"></div>
+                    <div class="twinkle-star star-2"></div>
+                    <div class="twinkle-star star-3"></div>
 
-                <div class="dt-col">
-                    <span id="current-date" class="dt-val-date">Memuat...</span>
-                    <span id="current-time" class="dt-val-time">00:00 WIB</span>
+                    <div class="dt-col">
+                        <span id="current-date" class="dt-val-date">Memuat...</span>
+                        <span id="current-time" class="dt-val-time">00:00 WIB</span>
+                    </div>
+                    
+                    <div class="time-icon-container" id="time-icon-container" title="Suasana Live">
+                        <!-- SVG disisipkan via JS -->
+                    </div>
                 </div>
                 
-                <div class="time-icon-container" id="time-icon-container" title="Suasana Live">
-                    <!-- SVG disisipkan via JS -->
-                </div>
+                <a href="javascript:void(0)" target="_self" class="btn-qr-scanner" id="btn-qr-scanner" title="QR Scanner">
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
+                        <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
+                        <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
+                        <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
+                        <rect x="7" y="7" width="10" height="10" rx="1" stroke-width="1.5"></rect>
+                        <line x1="7" y1="12" x2="17" y2="12" stroke-width="2" stroke-dasharray="2 2"></line>
+                    </svg>
+                </a>
             </div>
 
             <!-- 1. JIMPITAN -->
@@ -543,13 +579,13 @@
                 <div class="section-label">
                     <div class="sec-number-badge">4</div>
                     <div class="sec-text-group">
-                        <span class="sec-title">Kirim Laporan Gambar / Teks WA</span>
+                        <span class="sec-title">Kirim Laporan</span>
                         <span class="sec-subtitle">Langsung kirim hasil struk ke Grup WA</span>
                     </div>
                 </div>
                 <button type="button" id="btn-download" class="btn-download" disabled>
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Kirim Versi Gambar
+                    Kirim Sekarang
                 </button>
                 <button type="button" id="btn-wa" class="btn-wa" disabled>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
@@ -569,7 +605,7 @@
             <!-- MENU UTAMA -->
             <div class="main-menu-wrapper">
                 <!-- HOME -->
-                <a href="https://rt2pasekanlor.id/" class="nav-item btn-home" title="Home">
+                <a href="index" class="nav-item btn-home" title="Home">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <span>HOME</span>
                 </a>
@@ -773,8 +809,8 @@
     
     const daySelect = document.getElementById('day-select');
     
-    const sunSvg = `<svg class="icon-sun" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
-    const moonSvg = `<svg class="icon-moon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+    const sunSvg = `<svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+    const moonSvg = `<svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
 
     function updateDateTime() {
         const headerBox = document.getElementById('header-suasana-box');
@@ -1064,7 +1100,7 @@
             <div class="altruis-input-group">
                 <input type="text" id="custom-name-input" class="altruis-input" placeholder="Isi nama tambahan..." autocomplete="off">
                 <button type="button" id="btn-add-custom" class="btn-add-altruis" title="Tambah Warga">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
             </div>
         `;

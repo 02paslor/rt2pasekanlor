@@ -17,7 +17,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Library HTML5 QR Code Scanner -->
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -46,7 +46,7 @@
         
         .sec-icon-badge { width: 32px; height: 32px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 6px rgba(17,85,204,0.25); }
         .sec-text-group { display: flex; flex-direction: column; line-height: 1.1; }
-        .sec-title { font-size: 13.5px; font-weight: 600; color: #1155CC; text-transform: uppercase; }
+        .sec-title { font-size: 13.5px; font-weight: 700; color: #1155CC; text-transform: uppercase; }
         .sec-subtitle { font-size: 11px; font-weight: 400; color: #64748B; margin-top: 2px; }
 
         #reader { width: 100%; border-radius: 10px; overflow: hidden; border: 2px solid #CBD5E1; background: #E2E8F0; min-height: 180px; position: relative;}
@@ -81,13 +81,13 @@
         }
         .smooth-dropdown:focus { border-color: #1155CC; box-shadow: 0 0 0 3px rgba(17,85,204,0.12); }
 
-        /* Two-column layout for efficiency */
+        /* Two-column layout */
         .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: end; }
         .input-group-col { display: flex; flex-direction: column; gap: 4px; }
         .input-label { font-size: 11px; font-weight: 600; color: #64748B; }
         .value-text { font-size: 13px; font-weight: 600; color: #0F172A; padding: 6px 0; }
 
-        /* Nominal Buttons Styling (Solid Colors) */
+        /* Nominal Buttons Styling */
         .nominal-buttons-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
         .btn-nominal {
             flex: 1 1 calc(33.333% - 6px);
@@ -104,7 +104,7 @@
         }
         .btn-nominal:active { transform: scale(0.95); }
         .btn-nominal.active {
-            background-color: #334155 !important; /* Abu-abu gelap untuk state aktif */
+            background-color: #334155 !important;
             border: 2px solid #0F172A;
             box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
             transform: scale(0.96);
@@ -144,7 +144,7 @@
 
         .status-notif-box { width: 100%; padding: 10px; font-size: 12.5px; font-weight: 600; color: #64748B; border: 1px dashed #CBD5E1; border-radius: 8px; background-color: #F8FAFC; text-align: center; transition: all 0.3s ease; }
         .status-notif-box.success { background-color: #DCFCE7; color: #16A34A; border: 1px solid #22C55E; }
-
+        .status-notif-box.error { background-color: #FEE2E2; color: #DC2626; border: 1px solid #EF4444; }
     </style>
 </head>
 <body>
@@ -168,7 +168,7 @@
         <div id="reader"></div>
     </div>
 
-    <!-- 2. INPUT DATA & NOMINAL (GABUNGAN) -->
+    <!-- 2. INPUT DATA & NOMINAL -->
     <div class="form-section">
         <div class="section-label">
             <div class="sec-icon-badge" style="background: #0284C7;">
@@ -180,7 +180,6 @@
             </div>
         </div>
         
-        <!-- Grid Ringkas Data Rumah & Petugas -->
         <div class="grid-2-col">
             <div class="input-group-col">
                 <span class="input-label">ID Rumah</span>
@@ -210,12 +209,11 @@
             <div class="input-group-col">
                 <span class="input-label">Nama Petugas</span>
                 <select id="select-petugas" class="smooth-dropdown">
-                    <!-- Diisi otomatis via JS -->
+                    <!-- Diisi via JS -->
                 </select>
             </div>
         </div>
 
-        <!-- Tombol Nominal Tanpa Rp -->
         <span class="input-label" style="margin-top: 4px;">Pilih Nominal</span>
         <div class="nominal-buttons-container">
             <button type="button" class="btn-nominal btn-500" data-value="500">500</button>
@@ -312,8 +310,10 @@
         const previewContainer = document.getElementById("preview-container");
         const previewEmpty = document.getElementById("preview-empty");
         
-        // Konfigurasi Google Sheet Target
-        const scriptURL = 'https://script.google.com/macros/s/GANTI_DENGAN_URL_WEB_APP_ANDA/exec';
+        // =========================================================================
+        // MASUKKAN URL HASIL DEPLOYMENT WEB APP ANDA DI SINI
+        // =========================================================================
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbziSKnpiQBxWwr-2OdM80Ztb02VNwV_B1yYPghyuDfEYcK3VWmqiG5dEKpG0eidTV8RTA/exec';
         
         let html5QrCode;
         let currentScannedData = null;
@@ -321,10 +321,8 @@
         let scanTimeout;
         let isScanning = false;
 
-        // Data Laporan yang akan dikirim (Disimpan secara global di window)
         window.currentLaporanWaktu = "";
 
-        // Fungsi Parse CSV sederhana
         function parseCSV(text) {
             const result = [];
             let row = [], cell = "", inQuotes = false;
@@ -343,7 +341,6 @@
             return result;
         }
 
-        // Fetch Data ID Rumah & Nama Warga dari Spreadsheet
         async function fetchDataWarga() {
             const sheetId = '1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io';
             const gid = '177427564';
@@ -378,7 +375,6 @@
         
         fetchDataWarga();
 
-        // Data Jadwal Petugas Ronda
         const jadwalRonda = {
             "Senin": ["TRI MADIYANTO", "WISNU PRABOWO", "ANANG DHIAN K.", "CUCU SUKMANA", "KARYADI", "RONI"],
             "Selasa": ["SUGENG", "RENGGA D.", "TRI SUHARYANTO", "RUDIYANTO", "EKO B.", "NUR F.", "WIDODO"],
@@ -410,7 +406,6 @@
             populatePetugas(e.target.value);
         });
 
-        // Web Audio API Context
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playBeep() {
@@ -459,7 +454,6 @@
             notifBanner.textContent = message;
         }
 
-        // Dropdown Id_Rumah -> Info Warga
         selectIdRumah.addEventListener("change", function() {
             if(this.value !== "") {
                 const selectedOption = this.options[this.selectedIndex];
@@ -473,7 +467,6 @@
             hidePreview();
         });
 
-        // Logika Tombol Nominal
         nominalButtons.forEach(button => {
             button.addEventListener("click", () => {
                 nominalButtons.forEach(btn => btn.classList.remove("active"));
@@ -506,7 +499,6 @@
             btnKirim.disabled = true;
         }
 
-        // CETAK LAPORAN
         btnCetak.addEventListener("click", () => {
             if (!currentScannedData && selectIdRumah.value === "") {
                 alert("Scan QR atau pilih ID Rumah dari dropdown!");
@@ -525,7 +517,6 @@
             let tNama = currentScannedData ? currentScannedData.namaWarga : infoNamaWarga.textContent;
             let tNom = selectedNominalValue === "0" ? "ZONK (Rp 0)" : "Rp " + parseInt(selectedNominalValue, 10).toLocaleString('id-ID');
 
-            // Format Waktu Scan
             const now = new Date();
             const daysArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
             const hariStr = daysArr[now.getDay()];
@@ -533,7 +524,6 @@
             const jamStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
             const waktuFull = `${hariStr}, ${tanggalStr} - ${jamStr}`;
             
-            // Simpan waktu cetak ini untuk dipakai di payload kirim agar sinkron
             window.currentLaporanWaktu = waktuFull;
 
             document.getElementById('prev-waktu').textContent = waktuFull;
@@ -545,27 +535,27 @@
             let nomEl = document.getElementById('prev-nominal');
             nomEl.textContent = tNom;
             if (selectedNominalValue === "0") {
-                nomEl.style.color = "#DC2626"; // Merah
+                nomEl.style.color = "#DC2626";
             } else {
-                nomEl.style.color = "#16A34A"; // Hijau
+                nomEl.style.color = "#16A34A";
             }
 
             previewEmpty.style.display = "none";
             previewContainer.style.display = "block";
             btnKirim.disabled = false;
 
-            // Scroll to preview smoothly
             document.getElementById('section-preview').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // BATAL / SCAN ULANG
         btnScanUlang.addEventListener("click", () => {
             if (audioCtx.state === 'suspended') audioCtx.resume(); 
             resetScannerState();
             startScanner();
         });
 
-        // KIRIM DATA
+        // =========================================================================
+        // PENGIRIMAN DATA ASLI DENGAN FETCH FORMDATA KE GAS
+        // =========================================================================
         btnKirim.addEventListener("click", () => {
             btnKirim.disabled = true;
             btnKirim.textContent = "Mengirim...";
@@ -576,26 +566,35 @@
             let iuranValue = selectedNominalValue === "0" ? "0" : selectedNominalValue;
             let targetData = currentScannedData || { idRumah: selectIdRumah.value, namaWarga: infoNamaWarga.textContent };
 
-            // Susunan Baris Payload: Id_Rumah, Nama Warga, Hari/Tanggal, Iuran, Petugas, Hari Tugas
-            const payload = {
-                sheetId: "1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io", 
-                id_rumah: targetData.idRumah,
-                nama_warga: targetData.namaWarga,
-                hari_tanggal: window.currentLaporanWaktu,
-                iuran: iuranValue,
-                petugas: selectPetugas.value,
-                hari_tugas: selectHari.value
-            };
+            const formData = new FormData();
+            formData.append("id_rumah", targetData.idRumah);
+            formData.append("nama_warga", targetData.namaWarga);
+            formData.append("hari_tanggal", window.currentLaporanWaktu);
+            formData.append("iuran", iuranValue);
+            formData.append("petugas", selectPetugas.value);
+            formData.append("hari_tugas", selectHari.value);
 
-            // Simulasi POST
-            setTimeout(() => {
+            fetch(scriptURL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Penting agar tidak terblokir kebijakan browser di GitHub Pages
+            })
+            .then(() => {
                 statusDatabaseNotif.textContent = "Berhasil, sudah tersimpan.";
                 statusDatabaseNotif.className = "status-notif-box success";
                 
                 btnKirim.textContent = "Data Terkirim";
                 btnScanUlang.disabled = false;
                 btnScanUlang.textContent = "Lanjut Scan Berikutnya";
-            }, 1000);
+            })
+            .catch((err) => {
+                console.error("Error submit:", err);
+                statusDatabaseNotif.textContent = "Gagal terkirim. Periksa koneksi internet.";
+                statusDatabaseNotif.className = "status-notif-box error";
+                btnKirim.disabled = false;
+                btnKirim.textContent = "Kirim Ulang";
+                btnScanUlang.disabled = false;
+            });
         });
 
         function startScanner() {

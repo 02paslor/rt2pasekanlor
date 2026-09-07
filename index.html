@@ -70,6 +70,7 @@
             width: 100%; max-width: 480px; height: 90px; z-index: 1000;
             transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease;
             background: transparent; pointer-events: none;
+            will-change: height, background-color;
         }
         .morph-header-container.scrolled {
             height: 60px; background: var(--warna-bg-header-scrolled);
@@ -148,12 +149,12 @@
         .kas-left { display: flex; flex-direction: column; justify-content: center; gap: 6px; flex: 1.1; }
         .calendar-display { display: flex; align-items: flex-start; gap: 8px; }
         .calendar-display svg { width: 18px; height: 18px; opacity: 0.9; color: #ffffff; margin-top: 1px; flex-shrink: 0; }
-        .calendar-display .date-block { display: flex; flex-direction: column; line-height: 1.5; }
-        .calendar-display .date-day { font-size: 13px; font-weight: 500; color: #ffffff; }
-        .calendar-display .date-full { font-size: 13px; font-weight: 500; color: #ffffff; }
+        .calendar-display .date-block { display: flex; flex-direction: column; line-height: 1.25; }
+        .calendar-display .date-day { font-size: 13px; font-weight: 600; color: #ffffff; }
+        .calendar-display .date-full { font-size: 13px; font-weight: 600; color: #ffffff; }
         .clock-display { display: flex; align-items: center; gap: 8px; }
         .clock-display svg { width: 15px; height: 15px; opacity: 0.85; color: #ffffff; flex-shrink: 0; }
-        .clock-display .clock-text { font-size: 11px; font-weight: 500; color: #ffffff; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        .clock-display .clock-text { font-size: 11.5px; font-weight: 500; color: #ffffff; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .kas-right { display: flex; flex-direction: column; align-items: flex-end; flex: 0.9; text-align: right; }
         .saldo-label { font-size: 11px; font-weight: 500; line-height: 1; margin-bottom: 6px; color: #FFFFFF; display: flex; align-items: center; justify-content: flex-end; gap: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         @keyframes blinkDot { 0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(204, 255, 0, 0.8); transform: scale(1); } 50% { opacity: 0.4; box-shadow: 0 0 2px rgba(204, 255, 0, 0.2); transform: scale(0.85); } }
@@ -890,14 +891,17 @@
 <script>
     const GLOBAL_BLOG_URL = "https://rt2paslor.blogspot.com";
 
-    // ========================================== SCROLL ANIMASI (DIOPTIMASI UNTUK MENCEGAH LAG) ==========================================
+    // ========================================== SCROLL ANIMASI (DIOPTIMASI MAKSIMAL) ==========================================
     let isScrolling = false;
     
+    // Variabel memori (State Caching) agar DOM tidak dirender berulang-ulang
+    let isHeaderScrolled = false; 
+    let isFooterVisible = false;
+
     window.addEventListener('scroll', () => {
         if (!isScrolling) {
             window.requestAnimationFrame(() => {
                 
-                // --- FASE READ (BACA NILAI DOM SEKALIGUS UNTUK MENCEGAH LAYOUT THRASHING) ---
                 const currentScrollY = window.scrollY;
                 const docHeight = document.documentElement.scrollHeight;
                 const winHeight = window.innerHeight;
@@ -906,21 +910,27 @@
                 const header = document.getElementById('mainHeader');
                 const slideImg = document.getElementById('footerSlideImg');
 
-                // --- FASE WRITE (EKSEKUSI PERUBAHAN DOM BERSAMAAN) ---
-                
-                // 1. Header Morphing
-                if (currentScrollY > 40) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
+                // 1. Header Morphing (HANYA dieksekusi jika statusnya BERUBAH)
+                const shouldHeaderScroll = currentScrollY > 40;
+                if (shouldHeaderScroll !== isHeaderScrolled) {
+                    if (shouldHeaderScroll) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                    isHeaderScrolled = shouldHeaderScroll; // Update memori
                 }
 
-                // 2. Animasi Gambar Footer
+                // 2. Animasi Gambar Footer Gunung (HANYA dieksekusi jika statusnya BERUBAH)
                 if (slideImg) {
-                    if (docHeight - scrollPos < 100) {
-                        slideImg.style.transform = 'translateY(0)';
-                    } else {
-                        slideImg.style.transform = 'translateY(150%)';
+                    const shouldFooterShow = (docHeight - scrollPos < 100);
+                    if (shouldFooterShow !== isFooterVisible) {
+                        if (shouldFooterShow) {
+                            slideImg.style.transform = 'translateY(0)';
+                        } else {
+                            slideImg.style.transform = 'translateY(150%)';
+                        }
+                        isFooterVisible = shouldFooterShow; // Update memori
                     }
                 }
 
@@ -928,7 +938,7 @@
             });
             isScrolling = true;
         }
-    }, { passive: true }); // Penambahan { passive: true } mengurangi beban lag browser secara signifikan saat scroll
+    }, { passive: true });
 
     // ========================================== HEADER DARURAT MODAL ==========================================
     const emModalOverlay = document.getElementById('emModalOverlay');

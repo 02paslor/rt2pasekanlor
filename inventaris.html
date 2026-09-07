@@ -32,7 +32,7 @@
             background-color: #F2F2F2; 
             min-height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15);
-            padding-top: 155px; 
+            padding-top: 135px; /* Jarak untuk header oranye saat fixed */
             padding-bottom: 30px; overflow-x: hidden;
             transition: padding-bottom 0.3s ease;
             display: flex;
@@ -45,9 +45,9 @@
         @keyframes spinAnim { 100% { transform: rotate(360deg); } }
         .spin-icon { animation: spinAnim 1s linear infinite; display: inline-block; vertical-align: middle; }
 
-        /* Fixed Top Bar selalu fixed di atas layar */
+        /* Kontainer Utama Wrapper Header */
         .fixed-top-bar { 
-            position: fixed; 
+            position: absolute; 
             top: 0; 
             left: 50%; 
             transform: translateX(-50%); 
@@ -58,31 +58,45 @@
             flex-direction: column; 
         }
         
-        /* Header Biru #1155cc Transisi Halus */
+        /* Ketika scroll, area ini menjadi fixed di atas layar */
+        .fixed-top-bar.scrolled { 
+            position: fixed; 
+        }
+        
+        /* Header Biru #1155cc ikut naik ke atas saat discroll */
         .glass-header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            padding: 8px 12px; 
+            padding: 3px 12px; 
             background-color: #1155CC; 
             box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); 
-            transition: all 0.25s ease-out;
             z-index: 1; 
             position: relative;
+            transition: transform 0.3s ease, opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .fixed-top-bar.scrolled .glass-header { 
+            transform: translateY(-100%);
+            opacity: 0;
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            pointer-events: none;
         }
 
-        .header-left { display: flex; align-items: center; gap: 8px; max-width: 100%; transition: all 0.25s ease-out; position: relative;}
-        .header-logo { width: 70px; height: 70px; object-fit: contain; flex-shrink: 0; transition: all 0.25s ease-out; }
-        .header-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; white-space: nowrap; transition: all 0.25s ease-out; transform-origin: top left;}
-        .header-title-text { font-size: 11pt; font-weight: 600; color: #ffffff; line-height: 1.2; transition: all 0.25s ease-out; }
-        .header-slogan { font-size: 8pt; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 0; transition: all 0.25s ease-out; overflow: hidden; text-overflow: ellipsis; }
+        .header-left { display: flex; align-items: center; gap: 8px; max-width: 100%; }
+        .header-logo { width: 70px; height: 70px; object-fit: contain; flex-shrink: 0; }
+        .header-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; white-space: normal; }
+        .header-title-text { font-size: 11pt; font-weight: 600; color: #ffffff; line-height: 1.2; }
+        .header-slogan { font-size: 8pt; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 0; overflow: hidden; text-overflow: ellipsis; }
         .header-logo + .header-text { flex: 1; }
 
-        /* Tombol Ikon Titik 4 + Teks warna Biru */
-        .btn-menu-dots { background: #1155CC; border: 1px solid rgba(255, 255, 255, 0.4); color: #ffffff; border-radius: 8px; height: 32px; padding: 0 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; transition: all 0.2s, background-color 0.3s ease; backdrop-filter: blur(4px); }
+        /* Tombol Ikon Menu */
+        .btn-menu-dots { background: #1155CC; border: 0px solid rgba(255, 255, 255, 0.4); color: #ffffff; border-radius: 8px; height: 32px; padding: 0 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; transition: all 0.2s; backdrop-filter: blur(4px); }
         .btn-menu-dots:active { transform: scale(0.92); filter: brightness(0.9); }
 
-        /* Header Oranye Transisi Halus */
+        /* Header Oranye Judul Halaman yang Fixed */
         .title-card-panel { 
             background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
             color: #ffffff; 
@@ -92,53 +106,22 @@
             align-items: center; 
             border-radius: 0; 
             box-shadow: none; 
-            transition: all 0.3s ease; 
             z-index: 2; 
             position: relative; 
             flex-shrink: 0;
+            transition: padding 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fixed-top-bar.scrolled .title-card-panel {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            padding: 12px 20px;
         }
 
         .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; min-width: 0; }
         .title-card-left i { font-size: 18px; }
         .title-card-right { display: flex; align-items: center; margin-left: auto; }
         .scroll-logo { width: 0; height: 0; object-fit: contain; opacity: 0; transform: scale(0.7); transition: width 0.22s ease, height 0.22s ease, opacity 0.18s ease, transform 0.22s ease; }
-        .fixed-top-bar.scrolled .scroll-logo { width: 40px; height: 40px; opacity: 1; transform: scale(1); flex-shrink: 0; }
-
-        /* PERINTAH UNTUK LOGO HILANG & MORPH TEKS SAAT SCROLL (SHRINK) */
-        .fixed-top-bar.shrink .glass-header { padding: 20px 12px; }
-        .fixed-top-bar.shrink .header-left { gap: 0; width: 100%; justify-content: flex-start; }
-        .fixed-top-bar.shrink .header-logo { width: 0; height: 0; opacity: 0; margin: 0; } 
-        .fixed-top-bar.shrink .header-text { 
-            flex-direction: row; 
-            align-items: baseline; 
-            position: absolute; 
-            left: 0; 
-            top: -10px; /* bergerak ke kiri atas */
-            width: auto;
-            justify-content: flex-start;
-        }
-        .fixed-top-bar.shrink .header-title-text { 
-            display: block; 
-            font-size: 10px; 
-            font-weight: 600; 
-        }
-        .fixed-top-bar.shrink .header-slogan { 
-            display: block; 
-            font-size: 8px; 
-            font-weight: 400; 
-            margin-top: 0; 
-        }
-        .fixed-top-bar.shrink .header-slogan::before { 
-            content: " | "; 
-            margin-left: 4px;
-            margin-right: 4px;
-            font-weight: 400;
-        }
-        
-        .fixed-top-bar.scrolled .title-card-panel { padding: 8px 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); justify-content: flex-start; }
-        .fixed-top-bar.scrolled .title-card-left { gap: 8px; font-size: 13px; }
-        .fixed-top-bar.scrolled .title-card-left svg { display: inline-block; }
-        .fixed-top-bar.scrolled .title-card-right { margin-left: auto; }
+        .fixed-top-bar.scrolled .scroll-logo { width: 60px; height: 60px; opacity: 1; transform: scale(1); flex-shrink: 0; margin-right: 4px; }
         
         /* ================== MENU MODAL FAST CONTAINER ================== */
         .menu-modal-overlay { 
@@ -234,7 +217,7 @@
         .logo-wrapper { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; border: 1px solid #a8a8a8; color:#1155CC; }
         .contact-details { display: flex; flex-direction: column; flex-grow: 1; }
         .emergency-label { font-size: 11px; color: #334155; font-weight: 500; text-transform: uppercase; }
-        .emergency-value { font-size: 14px; font-weight: 600; margin-top: 1px; }
+        .emergency-value { font-size: 14px; font-weight: 700; margin-top: 1px; }
         .call-icon { width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color:#1155CC; }
         .emergency-item.wa { border-left: 5px solid #22c55e; }
         .emergency-item.wa .call-icon, .emergency-item.wa .logo-wrapper { color: #22c55e; border-color:#22c55e; }
@@ -265,7 +248,7 @@
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 400; }
         
-        .main-content-area { width: 100%; }
+        .main-content-area { width: 100%; margin-top: 15px; }
 
         /* ================= CSS KHUSUS HALAMAN INVENTARIS ================= */
         :root {
@@ -358,7 +341,7 @@
         .inv-btn-icon-close-modal { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .inv-btn-icon-close-modal:active { background: #fee2e2; transform: scale(0.9); }
 
-        .inv-lightbox-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 20000; padding: 10px; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(6px); }
+        .inv-lightbox-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 20000; padding: 10px; opacity: 0; transition: opacity 0.3s ease; }
         .inv-lightbox-overlay.show { opacity: 1; display: flex; }
         .inv-lightbox-overlay img { max-width: 100%; max-height: 75vh; border-radius: 12px; transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1); }
         .inv-lightbox-overlay.show img { transform: scale(1); }
@@ -450,7 +433,7 @@
             <!-- MENU UTAMA -->
             <div class="main-menu-wrapper">
                 <!-- HOME -->
-                <a href="index" class="nav-item btn-home" title="Home">
+                <a href="#" class="nav-item btn-home" title="Home">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <span>HOME</span>
                 </a>
@@ -551,9 +534,9 @@
     // Script Efek Scroll pada Top Bar & Auto-close Modal
     window.addEventListener('scroll', () => {
         if (window.scrollY > 30) {
-            topBar.classList.add('shrink', 'scrolled');
+            topBar.classList.add('scrolled');
         } else {
-            topBar.classList.remove('shrink', 'scrolled');
+            topBar.classList.remove('scrolled');
         }
         
         // Menutup menu secara otomatis saat layar discroll

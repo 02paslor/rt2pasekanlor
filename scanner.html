@@ -17,7 +17,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- Library HTML5 QR Code Scanner & HTML2Canvas -->
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -25,169 +25,172 @@
 
     <style>
         /* =========================================================
-           RESET & TYPOGRAPHY COMPACT MODERN
+           RESET & TYPOGRAPHY COMPACT FLAT
            ========================================================= */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
-        body { background-color: #E2E8F0; display: flex; justify-content: center; padding: 12px 8px; color: #0F172A; }
+        body { background-color: #E9ECEF; display: flex; justify-content: center; padding: 12px 8px; color: #1E293B; }
         button, input, select { outline: none; }
 
         .app-wrapper {
             width: 100%; max-width: 480px; background-color: #F8FAFC; 
-            min-height: calc(100vh - 24px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            border-radius: 20px; padding: 12px; display: flex; flex-direction: column; gap: 14px;
+            min-height: calc(100vh - 24px); box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+            border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 12px;
         }
 
         /* Navigasi Atas */
         .btn-back-web {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #A2DEDC; color: #334155; padding: 10px; border-radius: 12px;
-            text-decoration: none; font-weight: 500; font-size: 13px;
-            border: 1px solid #82C2C0; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-            transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            background: #FFFFFF; color: #475569; padding: 10px; border-radius: 10px;
+            text-decoration: none; font-weight: 500; font-size: 12px;
+            border: 1px solid #CBD5E1; transition: all 0.2s;
         }
-        .btn-back-web:hover { background: #82C2C0; color: #0F172A; border-color: #94A3B8; }
+        .btn-back-web:hover { background: #F1F5F9; color: #0F172A; border-color: #94A3B8; }
 
         /* =========================================================
-           CARD SECTIONS (HEADER BLOCK WARNA)
+           CARD SECTIONS (HEADER FLAT WARNA)
            ========================================================= */
         .form-section { 
-            background: #FFFFFF; border-radius: 16px; overflow: hidden; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #E2E8F0; 
-            display: flex; flex-direction: column;
+            background: #FFFFFF; border-radius: 12px; overflow: hidden; 
+            border: 1px solid #E2E8F0; display: flex; flex-direction: column;
         }
         
-        /* Header Radius Warna */
+        /* Header Flat Warna */
         .section-header { 
-            padding: 12px 14px; display: flex; align-items: center; gap: 12px; color: #FFF; 
+            padding: 10px 14px; display: flex; align-items: center; gap: 10px; color: #FFF; 
         }
-        .header-blue { background: #1155CC; }
-        .header-cyan { background: #1155CC; }
-        .header-orange { background: #1155CC; }
-        .header-green { background: #1155CC; }
+        .header-blue { background-color: #2563EB; }
+        .header-cyan { background-color: #0284C7; }
+        .header-orange { background-color: #D97706; }
+        .header-green { background-color: #059669; }
 
         .sec-icon-badge { 
-            width: 34px; height: 34px; background: rgba(255,255,255,0.25); border-radius: 8px; 
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0; backdrop-filter: blur(4px);
+            width: 28px; height: 28px; background: rgba(255,255,255,0.2); border-radius: 6px; 
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
         }
-        .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
-        .sec-title { font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
-        .sec-subtitle { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.9); margin-top: 2px; }
+        .sec-text-group { display: flex; flex-direction: column; line-height: 1.1; }
+        .sec-title { font-size: 13.5px; font-weight: 600; letter-spacing: 0.2px; }
+        .sec-subtitle { font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.85); margin-top: 2px; }
         
-        .section-body { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+        .section-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
 
         /* =========================================================
            SCANNER AREA
            ========================================================= */
-        #reader { width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid #CBD5E1; background: #F1F5F9; min-height: 160px;}
+        #reader { width: 100%; border-radius: 8px; overflow: hidden; border: 1.5px dashed #CBD5E1; background: #F1F5F9; min-height: 150px;}
         #reader img { display: none !important; }
-        #reader button { background: #2563EB; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; margin-top: 8px; }
+        #reader button { background: #1155CC; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 500; font-size: 11px; cursor: pointer; margin-top: 6px; }
         
         /* Notifikasi */
-        .notif-banner { padding: 10px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 500; text-align: center; display: none; line-height: 1.3; }
-        .notif-success { background: #F0FDF4; color: #16A34A; border: 1.5px solid #4ADE80; }
-        .notif-error { background: #FEF2F2; color: #DC2626; border: 1.5px solid #F87171; }
-        .notif-loading { background: #FFFBEB; color: #D97706; border: 1.5px solid #FCD34D; }
+        .notif-banner { padding: 10px; border-radius: 6px; font-size: 12px; font-weight: 500; text-align: center; display: none; margin-bottom: 4px; border: 1px solid transparent; }
+        .notif-success { background: #F0FDF4; color: #16A34A; border-color: #A7F3D0; }
+        .notif-error { background: #FEF2F2; color: #DC2626; border-color: #FECACA; }
+        .notif-loading { background: #FFFBEB; color: #D97706; border-color: #FDE68A; }
 
         /* =========================================================
            INPUTS & DROPDOWNS COMPACT
            ========================================================= */
         .smooth-dropdown {
-            padding: 9px 30px 9px 12px; border: 1.5px solid #1155CC; border-radius: 10px;
-            font-size: 13px; font-weight: 600; color: #1E293B; background-color: #F8FAFC;
+            padding: 8px 30px 8px 12px; border: 1px solid #CBD5E1; border-radius: 8px;
+            font-size: 12.5px; font-weight: 500; color: #334155; background-color: #F8FAFC;
             cursor: pointer; appearance: none; -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='%2364748B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='14' height='14' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
             background-repeat: no-repeat; background-position: right 10px center; width: 100%; transition: all 0.2s;
         }
-        .smooth-dropdown:focus { border-color: #0EA5E9; background-color: #FFFFFF; box-shadow: 0 0 0 3px rgba(14,165,233,0.15); }
-        .opt-done { background-color: #DCFCE7; color: #15803D; font-weight: bold; }
-        .opt-altruis { background-color: #FEF08A; color: #854D0E; font-weight: bold; }
+        .smooth-dropdown:focus { border-color: #1155CC; background-color: #FFFFFF; }
+        .opt-done { background-color: #ECFDF5; color: #10B981; }
+        .opt-altruis { background-color: #FEF9C3; color: #CA8A04; }
 
-        .input-label { font-size: 11.5px; font-weight: 600; color: #64748B; margin-bottom: 4px; display: block; }
-        .divider-line { height: 1px; background-color: #E2E8F0; margin: 4px 0; }
+        .input-label { font-size: 11px; font-weight: 600; color: #64748B; margin-bottom: 4px; display: block; }
+        .divider-line { height: 1px; background-color: #F1F5F9; margin: 4px 0; }
 
         /* Tampilan Detail Warga Compact */
-        .waktu-realtime { font-size: 12px; font-weight: 500; color: #1155cc; text-align: center; margin-bottom: 6px; background: #F0F9FF; padding: 6px; border-radius: 6px; border: 1px solid #BAE6FD;}
-        .identitas-box { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; background: #F8FAFC; padding: 10px; border-radius: 10px; border: 1px solid #E2E8F0;}
-        .id-warga-text { font-size: 12.5px; font-weight: 600; color: #64748B; }
-        .nama-warga-box { background: #DCFCE7; border: 1.5px solid #22C55E; color: #15803D; padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 14.5px; display: inline-block; }
-        .domisili-text { font-size: 11px; font-weight: 600; color: #1155CC; background: #E8E8E8; padding: 3px 8px; border-radius: 4px; }
+        .waktu-realtime { font-size: 11px; font-weight: 600; color: #0284C7; text-align: center; margin-bottom: 6px; background: #F0F9FF; padding: 4px; border-radius: 4px; border: 1px solid #E0F2FE;}
+        .identitas-box { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; background: #FFFFFF; padding: 8px 10px; border-radius: 8px; border: 1px solid #E2E8F0;}
         
-        .badge-selesai { display: none; background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; font-size: 10px; padding: 3px 6px; border-radius: 4px; font-weight: 600; letter-spacing: 0.5px; }
+        .id-warga-badge { background: #F1F5F9; border: 1px solid #CBD5E1; color: #475569; padding: 2px 6px; border-radius: 4px; font-weight: 600; font-size: 11.5px; }
+        .nama-warga-text { color: #0F172A; font-weight: 600; font-size: 13.5px; letter-spacing: 0.3px; margin-left: 4px; }
+        
+        .domisili-text { font-size: 10.5px; font-weight: 600; color: #D97706; background: #FEF3C7; padding: 2px 6px; border-radius: 4px; }
+        .badge-selesai { display: none; background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
 
-        /* Nominal Buttons (Abu-abu -> Warna saat klik) */
+        /* Nominal Buttons */
         .nominal-buttons-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .btn-nominal {
-            background-color: #8F8F8F; color: #FFFFFF; border: none; padding: 12px 4px; border-radius: 10px; 
-            font-size: 14.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+            background-color: #E2E8F0; color: #475569; border: 1px solid #CBD5E1; padding: 10px 4px; border-radius: 8px; 
+            font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
-        .btn-nominal:active { transform: scale(0.95); }
-        .btn-nominal.active-500 { background-color: #22C55E;}
-        .btn-nominal.active-1000 { background-color: #3B82F6;}
-        .btn-nominal.active-2000 { background-color: #A855F7;}
-        .btn-nominal.active-manual { background-color: #F59E0B;}
-        .btn-nominal.active-kosong { background-color: #CF3636;}
+        .btn-nominal:active { transform: scale(0.97); }
+        .btn-nominal.active-500 { background-color: #22C55E; color: #FFF; border-color: #16A34A; }
+        .btn-nominal.active-1000 { background-color: #3B82F6; color: #FFF; border-color: #2563EB; }
+        .btn-nominal.active-2000 { background-color: #A855F7; color: #FFF; border-color: #9333EA; }
+        .btn-nominal.active-manual { background-color: #F59E0B; color: #FFF; border-color: #D97706; }
+        .btn-nominal.active-kosong { background-color: #EF4444; color: #FFF; border-color: #DC2626; }
         .btn-manual, .btn-kosong { grid-column: span 1.5; }
 
         .custom-input-wrapper { position: relative; width: 100%; margin-top: 6px; display: none; }
-        .custom-nominal-input { width: 100%; padding: 10px 14px 10px 44px; font-size: 14.5px; font-weight: 600; border: 1px solid #1155cc; border-radius: 10px; outline: none; }
-        .custom-nominal-input:focus { border-color: #0EA5E9; }
+        .custom-nominal-input { width: 100%; padding: 8px 12px 8px 36px; font-size: 13.5px; font-weight: 600; border: 1px solid #CBD5E1; border-radius: 8px; outline: none; }
+        .custom-nominal-input:focus { border-color: #1155CC; }
 
         /* Area Cetak Terpisah */
-        .cetak-area { margin-top: 8px; padding-top: 12px; border-top: 2px dashed #E2E8F0; }
-        .btn-cetak { width: 100%; background: #F55E00; color: #FFF; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(15,23,42,0.25); transition: background 0.2s; }
-        .btn-cetak:hover { background: #1E293B; }
+        .cetak-area { margin-top: 6px; padding-top: 10px; border-top: 1px dashed #E2E8F0; }
+        .btn-cetak { 
+            width: 100%; background: #1155CC; color: #FFF; padding: 12px; border-radius: 8px; 
+            font-size: 13.5px; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; 
+        }
+        .btn-cetak:hover:not(:disabled) { background: #0D42A6; }
+        .btn-cetak:disabled { background: #CBD5E1; color: #94A3B8; cursor: not-allowed; }
         
         /* =========================================================
            KOTAK LAPORAN (PREVIEW)
            ========================================================= */
-        .preview-card { background: #FFFFFF; border: 1.5px solid #949494; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
-        .preview-row { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; border-bottom: 1px dashed #F1F5F9; padding-bottom: 6px; }
+        .preview-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+        .preview-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; border-bottom: 1px dashed #F1F5F9; padding-bottom: 6px; }
         .preview-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .preview-label { color: #64748B; font-weight: 600; min-width: 70px; font-size: 11.5px; text-transform: uppercase; }
-        .preview-value { color: #0F172A; font-weight: 600; text-align: right; }
+        .preview-label { color: #64748B; font-weight: 500; min-width: 60px; font-size: 11px; }
+        .preview-value { color: #1E293B; font-weight: 600; text-align: right; }
         
-        .val-waktu { color: #1155CC; font-size: 12px; font-weight: 500; }
-        .val-highlight { color: #16A34A; font-size: 15px; font-weight: 800; }
+        .val-waktu { color: #0284C7; font-size: 11px; font-weight: 600; }
+        .val-highlight { color: #16A34A; font-size: 14px; font-weight: 600; }
 
         /* Action Buttons */
-        .action-row-2 { display: flex; gap: 10px; width: 100%; margin-top: 8px; }
-        .btn-scan-ulang { background: #94A3B8; color:#fff; border:none; padding:10px; border-radius:10px; font-weight:600; flex: 0.7; font-size:13px; cursor:pointer;}
-        .btn-kirim { background: #10B981; color:#fff; border:none; padding:10px; border-radius:10px; font-weight:600; flex: 1.3; font-size: 14.5px; cursor:pointer; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
-        .btn-kirim:disabled { background: #CBD5E1; cursor: not-allowed; box-shadow: none; color: #FFFFFF; }
+        .action-row-2 { display: flex; gap: 8px; width: 100%; margin-top: 6px; }
+        .btn-scan-ulang { background: #94A3B8; color:#fff; border:none; padding:8px; border-radius:8px; font-weight:500; flex: 0.6; font-size:12px; cursor:pointer;}
+        .btn-kirim { background: #10B981; color:#fff; border:none; padding:8px; border-radius:8px; font-weight:600; flex: 1.4; font-size: 13.5px; cursor:pointer; }
+        .btn-kirim:disabled { background: #E2E8F0; cursor: not-allowed; color: #94A3B8; }
 
         /* =========================================================
            REKAP SESI & MODAL
            ========================================================= */
-        .status-notif-box { width: 100%; padding: 10px; font-size: 11px; font-weight: 600; color: #64748B; border: 2px solid #E2E8F0; border-radius: 10px; background-color: #F8FAFC; text-align: center; }
+        .status-notif-box { width: 100%; padding: 10px; font-size: 12px; font-weight: 500; color: #64748B; border: 1px dashed #CBD5E1; border-radius: 8px; background-color: #F8FAFC; text-align: center; }
         .total-box-light {
-            background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 14px 16px;
-            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
+            background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px;
+            display: flex; justify-content: space-between; align-items: center; margin-top: 6px;
         }
-        .total-box-val { font-size: 18px; font-weight: 600; color: #1155cc; }
+        .total-box-val { font-size: 20px; font-weight: 600; color: #16A34A; }
         
-        .btn-laporan-akhir { width: 100%; background: #8B5CF6; color: #FFF; border: none; padding: 12px; border-radius: 10px; font-weight: 600; font-size: 13.5px; cursor: pointer; box-shadow: 0 4px 10px rgba(139,92,246,0.3); }
+        .btn-laporan-akhir { width: 100%; background: #8B5CF6; color: #FFF; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; margin-top: 6px;}
 
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.85); 
-            z-index: 999; display: none; justify-content: center; align-items: center; padding: 16px; backdrop-filter: blur(4px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.8); 
+            z-index: 999; display: none; justify-content: center; align-items: center; padding: 12px;
         }
-        .modal-content { background: #F8FAFC; width: 100%; max-width: 400px; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; max-height: 90vh; }
-        .modal-header { background: #0F172A; color: #FFF; padding: 14px; text-align: center; font-weight: 600; font-size: 14px; letter-spacing: 0.5px;}
-        .modal-body { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .modal-content { background: #FFFFFF; width: 100%; max-width: 380px; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; max-height: 90vh; }
+        .modal-header { background: #1E293B; color: #FFF; padding: 12px; text-align: center; font-weight: 600; font-size: 13px;}
+        .modal-body { padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
         
-        .rekap-table { width: 100%; border-collapse: collapse; background: #FFF; border-radius: 8px; overflow: hidden; border: 1px solid #E2E8F0; }
-        .rekap-table th { background: #F1F5F9; font-size: 11px; padding: 8px 10px; color: #64748B; text-align: left; }
-        .rekap-table td { padding: 10px; font-size: 12.5px; font-weight: 600; border-top: 1px solid #E2E8F0; color: #0F172A; }
+        .rekap-table { width: 100%; border-collapse: collapse; background: #FFF; border-radius: 6px; overflow: hidden; border: 1px solid #E2E8F0; }
+        .rekap-table th { background: #F8FAFC; font-size: 10.5px; padding: 8px; color: #64748B; text-align: left; font-weight: 500;}
+        .rekap-table td { padding: 8px; font-size: 12px; font-weight: 500; border-top: 1px solid #E2E8F0; color: #1E293B; }
         .rekap-table td.uang { color: #16A34A; text-align: right; font-weight: 600; }
 
-        .stat-card { background: #FFF; border: 1px solid #E2E8F0; padding: 10px 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;}
-        .stat-label { font-size: 11.5px; color: #64748B; font-weight: 600; }
-        .stat-val { font-size: 13.5px; font-weight: 600; color: #0F172A; text-align: right; }
+        .stat-card { background: #FFF; border: 1px solid #E2E8F0; padding: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;}
+        .stat-label { font-size: 11px; color: #64748B; font-weight: 500; }
+        .stat-val { font-size: 12.5px; font-weight: 600; color: #1E293B; text-align: right; }
 
-        .modal-footer { padding: 14px; background: #FFF; border-top: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 8px; }
-        .btn-dl-jpg { background: #0EA5E9; color: #FFF; padding: 12px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; font-size: 13px;}
-        .btn-lempar-ronda { background: #10B981; color: #FFF; padding: 12px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; font-size: 13.5px; box-shadow: 0 4px 10px rgba(16,185,129,0.25);}
-        .btn-close-modal { background: transparent; color: #64748B; border: none; font-weight: 600; cursor: pointer; padding: 6px; font-size: 13px;}
+        .modal-footer { padding: 12px; background: #F8FAFC; border-top: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 6px; }
+        .btn-dl-jpg { background: #0EA5E9; color: #FFF; padding: 10px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 12px;}
+        .btn-lempar-ronda { background: #10B981; color: #FFF; padding: 10px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 12.5px;}
+        .btn-close-modal { background: transparent; color: #64748B; border: none; font-weight: 500; cursor: pointer; padding: 6px; font-size: 12px;}
 
     </style>
 </head>
@@ -197,7 +200,7 @@
 
     <!-- Tombol Kembali ke Web -->
     <a href="https://rt2pasekanlor.id/ronda" target="_self" class="btn-back-web">
-        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Kembali ke Halaman Ronda
     </a>
 
@@ -206,7 +209,7 @@
     <!-- 1. KAMERA SCANNER -->
     <div class="form-section">
         <div class="section-header header-blue">
-            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
             <div class="sec-text-group">
                 <span class="sec-title">1. Kamera Scanner</span>
                 <span class="sec-subtitle">Arahkan ke QR Code Warga</span>
@@ -220,7 +223,7 @@
     <!-- 2. DETAIL JIMPITAN -->
     <div class="form-section">
         <div class="section-header header-cyan">
-            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
             <div class="sec-text-group">
                 <span class="sec-title">2. Detail Jimpitan</span>
                 <span class="sec-subtitle">Cek data & tentukan nominal fisik</span>
@@ -231,16 +234,16 @@
             <div id="prev-waktu-detail" class="waktu-realtime">-</div>
             
             <div>
-                <span class="input-label">Identitas Warga</span>
+                <span class="input-label">Id & Nama Warga RT 2</span>
                 <select id="select-id-rumah" class="smooth-dropdown" style="margin-bottom: 8px;">
-                    <option value="">- Cari ID / Nama Warga -</option>
+                    <option value="">- Cari Id & Nama Warga -</option>
                     <option value="Loading">Memuat data...</option>
                 </select>
                 
                 <div class="identitas-box">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="id-warga-text" id="info-id-rumah">( - )</span>
-                        <div class="nama-warga-box" id="info-nama-warga">NAMA WARGA</div>
+                    <div style="display:flex; align-items:center;">
+                        <span class="id-warga-badge" id="info-id-rumah">rt2_--</span>
+                        <span class="nama-warga-text" id="info-nama-warga">PILIH WARGA</span>
                     </div>
                     <div style="display:flex; align-items:center; gap:6px;">
                         <span class="domisili-text" id="info-domisili">Domisili</span>
@@ -251,10 +254,10 @@
 
             <div class="divider-line"></div>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                 <div>
                     <span class="input-label">Hari Tugas</span>
-                    <select id="select-hari-ronda" class="smooth-dropdown">
+                    <select id="select-hari-ronda" class="smooth-dropdown" style="background-color: #F1F5F9;">
                         <option value="Senin">Senin</option>
                         <option value="Selasa">Selasa</option>
                         <option value="Rabu">Rabu</option>
@@ -287,13 +290,13 @@
                 </div>
                 
                 <div id="manual-input-container" class="custom-input-wrapper">
-                    <div style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 600;">Rp</div>
+                    <div style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 13px; font-weight: 600;">Rp</div>
                     <input type="text" id="custom-nominal-input" class="custom-nominal-input" placeholder="Ketik nominal..." autocomplete="off" inputmode="numeric">
                 </div>
             </div>
 
             <div class="cetak-area">
-                <button type="button" id="btn-cetak" class="btn-cetak">Cetak Laporan</button>
+                <button type="button" id="btn-cetak" class="btn-cetak" disabled>Cetak Laporan</button>
             </div>
         </div>
     </div>
@@ -301,15 +304,15 @@
     <!-- 3. KOTAK LAPORAN -->
     <div class="form-section" id="section-preview">
         <div class="section-header header-orange">
-            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
             <div class="sec-text-group">
-                <span class="sec-title">3. Kotak Laporan Pengecekan</span>
+                <span class="sec-title">3. Kotak Laporan</span>
                 <span class="sec-subtitle">Periksa sebelum setor ke server</span>
             </div>
         </div>
         
         <div class="section-body">
-            <div id="preview-empty" style="font-size: 12.5px; color: #94A3B8; text-align: center; padding: 10px; font-weight: 500;">Belum ada laporan.</div>
+            <div id="preview-empty" style="font-size: 11.5px; color: #94A3B8; text-align: center; padding: 10px; font-weight: 500;">Belum ada laporan dicetak.</div>
             
             <div id="preview-container" style="display: none;">
                 <div class="preview-card">
@@ -320,16 +323,16 @@
                     <div class="preview-row" style="align-items: flex-start; padding-top:6px;">
                         <span class="preview-label">Warga</span>
                         <div style="text-align: right;">
-                            <span class="preview-value" id="prev-id" style="color: #64748B; font-size: 11.5px;">(-)</span><br>
-                            <div class="nama-warga-box" id="prev-nama" style="margin: 4px 0;">-</div><br>
+                            <span class="id-warga-badge" id="prev-id" style="font-size: 10.5px;">-</span><br>
+                            <div class="nama-warga-text" id="prev-nama" style="margin: 4px 0;">-</div><br>
                             <span class="domisili-text" id="prev-domisili">-</span>
                         </div>
                     </div>
                     <div class="preview-row">
                         <span class="preview-label">Petugas</span>
                         <div style="text-align: right;">
-                            <span id="prev-petugas" style="color: #2563EB; font-weight: 600; font-size: 14px;">-</span> 
-                            <span style="font-size: 11px; color: #64748B; font-weight: 600;" id="prev-hari">(-)</span>
+                            <span id="prev-petugas" style="color: #2563EB; font-weight: 600; font-size: 13px;">-</span> 
+                            <span style="font-size: 10.5px; color: #64748B; font-weight: 500;" id="prev-hari">(-)</span>
                         </div>
                     </div>
                     <div class="preview-row">
@@ -338,7 +341,7 @@
                     </div>
                 </div>
                 <div class="action-row-2">
-                    <button type="button" id="btn-scan-ulang" class="btn-scan-ulang">Batal / Ulang</button>
+                    <button type="button" id="btn-scan-ulang" class="btn-scan-ulang">Batal/Ulang</button>
                     <button type="button" id="btn-kirim" class="btn-kirim">Kirim Data</button>
                 </div>
             </div>
@@ -348,7 +351,7 @@
     <!-- 4. REKAP SESI -->
     <div class="form-section">
         <div class="section-header header-green">
-            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
             <div class="sec-text-group">
                 <span class="sec-title">4. Live Rekap Sesi</span>
                 <span class="sec-subtitle">Akumulasi uang fisik sesi ini</span>
@@ -374,7 +377,7 @@
         <div id="area-cetak-modal" style="background: #F8FAFC;">
             <div class="modal-header">LAPORAN PENARIKAN RONDA</div>
             <div class="modal-body">
-                <div style="text-align: center; font-size: 11.5px; color: #64748B; font-weight: 600; margin-bottom: 4px;" id="modal-tgl">Tanggal</div>
+                <div style="text-align: center; font-size: 11px; color: #64748B; font-weight: 500; margin-bottom: 4px;" id="modal-tgl">Tanggal</div>
                 
                 <table class="rekap-table" id="table-rekap-petugas">
                     <thead><tr><th>Nama Petugas</th><th style="text-align: right;">Total Ditarik</th></tr></thead>
@@ -388,18 +391,18 @@
                 
                 <div class="stat-card" style="flex-direction: column; align-items: flex-start; gap: 4px;">
                     <span class="stat-label">Daftar Warga Zonk (Rp 0):</span>
-                    <div class="stat-val" id="modal-zonk-warga" style="text-align: left; font-size: 11.5px; font-weight: 500; color: #DC2626;">-</div>
+                    <div class="stat-val" id="modal-zonk-warga" style="text-align: left; font-size: 11px; font-weight: 500; color: #DC2626;">-</div>
                 </div>
                 
-                <div class="stat-card" style="background: #0F172A;">
-                    <span class="stat-label" style="color: #94A3B8;">TOTAL KESELURUHAN:</span>
-                    <span class="stat-val" id="modal-total-all" style="color: #34D399; font-size: 18px;">Rp 0</span>
+                <div class="stat-card" style="background: #F1F5F9;">
+                    <span class="stat-label" style="color: #475569;">TOTAL KESELURUHAN:</span>
+                    <span class="stat-val" id="modal-total-all" style="color: #10B981; font-size: 16px;">Rp 0</span>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
             <button id="btn-download-jpg" class="btn-dl-jpg">Download Laporan (JPG)</button>
-            <button id="btn-lempar-ronda" class="btn-lempar-ronda">Kirim Data Total Jimpitan ke Halaman Ronda</button>
+            <button id="btn-lempar-ronda" class="btn-lempar-ronda">Kirim Total Jimpitan ke Form Ronda</button>
             <button id="btn-close-modal" class="btn-close-modal">Tutup</button>
         </div>
     </div>
@@ -426,6 +429,7 @@
         const btnCetak = document.getElementById("btn-cetak");
         const btnKirim = document.getElementById("btn-kirim");
         const btnScanUlang = document.getElementById("btn-scan-ulang");
+        const notifBanner = document.getElementById("notif-banner");
         
         const previewContainer = document.getElementById("preview-container");
         const previewEmpty = document.getElementById("preview-empty");
@@ -441,7 +445,7 @@
         // =========================================================================
         // URL APLIKASI WEB GAS ANDA
         // =========================================================================
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbziSKnpiQBxWwr-2OdM80Ztb02VNwV_B1yYPghyuDfEYcK3VWmqiG5dEKpG0eidTV8RTA/exec';
+        const scriptURL = 'KfycbziSKnpiQBxWwr-2OdM80Ztb02VNwV_B1yYPghyuDfEYcK3VWmqiG5dEKpG0eidTV8RTA/exec';
         
         let html5QrCode;
         let currentScannedData = null;
@@ -452,7 +456,7 @@
         let semuaPetugasSet = new Set();
         window.currentLaporanWaktu = "";
 
-        // Fungsi Teks Waktu Lengkap
+        // Fungsi Teks Waktu Lengkap (Selasa, 8 September 2026 (21.40 WIB))
         function getFormattedTime() {
             const now = new Date();
             const daysArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
@@ -462,12 +466,20 @@
             return `${tglStr} ${jamStr}`;
         }
 
-        // Live Timer UI
         setInterval(() => {
             if(!currentScannedData || prevWaktuDetail.textContent === "-") {
                 prevWaktuDetail.textContent = getFormattedTime();
             }
         }, 1000);
+
+        // Evaluasi Tombol Cetak
+        function checkCetakStatus() {
+            if (currentScannedData && selectedNominalValue !== null && getNamaPetugasFinal() !== "" && getNamaPetugasFinal() !== "-") {
+                btnCetak.disabled = false;
+            } else {
+                btnCetak.disabled = true;
+            }
+        }
 
         function parseCSV(text) {
             const result = [];
@@ -498,7 +510,7 @@
                 const csvText = await response.text();
                 const rows = parseCSV(csvText);
                 
-                selectIdRumah.innerHTML = '<option value="">- Cari ID / Nama Warga -</option>';
+                selectIdRumah.innerHTML = '<option value="">- Cari Id & Nama Warga -</option>';
                 for(let r = 1; r < rows.length; r++) {
                     let idRumah = (rows[r][0] || "").trim();    
                     let namaWarga = (rows[r][2] || "").trim();  
@@ -509,14 +521,13 @@
                         opt.value = idRumah;
                         opt.setAttribute("data-nama", namaWarga || "-");
                         opt.setAttribute("data-domisili", domisili || "-");
-                        // GABUNGAN TEKS DROPDOWN
                         opt.textContent = `${idRumah} (${namaWarga || 'Tanpa Nama'})`;
                         selectIdRumah.appendChild(opt);
                     }
                 }
             } catch (error) {
                 console.error("Gagal load data warga:", error);
-                selectIdRumah.innerHTML = '<option value="">- Cari ID / Nama Warga -</option><option value="rt2_01" data-nama="Bambang Purwono" data-domisili="Tetap">rt2_01 (Bambang Purwono)</option>';
+                selectIdRumah.innerHTML = '<option value="">- Cari Id & Nama Warga -</option><option value="rt2_01" data-nama="Bambang Purwono" data-domisili="Tetap">rt2_01 (Bambang Purwono)</option>';
             }
         }
         
@@ -590,6 +601,10 @@
                 optManual.value = "Manual"; optManual.textContent = "+ Nama Lain (Ketik Manual)";
                 selectPetugas.appendChild(optManual);
             } else {
+                let optBlank = document.createElement("option");
+                optBlank.value = ""; optBlank.textContent = "- Pilih Petugas -";
+                selectPetugas.appendChild(optBlank);
+                
                 if (jadwalRonda[hariTerpilih]) {
                     jadwalRonda[hariTerpilih].forEach(nama => {
                         let opt = document.createElement("option");
@@ -598,6 +613,7 @@
                     });
                 }
             }
+            checkCetakStatus();
         });
 
         selectPetugas.addEventListener("change", (e) => {
@@ -606,11 +622,14 @@
             } else {
                 inputPetugasManual.style.display = "none";
             }
+            checkCetakStatus();
         });
 
+        inputPetugasManual.addEventListener("input", checkCetakStatus);
+
         function getNamaPetugasFinal() {
-            if (selectPetugas.value === "Manual") return inputPetugasManual.value.trim() || "-";
-            return selectPetugas.value || "-";
+            if (selectPetugas.value === "Manual") return inputPetugasManual.value.trim() || "";
+            return selectPetugas.value || "";
         }
 
         // AUDIO SOUND EFFECT SUKSES (Chime)
@@ -629,9 +648,9 @@
                 osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.start(startTime); osc.stop(startTime + duration);
             };
-            playTone(523.25, t, 0.2); // C5
-            playTone(659.25, t + 0.15, 0.3); // E5
-            playTone(783.99, t + 0.3, 0.4); // G5
+            playTone(523.25, t, 0.2); 
+            playTone(659.25, t + 0.15, 0.3); 
+            playTone(783.99, t + 0.3, 0.4); 
         }
         function playErrorBeep() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -656,15 +675,13 @@
         function checkIdSelesai(id) {
             if (id && window.submittedIds.has(id)) {
                 badgeSelesai.style.display = "inline-block";
-                infoNamaWarga.style.background = "#F1F5F9";
+                infoIdRumah.style.color = "#94A3B8"; infoIdRumah.style.borderColor = "#E2E8F0";
                 infoNamaWarga.style.color = "#94A3B8"; 
-                infoNamaWarga.style.borderColor = "#CBD5E1"; 
                 showNotif('error', '⚠️ Warga ini sudah disetor di sesi ini!');
             } else {
                 badgeSelesai.style.display = "none";
-                infoNamaWarga.style.background = "#DCFCE7";
-                infoNamaWarga.style.color = "#15803D"; 
-                infoNamaWarga.style.borderColor = "#22C55E"; 
+                infoIdRumah.style.color = "#475569"; infoIdRumah.style.borderColor = "#CBD5E1";
+                infoNamaWarga.style.color = "#0F172A"; 
                 notifBanner.style.display = "none";
             }
         }
@@ -675,20 +692,21 @@
                 const nama = selectedOption.getAttribute("data-nama");
                 const domisili = selectedOption.getAttribute("data-domisili");
                 
-                infoIdRumah.textContent = `(${this.value})`;
+                infoIdRumah.textContent = this.value; // rt2_01
                 infoNamaWarga.textContent = nama;
                 infoDomisili.textContent = domisili && domisili !== "-" ? domisili : "Domisili";
                 
                 currentScannedData = { idRumah: this.value, namaWarga: nama, domisili: domisili };
                 checkIdSelesai(this.value);
             } else {
-                infoIdRumah.textContent = "( - )";
-                infoNamaWarga.textContent = "NAMA WARGA";
+                infoIdRumah.textContent = "rt2_--";
+                infoNamaWarga.textContent = "PILIH WARGA";
                 infoDomisili.textContent = "Domisili";
                 currentScannedData = null;
                 checkIdSelesai(null);
             }
             hidePreview();
+            checkCetakStatus();
         });
 
         nominalButtons.forEach(button => {
@@ -709,6 +727,7 @@
                     selectedNominalValue = val;
                 }
                 hidePreview();
+                checkCetakStatus();
             });
         });
 
@@ -717,6 +736,7 @@
             this.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('id-ID') : '';
             selectedNominalValue = cleanVal;
             hidePreview();
+            checkCetakStatus();
         });
 
         function hidePreview() {
@@ -726,14 +746,7 @@
         }
 
         btnCetak.addEventListener("click", () => {
-            if (!currentScannedData && selectIdRumah.value === "") { alert("Pilih ID Rumah dari dropdown!"); return; }
-            if (selectedNominalValue === null || selectedNominalValue === "") { alert("Pilih nominal uang fisik!"); return; }
-            
-            const finalPetugas = getNamaPetugasFinal();
-            if (!finalPetugas || finalPetugas === "-" || finalPetugas === "") { alert("Pilih atau ketik nama petugas!"); return; }
-
             let tId = currentScannedData ? currentScannedData.idRumah : selectIdRumah.value;
-            
             if(window.submittedIds.has(tId)) {
                 let konfirmasi = confirm("ID ini sudah disetor sebelumnya. Yakin ingin mencetak ulang?");
                 if(!konfirmasi) return;
@@ -742,12 +755,13 @@
             let tNama = currentScannedData ? currentScannedData.namaWarga : infoNamaWarga.textContent;
             let tDomisili = currentScannedData && currentScannedData.domisili ? currentScannedData.domisili : "-";
             let tNom = selectedNominalValue === "0" ? "ZONK (Rp 0)" : "Rp " + parseInt(selectedNominalValue, 10).toLocaleString('id-ID');
+            let finalPetugas = getNamaPetugasFinal();
 
-            const fullTimeStr = getFormattedTime(); // Format: Hari, Tgl (Jam)
+            const fullTimeStr = getFormattedTime(); // Format Lengkap
             window.currentLaporanWaktu = fullTimeStr;
 
             document.getElementById('prev-waktu').textContent = fullTimeStr;
-            document.getElementById('prev-id').textContent = `(${tId})`;
+            document.getElementById('prev-id').textContent = tId;
             document.getElementById('prev-nama').textContent = tNama;
             document.getElementById('prev-domisili').textContent = tDomisili;
             document.getElementById('prev-hari').textContent = `(${selectHari.value})`;
@@ -810,14 +824,13 @@
             })
             .then(() => {
                 showNotif('success', '✅ Berhasil, data sudah tersimpan.');
-                playSuccessChime(); // Suara sukses baru
+                playSuccessChime(); 
                 
                 statusDatabaseNotif.textContent = "Pengiriman berhasil.";
                 statusDatabaseNotif.style.borderColor = "#E2E8F0";
                 
                 btnKirim.textContent = "Data Terkirim";
                 btnScanUlang.disabled = false;
-                btnScanUlang.textContent = "Lanjut Scan Berikutnya";
                 
                 window.submittedIds.add(targetData.idRumah);
                 let options = Array.from(selectIdRumah.options);
@@ -945,7 +958,7 @@
                 let nama = optionExists.getAttribute("data-nama");
                 let domisili = optionExists.getAttribute("data-domisili");
                 
-                infoIdRumah.textContent = `(${scannedId})`;
+                infoIdRumah.textContent = scannedId;
                 infoNamaWarga.textContent = nama;
                 infoDomisili.textContent = domisili && domisili !== "-" ? domisili : "";
                 currentScannedData = { idRumah: scannedId, namaWarga: nama, domisili: domisili };
@@ -955,6 +968,7 @@
             if (!window.submittedIds.has(scannedId)) { showNotif('success', 'BERHASIL! Data Warga Terdeteksi.'); }
             
             hidePreview();
+            checkCetakStatus();
             if (html5QrCode && html5QrCode.isScanning) { html5QrCode.stop().catch(err => console.log(err)); }
         }
 
@@ -962,8 +976,8 @@
             currentScannedData = null;
             selectedNominalValue = null;
             selectIdRumah.value = "";
-            infoIdRumah.textContent = "( - )";
-            infoNamaWarga.textContent = "NAMA WARGA";
+            infoIdRumah.textContent = "rt2_--";
+            infoNamaWarga.textContent = "PILIH WARGA";
             infoDomisili.textContent = "Domisili";
             
             customNominalInput.value = "";
@@ -977,13 +991,14 @@
             checkIdSelesai(null); 
             notifBanner.style.display = 'none';
             hidePreview();
+            checkCetakStatus();
             
             btnKirim.textContent = "Kirim Data";
             btnScanUlang.textContent = "Batal / Ulang";
             
             statusDatabaseNotif.className = "status-notif-box";
             statusDatabaseNotif.textContent = "Menunggu pengiriman...";
-            statusDatabaseNotif.style.borderColor = "#E2E8F0";
+            statusDatabaseNotif.style.borderColor = "#CBD5E1";
         }
 
         startScanner();

@@ -23,128 +23,210 @@
     <script src="https://unpkg.com/html5-qrcode"></script>
 
     <style>
+        /* =========================================================
+           RESET & TYPOGRAPHY MODERN MINIMALIS
+           ========================================================= */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
-        body { background-color: #B4C3D4; display: flex; justify-content: center; padding: 10px 0; }
+        body { background-color: #E2E8F0; display: flex; justify-content: center; padding: 12px 8px; }
         button, input, textarea, select { font-family: 'Poppins', sans-serif !important; }
 
         .app-wrapper {
             width: 100%; max-width: 480px;
-            background-color: #F2F2F2; 
-            min-height: calc(100vh - 20px); position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.15);
-            border-radius: 16px;
-            padding: 12px;
+            background-color: #F8FAFC; 
+            min-height: calc(100vh - 24px); position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
         }
 
         svg { display: inline-block; vertical-align: middle; }
 
-        .form-section { display: flex; flex-direction: column; gap: 10px; background: #FFFFFF; padding: 14px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; }
-        .section-label { font-size: 13.5px; font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 8px; }
+        /* =========================================================
+           CARDS & SECTIONS
+           ========================================================= */
+        .form-section { 
+            display: flex; flex-direction: column; gap: 12px; 
+            background: #FFFFFF; padding: 16px; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); 
+            border: 1px solid #F1F5F9; 
+        }
+        .section-label { font-size: 14.5px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px; }
         
-        .sec-icon-badge { width: 32px; height: 32px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 6px rgba(17,85,204,0.25); }
-        .sec-text-group { display: flex; flex-direction: column; line-height: 1.1; }
-        .sec-title { font-size: 13.5px; font-weight: 700; color: #1155CC; text-transform: uppercase; }
-        .sec-subtitle { font-size: 11px; font-weight: 400; color: #64748B; margin-top: 2px; }
+        .sec-icon-badge { 
+            width: 36px; height: 36px; background: #2563EB; color: #FFFFFF; 
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; 
+            flex-shrink: 0; box-shadow: 0 4px 8px rgba(37,99,235,0.25); 
+        }
+        .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
+        .sec-title { font-size: 14.5px; font-weight: 700; color: #1E293B; letter-spacing: 0.2px; }
+        .sec-subtitle { font-size: 11.5px; font-weight: 500; color: #64748B; margin-top: 2px; }
 
-        #reader { width: 100%; border-radius: 10px; overflow: hidden; border: 2px solid #CBD5E1; background: #E2E8F0; min-height: 180px; position: relative;}
+        /* =========================================================
+           SCANNER AREA
+           ========================================================= */
+        #reader { width: 100%; border-radius: 12px; overflow: hidden; border: 2px dashed #CBD5E1; background: #F1F5F9; min-height: 180px; position: relative;}
         #reader img { display: none !important; }
-        #reader button { background: #1155CC; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 11px; cursor: pointer; margin-top: 6px; }
-        #reader select { padding: 6px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 11px; margin-bottom: 6px; width: 80%; }
+        #reader button { background: #2563EB; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
+        #reader button:hover { background: #1D4ED8; }
+        #reader select { padding: 8px; border-radius: 8px; border: 1px solid #CBD5E1; font-size: 12px; margin-bottom: 8px; width: 85%; outline: none; }
         
-        /* Notification Banner */
-        .notif-banner { padding: 10px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 600; text-align: center; display: none; line-height: 1.3; }
-        .notif-success { background: #DCFCE7; color: #16A34A; border: 1.5px solid #22C55E; }
-        .notif-error { background: #FEE2E2; color: #DC2626; border: 1.5px solid #EF4444; }
+        /* =========================================================
+           NOTIFICATIONS
+           ========================================================= */
+        .notif-banner { padding: 12px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; text-align: center; display: none; line-height: 1.4; letter-spacing: 0.3px; }
+        .notif-success { background: #F0FDF4; color: #16A34A; border: 1.5px solid #4ADE80; box-shadow: 0 4px 10px rgba(74,222,128,0.1); }
+        .notif-error { background: #FEF2F2; color: #DC2626; border: 1.5px solid #F87171; box-shadow: 0 4px 10px rgba(248,113,113,0.1); }
 
-        /* Fast Smooth Dropdown */
+        /* =========================================================
+           INPUTS & DROPDOWNS
+           ========================================================= */
         .smooth-dropdown {
-            font-family: 'Poppins', sans-serif !important;
-            padding: 6px 26px 6px 10px;
+            padding: 10px 30px 10px 12px;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1E293B;
+            background-color: #F8FAFC;
+            outline: none; cursor: pointer; transition: all 0.3s ease;
+            appearance: none; -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='%2364748B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 10px center; width: 100%;
+        }
+        .smooth-dropdown:focus { border-color: #3B82F6; background-color: #FFFFFF; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+        
+        .manual-petugas-input { margin-top: 8px; background-image: none; padding-right: 12px; }
+
+        .grid-warga { display: grid; grid-template-columns: 110px 1fr; gap: 10px; align-items: end; }
+        .grid-petugas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: end; }
+        .input-group-col { display: flex; flex-direction: column; gap: 6px; }
+        .input-label { font-size: 12px; font-weight: 600; color: #64748B; letter-spacing: 0.3px; text-transform: uppercase; }
+        
+        .value-text-container { display: flex; flex-direction: column; gap: 4px; padding: 4px 0; }
+        .value-text { font-size: 14.5px; font-weight: 700; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; }
+        .domisili-text { font-size: 11.5px; font-weight: 600; color: #0284C7; }
+        
+        /* Badge "Sudah Disetor" */
+        .badge-selesai { 
+            display: none; align-self: flex-start;
+            background: #FEF2F2; color: #EF4444; border: 1px solid #FCA5A5; 
+            font-size: 10px; padding: 2px 6px; border-radius: 4px; 
+            font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; 
+        }
+
+        /* Badge Pengenal Petugas Ronda */
+        .badge-petugas {
+            background-color: #F1F5F9;
+            color: #334155;
             border: 1.5px solid #CBD5E1;
+            padding: 4px 10px;
             border-radius: 8px;
             font-size: 12.5px;
-            font-weight: 600;
-            color: #0F172A;
-            background-color: #FFFFFF;
-            outline: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='14' height='14' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 8px center;
-            width: 100%;
+            font-weight: 700;
+            display: inline-block;
+            letter-spacing: 0.3px;
         }
-        .smooth-dropdown:focus { border-color: #1155CC; box-shadow: 0 0 0 3px rgba(17,85,204,0.12); }
 
-        /* Two-column layout */
-        .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: end; }
-        .input-group-col { display: flex; flex-direction: column; gap: 4px; }
-        .input-label { font-size: 11px; font-weight: 600; color: #64748B; }
-        .value-text { font-size: 13px; font-weight: 600; color: #0F172A; padding: 6px 0; }
-
-        /* Nominal Buttons Styling */
-        .nominal-buttons-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+        /* =========================================================
+           NOMINAL BUTTONS
+           ========================================================= */
+        .nominal-buttons-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
         .btn-nominal {
-            flex: 1 1 calc(33.333% - 6px);
+            flex: 1 1 calc(33.333% - 8px);
             border: 2px solid transparent; 
             color: #FFFFFF;
-            padding: 10px 4px; 
-            border-radius: 8px; 
-            font-size: 13.5px; 
-            font-weight: 600;
+            padding: 12px 4px; 
+            border-radius: 10px; 
+            font-size: 14.5px; 
+            font-weight: 700;
             cursor: pointer; 
-            transition: all 0.15s ease; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .btn-nominal:active { transform: scale(0.95); }
         .btn-nominal.active {
-            background-color: #334155 !important;
+            background-color: #1E293B !important;
             border: 2px solid #0F172A;
-            box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
-            transform: scale(0.96);
-            color: #FFFFFF !important;
+            box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2), 0 4px 10px rgba(0,0,0,0.2);
+            transform: scale(0.97);
+            color: #F8FAFC !important;
         }
         
         .btn-500 { background-color: #22C55E; }
         .btn-1000 { background-color: #3B82F6; }
         .btn-2000 { background-color: #A855F7; }
-        .btn-manual { background-color: #F97316; flex: 1 1 calc(50% - 3px); }
-        .btn-kosong { background-color: #EF4444; flex: 1 1 calc(50% - 3px); }
+        .btn-manual { background-color: #F59E0B; flex: 1 1 calc(50% - 4px); }
+        .btn-kosong { background-color: #EF4444; flex: 1 1 calc(50% - 4px); }
 
-        .custom-input-wrapper { position: relative; width: 100%; margin-top: 4px; display: none; }
-        .input-prefix { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 13px; font-weight: 600; color: #1155CC; }
-        .custom-nominal-input { width: 100%; padding: 10px 12px 10px 38px; font-size: 13.5px; font-weight: 600; color: #0F172A; border: 1.5px solid #CBD5E1; border-radius: 8px; background-color: #FFFFFF; outline: none; transition: border-color 0.2s; }
-        .custom-nominal-input:focus { border-color: #1155CC; box-shadow: 0 0 0 3px rgba(17,85,204,0.12); }
+        /* Manual Input */
+        .custom-input-wrapper { position: relative; width: 100%; margin-top: 6px; display: none; }
+        .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 700; color: #1E293B; }
+        .custom-nominal-input { width: 100%; padding: 12px 14px 12px 44px; font-size: 15px; font-weight: 700; color: #0F172A; border: 2px solid #E2E8F0; border-radius: 10px; background-color: #F8FAFC; outline: none; transition: all 0.3s; }
+        .custom-nominal-input:focus { border-color: #3B82F6; background-color: #FFFFFF; box-shadow: 0 0 0 4px rgba(59,130,246,0.15); }
 
-        .btn-action-custom { width: 100%; padding: 12px; border-radius: 10px; font-size: 13.5px; font-weight: 600; cursor: pointer; border: none; color: #FFFFFF; transition: all 0.2s ease; text-align: center; margin-top: 6px; }
-        .btn-cetak { background: #2563EB; box-shadow: 0 3px 8px rgba(37,99,235,0.3); }
-        .btn-cetak:hover { background: #1D4ED8; }
+        /* Action Buttons */
+        .btn-action-custom { width: 100%; padding: 14px; border-radius: 12px; font-size: 14.5px; font-weight: 700; cursor: pointer; border: none; color: #FFFFFF; transition: all 0.2s ease; text-align: center; margin-top: 8px; letter-spacing: 0.5px; }
+        .btn-cetak { background: #2563EB; box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
+        .btn-cetak:hover { background: #1D4ED8; transform: translateY(-2px); }
         
-        /* Preview Card */
-        .preview-card { background: #F8FAFC; border: 1.5px dashed #CBD5E1; border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
-        .preview-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: 12.5px; border-bottom: 1px dashed #E2E8F0; padding-bottom: 4px; }
+        /* =========================================================
+           PREVIEW CARD
+           ========================================================= */
+        .preview-card { background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+        .preview-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; border-bottom: 1px dashed #E2E8F0; padding-bottom: 6px; }
         .preview-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .preview-label { color: #64748B; font-weight: 500; min-width: 80px; }
-        .preview-value { color: #0F172A; font-weight: 600; text-align: right; word-break: break-word; }
-        .val-highlight { color: #16A34A; font-size: 14px; }
-        .val-waktu { color: #0284C7; font-size: 11.5px; font-weight: 600; }
+        .preview-label { color: #64748B; font-weight: 600; min-width: 80px; }
+        .preview-value { color: #0F172A; font-weight: 700; text-align: right; word-break: break-word; }
+        .val-highlight { color: #16A34A; font-size: 16px; font-weight: 800; }
+        .val-waktu { color: #0284C7; font-size: 11.5px; font-weight: 700; }
+        .val-domisili { color: #F59E0B; font-size: 11.5px; font-weight: 600; }
 
-        .action-row-2 { display: flex; gap: 8px; width: 100%; margin-top: 8px; }
-        .btn-scan-ulang { background: #64748B; box-shadow: 0 3px 8px rgba(100,116,139,0.3); flex: 1; }
+        .action-row-2 { display: flex; gap: 10px; width: 100%; margin-top: 10px; }
+        .btn-scan-ulang { background: #64748B; box-shadow: 0 4px 10px rgba(100,116,139,0.25); flex: 1; }
         .btn-scan-ulang:hover { background: #475569; }
-        .btn-kirim { background: #10B981; box-shadow: 0 3px 8px rgba(16,185,129,0.3); flex: 1; font-size: 14px; }
+        .btn-kirim { background: #10B981; box-shadow: 0 4px 12px rgba(16,185,129,0.3); flex: 1; font-size: 14.5px; }
         .btn-kirim:hover { background: #059669; }
-        .btn-kirim:disabled { background: #CBD5E1; cursor: not-allowed; box-shadow: none; }
+        .btn-kirim:disabled { background: #CBD5E1; cursor: not-allowed; box-shadow: none; color: #94A3B8; }
 
-        .status-notif-box { width: 100%; padding: 10px; font-size: 12.5px; font-weight: 600; color: #64748B; border: 1px dashed #CBD5E1; border-radius: 8px; background-color: #F8FAFC; text-align: center; transition: all 0.3s ease; }
-        .status-notif-box.success { background-color: #DCFCE7; color: #16A34A; border: 1px solid #22C55E; }
-        .status-notif-box.error { background-color: #FEE2E2; color: #DC2626; border: 1px solid #EF4444; }
+        /* =========================================================
+           REKAP SESI & LOG CARD
+           ========================================================= */
+        .status-notif-box { width: 100%; padding: 12px; font-size: 13px; font-weight: 600; color: #64748B; border: 2px dashed #E2E8F0; border-radius: 10px; background-color: #F8FAFC; text-align: center; transition: all 0.3s ease; }
+        .status-notif-box.success { background-color: #F0FDF4; color: #16A34A; border: 2px solid #4ADE80; }
+        .status-notif-box.error { background-color: #FEF2F2; color: #DC2626; border: 2px solid #F87171; }
+
+        .rekap-sesi-container { margin-top: 8px; display: flex; flex-direction: column; gap: 12px; }
+        .total-box {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            color: #FFFFFF; border-radius: 12px; padding: 16px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        .total-box-label { font-size: 13px; font-weight: 600; color: #94A3B8; text-transform: uppercase; letter-spacing: 1px; }
+        .total-box-val { font-size: 22px; font-weight: 800; color: #34D399; }
+        
+        .log-container {
+            max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px;
+        }
+        .log-container::-webkit-scrollbar { width: 5px; }
+        .log-container::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 5px; }
+        
+        .log-card {
+            background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 12px;
+            padding: 12px 14px; display: flex; flex-direction: column; gap: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: all 0.3s ease;
+        }
+        .log-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #F1F5F9; padding-bottom: 5px; font-size: 12px; }
+        .log-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .log-label { color: #64748B; font-weight: 600; }
+        .log-val { color: #0F172A; font-weight: 700; text-align: right; }
+        .empty-log { font-size: 12.5px; color: #94A3B8; text-align: center; padding: 14px; font-style: italic; font-weight: 500; }
+
     </style>
 </head>
 <body>
@@ -158,11 +240,11 @@
     <div class="form-section">
         <div class="section-label">
             <div class="sec-icon-badge">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
             </div>
             <div class="sec-text-group">
-                <span class="sec-title">1. Scan QR</span>
-                <span class="sec-subtitle">Arahkan kamera ke QR Warga</span>
+                <span class="sec-title">1. Kamera Scanner</span>
+                <span class="sec-subtitle">Arahkan ke QR Code Warga</span>
             </div>
         </div>
         <div id="reader"></div>
@@ -172,30 +254,37 @@
     <div class="form-section">
         <div class="section-label">
             <div class="sec-icon-badge" style="background: #0284C7;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             </div>
             <div class="sec-text-group">
-                <span class="sec-title">2. Data & Nominal</span>
-                <span class="sec-subtitle">Lengkapi data jimpitan</span>
+                <span class="sec-title">2. Detail Jimpitan</span>
+                <span class="sec-subtitle">Cek data & tentukan nominal</span>
             </div>
         </div>
         
-        <div class="grid-2-col">
+        <!-- Grid Warga (ID & Nama) -->
+        <div class="grid-warga">
             <div class="input-group-col">
                 <span class="input-label">ID Rumah</span>
                 <select id="select-id-rumah" class="smooth-dropdown">
-                    <option value="">- Pilih ID -</option>
-                    <option value="Loading">Memuat data...</option>
+                    <option value="">- ID -</option>
+                    <option value="Loading">Memuat...</option>
                 </select>
             </div>
             <div class="input-group-col">
                 <span class="input-label">Nama Warga RT 2</span>
-                <div class="value-text" id="info-nama-warga" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-</div>
+                <div class="value-text-container">
+                    <div class="value-text" id="info-nama-warga">-</div>
+                    <div class="domisili-text" id="info-domisili"></div>
+                    <span id="badge-selesai" class="badge-selesai">Sudah Disetor</span>
+                </div>
             </div>
         </div>
-        <div class="grid-2-col">
+        
+        <!-- Grid Petugas -->
+        <div class="grid-petugas">
             <div class="input-group-col">
-                <span class="input-label">Hari Tugas Ronda</span>
+                <span class="input-label">Hari Tugas</span>
                 <select id="select-hari-ronda" class="smooth-dropdown">
                     <option value="Senin">Senin</option>
                     <option value="Selasa">Selasa</option>
@@ -204,17 +293,19 @@
                     <option value="Jumat">Jumat</option>
                     <option value="Sabtu">Sabtu</option>
                     <option value="Minggu">Minggu</option>
+                    <option value="Altruis">Altruis (Ganti)</option>
                 </select>
             </div>
             <div class="input-group-col">
-                <span class="input-label">Nama Petugas</span>
+                <span class="input-label">Petugas Ronda</span>
                 <select id="select-petugas" class="smooth-dropdown">
                     <!-- Diisi via JS -->
                 </select>
+                <input type="text" id="input-petugas-manual" class="smooth-dropdown manual-petugas-input" style="display:none;" placeholder="Ketik nama...">
             </div>
         </div>
 
-        <span class="input-label" style="margin-top: 4px;">Pilih Nominal</span>
+        <span class="input-label" style="margin-top: 6px;">Pilih Nominal Uang Fisik</span>
         <div class="nominal-buttons-container">
             <button type="button" class="btn-nominal btn-500" data-value="500">500</button>
             <button type="button" class="btn-nominal btn-1000" data-value="1000">1.000</button>
@@ -235,15 +326,15 @@
     <div class="form-section" id="section-preview">
         <div class="section-label">
             <div class="sec-icon-badge" style="background: #D97706;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
             <div class="sec-text-group">
                 <span class="sec-title">3. Laporan Cepat</span>
-                <span class="sec-subtitle">Periksa sebelum kirim</span>
+                <span class="sec-subtitle">Periksa sebelum setor ke server</span>
             </div>
         </div>
         
-        <div id="preview-empty" style="font-size: 12px; color: #64748B; text-align: center; padding: 10px;">Belum ada laporan dicetak.</div>
+        <div id="preview-empty" style="font-size: 13px; color: #94A3B8; text-align: center; padding: 14px; font-weight: 500;">Belum ada laporan dicetak.</div>
         
         <div id="preview-container" style="display: none;">
             <div class="preview-card">
@@ -260,8 +351,12 @@
                     <span class="preview-value" id="prev-nama">-</span>
                 </div>
                 <div class="preview-row">
-                    <span class="preview-label">Petugas Tugas</span>
-                    <span class="preview-value"><span id="prev-petugas">-</span> (<span id="prev-hari">-</span>)</span>
+                    <span class="preview-label">Status Domisili</span>
+                    <span class="preview-value val-domisili" id="prev-domisili">-</span>
+                </div>
+                <div class="preview-row">
+                    <span class="preview-label">Petugas</span>
+                    <span class="preview-value"><span class="badge-petugas"><span id="prev-petugas">-</span> (<span id="prev-hari">-</span>)</span></span>
                 </div>
                 <div class="preview-row">
                     <span class="preview-label">Nominal</span>
@@ -275,17 +370,31 @@
         </div>
     </div>
 
-    <!-- 4. STATUS DATABASE -->
+    <!-- 4. STATUS DATABASE & REKAP SESI -->
     <div class="form-section">
         <div class="section-label">
             <div class="sec-icon-badge" style="background: #059669;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <div class="sec-text-group">
-                <span class="sec-title">4. Status Database</span>
+                <span class="sec-title">4. Live Rekap Sesi</span>
+                <span class="sec-subtitle">Akumulasi uang fisik sesi ini</span>
             </div>
         </div>
-        <div id="status-database-notif" class="status-notif-box">Menunggu pengiriman...</div>
+        
+        <div id="status-database-notif" class="status-notif-box">Menunggu pengiriman pertama...</div>
+
+        <!-- Wadah Rekap Sesi -->
+        <div class="rekap-sesi-container">
+            <div class="total-box">
+                <span class="total-box-label">Total Uang:</span>
+                <span class="total-box-val" id="total-uang-sesi">Rp 0</span>
+            </div>
+            <div id="log-container" class="log-container">
+                <div id="empty-log" class="empty-log">Tabel rekap akan muncul di sini setelah pengiriman sukses.</div>
+                <!-- Log Card Otomatis masuk sini -->
+            </div>
+        </div>
     </div>
 </div> 
 
@@ -293,9 +402,12 @@
     document.addEventListener("DOMContentLoaded", function() {
         const selectIdRumah = document.getElementById("select-id-rumah");
         const infoNamaWarga = document.getElementById("info-nama-warga");
+        const infoDomisili = document.getElementById("info-domisili");
+        const badgeSelesai = document.getElementById("badge-selesai");
         
         const selectHari = document.getElementById("select-hari-ronda");
         const selectPetugas = document.getElementById("select-petugas");
+        const inputPetugasManual = document.getElementById("input-petugas-manual");
         
         const statusDatabaseNotif = document.getElementById("status-database-notif");
         const nominalButtons = document.querySelectorAll(".btn-nominal");
@@ -310,16 +422,27 @@
         const previewContainer = document.getElementById("preview-container");
         const previewEmpty = document.getElementById("preview-empty");
         
+        const totalUangSesiEl = document.getElementById("total-uang-sesi");
+        const logContainer = document.getElementById("log-container");
+        const emptyLog = document.getElementById("empty-log");
+        let totalJimpitanSesiIni = 0;
+        
+        window.submittedIds = new Set();
+        
         // =========================================================================
-        // MASUKKAN URL HASIL DEPLOYMENT WEB APP ANDA DI SINI
+        // URL APLIKASI WEB - WEB APP BACKEND ANDA
         // =========================================================================
-        const scriptURL = 'https://script.google.com/macros/s/AKfycby-AooZcVuqM8gh2N86o_ZDuWcLVBNvmvWWlrLmCoQ2kbGwc56itw5-hkLUqWj637QIGQ/exec';
+        const scriptURL = 'https://script.google.com/macros/s/GANTI_DENGAN_URL_WEB_APP_ANDA/exec';
         
         let html5QrCode;
         let currentScannedData = null;
         let selectedNominalValue = null;
         let scanTimeout;
         let isScanning = false;
+
+        // Data Jadwal Petugas & Set Semua Petugas
+        let jadwalRonda = {};
+        let semuaPetugasSet = new Set();
 
         window.currentLaporanWaktu = "";
 
@@ -341,73 +464,163 @@
             return result;
         }
 
+        // =========================================================================
+        // FETCH DATA WARGA (SHEET 1)
+        // =========================================================================
         async function fetchDataWarga() {
             const sheetId = '1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io';
-            const gid = '177427564';
+            const gid = '0'; // Tab Warga Data
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
             
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error("Gagal akses API");
-                
                 const csvText = await response.text();
                 const rows = parseCSV(csvText);
                 
                 selectIdRumah.innerHTML = '<option value="">- Pilih ID -</option>';
-                
                 for(let r = 1; r < rows.length; r++) {
-                    let idRumah = (rows[r][0] || "").trim();
-                    let namaWarga = (rows[r][1] || "").trim();
+                    let idRumah = (rows[r][0] || "").trim();    
+                    let namaWarga = (rows[r][2] || "").trim();  
+                    let domisili = (rows[r][9] || "").trim();   
                     
-                    if (idRumah && namaWarga) {
+                    if (idRumah) {
                         let opt = document.createElement("option");
                         opt.value = idRumah;
-                        opt.setAttribute("data-nama", namaWarga);
+                        opt.setAttribute("data-nama", namaWarga || "-");
+                        opt.setAttribute("data-domisili", domisili || "-");
                         opt.textContent = idRumah;
                         selectIdRumah.appendChild(opt);
                     }
                 }
             } catch (error) {
                 console.error("Gagal load data warga:", error);
-                selectIdRumah.innerHTML = '<option value="">- Pilih ID -</option><option value="rt2_01" data-nama="Bambang Purwono">rt2_01 (Offline)</option>';
+                selectIdRumah.innerHTML = '<option value="">- Pilih ID -</option><option value="rt2_01" data-nama="Bambang Purwono" data-domisili="Tetap">rt2_01 (Offline)</option>';
             }
         }
         
+        // =========================================================================
+        // FETCH DATA PETUGAS (SHEET 4)
+        // =========================================================================
+        async function fetchDataPetugas() {
+            const sheetId = '1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io';
+            // =====================================================================
+            // WAJIB GANTI: Masukkan angka GID dari Sheet 4 (Petugas) di bawah ini
+            // =====================================================================
+            const gidPetugas = 'MASUKKAN_GID_SHEET_PETUGAS_DISINI'; 
+            
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gidPetugas}`;
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Gagal akses API Petugas");
+                const csvText = await response.text();
+                const rows = parseCSV(csvText);
+                
+                jadwalRonda = {};
+                semuaPetugasSet = new Set();
+                
+                if (rows.length > 0) {
+                    // Asumsi baris pertama (index 0) adalah Header Hari (Senin, Selasa, dsb)
+                    const headers = rows[0].map(h => h.trim());
+                    headers.forEach(h => { if(h) jadwalRonda[h] = []; });
+                    
+                    for(let r = 1; r < rows.length; r++) {
+                        for(let c = 0; c < headers.length; c++) {
+                            if(headers[c]) {
+                                let nama = (rows[r][c] || "").trim();
+                                if(nama && nama !== "-") {
+                                    jadwalRonda[headers[c]].push(nama);
+                                    semuaPetugasSet.add(nama);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // Trigger select Hari untuk apply petugas
+                selectHari.dispatchEvent(new Event('change'));
+
+            } catch (error) {
+                console.error("Gagal load data petugas, menggunakan fallback manual.", error);
+                // Fallback hardcode jika fetch gagal
+                jadwalRonda = {
+                    "Senin": ["TRI MADIYANTO", "WISNU PRABOWO", "ANANG DHIAN K.", "CUCU SUKMANA", "KARYADI", "RONI"],
+                    "Selasa": ["SUGENG", "RENGGA D.", "TRI SUHARYANTO", "RUDIYANTO", "EKO B.", "NUR F.", "WIDODO"],
+                    "Rabu": ["YULIANTO", "SUPARDI", "TWENTY APRILIYAN", "DEDI S.", "MIKI", "GOODMAN MANULANG", "BAGUS HANDOKO", "AGUS H."],
+                    "Kamis": ["ARI SUPRIYANTO", "TRI SETYO WINARYANTO", "ARGA D. WICAKSANA", "DONI HARIYANTO", "HUDIYONO", "FERI", "SUNARDI"],
+                    "Jumat": ["SATRIA", "IBNU", "RIZAL", "PEMUDA 1", "PEMUDA 2", "PEMUDA 3", "PEMUDA 4"],
+                    "Sabtu": ["NGADIMIN", "ARIS YUSWANTORO", "PRIYOTO", "SURAHYA", "ARI NUGROHO"],
+                    "Minggu": ["KARTI NURJANI", "SAMIJOKO", "TRISNA SANJAYA", "FAJAR YUNIANTO", "SARJIYO"]
+                };
+                
+                Object.values(jadwalRonda).forEach(arr => arr.forEach(n => semuaPetugasSet.add(n)));
+                selectHari.dispatchEvent(new Event('change'));
+            }
+        }
+
+        // Panggil fetchers
         fetchDataWarga();
+        fetchDataPetugas();
 
-        const jadwalRonda = {
-            "Senin": ["TRI MADIYANTO", "WISNU PRABOWO", "ANANG DHIAN K.", "CUCU SUKMANA", "KARYADI", "RONI"],
-            "Selasa": ["SUGENG", "RENGGA D.", "TRI SUHARYANTO", "RUDIYANTO", "EKO B.", "NUR F.", "WIDODO"],
-            "Rabu": ["YULIANTO", "SUPARDI", "TWENTY APRILIYAN", "DEDI S.", "MIKI", "GOODMAN MANULANG", "BAGUS HANDOKO", "AGUS H."],
-            "Kamis": ["ARI SUPRIYANTO", "TRI SETYO WINARYANTO", "ARGA D. WICAKSANA", "DONI HARIYANTO", "HUDIYONO", "FERI", "SUNARDI"],
-            "Jumat": ["SATRIA", "IBNU", "RIZAL", "PEMUDA 1", "PEMUDA 2", "PEMUDA 3", "PEMUDA 4"],
-            "Sabtu": ["NGADIMIN", "ARIS YUSWANTORO", "PRIYOTO", "SURAHYA", "ARI NUGROHO"],
-            "Minggu": ["KARTI NURJANI", "SAMIJOKO", "TRISNA SANJAYA", "FAJAR YUNIANTO", "SARJIYO"]
-        };
+        // LOGIC DROPDOWN HARI DAN PETUGAS (Termasuk Altruis)
+        const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        selectHari.value = days[new Date().getDay()];
 
-        function populatePetugas(hari) {
+        selectHari.addEventListener("change", (e) => {
+            const hariTerpilih = e.target.value;
             selectPetugas.innerHTML = "";
-            if (jadwalRonda[hari]) {
-                jadwalRonda[hari].forEach(nama => {
+            inputPetugasManual.style.display = "none";
+            inputPetugasManual.value = "";
+            
+            if (hariTerpilih === "Altruis") {
+                let optBlank = document.createElement("option");
+                optBlank.value = "";
+                optBlank.textContent = "- Pilih Petugas -";
+                selectPetugas.appendChild(optBlank);
+                
+                // Tambahkan semua petugas urut abjad
+                Array.from(semuaPetugasSet).sort().forEach(nama => {
                     let opt = document.createElement("option");
                     opt.value = nama;
                     opt.textContent = nama;
                     selectPetugas.appendChild(opt);
                 });
+                
+                let optManual = document.createElement("option");
+                optManual.value = "Manual";
+                optManual.textContent = "+ Petugas Lain (Ketik Manual)";
+                selectPetugas.appendChild(optManual);
+            } else {
+                if (jadwalRonda[hariTerpilih]) {
+                    jadwalRonda[hariTerpilih].forEach(nama => {
+                        let opt = document.createElement("option");
+                        opt.value = nama;
+                        opt.textContent = nama;
+                        selectPetugas.appendChild(opt);
+                    });
+                }
             }
-        }
-
-        const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-        const todayStr = days[new Date().getDay()];
-        selectHari.value = todayStr;
-        populatePetugas(todayStr);
-
-        selectHari.addEventListener("change", (e) => {
-            populatePetugas(e.target.value);
         });
 
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        selectPetugas.addEventListener("change", (e) => {
+            if (e.target.value === "Manual") {
+                inputPetugasManual.style.display = "block";
+                inputPetugasManual.focus();
+            } else {
+                inputPetugasManual.style.display = "none";
+            }
+        });
 
+        function getNamaPetugasFinal() {
+            if (selectPetugas.value === "Manual") {
+                return inputPetugasManual.value.trim() || "-";
+            }
+            return selectPetugas.value || "-";
+        }
+
+        // AUDIO SOUND EFFECT
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playBeep() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const oscillator = audioCtx.createOscillator();
@@ -451,18 +664,44 @@
             notifBanner.style.display = 'block';
             notifBanner.className = 'notif-banner';
             notifBanner.classList.add(type === 'success' ? 'notif-success' : 'notif-error');
-            notifBanner.textContent = message;
+            notifBanner.innerHTML = message;
+        }
+
+        function markOptionAsDone(id) {
+            let options = Array.from(selectIdRumah.options);
+            let opt = options.find(o => o.value === id);
+            if(opt && !opt.textContent.includes("✅")) {
+                opt.textContent = "✅ " + opt.textContent;
+            }
+        }
+
+        function checkIdSelesai(id) {
+            if (id && window.submittedIds.has(id)) {
+                badgeSelesai.style.display = "inline-block";
+                infoNamaWarga.style.color = "#94A3B8"; 
+                showNotif('error', '⚠️ ID ini sudah disetor di sesi ini!');
+            } else {
+                badgeSelesai.style.display = "none";
+                infoNamaWarga.style.color = "#0F172A"; 
+                notifBanner.style.display = "none";
+            }
         }
 
         selectIdRumah.addEventListener("change", function() {
             if(this.value !== "") {
                 const selectedOption = this.options[this.selectedIndex];
                 const nama = selectedOption.getAttribute("data-nama");
+                const domisili = selectedOption.getAttribute("data-domisili");
                 infoNamaWarga.textContent = nama;
-                currentScannedData = { idRumah: this.value, namaWarga: nama };
+                infoDomisili.textContent = domisili && domisili !== "-" ? `[${domisili}]` : "";
+                
+                currentScannedData = { idRumah: this.value, namaWarga: nama, domisili: domisili };
+                checkIdSelesai(this.value);
             } else {
                 infoNamaWarga.textContent = "-";
+                infoDomisili.textContent = "";
                 currentScannedData = null;
+                checkIdSelesai(null);
             }
             hidePreview();
         });
@@ -508,13 +747,22 @@
                 alert("Pilih nominal jimpitan!");
                 return;
             }
-            if (!selectPetugas.value) {
-                alert("Pilih nama petugas!");
+            
+            const finalPetugas = getNamaPetugasFinal();
+            if (!finalPetugas || finalPetugas === "-" || finalPetugas === "") {
+                alert("Pilih atau ketik nama petugas!");
                 return;
             }
 
             let tId = currentScannedData ? currentScannedData.idRumah : selectIdRumah.value;
+            
+            if(window.submittedIds.has(tId)) {
+                let konfirmasi = confirm("ID ini sudah disetor sebelumnya. Yakin ingin mencetak ulang?");
+                if(!konfirmasi) return;
+            }
+
             let tNama = currentScannedData ? currentScannedData.namaWarga : infoNamaWarga.textContent;
+            let tDomisili = currentScannedData && currentScannedData.domisili ? currentScannedData.domisili : "-";
             let tNom = selectedNominalValue === "0" ? "ZONK (Rp 0)" : "Rp " + parseInt(selectedNominalValue, 10).toLocaleString('id-ID');
 
             const now = new Date();
@@ -529,8 +777,9 @@
             document.getElementById('prev-waktu').textContent = waktuFull;
             document.getElementById('prev-id').textContent = tId;
             document.getElementById('prev-nama').textContent = tNama;
+            document.getElementById('prev-domisili').textContent = tDomisili;
             document.getElementById('prev-hari').textContent = selectHari.value;
-            document.getElementById('prev-petugas').textContent = selectPetugas.value;
+            document.getElementById('prev-petugas').textContent = finalPetugas;
             
             let nomEl = document.getElementById('prev-nominal');
             nomEl.textContent = tNom;
@@ -554,7 +803,7 @@
         });
 
         // =========================================================================
-        // PENGIRIMAN DATA SUPER AMAN (METODE GET) UNTUK GITHUB PAGES
+        // PENGIRIMAN DATA
         // =========================================================================
         btnKirim.addEventListener("click", () => {
             btnKirim.disabled = true;
@@ -564,24 +813,25 @@
             statusDatabaseNotif.textContent = "Sedang mengirim data ke Spreadsheet...";
 
             let iuranValue = selectedNominalValue === "0" ? "0" : selectedNominalValue;
-            let targetData = currentScannedData || { idRumah: selectIdRumah.value, namaWarga: infoNamaWarga.textContent };
+            let targetData = currentScannedData || { 
+                idRumah: selectIdRumah.value, 
+                namaWarga: infoNamaWarga.textContent,
+                domisili: document.getElementById('prev-domisili').textContent
+            };
 
-            // Jadikan parameter URL
             const params = new URLSearchParams({
                 id_rumah: targetData.idRumah,
                 nama_warga: targetData.namaWarga,
+                status_domisili: targetData.domisili,
                 hari_tanggal: window.currentLaporanWaktu,
                 iuran: iuranValue,
-                petugas: selectPetugas.value,
+                petugas: getNamaPetugasFinal(),
                 hari_tugas: selectHari.value
             });
 
-            // Gabungkan URL Web App dengan Parameter
-            const urlDenganParameter = scriptURL + "?" + params.toString();
-
-            fetch(urlDenganParameter, {
+            fetch(scriptURL + "?" + params.toString(), {
                 method: 'GET',
-                mode: 'no-cors' // Super penting agar diizinkan oleh Github & Google
+                mode: 'no-cors' 
             })
             .then(() => {
                 statusDatabaseNotif.textContent = "Berhasil, sudah tersimpan.";
@@ -590,6 +840,11 @@
                 btnKirim.textContent = "Data Terkirim";
                 btnScanUlang.disabled = false;
                 btnScanUlang.textContent = "Lanjut Scan Berikutnya";
+                
+                window.submittedIds.add(targetData.idRumah);
+                markOptionAsDone(targetData.idRumah); 
+
+                tambahLogRekap(targetData, iuranValue);
             })
             .catch((err) => {
                 console.error("Error submit:", err);
@@ -600,6 +855,32 @@
                 btnScanUlang.disabled = false;
             });
         });
+
+        function tambahLogRekap(targetData, iuranStr) {
+            let nominalInt = parseInt(iuranStr) || 0;
+            
+            totalJimpitanSesiIni += nominalInt;
+            totalUangSesiEl.textContent = "Rp " + totalJimpitanSesiIni.toLocaleString('id-ID');
+            
+            if (emptyLog) emptyLog.style.display = "none";
+            
+            const logCard = document.createElement("div");
+            logCard.className = "log-card";
+            
+            let colorNominal = nominalInt === 0 ? '#DC2626' : '#16A34A';
+            let txtNominal = nominalInt === 0 ? 'Rp 0' : 'Rp ' + nominalInt.toLocaleString('id-ID');
+            let petugasSesi = getNamaPetugasFinal();
+            
+            logCard.innerHTML = `
+                <div class="log-row"><span class="log-label">Waktu Scan</span><span class="log-val" style="color:#0284C7; font-size:11px;">${window.currentLaporanWaktu}</span></div>
+                <div class="log-row"><span class="log-label">ID / Nama</span><span class="log-val">${targetData.idRumah} - ${targetData.namaWarga}</span></div>
+                <div class="log-row"><span class="log-label">Domisili</span><span class="log-val" style="color:#F59E0B;">${targetData.domisili}</span></div>
+                <div class="log-row"><span class="log-label">Petugas</span><span class="log-val"><span class="badge-petugas">${petugasSesi} (${selectHari.value})</span></span></div>
+                <div class="log-row"><span class="log-label">Nominal</span><span class="log-val" style="color:${colorNominal}; font-size:13px;">${txtNominal}</span></div>
+            `;
+            
+            logContainer.prepend(logCard);
+        }
 
         function startScanner() {
             if (!html5QrCode) {
@@ -622,7 +903,7 @@
             .catch((err) => {
                 console.error("Kamera Error:", err);
                 playTetTot();
-                showNotif('error', 'Gagal mengakses kamera. Untuk mempercepat lakukan manual dengan tulis dan paraf.');
+                showNotif('error', 'Gagal mengakses kamera. Lakukan manual dengan tulis dan paraf.');
             });
         }
 
@@ -639,16 +920,24 @@
             if(optionExists) {
                 selectIdRumah.value = scannedId;
                 let nama = optionExists.getAttribute("data-nama");
+                let domisili = optionExists.getAttribute("data-domisili");
                 infoNamaWarga.textContent = nama;
-                currentScannedData = { idRumah: scannedId, namaWarga: nama };
+                infoDomisili.textContent = domisili && domisili !== "-" ? `[${domisili}]` : "";
+                currentScannedData = { idRumah: scannedId, namaWarga: nama, domisili: domisili };
             } else {
                 selectIdRumah.value = "";
                 let fallbackNama = parts[1] || "Warga Pasekan Lor";
                 infoNamaWarga.textContent = fallbackNama;
-                currentScannedData = { idRumah: scannedId, namaWarga: fallbackNama };
+                infoDomisili.textContent = "[Tidak Terdaftar]";
+                currentScannedData = { idRumah: scannedId, namaWarga: fallbackNama, domisili: "Tidak Terdaftar" };
             }
 
-            showNotif('success', 'BERHASIL! Data Warga Terdeteksi.');
+            checkIdSelesai(scannedId);
+
+            if (!window.submittedIds.has(scannedId)) {
+                showNotif('success', 'BERHASIL! Data Warga Terdeteksi.');
+            }
+            
             hidePreview();
 
             if (html5QrCode && html5QrCode.isScanning) {
@@ -661,10 +950,14 @@
             selectedNominalValue = null;
             selectIdRumah.value = "";
             infoNamaWarga.textContent = "-";
+            infoDomisili.textContent = "";
             customNominalInput.value = "";
+            inputPetugasManual.style.display = "none";
             manualInputContainer.style.display = "none";
             
             nominalButtons.forEach(btn => btn.classList.remove("active"));
+            
+            checkIdSelesai(null); 
             notifBanner.style.display = 'none';
             
             hidePreview();

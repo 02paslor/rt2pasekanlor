@@ -506,46 +506,53 @@
         // =========================================================================
         async function fetchDataPetugas() {
             const sheetId = '1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io';
+            
             // =====================================================================
             // WAJIB GANTI: Masukkan angka GID dari Sheet 4 (Petugas) di bawah ini
             // =====================================================================
-            const gidPetugas = 'MASUKKAN_GID_SHEET_PETUGAS_DISINI'; 
+            const gidPetugas = '305568271'; 
             
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gidPetugas}`;
             
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error("Gagal akses API Petugas");
+                
                 const csvText = await response.text();
                 const rows = parseCSV(csvText);
                 
+                // Kosongkan memori lama
                 jadwalRonda = {};
                 semuaPetugasSet = new Set();
                 
                 if (rows.length > 0) {
-                    // Asumsi baris pertama (index 0) adalah Header Hari (Senin, Selasa, dsb)
-                    const headers = rows[0].map(h => h.trim());
-                    headers.forEach(h => { if(h) jadwalRonda[h] = []; });
+                    // Ambil Baris 1 sebagai Judul Hari (Senin, Selasa, dsb)
+                    const headers = rows[0].map(h => (h || "").trim());
+                    headers.forEach(h => { 
+                        if(h) jadwalRonda[h] = []; 
+                    });
                     
+                    // Looping dari Baris 2 ke bawah untuk mengambil nama petugas
                     for(let r = 1; r < rows.length; r++) {
                         for(let c = 0; c < headers.length; c++) {
-                            if(headers[c]) {
+                            if(headers[c]) { // Pastikan kolom ini punya judul hari
                                 let nama = (rows[r][c] || "").trim();
-                                if(nama && nama !== "-") {
+                                if(nama && nama !== "-" && nama.toLowerCase() !== "kosong") {
                                     jadwalRonda[headers[c]].push(nama);
-                                    semuaPetugasSet.add(nama);
+                                    semuaPetugasSet.add(nama); // Masukkan ke wadah Altruis
                                 }
                             }
                         }
                     }
                 }
                 
-                // Trigger select Hari untuk apply petugas
+                // Pancing dropdown hari agar nama petugas langsung muncul sesuai hari ini
                 selectHari.dispatchEvent(new Event('change'));
 
             } catch (error) {
-                console.error("Gagal load data petugas, menggunakan fallback manual.", error);
-                // Fallback hardcode jika fetch gagal
+                console.error("Gagal load data petugas dari Spreadsheet, pakai data manual.", error);
+                
+                // Data Cadangan (Fallback) jika Spreadsheet sedang gangguan atau GID salah
                 jadwalRonda = {
                     "Senin": ["TRI MADIYANTO", "WISNU PRABOWO", "ANANG DHIAN K.", "CUCU SUKMANA", "KARYADI", "RONI"],
                     "Selasa": ["SUGENG", "RENGGA D.", "TRI SUHARYANTO", "RUDIYANTO", "EKO B.", "NUR F.", "WIDODO"],

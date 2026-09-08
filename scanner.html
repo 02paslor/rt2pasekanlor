@@ -465,11 +465,11 @@
         }
 
         // =========================================================================
-        // FETCH DATA WARGA (SHEET 1)
+        // FETCH DATA WARGA (SHEET DATA WARGA)
         // =========================================================================
         async function fetchDataWarga() {
             const sheetId = '1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io';
-            const gid = '0'; // Tab Warga Data
+            const gid = '1159385762'; // GID akurat menuju tab Data Warga
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
             
             try {
@@ -479,10 +479,12 @@
                 const rows = parseCSV(csvText);
                 
                 selectIdRumah.innerHTML = '<option value="">- Pilih ID -</option>';
+                
+                // Dimulai dari baris ke-2 (index 1) untuk melewati header
                 for(let r = 1; r < rows.length; r++) {
-                    let idRumah = (rows[r][0] || "").trim();    
-                    let namaWarga = (rows[r][2] || "").trim();  
-                    let domisili = (rows[r][9] || "").trim();   
+                    let idRumah = (rows[r][0] || "").trim();    // Kolom A (Index 0)
+                    let namaWarga = (rows[r][2] || "").trim();  // Kolom C (Index 2)
+                    let domisili = (rows[r][9] || "").trim();   // Kolom J (Index 9)
                     
                     if (idRumah) {
                         let opt = document.createElement("option");

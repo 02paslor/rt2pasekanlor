@@ -17,165 +17,177 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Library HTML5 QR Code Scanner -->
+    <!-- Library HTML5 QR Code Scanner & HTML2Canvas -->
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <!-- Library HTML2Canvas untuk Cetak JPG Modal -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
+        /* =========================================================
+           RESET & TYPOGRAPHY COMPACT MODERN
+           ========================================================= */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
-        body { background-color: #E2E8F0; display: flex; justify-content: center; padding: 12px 8px; }
-        button, input, textarea, select { font-family: 'Poppins', sans-serif !important; outline: none; }
+        body { background-color: #E2E8F0; display: flex; justify-content: center; padding: 12px 8px; color: #0F172A; }
+        button, input, select { outline: none; }
 
         .app-wrapper {
             width: 100%; max-width: 480px; background-color: #F8FAFC; 
-            min-height: calc(100vh - 24px); position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 20px;
-            padding: 16px; display: flex; flex-direction: column; gap: 14px;
+            min-height: calc(100vh - 24px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            border-radius: 20px; padding: 12px; display: flex; flex-direction: column; gap: 14px;
         }
 
         /* Navigasi Atas */
         .btn-back-web {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #FFFFFF; color: #475569; padding: 10px; border-radius: 12px;
-            text-decoration: none; font-weight: 600; font-size: 13px;
-            border: 1.5px solid #E2E8F0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            background: #A2DEDC; color: #334155; padding: 10px; border-radius: 12px;
+            text-decoration: none; font-weight: 500; font-size: 13px;
+            border: 1px solid #82C2C0; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
             transition: all 0.2s;
         }
-        .btn-back-web:hover { background: #F1F5F9; color: #0F172A; }
+        .btn-back-web:hover { background: #82C2C0; color: #0F172A; border-color: #94A3B8; }
 
+        /* =========================================================
+           CARD SECTIONS (HEADER BLOCK WARNA)
+           ========================================================= */
         .form-section { 
-            display: flex; flex-direction: column; gap: 12px; 
-            background: #FFFFFF; padding: 16px; border-radius: 16px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #F1F5F9; 
+            background: #FFFFFF; border-radius: 16px; overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #E2E8F0; 
+            display: flex; flex-direction: column;
         }
-        .section-label { font-size: 14.5px; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 10px; }
-        .sec-icon-badge { width: 36px; height: 36px; background: #2563EB; color: #FFFFFF; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 8px rgba(37,99,235,0.25); }
-        .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
-        .sec-title { font-size: 14.5px; font-weight: 700; color: #1E293B; }
-        .sec-subtitle { font-size: 11px; font-weight: 500; color: #64748B; margin-top: 2px; }
-
-        /* Scanner */
-        #reader { width: 100%; border-radius: 12px; overflow: hidden; border: 2px dashed #CBD5E1; background: #F1F5F9; min-height: 180px; position: relative;}
-        #reader img { display: none !important; }
-        #reader button { background: #2563EB; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; margin-top: 8px; }
         
-        .notif-banner { padding: 12px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; text-align: center; display: none; line-height: 1.4; }
+        /* Header Radius Warna */
+        .section-header { 
+            padding: 12px 14px; display: flex; align-items: center; gap: 12px; color: #FFF; 
+        }
+        .header-blue { background: #1155CC; }
+        .header-cyan { background: #1155CC; }
+        .header-orange { background: #1155CC; }
+        .header-green { background: #1155CC; }
+
+        .sec-icon-badge { 
+            width: 34px; height: 34px; background: rgba(255,255,255,0.25); border-radius: 8px; 
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; backdrop-filter: blur(4px);
+        }
+        .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
+        .sec-title { font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
+        .sec-subtitle { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.9); margin-top: 2px; }
+        
+        .section-body { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+
+        /* =========================================================
+           SCANNER AREA
+           ========================================================= */
+        #reader { width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid #CBD5E1; background: #F1F5F9; min-height: 160px;}
+        #reader img { display: none !important; }
+        #reader button { background: #2563EB; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; margin-top: 8px; }
+        
+        /* Notifikasi */
+        .notif-banner { padding: 10px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 500; text-align: center; display: none; line-height: 1.3; }
         .notif-success { background: #F0FDF4; color: #16A34A; border: 1.5px solid #4ADE80; }
         .notif-error { background: #FEF2F2; color: #DC2626; border: 1.5px solid #F87171; }
         .notif-loading { background: #FFFBEB; color: #D97706; border: 1.5px solid #FCD34D; }
 
-        /* Dropdowns & Inputs */
+        /* =========================================================
+           INPUTS & DROPDOWNS COMPACT
+           ========================================================= */
         .smooth-dropdown {
-            padding: 10px 30px 10px 12px; border: 1.5px solid #E2E8F0; border-radius: 10px;
-            font-size: 13.5px; font-weight: 600; color: #1E293B; background-color: #F8FAFC;
-            cursor: pointer; transition: all 0.2s; appearance: none; -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='%2364748B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 10px center; width: 100%;
+            padding: 9px 30px 9px 12px; border: 1.5px solid #1155CC; border-radius: 10px;
+            font-size: 13px; font-weight: 600; color: #1E293B; background-color: #F8FAFC;
+            cursor: pointer; appearance: none; -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='%2364748B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 10px center; width: 100%; transition: all 0.2s;
         }
-        .smooth-dropdown:focus { border-color: #3B82F6; background-color: #FFFFFF; }
-        
-        /* Pewarnaan Option yang selesai */
-        .opt-done { background-color: #DCFCE7; color: #16A34A; font-weight: bold; }
+        .smooth-dropdown:focus { border-color: #0EA5E9; background-color: #FFFFFF; box-shadow: 0 0 0 3px rgba(14,165,233,0.15); }
+        .opt-done { background-color: #DCFCE7; color: #15803D; font-weight: bold; }
         .opt-altruis { background-color: #FEF08A; color: #854D0E; font-weight: bold; }
 
-        .input-label { font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: block; }
-        .divider-line { height: 1px; background-color: #E2E8F0; margin: 6px 0 10px 0; }
+        .input-label { font-size: 11.5px; font-weight: 600; color: #64748B; margin-bottom: 4px; display: block; }
+        .divider-line { height: 1px; background-color: #E2E8F0; margin: 4px 0; }
 
-        /* Format Identitas Baru */
-        .identitas-container { display: flex; flex-direction: column; gap: 8px; }
-        .id-warga-text { font-size: 12px; font-weight: 600; color: #64748B; }
-        .nama-warga-box { background: #DCFCE7; border: 1.5px solid #22C55E; color: #15803D; padding: 6px 10px; border-radius: 8px; font-weight: 700; font-size: 15px; display: inline-block; width: fit-content; }
-        .domisili-text { font-size: 11px; font-weight: 600; color: #F59E0B; background: #FEF3C7; padding: 2px 8px; border-radius: 4px; display: inline-block; width: fit-content;}
-        .petugas-text { color: #2563EB; font-weight: 700; font-size: 14.5px; }
+        /* Tampilan Detail Warga Compact */
+        .waktu-realtime { font-size: 12px; font-weight: 500; color: #1155cc; text-align: center; margin-bottom: 6px; background: #F0F9FF; padding: 6px; border-radius: 6px; border: 1px solid #BAE6FD;}
+        .identitas-box { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; background: #F8FAFC; padding: 10px; border-radius: 10px; border: 1px solid #E2E8F0;}
+        .id-warga-text { font-size: 12.5px; font-weight: 600; color: #64748B; }
+        .nama-warga-box { background: #DCFCE7; border: 1.5px solid #22C55E; color: #15803D; padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 14.5px; display: inline-block; }
+        .domisili-text { font-size: 11px; font-weight: 600; color: #1155CC; background: #E8E8E8; padding: 3px 8px; border-radius: 4px; }
+        
+        .badge-selesai { display: none; background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; font-size: 10px; padding: 3px 6px; border-radius: 4px; font-weight: 600; letter-spacing: 0.5px; }
 
-        /* Nominal Buttons (Default Abu-abu) */
+        /* Nominal Buttons (Abu-abu -> Warna saat klik) */
         .nominal-buttons-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .btn-nominal {
-            background-color: #8F8F8F; color: #FFFFFF;
-            border: none; padding: 12px 4px; border-radius: 10px; 
-            font-size: 14.5px; font-weight: 700; cursor: pointer; transition: all 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: #8F8F8F; color: #FFFFFF; border: none; padding: 12px 4px; border-radius: 10px; 
+            font-size: 14.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: 0 3px 5px rgba(0,0,0,0.1);
         }
         .btn-nominal:active { transform: scale(0.95); }
-        
-        /* Active States */
-        .btn-nominal.active-500 { background-color: #22C55E; box-shadow: 0 0 0 3px rgba(34,197,94,0.3); }
-        .btn-nominal.active-1000 { background-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59,130,246,0.3); }
-        .btn-nominal.active-2000 { background-color: #A855F7; box-shadow: 0 0 0 3px rgba(168,85,247,0.3); }
-        .btn-nominal.active-manual { background-color: #F59E0B; box-shadow: 0 0 0 3px rgba(245,158,11,0.3); }
-        .btn-nominal.active-kosong { background-color: #EF4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.3); }
-        
-        /* Span columns for last two */
+        .btn-nominal.active-500 { background-color: #22C55E;}
+        .btn-nominal.active-1000 { background-color: #3B82F6;}
+        .btn-nominal.active-2000 { background-color: #A855F7;}
+        .btn-nominal.active-manual { background-color: #F59E0B;}
+        .btn-nominal.active-kosong { background-color: #CF3636;}
         .btn-manual, .btn-kosong { grid-column: span 1.5; }
 
+        .custom-input-wrapper { position: relative; width: 100%; margin-top: 6px; display: none; }
+        .custom-nominal-input { width: 100%; padding: 10px 14px 10px 44px; font-size: 14.5px; font-weight: 600; border: 1px solid #1155cc; border-radius: 10px; outline: none; }
+        .custom-nominal-input:focus { border-color: #0EA5E9; }
+
         /* Area Cetak Terpisah */
-        .cetak-area { margin-top: 10px; padding-top: 14px; border-top: 2px dashed #E2E8F0; }
-        .btn-cetak { width: 100%; background: #0F172A; color: #FFF; padding: 14px; border-radius: 12px; font-size: 14.5px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(15,23,42,0.3); }
+        .cetak-area { margin-top: 8px; padding-top: 12px; border-top: 2px dashed #E2E8F0; }
+        .btn-cetak { width: 100%; background: #F55E00; color: #FFF; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(15,23,42,0.25); transition: background 0.2s; }
         .btn-cetak:hover { background: #1E293B; }
         
-        /* Preview Card */
-        .preview-card { background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
-        .preview-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; border-bottom: 1px dashed #E2E8F0; padding-bottom: 6px; }
+        /* =========================================================
+           KOTAK LAPORAN (PREVIEW)
+           ========================================================= */
+        .preview-card { background: #FFFFFF; border: 1.5px solid #949494; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .preview-row { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; border-bottom: 1px dashed #F1F5F9; padding-bottom: 6px; }
         .preview-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .preview-label { color: #64748B; font-weight: 600; min-width: 80px; }
-        .preview-value { color: #0F172A; font-weight: 700; text-align: right; }
-        .val-waktu { color: #0284C7; font-size: 12px; font-weight: 700; }
+        .preview-label { color: #64748B; font-weight: 600; min-width: 70px; font-size: 11.5px; text-transform: uppercase; }
+        .preview-value { color: #0F172A; font-weight: 600; text-align: right; }
         
-        .action-row-2 { display: flex; gap: 10px; width: 100%; margin-top: 10px; }
-        /* Tombol Batal lebih kecil */
-        .btn-scan-ulang { background: #94A3B8; color:#fff; border:none; padding:12px; border-radius:10px; font-weight:700; flex: 0.6; cursor:pointer;}
-        .btn-kirim { background: #10B981; color:#fff; border:none; padding:12px; border-radius:10px; font-weight:700; flex: 1.4; font-size: 15px; cursor:pointer; box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
+        .val-waktu { color: #1155CC; font-size: 12px; font-weight: 500; }
+        .val-highlight { color: #16A34A; font-size: 15px; font-weight: 800; }
+
+        /* Action Buttons */
+        .action-row-2 { display: flex; gap: 10px; width: 100%; margin-top: 8px; }
+        .btn-scan-ulang { background: #94A3B8; color:#fff; border:none; padding:10px; border-radius:10px; font-weight:600; flex: 0.7; font-size:13px; cursor:pointer;}
+        .btn-kirim { background: #10B981; color:#fff; border:none; padding:10px; border-radius:10px; font-weight:600; flex: 1.3; font-size: 14.5px; cursor:pointer; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
         .btn-kirim:disabled { background: #CBD5E1; cursor: not-allowed; box-shadow: none; color: #FFFFFF; }
 
-        /* Kotak Total Terang */
-        .status-notif-box { width: 100%; padding: 12px; font-size: 13px; font-weight: 600; color: #64748B; border: 2px dashed #E2E8F0; border-radius: 10px; background-color: #F8FAFC; text-align: center; }
+        /* =========================================================
+           REKAP SESI & MODAL
+           ========================================================= */
+        .status-notif-box { width: 100%; padding: 10px; font-size: 11px; font-weight: 600; color: #64748B; border: 2px solid #E2E8F0; border-radius: 10px; background-color: #F8FAFC; text-align: center; }
         .total-box-light {
-            background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 12px; padding: 16px;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-top: 8px;
+            background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 14px 16px;
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
         }
-        .total-box-label { font-size: 13px; font-weight: 700; color: #64748B; text-transform: uppercase; }
-        .total-box-val { font-size: 24px; font-weight: 700; color: #16A34A; }
+        .total-box-val { font-size: 18px; font-weight: 600; color: #1155cc; }
         
-        /* Tombol Laporan Akhir */
-        .btn-laporan-akhir {
-            width: 100%; background: #8B5CF6; color: #FFF; border: none; padding: 14px;
-            border-radius: 12px; font-weight: 700; font-size: 14px; margin-top: 10px;
-            cursor: pointer; box-shadow: 0 4px 12px rgba(139,92,246,0.3);
-        }
+        .btn-laporan-akhir { width: 100%; background: #8B5CF6; color: #FFF; border: none; padding: 12px; border-radius: 10px; font-weight: 600; font-size: 13.5px; cursor: pointer; box-shadow: 0 4px 10px rgba(139,92,246,0.3); }
 
-        /* Modal Laporan Akhir */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15,23,42,0.8); z-index: 999; display: none;
-            justify-content: center; align-items: center; padding: 16px; backdrop-filter: blur(4px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.85); 
+            z-index: 999; display: none; justify-content: center; align-items: center; padding: 16px; backdrop-filter: blur(4px);
         }
-        .modal-content {
-            background: #F8FAFC; width: 100%; max-width: 420px; border-radius: 20px;
-            overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;
-        }
-        .modal-header { background: #1E293B; color: #FFF; padding: 16px; text-align: center; font-weight: 700; }
-        .modal-body { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .modal-content { background: #F8FAFC; width: 100%; max-width: 400px; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; max-height: 90vh; }
+        .modal-header { background: #0F172A; color: #FFF; padding: 14px; text-align: center; font-weight: 600; font-size: 14px; letter-spacing: 0.5px;}
+        .modal-body { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         
-        /* Tabel Rekap Modal */
-        .rekap-table { width: 100%; border-collapse: collapse; background: #FFF; border-radius: 10px; overflow: hidden; border: 1px solid #E2E8F0; }
-        .rekap-table th { background: #F1F5F9; font-size: 11px; padding: 10px; color: #64748B; text-transform: uppercase; text-align: left; }
-        .rekap-table td { padding: 10px; font-size: 13px; font-weight: 600; border-top: 1px solid #E2E8F0; color: #0F172A; }
-        .rekap-table td.uang { color: #16A34A; text-align: right; }
+        .rekap-table { width: 100%; border-collapse: collapse; background: #FFF; border-radius: 8px; overflow: hidden; border: 1px solid #E2E8F0; }
+        .rekap-table th { background: #F1F5F9; font-size: 11px; padding: 8px 10px; color: #64748B; text-align: left; }
+        .rekap-table td { padding: 10px; font-size: 12.5px; font-weight: 600; border-top: 1px solid #E2E8F0; color: #0F172A; }
+        .rekap-table td.uang { color: #16A34A; text-align: right; font-weight: 600; }
 
-        .stat-card { background: #FFF; border: 1px solid #E2E8F0; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;}
-        .stat-label { font-size: 12px; color: #64748B; font-weight: 600; }
-        .stat-val { font-size: 14px; font-weight: 700; color: #0F172A; text-align: right; }
+        .stat-card { background: #FFF; border: 1px solid #E2E8F0; padding: 10px 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;}
+        .stat-label { font-size: 11.5px; color: #64748B; font-weight: 600; }
+        .stat-val { font-size: 13.5px; font-weight: 600; color: #0F172A; text-align: right; }
 
-        .modal-footer { padding: 16px; background: #FFF; border-top: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 10px; }
-        .btn-dl-jpg { background: #0EA5E9; color: #FFF; padding: 12px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
-        .btn-dl-jpg:hover { background: #0284C7; }
-        .btn-lempar-ronda { background: #10B981; color: #FFF; padding: 14px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; font-size: 14px; box-shadow: 0 4px 10px rgba(16,185,129,0.3);}
-        .btn-lempar-ronda:hover { background: #059669; }
-        .btn-close-modal { background: transparent; color: #64748B; border: none; font-weight: 600; cursor: pointer; padding: 8px; }
+        .modal-footer { padding: 14px; background: #FFF; border-top: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 8px; }
+        .btn-dl-jpg { background: #0EA5E9; color: #FFF; padding: 12px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; font-size: 13px;}
+        .btn-lempar-ronda { background: #10B981; color: #FFF; padding: 12px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; font-size: 13.5px; box-shadow: 0 4px 10px rgba(16,185,129,0.25);}
+        .btn-close-modal { background: transparent; color: #64748B; border: none; font-weight: 600; cursor: pointer; padding: 6px; font-size: 13px;}
 
     </style>
 </head>
@@ -185,7 +197,7 @@
 
     <!-- Tombol Kembali ke Web -->
     <a href="https://rt2pasekanlor.id/ronda" target="_self" class="btn-back-web">
-        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Kembali ke Halaman Ronda
     </a>
 
@@ -193,143 +205,166 @@
 
     <!-- 1. KAMERA SCANNER -->
     <div class="form-section">
-        <div class="section-label">
+        <div class="section-header header-blue">
             <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-            <div class="sec-text-group"><span class="sec-title">1. Kamera Pemindai (Scanner)</span></div>
+            <div class="sec-text-group">
+                <span class="sec-title">1. Kamera Scanner</span>
+                <span class="sec-subtitle">Arahkan ke QR Code Warga</span>
+            </div>
         </div>
-        <div id="reader"></div>
+        <div class="section-body" style="padding-top: 8px;">
+            <div id="reader"></div>
+        </div>
     </div>
 
     <!-- 2. DETAIL JIMPITAN -->
     <div class="form-section">
-        <div class="section-label">
-            <div class="sec-icon-badge" style="background: #0284C7;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-            <div class="sec-text-group"><span class="sec-title">2. Detail Jimpitan</span></div>
-        </div>
-        
-        <span class="input-label">Identitas Warga</span>
-        <select id="select-id-rumah" class="smooth-dropdown" style="margin-bottom: 8px;">
-            <option value="">- Cari ID Rumah -</option>
-            <option value="Loading">Memuat...</option>
-        </select>
-        
-        <div class="identitas-container">
-            <div id="prev-waktu-detail" class="val-waktu" style="text-align: right; font-size: 11px;"></div>
-            <div>
-                <span class="id-warga-text" id="info-id-rumah">( - )</span>
-            </div>
-            <div>
-                <div class="nama-warga-box" id="info-nama-warga">NAMA WARGA</div>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <div class="domisili-text" id="info-domisili">Domisili</div>
-                <span id="badge-selesai" style="display: none; background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700;">SUDAH DISETOR</span>
+        <div class="section-header header-cyan">
+            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div class="sec-text-group">
+                <span class="sec-title">2. Detail Jimpitan</span>
+                <span class="sec-subtitle">Cek data & tentukan nominal fisik</span>
             </div>
         </div>
-
-        <div class="divider-line"></div>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="section-body">
+            <div id="prev-waktu-detail" class="waktu-realtime">-</div>
+            
             <div>
-                <span class="input-label">Hari Tugas</span>
-                <select id="select-hari-ronda" class="smooth-dropdown">
-                    <option value="Senin">Senin</option>
-                    <option value="Selasa">Selasa</option>
-                    <option value="Rabu">Rabu</option>
-                    <option value="Kamis">Kamis</option>
-                    <option value="Jumat">Jumat</option>
-                    <option value="Sabtu">Sabtu</option>
-                    <option value="Minggu">Minggu</option>
-                    <option value="Altruis" class="opt-altruis">Altruis (Pilih Nama)</option>
+                <span class="input-label">Identitas Warga</span>
+                <select id="select-id-rumah" class="smooth-dropdown" style="margin-bottom: 8px;">
+                    <option value="">- Cari ID / Nama Warga -</option>
+                    <option value="Loading">Memuat data...</option>
                 </select>
+                
+                <div class="identitas-box">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="id-warga-text" id="info-id-rumah">( - )</span>
+                        <div class="nama-warga-box" id="info-nama-warga">NAMA WARGA</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <span class="domisili-text" id="info-domisili">Domisili</span>
+                        <span id="badge-selesai" class="badge-selesai">SUDAH DISETOR</span>
+                    </div>
+                </div>
             </div>
+
+            <div class="divider-line"></div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                    <span class="input-label">Hari Tugas</span>
+                    <select id="select-hari-ronda" class="smooth-dropdown">
+                        <option value="Senin">Senin</option>
+                        <option value="Selasa">Selasa</option>
+                        <option value="Rabu">Rabu</option>
+                        <option value="Kamis">Kamis</option>
+                        <option value="Jumat">Jumat</option>
+                        <option value="Sabtu">Sabtu</option>
+                        <option value="Minggu">Minggu</option>
+                        <option value="Altruis" class="opt-altruis">Altruis (Pilih Nama)</option>
+                    </select>
+                </div>
+                <div>
+                    <span class="input-label">Petugas Ronda</span>
+                    <select id="select-petugas" class="smooth-dropdown">
+                        <!-- Diisi via JS -->
+                    </select>
+                    <input type="text" id="input-petugas-manual" class="smooth-dropdown" style="display:none; margin-top:6px;" placeholder="Ketik nama...">
+                </div>
+            </div>
+
+            <div class="divider-line"></div>
+
             <div>
-                <span class="input-label">Petugas Ronda</span>
-                <select id="select-petugas" class="smooth-dropdown">
-                    <!-- Diisi via JS -->
-                </select>
-                <input type="text" id="input-petugas-manual" class="smooth-dropdown" style="display:none; margin-top:6px;" placeholder="Ketik nama...">
+                <span class="input-label">Pilih Nominal Uang Fisik</span>
+                <div class="nominal-buttons-container">
+                    <button type="button" class="btn-nominal" data-value="500">500</button>
+                    <button type="button" class="btn-nominal" data-value="1000">1.000</button>
+                    <button type="button" class="btn-nominal" data-value="2000">2.000</button>
+                    <button type="button" class="btn-nominal btn-manual" data-value="manual">Manual</button>
+                    <button type="button" class="btn-nominal btn-kosong" data-value="0">Zonk</button>
+                </div>
+                
+                <div id="manual-input-container" class="custom-input-wrapper">
+                    <div style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 600;">Rp</div>
+                    <input type="text" id="custom-nominal-input" class="custom-nominal-input" placeholder="Ketik nominal..." autocomplete="off" inputmode="numeric">
+                </div>
             </div>
-        </div>
 
-        <div class="divider-line"></div>
-
-        <span class="input-label">Pilih Nominal Uang Jimpitan</span>
-        <div class="nominal-buttons-container">
-            <button type="button" class="btn-nominal" data-value="500">500</button>
-            <button type="button" class="btn-nominal" data-value="1000">1.000</button>
-            <button type="button" class="btn-nominal" data-value="2000">2.000</button>
-            <button type="button" class="btn-nominal btn-manual" data-value="manual">Nominal lain</button>
-            <button type="button" class="btn-nominal btn-kosong" data-value="0">Zonk</button>
-        </div>
-        
-        <div id="manual-input-container" style="position: relative; width: 100%; margin-top: 8px; display: none;">
-            <div style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 700; color: #1E293B;">Rp</div>
-            <input type="text" id="custom-nominal-input" style="width: 100%; padding: 12px 14px 12px 44px; font-size: 15px; font-weight: 700; border: 2px solid #E2E8F0; border-radius: 10px; background-color: #F8FAFC; outline: none;" placeholder="Ketik nominal..." autocomplete="off" inputmode="numeric">
-        </div>
-
-        <div class="cetak-area">
-            <button type="button" id="btn-cetak" class="btn-cetak">Cetak Laporan</button>
+            <div class="cetak-area">
+                <button type="button" id="btn-cetak" class="btn-cetak">Cetak Laporan</button>
+            </div>
         </div>
     </div>
 
     <!-- 3. KOTAK LAPORAN -->
     <div class="form-section" id="section-preview">
-        <div class="section-label">
-            <div class="sec-icon-badge" style="background: #D97706;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-            <div class="sec-text-group"><span class="sec-title">3. Kotak Laporan</span></div>
+        <div class="section-header header-orange">
+            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+            <div class="sec-text-group">
+                <span class="sec-title">3. Kotak Laporan Pengecekan</span>
+                <span class="sec-subtitle">Periksa sebelum setor ke server</span>
+            </div>
         </div>
         
-        <div id="preview-empty" style="font-size: 13px; color: #94A3B8; text-align: center; padding: 14px; font-weight: 500;">Belum ada laporan.</div>
-        
-        <div id="preview-container" style="display: none;">
-            <div class="preview-card">
-                <div class="preview-row">
-                    <span class="preview-label">Waktu</span>
-                    <span class="preview-value val-waktu" id="prev-waktu">(-)</span>
-                </div>
-                <div class="preview-row" style="align-items: flex-start; padding-top:4px;">
-                    <span class="preview-label">Warga</span>
-                    <div style="text-align: right;">
-                        <span class="preview-value" id="prev-id" style="color: #64748B; font-size: 11px;">(-)</span><br>
-                        <div class="nama-warga-box" id="prev-nama" style="margin: 4px 0;">-</div><br>
-                        <span class="domisili-text" id="prev-domisili">-</span>
+        <div class="section-body">
+            <div id="preview-empty" style="font-size: 12.5px; color: #94A3B8; text-align: center; padding: 10px; font-weight: 500;">Belum ada laporan.</div>
+            
+            <div id="preview-container" style="display: none;">
+                <div class="preview-card">
+                    <div class="preview-row">
+                        <span class="preview-label">Waktu</span>
+                        <span class="preview-value val-waktu" id="prev-waktu">(-)</span>
+                    </div>
+                    <div class="preview-row" style="align-items: flex-start; padding-top:6px;">
+                        <span class="preview-label">Warga</span>
+                        <div style="text-align: right;">
+                            <span class="preview-value" id="prev-id" style="color: #64748B; font-size: 11.5px;">(-)</span><br>
+                            <div class="nama-warga-box" id="prev-nama" style="margin: 4px 0;">-</div><br>
+                            <span class="domisili-text" id="prev-domisili">-</span>
+                        </div>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Petugas</span>
+                        <div style="text-align: right;">
+                            <span id="prev-petugas" style="color: #2563EB; font-weight: 600; font-size: 14px;">-</span> 
+                            <span style="font-size: 11px; color: #64748B; font-weight: 600;" id="prev-hari">(-)</span>
+                        </div>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Nominal</span>
+                        <span class="preview-value val-highlight" id="prev-nominal">-</span>
                     </div>
                 </div>
-                <div class="preview-row">
-                    <span class="preview-label">Petugas</span>
-                    <div style="text-align: right; max-width: 60%;">
-                        <span class="petugas-text" id="prev-petugas">-</span> 
-                        <span style="font-size: 11px; color: #64748B;" id="prev-hari">(-)</span>
-                    </div>
+                <div class="action-row-2">
+                    <button type="button" id="btn-scan-ulang" class="btn-scan-ulang">Batal / Ulang</button>
+                    <button type="button" id="btn-kirim" class="btn-kirim">Kirim Data</button>
                 </div>
-                <div class="preview-row">
-                    <span class="preview-label">Nominal</span>
-                    <span class="preview-value val-highlight" id="prev-nominal">-</span>
-                </div>
-            </div>
-            <div class="action-row-2">
-                <button type="button" id="btn-scan-ulang" class="btn-scan-ulang">Batal/Ulang</button>
-                <button type="button" id="btn-kirim" class="btn-kirim">Kirim Data</button>
             </div>
         </div>
     </div>
 
     <!-- 4. REKAP SESI -->
     <div class="form-section">
-        <div class="section-label">
-            <div class="sec-icon-badge" style="background: #059669;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div class="sec-text-group"><span class="sec-title">4. Live Rekap Sesi</span></div>
+        <div class="section-header header-green">
+            <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="sec-text-group">
+                <span class="sec-title">4. Live Rekap Sesi</span>
+                <span class="sec-subtitle">Akumulasi uang fisik sesi ini</span>
+            </div>
         </div>
         
-        <div id="status-database-notif" class="status-notif-box">Menunggu pengiriman pertama...</div>
+        <div class="section-body">
+            <div id="status-database-notif" class="status-notif-box">Menunggu pengiriman pertama...</div>
 
-        <div class="total-box-light">
-            <span class="total-box-label">Total Uang Fisik</span>
-            <span class="total-box-val" id="total-uang-sesi">Rp 0</span>
+            <div class="total-box-light">
+                <span class="total-box-label">Total Uang Fisik</span>
+                <span class="total-box-val" id="total-uang-sesi">Rp 0</span>
+            </div>
+            
+            <button id="btn-laporan-akhir" class="btn-laporan-akhir" style="display: none;">Selesaikan & Laporan Penarikan Ronda</button>
         </div>
-        
-        <button id="btn-laporan-akhir" class="btn-laporan-akhir" style="display: none;">Selesaikan & Laporan Penarikan Ronda</button>
     </div>
 </div> 
 
@@ -339,7 +374,7 @@
         <div id="area-cetak-modal" style="background: #F8FAFC;">
             <div class="modal-header">LAPORAN PENARIKAN RONDA</div>
             <div class="modal-body">
-                <div style="text-align: center; font-size: 12px; color: #64748B; font-weight: 600; margin-bottom: 8px;" id="modal-tgl">Tanggal</div>
+                <div style="text-align: center; font-size: 11.5px; color: #64748B; font-weight: 600; margin-bottom: 4px;" id="modal-tgl">Tanggal</div>
                 
                 <table class="rekap-table" id="table-rekap-petugas">
                     <thead><tr><th>Nama Petugas</th><th style="text-align: right;">Total Ditarik</th></tr></thead>
@@ -351,12 +386,12 @@
                     <div class="stat-val" id="modal-top-warga">-<br><span style="color:#16A34A;">Rp 0</span></div>
                 </div>
                 
-                <div class="stat-card" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+                <div class="stat-card" style="flex-direction: column; align-items: flex-start; gap: 4px;">
                     <span class="stat-label">Daftar Warga Zonk (Rp 0):</span>
-                    <div class="stat-val" id="modal-zonk-warga" style="text-align: left; font-size: 12px; font-weight: 500; color: #DC2626;">-</div>
+                    <div class="stat-val" id="modal-zonk-warga" style="text-align: left; font-size: 11.5px; font-weight: 500; color: #DC2626;">-</div>
                 </div>
                 
-                <div class="stat-card" style="background: #1E293B;">
+                <div class="stat-card" style="background: #0F172A;">
                     <span class="stat-label" style="color: #94A3B8;">TOTAL KESELURUHAN:</span>
                     <span class="stat-val" id="modal-total-all" style="color: #34D399; font-size: 18px;">Rp 0</span>
                 </div>
@@ -400,8 +435,8 @@
         
         let totalJimpitanSesiIni = 0;
         window.submittedIds = new Set();
-        let sessionLogData = []; // Array simpan log lengkap untuk Modal
-        let activePetugasSet = new Set(); // Simpan nama petugas yang hadir narik
+        let sessionLogData = []; 
+        let activePetugasSet = new Set(); 
         
         // =========================================================================
         // URL APLIKASI WEB GAS ANDA
@@ -413,17 +448,24 @@
         let selectedNominalValue = null;
         let scanTimeout;
         let isScanning = false;
-
         let jadwalRonda = {};
         let semuaPetugasSet = new Set();
         window.currentLaporanWaktu = "";
 
-        // Fungsi Waktu Realtime untuk input kosong
-        setInterval(() => {
+        // Fungsi Teks Waktu Lengkap
+        function getFormattedTime() {
             const now = new Date();
-            const jamStr = '(' + String(now.getHours()).padStart(2, '0') + '.' + String(now.getMinutes()).padStart(2, '0') + ' WIB)';
-            if(prevWaktuDetail.textContent === "" || !currentScannedData) {
-                prevWaktuDetail.textContent = jamStr;
+            const daysArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const monthArr = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const tglStr = `${daysArr[now.getDay()]}, ${now.getDate()} ${monthArr[now.getMonth()]} ${now.getFullYear()}`;
+            const jamStr = `(${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} WIB)`;
+            return `${tglStr} ${jamStr}`;
+        }
+
+        // Live Timer UI
+        setInterval(() => {
+            if(!currentScannedData || prevWaktuDetail.textContent === "-") {
+                prevWaktuDetail.textContent = getFormattedTime();
             }
         }, 1000);
 
@@ -447,7 +489,7 @@
 
         async function fetchDataWarga() {
             const sheetId = '1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io';
-            const gid = '1159385762'; // GID Warga
+            const gid = '1159385762'; 
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
             
             try {
@@ -456,7 +498,7 @@
                 const csvText = await response.text();
                 const rows = parseCSV(csvText);
                 
-                selectIdRumah.innerHTML = '<option value="">- Pilih ID -</option>';
+                selectIdRumah.innerHTML = '<option value="">- Cari ID / Nama Warga -</option>';
                 for(let r = 1; r < rows.length; r++) {
                     let idRumah = (rows[r][0] || "").trim();    
                     let namaWarga = (rows[r][2] || "").trim();  
@@ -467,13 +509,14 @@
                         opt.value = idRumah;
                         opt.setAttribute("data-nama", namaWarga || "-");
                         opt.setAttribute("data-domisili", domisili || "-");
-                        opt.textContent = idRumah;
+                        // GABUNGAN TEKS DROPDOWN
+                        opt.textContent = `${idRumah} (${namaWarga || 'Tanpa Nama'})`;
                         selectIdRumah.appendChild(opt);
                     }
                 }
             } catch (error) {
                 console.error("Gagal load data warga:", error);
-                selectIdRumah.innerHTML = '<option value="">- Pilih ID -</option><option value="rt2_01" data-nama="Bambang Purwono" data-domisili="Tetap">rt2_01 (Offline)</option>';
+                selectIdRumah.innerHTML = '<option value="">- Cari ID / Nama Warga -</option><option value="rt2_01" data-nama="Bambang Purwono" data-domisili="Tetap">rt2_01 (Bambang Purwono)</option>';
             }
         }
         
@@ -513,12 +556,7 @@
                 console.error("Gagal load data petugas, fallback manual.", error);
                 jadwalRonda = {
                     "Senin": ["TRI MADIYANTO", "WISNU PRABOWO", "ANANG DHIAN K.", "CUCU SUKMANA", "KARYADI", "RONI"],
-                    "Selasa": ["SUGENG", "RENGGA D.", "TRI SUHARYANTO", "RUDIYANTO", "EKO B.", "NUR F.", "WIDODO"],
-                    "Rabu": ["YULIANTO", "SUPARDI", "TWENTY APRILIYAN", "DEDI S.", "MIKI", "GOODMAN MANULANG", "BAGUS HANDOKO", "AGUS H."],
-                    "Kamis": ["ARI SUPRIYANTO", "TRI SETYO WINARYANTO", "ARGA D. WICAKSANA", "DONI HARIYANTO", "HUDIYONO", "FERI", "SUNARDI"],
-                    "Jumat": ["SATRIA", "IBNU", "RIZAL", "PEMUDA 1", "PEMUDA 2", "PEMUDA 3", "PEMUDA 4"],
-                    "Sabtu": ["NGADIMIN", "ARIS YUSWANTORO", "PRIYOTO", "SURAHYA", "ARI NUGROHO"],
-                    "Minggu": ["KARTI NURJANI", "SAMIJOKO", "TRISNA SANJAYA", "FAJAR YUNIANTO", "SARJIYO"]
+                    "Selasa": ["SUGENG", "RENGGA D.", "TRI SUHARYANTO", "RUDIYANTO", "EKO B.", "NUR F.", "WIDODO"]
                 };
                 Object.values(jadwalRonda).forEach(arr => arr.forEach(n => semuaPetugasSet.add(n)));
                 selectHari.dispatchEvent(new Event('change'));
@@ -528,8 +566,8 @@
         fetchDataWarga();
         fetchDataPetugas();
 
-        const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-        selectHari.value = days[new Date().getDay()];
+        const daysArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        selectHari.value = daysArr[new Date().getDay()];
 
         selectHari.addEventListener("change", (e) => {
             const hariTerpilih = e.target.value;
@@ -539,7 +577,7 @@
             
             if (hariTerpilih === "Altruis") {
                 let optBlank = document.createElement("option");
-                optBlank.value = ""; optBlank.textContent = "- Pilih Petugas -";
+                optBlank.value = ""; optBlank.textContent = "- Pilih Nama -";
                 selectPetugas.appendChild(optBlank);
                 
                 Array.from(semuaPetugasSet).sort().forEach(nama => {
@@ -549,7 +587,7 @@
                 });
                 
                 let optManual = document.createElement("option");
-                optManual.value = "Manual"; optManual.textContent = "+ Petugas Lain (Manual)";
+                optManual.value = "Manual"; optManual.textContent = "+ Nama Lain (Ketik Manual)";
                 selectPetugas.appendChild(optManual);
             } else {
                 if (jadwalRonda[hariTerpilih]) {
@@ -621,7 +659,7 @@
                 infoNamaWarga.style.background = "#F1F5F9";
                 infoNamaWarga.style.color = "#94A3B8"; 
                 infoNamaWarga.style.borderColor = "#CBD5E1"; 
-                showNotif('error', '⚠️ ID ini sudah disetor di sesi ini!');
+                showNotif('error', '⚠️ Warga ini sudah disetor di sesi ini!');
             } else {
                 badgeSelesai.style.display = "none";
                 infoNamaWarga.style.background = "#DCFCE7";
@@ -639,7 +677,7 @@
                 
                 infoIdRumah.textContent = `(${this.value})`;
                 infoNamaWarga.textContent = nama;
-                infoDomisili.textContent = domisili && domisili !== "-" ? domisili : "";
+                infoDomisili.textContent = domisili && domisili !== "-" ? domisili : "Domisili";
                 
                 currentScannedData = { idRumah: this.value, namaWarga: nama, domisili: domisili };
                 checkIdSelesai(this.value);
@@ -653,10 +691,8 @@
             hidePreview();
         });
 
-        // Warna warni tombol nominal
         nominalButtons.forEach(button => {
             button.addEventListener("click", () => {
-                // Remove all active classes
                 nominalButtons.forEach(btn => {
                     btn.className = "btn-nominal" + (btn.classList.contains("btn-manual") ? " btn-manual" : "") + (btn.classList.contains("btn-kosong") ? " btn-kosong" : "");
                 });
@@ -707,11 +743,10 @@
             let tDomisili = currentScannedData && currentScannedData.domisili ? currentScannedData.domisili : "-";
             let tNom = selectedNominalValue === "0" ? "ZONK (Rp 0)" : "Rp " + parseInt(selectedNominalValue, 10).toLocaleString('id-ID');
 
-            const now = new Date();
-            const jamStr = '(' + String(now.getHours()).padStart(2, '0') + '.' + String(now.getMinutes()).padStart(2, '0') + ' WIB)';
-            window.currentLaporanWaktu = jamStr;
+            const fullTimeStr = getFormattedTime(); // Format: Hari, Tgl (Jam)
+            window.currentLaporanWaktu = fullTimeStr;
 
-            document.getElementById('prev-waktu').textContent = jamStr;
+            document.getElementById('prev-waktu').textContent = fullTimeStr;
             document.getElementById('prev-id').textContent = `(${tId})`;
             document.getElementById('prev-nama').textContent = tNama;
             document.getElementById('prev-domisili').textContent = tDomisili;
@@ -745,9 +780,10 @@
             btnKirim.disabled = true;
             btnKirim.textContent = "Mengirim...";
             btnScanUlang.disabled = true;
+            
             showNotif('loading', '⏳ Mohon Menunggu Sedang Kirim Data...');
             statusDatabaseNotif.textContent = "Sedang mengirim data ke Spreadsheet...";
-            statusDatabaseNotif.style.borderColor = "#F59E0B";
+            statusDatabaseNotif.style.borderColor = "#FCD34D";
 
             let iuranValue = selectedNominalValue === "0" ? "0" : selectedNominalValue;
             let targetData = currentScannedData || { 
@@ -758,16 +794,11 @@
             
             let p_petugas = getNamaPetugasFinal();
 
-            // Format tanggal Spreadsheet (tambahkan tanggal asli)
-            const now = new Date();
-            const daysArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-            const tglFull = `${daysArr[now.getDay()]}, ${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()} ${window.currentLaporanWaktu}`;
-
             const params = new URLSearchParams({
                 id_rumah: targetData.idRumah,
                 nama_warga: targetData.namaWarga,
                 status_domisili: targetData.domisili,
-                hari_tanggal: tglFull,
+                hari_tanggal: window.currentLaporanWaktu,
                 iuran: iuranValue,
                 petugas: p_petugas,
                 hari_tugas: selectHari.value
@@ -779,24 +810,23 @@
             })
             .then(() => {
                 showNotif('success', '✅ Berhasil, data sudah tersimpan.');
-                playSuccessChime(); // Nada sukses!
+                playSuccessChime(); // Suara sukses baru
+                
                 statusDatabaseNotif.textContent = "Pengiriman berhasil.";
-                statusDatabaseNotif.style.borderColor = "#22C55E";
+                statusDatabaseNotif.style.borderColor = "#E2E8F0";
                 
                 btnKirim.textContent = "Data Terkirim";
                 btnScanUlang.disabled = false;
                 btnScanUlang.textContent = "Lanjut Scan Berikutnya";
                 
-                // Tandai sudah eksekusi
                 window.submittedIds.add(targetData.idRumah);
                 let options = Array.from(selectIdRumah.options);
                 let opt = options.find(o => o.value === targetData.idRumah);
                 if(opt && !opt.textContent.includes("✅")) {
                     opt.textContent = "✅ " + opt.textContent;
-                    opt.classList.add("opt-done"); // Tambah kelas hijau
+                    opt.classList.add("opt-done");
                 }
 
-                // Tambahkan ke Log Session untuk Modal
                 let numIuran = parseInt(iuranValue) || 0;
                 totalJimpitanSesiIni += numIuran;
                 totalUangSesiEl.textContent = "Rp " + totalJimpitanSesiIni.toLocaleString('id-ID');
@@ -808,14 +838,14 @@
                     nominal: numIuran
                 });
                 
-                btnLaporanAkhir.style.display = "block"; // Tampilkan tombol laporan
+                btnLaporanAkhir.style.display = "block"; 
             })
             .catch((err) => {
                 console.error("Error submit:", err);
                 showNotif('error', '❌ Gagal terkirim. Periksa koneksi internet.');
                 playErrorBeep();
                 statusDatabaseNotif.textContent = "Pengiriman Gagal.";
-                statusDatabaseNotif.style.borderColor = "#EF4444";
+                statusDatabaseNotif.style.borderColor = "#F87171";
                 btnKirim.disabled = false;
                 btnKirim.textContent = "Kirim Ulang";
                 btnScanUlang.disabled = false;
@@ -829,7 +859,6 @@
         const btnCloseModal = document.getElementById("btn-close-modal");
         
         btnLaporanAkhir.addEventListener("click", () => {
-            // Hitung Data
             let rekapPetugas = {};
             let maxNominal = -1;
             let topWarga = "-";
@@ -848,14 +877,12 @@
                 }
             });
             
-            // Render Tabel Petugas
             const tbody = document.querySelector("#table-rekap-petugas tbody");
             tbody.innerHTML = "";
             for (const [ptg, uang] of Object.entries(rekapPetugas)) {
                 tbody.innerHTML += `<tr><td>${ptg}</td><td class="uang">Rp ${uang.toLocaleString('id-ID')}</td></tr>`;
             }
             
-            // Render Stat
             document.getElementById("modal-top-warga").innerHTML = `${topWarga}<br><span style="color:#16A34A;">Rp ${maxNominal > 0 ? maxNominal.toLocaleString('id-ID') : 0}</span>`;
             document.getElementById("modal-zonk-warga").innerHTML = listZonk.length > 0 ? listZonk.join(", ") : "Tidak ada warga zonk.";
             document.getElementById("modal-total-all").textContent = "Rp " + totalJimpitanSesiIni.toLocaleString('id-ID');
@@ -866,11 +893,8 @@
             modalLaporan.style.display = "flex";
         });
         
-        btnCloseModal.addEventListener("click", () => {
-            modalLaporan.style.display = "none";
-        });
+        btnCloseModal.addEventListener("click", () => { modalLaporan.style.display = "none"; });
 
-        // Download JPG
         document.getElementById("btn-download-jpg").addEventListener("click", async function() {
             const areaCetak = document.getElementById("area-cetak-modal");
             const originalBtnText = this.innerHTML;
@@ -891,24 +915,18 @@
             }
         });
 
-        // Lempar ke Halaman Ronda (Kirim Data Total)
         document.getElementById("btn-lempar-ronda").addEventListener("click", function() {
-            // Susun petugas yang hadir dipisahkan koma
             let petugasHadirStr = Array.from(activePetugasSet).join(",");
             let totalStr = totalJimpitanSesiIni;
-            
-            // Buka URL dengan Parameter di tab yang sama (_self)
             let urlTarget = `https://rt2pasekanlor.id/ronda?nominal_otomatis=${totalStr}&hadir_otomatis=${encodeURIComponent(petugasHadirStr)}`;
             window.location.href = urlTarget;
         });
-
 
         // Scanner Logic
         function startScanner() {
             if (!html5QrCode) { html5QrCode = new Html5Qrcode("reader"); }
             const config = { fps: 10, qrbox: { width: 200, height: 200 } };
             isScanning = true;
-            
             html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess)
             .catch((err) => { console.error("Kamera Error:", err); playErrorBeep(); });
         }

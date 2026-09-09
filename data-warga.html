@@ -70,7 +70,7 @@
 
         <!-- ================== BAGIAN LOGIN ================== -->
         <transition name="fade">
-            <div v-if="!isLoggedIn" class="fixed inset-0 z-50 flex flex-col justify-center items-center p-2 py-4 bg-[#D6D6D6] overflow-y-auto">
+            <div v-if="!isLoggedIn" class="fixed inset-0 z-50 flex flex-col justify-center items-center p-2 py-4 bg-[#D6D6D6] overflow-y-auto pb-12">
                 <div class="w-full max-w-[340px] flex flex-col items-center my-auto relative z-10">
                     <div class="mb-2 text-center">
                         <a href="https://rt2pasekanlor.id/" target="_blank" class="inline-block hover:scale-105 transition-transform" title="Website RT 2">
@@ -119,19 +119,16 @@
                         </div>
                     </div>
 
-                    <div class="mt-3 sm:mt-4 text-center w-full">
+                    <div class="mt-3 sm:mt-4 text-center w-full mb-8">
                         <a href="https://rt2pasekanlor.id/" target="_blank" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/90 hover:bg-white text-primary hover:text-[#000F2E] text-[11px] sm:text-[12px] font-[600] shadow-sm hover:shadow-md transition-all border border-white/60 backdrop-blur-sm w-full">
                             <i class="fas fa-arrow-left text-[11px]"></i><span>www.rt2pasekanlor.id</span>
                         </a>
-                    </div>
-                    <div class="mt-3 text-center text-[10px] sm:text-[11px] text-[#4B5563] font-[500]">
-                        Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. Dikerjakan mandiri oleh Warga RT 2 Paslor. AdW
                     </div>
                 </div>
             </div>
         </transition>
 
-        <!-- ================== SIDEBAR KIRI (ORISINAL COLLAPSIBLE) ================== -->
+        <!-- ================== SIDEBAR KIRI ================== -->
         <aside v-if="isLoggedIn" class="hidden lg:flex fixed left-0 top-0 h-screen bg-sidebar shadow-[5px_0_40px_rgba(0,0,0,0.4)] z-50 flex-col font-['Poppins'] border-r border-blue-400/30 overflow-y-auto custom-scrollbar transition-all duration-300 cursor-pointer rounded-none"
                :class="isSidebarExpanded ? 'w-[230px] p-4' : 'w-[60px] py-4 px-0 items-center'"
                @click="isSidebarExpanded = !isSidebarExpanded">
@@ -139,9 +136,9 @@
             <!-- Tampilan Saat Dilipat -->
             <div v-if="!isSidebarExpanded" class="text-white flex flex-col items-center gap-6 mt-2 w-full">
                 <i class="fas fa-bars text-[18px]"></i>
-                <i class="fas fa-search text-[16px] mt-4 text-yellow-300"></i>
-                <i class="fas fa-filter text-[16px] text-yellow-300"></i>
-                <div class="text-[13px] font-[600] tracking-widest mt-12 text-white" style="writing-mode: vertical-rl; transform: rotate(180deg);">PENCARIAN & NAVIGASI</div>
+                <i class="fas fa-search text-[16px] mt-4 text-white"></i>
+                <i class="fas fa-filter text-[16px] text-white"></i>
+                <div class="text-[13px] font-[600] tracking-widest mt-12 text-white" style="writing-mode: vertical-rl; transform: rotate(180deg);">NAVIGASI & FILTER</div>
             </div>
 
             <!-- Tampilan Saat Dibuka -->
@@ -163,7 +160,7 @@
 
                 <!-- Filter Data dengan elemen Putih/Warna Terang -->
                 <div v-if="activeMenu === 'list' && userRole === 'admin'" class="flex flex-col flex-1">
-                    <div class="text-white/50 text-[10px] font-[600] mb-1.5">CARI & SARING DATA</div>
+                    <div class="text-white/50 text-[10px] font-[600] mb-1.5 mt-2">CARI & SARING DATA</div>
                     
                     <div class="relative w-full mb-3">
                         <div class="bg-white rounded flex items-center px-3 py-1.5 shadow-sm">
@@ -198,8 +195,8 @@
                         </select>
                     </div>
 
-                    <div class="mt-auto mb-2 text-[11px] bg-white text-gray-800 py-1.5 px-2 rounded text-center shadow-sm">
-                        Total Hasil Data: <span class="font-[600] text-primary">{{ filteredWarga.length }}</span>
+                    <div class="mt-auto mb-2 text-[11px] font-[500] text-white py-1 px-2 text-center rounded border border-white/20">
+                        Total Hasil Data: <span class="font-[600]">{{ filteredWarga.length }}</span> Warga
                     </div>
 
                     <div class="flex gap-1.5 mb-2">
@@ -211,10 +208,11 @@
                 <!-- Footer Sidebar (Profil Bulat, Keluar & Refresh Ikon Saja) -->
                 <div class="mt-auto pt-3 border-t border-white/20 flex flex-col gap-3">
                     <div class="flex items-center gap-2">
-                        <img v-if="userRole === 'admin'" src="https://ui-avatars.com/api/?name=Admin+RT2&background=fff&color=0743AB&rounded=true&bold=true" class="w-[36px] h-[36px] rounded-full border-2 border-white/50 object-cover bg-white shrink-0">
+                        <!-- Avatar Admin Gambar Khusus -->
+                        <img v-if="userRole === 'admin'" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhpEdeIMDtiqvt76CqoStO1Hfuc_M4nVv1fC2A6DLelPMt1JN7j3ZT9XLuP0hz2G1Oc6mjSkiKwm95kGB1XXdsc1g00E-aKuR5aRrJcUjxz0TfKAcQHgf65gdCdfMeyoa1uZVb4Sb9L3naxhkvleZUxwNJSLRZGaYZluO_O8BuHb2vqpK19j-zI9kzDILA/s1600/RT%202%20PASLOR%20(small).png" class="w-[36px] h-[36px] rounded-full border-2 border-white/50 object-cover bg-white shrink-0">
                         <img v-else :src="filteredWarga.length ? getAvatar(filteredWarga[0]) : 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png'" class="w-[36px] h-[36px] rounded-full border-2 border-white/50 object-cover bg-white shrink-0">
                         <div class="flex-1 min-w-0">
-                            <h3 class="font-[600] text-white truncate text-[13px]">{{ userRole === 'admin' ? 'Administrator RT 2' : getDisplayName() }}</h3>
+                            <h3 class="font-[600] text-white truncate text-[13px]">{{ userRole === 'admin' ? 'Pengurus RT 2' : getDisplayName() }}</h3>
                             <p class="text-[10px] text-white/70 truncate">{{ userRole === 'admin' ? 'Akses Sistem Penuh' : 'Warga RT 2' }}</p>
                         </div>
                     </div>
@@ -227,10 +225,10 @@
         </aside>
 
         <!-- ================== KONTEN UTAMA & HEADER ORISINAL ================== -->
+        <!-- Padding menyesuaikan lebar sidebar -->
         <div v-if="isLoggedIn" class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative transition-all duration-300"
              :class="(userRole === 'admin' && activeMenu === 'list') ? (isSidebarExpanded ? 'lg:pl-[230px]' : 'lg:pl-[60px]') : ''">
             
-            <!-- HEADER UTAMA ORISINAL -->
             <header class="bg-primary w-full border-b border-[#0C3D96] shrink-0">
                 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center w-full">
                     <div class="flex items-center gap-3">
@@ -251,7 +249,6 @@
                 </div>
             </header>
 
-            <!-- NAVIGASI TABS & PENCARIAN (KHUSUS MOBILE KARENA DESKTOP SUDAH DI SIDEBAR) -->
             <div class="shrink-0 shadow-md border-b w-full bg-[#2F3E61] border-[#1F2A42] lg:hidden">
                 <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center gap-2 w-full justify-between">
                     <div class="relative flex-1 group" v-if="userRole === 'admin' && activeMenu === 'list'">
@@ -286,8 +283,9 @@
             </div>
 
             <!-- CONTAINER UTAMA HALAMAN -->
+            <!-- Ruang di bawah (pb-20) untuk memastikan footer tipis tidak menutupi tombol simpan -->
             <div class="flex-1 overflow-y-auto w-full custom-scrollbar flex flex-col relative" id="scrollArea">
-                <main class="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 pb-12 flex flex-col flex-1">
+                <main class="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 pb-20 flex flex-col flex-1">
                     
                     <div v-if="loading" class="flex flex-col items-center justify-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
                         <div class="spinner mb-4 w-10 h-10 border-t-primary"></div><p class="text-gray-500 font-[500] text-[13px]">Memuat Database...</p>
@@ -296,7 +294,7 @@
                     <!-- ================== MENU 1: DAFTAR WARGA ================== -->
                     <div v-show="activeMenu === 'list' && !loading" class="space-y-4">
                         
-                        <!-- FILTER ACCORDION (Hanya Mobile Admin) -->
+                        <!-- FILTER ACCORDION MOBILE ADMIN -->
                         <div v-if="userRole === 'admin'" class="bg-white rounded-2xl shadow-md border border-[#E5E7EB] mb-6 overflow-hidden block lg:hidden">
                             <div @click="isFilterOpen = !isFilterOpen" class="bg-gray-50 p-3.5 flex justify-between items-center cursor-pointer">
                                 <div class="flex items-center gap-2 text-[12px]">
@@ -305,6 +303,7 @@
                                 </div>
                                 <i class="fas fa-chevron-up text-gray-400 text-[12px] transition-transform" :class="{'rotate-180': !isFilterOpen}"></i>
                             </div>
+                            <!-- TRANSITION ACCORDION -->
                             <transition name="accordion">
                                 <div v-show="isFilterOpen">
                                     <div class="px-4 pb-4 pt-3 space-y-2">
@@ -317,7 +316,8 @@
                                             <button @click="resetFilters" class="flex-1 py-2 bg-red-50 text-red-500 border border-red-200 rounded font-[600] text-[12px]">Reset Filter</button>
                                         </div>
                                     </div>
-                                </transition>
+                                </div> 
+                            </transition>
                         </div>
 
                         <div v-if="filteredWarga.length === 0" class="bg-white rounded-3xl py-20 text-center shadow-sm border border-gray-100">
@@ -394,7 +394,7 @@
                                             </td>
                                             <td class="p-3 hidden sm:table-cell text-gray-600 font-[500] space-y-0.5 text-[11px]">
                                                 <div><i class="fas fa-map-marker-alt text-red-500 w-3.5 text-center"></i> {{ w.Status_Domisili || '-' }}</div>
-                                                <div class="font-[600]" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-[#EF4444]' : 'text-brandgreen'"><i class="fas fa-shield-alt w-3.5 text-center" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-[#EF4444]' : 'text-brandgreen'"></i> {{ w.Ronda || 'Belum ada data' }}</div>
+                                                <div class="font-[600]" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-500' : 'text-brandgreen'"><i class="fas fa-shield-alt w-3.5 text-center" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-500' : 'text-brandgreen'"></i> {{ w.Ronda || 'Belum ada data' }}</div>
                                             </td>
                                             <td class="p-3 text-center align-middle">
                                                 <a @click.stop :href="'https://wa.me/' + formatWhatsApp(w.No_Tlp)" target="_blank" class="text-brandgreen hover:text-green-700 text-[20px] transition-colors"><i class="fab fa-whatsapp"></i></a>
@@ -514,49 +514,14 @@
 
                 </main>
 
-                <!-- Footer Tipis 1 Baris di dalam area konten -->
-                <footer class="w-full bg-[#D6D6D6]/50 border-t border-gray-300 shrink-0 py-1.5 mt-auto">
-                    <div class="text-center px-4"><p class="text-[10px] font-[500] text-gray-500 tracking-wide">&copy; Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. AdW.</p></div>
+                <!-- FIXED FOOTER TIPIS -->
+                <footer class="w-full bg-[#FFFFFF] border-t border-gray-200 shrink-0 py-2 fixed bottom-0 z-10 transition-all duration-300" :class="(userRole === 'admin' && activeMenu === 'list') ? (isSidebarExpanded ? 'lg:pl-[230px]' : 'lg:pl-[60px]') : ''">
+                    <div class="text-center px-4"><p class="text-[12px] font-[500] text-gray-400">&copy; Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. AdW.</p></div>
                 </footer>
             </div>
         </div>
 
-        <!-- ================== MODAL IDENTITAS WACANA DSB ================== -->
-        <!-- HIDDEN A4 TEMPLATE FOR DOWNLOAD -->
-        <div style="overflow: hidden; height: 0; width: 0; position: absolute; z-index: -9999;">
-            <div id="print-area-a4" class="w-[1123px] min-h-[794px] bg-white text-black p-10 box-border absolute text-[12px]">
-                <div class="text-center border-b-2 border-black pb-4 mb-6">
-                    <h1 class="text-2xl font-[600] uppercase">Data Warga Terpadu RT 2 Pasekan Lor</h1>
-                    <p class="text-sm">Berdasarkan data terkini sistem ({{ new Date().toLocaleDateString() }})</p>
-                </div>
-                <table class="w-full text-left border-collapse mb-8">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="border border-gray-800 p-2 text-center w-10 font-[600]">No</th>
-                            <th class="border border-gray-800 p-2 font-[600]">Nama Warga</th>
-                            <th class="border border-gray-800 p-2 text-center font-[600]">No. Rumah</th>
-                            <th class="border border-gray-800 p-2 text-center font-[600]">No. WA</th>
-                            <th class="border border-gray-800 p-2 text-center font-[600]">Agama</th>
-                            <th class="border border-gray-800 p-2 text-center font-[600]">Gol. Darah</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(w, i) in filteredWarga" :key="'dl_'+i">
-                            <td class="border border-gray-800 p-2 text-center">{{ i+1 }}</td>
-                            <td class="border border-gray-800 p-2 font-[600]">{{ w.Nama }}</td>
-                            <td class="border border-gray-800 p-2 text-center">{{ w.Id_Rumah }}</td>
-                            <td class="border border-gray-800 p-2 text-center">{{ formatDashPhone(w.No_Tlp) }}</td>
-                            <td class="border border-gray-800 p-2 text-center">{{ w.Agama || '-' }}</td>
-                            <td class="border border-gray-800 p-2 text-center">{{ w.Gol_Darah || '-' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="pt-8 text-center text-[10px] text-gray-500 italic border-t border-gray-300">
-                    Sumber data: Aplikasi Data Warga Terpadu RT 2 Pasekan Lor (www.rt2pasekanlor.id).
-                </div>
-            </div>
-        </div>
-
+        <!-- ================== MODAL IDENTITAS (DETAIL) ================== -->
         <transition name="fade">
             <div v-if="detailModal.show" class="fixed inset-0 z-[70] bg-[#000000]/70 backdrop-blur-sm flex justify-center items-center p-4 cursor-pointer overflow-y-auto pt-[50px] pb-[50px]" @click.self="closeDetailModal">
                 <div class="bg-[#FFFFFF] rounded-[24px] w-full max-w-4xl flex flex-col shadow-2xl overflow-hidden cursor-default relative my-auto">
@@ -579,7 +544,6 @@
 
                     <div class="p-6 overflow-y-auto space-y-5 bg-[#FFFFFF]">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Kolom Kiri -->
                             <div class="space-y-4">
                                 <div class="bg-[#F9FAFB] p-4 rounded-2xl border border-[#E5E7EB] space-y-2.5">
                                     <h4 class="font-[600] text-[#000000] border-b border-[#E5E7EB] pb-1.5 mb-2 text-[14px]"><i class="fas fa-id-card mr-2 text-primary"></i>Data Diri</h4>
@@ -598,7 +562,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Kolom Kanan -->
                             <div class="space-y-4 flex flex-col">
                                 <div class="bg-orange-50/50 p-4 rounded-2xl border border-orange-200 flex-1">
                                     <h4 class="font-[600] text-brandorange border-b border-orange-200 pb-1.5 mb-2 text-[14px]"><i class="fas fa-users mr-1.5"></i>Keluarga Se-rumah</h4>
@@ -655,21 +618,18 @@
             </div>
         </transition>
 
+        <!-- MODAL WACANA -->
         <transition name="fade">
             <div v-if="wacanaModal.show" class="fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm flex justify-center items-center p-4" @click.self="wacanaModal.show = false; showTataCara = false">
-                <div class="bg-white rounded-[24px] p-6 w-full max-w-lg shadow-2xl relative text-[13px]">
+                <div class="bg-white rounded-3xl p-6 md:p-8 max-w-2xl w-full text-center shadow-2xl relative overflow-y-auto max-h-[90vh] custom-scrollbar">
                     <button @click="wacanaModal.show = false; showTataCara = false" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-times text-[14px]"></i></button>
 
                     <div v-if="!showTataCara">
-                        <div class="flex items-center gap-3 mb-5 border-b border-gray-100 pb-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-100 text-primary flex items-center justify-center shadow-sm"><i class="fas fa-file-invoice-dollar text-[20px]"></i></div>
-                            <div>
-                                <h3 class="font-[600] text-gray-900 text-[16px]">Laporan Iuran Warga</h3>
-                                <p class="text-gray-500 font-[500] text-[13px]">{{ wacanaModal.nama }}</p>
-                            </div>
-                        </div>
-                        <div class="border border-gray-200 rounded-xl overflow-hidden mb-4 shadow-sm">
-                            <table class="w-full text-left text-[13px]">
+                        <i class="fas fa-file-invoice-dollar text-[40px] text-blue-500 mb-3 drop-shadow-md"></i>
+                        <h3 class="text-[16px] font-[600] text-gray-800 mb-6">Data Laporan Warga: {{ wacanaModal.nama }}</h3>
+
+                        <div class="overflow-x-auto text-left mb-6 shadow-sm rounded-xl border border-gray-200">
+                            <table class="w-full border-collapse text-[13px]">
                                 <thead class="bg-blue-50 text-blue-800 font-[600] border-b border-blue-100">
                                     <tr><th class="p-2.5 pl-4">Bulan</th><th class="p-2.5 text-center">Jimpitan</th><th class="p-2.5 text-center pr-4">Lainnya</th></tr>
                                 </thead>
@@ -712,6 +672,7 @@
             </div>
         </transition>
 
+        <!-- TOASTS -->
         <div class="fixed top-20 right-4 z-[110] flex flex-col gap-2 pointer-events-none">
             <transition-group name="fade">
                 <div v-for="t in toasts" :key="t.id" class="px-5 py-3.5 rounded-xl shadow-xl flex items-center text-white text-[13px] font-[600] min-w-[250px]" :class="t.type === 'error' ? 'bg-red-500' : 'bg-brandgreen'">
@@ -945,7 +906,6 @@
                         userRole.value = res.role;
                         loggedInId.value = loginIdRumah.value;
                         wargaList.value = res.data; 
-                        
                         isLoggedIn.value = true;
                         activeMenu.value = 'list';
                         isSidebarExpanded.value = false; 

@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1600/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ronda Warga RT 2 - RW 3, Pasekan Lor. Warga Kreatif, Mandiri & Berbudaya.">
+    <meta name="description" content="Versi 3.0. Ronda Warga RT 2 - RW 3, Pasekan Lor. Warga Kreatif, Mandiri & Berbudaya.">
     <title>Ronda Warga RT 2 Pasekan Lor</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,6 @@
             width: 100%; max-width: 480px;
             background-color: #F2F2F2; 
             min-height: 100vh; position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.15);
             padding-top: 135px; /* Jarak untuk header oranye saat fixed */
             padding-bottom: 30px; overflow-x: hidden;
             transition: padding-bottom 0.3s ease;
@@ -70,7 +69,6 @@
             align-items: center; 
             padding: 3px 12px; 
             background-color: #1155CC; 
-            box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); 
             z-index: 1; 
             position: relative;
             transition: transform 0.3s ease, opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
@@ -93,7 +91,7 @@
         .header-logo + .header-text { flex: 1; }
 
         /* Tombol Ikon Menu */
-        .btn-menu-dots { background: #1155CC; border: 0px solid rgba(255, 255, 255, 0.4); color: #ffffff; border-radius: 8px; height: 32px; padding: 0 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; transition: all 0.2s; backdrop-filter: blur(4px); }
+        .btn-menu-dots { background: #1155CC; border: 0px solid rgba(255, 255, 255, 0.4); color: #ffffff; border-radius: 8px; height: 32px; padding: 0 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; transition: all 0.2s; backdrop-filter: blur(4px); }
         .btn-menu-dots:active { transform: scale(0.92); filter: brightness(0.9); }
 
         /* Header Oranye Judul Halaman yang Fixed */
@@ -105,19 +103,17 @@
             justify-content: space-between; 
             align-items: center; 
             border-radius: 0; 
-            box-shadow: none; 
             z-index: 2; 
             position: relative; 
             flex-shrink: 0;
-            transition: padding 0.3s ease, box-shadow 0.3s ease;
+            transition: padding 0.3s ease;
         }
 
         .fixed-top-bar.scrolled .title-card-panel {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             padding: 12px 20px;
         }
 
-        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; min-width: 0; }
+        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; gap: 8px; min-width: 0; }
         .title-card-left i { font-size: 18px; }
         .title-card-right { display: flex; align-items: center; margin-left: auto; }
         .scroll-logo { width: 0; height: 0; object-fit: contain; opacity: 0; transform: scale(0.7); transition: width 0.22s ease, height 0.22s ease, opacity 0.18s ease, transform 0.22s ease; }
@@ -135,7 +131,6 @@
         
         .menu-modal-content { 
             background: transparent; 
-            box-shadow: none; 
             border: none; 
             padding: 0; 
             width: 100%; 
@@ -157,7 +152,6 @@
             --text-white: #FFFFFF;
             --btn-blue: #0047BF;
             --btn-active: #A1A1A1;
-            --shadow-inset: #000000;
         }
 
         .main-menu-wrapper {
@@ -172,9 +166,8 @@
             color: var(--text-white); text-decoration: none; border-radius: 12px; 
             font-size: 11px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; 
+            transition: transform 0.2s, background 0.3s; text-align: center; 
             width: 100%; min-height: 84px; padding: 12px 4px; border: none; line-height: 1.2;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
         }
         
         .nav-item:active { transform: scale(0.94); }
@@ -187,7 +180,6 @@
         /* EFEK TOMBOL AKTIF */
         .nav-item.menu-tertekan {
             background: var(--btn-active) !important; 
-            box-shadow: inset 0 6px 10px var(--shadow-inset) !important; 
             transform: scale(0.95); 
             color: var(--text-white) !important; 
             pointer-events: none; 
@@ -206,10 +198,10 @@
 
         .univ-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s; padding: 16px; }
         .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
-        .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
+        .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
         .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
         .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 600; color: #1e293b; }
-        .univ-modal-title { font-size: 16px; text-transform: uppercase; }
+        .univ-modal-title { font-size: 16px; }
         .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;}
         .btn-close-univ:hover { background: #FEE2E2; }
         .univ-modal-body { flex: 1; width: 100%; height: 100%; background: #f1f5f9; }
@@ -236,7 +228,6 @@
             background: #FFFFFF; 
             border-radius: 16px; 
             padding: 16px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04); 
             border: 1px solid #e2e8f0; 
             display: flex; 
             flex-direction: column; 
@@ -251,7 +242,7 @@
         }
 
         .header-fancy {
-            border-radius: 14px; padding: 12px; color: #FFFFFF; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease; flex: 1;
+            border-radius: 14px; padding: 12px; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease; flex: 1;
         }
         .header-pagi { background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%); }    
         .header-siang { background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%); }   
@@ -260,11 +251,11 @@
 
         .dt-col { display: flex; flex-direction: column; gap: 4px; z-index: 2; }
         .dt-val-date { font-size: 13px; font-weight: 600; color: #FFFFFF; }
-        .dt-val-time { font-size: 11px; font-weight: 500; color: #FFFFFF; }
+        .dt-val-time { font-size: 12px; font-weight: 500; color: #FFFFFF; }
 
         .time-icon-container { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; position: relative; z-index: 2; }
-        .icon-sun { color: #FEF08A; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
-        .icon-moon { color: #FDE047; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
+        .icon-sun { color: #FEF08A; }
+        .icon-moon { color: #FDE047; }
 
         .twinkle-star { position: absolute; background: #FFFFFF; border-radius: 50%; animation: twinkleAnim 1s infinite ease-in-out alternate; z-index: 1; display: none; }
         .star-1 { width: 3px; height: 3px; top: 20%; right: 70px; animation-delay: 0.1s; }
@@ -273,11 +264,12 @@
 
         @keyframes twinkleAnim {
             0% { opacity: 0.1; transform: scale(0.6); }
-            100% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 6px #FFFFFF; }
+            100% { opacity: 1; transform: scale(1.4); }
         }
         
         .btn-qr-scanner {
-            background: #F527DD;
+            position: relative;
+            background: #0F47A1;
             border-radius: 14px;
             width: 66px;
             height: 66px;
@@ -290,21 +282,33 @@
             flex-shrink: 0;
             text-decoration: none;
         }
-        .btn-qr-scanner:hover { background: #0F47A1; border-color: #0F47A1; }
+        .btn-qr-scanner:hover { background: #1F995D; border-color: #0F47A1; }
         .btn-qr-scanner:active { transform: scale(0.95); }
+
+        .demo-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background-color: #FFD721;
+            color: #0F47A1;
+            font-size: 9px;
+            font-weight: 400;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
 
         .form-section { display: flex; flex-direction: column; gap: 12px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.15); padding-bottom: 16px; }
         .form-section:last-child { border-bottom: none; padding-bottom: 0; }
         .section-label { font-size: 14px; font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 10px; }
-        .sec-number-badge { width: 34px; height: 34px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; box-shadow: 0 3px 8px rgba(17,85,204,0.25); }
+        .sec-number-badge { width: 34px; height: 34px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
         .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
-        .sec-title { font-size: 14.5px; font-weight: 600; color: #1155CC; text-transform: uppercase; }
+        .sec-title { font-size: 14.5px; font-weight: 600; color: #1155CC; }
         .sec-subtitle { font-size: 11.5px; font-weight: 400; color: #64748B; margin-top: 2px; }
 
         .input-group { position: relative; }
         .input-icon-wrapper { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 600; color: #1155CC; z-index: 10; }
         .nominal-input { width: 100%; padding: 12px 14px 12px 44px; font-size: 15px; font-weight: 600; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; transition: all 0.3s; }
-        .nominal-input:focus { outline: none; border-color: #1155CC; box-shadow: 0 0 0 3px rgba(17,85,204,0.12); }
+        .nominal-input:focus { outline: none; border-color: #1155CC; }
         .nominal-confirmed-badge { display: none; font-size: 12.5px; font-weight: 500; color: #16A34A; margin-top: 6px; padding-left: 4px; }
         
         .day-select, .catatan-dropdown { width: 100%; padding: 12px 14px; font-size: 13.5px; font-weight: 500; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; cursor: pointer; outline: none; transition: border-color 0.2s; }
@@ -319,14 +323,14 @@
         .btn-primary-custom:active, .btn-download:active, .btn-wa:active { transform: scale(0.97); }
         
         .btn-primary-custom:not(:disabled):hover, .btn-download:not(:disabled):hover, .btn-wa:not(:disabled):hover {
-            transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); filter: brightness(1.05);
+            transform: translateY(-2px); filter: brightness(1.05);
         }
         
         .btn-download { margin-bottom: 8px; background: #1155CC; }
         .btn-wa { text-decoration: none; display: none !important; } /* Menyembunyikan tombol WA teks */
         
         .btn-primary-custom:disabled, .btn-download:disabled, .btn-wa:disabled { 
-            background: #CBD5E1 !important; color: #64748B !important; cursor: not-allowed; box-shadow: none; transform: none; opacity: 0.8;
+            background: #CBD5E1 !important; color: #64748B !important; cursor: not-allowed; transform: none; opacity: 0.8;
         }
 
         .loading-warga { font-size: 12.5px; font-weight: 500; color: #1155CC; text-align: center; padding: 10px; display: none; background: #EFF6FF; border-radius: 8px;}
@@ -346,9 +350,9 @@
         .pres-btn-izin:hover:not(.active) { color: #2563EB; border-color: #60A5FA; background-color: #DBEAFE; }
         .pres-btn-absen:hover:not(.active) { color: #DC2626; border-color: #EF4444; background-color: #FEE2E2; }
         
-        .pres-btn-hadir.active { background-color: #22C55E; border-color: #22C55E; color: white; font-weight: 600; box-shadow: 0 3px 6px rgba(34,197,94,0.25); }
-        .pres-btn-izin.active { background-color: #60A5FA; border-color: #60A5FA; color: white; font-weight: 600; box-shadow: 0 3px 6px rgba(96,165,250,0.25); } 
-        .pres-btn-absen.active { background-color: #EF4444; border-color: #EF4444; color: white; font-weight: 600; box-shadow: 0 3px 6px rgba(239,68,68,0.25); }
+        .pres-btn-hadir.active { background-color: #22C55E; border-color: #22C55E; color: white; font-weight: 600; }
+        .pres-btn-izin.active { background-color: #60A5FA; border-color: #60A5FA; color: white; font-weight: 600; } 
+        .pres-btn-absen.active { background-color: #EF4444; border-color: #EF4444; color: white; font-weight: 600; }
         
         .warga-card.state-hadir { background-color: #F0FDF4 !important; }
         .warga-card.state-izin { background-color: #EFF6FF !important; } 
@@ -412,7 +416,6 @@
             background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
             color: #FFFFFF; padding: 12px 14px; border-radius: 12px; margin-bottom: 12px;
             display: flex; align-items: center; gap: 12px;
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
         }
         .altruis-banner svg { width: 28px; height: 28px; flex-shrink: 0; }
         .altruis-banner-text { display: flex; flex-direction: column; }
@@ -489,7 +492,8 @@
                     </div>
                 </div>
                 
-                <a href="javascript:void(0)" target="_self" class="btn-qr-scanner" id="btn-qr-scanner" title="QR Scanner">
+                <a href="https://rt2pasekanlor.id/scanner" target="_self" class="btn-qr-scanner" id="btn-qr-scanner" title="QR Scanner">
+                    <div class="demo-badge">demo</div>
                     <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
                         <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
@@ -527,7 +531,7 @@
                     <div class="sec-number-badge">2</div>
                     <div class="sec-text-group">
                         <span class="sec-title">Pilih Hari Ronda (bebas pilih)</span>
-                        <span class="sec-subtitle">Kehadiran anggota. Khusus Altruis wajib mengisi juga.</span>
+                        <span class="sec-subtitle">Dapat diisi ketika terlambat sampai berganti hari. <br>Khusus Altruis wajib mengisi juga.</span>
                     </div>
                 </div>
                 <div id="loading-warga" class="loading-warga">
@@ -535,7 +539,7 @@
                     Menghubungkan data...
                 </div>
                 <select id="day-select" class="day-select" disabled>
-                    <option value="">-- PILIH HARI --</option>
+                    <option value="">- PILIH HARI -</option>
                     <option value="SENIN">SENIN</option>
                     <option value="SELASA">SELASA</option>
                     <option value="RABU">RABU</option>
@@ -561,15 +565,15 @@
                     </div>
                 </div>
                 <select id="catatan-dropdown" class="catatan-dropdown">
-                    <option value="">-- PILIH CATATAN CEPAT --</option>
-                    <option value="UANG JIMPITAN BERADA DI:">💰 Uang Jimpitan Berada di ...</option>
-                    <option value="SITUASI AMAN TERKENDALI">✅ Situasi Aman Terkendali</option>
-                    <option value="STOK KOPI HABIS">☕ Kopi Habis</option>
-                    <option value="STOK GULA HABIS">🍚 Gula Habis</option>
-                    <option value="GALON AIR HABIS">💧 Galon Air Habis</option>
-                    <option value="PENGHITUNGAN UANG JIMPITAN SEJUMLAH Rp ...">🧮 Penghitungan Uang</option>
-                    <option value="LAMPU JALAN MATI LOKASI: ...">💡 Lampu Jalan Mati</option>
-                    <option value="MASIH ADA RUMAH BELUM PASANG JIMPITAN">❌ Jimpitan Zonk</option>
+                    <option value="">- PILIH CATATAN CEPAT DISINI -</option>
+                    <option value="Uang jimpitan berada di">💰 Uang jimpitan berada di ...</option>
+                    <option value="Situasi aman dan terkendali">✅ Situasi aman terkendali</option>
+                    <option value="Stok kopi habis">☕ Kopi habis</option>
+                    <option value="Stok gula habis">🍚 Gula habis</option>
+                    <option value="Galon air habis">💧 Galon air habis</option>
+                    <option value="Rekapitulasi uang jimpitan Bulan ( )// Sesi ( ) // Rp ( ) ">🧮 Rekapituasi</option>
+                    <option value="Lampu jalan ada yang mati di ">💡 Lampu mati</option>
+                    <option value="Masih ada beberapa warga yang belum pasang jimpitan. Mohon kerja samanya.">❌ Jimpitan zonk</option>
                 </select>
                 <textarea id="catatan-text" class="note-textarea" placeholder="Isi catatan kegiatan malam ini"></textarea>
             </div>
@@ -876,8 +880,8 @@
         
         namaHariID.forEach(h => { dataRonda[h] = []; originalDataRonda[h] = []; });
 
-        const sheetId = '1bvGq6kIc2dHms3ufOmePCpJn4Qj6OJ1WhRk_PJM0kF4';
-        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+        const sheetId = '1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io';
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=305568271`;
         
         try {
             const response = await fetch(url);
@@ -1071,7 +1075,7 @@
         if (selectedDay === 'ALTRUIS') {
             htmlContent += `
                 <div class="altruis-banner">
-                    <svg viewBox="0 0 24 24" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));">
+                    <svg viewBox="0 0 24 24">
                         <defs>
                             <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stop-color="#FFDF73" />
@@ -1114,7 +1118,7 @@
         const inputName = document.getElementById('custom-name-input');
         
         const addName = () => {
-            const name = inputName.value.trim().toUpperCase();
+            const name = inputName.value.trim();
             if(name) {
                 if (!dataRonda[selectedDay].includes(name)) {
                     dataRonda[selectedDay].push(name);

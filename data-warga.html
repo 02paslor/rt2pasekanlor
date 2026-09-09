@@ -15,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
+        /* Mengunci Font Poppins dan Bobot Maksimal 600 */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
         
         body, html {
@@ -32,6 +33,7 @@
             --color-sidebar: #0743AB;
         }
         
+        /* Memastikan tidak ada teks melebihi 16px secara global */
         * { max-font-size: 16px; font-weight: normal; }
         b, strong { font-weight: 600 !important; }
 
@@ -116,26 +118,29 @@
                             </button>
                         </div>
                     </div>
+
                     <div class="mt-3 sm:mt-4 text-center w-full">
-                        <a href="https://rt2pasekanlor.id/" target="_blank" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/90 hover:bg-white text-primary text-[11px] sm:text-[12px] font-[600] shadow-sm hover:shadow-md transition-all border border-white/60 backdrop-blur-sm w-full">
+                        <a href="https://rt2pasekanlor.id/" target="_blank" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/90 hover:bg-white text-primary hover:text-[#000F2E] text-[11px] sm:text-[12px] font-[600] shadow-sm hover:shadow-md transition-all border border-white/60 backdrop-blur-sm w-full">
                             <i class="fas fa-arrow-left text-[11px]"></i><span>www.rt2pasekanlor.id</span>
                         </a>
                     </div>
-                    <div class="mt-3 text-center text-[10px] sm:text-[11px] text-[#4B5563] font-[400]">Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. AdW</div>
+                    <div class="mt-3 text-center text-[10px] sm:text-[11px] text-[#4B5563] font-[500]">
+                        Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. Dikerjakan mandiri oleh Warga RT 2 Paslor. AdW
+                    </div>
                 </div>
             </div>
         </transition>
 
-        <!-- ================== SIDEBAR KIRI (COLLAPSIBLE, KLIK DIMANAPUN) ================== -->
-        <aside v-if="isLoggedIn" class="hidden lg:flex fixed left-0 top-0 h-screen bg-sidebar shadow-[5px_0_40px_rgba(0,0,0,0.4)] z-50 flex-col font-['Poppins'] border-r border-blue-400/30 overflow-y-auto custom-scrollbar transition-all duration-300 cursor-pointer rounded-r-[24px]"
+        <!-- ================== SIDEBAR KIRI (ORISINAL COLLAPSIBLE) ================== -->
+        <aside v-if="isLoggedIn" class="hidden lg:flex fixed left-0 top-0 h-screen bg-sidebar shadow-[5px_0_40px_rgba(0,0,0,0.4)] z-50 flex-col font-['Poppins'] border-r border-blue-400/30 overflow-y-auto custom-scrollbar transition-all duration-300 cursor-pointer rounded-none"
                :class="isSidebarExpanded ? 'w-[230px] p-4' : 'w-[60px] py-4 px-0 items-center'"
                @click="isSidebarExpanded = !isSidebarExpanded">
                
             <!-- Tampilan Saat Dilipat -->
             <div v-if="!isSidebarExpanded" class="text-white flex flex-col items-center gap-6 mt-2 w-full">
                 <i class="fas fa-bars text-[18px]"></i>
-                <i class="fas fa-search text-[16px] mt-4"></i>
-                <i class="fas fa-filter text-[16px]"></i>
+                <i class="fas fa-search text-[16px] mt-4 text-yellow-300"></i>
+                <i class="fas fa-filter text-[16px] text-yellow-300"></i>
                 <div class="text-[13px] font-[600] tracking-widest mt-12 text-white" style="writing-mode: vertical-rl; transform: rotate(180deg);">PENCARIAN & NAVIGASI</div>
             </div>
 
@@ -151,90 +156,82 @@
                     <button @click="changeMenu('list')" class="flex items-center rounded-lg p-2 w-full text-left transition-colors" :class="activeMenu === 'list' ? 'bg-white/20 text-white font-[600]' : 'hover:bg-white/10 text-white/80'">
                         <i class="fas fa-users w-6 text-center text-[12px]"></i><span class="text-[12px]">Seluruh Warga</span>
                     </button>
-                    <button v-if="userRole === 'admin'" @click="changeMenu('register')" class="flex items-center rounded-lg p-2 w-full text-left transition-colors" :class="activeMenu === 'register' ? 'bg-brandgreen text-white font-[600]' : 'hover:bg-white/10 text-white/80'">
+                    <button v-if="userRole === 'admin'" @click="changeMenu('register')" class="flex items-center rounded-lg p-2 w-full text-left transition-colors" :class="activeMenu === 'register' ? 'bg-white text-brandgreen font-[600]' : 'hover:bg-white/10 text-white/80'">
                         <i class="fas fa-user-plus w-6 text-center text-[12px]"></i><span class="text-[12px]">Tambah Warga</span>
                     </button>
-                    <!-- Tombol Profil Admin di Sidebar -->
-                    <button v-if="userRole === 'admin'" @click="changeMenu('admin_profile')" class="flex items-center rounded-lg p-2 w-full text-left transition-colors" :class="activeMenu === 'admin_profile' ? 'bg-white/20 text-white font-[600]' : 'hover:bg-white/10 text-white/80'">
-                        <i class="fas fa-user-shield w-6 text-center text-[12px]"></i><span class="text-[12px]">Edit Profil Admin</span>
-                    </button>
                 </div>
 
-                <!-- Tampilan -->
-                <div v-if="activeMenu === 'list' && userRole === 'admin'" class="mb-4">
-                    <div class="text-white/50 text-[10px] font-[600] mb-1.5">MODE TAMPILAN</div>
-                    <div class="flex gap-1">
-                        <button @click="viewMode = 'card'" class="flex-1 py-1.5 rounded bg-white/10 text-[11px] transition-colors" :class="viewMode === 'card' ? 'bg-white/30 text-white font-[600]' : 'text-white/70 hover:bg-white/20'"><i class="fas fa-th-large mr-1"></i> Kartu</button>
-                        <button @click="viewMode = 'table'" class="flex-1 py-1.5 rounded bg-white/10 text-[11px] transition-colors" :class="viewMode === 'table' ? 'bg-white/30 text-white font-[600]' : 'text-white/70 hover:bg-white/20'"><i class="fas fa-list mr-1"></i> Baris</button>
-                    </div>
-                </div>
-
-                <!-- Filter Data (Hanya tampil di list admin) -->
+                <!-- Filter Data dengan elemen Putih/Warna Terang -->
                 <div v-if="activeMenu === 'list' && userRole === 'admin'" class="flex flex-col flex-1">
                     <div class="text-white/50 text-[10px] font-[600] mb-1.5">CARI & SARING DATA</div>
+                    
                     <div class="relative w-full mb-3">
-                        <div class="bg-white/10 rounded-full flex items-center px-3 py-1.5 border border-white/20">
-                            <i class="fas fa-search text-white text-[12px] opacity-70"></i>
-                            <input type="text" v-model="searchQuery" @input="handleSearchInput" placeholder="Pencarian" class="bg-transparent border-none text-white placeholder-white/50 focus:outline-none w-full ml-2 text-[11px] font-['Poppins']">
+                        <div class="bg-white rounded flex items-center px-3 py-1.5 shadow-sm">
+                            <i class="fas fa-search text-gray-400 text-[12px]"></i>
+                            <input type="text" v-model="searchQuery" @input="handleSearchInput" placeholder="Cari warga..." class="bg-transparent border-none text-gray-800 placeholder-gray-400 focus:outline-none w-full ml-2 text-[12px] font-['Poppins']">
                         </div>
                     </div>
 
                     <div class="flex gap-1.5 mb-2.5">
-                        <button @click="applySingleFilter('domisili', 'Tempat Tinggal')" class="flex-1 bg-white/10 py-1.5 rounded text-[11px] transition-all" :class="filterDomisili === 'Tempat Tinggal' ? 'bg-brandgreen text-white font-[600]' : 'text-white/80 hover:bg-white/20'"><i class="fas fa-home"></i> Tinggal</button>
-                        <button @click="applySingleFilter('domisili', 'Kontrak / Kost')" class="flex-1 bg-white/10 py-1.5 rounded text-[11px] transition-all" :class="filterDomisili === 'Kontrak / Kost' ? 'bg-brandorange text-white font-[600]' : 'text-white/80 hover:bg-white/20'"><i class="fas fa-building"></i> Kost</button>
+                        <button @click="applySingleFilter('domisili', 'Tempat Tinggal')" class="flex-1 bg-white py-1.5 rounded text-[11px] transition-all shadow-sm flex items-center justify-center gap-1.5" :class="filterDomisili === 'Tempat Tinggal' ? 'text-white bg-brandgreen font-[600]' : 'text-gray-600 hover:bg-gray-100'"><i class="fas fa-home text-[12px]"></i> Tinggal</button>
+                        <button @click="applySingleFilter('domisili', 'Kontrak / Kost')" class="flex-1 bg-white py-1.5 rounded text-[11px] transition-all shadow-sm flex items-center justify-center gap-1.5" :class="filterDomisili === 'Kontrak / Kost' ? 'text-white bg-brandorange font-[600]' : 'text-gray-600 hover:bg-gray-100'"><i class="fas fa-building text-[12px]"></i> Kost</button>
                     </div>
 
                     <div class="flex gap-1.5 mb-2.5">
-                        <button @click="applySingleFilter('jk', 'Laki-laki')" class="flex-1 bg-white/10 py-1.5 rounded text-[11px] transition-all" :class="filterJK === 'Laki-laki' ? 'bg-white text-primary font-[600]' : 'text-white/80 hover:bg-white/20'"><i class="fas fa-mars"></i> Pria</button>
-                        <button @click="applySingleFilter('jk', 'Perempuan')" class="flex-1 bg-white/10 py-1.5 rounded text-[11px] transition-all" :class="filterJK === 'Perempuan' ? 'bg-white text-[#C955A1] font-[600]' : 'text-white/80 hover:bg-white/20'"><i class="fas fa-venus"></i> Wanita</button>
+                        <button @click="applySingleFilter('jk', 'Laki-laki')" class="flex-1 bg-white py-1.5 rounded text-[11px] transition-all shadow-sm flex items-center justify-center gap-1.5" :class="filterJK === 'Laki-laki' ? 'text-white bg-primary font-[600]' : 'text-gray-600 hover:bg-gray-100'"><i class="fas fa-mars text-[12px]"></i> Pria</button>
+                        <button @click="applySingleFilter('jk', 'Perempuan')" class="flex-1 bg-white py-1.5 rounded text-[11px] transition-all shadow-sm flex items-center justify-center gap-1.5" :class="filterJK === 'Perempuan' ? 'text-white bg-[#C955A1] font-[600]' : 'text-gray-600 hover:bg-gray-100'"><i class="fas fa-venus text-[12px]"></i> Wanita</button>
                     </div>
 
                     <div class="relative w-full mb-2.5">
-                        <select v-model="filterRonda" @change="searchQuery=''" class="w-full pl-2 pr-6 py-1.5 rounded bg-white/10 border border-white/20 text-[11px] text-white outline-none">
-                            <option value="" class="text-black">Jadwal Ronda (Semua)</option><option class="text-black">Senin</option><option class="text-black">Selasa</option><option class="text-black">Rabu</option><option class="text-black">Kamis</option><option class="text-black">Jum'at</option><option class="text-black">Sabtu</option><option class="text-black">Minggu</option><option class="text-black">Bebas Tugas</option><option class="text-black">Belum ada data</option>
+                        <select v-model="filterRonda" @change="searchQuery=''" class="w-full pl-2 pr-6 py-1.5 rounded bg-white text-gray-800 text-[11px] outline-none shadow-sm cursor-pointer">
+                            <option value="">Jadwal Ronda (Semua)</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jum'at</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option>
                         </select>
                     </div>
                     <div class="relative w-full mb-2.5">
-                        <select v-model="filterAgama" @change="searchQuery=''" class="w-full pl-2 pr-6 py-1.5 rounded bg-white/10 border border-white/20 text-[11px] text-white outline-none">
-                            <option value="" class="text-black">Agama (Semua)</option><option class="text-black">Islam</option><option class="text-black">Kristen</option><option class="text-black">Katolik</option><option class="text-black">Hindu</option><option class="text-black">Buddha</option><option class="text-black">Konghucu</option>
+                        <select v-model="filterAgama" @change="searchQuery=''" class="w-full pl-2 pr-6 py-1.5 rounded bg-white text-gray-800 text-[11px] outline-none shadow-sm cursor-pointer">
+                            <option value="">Agama (Semua)</option><option>Islam</option><option>Kristen</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option>
+                        </select>
+                    </div>
+                    <div class="relative w-full mb-2.5">
+                        <select v-model="filterStatus" @change="searchQuery=''" class="w-full pl-2 pr-6 py-1.5 rounded bg-white text-gray-800 text-[11px] outline-none shadow-sm cursor-pointer">
+                            <option value="">Status Kawin (Semua)</option><option>Belum Menikah</option><option>Sudah Menikah</option><option>Pisah Hidup</option><option>Pisah Meninggal</option>
                         </select>
                     </div>
 
-                    <div class="mt-auto mb-2 text-[11px] bg-white/10 py-1 px-2 rounded border border-white/20 text-center">
-                        Hasil: <span class="font-[600]">{{ filteredWarga.length }}</span> Orang
+                    <div class="mt-auto mb-2 text-[11px] bg-white text-gray-800 py-1.5 px-2 rounded text-center shadow-sm">
+                        Total Hasil Data: <span class="font-[600] text-primary">{{ filteredWarga.length }}</span>
                     </div>
 
                     <div class="flex gap-1.5 mb-2">
-                        <button @click="toggleSort" class="w-8 h-7 bg-white/10 rounded flex items-center justify-center text-white/80 hover:bg-white/20" title="Urutkan A-Z"><i class="fas text-[11px]" :class="sortOrder === 'asc' ? 'fa-sort-alpha-down' : 'fa-sort-alpha-up'"></i></button>
-                        <button @click="resetFilters" class="flex-1 h-7 bg-white/10 rounded flex items-center justify-center gap-1 text-[11px] hover:bg-white/20" :class="{'text-red-300 bg-red-500/20': hasActiveFilters || searchQuery}"><i class="fas fa-sync-alt text-[10px]"></i> Reset Filter</button>
+                        <button @click="toggleSort" class="w-8 h-7 bg-white rounded flex items-center justify-center text-gray-600 shadow-sm hover:bg-gray-100" title="Urutkan A-Z"><i class="fas text-[11px]" :class="sortOrder === 'asc' ? 'fa-sort-alpha-down' : 'fa-sort-alpha-up'"></i></button>
+                        <button @click="resetFilters" class="flex-1 h-7 bg-white rounded shadow-sm flex items-center justify-center gap-1 text-[11px] font-[600] transition-colors" :class="{'text-red-500 hover:bg-red-50': hasActiveFilters || searchQuery, 'text-gray-500': !(hasActiveFilters || searchQuery)}"><i class="fas fa-sync-alt text-[10px]"></i> Reset Filter</button>
                     </div>
                 </div>
 
-                <!-- Footer Sidebar (Profil & Tool) -->
+                <!-- Footer Sidebar (Profil Bulat, Keluar & Refresh Ikon Saja) -->
                 <div class="mt-auto pt-3 border-t border-white/20 flex flex-col gap-3">
                     <div class="flex items-center gap-2">
-                        <img v-if="userRole === 'admin'" :src="adminProfile.Foto_Profil || 'https://ui-avatars.com/api/?name=Admin&background=fff&color=0743AB&rounded=true&bold=true'" class="w-8 h-8 rounded-full border border-white/30 object-cover bg-white">
-                        <img v-else :src="filteredWarga.length ? getAvatar(filteredWarga[0]) : 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png'" class="w-8 h-8 rounded-full border border-white/30 object-cover bg-white">
+                        <img v-if="userRole === 'admin'" src="https://ui-avatars.com/api/?name=Admin+RT2&background=fff&color=0743AB&rounded=true&bold=true" class="w-[36px] h-[36px] rounded-full border-2 border-white/50 object-cover bg-white shrink-0">
+                        <img v-else :src="filteredWarga.length ? getAvatar(filteredWarga[0]) : 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png'" class="w-[36px] h-[36px] rounded-full border-2 border-white/50 object-cover bg-white shrink-0">
                         <div class="flex-1 min-w-0">
-                            <h3 class="font-[600] text-white truncate text-[12px]">{{ userRole === 'admin' ? (adminProfile.Nama || 'Administrator') : getDisplayName() }}</h3>
-                            <p class="text-[9px] text-white/70 truncate">{{ userRole === 'admin' ? 'Akses Sistem Penuh' : 'Warga RT 2' }}</p>
+                            <h3 class="font-[600] text-white truncate text-[13px]">{{ userRole === 'admin' ? 'Administrator RT 2' : getDisplayName() }}</h3>
+                            <p class="text-[10px] text-white/70 truncate">{{ userRole === 'admin' ? 'Akses Sistem Penuh' : 'Warga RT 2' }}</p>
                         </div>
                     </div>
                     <div class="flex gap-1.5">
-                        <button @click="fetchData" class="flex-1 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white flex justify-center items-center"><i class="fas fa-sync-alt text-[12px]" :class="{'animate-spin text-blue-300': loading}"></i></button>
-                        <button @click="logout" class="flex-1 py-1.5 rounded bg-red-500/20 hover:bg-red-500/40 text-red-200 flex justify-center items-center border border-red-500/30"><i class="fas fa-sign-out-alt text-[12px]"></i></button>
+                        <button @click="fetchData" class="flex-1 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white flex justify-center items-center" title="Refresh"><i class="fas fa-sync-alt text-[14px]" :class="{'animate-spin text-blue-300': loading}"></i></button>
+                        <button @click="logout" class="flex-1 py-1.5 rounded bg-red-500/80 hover:bg-red-600 text-white flex justify-center items-center" title="Keluar"><i class="fas fa-sign-out-alt text-[14px]"></i></button>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- ================== KONTEN UTAMA ================== -->
-        <!-- Padding kiri dinamis menyesuaikan lebar sidebar -->
-        <div v-if="isLoggedIn" class="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto relative transition-all duration-300"
+        <!-- ================== KONTEN UTAMA & HEADER ORISINAL ================== -->
+        <div v-if="isLoggedIn" class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative transition-all duration-300"
              :class="(userRole === 'admin' && activeMenu === 'list') ? (isSidebarExpanded ? 'lg:pl-[230px]' : 'lg:pl-[60px]') : ''">
             
             <!-- HEADER UTAMA ORISINAL -->
-            <header class="bg-primary w-full border-b border-[#0C3D96]">
+            <header class="bg-primary w-full border-b border-[#0C3D96] shrink-0">
                 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center w-full">
                     <div class="flex items-center gap-3">
                         <a href="https://rt2pasekanlor.id/" target="_blank" class="shrink-0 transition-transform hover:scale-105" title="Menuju Website RT 2 Pasekan Lor">
@@ -255,10 +252,10 @@
             </header>
 
             <!-- NAVIGASI TABS & PENCARIAN (KHUSUS MOBILE KARENA DESKTOP SUDAH DI SIDEBAR) -->
-            <div class="sticky top-0 z-30 shadow-md border-b w-full bg-[#2F3E61] border-[#1F2A42] lg:hidden">
+            <div class="shrink-0 shadow-md border-b w-full bg-[#2F3E61] border-[#1F2A42] lg:hidden">
                 <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center gap-2 w-full justify-between">
                     <div class="relative flex-1 group" v-if="userRole === 'admin' && activeMenu === 'list'">
-                        <input type="text" v-model="searchQuery" @input="handleSearchInput" placeholder="Pencarian" class="w-full pl-9 pr-3 py-2 rounded-lg bg-white/15 border border-white/20 text-white placeholder-white/80 focus:bg-white focus:text-[#374151] outline-none text-[12px] transition-all">
+                        <input type="text" v-model="searchQuery" @input="handleSearchInput" placeholder="Pencarian" class="w-full pl-9 pr-3 py-2 rounded-lg bg-white/15 border border-white/20 text-white placeholder-white/80 focus:bg-white focus:text-[#374151] outline-none text-[12px] transition-all shadow-inner font-[500]">
                         <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-white/80 text-[12px]"></i>
                     </div>
 
@@ -268,11 +265,9 @@
                         <button @click="fiturWacanaOn = !fiturWacanaOn" :class="fiturWacanaOn ? 'bg-white text-[#2F3E61] shadow-sm' : 'text-white/80'" class="px-3 py-1.5 rounded text-[12px] ml-1 border-l border-white/20"><i class="fas fa-file-invoice-dollar" :class="fiturWacanaOn ? 'text-primary' : ''"></i></button>
                     </div>
 
-                    <!-- TABS NAVIGASI ADMIN (Mobile Saja) -->
                     <div class="flex w-full bg-black/20 p-1 rounded-lg shadow-inner shrink-0 lg:hidden mt-1" v-if="userRole === 'admin'">
                         <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-white text-[#2F3E61] shadow-sm' : 'text-white/80'" class="flex-1 py-1.5 rounded text-[11px] font-[600]"><i class="fas fa-users mr-1"></i> Warga</button>
                         <button @click="changeMenu('register')" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-white/80'" class="flex-1 py-1.5 rounded text-[11px] font-[600]"><i class="fas fa-user-plus mr-1"></i> Tambah</button>
-                        <button @click="changeMenu('admin_profile')" :class="activeMenu === 'admin_profile' ? 'bg-white text-purple-600 shadow-sm' : 'text-white/80'" class="flex-1 py-1.5 rounded text-[11px] font-[600]"><i class="fas fa-user-shield mr-1"></i> Profil</button>
                     </div>
 
                     <div class="flex w-full bg-black/20 p-1 rounded-lg shadow-inner shrink-0" v-if="userRole === 'warga' || userRole === 'new_warga'">
@@ -283,8 +278,7 @@
                 </div>
             </div>
 
-            <!-- MENU MELAYANG BAWAH (MOBILE) -->
-            <div class="fixed right-3 top-1/2 -translate-y-1/2 z-20 flex lg:hidden flex-col gap-2">
+            <div class="fixed right-3 bottom-12 z-20 flex lg:hidden flex-col gap-2">
                 <div class="bg-white/90 backdrop-blur-md p-1.5 rounded-xl shadow-lg border border-gray-200 flex flex-col gap-1.5">
                     <button @click="scrollTo('top')" class="w-8 h-8 rounded-lg bg-gray-100 text-gray-600 font-[600]"><i class="fas fa-chevron-up text-[12px]"></i></button>
                     <button @click="scrollTo('bottom')" class="w-8 h-8 rounded-lg bg-gray-100 text-gray-600 font-[600]"><i class="fas fa-chevron-down text-[12px]"></i></button>
@@ -292,278 +286,242 @@
             </div>
 
             <!-- CONTAINER UTAMA HALAMAN -->
-            <main class="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 pb-28 flex flex-col">
-                
-                <div v-if="loading" class="flex flex-col items-center justify-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
-                    <div class="spinner mb-4 w-10 h-10 border-t-primary"></div><p class="text-gray-500 font-[500] text-[13px]">Memuat Database...</p>
-                </div>
-
-                <!-- ================== MENU 1: DAFTAR WARGA ================== -->
-                <div v-show="activeMenu === 'list' && !loading" class="space-y-4">
+            <div class="flex-1 overflow-y-auto w-full custom-scrollbar flex flex-col relative" id="scrollArea">
+                <main class="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 pb-12 flex flex-col flex-1">
                     
-                    <!-- FILTER ACCORDION (Hanya Mobile Admin) -->
-                    <div v-if="userRole === 'admin'" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden lg:hidden mb-4">
-                        <div @click="isFilterOpen = !isFilterOpen" class="bg-gray-50 p-3.5 flex justify-between items-center cursor-pointer">
-                            <div class="flex items-center gap-2 text-[12px]">
-                                <i class="fas fa-filter text-primary"></i> <span class="font-[600] text-gray-700">Filter Pencarian Mobile</span>
-                                <span class="bg-primary text-white px-1.5 py-0.5 rounded text-[10px] font-[600] ml-1">{{ filteredWarga.length }}</span>
-                            </div>
-                            <i class="fas fa-chevron-up text-gray-400 text-[12px] transition-transform" :class="{'rotate-180': !isFilterOpen}"></i>
-                        </div>
-                        <transition name="accordion">
-                            <div v-show="isFilterOpen" class="px-4 pb-4 pt-3 space-y-2">
-                                <div class="flex gap-2">
-                                    <select v-model="filterDomisili" @change="searchQuery=''" class="w-1/2 py-2 px-2 rounded border border-gray-300 text-[12px] bg-white outline-none"><option value="">Semua Domisili</option><option>Tempat Tinggal</option><option>Kontrak / Kost</option></select>
-                                    <select v-model="filterRonda" @change="searchQuery=''" class="w-1/2 py-2 px-2 rounded border border-gray-300 text-[12px] bg-white outline-none"><option value="">Semua Ronda</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jum'at</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option></select>
-                                </div>
-                                <div class="flex gap-2 mt-1">
-                                    <button @click="toggleSort" class="w-10 bg-gray-100 border border-gray-200 rounded text-gray-600 flex justify-center items-center"><i class="fas" :class="sortOrder === 'asc' ? 'fa-sort-alpha-down' : 'fa-sort-alpha-up'"></i></button>
-                                    <button @click="resetFilters" class="flex-1 py-2 bg-red-50 text-red-500 border border-red-200 rounded font-[600] text-[12px]">Reset Filter</button>
-                                </div>
-                            </div>
-                        </transition>
+                    <div v-if="loading" class="flex flex-col items-center justify-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
+                        <div class="spinner mb-4 w-10 h-10 border-t-primary"></div><p class="text-gray-500 font-[500] text-[13px]">Memuat Database...</p>
                     </div>
 
-                    <div v-if="filteredWarga.length === 0" class="bg-white rounded-3xl py-20 text-center shadow-sm border border-gray-100">
-                        <i class="fas fa-folder-open text-[40px] text-gray-300 mb-3"></i><p class="text-gray-500 font-[500] text-[13px]">Wah...Maap, tidak ada data warga yang sesuai.</p>
-                    </div>
-
-                    <!-- TAMPILAN KARTU (GRID VIEW) ORISINAL -->
-                    <div v-if="viewMode === 'card' || userRole === 'warga'" class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5 w-full items-start">
-                        <div v-for="(w, index) in filteredWarga" :key="index + '_' + w.Nama" @click="openDetailModal(w)" class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col relative group cursor-pointer w-full">
-                            <div :class="w.Jenis_Kelamin === 'Perempuan' ? 'bg-[#C955A1]' : 'bg-[#0C4A9E]'" class="px-4 py-2.5 flex justify-between items-center">
-                                <div :class="w.Jenis_Kelamin === 'Perempuan' ? 'bg-black/20' : 'bg-[#06306E]'" class="text-white font-[600] text-[12px] tracking-wide px-2.5 py-1 rounded-lg border border-white/10 shadow-inner flex items-center gap-1.5">
-                                    <span class="opacity-80">#</span> {{ w.Id_Rumah || '-' }}
-                                </div>
-                                <div class="text-white/90 text-[10px] font-[600] bg-white/10 px-2 py-1 rounded shadow-sm uppercase tracking-wider">
-                                    {{ w.Status_Domisili === 'Kontrak / Kost' ? 'Kost' : 'Tinggal' }}
-                                </div>
-                            </div>
-                            <div class="p-4 flex gap-4 flex-1 items-center bg-white">
-                                <div class="shrink-0 relative">
-                                    <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(w)" class="w-[70px] h-[70px] rounded-full object-cover shadow-sm border-2 border-gray-100 bg-gray-50 z-10 relative" :class="!w.Foto_Profil ? 'grayscale opacity-70' : ''" @click.stop="openLightbox(getAvatar(w))">
-                                    <div v-if="w.QR_Code" class="absolute -bottom-1 -right-1 bg-white p-1 rounded-full shadow-md border border-gray-100 cursor-pointer z-20 hover:scale-110 transition-transform" @click.stop="openLightbox(w.QR_Code)">
-                                        <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="w.QR_Code" class="w-4 h-4 object-contain rounded">
-                                    </div>
-                                </div>
-                                <div class="flex-1 min-w-0 flex flex-col justify-center">
-                                    <div class="mb-2">
-                                        <h3 class="text-[16px] font-[600] text-gray-900 capitalize truncate leading-tight group-hover:text-primary transition-colors">{{ w.Nama }}</h3>
-                                        <p class="text-[11px] text-gray-500 font-[500] truncate mt-0.5">{{ formatTTL(w) }}</p>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-y-1 gap-x-2 text-[11px] text-gray-600">
-                                        <div class="flex items-center gap-1.5 truncate" title="Jadwal Ronda"><i class="fas fa-shield-alt w-3 text-center text-brandgreen"></i><span class="font-[600] truncate" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-500' : 'text-brandgreen'">{{ w.Ronda || '-' }}</span></div>
-                                        <div class="flex items-center gap-1.5 truncate" title="Golongan Darah"><i class="fas fa-tint w-3 text-center text-red-500"></i><span class="font-[600] text-gray-900 truncate">{{ w.Gol_Darah || '-' }}</span></div>
-                                        <div class="flex items-center gap-1.5 truncate col-span-2" title="Pekerjaan"><i class="fas fa-briefcase w-3 text-center text-primary"></i><span class="truncate">{{ w.Pekerjaan || '-' }}</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 px-4 py-2.5 border-t border-gray-100 flex justify-between items-center" :class="{'rounded-b-3xl': !(userRole === 'admin' || (userRole === 'warga' && fiturWacanaOn))}">
-                                <a @click.stop :href="'https://wa.me/' + formatWhatsApp(w.No_Tlp)" target="_blank" class="flex items-center gap-1.5 bg-brandgreen hover:bg-green-600 text-white px-3 py-1.5 rounded-lg text-[11px] font-[600] transition-colors shadow-sm w-fit">
-                                    <i class="fab fa-whatsapp text-[14px]"></i> <span>{{ formatDashPhone(w.No_Tlp) }}</span>
-                                </a>
-                                <div class="flex gap-1.5">
-                                    <button @click.stop="editWarga(w)" class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 hover:bg-primary hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-pen text-[11px]"></i></button>
-                                    <button v-if="userRole === 'admin'" @click.stop="confirmDelete(w)" class="w-7 h-7 rounded-full bg-red-100 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-trash text-[11px]"></i></button>
-                                </div>
-                            </div>
-                            <div v-if="userRole === 'admin' || (userRole === 'warga' && fiturWacanaOn)" @click.stop="openWacanaModal(w)" class="bg-blue-50 px-4 py-2.5 border-t border-blue-100 flex justify-between items-center cursor-pointer hover:bg-blue-100 transition-colors rounded-b-3xl group/wacana">
-                                <span class="font-[600] text-blue-700 text-[11px]"><i class="fas fa-file-invoice-dollar mr-1.5 opacity-70 group-hover/wacana:opacity-100 transition-opacity"></i>Data Laporan Warga</span>
-                                <i class="fas fa-chevron-right text-blue-500 text-[10px] group-hover/wacana:translate-x-1 transition-transform"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TAMPILAN TABEL (LIST VIEW) - Hanya Untuk Admin -->
-                    <div v-if="viewMode === 'table' && userRole === 'admin'" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden w-full">
-                        <div class="overflow-x-auto w-full custom-scrollbar">
-                            <table class="w-full text-left whitespace-nowrap text-[12px]">
-                                <thead class="bg-gray-100 text-gray-600 font-[600] uppercase tracking-wider border-b border-gray-200">
-                                    <tr><th class="p-3 pl-4">Warga</th><th class="p-3 hidden md:table-cell">Detail Profil</th><th class="p-3 hidden sm:table-cell">Domisili & Ronda</th><th class="p-3 text-center">Kontak</th><th class="p-3 text-right pr-4">Aksi</th></tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-100">
-                                    <tr v-for="(w, index) in filteredWarga" :key="index + '_' + w.Nama" @click="openDetailModal(w)" class="hover:bg-blue-50 transition-colors align-middle cursor-pointer group">
-                                        <td class="p-3 pl-4">
-                                            <div class="flex items-center gap-3">
-                                                <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(w)" class="w-10 h-10 rounded-full object-cover border border-gray-200 shadow-sm" :class="!w.Foto_Profil ? 'grayscale opacity-70' : ''">
-                                                <div class="flex flex-col">
-                                                    <div class="font-[600] text-gray-900 capitalize text-[13px] group-hover:text-primary">{{ w.Nama }}</div>
-                                                    <div class="text-[10px] text-gray-500 font-[600] mt-0.5">ID: <span class="font-[600] text-gray-700">{{ w.Id_Rumah || '-' }}</span></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="p-3 hidden md:table-cell text-gray-600 font-[500] space-y-0.5 text-[11px]">
-                                            <div><i class="fas fa-birthday-cake text-purple-400 w-3.5 text-center"></i> {{ formatTTL(w) }}</div>
-                                            <div class="truncate"><i class="fas fa-briefcase text-blue-400 w-3.5 text-center"></i> {{ w.Pekerjaan || '-' }}</div>
-                                        </td>
-                                        <td class="p-3 hidden sm:table-cell text-gray-600 font-[500] space-y-0.5 text-[11px]">
-                                            <div><i class="fas fa-map-marker-alt text-red-500 w-3.5 text-center"></i> {{ w.Status_Domisili || '-' }}</div>
-                                            <div class="font-[600]" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-500' : 'text-brandgreen'"><i class="fas fa-shield-alt w-3.5 text-center" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-500' : 'text-brandgreen'"></i> {{ w.Ronda || 'Belum ada data' }}</div>
-                                        </td>
-                                        <td class="p-3 text-center align-middle">
-                                            <a @click.stop :href="'https://wa.me/' + formatWhatsApp(w.No_Tlp)" target="_blank" class="text-brandgreen hover:text-green-700 text-[20px] transition-colors"><i class="fab fa-whatsapp"></i></a>
-                                        </td>
-                                        <td class="p-3 text-right pr-4 align-middle">
-                                            <div class="flex gap-1.5 justify-end">
-                                                <button @click.stop="openWacanaModal(w)" class="w-7 h-7 rounded-lg text-blue-600 bg-blue-100 hover:bg-primary hover:text-white transition-colors" title="Laporan"><i class="fas fa-file-invoice-dollar text-[11px]"></i></button>
-                                                <button @click.stop="editWarga(w)" class="w-7 h-7 rounded-lg text-blue-600 bg-blue-100 hover:bg-primary hover:text-white transition-colors"><i class="fas fa-pen text-[11px]"></i></button>
-                                                <button v-if="userRole === 'admin'" @click.stop="confirmDelete(w)" class="w-7 h-7 rounded-lg text-red-500 bg-red-100 hover:bg-red-500 hover:text-white transition-colors"><i class="fas fa-trash text-[11px]"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ================== MENU 2: FORM REGISTRASI / EDIT WARGA ================== -->
-                <div v-show="activeMenu === 'register'" class="w-full space-y-5">
-                    <form @submit.prevent="saveData" class="space-y-5">
+                    <!-- ================== MENU 1: DAFTAR WARGA ================== -->
+                    <div v-show="activeMenu === 'list' && !loading" class="space-y-4">
                         
-                        <!-- 1. IDENTITAS AKUN -->
-                        <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-gray-100">
-                            <h3 class="font-[600] text-[15px] text-gray-800 bg-gray-50 border border-gray-100 px-4 py-2.5 rounded-xl mb-5 flex items-center"><i class="fas fa-id-card text-primary mr-2 text-[15px]"></i> Identitas Kepala Keluarga</h3>
-                            <div class="flex flex-col md:flex-row gap-5">
-                                <div class="shrink-0 w-full md:w-32 flex flex-col items-center gap-2">
-                                    <label class="block text-[12px] font-[600] text-gray-500 text-center w-full">Foto Profil</label>
-                                    <div class="w-28 h-28 border-2 border-gray-300 border-dashed rounded-full bg-gray-50 hover:border-primary hover:bg-white relative flex justify-center items-center overflow-hidden cursor-pointer group transition-all">
-                                        <input type="file" accept="image/*" @change="e => handleFileUpload(e, 'Foto_Profil')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
-                                        <button v-if="form.Foto_Profil" @click.prevent.stop="removeFile('Foto_Profil')" class="absolute top-1 right-3 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center z-20 shadow-sm"><i class="fas fa-times text-[10px]"></i></button>
-                                        <img v-if="form.Foto_Profil" crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.Foto_Profil" class="w-full h-full object-cover">
-                                        <i v-else class="fas fa-camera text-[24px] text-gray-400 group-hover:text-primary"></i>
+                        <!-- FILTER ACCORDION (Hanya Mobile Admin) -->
+                        <div v-if="userRole === 'admin'" class="bg-white rounded-2xl shadow-md border border-[#E5E7EB] mb-6 overflow-hidden block lg:hidden">
+                            <div @click="isFilterOpen = !isFilterOpen" class="bg-gray-50 p-3.5 flex justify-between items-center cursor-pointer">
+                                <div class="flex items-center gap-2 text-[12px]">
+                                    <i class="fas fa-filter text-primary"></i> <span class="font-[600] text-gray-700">Filter Pencarian Mobile</span>
+                                    <span class="bg-primary text-white px-1.5 py-0.5 rounded text-[10px] font-[600] ml-1">{{ filteredWarga.length }}</span>
+                                </div>
+                                <i class="fas fa-chevron-up text-gray-400 text-[12px] transition-transform" :class="{'rotate-180': !isFilterOpen}"></i>
+                            </div>
+                            <transition name="accordion">
+                                <div v-show="isFilterOpen">
+                                    <div class="px-4 pb-4 pt-3 space-y-2">
+                                        <div class="flex gap-2">
+                                            <select v-model="filterDomisili" @change="searchQuery=''" class="w-1/2 py-2 px-2 rounded border border-gray-300 text-[12px] bg-white outline-none"><option value="">Semua Domisili</option><option>Tempat Tinggal</option><option>Kontrak / Kost</option></select>
+                                            <select v-model="filterRonda" @change="searchQuery=''" class="w-1/2 py-2 px-2 rounded border border-gray-300 text-[12px] bg-white outline-none"><option value="">Semua Ronda</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jum'at</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option></select>
+                                        </div>
+                                        <div class="flex gap-2 mt-1">
+                                            <button @click="toggleSort" class="w-10 bg-gray-100 border border-gray-200 rounded text-gray-600 flex justify-center items-center"><i class="fas" :class="sortOrder === 'asc' ? 'fa-sort-alpha-down' : 'fa-sort-alpha-up'"></i></button>
+                                            <button @click="resetFilters" class="flex-1 py-2 bg-red-50 text-red-500 border border-red-200 rounded font-[600] text-[12px]">Reset Filter</button>
+                                        </div>
+                                    </div>
+                                </transition>
+                        </div>
+
+                        <div v-if="filteredWarga.length === 0" class="bg-white rounded-3xl py-20 text-center shadow-sm border border-gray-100">
+                            <i class="fas fa-folder-open text-[40px] text-gray-300 mb-3"></i><p class="text-gray-500 font-[500] text-[13px]">Wah...Maap, tidak ada data warga yang sesuai.</p>
+                        </div>
+
+                        <!-- TAMPILAN KARTU (GRID VIEW) ORISINAL -->
+                        <div v-if="viewMode === 'card' || userRole === 'warga'" class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5 w-full items-start">
+                            <div v-for="(w, index) in filteredWarga" :key="index + '_' + w.Nama" @click="openDetailModal(w)" class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col relative group cursor-pointer w-full">
+                                <div :class="w.Jenis_Kelamin === 'Perempuan' ? 'bg-[#C955A1]' : 'bg-[#0C4A9E]'" class="px-4 py-2.5 flex justify-between items-center">
+                                    <div :class="w.Jenis_Kelamin === 'Perempuan' ? 'bg-black/20' : 'bg-[#06306E]'" class="text-white font-[600] text-[12px] tracking-wide px-2.5 py-1 rounded-lg border border-white/10 shadow-inner flex items-center gap-1.5">
+                                        <span class="opacity-80">#</span> {{ w.Id_Rumah || '-' }}
+                                    </div>
+                                    <div class="text-white/90 text-[10px] font-[600] bg-white/10 px-2 py-1 rounded shadow-sm uppercase tracking-wider">
+                                        {{ w.Status_Domisili === 'Kontrak / Kost' ? 'Kost' : 'Tinggal' }}
                                     </div>
                                 </div>
-                                <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">ID Rumah (misal: rt2_90)</label><input type="text" v-model="form.Id_Rumah" required class="w-full rounded-xl border border-gray-300 p-2.5 bg-gray-50 focus:bg-white focus:border-primary outline-none font-[600] text-primary text-[13px] shadow-sm" placeholder="rt2_XXX"></div>
-                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Buat Password</label><input type="text" v-model="form.Password" required class="w-full rounded-xl border border-gray-300 p-2.5 bg-gray-50 focus:bg-white focus:border-primary outline-none font-mono text-[13px] shadow-sm" placeholder="Kata Sandi"></div>
-                                    <div class="md:col-span-2"><label class="block text-[12px] font-[600] text-gray-500 mb-1">Nama Lengkap (KTP)</label><input type="text" v-model="form.Nama" @input="capitalizeName" required class="w-full rounded-xl border border-gray-300 p-2.5 bg-gray-50 focus:bg-white focus:border-primary outline-none font-[600] text-[14px] shadow-sm" placeholder="Nama Lengkap"></div>
+                                <div class="p-4 flex gap-4 flex-1 items-center bg-white">
+                                    <div class="shrink-0 relative">
+                                        <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(w)" class="w-[70px] h-[70px] rounded-full object-cover shadow-sm border-2 border-gray-100 bg-gray-50 z-10 relative" :class="!w.Foto_Profil ? 'grayscale opacity-70' : ''" @click.stop="openLightbox(getAvatar(w))">
+                                        <div v-if="w.QR_Code" class="absolute -bottom-1 -right-1 bg-white p-1 rounded-full shadow-md border border-gray-100 cursor-pointer z-20 hover:scale-110 transition-transform" @click.stop="openLightbox(w.QR_Code)">
+                                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="w.QR_Code" class="w-4 h-4 object-contain rounded">
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                                        <div class="mb-2">
+                                            <h3 class="text-[16px] font-[600] text-gray-900 capitalize truncate leading-tight group-hover:text-primary transition-colors">{{ w.Nama }}</h3>
+                                            <p class="text-[11px] text-gray-500 font-[500] truncate mt-0.5">{{ formatTTL(w) }}</p>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-y-1 gap-x-2 text-[11px] text-gray-600">
+                                            <div class="flex items-center gap-1.5 truncate" title="Jadwal Ronda"><i class="fas fa-shield-alt w-3 text-center text-brandgreen"></i><span class="font-[600] truncate" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-[#EF4444]' : 'text-brandgreen'">{{ w.Ronda || '-' }}</span></div>
+                                            <div class="flex items-center gap-1.5 truncate" title="Golongan Darah"><i class="fas fa-tint w-3 text-center text-red-500"></i><span class="font-[600] text-gray-900 truncate">{{ w.Gol_Darah || '-' }}</span></div>
+                                            <div class="flex items-center gap-1.5 truncate col-span-2" title="Pekerjaan"><i class="fas fa-briefcase w-3 text-center text-primary"></i><span class="truncate">{{ w.Pekerjaan || '-' }}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 px-4 py-2.5 border-t border-gray-100 flex justify-between items-center" :class="{'rounded-b-3xl': !(userRole === 'admin' || (userRole === 'warga' && fiturWacanaOn))}">
+                                    <a @click.stop :href="'https://wa.me/' + formatWhatsApp(w.No_Tlp)" target="_blank" class="flex items-center gap-1.5 bg-brandgreen hover:bg-green-600 text-white px-3 py-1.5 rounded-lg text-[11px] font-[600] transition-colors shadow-sm w-fit">
+                                        <i class="fab fa-whatsapp text-[14px]"></i> <span>{{ formatDashPhone(w.No_Tlp) }}</span>
+                                    </a>
+                                    <div class="flex gap-1.5">
+                                        <button @click.stop="editWarga(w)" class="w-7 h-7 rounded-full flex items-center justify-center transition-colors bg-blue-100 text-blue-600 hover:bg-primary hover:text-white shadow-sm"><i class="fas fa-pen text-[11px]"></i></button>
+                                        <button v-if="userRole === 'admin'" @click.stop="confirmDelete(w)" class="w-7 h-7 rounded-full bg-red-100 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-trash text-[11px]"></i></button>
+                                    </div>
+                                </div>
+                                <div v-if="userRole === 'admin' || (userRole === 'warga' && fiturWacanaOn)" @click.stop="openWacanaModal(w)" class="bg-blue-50 px-4 py-2.5 border-t border-blue-100 flex justify-between items-center cursor-pointer hover:bg-blue-100 transition-colors rounded-b-3xl group/wacana">
+                                    <span class="font-[600] text-blue-700 text-[11px]"><i class="fas fa-file-invoice-dollar mr-1.5 opacity-70 group-hover/wacana:opacity-100 transition-opacity"></i>Data Laporan Warga</span>
+                                    <i class="fas fa-chevron-right text-blue-500 text-[10px] group-hover/wacana:translate-x-1 transition-transform"></i>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 2. PROFIL PERSONAL -->
-                        <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-gray-100">
-                            <h3 class="font-[600] text-[15px] text-gray-800 bg-gray-50 border border-gray-100 px-4 py-2.5 rounded-xl mb-5 flex items-center"><i class="fas fa-briefcase text-primary mr-2 text-[15px]"></i> Profil Personal & Kontak</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                                <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Tempat Lahir</label><input type="text" v-model="form.Tempat_Lahir" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-gray-50 focus:bg-white"></div>
-                                <div class="relative"><label class="block text-[12px] font-[600] text-gray-500 mb-1">Tanggal Lahir</label><input type="date" v-model="form.Tanggal_Lahir" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-gray-50 focus:bg-white pr-16"><span v-if="calculatedAge" class="absolute right-3 top-8 text-[11px] font-[600] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">{{ calculatedAge }} Th</span></div>
-                                <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Jenis Kelamin</label><select v-model="form.Jenis_Kelamin" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Laki-laki</option><option>Perempuan</option></select></div>
-                                <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Gol. Darah</label><select v-model="form.Gol_Darah" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">-</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div>
-                                <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Agama</label><select v-model="form.Agama" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Islam</option><option>Kristen</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
-                                <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Status Kawin</label><select v-model="form.Status_Perkawinan" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Belum Menikah</option><option>Sudah Menikah</option><option>Pisah Hidup</option><option>Pisah Meninggal</option><option>Belum Jelas</option></select></div>
-                                <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Pekerjaan</label><select v-model="form.Pekerjaan" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Karyawan Swasta</option><option>Wiraswasta / Pengusaha</option><option>Petani / Peternak</option><option>TNI / Polri</option><option>Tenaga Pendidik</option><option>Pelajar / Mahasiswa</option><option>Pensiunan</option><option>Serabutan</option><option>Lainnya</option></select></div>
-                                <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Domisili</label><select v-model="form.Status_Domisili" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Tempat Tinggal</option><option>Kontrak / Kost</option></select></div>
-                                <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">WhatsApp (+62)</label><input type="text" v-model="form.No_Tlp" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] font-mono shadow-sm bg-gray-50 focus:bg-white" placeholder="08..."></div>
-                                <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Jadwal Ronda</label><select v-model="form.Ronda" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jum'at</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option></select></div>
+                        <!-- TAMPILAN TABEL (LIST VIEW) - Hanya Untuk Admin -->
+                        <div v-if="viewMode === 'table' && userRole === 'admin'" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden w-full">
+                            <div class="overflow-x-auto w-full custom-scrollbar">
+                                <table class="w-full text-left whitespace-nowrap text-[12px]">
+                                    <thead class="bg-gray-100 text-gray-600 font-[600] uppercase tracking-wider border-b border-gray-200">
+                                        <tr><th class="p-3 pl-4">Warga</th><th class="p-3 hidden md:table-cell">Detail Profil</th><th class="p-3 hidden sm:table-cell">Domisili & Ronda</th><th class="p-3 text-center">Kontak</th><th class="p-3 text-right pr-4">Aksi</th></tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100">
+                                        <tr v-for="(w, index) in filteredWarga" :key="index + '_' + w.Nama" @click="openDetailModal(w)" class="hover:bg-blue-50 transition-colors align-middle cursor-pointer group">
+                                            <td class="p-3 pl-4">
+                                                <div class="flex items-center gap-3">
+                                                    <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(w)" class="w-10 h-10 rounded-full object-cover border border-gray-200 shadow-sm" :class="!w.Foto_Profil ? 'grayscale opacity-70' : ''">
+                                                    <div class="flex flex-col">
+                                                        <div class="font-[600] text-gray-900 capitalize text-[14px] group-hover:text-primary">{{ w.Nama }}</div>
+                                                        <div class="text-[10px] text-gray-500 font-[600] mt-0.5">ID: <span class="font-[600] text-gray-700">{{ w.Id_Rumah || '-' }}</span></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="p-3 hidden md:table-cell text-gray-600 font-[500] space-y-0.5 text-[11px]">
+                                                <div><i class="fas fa-birthday-cake text-purple-400 w-3.5 text-center"></i> {{ formatTTL(w) }}</div>
+                                                <div class="truncate"><i class="fas fa-briefcase text-blue-400 w-3.5 text-center"></i> {{ w.Pekerjaan || '-' }}</div>
+                                            </td>
+                                            <td class="p-3 hidden sm:table-cell text-gray-600 font-[500] space-y-0.5 text-[11px]">
+                                                <div><i class="fas fa-map-marker-alt text-red-500 w-3.5 text-center"></i> {{ w.Status_Domisili || '-' }}</div>
+                                                <div class="font-[600]" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-[#EF4444]' : 'text-brandgreen'"><i class="fas fa-shield-alt w-3.5 text-center" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-[#EF4444]' : 'text-brandgreen'"></i> {{ w.Ronda || 'Belum ada data' }}</div>
+                                            </td>
+                                            <td class="p-3 text-center align-middle">
+                                                <a @click.stop :href="'https://wa.me/' + formatWhatsApp(w.No_Tlp)" target="_blank" class="text-brandgreen hover:text-green-700 text-[20px] transition-colors"><i class="fab fa-whatsapp"></i></a>
+                                            </td>
+                                            <td class="p-3 text-right pr-4 align-middle">
+                                                <div class="flex gap-1.5 justify-end">
+                                                    <button @click.stop="openWacanaModal(w)" class="w-7 h-7 rounded-lg text-blue-600 bg-blue-100 hover:bg-primary hover:text-white transition-colors" title="Laporan"><i class="fas fa-file-invoice-dollar text-[11px]"></i></button>
+                                                    <button @click.stop="editWarga(w)" class="w-7 h-7 rounded-lg text-blue-600 bg-blue-100 hover:bg-primary hover:text-white transition-colors"><i class="fas fa-pen text-[11px]"></i></button>
+                                                    <button v-if="userRole === 'admin'" @click.stop="confirmDelete(w)" class="w-7 h-7 rounded-lg text-red-500 bg-red-100 hover:bg-red-500 hover:text-white transition-colors"><i class="fas fa-trash text-[11px]"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ================== MENU 2: FORM REGISTRASI / EDIT WARGA ================== -->
+                    <div v-show="activeMenu === 'register'" class="w-full space-y-5">
+                        <form @submit.prevent="saveData" class="space-y-5">
+                            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-gray-100">
+                                <h3 class="font-[600] text-[15px] text-gray-800 bg-gray-50 border border-gray-100 px-4 py-2.5 rounded-xl mb-5 flex items-center"><i class="fas fa-id-card text-primary mr-2 text-[15px]"></i> Identitas Kepala Keluarga</h3>
+                                <div class="flex flex-col md:flex-row gap-5">
+                                    <div class="shrink-0 w-full md:w-32 flex flex-col items-center gap-2">
+                                        <label class="block text-[12px] font-[600] text-gray-500 text-center w-full">Foto Profil</label>
+                                        <div class="w-28 h-28 border-2 border-gray-300 border-dashed rounded-full bg-gray-50 hover:border-primary hover:bg-white relative flex justify-center items-center overflow-hidden cursor-pointer group transition-all">
+                                            <input type="file" accept="image/*" @change="e => handleFileUpload(e, 'Foto_Profil')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
+                                            <button v-if="form.Foto_Profil" @click.prevent.stop="removeFile('Foto_Profil')" class="absolute top-1 right-3 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center z-20 shadow-sm"><i class="fas fa-times text-[10px]"></i></button>
+                                            <img v-if="form.Foto_Profil" crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.Foto_Profil" class="w-full h-full object-cover">
+                                            <i v-else class="fas fa-camera text-[24px] text-gray-400 group-hover:text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">ID Rumah (misal: rt2_90)</label><input type="text" v-model="form.Id_Rumah" required class="w-full rounded-xl border border-gray-300 p-2.5 bg-gray-50 focus:bg-white focus:border-primary outline-none font-[600] text-primary text-[13px] shadow-sm" placeholder="rt2_XXX"></div>
+                                        <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Buat Password</label><input type="text" v-model="form.Password" required class="w-full rounded-xl border border-gray-300 p-2.5 bg-gray-50 focus:bg-white focus:border-primary outline-none font-mono text-[13px] shadow-sm" placeholder="Kata Sandi"></div>
+                                        <div class="md:col-span-2"><label class="block text-[12px] font-[600] text-gray-500 mb-1">Nama Lengkap (KTP)</label><input type="text" v-model="form.Nama" @input="capitalizeName" required class="w-full rounded-xl border border-gray-300 p-2.5 bg-gray-50 focus:bg-white focus:border-primary outline-none font-[600] text-[14px] shadow-sm" placeholder="Nama Lengkap"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-gray-100">
+                                <h3 class="font-[600] text-[15px] text-gray-800 bg-gray-50 border border-gray-100 px-4 py-2.5 rounded-xl mb-5 flex items-center"><i class="fas fa-briefcase text-primary mr-2 text-[15px]"></i> Profil Personal & Kontak</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Tempat Lahir</label><input type="text" v-model="form.Tempat_Lahir" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-gray-50 focus:bg-white"></div>
+                                    <div class="relative"><label class="block text-[12px] font-[600] text-gray-500 mb-1">Tanggal Lahir</label><input type="date" v-model="form.Tanggal_Lahir" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-gray-50 focus:bg-white pr-16"><span v-if="calculatedAge" class="absolute right-3 top-8 text-[11px] font-[600] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">{{ calculatedAge }} Th</span></div>
+                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Jenis Kelamin</label><select v-model="form.Jenis_Kelamin" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Laki-laki</option><option>Perempuan</option></select></div>
+                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Gol. Darah</label><select v-model="form.Gol_Darah" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">-</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div>
+                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Agama</label><select v-model="form.Agama" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Islam</option><option>Kristen</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
+                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Status Kawin</label><select v-model="form.Status_Perkawinan" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Belum Menikah</option><option>Sudah Menikah</option><option>Pisah Hidup</option><option>Pisah Meninggal</option><option>Belum Jelas</option></select></div>
+                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Pekerjaan</label><select v-model="form.Pekerjaan" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Karyawan Swasta</option><option>Wiraswasta / Pengusaha</option><option>Petani / Peternak</option><option>TNI / Polri</option><option>Tenaga Pendidik</option><option>Pelajar / Mahasiswa</option><option>Pensiunan</option><option>Serabutan</option><option>Lainnya</option></select></div>
+                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Domisili</label><select v-model="form.Status_Domisili" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Tempat Tinggal</option><option>Kontrak / Kost</option></select></div>
+                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">WhatsApp</label><input type="text" v-model="form.No_Tlp" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] font-mono shadow-sm bg-gray-50 focus:bg-white" placeholder="08..."></div>
+                                    <div><label class="block text-[12px] font-[600] text-gray-500 mb-1">Jadwal Ronda</label><select v-model="form.Ronda" class="w-full rounded-xl border border-gray-300 p-2.5 focus:border-primary outline-none text-[13px] shadow-sm bg-white"><option value="">- Pilih -</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jum'at</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option></select></div>
+                                    
+                                    <div>
+                                        <label class="block text-[12px] font-[600] text-gray-500 mb-1">QR Code</label>
+                                        <div class="w-full rounded-xl border border-gray-300 border-dashed p-1.5 bg-gray-50 hover:border-primary hover:bg-white relative overflow-hidden h-[42px] flex justify-center items-center group cursor-pointer shadow-sm transition-all">
+                                            <input v-if="!form.QR_Code" type="file" accept="image/*" @change="e => handleFileUpload(e, 'QR_Code')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
+                                            <button v-if="form.QR_Code" @click.prevent.stop="removeFile('QR_Code')" class="absolute right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center z-20"><i class="fas fa-times text-[8px]"></i></button>
+                                            <div v-if="form.QR_Code" class="h-full flex items-center justify-center"><img crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.QR_Code" class="max-h-full rounded object-contain"></div>
+                                            <div v-else class="flex items-center gap-2 text-gray-400 group-hover:text-primary text-[11px]"><i class="fas fa-qrcode"></i> <span>Upload</span></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[12px] font-[600] text-gray-500 mb-1">File Lain (PDF/Img)</label>
+                                        <div class="w-full rounded-xl border border-gray-300 border-dashed p-1.5 bg-gray-50 hover:border-primary hover:bg-white relative overflow-hidden h-[42px] flex justify-center items-center group cursor-pointer shadow-sm transition-all">
+                                            <input v-if="!form.Data_Lain" type="file" accept="image/*,.pdf" @change="e => handleFileUpload(e, 'Data_Lain')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
+                                            <button v-if="form.Data_Lain" @click.prevent.stop="removeFile('Data_Lain')" class="absolute right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center z-20"><i class="fas fa-times text-[8px]"></i></button>
+                                            <div v-if="form.Data_Lain && (form.Data_Lain.startsWith('data:image') || form.Data_Lain.includes('lh3'))" class="h-full flex items-center justify-center"><img crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.Data_Lain" class="max-h-full rounded object-contain"></div>
+                                            <div v-else-if="form.Data_Lain" class="text-brandgreen text-[11px] font-[600]"><i class="fas fa-file-pdf"></i> Tersimpan</div>
+                                            <div v-else class="flex items-center gap-2 text-gray-400 group-hover:text-primary text-[11px]"><i class="fas fa-upload"></i> <span>Upload</span></div>
+                                        </div>
+                                    </div>
+                                </div>
                                 
-                                <div>
-                                    <label class="block text-[12px] font-[600] text-gray-500 mb-1">QR Code</label>
-                                    <div class="w-full rounded-xl border border-gray-300 border-dashed p-1.5 bg-gray-50 hover:border-primary hover:bg-white relative overflow-hidden h-[44px] flex justify-center items-center group cursor-pointer shadow-sm transition-all">
-                                        <input v-if="!form.QR_Code" type="file" accept="image/*" @change="e => handleFileUpload(e, 'QR_Code')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
-                                        <button v-if="form.QR_Code" @click.prevent.stop="removeFile('QR_Code')" class="absolute right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center z-20"><i class="fas fa-times text-[8px]"></i></button>
-                                        <div v-if="form.QR_Code" class="h-full flex items-center justify-center"><img crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.QR_Code" class="max-h-full rounded object-contain"></div>
-                                        <div v-else class="flex items-center gap-1.5 text-gray-400 group-hover:text-primary text-[12px]"><i class="fas fa-qrcode"></i> <span>Upload QR</span></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-[12px] font-[600] text-gray-500 mb-1">File Lain (PDF/Img)</label>
-                                    <div class="w-full rounded-xl border border-gray-300 border-dashed p-1.5 bg-gray-50 hover:border-primary hover:bg-white relative overflow-hidden h-[44px] flex justify-center items-center group cursor-pointer shadow-sm transition-all">
-                                        <input v-if="!form.Data_Lain" type="file" accept="image/*,.pdf" @change="e => handleFileUpload(e, 'Data_Lain')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
-                                        <button v-if="form.Data_Lain" @click.prevent.stop="removeFile('Data_Lain')" class="absolute right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center z-20"><i class="fas fa-times text-[8px]"></i></button>
-                                        <div v-if="form.Data_Lain && (form.Data_Lain.startsWith('data:image') || form.Data_Lain.includes('lh3'))" class="h-full flex items-center justify-center"><img crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.Data_Lain" class="max-h-full rounded object-contain"></div>
-                                        <div v-else-if="form.Data_Lain" class="text-brandgreen text-[12px] font-[600]"><i class="fas fa-file-pdf"></i> Tersimpan</div>
-                                        <div v-else class="flex items-center gap-1.5 text-gray-400 group-hover:text-primary text-[12px]"><i class="fas fa-upload"></i> <span>Upload File</span></div>
+                                <div class="border-t border-gray-100 pt-4">
+                                    <label class="block text-[12px] font-[600] text-brandorange mb-2"><i class="fas fa-users mr-1"></i> Anggota Keluarga Se-rumah</label>
+                                    <div class="space-y-2 max-w-2xl">
+                                        <div v-for="(fam, index) in form.AnggotaList" :key="index" class="flex items-center gap-2 relative">
+                                            <div class="w-7 h-7 shrink-0 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-[600] text-[12px]">{{ index + 1 }}</div>
+                                            <input type="text" v-model="fam.n" class="flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-primary outline-none text-[13px] bg-gray-50 focus:bg-white shadow-sm" placeholder="Nama Lengkap">
+                                            <input type="text" v-model="fam.s" class="w-1/3 rounded-lg border border-gray-300 px-3 py-2 focus:border-primary outline-none text-[13px] bg-gray-50 focus:bg-white shadow-sm" placeholder="Status (Istri/Anak)">
+                                            <button v-if="form.AnggotaList.length > 1" @click.prevent="removeFam(index)" class="text-red-500 hover:text-red-700 w-8 h-8 flex justify-center items-center"><i class="fas fa-trash text-[13px]"></i></button>
+                                        </div>
+                                        <button @click.prevent="addFam" class="px-4 py-1.5 mt-1 bg-orange-50 text-brandorange font-[600] rounded-lg border border-orange-200 hover:bg-orange-100 text-[11px]"><i class="fas fa-plus mr-1"></i> Tambah Keluarga</button>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="border-t border-gray-100 pt-5">
-                                <label class="block text-[13px] font-[600] text-brandorange mb-3"><i class="fas fa-users mr-1.5"></i> Anggota Keluarga Se-rumah</label>
-                                <div class="space-y-3 max-w-2xl">
-                                    <div v-for="(fam, index) in form.AnggotaList" :key="index" class="flex items-center gap-2 relative">
-                                        <div class="w-8 h-8 shrink-0 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-[600] text-[13px]">{{ index + 1 }}</div>
-                                        <input type="text" v-model="fam.n" class="flex-1 rounded-xl border border-gray-300 px-3 py-2.5 focus:border-primary outline-none text-[13px] bg-gray-50 focus:bg-white shadow-sm" placeholder="Nama Lengkap">
-                                        <input type="text" v-model="fam.s" class="w-1/3 rounded-xl border border-gray-300 px-3 py-2.5 focus:border-primary outline-none text-[13px] bg-gray-50 focus:bg-white shadow-sm" placeholder="Status (Istri/Anak)">
-                                        <button v-if="form.AnggotaList.length > 1" @click.prevent="removeFam(index)" class="text-red-500 hover:text-red-700 w-8 h-8 flex justify-center items-center"><i class="fas fa-trash text-[14px]"></i></button>
+
+                            <!-- 3. CATATAN ADMIN -->
+                            <div v-if="userRole === 'admin'" class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-gray-100">
+                                <h3 class="font-[600] text-[14px] text-gray-800 bg-gray-50 border border-gray-100 px-4 py-2.5 rounded-xl mb-4 flex items-center"><i class="fas fa-sticky-note text-purple-600 mr-2 text-[14px]"></i> Catatan Historis</h3>
+                                <div class="space-y-3">
+                                    <div class="hidden sm:grid grid-cols-[30px_1fr_1fr_1fr_30px] gap-2 text-[10px] font-[600] text-gray-500 uppercase px-1">
+                                        <div class="text-center">No</div><div>Pertemuan</div><div>Sosial</div><div>Lainnya</div><div></div>
                                     </div>
-                                    <button @click.prevent="addFam" class="px-4 py-2 mt-2 bg-orange-50 text-brandorange font-[600] rounded-lg border border-orange-200 hover:bg-orange-100 text-[12px] transition-colors"><i class="fas fa-plus mr-1"></i> Tambah Anggota</button>
+                                    <div v-for="(ket, index) in form.KeteranganList" :key="index" class="flex flex-col sm:flex-row gap-2 border-b sm:border-0 border-gray-100 pb-4 sm:pb-0">
+                                        <div class="w-8 h-8 shrink-0 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-[600] text-[13px] self-start mt-1 sm:mx-auto">{{ index + 1 }}</div>
+                                        <textarea v-model="ket.pertemuan" rows="2" class="flex-1 rounded-xl border border-gray-300 p-3 focus:border-purple-500 outline-none text-[12px] resize-none shadow-sm bg-gray-50 focus:bg-white" placeholder="Ket. Pertemuan"></textarea>
+                                        <textarea v-model="ket.dansos" rows="2" class="flex-1 rounded-xl border border-gray-300 p-3 focus:border-purple-500 outline-none text-[12px] resize-none shadow-sm bg-gray-50 focus:bg-white" placeholder="Ket. Sosial"></textarea>
+                                        <textarea v-model="ket.kurban" rows="2" class="flex-1 rounded-xl border border-gray-300 p-3 focus:border-purple-500 outline-none text-[12px] resize-none shadow-sm bg-gray-50 focus:bg-white" placeholder="Ket. Lainnya"></textarea>
+                                        <button v-if="form.KeteranganList.length > 1" @click.prevent="removeKeterangan(index)" class="text-red-500 hover:text-red-700 w-8 flex justify-center self-start mt-2"><i class="fas fa-trash text-[14px]"></i></button>
+                                    </div>
+                                    <button @click.prevent="addKeterangan" class="px-4 py-1.5 bg-purple-50 text-purple-600 font-[600] rounded-lg border border-purple-200 hover:bg-purple-100 text-[12px] transition-colors"><i class="fas fa-plus mr-1"></i> Baris Baru</button>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- 3. CATATAN ADMIN -->
-                        <div v-if="userRole === 'admin'" class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-gray-100">
-                            <h3 class="font-[600] text-[15px] text-gray-800 bg-gray-50 border border-gray-100 px-4 py-2.5 rounded-xl mb-5 flex items-center"><i class="fas fa-sticky-note text-purple-600 mr-2 text-[15px]"></i> Catatan Historis</h3>
-                            <div class="space-y-3">
-                                <div class="hidden sm:grid grid-cols-[30px_1fr_1fr_1fr_30px] gap-2 text-[11px] font-[600] text-gray-500 uppercase px-1">
-                                    <div class="text-center">No</div><div>Pertemuan</div><div>Sosial</div><div>Lainnya</div><div></div>
-                                </div>
-                                <div v-for="(ket, index) in form.KeteranganList" :key="index" class="flex flex-col sm:flex-row gap-2 border-b sm:border-0 border-gray-100 pb-4 sm:pb-0">
-                                    <div class="w-8 h-8 shrink-0 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-[600] text-[13px] self-start mt-1 sm:mx-auto">{{ index + 1 }}</div>
-                                    <textarea v-model="ket.pertemuan" rows="2" class="flex-1 rounded-xl border border-gray-300 p-3 focus:border-purple-500 outline-none text-[12px] resize-none shadow-sm bg-gray-50 focus:bg-white" placeholder="Ket. Pertemuan"></textarea>
-                                    <textarea v-model="ket.dansos" rows="2" class="flex-1 rounded-xl border border-gray-300 p-3 focus:border-purple-500 outline-none text-[12px] resize-none shadow-sm bg-gray-50 focus:bg-white" placeholder="Ket. Sosial"></textarea>
-                                    <textarea v-model="ket.kurban" rows="2" class="flex-1 rounded-xl border border-gray-300 p-3 focus:border-purple-500 outline-none text-[12px] resize-none shadow-sm bg-gray-50 focus:bg-white" placeholder="Ket. Lainnya"></textarea>
-                                    <button v-if="form.KeteranganList.length > 1" @click.prevent="removeKeterangan(index)" class="text-red-500 hover:text-red-700 w-8 flex justify-center self-start mt-2"><i class="fas fa-trash text-[14px]"></i></button>
-                                </div>
-                                <button @click.prevent="addKeterangan" class="px-4 py-2 mt-2 bg-purple-50 text-purple-600 font-[600] rounded-lg border border-purple-200 hover:bg-purple-100 text-[12px] transition-colors"><i class="fas fa-plus mr-1"></i> Baris Baru</button>
+                            <div class="flex justify-center gap-3 pt-2">
+                                <button type="button" @click="resetForm" class="px-6 py-2.5 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 font-[600] text-[13px] transition-colors">Batal</button>
+                                <button type="submit" :disabled="saving" class="px-8 py-2.5 btn-primary rounded-xl font-[600] flex items-center disabled:opacity-70 text-[14px] shadow-md">
+                                    <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-2"></span>{{ saving ? 'Menyimpan...' : 'Simpan Data Warga' }}
+                                </button>
                             </div>
-                        </div>
+                        </form>
+                    </div>
 
-                        <div class="flex justify-center gap-3 pt-2">
-                            <button type="button" @click="resetForm" class="px-6 py-2.5 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 font-[600] text-[13px] transition-colors">Batal</button>
-                            <button type="submit" :disabled="saving" class="px-8 py-2.5 btn-primary rounded-xl font-[600] flex items-center disabled:opacity-70 text-[14px] shadow-md">
-                                <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-2"></span>{{ saving ? 'Menyimpan...' : 'Simpan Data Warga' }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                </main>
 
-                <!-- ================== MENU 3: FORM EDIT PROFIL ADMIN ================== -->
-                <div v-show="activeMenu === 'admin_profile'" class="w-full max-w-2xl mx-auto space-y-5 pt-4">
-                    <form @submit.prevent="saveAdminProfile" class="bg-white rounded-3xl p-6 shadow-md border border-gray-100">
-                        <div class="text-center mb-6">
-                            <h2 class="text-[18px] font-[700] text-[#1155CC]">Profil Administrator</h2>
-                            <p class="text-[12px] text-gray-500 font-[500] mt-1">Ubah data identitas rahasia Admin RT 2.</p>
-                        </div>
-
-                        <div class="flex flex-col items-center gap-3 mb-6">
-                            <div class="w-32 h-32 border-2 border-gray-200 rounded-full bg-gray-50 hover:border-primary relative flex justify-center items-center overflow-hidden cursor-pointer group transition-all shadow-inner">
-                                <input type="file" accept="image/*" @change="e => handleFileUpload(e, 'Foto_Profil', true)" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
-                                <button v-if="adminProfileForm.Foto_Profil" type="button" @click.prevent.stop="adminProfileForm.Foto_Profil = ''" class="absolute top-2 right-4 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center z-20 shadow-md"><i class="fas fa-times text-[10px]"></i></button>
-                                <img v-if="adminProfileForm.Foto_Profil" crossorigin="anonymous" referrerpolicy="no-referrer" :src="adminProfileForm.Foto_Profil" class="w-full h-full object-cover">
-                                <i v-else class="fas fa-camera text-[30px] text-gray-300 group-hover:text-primary"></i>
-                            </div>
-                            <span class="text-[11px] font-[600] text-gray-400">Ketuk untuk ubah foto (Bulat)</span>
-                        </div>
-
-                        <div class="space-y-4">
-                            <div><label class="block text-[12px] font-[600] text-gray-600 mb-1">Username (ID Rumah Admin)</label><input type="text" v-model="adminProfileForm.Id_Rumah" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-primary outline-none font-[600] text-primary text-[13px] shadow-sm" placeholder="Misal: rt2_jaya"></div>
-                            <div><label class="block text-[12px] font-[600] text-gray-600 mb-1">Password Admin</label>
-                                <div class="relative">
-                                    <input :type="showAdminPass ? 'text' : 'password'" v-model="adminProfileForm.Password" required class="w-full rounded-xl border border-gray-300 pl-3 pr-10 py-3 bg-gray-50 focus:bg-white focus:border-primary outline-none font-mono text-[13px] shadow-sm tracking-widest" placeholder="Ketik Password Baru">
-                                    <i class="fas cursor-pointer absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" :class="showAdminPass ? 'fa-eye-slash' : 'fa-eye'" @click="showAdminPass = !showAdminPass"></i>
-                                </div>
-                            </div>
-                            <div><label class="block text-[12px] font-[600] text-gray-600 mb-1">Nama Tampil (Display Name)</label><input type="text" v-model="adminProfileForm.Nama" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-primary outline-none font-[600] text-[13px] shadow-sm" placeholder="Nama Administrator"></div>
-                        </div>
-
-                        <div class="flex justify-center gap-3 pt-6 border-t border-gray-100 mt-6">
-                            <button type="button" @click="changeMenu('list')" class="px-6 py-2.5 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 font-[600] text-[13px] transition-colors">Batal</button>
-                            <button type="submit" :disabled="saving" class="px-8 py-2.5 btn-primary rounded-xl font-[600] flex items-center disabled:opacity-70 text-[13px] shadow-md">
-                                <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-2"></span>{{ saving ? 'Menyimpan...' : 'Simpan Profil' }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </main>
-
-            <footer class="fixed bottom-0 right-0 w-full md:w-auto bg-[#FFFFFF] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-30 border-t border-[#E5E7EB] md:bg-transparent md:shadow-none md:border-none md:pr-6 md:pb-2 lg:z-10 transition-all duration-300" :class="isSidebarExpanded ? 'lg:pl-[230px]' : 'lg:pl-[60px]'">
-                <div class="py-2.5 text-center px-4 md:text-right"><p class="text-[10px] font-[500] text-[#9CA3AF] leading-relaxed">Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. AdW.</p></div>
-            </footer>
+                <!-- Footer Tipis 1 Baris di dalam area konten -->
+                <footer class="w-full bg-[#D6D6D6]/50 border-t border-gray-300 shrink-0 py-1.5 mt-auto">
+                    <div class="text-center px-4"><p class="text-[10px] font-[500] text-gray-500 tracking-wide">&copy; Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. AdW.</p></div>
+                </footer>
+            </div>
         </div>
 
-        <!-- ================== MODAL IDENTITAS WACANA DSB (SAMA SEPERTI SEBELUMNYA) ================== -->
+        <!-- ================== MODAL IDENTITAS WACANA DSB ================== -->
         <!-- HIDDEN A4 TEMPLATE FOR DOWNLOAD -->
         <div style="overflow: hidden; height: 0; width: 0; position: absolute; z-index: -9999;">
             <div id="print-area-a4" class="w-[1123px] min-h-[794px] bg-white text-black p-10 box-border absolute text-[12px]">
@@ -607,12 +565,11 @@
                             <button @click="editWarga(detailModal.data); closeDetailModal()" class="w-8 h-8 rounded-full bg-white/20 text-white hover:bg-white/40 flex items-center justify-center transition-colors shadow-sm" title="Edit Data"><i class="fas fa-pen text-[12px]"></i></button>
                             <button @click="closeDetailModal" class="w-8 h-8 rounded-full bg-white/20 text-white hover:bg-white/40 flex items-center justify-center transition-colors shadow-sm" title="Tutup Modal"><i class="fas fa-times text-[14px]"></i></button>
                         </div>
-
                         <div class="flex items-center gap-4 mt-2 sm:mt-0">
-                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(detailModal.data)" class="w-[70px] h-[70px] rounded-full border-2 border-[#FFFFFF] object-cover shadow-md bg-[#FFFFFF] cursor-pointer" :class="!detailModal.data.Foto_Profil ? 'grayscale opacity-70' : ''" @click="openLightbox(getAvatar(detailModal.data))">
+                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(detailModal.data)" class="w-[80px] h-[80px] rounded-full border-2 border-[#FFFFFF] object-cover shadow-md bg-[#FFFFFF] cursor-pointer" :class="!detailModal.data.Foto_Profil ? 'grayscale opacity-70' : ''" @click="openLightbox(getAvatar(detailModal.data))">
                             <div>
-                                <h3 class="text-[18px] font-[600] leading-tight text-[#FFFFFF] capitalize">{{ detailModal.data.Nama }}</h3>
-                                <p class="text-blue-100 font-mono text-[12px] mt-1 flex items-center gap-2 flex-wrap">
+                                <h3 class="text-[20px] font-[600] leading-tight text-[#FFFFFF] capitalize">{{ detailModal.data.Nama }}</h3>
+                                <p class="text-blue-100 font-mono text-[14px] mt-1 flex items-center gap-2 flex-wrap">
                                     <span class="bg-[#5D98E3] text-[#FFFFFF] px-2 py-0.5 rounded shadow-sm font-[600] border border-[#4887D9]">ID: {{ detailModal.data.Id_Rumah || '-' }}</span> 
                                     <span class="font-[600]" v-if="userRole === 'admin'">| Sandi: Akses Admin</span>
                                 </p>
@@ -622,68 +579,71 @@
 
                     <div class="p-6 overflow-y-auto space-y-5 bg-[#FFFFFF]">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Kolom Kiri -->
                             <div class="space-y-4">
-                                <div class="bg-[#F9FAFB] p-4 rounded-2xl border border-[#E5E7EB] space-y-2">
-                                    <h4 class="font-[600] text-gray-800 border-b border-[#E5E7EB] pb-1.5 mb-2 text-[12px]"><i class="fas fa-id-card mr-1.5 text-primary"></i>Data Diri</h4>
-                                    <div class="flex"><span class="text-gray-500 w-[90px] shrink-0 font-[600] text-[12px]">Lahir</span><span class="font-[500] text-gray-900 text-[12px]">: {{ formatTTL(detailModal.data) }}</span></div>
-                                    <div class="flex"><span class="text-gray-500 w-[90px] shrink-0 font-[600] text-[12px]">Kelamin</span><span class="font-[500] text-gray-900 text-[12px]">: {{ detailModal.data.Jenis_Kelamin || '-' }}</span></div>
-                                    <div class="flex"><span class="text-gray-500 w-[90px] shrink-0 font-[600] text-[12px]">Gol. Darah</span><span class="font-[500] text-gray-900 text-[12px]">: {{ detailModal.data.Gol_Darah || '-' }}</span></div>
-                                    <div class="flex"><span class="text-gray-500 w-[90px] shrink-0 font-[600] text-[12px]">Agama</span><span class="font-[500] text-gray-900 text-[12px]">: {{ detailModal.data.Agama || '-' }}</span></div>
-                                    <div class="flex"><span class="text-gray-500 w-[90px] shrink-0 font-[600] text-[12px]">Status</span><span class="font-[500] text-gray-900 text-[12px]">: {{ detailModal.data.Status_Perkawinan || '-' }}</span></div>
+                                <div class="bg-[#F9FAFB] p-4 rounded-2xl border border-[#E5E7EB] space-y-2.5">
+                                    <h4 class="font-[600] text-[#000000] border-b border-[#E5E7EB] pb-1.5 mb-2 text-[14px]"><i class="fas fa-id-card mr-2 text-primary"></i>Data Diri</h4>
+                                    <p class="text-[14px] flex"><span class="text-[#000000] w-[100px] shrink-0 font-[600]">Lahir</span><span class="font-[500] text-[#000000]">: {{ formatTTL(detailModal.data) }}</span></p>
+                                    <p class="text-[14px] flex"><span class="text-[#000000] w-[100px] shrink-0 font-[600]">Jenis Kelamin</span><span class="font-[500] text-[#000000]">: {{ detailModal.data.Jenis_Kelamin || '-' }}</span></p>
+                                    <p class="text-[14px] flex"><span class="text-[#000000] w-[100px] shrink-0 font-[600]">Golongan Darah</span><span class="font-[500] text-[#000000]">: {{ detailModal.data.Gol_Darah || '-' }}</span></p>
+                                    <p class="text-[14px] flex"><span class="text-[#000000] w-[100px] shrink-0 font-[600]">Agama</span><span class="font-[500] text-[#000000]">: {{ detailModal.data.Agama || '-' }}</span></p>
+                                    <p class="text-[14px] flex"><span class="text-[#000000] w-[100px] shrink-0 font-[600]">Status</span><span class="font-[500] text-[#000000]">: {{ detailModal.data.Status_Perkawinan || '-' }}</span></p>
                                 </div>
-                                <div class="bg-[#F9FAFB] p-4 rounded-2xl border border-[#E5E7EB] space-y-2">
-                                    <h4 class="font-[600] text-gray-800 border-b border-[#E5E7EB] pb-1.5 mb-2 text-[12px]"><i class="fas fa-map-marker-alt mr-1.5 text-[#EF4444]"></i>Lingkungan</h4>
-                                    <div class="flex items-center"><span class="text-gray-500 w-[90px] shrink-0 font-[600] text-[12px]">Domisili</span><span class="font-[500] text-gray-900 text-[12px] flex items-center gap-1.5">: {{ detailModal.data.Status_Domisili || '-' }}<span v-if="detailModal.data.Id_Rumah && detailModal.data.Status_Domisili === 'Tempat Tinggal'" class="bg-primary text-[#FFFFFF] text-[10px] font-[600] px-1.5 rounded">{{ getHouseNumber(detailModal.data.Id_Rumah) }}</span></span></div>
-                                    <div class="flex"><span class="text-gray-500 w-[90px] shrink-0 font-[600] text-[12px]">Pekerjaan</span><span class="font-[500] text-gray-900 text-[12px]">: {{ detailModal.data.Pekerjaan || '-' }}</span></div>
-                                    <div class="flex items-center"><span class="text-gray-500 w-[90px] shrink-0 font-[600] text-[12px]">WhatsApp</span><a :href="'https://wa.me/' + formatWhatsApp(detailModal.data.No_Tlp)" target="_blank" class="font-[600] text-brandgreen hover:underline flex items-center gap-1 text-[12px]">: {{ detailModal.data.No_Tlp || '-' }}</a></div>
-                                    <div class="flex"><span class="text-gray-500 w-[90px] shrink-0 font-[600] text-[12px]">Ronda</span><span class="font-[600] text-[12px]" :class="['Bebas Tugas', 'Belum ada data', ''].includes(detailModal.data.Ronda) ? 'text-[#EF4444]' : 'text-brandgreen'">: {{ detailModal.data.Ronda || 'Belum ada data' }}</span></div>
+                                <div class="bg-[#F9FAFB] p-4 rounded-2xl border border-[#E5E7EB] space-y-2.5">
+                                    <h4 class="font-[600] text-[#000000] border-b border-[#E5E7EB] pb-1.5 mb-2 text-[14px]"><i class="fas fa-map-marker-alt mr-2 text-[#EF4444]"></i>Lingkungan</h4>
+                                    <p class="text-[14px] flex items-center"><span class="text-[#000000] w-[100px] shrink-0 font-[600]">Domisili</span><span class="font-[500] text-[#000000] flex items-center gap-2">: {{ detailModal.data.Status_Domisili || '-' }}<span v-if="detailModal.data.Id_Rumah && detailModal.data.Status_Domisili === 'Tempat Tinggal'" class="bg-[#5D98E3] text-[#FFFFFF] text-[10px] font-[600] px-1.5 rounded">{{ getHouseNumber(detailModal.data.Id_Rumah) }}</span></span></p>
+                                    <p class="text-[14px] flex"><span class="text-[#000000] w-[100px] shrink-0 font-[600]">Pekerjaan</span><span class="font-[500] text-[#000000]">: {{ detailModal.data.Pekerjaan || '-' }}</span></p>
+                                    <p class="text-[14px] flex items-center"><span class="text-[#000000] w-[100px] shrink-0 font-[600]">WhatsApp</span><a :href="'https://wa.me/' + formatWhatsApp(detailModal.data.No_Tlp)" target="_blank" class="font-[600] text-[#16A34A] hover:underline flex items-center gap-1 group">: <i class="fab fa-whatsapp group-hover:scale-110 transition-transform"></i> {{ detailModal.data.No_Tlp || '-' }}</a></p>
+                                    <p class="text-[14px] flex"><span class="text-[#000000] w-[100px] shrink-0 font-[600]">Ronda</span><span class="font-[600]" :class="['Bebas Tugas', 'Belum ada data', ''].includes(detailModal.data.Ronda) ? 'text-[#EF4444]' : 'text-brandgreen'">: {{ detailModal.data.Ronda || 'Belum ada data' }}</span></p>
                                 </div>
                             </div>
                             
+                            <!-- Kolom Kanan -->
                             <div class="space-y-4 flex flex-col">
                                 <div class="bg-orange-50/50 p-4 rounded-2xl border border-orange-200 flex-1">
-                                    <h4 class="font-[600] text-brandorange border-b border-orange-200 pb-1.5 mb-2 text-[12px]"><i class="fas fa-users mr-1.5"></i>Keluarga Se-rumah</h4>
-                                    <div class="flex flex-col text-[12px] font-[500] text-gray-800 leading-relaxed w-full font-['Poppins']">
+                                    <h4 class="font-[600] text-brandorange border-b border-orange-200 pb-1.5 mb-2 text-[14px]"><i class="fas fa-users mr-1.5"></i>Keluarga Se-rumah</h4>
+                                    <div class="flex flex-col text-[13px] font-[500] text-[#000000] leading-relaxed w-full font-['Poppins']">
                                         <template v-if="detailModal.data.Anggota_Keluarga && detailModal.data.Anggota_Keluarga !== 'Tidak ada Data'">
-                                            <div v-for="(line, i) in detailModal.data.Anggota_Keluarga.split('\n')" :key="i" class="border-b border-orange-100 pb-1 mb-1 last:border-0 last:pb-0 last:mb-0">{{ line }}</div>
+                                            <div v-for="(line, i) in detailModal.data.Anggota_Keluarga.split('\n')" :key="i" class="border-b border-orange-100 pb-1.5 mb-1.5 last:border-0 last:pb-0 last:mb-0">{{ line }}</div>
                                         </template>
                                         <span v-else class="text-[#9CA3AF] italic">- Tidak ada data keluarga</span>
                                     </div>
                                 </div>
                                 
                                 <div class="bg-[#F9FAFB] p-4 rounded-2xl border border-[#E5E7EB]">
-                                    <h4 class="font-[600] text-gray-800 border-b border-[#E5E7EB] pb-1.5 mb-2 text-[12px]"><i class="fas fa-photo-video mr-1.5 text-primary"></i>Media Tersimpan</h4>
+                                    <h4 class="font-[600] text-[#000000] border-b border-[#E5E7EB] pb-1.5 mb-2 text-[14px]"><i class="fas fa-photo-video mr-1.5 text-primary"></i>Media Tersimpan</h4>
                                     <div class="flex flex-wrap gap-4 items-center">
-                                        <div v-if="detailModal.data.QR_Code" class="flex flex-col items-center gap-1">
-                                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.QR_Code" class="w-[50px] h-[50px] object-contain bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors" @click="openLightbox(detailModal.data.QR_Code)">
-                                            <span class="text-[10px] font-[600] text-gray-500">QR Code</span>
+                                        <div v-if="detailModal.data.QR_Code" class="flex flex-col items-center gap-1.5">
+                                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.QR_Code" class="w-[60px] h-[60px] object-contain bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors" @click="openLightbox(detailModal.data.QR_Code)">
+                                            <span class="text-[11px] font-[600] text-gray-500">QR Code</span>
                                         </div>
-                                        <div v-if="detailModal.data.Data_Lain" class="flex flex-col items-center gap-1">
-                                            <img v-if="detailModal.data.Data_Lain.includes('lh3.googleusercontent.com')" crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.Data_Lain" class="w-[50px] h-[50px] object-cover bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors" @click="openLightbox(detailModal.data.Data_Lain)">
-                                            <button v-else @click="openLightbox(detailModal.data.Data_Lain)" class="w-[50px] h-[50px] bg-gray-100 text-red-500 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-200 transition-colors flex items-center justify-center">
-                                                <i class="fas fa-file-pdf text-[20px]"></i>
+                                        <div v-if="detailModal.data.Data_Lain" class="flex flex-col items-center gap-1.5">
+                                            <img v-if="detailModal.data.Data_Lain.includes('lh3.googleusercontent.com')" crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.Data_Lain" class="w-[60px] h-[60px] object-cover bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors" @click="openLightbox(detailModal.data.Data_Lain)">
+                                            <button v-else @click="openLightbox(detailModal.data.Data_Lain)" class="w-[60px] h-[60px] bg-gray-100 text-red-500 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-200 transition-colors flex items-center justify-center">
+                                                <i class="fas fa-file-pdf text-[26px]"></i>
                                             </button>
-                                            <span class="text-[10px] font-[600] text-gray-500">Data Lain</span>
+                                            <span class="text-[11px] font-[600] text-gray-500">Data Lain</span>
                                         </div>
-                                        <div v-if="!detailModal.data.QR_Code && !detailModal.data.Data_Lain" class="text-[11px] text-gray-400 italic">Tidak ada file media terlampir.</div>
+                                        <div v-if="!detailModal.data.QR_Code && !detailModal.data.Data_Lain" class="text-[12px] text-gray-400 italic">Tidak ada file media terlampir.</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div v-if="userRole === 'admin' && parseKeterangan(detailModal.data.Keterangan).length > 0 && (parseKeterangan(detailModal.data.Keterangan)[0].pertemuan !== '' || parseKeterangan(detailModal.data.Keterangan)[0].dansos !== '' || parseKeterangan(detailModal.data.Keterangan)[0].kurban !== '')" class="bg-purple-50/50 p-4 rounded-2xl border border-purple-200 mt-2 w-full flex flex-col">
-                            <h4 class="font-[600] text-[12px] text-purple-800 border-b border-purple-200 pb-1.5 mb-2 shrink-0"><i class="fas fa-history mr-1.5"></i>Histori Catatan & Keterangan</h4>
-                            <div class="overflow-x-auto custom-scrollbar pr-1.5">
-                                <table class="w-full text-left text-[12px] text-gray-800 min-w-[400px]">
-                                    <thead class="text-gray-500 font-[600] border-b border-purple-200">
-                                        <tr><th class="py-1 pr-2 w-[30px] text-center">No</th><th class="py-1 px-2">Pertemuan RT</th><th class="py-1 px-2">Kegiatan Sosial</th><th class="py-1 px-2">Keterangan Lain</th></tr>
+                        <!-- Keterangan Historis di Modal -->
+                        <div v-if="userRole === 'admin' && parseKeterangan(detailModal.data.Keterangan).length > 0 && (parseKeterangan(detailModal.data.Keterangan)[0].pertemuan !== '' || parseKeterangan(detailModal.data.Keterangan)[0].dansos !== '' || parseKeterangan(detailModal.data.Keterangan)[0].kurban !== '')" class="bg-[#F5F3FF] p-4 rounded-2xl border border-[#DDD6FE] mt-2 w-full flex flex-col">
+                            <h4 class="font-[600] text-[14px] text-[#000000] border-b border-[#C4B5FD] pb-2 mb-3 shrink-0"><i class="fas fa-sticky-note mr-2 text-[#8B5CF6]"></i>Catatan & Keterangan Tambahan</h4>
+                            <div class="overflow-y-auto max-h-[300px] custom-scrollbar pr-1.5">
+                                <table class="w-full text-left text-[13px] sm:text-[14px] text-[#000000] break-words">
+                                    <thead class="text-[#000000] font-[600] border-b border-[#C4B5FD] sticky top-0 bg-[#F5F3FF] z-10">
+                                        <tr><th class="py-2 pr-2 w-[40px] text-center align-top">No</th><th class="py-2 px-3 align-top">Pertemuan RT</th><th class="py-2 px-3 align-top">Kegiatan Sosial</th><th class="py-2 px-3 align-top">Keterangan Lain</th></tr>
                                     </thead>
-                                    <tbody class="divide-y divide-purple-100">
+                                    <tbody class="divide-y divide-[#DDD6FE]">
                                         <tr v-for="(ket, i) in parseKeterangan(detailModal.data.Keterangan)" :key="i">
-                                            <td class="py-2 pr-2 text-center font-[600] text-purple-600 align-top">{{ i + 1 }}</td>
-                                            <td class="py-2 px-2 align-top whitespace-pre-wrap font-[500]">{{ ket.pertemuan || '-' }}</td>
-                                            <td class="py-2 px-2 align-top whitespace-pre-wrap font-[500]">{{ ket.dansos || '-' }}</td>
-                                            <td class="py-2 px-2 align-top whitespace-pre-wrap font-[500]">{{ ket.kurban || '-' }}</td>
+                                            <td class="py-2.5 pr-2 text-center font-[600] text-[#8B5CF6] align-top w-[40px]">{{ i + 1 }}</td>
+                                            <td class="py-2.5 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.pertemuan || '-' }}</td>
+                                            <td class="py-2.5 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.dansos || '-' }}</td>
+                                            <td class="py-2.5 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.kurban || '-' }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -704,12 +664,12 @@
                         <div class="flex items-center gap-3 mb-5 border-b border-gray-100 pb-4">
                             <div class="w-12 h-12 rounded-xl bg-blue-100 text-primary flex items-center justify-center shadow-sm"><i class="fas fa-file-invoice-dollar text-[20px]"></i></div>
                             <div>
-                                <h3 class="font-[600] text-gray-900 text-[15px]">Laporan Iuran Warga</h3>
-                                <p class="text-gray-500 font-[500] text-[12px]">{{ wacanaModal.nama }}</p>
+                                <h3 class="font-[600] text-gray-900 text-[16px]">Laporan Iuran Warga</h3>
+                                <p class="text-gray-500 font-[500] text-[13px]">{{ wacanaModal.nama }}</p>
                             </div>
                         </div>
                         <div class="border border-gray-200 rounded-xl overflow-hidden mb-4 shadow-sm">
-                            <table class="w-full text-left text-[12px]">
+                            <table class="w-full text-left text-[13px]">
                                 <thead class="bg-blue-50 text-blue-800 font-[600] border-b border-blue-100">
                                     <tr><th class="p-2.5 pl-4">Bulan</th><th class="p-2.5 text-center">Jimpitan</th><th class="p-2.5 text-center pr-4">Lainnya</th></tr>
                                 </thead>
@@ -719,13 +679,13 @@
                                 </tbody>
                             </table>
                         </div>
-                        <button @click="showTataCara = true" class="w-full py-2.5 bg-blue-50 text-primary font-[600] rounded-xl hover:bg-blue-100 transition-colors border border-blue-200 text-[12px]"><i class="fas fa-info-circle mr-1.5"></i> Info Cara Pembayaran</button>
+                        <button @click="showTataCara = true" class="w-full py-2.5 bg-blue-50 text-primary font-[600] rounded-xl hover:bg-blue-100 transition-colors border border-blue-200 text-[13px]"><i class="fas fa-info-circle mr-1.5"></i> Info Cara Pembayaran</button>
                     </div>
 
                     <div v-else class="text-left">
-                        <button @click="showTataCara = false" class="text-primary font-[600] mb-4 hover:underline text-[12px] flex items-center gap-1.5"><i class="fas fa-arrow-left"></i> Kembali</button>
-                        <h3 class="font-[600] text-gray-900 text-[15px] mb-4 text-center">Tata Cara Pembayaran Online</h3>
-                        <div class="space-y-3 text-[12px] text-gray-700">
+                        <button @click="showTataCara = false" class="text-primary font-[600] mb-4 hover:underline text-[13px] flex items-center gap-1.5"><i class="fas fa-arrow-left"></i> Kembali</button>
+                        <h3 class="font-[600] text-gray-900 text-[16px] mb-4 text-center">Tata Cara Pembayaran Online</h3>
+                        <div class="space-y-3 text-[13px] text-gray-700">
                             <div class="p-4 border border-blue-200 rounded-xl bg-blue-50">
                                 <h4 class="font-[600] text-primary mb-1">1. Transfer Bank (BCA)</h4>
                                 <p>No Rekening: <strong>1234567890</strong><br>A.N: Bendahara RT 2<br>Berita: <em>Iuran [Bulan] [Nama]</em></p>
@@ -754,8 +714,8 @@
 
         <div class="fixed top-20 right-4 z-[110] flex flex-col gap-2 pointer-events-none">
             <transition-group name="fade">
-                <div v-for="t in toasts" :key="t.id" class="px-5 py-3.5 rounded-xl shadow-xl flex items-center text-white text-[12px] font-[600] min-w-[250px]" :class="t.type === 'error' ? 'bg-red-500' : 'bg-brandgreen'">
-                    <i :class="t.type === 'error' ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle'" class="mr-2.5 text-[16px]"></i>{{ t.message }}
+                <div v-for="t in toasts" :key="t.id" class="px-5 py-3.5 rounded-xl shadow-xl flex items-center text-white text-[13px] font-[600] min-w-[250px]" :class="t.type === 'error' ? 'bg-red-500' : 'bg-brandgreen'">
+                    <i :class="t.type === 'error' ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle'" class="mr-2.5 text-[18px]"></i>{{ t.message }}
                 </div>
             </transition-group>
         </div>
@@ -765,10 +725,10 @@
                 <div class="bg-white rounded-[24px] p-6 max-w-xs w-full text-center shadow-2xl">
                     <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-trash-alt text-[24px] text-red-500"></i></div>
                     <h3 class="text-[16px] font-[600] text-gray-900 mb-1">Hapus Data?</h3>
-                    <p class="text-gray-500 text-[12px] mb-6">Data <b class="text-gray-800">{{ deleteConfirm.nama }}</b> akan dihapus dari sistem.</p>
+                    <p class="text-gray-500 text-[13px] mb-6">Data <b class="text-gray-800">{{ deleteConfirm.nama }}</b> akan dihapus dari sistem.</p>
                     <div class="flex gap-2">
-                        <button @click="deleteConfirm.show = false" class="flex-1 py-2.5 bg-gray-100 text-gray-700 font-[600] rounded-xl hover:bg-gray-200 text-[12px]">Batal</button>
-                        <button @click="executeDelete" :disabled="saving" class="flex-1 py-2.5 bg-red-500 text-white font-[600] rounded-xl hover:bg-red-600 flex justify-center items-center text-[12px]">Hapus</button>
+                        <button @click="deleteConfirm.show = false" class="flex-1 py-2.5 bg-gray-100 text-gray-700 font-[600] rounded-xl hover:bg-gray-200 text-[13px]">Batal</button>
+                        <button @click="executeDelete" :disabled="saving" class="flex-1 py-2.5 bg-red-500 text-white font-[600] rounded-xl hover:bg-red-600 flex justify-center items-center text-[13px]">Hapus</button>
                     </div>
                 </div>
             </div>
@@ -778,10 +738,7 @@
     <script>
         const { createApp, ref, computed } = Vue;
 
-        // ==========================================
-        // KONFIGURASI API
-        // ==========================================
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz6A1WbyNnkbUNuUMEo-DJRgtmhzsFnHFCQRSTDq4RCPhiZk49MLALM_qNQqbwEtMnB1A/exec"; 
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz-jYl4x8O56cgXoQBqEqXdzXh1PrbQX1o6RiPJbGVOy5YjblHm-_r2Qe7EX72XAN1KWw/exec"; 
         const SECRET_TOKEN = "RT2_PASEKAN_AMAN_2026";
 
         const callAPI = async (action, payload = {}) => {
@@ -805,7 +762,7 @@
 
         createApp({
             setup() {
-                const isSidebarExpanded = ref(false); // Default ditarik saat desktop masuk pertama
+                const isSidebarExpanded = ref(false); 
                 
                 const isLoggedIn = ref(false); 
                 const loginIdRumah = ref('');
@@ -815,11 +772,6 @@
                 
                 const userRole = ref('');
                 const loggedInId = ref('');
-                
-                // Variabel khusus data admin
-                const adminProfile = ref({ Id_Rumah: '', Password: '', Nama: '', Foto_Profil: '' });
-                const adminProfileForm = ref({ Id_Rumah: '', Password: '', Nama: '', Foto_Profil: '' });
-                const showAdminPass = ref(false);
 
                 const activeMenu = ref('list');
                 const viewMode = ref('card');
@@ -876,17 +828,6 @@
 
                 const hasActiveFilters = computed(() => filterJK.value || filterDomisili.value || filterRonda.value || filterAgama.value || filterGolDarah.value || filterStatus.value);
                 
-                const activeFilterText = computed(() => {
-                    if (searchQuery.value) return `Pencarian`;
-                    if (filterDomisili.value) return filterDomisili.value;
-                    if (filterJK.value) return filterJK.value;
-                    if (filterRonda.value) return `Ronda ${filterRonda.value}`;
-                    if (filterGolDarah.value) return `Darah ${filterGolDarah.value}`;
-                    if (filterStatus.value) return filterStatus.value;
-                    if (filterAgama.value) return filterAgama.value;
-                    return 'Semua Data';
-                });
-
                 const handleSearchInput = () => {
                     if(searchQuery.value) {
                         filterJK.value = ''; filterDomisili.value = ''; filterRonda.value = '';
@@ -962,7 +903,7 @@
                 };
 
                 const scrollTo = (pos) => {
-                    const mainArea = document.querySelector('main');
+                    const mainArea = document.querySelector('#scrollArea');
                     if(mainArea) {
                         mainArea.scrollTo({ top: pos === 'top' ? 0 : mainArea.scrollHeight, behavior: 'smooth' });
                     }
@@ -1005,14 +946,9 @@
                         loggedInId.value = loginIdRumah.value;
                         wargaList.value = res.data; 
                         
-                        // Set profil admin jika login sbg admin
-                        if (res.role === 'admin' && res.adminProfile) {
-                            adminProfile.value = { ...res.adminProfile };
-                        }
-                        
                         isLoggedIn.value = true;
                         activeMenu.value = 'list';
-                        isSidebarExpanded.value = false; // Otomatis lipat sidebar saat berhasil login desktop
+                        isSidebarExpanded.value = false; 
                     } catch(e) {
                         showToast(e.message || 'Gagal login.', 'error');
                     } finally { loading.value = false; }
@@ -1027,24 +963,19 @@
                 const logout = () => { 
                     isLoggedIn.value = false; loginIdRumah.value = ''; loginPassword.value = '';
                     isSetujuRegis.value = false; wargaList.value = []; 
-                    adminProfile.value = { Id_Rumah: '', Password: '', Nama: '', Foto_Profil: '' };
                 };
                 
                 const changeMenu = (menu) => { 
                     activeMenu.value = menu; scrollTo('top');
                     if(menu==='register' && !isEditing.value) resetForm(); 
-                    if(menu==='admin_profile') {
-                        adminProfileForm.value = { ...adminProfile.value };
-                        adminProfileForm.value.Id_Rumah_Lama = adminProfile.value.Id_Rumah;
-                    }
                 };
                 
                 const fetchData = async () => {
                     if(userRole.value === 'new_warga') return;
                     loading.value = true;
                     try { 
-                        let pId = userRole.value === 'admin' ? adminProfile.value.Id_Rumah : loggedInId.value;
-                        let pPass = userRole.value === 'admin' ? adminProfile.value.Password : loginPassword.value;
+                        let pId = userRole.value === 'admin' ? 'rt2_jaya' : loggedInId.value;
+                        let pPass = userRole.value === 'admin' ? '0203' : loginPassword.value;
                         const res = await callAPI('login', { Id_Rumah: pId, Password: pPass });
                         wargaList.value = res.data; 
                         if(userRole.value === 'warga' && isEditing.value) {
@@ -1113,21 +1044,6 @@
                     finally { saving.value = false; }
                 };
 
-                const saveAdminProfile = async () => {
-                    saving.value = true;
-                    try {
-                        const res = await callAPI('saveAdmin', adminProfileForm.value);
-                        showToast(res.message); 
-                        // Update local profil state
-                        adminProfile.value = { ...adminProfileForm.value };
-                        activeMenu.value = 'list';
-                        scrollTo('top');
-                    } catch(e) { 
-                        showToast(e.message || 'Gagal menyimpan profil', 'error'); 
-                    } 
-                    finally { saving.value = false; }
-                };
-
                 const confirmDelete = (w) => { deleteConfirm.value = { show:true, nama: w.Nama, idRumah: w.Id_Rumah }; };
                 const executeDelete = async () => {
                     saving.value = true;
@@ -1138,14 +1054,11 @@
                     finally { saving.value = false; }
                 };
 
-                const handleFileUpload = (e, field, isAdmin = false) => {
+                const handleFileUpload = (e, field) => {
                     const file = e.target.files[0]; if(!file) return;
                     if(file.size > 5 * 1024 * 1024) return showToast('File Maksimal 5MB', 'error');
                     const reader = new FileReader();
-                    reader.onload = ev => { 
-                        if(isAdmin) adminProfileForm.value[field] = ev.target.result;
-                        else form.value[field] = ev.target.result; 
-                    };
+                    reader.onload = ev => { form.value[field] = ev.target.result; };
                     reader.readAsDataURL(file);
                 };
 
@@ -1157,9 +1070,8 @@
 
                 return {
                     isSidebarExpanded, isLoggedIn, loginIdRumah, loginPassword, showPassword, isSetujuRegis, userRole, loggedInId, getDisplayName,
-                    adminProfile, adminProfileForm, showAdminPass, saveAdminProfile,
                     activeMenu, viewMode, isFilterOpen, loading, saving, wargaList, filteredWarga, searchQuery, scrollTo, getAvatar,
-                    filterJK, filterDomisili, filterRonda, filterAgama, filterGolDarah, filterStatus, sortOrder, toggleSort, applySingleFilter, resetFilters, hasActiveFilters, activeFilterText, handleSearchInput, activeDropdown,
+                    filterJK, filterDomisili, filterRonda, filterAgama, filterGolDarah, filterStatus, sortOrder, toggleSort, applySingleFilter, resetFilters, hasActiveFilters, activeDropdown,
                     isEditing, form, calculatedAge, capitalizeName, addFam, removeFam, removeFile, addKeterangan, removeKeterangan, parseKeterangan,
                     toasts, deleteConfirm, detailModal, lightboxImage, getHouseNumber, fiturWacanaOn, wacanaModal, showTataCara, openWacanaModal, 
                     handleLogin, logout, changeMenu, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, openDetailModal, closeDetailModal, openLightbox, closeLightbox, bukaHalamanRegistrasi, formatWhatsApp, formatDashPhone, formatTTL

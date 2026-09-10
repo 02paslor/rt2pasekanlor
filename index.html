@@ -20,15 +20,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ======================================================================
-           AREA PENGATURAN TAMPILAN
-           ====================================================================== */
+
         :root {
             --warna-bg-header-scrolled: rgba(0, 52, 143, 0.95);
-            --posisi-tombol-gulung: flex-end; 
         }
 
-        /* Sembunyikan scrollbar global untuk SEMUA ELEMEN (body, modal, slider, dll) */
+      
         * {
             scrollbar-width: none !important; /* Firefox */
             -ms-overflow-style: none !important; /* IE and Edge */
@@ -47,7 +44,6 @@
             justify-content: center; 
         }
 
-        /* --- APP WRAPPER DENGAN BACKGROUND GUNUNG NAIK LAGI --- */
         .app-wrapper {
             width: 100%; max-width: 480px;
             background-color: transparent; 
@@ -104,38 +100,21 @@
         /* ================== MAIN BOARD & SLIDER ================== */
         .main-content-board { background-color: transparent; border-radius: 25px 25px 0 0; padding-top: 80px; position: relative; z-index: 10; display: flex; flex-direction: column; box-shadow: none; min-height: calc(100vh - 80px); } 
 
-        .slider-wrapper-accordion { position: relative; z-index: 2; width: 100%; margin: 0 auto 15px auto; }
-        .slider-toggle-wrapper { display: flex; justify-content: var(--posisi-tombol-gulung); padding: 0 16px; margin-bottom: 5px; }
-        .slider-toggle-icon-btn { background-color: #ffffff; color: #383838; border: none; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: all 0.2s; }
-        .slider-toggle-icon-btn:active { transform: scale(0.9); background-color: #f1f5f9; }
-        
-        .slider-section { background: transparent; border-radius: 0; box-shadow: none; padding: 0; position: relative; max-height: 500px; overflow: hidden; transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; opacity: 1; }
-        .slider-section.collapsed { max-height: 0; opacity: 0; pointer-events: none; padding: 0; }
+        .hero-slider-wrapper { position: relative; z-index: 2; width: 100%; margin: 5px auto 15px auto; }
         .slider-container { position: relative; padding: 0 !important; }
         
         .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 12px; padding: 0 16px; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
-        .slide { flex: 0 0 230px; width: 230px; height: 140px; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-color: #ffffff; cursor: pointer; }
+        /* TINGGI SLIDER DIPENDEKKAN & SHADOW DIKURANGI AGAR TIDAK BERAT */
+        .slide { flex: 0 0 210px; width: 210px; height: 100px; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background-color: #ffffff; cursor: pointer; }
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 500; z-index:-1;}
 
-        /* ================== MENU UTAMA (GRID DI BAWAH KAS) ================== */
-        .main-menu-wrapper {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            padding: 0 16px 20px 16px;
-            width: 100%;
-            z-index: 2;
-            position: relative;
-        }
-        .nav-item { 
-            color: #FFFFFF; text-decoration: none; border-radius: 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; padding: 10px 2px; border: none; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); 
-        }
+        /* ================== MENU UTAMA ================== */
+        .main-menu-wrapper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 0 16px 20px 16px; width: 100%; z-index: 2; position: relative; }
+        .nav-item { color: #FFFFFF; text-decoration: none; border-radius: 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; padding: 10px 2px; border: none; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .nav-item:active { transform: scale(0.95); }
         .nav-item svg { width: 20px; height: 20px; margin-bottom: 6px; display: block; stroke: currentColor; stroke-width: 2 !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
         
-        /* ================== WARNA TOMBOL AKTIF ================== */
-
         .btn-home, .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-datawarga, .btn-tatatertib, .btn-lapak, .btn-disabled { background: #0047BF;}
         .btn-disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
@@ -162,19 +141,24 @@
         .saldo-value { font-size: 12pt; font-weight: 600; line-height: 1; margin-bottom: 0; color: #ccff00; text-shadow: 0 1px 3px rgba(0,0,0,0.4); } 
         .kas-action-buttons { display: flex; gap: 10px; margin-top: 14px; z-index: 2; justify-content: center; }
         
-        .btn-kas-small { flex: 1; padding: 6px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-        .btn-kas-detail { background: linear-gradient(135deg, #10b981, #059669) !important; border: none !important; color: white !important; }
-        .btn-kas-trx { background: linear-gradient(135deg, #f97316, #ea580c) !important; border: none !important; color: white !important; }
+        .btn-kas-small { flex: 1; padding: 6px 4px; border-radius: 50px; font-size: 11px; font-weight: 500; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .btn-kas-detail { background: #10b981 !important; border: none !important; color: white !important; }
+        .btn-kas-trx { background: #f97316 !important; border: none !important; color: white !important; }
 
-        /* ================== MODAL ANIMASI (CENTER CARD) ================== */
+        /* ================== MODAL ANIMASI (SUDAH DIOPTIMASI BLURNYA) ================== */
         .slide-up-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
-            z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center;
             padding: 75px 16px 20px 16px;
+            /* Perbaikan Performa GPU saat sembunyi */
+            visibility: hidden; opacity: 0; pointer-events: none; 
+            transition: opacity 0.3s ease, visibility 0s 0.3s;
         }
-        .slide-up-overlay.active { opacity: 1; pointer-events: auto; }
+        .slide-up-overlay.active { 
+            visibility: visible; opacity: 1; pointer-events: auto; 
+            transition: opacity 0.3s ease, visibility 0s 0s;
+        }
         
         .slide-up-content {
             background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 100%; 
@@ -185,15 +169,20 @@
         }
         .slide-up-overlay.active .slide-up-content { transform: scale(1); opacity: 1; }
 
-        /* ================== MODAL SLIDER BANNER (VIEW UTUH CENTER) ================== */
+        /* ================== MODAL SLIDER BANNER ================== */
         .slide-down-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); backdrop-filter: blur(4px);
-            z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center;
             padding: 75px 20px 20px 20px;
+            /* Perbaikan Performa GPU saat sembunyi */
+            visibility: hidden; opacity: 0; pointer-events: none; 
+            transition: opacity 0.3s ease, visibility 0s 0.3s;
         }
-        .slide-down-overlay.active { opacity: 1; pointer-events: auto; }
+        .slide-down-overlay.active { 
+            visibility: visible; opacity: 1; pointer-events: auto; 
+            transition: opacity 0.3s ease, visibility 0s 0s;
+        }
         
         .slide-down-content {
             background: transparent; width: auto; max-width: 100%; 
@@ -207,93 +196,30 @@
         .modal-scroll-area.no-padding { padding: 0; }
 
         /* Tombol Mengambang Modal */
-        .modal-close-btn-absolute {
-            position: absolute; top: 16px; right: 16px;
-            background: #fef2f2; color: #ef4444; border: none;
-            width: 32px; height: 32px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s;
-        }
-        .modal-back-btn-absolute {
-            position: absolute; top: 16px; left: 16px;
-            background: #f1f5f9; color: #1155cc; border: none;
-            width: 32px; height: 32px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s;
-        }
+        .modal-close-btn-absolute { position: absolute; top: 16px; right: 16px; background: #fef2f2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
+        .modal-back-btn-absolute { position: absolute; top: 16px; left: 16px; background: #f1f5f9; color: #1155cc; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
 
-        /* ================== KARTU LUAR (DASHBOARD SECTION CARD) ================== */
-        .dashboard-section-card {
-            border-radius: 24px;
-            margin: 0 16px 24px 16px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            position: relative;
-            z-index: 2;
-        }
-        /* ================== WARNA KARTU LUAR ================== */
-        .card-kegiatan { background: linear-gradient(90deg, #0FBD76, #4777ED); }
-        .card-kegiatan .ds-footer { background: linear-gradient(90deg, #0FBD76, #4777ED); }
+        /* ================== KARTU LUAR & WARNA ================== */
+        .dashboard-section-card { border-radius: 24px; margin: 0 16px 24px 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); position: relative; z-index: 2; }
+        .card-kegiatan { background: #10b981; }
+        .card-kegiatan .ds-footer { background: #10b981; }
         
-        .card-lapak { background: linear-gradient(90deg, #9D4BDE, #5789F2); }
-        .card-lapak .ds-footer { background: linear-gradient(90deg, #9D4BDE, #5789F2); }
+        .ds-header { padding: 16px 10px; text-align: center; color: #ffffff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+        .ds-content { background-color: #f1f5f9; padding: 20px 16px; border-radius: 20px; }
+        .ds-footer { padding: 16px; display: flex; justify-content: center; align-items: center; }
+        .dashboard-section-card.ds-agenda .ds-content { padding: 12px 10px; border-radius: 20px; background-color: #ffffff; }
 
-        /* ================== WARNA FONT KARTU LUAR ================== */
-        .ds-header {
-            padding: 16px 10px;
-            text-align: center;
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-        .ds-content {
-            background-color: #f1f5f9;
-            padding: 20px 16px;
-            border-radius: 20px;
-        }
-        .ds-footer {
-            padding: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        /* ================== WARNA FONT KARTU DALAM ================== */
-        .dashboard-section-card.ds-agenda .ds-content {
-            padding: 12px 10px;
-            border-radius: 20px;
-            background-color: #ffffff;
-        }
-
-        .ds-pill-btn {
-            background-color: #ffffff; color: #383838; border: none; padding: 10px 24px;
-            border-radius: 50px; font-size: 13px; font-weight: 600; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s;
-        }
+        .ds-pill-btn { background-color: #ffffff; color: #383838; border: none; padding: 8px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
         .ds-pill-btn:active { transform: scale(0.95); }
-        .nav-circle-btn {
-            background: #ffffff; border: none; width: 34px; height: 34px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: #383838; 
-            cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
 
-        /* ================== ELEMEN DALAM KARTU AGENDA (KEGIATAN WARGA) ================== */
+        /* ================== ELEMEN AGENDA ================== */
         .cards-list { display: flex; flex-direction: column; gap: 16px; }
         .info-card { background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; border: 1px solid #D4D4D4; }
         .card-header { padding: 12px 16px; color: #ffffff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-        
-        /* ================== KOTAK STATUS ================== */
         .neumorph-status { background: #FFFFFF; border-radius: 9px; padding: 4px 10px; font-size: 10.5px;}
         
         .card-header .category-text { font-size: 15px; font-weight: 600; letter-spacing: 0.1px; text-shadow: 0 1px 2px rgba(0,0,0,0.15); display: block; }
-        .bg-pertemuan { background: #1155CC; }
-        .bg-kerjabakti { background: #BF1CD6; }
-        .bg-ronda      { background: #5530A6; }
-        .bg-lainnya    { background: #00997C; } 
+        .bg-pertemuan { background: #1155CC; } .bg-kerjabakti { background: #BF1CD6; } .bg-ronda { background: #5530A6; } .bg-lainnya { background: #00997C; } 
         
         .info-card-body { display: flex; padding: 14px 16px; gap: 14px; align-items: center; border-bottom: 1.5px dashed #e2e8f0; }
         .card-thumb-wrapper { position: relative; cursor: pointer; flex-shrink: 0; }
@@ -319,7 +245,6 @@
         @keyframes pulse-status { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
         @keyframes pulse-status-fast { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.3); opacity: 1; } }
 
-        /* ================== WARNA TOMBOL WA - HASIL================== */
         .info-card-footer { padding: 12px 16px; display: flex; gap: 10px; background-color: transparent; align-items: center; justify-content: space-between; }
         .btn-footer-action { padding: 8px 12px; border-radius: 10px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; border: none; transition: all 0.2s ease; width: 48%; }
         .btn-doc-footer { background-color: #dbeafe; color: #1e40af; }
@@ -335,7 +260,7 @@
         .doc-modal-text { background: #F8FAFC; color: #383838; padding: 20px; border-radius: 20px; width: 100%; border: 1px solid #e2e8f0; margin-top: 10px; }
         .loading-text { text-align: center; color: #64748b; padding: 40px; font-size: 14px; width: 100%; text-shadow: none; }
 
-        /* ================== ELEMEN DALAM KARTU BERITA & INTERMEZO ================== */
+        /* ================== ELEMEN BERITA ================== */
         .news-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 16px; padding: 0 0 10px 0; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
         .news-card { flex: 0 0 85%; width: 85%; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; flex-shrink: 0; scroll-snap-align: center; border: 1px solid #e2e8f0; }
         .news-thumb-wrapper { position: relative; width: 100%; height: 180px; background-color: #eaeaea; overflow: hidden; }
@@ -384,18 +309,15 @@
         .arsip-item:hover { background-color: #e2e8f0 !important; border-color: #94a3b8 !important; }
         #toggleSaldoBtn:hover { transform: scale(1.15); opacity: 0.8; transition: transform 0.2s ease, opacity 0.2s ease; }
         svg { display: inline-block; vertical-align: middle; }
-        @keyframes fadeInIframe { to { opacity: 1; } }
-        .yt-iframe-delayed { opacity: 0; animation: fadeInIframe 0.5s 1.2s forwards; }
-
     </style>
     
 <!-- ======================================================================
-     START AREA EDIT WIDGET LAPAK WARGA 
+     LAPAK WARGA 
      ====================================================================== -->
     <style>
         #widget-umkm-rt2, #modal-umkm, #zoom-overlay { font-family: 'Poppins', sans-serif; color: #333; box-sizing: border-box; text-align: left; }
         #widget-umkm-rt2 { width: 100%; max-width: 800px; margin: 0 auto; padding: 0; }
-        .loading-teks { font-weight: 500; text-align: center; padding: 25px; color: #64748b; font-size: 13px; border: 1px dashed #cbd5e1; border-radius: 12px; width: 100%; margin-top: 10px;}
+        .loading-teks { font-weight: 500; text-align: center; padding: 25px; color: #64748b; font-size: 13px; border-radius: 12px; width: 100%; margin-top: 10px;}
 
         /* --- FILTER KATEGORI --- */
         .filter-container { display: flex; overflow-x: auto; gap: 8px; scrollbar-width: none; -ms-overflow-style: none; }
@@ -437,24 +359,13 @@
         .card-thumb-lw { width: 100%; height: 120px; object-fit: cover; background: #f8f9fa; border-bottom: 1px solid #f0f0f0; display: block; }
         .card-body-lw { padding: 10px; display: flex; flex-direction: column; flex-grow: 1; }
         
-        .kategori-badge {
-          display: inline-block; 
-          background: rgba(128, 128, 128, 0.7); 
-          color: #fff; font-size: 10px; 
-          padding: 3px 6px; border-radius: 4px; font-weight: 600; margin: 0;
-        }
-        
+        .kategori-badge { display: inline-block; background: rgba(128, 128, 128, 0.7); color: #fff; font-size: 10px; padding: 3px 6px; border-radius: 4px; font-weight: 600; margin: 0; }
         .nama-toko { font-size: 14px; font-weight: 600; margin: 0 0 4px 0; color: #1155CC; line-height: 1.3; }
-        
         .teks-deskripsi-depan { font-size: 11px; color: #444; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
         
         /* --- PAGINATION --- */
         .pagination-container { display: flex; justify-content: center; gap: 8px; margin-top: 5px; flex-wrap: wrap; }
-        .page-btn {
-          background: #e2e8f0; border: none; padding: 4px 10px; border-radius: 8px;
-          font-size: 11px; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; 
-          color: #475569; transition: all 0.2s;
-        }
+        .page-btn { background: #e2e8f0; border: none; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; color: #475569; transition: all 0.2s; }
         .page-btn.active { background: #1155cc; color: #fff; }
         .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
@@ -486,37 +397,28 @@
         .zoom-content-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; padding: 20px; }
         .close-zoom { position: absolute; color: #ef4444; top: 20px; right: 25px; font-size: 32px; cursor: pointer; font-weight: 700; line-height: 1; z-index: 100000; background: rgba(255,255,255,0.85); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;}
     </style>
-<!-- ======================================================================
-     END AREA EDIT WIDGET LAPAK WARGA 
-     ====================================================================== -->
 
-<!-- ======================================================================
-     START AREA PENGATURAN MENU AKTIF (EDIT DI SINI SAJA) 
-     ====================================================================== -->
+
 <style>
-    /* Efek tombol pasif/tertekan (embos ke dalam) */
+   
     .nav-item.menu-tertekan {
-        background: #A1A1A1 !important; /* Warna biru lebih gelap/tenggelam */
-        box-shadow: inset 0 6px 10px rgba(0,0,0,0.5) !important; /* Shadow di dalam (tertekan) */
-        transform: scale(0.95); /* Sedikit mengecil */
-        color: #FFFFFF !important; /* Teks meredup */
-        pointer-events: none; /* Tidak bisa diklik lagi */
+        background: #A1A1A1 !important;
+        box-shadow: inset 0 6px 10px rgba(0,0,0,0.5) !important; 
+        transform: scale(0.95); 
+        color: #FFFFFF !important;
+        pointer-events: none; 
         cursor: default;
     }
     .nav-item.menu-tertekan svg {
-        filter: none !important; /* Hilangkan shadow luar pada svg */
+        filter: none !important; 
         opacity: 0.7;
     }
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // --- EDIT HALAMAN AKTIF DI BAWAH INI ---
-        // Ganti teks di dalam tanda kutip dengan nama halaman saat ini.
-        // Pilihan: 'home', 'warga', 'inventaris', 'lapak', 'pengurus', 'galeri', 'tatatertib', 'ronda'
         
         const halamanAktifSaatIni = 'home'; 
         
-        // ---------------------------------------
         
         const mapMenu = {
             'home': 'btn-home',
@@ -561,6 +463,14 @@
 
     <!-- MAIN CONTENT BOARD -->
     <div class="main-content-board">
+
+        <!-- ==================== SLIDER BANNER (DIPINDAH KE ATAS) ==================== -->
+        <div class="hero-slider-wrapper">
+            <div class="slider-container">
+                <div class="status-msg" id="ps-status-loading">Memuat konten slider banner</div>
+                <div class="ps-slider-container" id="ps-slider-track"></div>
+            </div>
+        </div>
 
         <!-- EM Modal -->
         <div class="em-modal-overlay slide-up-overlay" id="emModalOverlay" onclick="closeEmModalOutside(event)">
@@ -765,7 +675,7 @@
 
         <!-- ==================== BAGIAN BERITA & INTERMEZO (Simple Slider) ==================== -->
         <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
-            <div style="background: linear-gradient(135deg, #1155CC, #059669); color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <div style="background: #999999; color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                 BERITA & INTERMEZO
             </div>
             <div class="news-slider-container" id="newsCardsContainer" style="padding-bottom: 10px;">
@@ -792,7 +702,7 @@
         <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
             
             <!-- Tambahan Judul -->
-            <div style="background: linear-gradient(135deg, #1155CC, #059669); color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <div style="background:#999999; color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                 LAPAK WARGA
             </div>
 
@@ -831,22 +741,6 @@
         <!-- ======================================================================
              END AREA EDIT WIDGET LAPAK WARGA 
              ====================================================================== -->
-
-        <!-- ACCORDION SLIDER (DIPINDAH KE BAWAH LAPAK WARGA) -->
-        <div class="slider-wrapper-accordion" style="margin-top: 10px;">
-            <div class="slider-toggle-wrapper">
-                <button class="slider-toggle-icon-btn" id="toggleSliderBtn" title="Sembunyikan/Pulihkan Banner">
-                    <svg id="sliderToggleIcon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                </button>
-            </div>
-            <div class="slider-section" id="sliderSection">
-                <div class="slider-container">
-                    <div class="status-msg" id="ps-status-loading">Memuat konten slider banner</div>
-                    <div class="ps-slider-container" id="ps-slider-track"></div>
-                </div>
-            </div>
-        </div>
-        <!-- END ACCORDION SLIDER -->
 
         <!-- Area Footer -->
         <div class="sub-footer-section">
@@ -892,8 +786,10 @@
     const GLOBAL_BLOG_URL = "https://rt2paslor.blogspot.com";
 
     // ========================================== SCROLL ANIMASI (DIOPTIMASI MAKSIMAL) ==========================================
-    let isScrolling = false;
+    const header = document.getElementById('mainHeader');
+    const slideImg = document.getElementById('footerSlideImg');
     
+    let isScrolling = false;
     // Variabel memori (State Caching) agar DOM tidak dirender berulang-ulang
     let isHeaderScrolled = false; 
     let isFooterVisible = false;
@@ -907,18 +803,17 @@
                 const winHeight = window.innerHeight;
                 const scrollPos = currentScrollY + winHeight;
                 
-                const header = document.getElementById('mainHeader');
-                const slideImg = document.getElementById('footerSlideImg');
-
                 // 1. Header Morphing (HANYA dieksekusi jika statusnya BERUBAH)
-                const shouldHeaderScroll = currentScrollY > 40;
-                if (shouldHeaderScroll !== isHeaderScrolled) {
-                    if (shouldHeaderScroll) {
-                        header.classList.add('scrolled');
-                    } else {
-                        header.classList.remove('scrolled');
+                if (header) {
+                    const shouldHeaderScroll = currentScrollY > 40;
+                    if (shouldHeaderScroll !== isHeaderScrolled) {
+                        if (shouldHeaderScroll) {
+                            header.classList.add('scrolled');
+                        } else {
+                            header.classList.remove('scrolled');
+                        }
+                        isHeaderScrolled = shouldHeaderScroll; // Update memori
                     }
-                    isHeaderScrolled = shouldHeaderScroll; // Update memori
                 }
 
                 // 2. Animasi Gambar Footer Gunung (HANYA dieksekusi jika statusnya BERUBAH)
@@ -951,29 +846,6 @@
     function closeEmModalOutside(e) { 
         if (e.target === emModalOverlay) { emModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; } 
     }
-
-    // ========================================== ACCORDION SLIDER ==========================================
-    const toggleSliderBtn = document.getElementById('toggleSliderBtn');
-    const sliderSection = document.getElementById('sliderSection');
-    let isSliderOpen = true;
-
-    toggleSliderBtn.addEventListener('click', () => {
-        isSliderOpen = !isSliderOpen;
-        const icon = document.getElementById('sliderToggleIcon');
-        
-        if(isSliderOpen) {
-            sliderSection.classList.remove('collapsed');
-            icon.innerHTML = `<polyline points="18 15 12 9 6 15"></polyline>`; 
-            document.querySelectorAll('.slide video').forEach(v => {
-                v.muted = true;
-                v.play().catch(()=>{});
-            });
-        } else {
-            sliderSection.classList.add('collapsed');
-            icon.innerHTML = `<polyline points="6 9 12 15 18 9"></polyline>`; 
-            document.querySelectorAll('.slide video').forEach(v => v.pause());
-        }
-    });
 
     // ========================================== SCRIPT BAWAAN LAINNYA ==========================================
     const psTrack = document.getElementById('ps-slider-track');
@@ -1015,12 +887,18 @@
             slide.className = 'slide';
             let mediaHtml = '';
             
+            // Ikon Play Putih Sederhana untuk overlay video/youtube
+            const playIcon = `<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10;"><svg viewBox="0 0 24 24" width="40" height="40" fill="#ffffff" style="filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); opacity: 0.9;"><path d="M8 5v14l11-7z"/></svg></div>`;
+
             if (post.isYoutube) {
-                mediaHtml = `<div style="position:relative; width:100%; height:100%; overflow:hidden; background: #000 url('${post.media}') center/cover no-repeat;"><iframe class="yt-iframe-delayed" style="position:absolute; top:-18%; left:0; width:100%; height:136%; pointer-events:none; border:none; overflow:hidden;" src="https://www.youtube.com/embed/${post.youtubeId}?autoplay=1&mute=1&controls=0&rel=0&loop=1&playsinline=1&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playlist=${post.youtubeId}" allow="autoplay; encrypted-media" tabindex="-1"></iframe></div>`;
+                // Tampilkan Thumbnail Saja
+                mediaHtml = `<div style="position:relative; width:100%; height:100%; background: #000 url('${post.media}') center/cover no-repeat;">${playIcon}</div>`;
             } else if (post.isWave) {
-                mediaHtml = `<iframe style="width:100%; height:100%; border:none; pointer-events:none; overflow:hidden; object-fit:cover;" src="${post.waveUrl}?autoplay=1&muted=1&loop=1&controls=0" allow="autoplay" tabindex="-1"></iframe>`;
+                // Tampilkan Kotak Teks
+                mediaHtml = `<div style="position:relative; width:100%; height:100%; background:#333; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; font-weight:600;">Video (Klik) ${playIcon}</div>`;
             } else if (post.isVideo) {
-                mediaHtml = `<video src="${post.media}" autoplay muted playsinline loop style="width:100%; height:100%; object-fit:cover; pointer-events:none;"></video>`;
+                // Jangan Autoplay
+                mediaHtml = `<div style="position:relative; width:100%; height:100%; background:#000;">${playIcon}<video src="${post.media}" preload="metadata" playsinline style="width:100%; height:100%; object-fit:cover; pointer-events:none; opacity:0.8;"></video></div>`;
             } else {
                 mediaHtml = `<img src="${post.media}" alt="${post.title}" style="width:100%; height:100%; object-fit:cover; pointer-events:none;">`;
             }
@@ -1039,13 +917,6 @@
             psTrack.appendChild(slide);
         });
         
-        setTimeout(() => { 
-            document.querySelectorAll('.slide video').forEach(vid => { 
-                vid.muted = true; 
-                vid.defaultMuted = true;
-                vid.play().catch(e => console.log('Autoplay prevented', e)); 
-            }); 
-        }, 300);
         initPosterDrag();
     }
 

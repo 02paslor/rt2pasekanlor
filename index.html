@@ -20,12 +20,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-
+        /* ======================================================================
+           AREA PENGATURAN TAMPILAN
+           ====================================================================== */
         :root {
             --warna-bg-header-scrolled: rgba(0, 52, 143, 0.95);
         }
 
-      
+        /* Sembunyikan scrollbar global untuk SEMUA ELEMEN */
         * {
             scrollbar-width: none !important; /* Firefox */
             -ms-overflow-style: none !important; /* IE and Edge */
@@ -44,6 +46,7 @@
             justify-content: center; 
         }
 
+        /* --- APP WRAPPER DENGAN BACKGROUND GUNUNG NAIK LAGI --- */
         .app-wrapper {
             width: 100%; max-width: 480px;
             background-color: transparent; 
@@ -60,51 +63,47 @@
             z-index: 1;
         }
 
-        /* ================== HEADER MORPHING ================== */
-        .morph-header-container {
+        /* ================== HEADER BARU (KOTAK RADIUS TRANSISI) ================== */
+        .app-header-wrapper {
             position: fixed; top: 0; left: 50%; transform: translateX(-50%);
-            width: 100%; max-width: 480px; height: 90px; z-index: 1000;
-            transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease;
-            background: transparent; pointer-events: none;
-            will-change: height, background-color;
+            width: 100%; max-width: 480px; padding: 16px; z-index: 1000;
         }
-        .morph-header-container.scrolled {
-            height: 60px; background: var(--warna-bg-header-scrolled);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); pointer-events: auto;
+
+        .header-box {
+            background-color: rgba(0, 52, 143, 0.4); /* Biru tua transparan */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 12px;
         }
         
-        .morph-text {
-            position: absolute; left: 145px; top: 20px;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            transform-origin: left top; pointer-events: auto;
-        }
-        .main-header-text {
-            color: #ffffff; font-size: 11px; text-shadow: 0 0px 0px rgba(0,0,0,0.0), 0 0px 0px rgba(0,0,0,0.0);
-            line-height: 1.3; display: inline-block; white-space: nowrap;
-        }
+        .header-left-area { display: flex; align-items: center; gap: 10px; }
+        .header-logo-img { width: 42px; height: auto; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
+        .header-text-area { display: flex; flex-direction: column; line-height: 1.25; }
+        .slogan-text-1 { color: #ffffff; font-size: 11px; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+        .slogan-text-2 { color: #ffffff; font-size: 12.5px; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
 
-        .morph-logo-wrapper {
-            position: absolute; left: 20px; top: 5px;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); pointer-events: auto;
+        /* Area Login Warga di Header */
+        .login-btn-wrapper {
+            display: flex; align-items: center; gap: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 12px; border-radius: 50px;
+            color: #ffffff; text-decoration: none; cursor: pointer;
+            transition: background-color 0.2s; border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
-        .header-logo-img {
-            width: 110px; height: auto; filter: drop-shadow(0 0px 0px rgba(0,0,0,0.5));
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            transform-origin: left top;
-        }
-
-        .morph-header-container.scrolled .morph-logo-wrapper { left: 15px; top: 5px; }
-        .morph-header-container.scrolled .header-logo-img { transform: scale(0.65); filter: drop-shadow(0 0px 0px rgba(0,0,0,0.3)); }
-        .morph-header-container.scrolled .morph-text { left: 100px; top: 15px; transform: scale(0.85); }
+        .login-btn-wrapper:active { background-color: rgba(255, 255, 255, 0.4); transform: scale(0.95); }
+        .login-icon { width: 14px; height: 14px; }
+        .login-text { font-size: 11px; font-weight: 600; letter-spacing: 0.3px; }
 
         /* ================== MAIN BOARD & SLIDER ================== */
-        .main-content-board { background-color: transparent; border-radius: 25px 25px 0 0; padding-top: 80px; position: relative; z-index: 10; display: flex; flex-direction: column; box-shadow: none; min-height: calc(100vh - 80px); } 
+        .main-content-board { background-color: transparent; border-radius: 25px 25px 0 0; padding-top: 100px; position: relative; z-index: 10; display: flex; flex-direction: column; box-shadow: none; min-height: calc(100vh - 100px); } 
 
         .hero-slider-wrapper { position: relative; z-index: 2; width: 100%; margin: 5px auto 15px auto; }
         .slider-container { position: relative; padding: 0 !important; }
         
         .ps-slider-container { width: 100%; overflow-x: auto; display: flex; gap: 12px; padding: 0 16px; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; }
-        /* TINGGI SLIDER DIPENDEKKAN & SHADOW DIKURANGI AGAR TIDAK BERAT */
         .slide { flex: 0 0 210px; width: 210px; height: 100px; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background-color: #ffffff; cursor: pointer; }
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 500; z-index:-1;}
@@ -141,75 +140,64 @@
         .saldo-value { font-size: 12pt; font-weight: 600; line-height: 1; margin-bottom: 0; color: #ccff00; text-shadow: 0 1px 3px rgba(0,0,0,0.4); } 
         .kas-action-buttons { display: flex; gap: 10px; margin-top: 14px; z-index: 2; justify-content: center; }
         
-        .btn-kas-small { flex: 1; padding: 6px 4px; border-radius: 50px; font-size: 11px; font-weight: 500; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-        .btn-kas-detail { background: #10b981 !important; border: none !important; color: white !important; }
-        .btn-kas-trx { background: #f97316 !important; border: none !important; color: white !important; }
+        .btn-kas-small { flex: 1; padding: 6px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .btn-kas-detail { background: linear-gradient(135deg, #10b981, #059669) !important; border: none !important; color: white !important; }
+        .btn-kas-trx { background: linear-gradient(135deg, #f97316, #ea580c) !important; border: none !important; color: white !important; }
 
-        /* ================== MODAL ANIMASI (SUDAH DIOPTIMASI BLURNYA) ================== */
+        /* ================== MODAL ANIMASI & OVERLAY ================== */
         .slide-up-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
             z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 75px 16px 20px 16px;
-            /* Perbaikan Performa GPU saat sembunyi */
-            visibility: hidden; opacity: 0; pointer-events: none; 
+            padding: 75px 16px 20px 16px; visibility: hidden; opacity: 0; pointer-events: none; 
             transition: opacity 0.3s ease, visibility 0s 0.3s;
         }
-        .slide-up-overlay.active { 
-            visibility: visible; opacity: 1; pointer-events: auto; 
-            transition: opacity 0.3s ease, visibility 0s 0s;
-        }
+        .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
         
         .slide-up-content {
             background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 100%; 
             display: flex; flex-direction: column; overflow: hidden;
-            border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            position: relative; 
+            border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; 
             transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
         }
         .slide-up-overlay.active .slide-up-content { transform: scale(1); opacity: 1; }
 
-        /* ================== MODAL SLIDER BANNER ================== */
         .slide-down-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(4px);
-            z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 75px 20px 20px 20px;
-            /* Perbaikan Performa GPU saat sembunyi */
-            visibility: hidden; opacity: 0; pointer-events: none; 
-            transition: opacity 0.3s ease, visibility 0s 0.3s;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 75px 20px 20px 20px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s;
         }
-        .slide-down-overlay.active { 
-            visibility: visible; opacity: 1; pointer-events: auto; 
-            transition: opacity 0.3s ease, visibility 0s 0s;
-        }
-        
-        .slide-down-content {
-            background: transparent; width: auto; max-width: 100%; 
-            display: flex; flex-direction: column; position: relative;
-            transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
-        }
+        .slide-down-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
+        .slide-down-content { background: transparent; width: auto; max-width: 100%; display: flex; flex-direction: column; position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
         .slide-down-overlay.active .slide-down-content { transform: scale(1); opacity: 1; }
 
-        /* Area Scroll Internal Modal */
         .modal-scroll-area { flex: 1; overflow-y: auto; width: 100%; padding: 60px 20px 20px 20px; }
         .modal-scroll-area.no-padding { padding: 0; }
-
-        /* Tombol Mengambang Modal */
         .modal-close-btn-absolute { position: absolute; top: 16px; right: 16px; background: #fef2f2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
         .modal-back-btn-absolute { position: absolute; top: 16px; left: 16px; background: #f1f5f9; color: #1155cc; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
 
+        /* ================== FORM LOGIN CSS ================== */
+        .login-header-bg { background: linear-gradient(135deg, #1155CC, #0083E0); padding: 40px 20px 20px 20px; text-align: center; color: white; border-radius: 24px 24px 0 0; }
+        .login-title { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+        .login-subtitle { font-size: 13px; font-weight: 400; opacity: 0.9; }
+        .login-body { padding: 30px 20px; display: flex; flex-direction: column; gap: 16px; background: #ffffff; }
+        .input-group { display: flex; flex-direction: column; gap: 6px; position: relative; }
+        .input-group label { font-size: 13px; font-weight: 600; color: #383838; }
+        .input-box { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1.5px solid #cbd5e1; font-size: 14px; outline: none; transition: border-color 0.2s; background: #f8fafc; color: #333; }
+        .input-box:focus { border-color: #1155CC; background: #ffffff; }
+        .toggle-pw-btn { position: absolute; right: 16px; top: 38px; background: none; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .login-submit-btn { background: #1155CC; color: #ffffff; border: none; padding: 15px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 12px rgba(17, 85, 204, 0.3); }
+        .login-submit-btn:active { transform: scale(0.98); }
+        .login-submit-btn:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
+        .login-error-msg { color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; display: none; margin-top: -5px; }
+        
         /* ================== KARTU LUAR & WARNA ================== */
         .dashboard-section-card { border-radius: 24px; margin: 0 16px 24px 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); position: relative; z-index: 2; }
-        .card-kegiatan { background: #10b981; }
-        .card-kegiatan .ds-footer { background: #10b981; }
-        
+        .card-kegiatan { background: linear-gradient(90deg, #0FBD76, #4777ED); }
+        .card-kegiatan .ds-footer { background: linear-gradient(90deg, #0FBD76, #4777ED); }
         .ds-header { padding: 16px 10px; text-align: center; color: #ffffff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
         .ds-content { background-color: #f1f5f9; padding: 20px 16px; border-radius: 20px; }
         .ds-footer { padding: 16px; display: flex; justify-content: center; align-items: center; }
         .dashboard-section-card.ds-agenda .ds-content { padding: 12px 10px; border-radius: 20px; background-color: #ffffff; }
-
-        .ds-pill-btn { background-color: #ffffff; color: #383838; border: none; padding: 8px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+        .ds-pill-btn { background-color: #ffffff; color: #383838; border: none; padding: 10px 24px; border-radius: 50px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .ds-pill-btn:active { transform: scale(0.95); }
 
         /* ================== ELEMEN AGENDA ================== */
@@ -217,10 +205,8 @@
         .info-card { background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; border: 1px solid #D4D4D4; }
         .card-header { padding: 12px 16px; color: #ffffff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
         .neumorph-status { background: #FFFFFF; border-radius: 9px; padding: 4px 10px; font-size: 10.5px;}
-        
         .card-header .category-text { font-size: 15px; font-weight: 600; letter-spacing: 0.1px; text-shadow: 0 1px 2px rgba(0,0,0,0.15); display: block; }
         .bg-pertemuan { background: #1155CC; } .bg-kerjabakti { background: #BF1CD6; } .bg-ronda { background: #5530A6; } .bg-lainnya { background: #00997C; } 
-        
         .info-card-body { display: flex; padding: 14px 16px; gap: 14px; align-items: center; border-bottom: 1.5px dashed #e2e8f0; }
         .card-thumb-wrapper { position: relative; cursor: pointer; flex-shrink: 0; }
         .card-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 12px; background-color: #eaeaea; display: block; }
@@ -228,7 +214,6 @@
         .thumb-icon-overlay svg { width: 12px; height: 12px; }
         .card-right-content { flex-grow: 1; display: flex; flex-direction: column; gap: 2px; }
         .info-card-title { font-size: 14px; font-weight: 600; line-height: 1.4; color: #383838; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        
         .agenda-details-box { background-color: transparent; padding: 10px 12px; border-bottom: 1.5px solid #edf2f7; display: flex; flex-direction: column; gap: 0; }
         .agenda-row { display: grid; grid-template-columns: 80px 12px 1fr; line-height: 1.4; align-items: flex-start; padding: 6px 12px; border-radius: 8px; }
         .agenda-row:nth-child(odd) { background-color: rgba(248, 250, 252, 0.7); }
@@ -312,12 +297,12 @@
     </style>
     
 <!-- ======================================================================
-     LAPAK WARGA 
+     START AREA EDIT WIDGET LAPAK WARGA 
      ====================================================================== -->
     <style>
         #widget-umkm-rt2, #modal-umkm, #zoom-overlay { font-family: 'Poppins', sans-serif; color: #333; box-sizing: border-box; text-align: left; }
         #widget-umkm-rt2 { width: 100%; max-width: 800px; margin: 0 auto; padding: 0; }
-        .loading-teks { font-weight: 500; text-align: center; padding: 25px; color: #64748b; font-size: 13px; border-radius: 12px; width: 100%; margin-top: 10px;}
+        .loading-teks { font-weight: 500; text-align: center; padding: 25px; color: #64748b; font-size: 13px; border: 1px dashed #cbd5e1; border-radius: 12px; width: 100%; margin-top: 10px;}
 
         /* --- FILTER KATEGORI --- */
         .filter-container { display: flex; overflow-x: auto; gap: 8px; scrollbar-width: none; -ms-overflow-style: none; }
@@ -398,9 +383,11 @@
         .close-zoom { position: absolute; color: #ef4444; top: 20px; right: 25px; font-size: 32px; cursor: pointer; font-weight: 700; line-height: 1; z-index: 100000; background: rgba(255,255,255,0.85); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;}
     </style>
 
-
+<!-- ======================================================================
+     START AREA PENGATURAN MENU AKTIF (EDIT DI SINI SAJA) 
+     ====================================================================== -->
 <style>
-   
+    /* Efek tombol pasif/tertekan (embos ke dalam) */
     .nav-item.menu-tertekan {
         background: #A1A1A1 !important;
         box-shadow: inset 0 6px 10px rgba(0,0,0,0.5) !important; 
@@ -416,9 +403,7 @@
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        
         const halamanAktifSaatIni = 'home'; 
-        
         
         const mapMenu = {
             'home': 'btn-home',
@@ -448,23 +433,68 @@
 
 <div class="app-wrapper">
 
-    <!-- HEADER MORPHING -->
-    <header class="morph-header-container" id="mainHeader">
-        <div class="morph-logo-wrapper">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-img">
-        </div>
-        <div class="morph-text">
-            <div class="main-header-text">
-                <strong style="color: #ffffff; font-size: 16px;">RT 2 Online</strong><br>
-                Aplikasi Warga RT 2-RW 3, Pasekan Lor
+    <!-- HEADER BARU (KOTAK RADIUS TRANSISI) -->
+    <div class="app-header-wrapper">
+        <header class="header-box" id="mainHeader">
+            <div class="header-left-area">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-img">
+                <div class="header-text-area">
+                    <span class="slogan-text-1">Aplikasi Warga</span>
+                    <span class="slogan-text-2">RT 2-RW 3, Pasekan Lor</span>
+                </div>
             </div>
-        </div>
-    </header>
+            
+            <!-- TOMBOL LOGIN WARGA -->
+            <div class="login-btn-wrapper" id="openLoginModalBtn">
+                <svg class="login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span class="login-text">Login Warga</span>
+            </div>
+        </header>
+    </div>
 
     <!-- MAIN CONTENT BOARD -->
     <div class="main-content-board">
 
-        <!-- ==================== SLIDER BANNER (DIPINDAH KE ATAS) ==================== -->
+        <!-- ==================== AREA MODAL LOGIN ==================== -->
+        <div class="slide-up-overlay" id="loginModalOverlay" onclick="closeLoginModalOutside(event)">
+            <div class="slide-up-content" onclick="event.stopPropagation()" style="max-height: 90vh;">
+                <button class="modal-close-btn-absolute" onclick="closeLoginModal()" title="Tutup">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+                
+                <div class="login-header-bg">
+                    <div class="login-title">Masuk Akun</div>
+                    <div class="login-subtitle">Silakan isi data Anda untuk melanjutkan</div>
+                </div>
+                
+                <div class="login-body">
+                    <form id="loginForm" style="display: flex; flex-direction: column; gap: 16px;">
+                        <div class="input-group">
+                            <label for="loginUsername">ID Rumah / Username</label>
+                            <input type="text" id="loginUsername" class="input-box" placeholder="Contoh: paslor_01 atau rt2_jaya" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="loginPassword">Password / PIN</label>
+                            <input type="password" id="loginPassword" class="input-box" placeholder="Masukkan password Anda" required>
+                            <button type="button" class="toggle-pw-btn" onclick="togglePasswordVisibility()">
+                                <svg id="eyeIconPwOpen" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <svg id="eyeIconPwClosed" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:block;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                            </button>
+                        </div>
+                        
+                        <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
+                        
+                        <button type="submit" id="btnSubmitLogin" class="login-submit-btn">Masuk Sekarang</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDER BANNER ==================== -->
         <div class="hero-slider-wrapper">
             <div class="slider-container">
                 <div class="status-msg" id="ps-status-loading">Memuat konten slider banner</div>
@@ -553,8 +583,8 @@
             </div>
         </section>
 
-        <!-- MENU UTAMA) -->
-<div class="main-menu-wrapper">
+        <!-- MENU UTAMA -->
+        <div class="main-menu-wrapper">
             <!-- HOME -->
             <a href="#" class="nav-item btn-home" title="Home">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -626,7 +656,7 @@
             </div>
         </div>
 
-        <!-- ==================== BAGIAN AGENDA WARGA (Dashboard Card Design) ==================== -->
+        <!-- ==================== BAGIAN AGENDA WARGA ==================== -->
         <div class="dashboard-section-card card-kegiatan ds-agenda">
             <div class="ds-header">KEGIATAN WARGA RT 2</div>
             <div class="ds-content">
@@ -639,7 +669,7 @@
             </div>
         </div>
 
-        <!-- Modal List Arsip CENTER CARD -->
+        <!-- Modal List Arsip -->
         <div class="slide-up-overlay" id="listModal" onclick="closeListModalOutside(event)">
             <div class="slide-up-content" onclick="event.stopPropagation()">
                 <button class="modal-close-btn-absolute" onclick="closeListModal()">
@@ -649,10 +679,9 @@
             </div>
         </div>
 
-        <!-- Modal Detail Kegiatan CENTER CARD -->
+        <!-- Modal Detail Kegiatan -->
         <div class="slide-up-overlay" id="agendaDetailModal" onclick="closeAgendaDetailOutside(event)">
             <div class="slide-up-content" onclick="event.stopPropagation()">
-                <!-- Tombol Kembali ke Arsip -->
                 <button class="modal-back-btn-absolute" onclick="goBackToArsipList()">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </button>
@@ -663,7 +692,7 @@
             </div>
         </div>
 
-        <!-- Lightbox Hasil Kegiatan CENTER CARD -->
+        <!-- Lightbox Hasil Kegiatan -->
         <div class="slide-up-overlay" id="docModalOverlay" onclick="closeDocModalOutside(event)">
             <div class="slide-up-content" onclick="event.stopPropagation()">
                 <button class="modal-close-btn-absolute" onclick="closeDocModal()">
@@ -673,7 +702,7 @@
             </div>
         </div>
 
-        <!-- ==================== BAGIAN BERITA & INTERMEZO (Simple Slider) ==================== -->
+        <!-- ==================== BAGIAN BERITA & INTERMEZO ==================== -->
         <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
             <div style="background: #999999; color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                 BERITA & INTERMEZO
@@ -683,7 +712,7 @@
             </div>
         </div>
 
-        <!-- Berita Artikel CENTER CARD -->
+        <!-- Berita Artikel -->
         <div class="slide-up-overlay" id="articleModal" onclick="closeArticleModalOutside(event)">
             <div class="slide-up-content" onclick="event.stopPropagation()">
                 <button class="modal-close-btn-absolute" onclick="closeArticleModal()">
@@ -696,28 +725,20 @@
             </div>
         </div>
 
-        <!-- ======================================================================
-             START AREA EDIT WIDGET LAPAK WARGA 
-             ====================================================================== -->
+        <!-- ==================== BAGIAN LAPAK WARGA ==================== -->
         <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
-            
-            <!-- Tambahan Judul -->
             <div style="background:#999999; color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                 LAPAK WARGA
             </div>
 
             <div id="widget-umkm-rt2">
-                <!-- Area Filter Kategori -->
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
                     <div class="filter-container" id="filter-kategori" style="flex-grow: 1;"></div>
                 </div>
                 
-                <!-- Area Slider UMKM -->
                 <div class="umkm-slider" id="umkm-wrapper">
                     <div class="loading-teks">Memuat Data Lapak Warga...</div>
                 </div>
-
-                <!-- Area Pagination -->
                 <div id="pagination-container" class="pagination-container"></div>
             </div>
             
@@ -728,21 +749,16 @@
             </div>
         </div>
 
-        <!-- Modal / Popup Identitas Lapak -->
+        <!-- Modal Lapak -->
         <div id="modal-umkm" class="modal-overlay">
             <div class="modal-content-lw" id="modal-body"></div>
         </div>
-
-        <!-- Zoom Overlay Lapak -->
         <div id="zoom-overlay" class="zoom-overlay">
             <span class="close-zoom">&times;</span>
             <div id="zoom-content" class="zoom-content-wrapper"></div>
         </div>
-        <!-- ======================================================================
-             END AREA EDIT WIDGET LAPAK WARGA 
-             ====================================================================== -->
 
-        <!-- Area Footer -->
+        <!-- ==================== Area Footer ==================== -->
         <div class="sub-footer-section">
             <div class="himbauan-box">
                 <div class="himbauan-text" id="himbauanAnim">Mari Kita Jaga Keamanan, Ketertiban, Kebersihan dan Kenyamanan di Lingkungan Sekitar Kita</div>
@@ -766,69 +782,167 @@
             <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
         </footer>
 
-        <!-- Wadah Gambar Footer Bawah (LEBAH) -->
+        <!-- Wadah Gambar Footer Bawah -->
         <div style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: auto; z-index: 2;">
             <a href="data-warga" target="_blank" rel="noopener noreferrer" class="link-lebah" style="position: absolute; bottom: 80px; right: 40%; z-index: 4; width: 15%;">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiya0ghKMImhXBX9dzFBDE_JUUH0Ub8fJFdCSRlYRPUB0iB3PK0Yq29CjfTEPRyoDqdur3vqtDpkbxHUZggHN1qb4-DLIRszqygidj10d848bgmNSYbEvWa-LGHW4xgGThzaKDwSLZAiYpbXwI_nDeYl9EPtPMbP2q1CaWlPKGOBimWcYseznSvz5bvBwo/s1600/lebah%20-%20senter%20-%20small.png" alt="Lebah" style="width: 80%; display: block;">
             </a>
-            <!-- Wadah Gambar Footer Bawah (LINGKUNGAN RT) -->
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhNWaQOKzNxOXXJdKcaQvz89f58rx2eEzukj1SlZSmW7p8O_1jmGXpAOjGU_bz-7qBdJ-p52OkTdaZTTa3HzEIbSLTZ78DjnSLFzY_1VvVjELq0UhWvN9I1J-OgZLo8yIzUwvKKrVZcJI8fIvSo2uC0hsxto0DLTAYgnLc2ZlNi0VuH9S2qHCgbWkgrhGk/s1600/Footer%20Paslor%20600px.png" style="width: 100%; display: block; margin-bottom: -25px; position: relative; z-index: 2;" alt="Footer RT 2">
         </div>
-        <!-- Wadah Gambar Footer Bawah (GUNUNG) -->
         <div id="footerSlideImg" style="position: fixed; bottom: 20px; left: 0; right: 0; margin: 0 auto; z-index: 0; transform: translateY(150%); transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); width: 100%; max-width: 480px; pointer-events: none;">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEVrUepmKaBK9pBc1CnFkks7LLH4BXmgKOFv2WHgAO7yyG_JOlvXUpFhcQCsdFrUHaFYcwS532g9zKq9OzbWJe2rp8YytlJgsy27plTIrrfDGpYkJ-Bx8_nTF-fi3OzEBwtzh7hZtN4I3m094rg1cqHsFvwzXocbJtYlH2arEdkFSAqDxZCvFCYPKF03o/s1600/image1786676021" style="width: 100%; display: block;" alt="Animasi Footer">
         </div>
-
     </div> 
 </div> 
 
 <script>
+    // ==========================================
+    // PENGATURAN LOGIN ADMIN & API SPREADSHEET
+    // ==========================================
+    
+    // Ganti data di bawah ini jika ingin mengubah User/Pass Admin
+    const ADMIN_USERNAME = "rt2_jaya";
+    const ADMIN_PASSWORD = "0203";
+
+    // URL Google Apps Script Anda (Wajib diisi nanti agar bisa cek data warga di Sheet)
+    // Contoh: "https://script.google.com/macros/s/AKfycb.../exec"
+    const GAS_API_URL = ""; 
+
+    // ==========================================
+    // FUNGSI MODAL LOGIN
+    // ==========================================
+    const loginModalOverlay = document.getElementById('loginModalOverlay');
+    const loginForm = document.getElementById('loginForm');
+    const loginErrorMsg = document.getElementById('loginErrorMessage');
+    const btnSubmitLogin = document.getElementById('btnSubmitLogin');
+
+    // Buka Modal
+    document.getElementById('openLoginModalBtn').addEventListener('click', () => { 
+        loginModalOverlay.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+        loginErrorMsg.style.display = 'none'; // Reset error
+    });
+
+    // Tutup Modal
+    function closeLoginModal() { 
+        loginModalOverlay.classList.remove('active'); 
+        document.body.style.overflow = 'auto'; 
+        loginForm.reset();
+    }
+    function closeLoginModalOutside(e) { 
+        if (e.target === loginModalOverlay) closeLoginModal(); 
+    }
+
+    // Toggle Password Visibilty (Mata)
+    function togglePasswordVisibility() {
+        const pwInput = document.getElementById('loginPassword');
+        const eyeOpen = document.getElementById('eyeIconPwOpen');
+        const eyeClosed = document.getElementById('eyeIconPwClosed');
+        if (pwInput.type === "password") {
+            pwInput.type = "text";
+            eyeOpen.style.display = "block";
+            eyeClosed.style.display = "none";
+        } else {
+            pwInput.type = "password";
+            eyeOpen.style.display = "none";
+            eyeClosed.style.display = "block";
+        }
+    }
+
+    // Proses Submit Form Login
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const userInput = document.getElementById('loginUsername').value.trim();
+        const passInput = document.getElementById('loginPassword').value.trim();
+        
+        loginErrorMsg.style.display = 'none';
+        btnSubmitLogin.innerText = "Memeriksa...";
+        btnSubmitLogin.disabled = true;
+
+        // 1. Cek Apakah ini Akun Admin?
+        if(userInput === ADMIN_USERNAME && passInput === ADMIN_PASSWORD) {
+            setTimeout(() => {
+                alert("Login Admin Berhasil!");
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userRole', 'admin');
+                closeLoginModal();
+                btnSubmitLogin.innerText = "Masuk Sekarang";
+                btnSubmitLogin.disabled = false;
+                
+                // Refresh atau arahkan ke halaman khusus
+                // window.location.href = "halaman-admin.html";
+            }, 800);
+            return;
+        }
+
+        // 2. Cek Akun Warga via Spreadsheet
+        // (Contoh Sample "paslor_01" saya buatkan hardcode sbg pengingat sementara)
+        if(passInput === "paslor_01" && userInput !== "") {
+            setTimeout(() => {
+                alert(`Login Warga Berhasil! Selamat datang, Rumah ID: ${userInput}`);
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userRole', 'warga');
+                closeLoginModal();
+                btnSubmitLogin.innerText = "Masuk Sekarang";
+                btnSubmitLogin.disabled = false;
+            }, 800);
+            return;
+        }
+
+        /* 
+        // --- CONTOH LOGIC ASLI JIKA MENGGUNAKAN GOOGLE APPS SCRIPT ---
+        if(GAS_API_URL !== "") {
+            fetch(`${GAS_API_URL}?id=${userInput}&pass=${passInput}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    alert("Login Berhasil!");
+                    closeLoginModal();
+                } else {
+                    loginErrorMsg.innerText = "Username/Password salah!";
+                    loginErrorMsg.style.display = 'block';
+                }
+            }).catch(err => {
+                loginErrorMsg.innerText = "Terjadi kesalahan server.";
+                loginErrorMsg.style.display = 'block';
+            }).finally(() => {
+                btnSubmitLogin.innerText = "Masuk Sekarang";
+                btnSubmitLogin.disabled = false;
+            });
+            return;
+        }
+        */
+
+        // Jika semua gagal
+        setTimeout(() => {
+            loginErrorMsg.innerText = "Username atau Password salah!";
+            loginErrorMsg.style.display = 'block';
+            btnSubmitLogin.innerText = "Masuk Sekarang";
+            btnSubmitLogin.disabled = false;
+        }, 800);
+    });
+
     const GLOBAL_BLOG_URL = "https://rt2paslor.blogspot.com";
 
-    // ========================================== SCROLL ANIMASI (DIOPTIMASI MAKSIMAL) ==========================================
-    const header = document.getElementById('mainHeader');
-    const slideImg = document.getElementById('footerSlideImg');
-    
+    // ========================================== SCROLL ANIMASI ==========================================
     let isScrolling = false;
-    // Variabel memori (State Caching) agar DOM tidak dirender berulang-ulang
-    let isHeaderScrolled = false; 
     let isFooterVisible = false;
 
     window.addEventListener('scroll', () => {
         if (!isScrolling) {
             window.requestAnimationFrame(() => {
-                
-                const currentScrollY = window.scrollY;
                 const docHeight = document.documentElement.scrollHeight;
-                const winHeight = window.innerHeight;
-                const scrollPos = currentScrollY + winHeight;
-                
-                // 1. Header Morphing (HANYA dieksekusi jika statusnya BERUBAH)
-                if (header) {
-                    const shouldHeaderScroll = currentScrollY > 40;
-                    if (shouldHeaderScroll !== isHeaderScrolled) {
-                        if (shouldHeaderScroll) {
-                            header.classList.add('scrolled');
-                        } else {
-                            header.classList.remove('scrolled');
-                        }
-                        isHeaderScrolled = shouldHeaderScroll; // Update memori
-                    }
-                }
+                const scrollPos = window.scrollY + window.innerHeight;
+                const slideImg = document.getElementById('footerSlideImg');
 
-                // 2. Animasi Gambar Footer Gunung (HANYA dieksekusi jika statusnya BERUBAH)
                 if (slideImg) {
                     const shouldFooterShow = (docHeight - scrollPos < 100);
                     if (shouldFooterShow !== isFooterVisible) {
-                        if (shouldFooterShow) {
-                            slideImg.style.transform = 'translateY(0)';
-                        } else {
-                            slideImg.style.transform = 'translateY(150%)';
-                        }
-                        isFooterVisible = shouldFooterShow; // Update memori
+                        slideImg.style.transform = shouldFooterShow ? 'translateY(0)' : 'translateY(150%)';
+                        isFooterVisible = shouldFooterShow;
                     }
                 }
-
                 isScrolling = false;
             });
             isScrolling = true;
@@ -887,17 +1001,13 @@
             slide.className = 'slide';
             let mediaHtml = '';
             
-            // Ikon Play Putih Sederhana untuk overlay video/youtube
             const playIcon = `<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10;"><svg viewBox="0 0 24 24" width="40" height="40" fill="#ffffff" style="filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); opacity: 0.9;"><path d="M8 5v14l11-7z"/></svg></div>`;
 
             if (post.isYoutube) {
-                // Tampilkan Thumbnail Saja
                 mediaHtml = `<div style="position:relative; width:100%; height:100%; background: #000 url('${post.media}') center/cover no-repeat;">${playIcon}</div>`;
             } else if (post.isWave) {
-                // Tampilkan Kotak Teks
                 mediaHtml = `<div style="position:relative; width:100%; height:100%; background:#333; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; font-weight:600;">Video (Klik) ${playIcon}</div>`;
             } else if (post.isVideo) {
-                // Jangan Autoplay
                 mediaHtml = `<div style="position:relative; width:100%; height:100%; background:#000;">${playIcon}<video src="${post.media}" preload="metadata" playsinline style="width:100%; height:100%; object-fit:cover; pointer-events:none; opacity:0.8;"></video></div>`;
             } else {
                 mediaHtml = `<img src="${post.media}" alt="${post.title}" style="width:100%; height:100%; object-fit:cover; pointer-events:none;">`;
@@ -1122,12 +1232,10 @@
         let cat = "RONDA", hClass = "bg-ronda", hexColor = "#8b5cf6";
         const titleLower = (item.title || "").toLowerCase(), catLower = (item.category || "").toLowerCase();
 
-      // ========================================== WARNA TEKS HARI TEMPAT ========================================== 
-
         if (catLower.includes('pertemuan') || titleLower.includes('pertemuan')) { cat = "Pertemuan RT 2"; hClass = "bg-pertemuan"; hexColor = "#000000"; }
-else if (catLower.includes('bakti') || catLower.includes('kerja') || titleLower.includes('bakti') || titleLower.includes('kerja')) { cat = "Kerja Bakti"; hClass = "bg-kerjabakti"; hexColor = "#16428C"; }
-else if (catLower.includes('ronda') || titleLower.includes('ronda')) { cat = "Ronda"; hClass = "bg-ronda"; hexColor = "#000000"; }
-else if (item.category !== "" && item.category !== "-") { cat = item.category.toUpperCase(); hClass = "bg-lainnya"; hexColor = "#000000"; }
+        else if (catLower.includes('bakti') || catLower.includes('kerja') || titleLower.includes('bakti') || titleLower.includes('kerja')) { cat = "Kerja Bakti"; hClass = "bg-kerjabakti"; hexColor = "#16428C"; }
+        else if (catLower.includes('ronda') || titleLower.includes('ronda')) { cat = "Ronda"; hClass = "bg-ronda"; hexColor = "#000000"; }
+        else if (item.category !== "" && item.category !== "-") { cat = item.category.toUpperCase(); hClass = "bg-lainnya"; hexColor = "#000000"; }
         
         const textWa = encodeURIComponent(`*Undangan Kegiatan*\n*Warga RT 2 Pasekan Lor*\n\n*Hari, Tgl. :*\n${meta.hariTgl}\n\n*Tempat :*\n${meta.tempat}\n\n*Acara :*\n${meta.acara}\n\n*Pukul :*\n${meta.pukul}\n\n*Catatan :*\n${meta.catatan}\n\nhttps://rt2pasekanlor.id/`);
 
@@ -1192,8 +1300,8 @@ else if (item.category !== "" && item.category !== "-") { cat = item.category.to
 
     // ========================================== BERITA WARGA ==========================================
     const newsTrack = document.getElementById('newsCardsContainer');
-
     let newsDataStore = [];
+    
     function parseNewsFeed(json) {
         const c = document.getElementById('newsCardsContainer'); c.innerHTML = '';
         const entries = json.feed.entry || []; newsDataStore = entries;
@@ -1300,7 +1408,6 @@ else if (item.category !== "" && item.category !== "-") { cat = item.category.to
           else kategoriArr = ['Umum'];
         }
         
-        // Simpan kategori unik untuk Filter
         kategoriArr.forEach(kat => allCategories.add(kat));
         
         const badgeHTML = kategoriArr.map(k => `<span class="kategori-badge">${k}</span>`).join('');
@@ -1322,70 +1429,45 @@ else if (item.category !== "" && item.category !== "-") { cat = item.category.to
           }
         }
 
-        // Simpan kategori original berupa array murni ke JSON database lokal (storesData)
         storesData[index] = { namaToko, kategoriArr, badgeHTML, thumbToko, alamat, deskripsi, waText, waLink, produkArray };
       });
 
       renderFilter();
-      renderCards(); // Inisialisasi awal
+      renderCards();
     };
 
-    // 2. Fungsi Render Filter Cerdas
     function renderFilter() {
       const filterContainer = document.getElementById('filter-kategori');
       let filterHTML = `<button class="filter-btn active" onclick="filterData('Semua', this)">Semua</button>`;
-      
-      allCategories.forEach(kat => {
-        filterHTML += `<button class="filter-btn" onclick="filterData('${kat}', this)">${kat}</button>`;
-      });
-      
+      allCategories.forEach(kat => { filterHTML += `<button class="filter-btn" onclick="filterData('${kat}', this)">${kat}</button>`; });
       filterContainer.innerHTML = filterHTML;
     }
 
-    // 3. Fungsi JS untuk Filter (Tombol Diklik)
     window.filterData = function(kat, element) {
       document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-      element.classList.add('active');
-      currentFilter = kat;
-      currentPage = 1; // Reset ke halaman 1 setiap filter diubah
-      renderCards();
+      element.classList.add('active'); currentFilter = kat; currentPage = 1; renderCards();
     };
     
-    // Fungsi Pindah Halaman Pagination
-    window.gantiHalaman = function(page) {
-      currentPage = page;
-      renderCards();
-    };
+    window.gantiHalaman = function(page) { currentPage = page; renderCards(); };
 
-    // 4. Fungsi Menampilkan Grid dengan Pagination & Filter
     function renderCards() {
       const wrapper = document.getElementById('umkm-wrapper');
       const paginationContainer = document.getElementById('pagination-container');
-      wrapper.innerHTML = '';
-      paginationContainer.innerHTML = '';
+      wrapper.innerHTML = ''; paginationContainer.innerHTML = '';
 
-      // Ekstrak data yang lolos filter
       let filteredData = [];
       storesData.forEach((data, index) => {
-        if(currentFilter === 'Semua' || data.kategoriArr.includes(currentFilter)) {
-          filteredData.push({ data, originalIndex: index });
-        }
+        if(currentFilter === 'Semua' || data.kategoriArr.includes(currentFilter)) { filteredData.push({ data, originalIndex: index }); }
       });
 
-      if(filteredData.length === 0) {
-        wrapper.innerHTML = '<div class="loading-teks">Tidak ada data untuk kategori ini.</div>';
-        return;
-      }
+      if(filteredData.length === 0) { wrapper.innerHTML = '<div class="loading-teks">Tidak ada data untuk kategori ini.</div>'; return; }
 
-      // Hitung dan slice data untuk pagination
       const totalPages = Math.ceil(filteredData.length / itemsPerPage);
       const startIndex = (currentPage - 1) * itemsPerPage;
       const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
-      // Render Cards Halaman Aktif
       paginatedData.forEach(item => {
-        const data = item.data;
-        const index = item.originalIndex; // Gunakan index ori agar modal tetap sesuai
+        const data = item.data; const index = item.originalIndex;
         wrapper.innerHTML += `
           <div class="umkm-card" onclick="bukaModal(${index})">
             <img src="${data.thumbToko}" class="card-thumb-lw" alt="${data.namaToko}">
@@ -1397,22 +1479,15 @@ else if (item.category !== "" && item.category !== "-") { cat = item.category.to
         `;
       });
 
-      // Render Tombol Pagination
       if (totalPages > 1) {
         let paginationHTML = `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="gantiHalaman(${currentPage - 1})">Prev</button>`;
-        
-        for(let i = 1; i <= totalPages; i++) {
-          paginationHTML += `<button class="page-btn ${currentPage === i ? 'active' : ''}" onclick="gantiHalaman(${i})">${i}</button>`;
-        }
-        
+        for(let i = 1; i <= totalPages; i++) { paginationHTML += `<button class="page-btn ${currentPage === i ? 'active' : ''}" onclick="gantiHalaman(${i})">${i}</button>`; }
         paginationHTML += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="gantiHalaman(${currentPage + 1})">Next</button>`;
         paginationContainer.innerHTML = paginationHTML;
       }
     }
 
-    // 5. Inisialisasi DOM & Modal
     document.addEventListener("DOMContentLoaded", function() {
-      // Panggil Data
       const scriptApi = document.createElement('script');
       scriptApi.src = 'https://rt2-usahawarga.blogspot.com/feeds/posts/default?alt=json-in-script&callback=tampilkanWidgetUMKM&max-results=50'; 
       document.body.appendChild(scriptApi);
@@ -1423,7 +1498,6 @@ else if (item.category !== "" && item.category !== "-") { cat = item.category.to
 
       window.bukaModal = function(index) {
         const data = storesData[index];
-        
         let produkHTML = data.produkArray.length > 0 ? data.produkArray.map((p, pIdx) => `
             <div class="produk-card" onclick="bukaZoomProduk(${index}, ${pIdx})">
               <img src="${p.thumb}" alt="${p.nama}">
@@ -1437,23 +1511,14 @@ else if (item.category !== "" && item.category !== "-") { cat = item.category.to
         modalBody.innerHTML = `
           <div class="close-modal-lw">&times;</div>
           <img src="${data.thumbToko}" class="modal-toko-thumb" onclick="bukaZoom('${data.thumbToko}')">
-          
-          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px;">
-            ${data.badgeHTML}
-          </div>
-          
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px;">${data.badgeHTML}</div>
           <h2 class="nama-toko" style="font-size:18px;">${data.namaToko}</h2>
-          
           ${data.deskripsi ? `<div class="teks-deskripsi-modal modal-teks-sama">${data.deskripsi}</div>` : ''}
-          
-          <!-- Kotak alamat pada modal dihilangkan, hanya menampilkan teks icon saja -->
           <div class="icon-text modal-teks-sama" style="margin-top: 0; margin-bottom: 10px;">${svgMap} <span>${data.alamat}</span></div>
           ${data.waText ? `<a href="tel:+${data.waLink}" class="text-wa" title="Panggil/Telepon WA">${svgWa} ${data.waText}</a>` : ''}
-          
           <div class="produk-grid">${produkHTML}</div>
         `;
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        modal.style.display = 'flex'; document.body.style.overflow = 'hidden';
       };
 
       const tutupModal = () => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; };
@@ -1462,17 +1527,14 @@ else if (item.category !== "" && item.category !== "-") { cat = item.category.to
       modal.addEventListener('click', e => { if (e.target === modal || e.target.classList.contains('close-modal-lw')) tutupModal(); });
       zoomOverlay.addEventListener('click', tutupZoom);
       
-      // Zoom Foto Toko (hanya gambar)
       window.bukaZoom = function(src) { 
         event.stopPropagation(); 
         document.getElementById('zoom-content').innerHTML = `<img src="${src}" style="max-width: 90%; max-height: 90%; border-radius: 8px; object-fit: contain;">`;
         zoomOverlay.style.display = 'flex'; 
       };
 
-      // Zoom Produk Etalase dengan Card Utuh
       window.bukaZoomProduk = function(storeIdx, prodIdx) {
-        event.stopPropagation();
-        const p = storesData[storeIdx].produkArray[prodIdx];
+        event.stopPropagation(); const p = storesData[storeIdx].produkArray[prodIdx];
         document.getElementById('zoom-content').innerHTML = `
           <div style="background: #fff; border-radius: 12px; overflow: hidden; max-width: 90%; width: 320px; display: flex; flex-direction: column; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
             <img src="${p.thumb}" style="width: 100%; height: 260px; object-fit: cover; display: block; border-bottom: 1px solid #f5f5f5;">
@@ -1488,9 +1550,5 @@ else if (item.category !== "" && item.category !== "-") { cat = item.category.to
       };
     });
 </script>
-<!-- ======================================================================
-     END AREA EDIT WIDGET LAPAK WARGA (JAVASCRIPT)
-     ====================================================================== -->
-
 </body>
 </html>

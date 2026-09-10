@@ -75,76 +75,89 @@
         <!-- Global Dropdown Overlay -->
         <div v-if="activeDropdown !== ''" @click="activeDropdown = ''" class="fixed inset-0 z-[40]"></div>
 
-        <!-- ================== BAGIAN LOGIN (ORISINAL) ================== -->
+        <!-- ================== DESAIN LOGIN (GAGA) - VERSI COMPACT ================== -->
         <transition name="fade">
-            <div v-if="!isLoggedIn" class="min-h-screen flex flex-col justify-center items-center p-4 py-8 w-full absolute inset-0 z-50 bg-cover bg-center overflow-y-auto" style="background-image: url('');">
-                <div class="w-full max-w-[360px] sm:max-w-[380px] flex flex-col items-center my-auto relative z-10">
+            <div v-if="!isLoggedIn" class="min-h-screen flex flex-col justify-center items-center p-3 py-6 w-full absolute inset-0 z-50 bg-cover bg-center overflow-y-auto" style="background-image: url(''); background-color: #F3F4F6;">
+                <div class="w-full max-w-[340px] sm:max-w-[380px] flex flex-col items-center my-auto relative z-10">
                     
-                    <div class="mb-3 sm:mb-4 text-center">
-                        <a href="https://rt2pasekanlor.id/" target="_blank" class="inline-block hover:scale-105 transition-transform" title="Website RT 2">
-                            <div class="border-white/60">
-                                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png" 
-                                     alt="Logo RT 2" class="h-[75px] sm:h-[90px] w-auto object-contain">
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bg-[#F8F9FA] rounded-[24px] sm:rounded-[28px] shadow-2xl p-5 sm:p-6 w-full border border-gray-100 flex flex-col">
-                        <div class="relative mb-5 flex items-center pt-2">
-                            <div class="absolute -top-[80px] -left-20 z-20 pointer-events-none">
-                                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQ7IVomIkb-mV0q7VdknjHyQqSB4BnWfCUMC6ojydIhF0uOokTpEJRwcFrcYPXUnCQgZhXIbDHB9ThmUSynhKSEIkydOESr2GkLs3GpwZhGCMZm_mJybCZV1_cLyLhRE-Hur8xmS5ue2lRQOGmk7zykgcq4jLBCqUmSJJyCVxrMVMceGYPpOoeGzVmirs/s1600/lebah%20-%20senter.png" 
-                                     alt="Maskot Lebah" class="w-[200px] sm:w-[200px] max-w-none object-contain drop-shadow-xl -scale-x-90">
-                            </div>
-                            <div class="flex-1 min-w-0 pl-[95px] sm:pl-[105px]">
-                                <h2 class="text-[#1155CC] font-[700] text-[18px] sm:text-[20px] leading-[1.2] tracking-tight text-left">
+                    <!-- KOTAK LOGIN UTAMA -->
+                    <div class="bg-[#F8F9FA] rounded-[20px] sm:rounded-[24px] shadow-2xl p-4 sm:p-5 w-full border border-gray-100 flex flex-col relative z-10">
+                        
+                        <!-- HEADER -->
+                        <div class="flex items-center gap-3 mb-4">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png" 
+                                 alt="Logo RT 2" class="h-[50px] sm:h-[60px] w-auto object-contain drop-shadow-sm">
+                            <div class="flex-1 min-w-0">
+                                <h2 class="text-[#1155CC] font-[700] text-[15px] sm:text-[17px] leading-[1.2] tracking-tight text-left">
                                     Aplikasi Data Terpadu<br>Warga RT 2-RW 3
                                 </h2>
-                                <p class="text-[#8C8C8C] font-[500] text-[11px] sm:text-[12px] mt-1 leading-snug text-left">
+                                <p class="text-[#8C8C8C] font-[500] text-[9px] sm:text-[10px] mt-1 leading-snug text-left">
                                     Pasekan Lor, Balecatur, Gamping, Sleman, D. I. Yogyakarta, 55295
                                 </p>
                             </div>
                         </div>
 
-                        <form @submit.prevent="handleLogin" class="flex flex-col gap-3 sm:gap-3.5 w-full mb-3.5">
+                        <!-- FORM LOGIN -->
+                        <form @submit.prevent="handleLogin" class="flex flex-col gap-2.5 w-full mb-4">
                             <div class="relative">
-                                <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6B7280] text-[15px]"></i>
-                                <input type="text" v-model="loginIdRumah" placeholder="User" required class="w-full pl-10 pr-3 py-2.5 sm:py-3 rounded-xl border border-[#D1D5DB] bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-left text-[13px] sm:text-[14px] font-[500] shadow-sm">
+                                <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-[#6B7280] text-[13px]"></i>
+                                <input type="text" v-model="loginIdRumah" placeholder="User" required class="w-full pl-9 pr-3 py-2 rounded-xl border border-[#D1D5DB] bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-left text-[12px] sm:text-[13px] font-[500] shadow-sm">
                             </div>
                             <div class="relative">
-                                <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6B7280] text-[15px]"></i>
-                                <input :type="showPassword ? 'text' : 'password'" v-model="loginPassword" placeholder="Password" required class="w-full pl-10 pr-10 py-2.5 sm:py-3 rounded-xl border border-[#D1D5DB] bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-left text-[13px] sm:text-[14px] tracking-widest font-[500] shadow-sm">
-                                <div class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 flex items-center justify-center cursor-pointer text-[#6B7280] hover:text-[#374151] transition-colors" @click="showPassword = !showPassword" title="Lihat Password">
-                                    <i class="fas text-[13px] sm:text-[14px]" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-[#6B7280] text-[13px]"></i>
+                                <input :type="showPassword ? 'text' : 'password'" v-model="loginPassword" placeholder="Password" required class="w-full pl-9 pr-9 py-2 rounded-xl border border-[#D1D5DB] bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-left text-[12px] sm:text-[13px] tracking-widest font-[500] shadow-sm">
+                                <div class="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 flex items-center justify-center cursor-pointer text-[#6B7280] hover:text-[#374151] transition-colors" @click="showPassword = !showPassword" title="Lihat Password">
+                                    <i class="fas text-[12px]" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
                                 </div>
                             </div>
-                            <button type="submit" :disabled="loading" class="btn-primary w-full py-2.5 sm:py-3 rounded-xl font-[600] text-[13px] sm:text-[14px] flex justify-center items-center shadow-md disabled:opacity-70 gap-2 mt-0.5">
-                                <i v-if="!loading" class="fas fa-sign-in-alt text-[15px]"></i>
-                                <span v-if="loading" class="spinner border-t-white w-4 h-4"></span>
+                            <button type="submit" :disabled="loading" class="btn-primary w-full py-2 rounded-xl font-[600] text-[12px] sm:text-[13px] flex justify-center items-center shadow-md disabled:opacity-70 gap-2 bg-[#1155CC] text-white hover:bg-blue-800 transition-colors">
+                                <i v-if="!loading" class="fas fa-sign-in-alt text-[13px]"></i>
+                                <span v-if="loading" class="spinner border-t-white w-3.5 h-3.5 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
                                 <span v-if="!loading">Monggo Mlebet</span>
                                 <span v-else>Memeriksa...</span>
                             </button>
                         </form>
 
-                        <div class="bg-[#E5E7EB]/80 rounded-2xl p-3.5 sm:p-4 flex flex-col gap-2.5 border border-gray-200/80 shadow-inner">
-                            <h3 class="text-[#1155CC] font-[600] text-[12px] sm:text-[13px] leading-tight text-left">Registrasi warga baru khusus Kepala Keluarga.</h3>
-                            <div class="flex items-center gap-2 mt-0.5">
-                                <label class="relative inline-flex items-center cursor-pointer shrink-0">
-                                    <input type="checkbox" v-model="isSetujuRegis" class="sr-only peer">
-                                    <div class="w-10 h-5 bg-[#9CA3AF] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#22C55E] shadow-inner"></div>
-                                </label>
-                                <span class="text-[10px] sm:text-[11px] text-[#4B5563] font-[500] leading-snug text-left">Saya akan mengisi data dengan yang sebenarnya.</span>
+                        <!-- BOX REGISTRASI (Lebih Kompak) -->
+                        <div class="relative bg-[#E5E7EB]/80 rounded-xl p-2.5 sm:p-3 border border-gray-200/80 shadow-inner mb-4 flex items-center">
+                            <!-- Maskot Diperkecil -->
+                            <div class="absolute -bottom-1 -left-8 sm:-left-10 z-20 pointer-events-none">
+                                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh4LoZQQKzzykZGTio3vdyEBC6ZX5nHBcPDV1NIvVr1v1epiv8BV7NIiCqj4W0HYFb3LytbBtc4OWdHbLiG33njTW01Mgsk9IWxAg5DNweYtPF4Rw65jH4u8Q_Xnn39lFPQqXbq75C3LgXiebILzi5d67DVA-usW5qygOyqWCaaR7_qgHedIjzEkz0v9-A/s1600/lebah%20-%20merah%20putih%20(small).png" 
+                                     alt="Maskot Lebah" class="w-[120px] sm:w-[150px] max-w-none object-contain drop-shadow-xl -scale-x-2">
                             </div>
-                            <button @click="bukaHalamanRegistrasi" :disabled="!isSetujuRegis" class="w-full py-2 sm:py-2.5 rounded-xl font-[600] text-[12px] sm:text-[13px] flex items-center justify-center gap-2 transition-all shadow-sm border" :class="isSetujuRegis ? 'bg-[#1155CC] text-white hover:bg-[#000F2E] cursor-pointer' : 'bg-white text-gray-400 border-gray-200 cursor-not-allowed opacity-60'">
-                                <i class="fas fa-id-card text-[13px]"></i><span>Setuju & Registrasi</span>
-                            </button>
+                            
+                            <!-- Konten Registrasi Dirapatkan -->
+                            <div class="flex flex-col gap-1.5 pl-[70px] sm:pl-[80px] w-full relative z-10">
+                                <h3 class="text-[#1155CC] font-[600] text-[11px] sm:text-[12px] leading-tight text-left">Registrasi warga baru khusus Kepala Keluarga.</h3>
+                                <div class="flex items-start gap-1.5 mt-0.5">
+                                    <!-- Toggle Switch Diperkecil -->
+                                    <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+                                        <input type="checkbox" v-model="isSetujuRegis" class="sr-only peer">
+                                        <div class="w-7 h-4 bg-[#9CA3AF] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#22C55E] shadow-inner"></div>
+                                    </label>
+                                    <span class="text-[9px] sm:text-[10px] text-[#4B5563] font-[500] leading-tight text-left">Saya akan mengisi data dengan yang sebenarnya.</span>
+                                </div>
+                                <button @click="bukaHalamanRegistrasi" :disabled="!isSetujuRegis" class="w-full py-1.5 rounded-lg font-[600] text-[11px] sm:text-[12px] flex items-center justify-center gap-1.5 transition-all shadow-sm border mt-0.5" :class="isSetujuRegis ? 'bg-[#1155CC] text-white hover:bg-[#000F2E] cursor-pointer' : 'bg-white text-gray-400 border-gray-200 cursor-not-allowed opacity-60'">
+                                    <i class="fas fa-id-card text-[11px]"></i><span>Setuju & Registrasi</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- WEB LINK -->
+                        <div class="pt-3 border-t border-gray-200/80 text-center">
+                            <a href="https://rt2pasekanlor.id/" target="_blank" class="inline-flex items-center justify-center gap-1.5 w-full py-1.5 rounded-xl text-[#1155CC] hover:text-[#000F2E] hover:bg-blue-50/50 text-[11px] sm:text-[12px] font-[600] transition-colors">
+                                <i class="fas fa-arrow-left text-[11px]"></i><span>www.rt2pasekanlor.id</span>
+                            </a>
                         </div>
                     </div>
 
-                    <div class="mt-4 sm:mt-5 text-center w-full mb-6">
-                        <a href="https://rt2pasekanlor.id/" target="_blank" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white/90 hover:bg-white text-[#1155CC] hover:text-[#000F2E] text-[12px] sm:text-[13px] font-[600] shadow-md hover:shadow-lg transition-all hover:scale-[1.02] border border-white/60 backdrop-blur-sm w-full">
-                            <i class="fas fa-arrow-left text-[12px]"></i><span>www.rt2pasekanlor.id</span>
-                        </a>
+                    <!-- COPYRIGHT TEXT -->
+                    <div class="mt-4 text-center px-4 relative z-10">
+                        <p class="text-[10px] sm:text-[11px] font-[500] text-gray-500/70 tracking-wide drop-shadow-sm">
+                            Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. AdW.
+                        </p>
                     </div>
+
                 </div>
             </div>
         </transition>
@@ -606,7 +619,7 @@
 
                 <!-- FIXED FOOTER 1 BARIS -->
                 <footer class="w-full bg-[#FFFFFF] border-t border-gray-200 shrink-0 py-2 fixed bottom-0 z-10 transition-all duration-300" :class="(userRole === 'admin' && activeMenu === 'list') ? 'lg:pl-[240px]' : ''">
-                    <div class="text-center px-4"><p class="text-[12px] font-[500] text-gray-400 font-bold">&copy; Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. AdW.</p></div>
+                    <div class="text-center px-4"><p class="text-[11px] font-[500] text-gray-400 font-regular">&copy; Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. AdW.</p></div>
                 </footer>
             </div>
         </div>

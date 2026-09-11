@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6G930LME8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-V6G930LME8');
+    </script>
+    
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1600/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Versi 3.0. Ronda Warga RT 2 - RW 3, Pasekan Lor. Warga Kreatif, Mandiri & Berbudaya.">
+    <title>Ronda Warga RT 2 Pasekan Lor</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ================= CSS MASTER TEMPLATE ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
+        body { background-color: #B4C3D4; display: flex; justify-content: center; }
+        button, input, textarea, select, a { font-family: 'Poppins', sans-serif !important; }
+
+        .app-wrapper {
+            width: 100%; max-width: 480px;
+            background-color: #F2F2F2; 
+            min-height: 100vh; position: relative;
+            padding-top: 135px; /* Jarak untuk header oranye saat fixed */
+            padding-bottom: 30px; overflow-x: hidden;
+            transition: padding-bottom 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        svg { display: inline-block; vertical-align: middle; }
+
+        /* Animasi Loading Muter untuk Ikon SVG */
+        @keyframes spinAnim { 100% { transform: rotate(360deg); } }
+        .spin-icon { animation: spinAnim 1s linear infinite; display: inline-block; vertical-align: middle; }
+
+        /* Kontainer Utama Wrapper Header */
+        .fixed-top-bar { 
+            position: absolute; 
+            top: 0; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 100%; 
+            max-width: 480px; 
+            z-index: 999; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        /* Ketika scroll, area ini menjadi fixed di atas layar */
+        .fixed-top-bar.scrolled { 
+            position: fixed; 
+        }
+        
+        /* Header Biru #1155cc ikut naik ke atas saat discroll */
+        .glass-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 3px 12px; 
+            background-color: #1155CC; 
+            z-index: 1; 
+            position: relative;
+            transition: transform 0.3s ease, opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .fixed-top-bar.scrolled .glass-header { 
+            transform: translateY(-100%);
+            opacity: 0;
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            pointer-events: none;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 8px; max-width: 100%; }
+        .header-logo { width: 70px; height: 70px; object-fit: contain; flex-shrink: 0; }
+        .header-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; white-space: normal; }
+        .header-title-text { font-size: 11pt; font-weight: 600; color: #ffffff; line-height: 1.2; }
+        .header-slogan { font-size: 8pt; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 0; overflow: hidden; text-overflow: ellipsis; }
+        .header-logo + .header-text { flex: 1; }
+
+        /* Tombol Ikon Menu */
+        .btn-menu-dots { background: #1155CC; border: 0px solid rgba(255, 255, 255, 0.4); color: #ffffff; border-radius: 8px; height: 32px; padding: 0 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; transition: all 0.2s; backdrop-filter: blur(4px); }
+        .btn-menu-dots:active { transform: scale(0.92); filter: brightness(0.9); }
+
+        /* Header Oranye Judul Halaman yang Fixed */
+        .title-card-panel { 
+            background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
+            color: #ffffff; 
+            padding: 12px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-radius: 0; 
+            z-index: 2; 
+            position: relative; 
+            flex-shrink: 0;
+            transition: padding 0.3s ease;
+        }
+
+        .fixed-top-bar.scrolled .title-card-panel {
+            padding: 12px 20px;
+        }
+
+        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; gap: 8px; min-width: 0; }
+        .title-card-left i { font-size: 18px; }
+        .title-card-right { display: flex; align-items: center; margin-left: auto; }
+        .scroll-logo { width: 0; height: 0; object-fit: contain; opacity: 0; transform: scale(0.7); transition: width 0.22s ease, height 0.22s ease, opacity 0.18s ease, transform 0.22s ease; }
+        .fixed-top-bar.scrolled .scroll-logo { width: 60px; height: 60px; opacity: 1; transform: scale(1); flex-shrink: 0; margin-right: 4px; }
+        
+        /* ================== MENU MODAL FAST CONTAINER ================== */
+        .menu-modal-overlay { 
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px); 
+            display: flex; justify-content: center; align-items: center; 
+            padding: 16px; z-index: 25000; opacity: 0; visibility: hidden; 
+            transition: all 0.2s ease; 
+        }
+        .menu-modal-overlay.active { opacity: 1; visibility: visible; }
+        
+        .menu-modal-content { 
+            background: transparent; 
+            border: none; 
+            padding: 0; 
+            width: 100%; 
+            max-width: 440px; 
+            transform: scale(0.92); 
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+        .menu-modal-overlay.active .menu-modal-content { transform: scale(1); }
+
+        /* =========================================================
+            MENU UTAMA — BENTUK TOMBOL PERSEGI PANJANG (ORANGE)
+            ========================================================= */
+        :root {
+            --bg-primary: #1155CC;
+            --bg-white: #FFFFFF;
+            --text-white: #FFFFFF;
+            --btn-blue: #0047BF;
+            --btn-active: #A1A1A1;
+        }
+
+        .main-menu-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 0 4px;
+            width: 100%;
+        }
+        
+        .nav-item { 
+            color: var(--text-white); text-decoration: none; border-radius: 12px; 
+            font-size: 11px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: transform 0.2s, background 0.3s; text-align: center; 
+            width: 100%; min-height: 84px; padding: 12px 4px; border: none; line-height: 1.2;
+        }
+        
+        .nav-item:active { transform: scale(0.94); }
+        
+        .nav-item svg { width: 26px; height: 26px; margin-bottom: 6px; display: block; stroke: currentColor; stroke-width: 2 !important; } 
+        
+        /* WARNA TOMBOL ALL MENU JADI ORANGE */
+        .btn-home, .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-datawarga, .btn-tatatertib, .btn-lapak { background: #FA6800; }
+
+        /* EFEK TOMBOL AKTIF */
+        .nav-item.menu-tertekan {
+            background: var(--btn-active) !important; 
+            transform: scale(0.95); 
+            color: var(--text-white) !important; 
+            pointer-events: none; 
+            cursor: default;
+        }
+        .nav-item.menu-tertekan svg {
+            filter: none !important; 
+            opacity: 0.7;
+        }
+
+        @media (max-width: 380px) {
+            .main-menu-wrapper { gap: 8px; padding: 0 2px; }
+            .nav-item { font-size: 9.5px; min-height: 72px; padding: 10px 2px; border-radius: 10px; }
+            .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; }
+        }
+
+        .univ-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s; padding: 16px; }
+        .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
+        .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
+        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 600; color: #1e293b; }
+        .univ-modal-title { font-size: 16px; }
+        .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;}
+        .btn-close-univ:hover { background: #FEE2E2; }
+        .univ-modal-body { flex: 1; width: 100%; height: 100%; background: #f1f5f9; }
+        .univ-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
+
+        .main-content-space { flex: 1; }
+        
+        .main-footer { 
+            width: 100%; 
+            margin: auto auto 0 auto; 
+            padding: 16px 16px; 
+            text-align: center; 
+            border-top: none !important; 
+            display: block; 
+        }
+        .footer-line { color: #64748b; line-height: 1.3; margin-bottom: 2px; }
+        .f-bold { font-size: 11px; font-weight: 600; }
+        .f-reg { font-size: 10px; font-weight: 400; }
+        
+        .main-content-area { width: 100%; margin-top: 15px; }
+
+        /* ================= CSS KHUSUS HALAMAN RONDA ================= */
+        .main-card { 
+            background: #FFFFFF; 
+            border-radius: 16px; 
+            padding: 16px; 
+            border: 1px solid #e2e8f0; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            margin: 0 16px; 
+        }
+
+        .ronda-top-container {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .header-fancy {
+            border-radius: 14px; padding: 12px; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease; flex: 1;
+        }
+        .header-pagi { background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%); }    
+        .header-siang { background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%); }   
+        .header-sore { background: linear-gradient(135deg, #C2410C 0%, #FB923C 100%); }    
+        .header-malam { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); }   
+
+        .dt-col { display: flex; flex-direction: column; gap: 4px; z-index: 2; }
+        .dt-val-date { font-size: 13px; font-weight: 600; color: #FFFFFF; }
+        .dt-val-time { font-size: 12px; font-weight: 500; color: #FFFFFF; }
+
+        .time-icon-container { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; position: relative; z-index: 2; }
+        .icon-sun { color: #FEF08A; }
+        .icon-moon { color: #FDE047; }
+
+        .twinkle-star { position: absolute; background: #FFFFFF; border-radius: 50%; animation: twinkleAnim 1s infinite ease-in-out alternate; z-index: 1; display: none; }
+        .star-1 { width: 3px; height: 3px; top: 20%; right: 70px; animation-delay: 0.1s; }
+        .star-2 { width: 2px; height: 2px; top: 70%; right: 85px; animation-delay: 0.5s; }
+        .star-3 { width: 3px; height: 3px; top: 25%; right: 110px; animation-delay: 0.8s; }
+
+        @keyframes twinkleAnim {
+            0% { opacity: 0.1; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1.4); }
+        }
+        
+        .btn-qr-scanner {
+            position: relative;
+            background: #0F47A1;
+            border-radius: 14px;
+            width: 66px;
+            height: 66px;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+        .btn-qr-scanner:hover { background: #1F995D; border-color: #0F47A1; }
+        .btn-qr-scanner:active { transform: scale(0.95); }
+
+        .demo-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background-color: #FFD721;
+            color: #0F47A1;
+            font-size: 9px;
+            font-weight: 400;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        .form-section { display: flex; flex-direction: column; gap: 12px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.15); padding-bottom: 16px; }
+        .form-section:last-child { border-bottom: none; padding-bottom: 0; }
+        .section-label { font-size: 14px; font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 10px; }
+        .sec-number-badge { width: 34px; height: 34px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+        .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
+        .sec-title { font-size: 14.5px; font-weight: 600; color: #1155CC; }
+        .sec-subtitle { font-size: 11.5px; font-weight: 400; color: #64748B; margin-top: 2px; }
+
+        .input-group { position: relative; }
+        .input-icon-wrapper { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 600; color: #1155CC; z-index: 10; }
+        .nominal-input { width: 100%; padding: 12px 14px 12px 44px; font-size: 15px; font-weight: 600; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; transition: all 0.3s; }
+        .nominal-input:focus { outline: none; border-color: #1155CC; }
+        .nominal-confirmed-badge { display: none; font-size: 12.5px; font-weight: 500; color: #16A34A; margin-top: 6px; padding-left: 4px; }
+        
+        .day-select, .catatan-dropdown { width: 100%; padding: 12px 14px; font-size: 13.5px; font-weight: 500; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; cursor: pointer; outline: none; transition: border-color 0.2s; }
+        .day-select:focus, .catatan-dropdown:focus { border-color: #1155CC; }
+        
+        .note-textarea { width: 100%; padding: 12px; font-size: 13.5px; font-weight: 400; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; resize: none; min-height: 80px; line-height: 1.5; outline: none; transition: border-color 0.2s;}
+        .note-textarea:focus { border-color: #1155CC; }
+
+        .btn-primary-custom, .btn-download, .btn-wa { 
+            width: 100%; padding: 12px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #25D366; color: white; transition: all 0.3s ease; 
+        }
+        .btn-primary-custom:active, .btn-download:active, .btn-wa:active { transform: scale(0.97); }
+        
+        .btn-primary-custom:not(:disabled):hover, .btn-download:not(:disabled):hover, .btn-wa:not(:disabled):hover {
+            transform: translateY(-2px); filter: brightness(1.05);
+        }
+        
+        .btn-download { margin-bottom: 8px; background: #1155CC; }
+        .btn-wa { text-decoration: none; display: none !important; } /* Menyembunyikan tombol WA teks */
+        
+        .btn-primary-custom:disabled, .btn-download:disabled, .btn-wa:disabled { 
+            background: #CBD5E1 !important; color: #64748B !important; cursor: not-allowed; transform: none; opacity: 0.8;
+        }
+
+        .loading-warga { font-size: 12.5px; font-weight: 500; color: #1155CC; text-align: center; padding: 10px; display: none; background: #EFF6FF; border-radius: 8px;}
+        .warga-container-direct { display: none; margin-top: 6px; border: 1.5px solid #CBD5E1; border-radius: 12px; overflow: hidden; background: #FFFFFF; }
+        .warga-container-direct.show { display: block; }
+        
+        .warga-card { padding: 12px 14px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.15); display: flex; flex-direction: column; gap: 8px; background: #FFFFFF; }
+        .warga-card:nth-child(even) { background-color: #F8FAFC; }
+        .warga-card:last-child { border-bottom: none; }
+        .warga-name { font-size: 14px; font-weight: 600; color: #0F172A; }
+        
+        .presence-buttons-group { display: flex; gap: 6px; }
+        .pres-btn { flex: 1; border: 1.5px solid rgba(17, 85, 204, 0.3); background: #FFFFFF; padding: 7px 4px; font-size: 11.5px; font-weight: 500; border-radius: 8px; cursor: pointer; color: #334155; transition: all 0.2s ease; }
+        
+        .pres-btn:hover { background-color: #F8FAFC; border-color: #94A3B8; }
+        .pres-btn-hadir:hover:not(.active) { color: #16A34A; border-color: #22C55E; background-color: #DCFCE7; }
+        .pres-btn-izin:hover:not(.active) { color: #2563EB; border-color: #60A5FA; background-color: #DBEAFE; }
+        .pres-btn-absen:hover:not(.active) { color: #DC2626; border-color: #EF4444; background-color: #FEE2E2; }
+        
+        .pres-btn-hadir.active { background-color: #22C55E; border-color: #22C55E; color: white; font-weight: 600; }
+        .pres-btn-izin.active { background-color: #60A5FA; border-color: #60A5FA; color: white; font-weight: 600; } 
+        .pres-btn-absen.active { background-color: #EF4444; border-color: #EF4444; color: white; font-weight: 600; }
+        
+        .warga-card.state-hadir { background-color: #F0FDF4 !important; }
+        .warga-card.state-izin { background-color: #EFF6FF !important; } 
+        .warga-card.state-absen { background-color: #FEF2F2 !important; }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .fa-spin { animation: spin 1s linear infinite; }
+
+        /* ================= AREA EXPORT STRUK TEMA TERBARU ================= */
+        #laporan-export {
+            position: fixed; left: 0px; top: 0px; width: 450px; 
+            background: #F9FAFB; padding: 40px 30px;
+            box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
+            visibility: hidden; opacity: 0; pointer-events: none; z-index: -99999; 
+        }
+        .exp-header-main { text-align: center; margin-bottom: 20px; width: 100%; }
+        .exp-main-title { font-size: 34px; font-weight: 700; color: #1155CC; margin-bottom: 4px; }
+        .exp-sub-title { font-size: 14px; font-weight: 400; color: #64748B; }
+        
+        .exp-blue-banner { background: #1155CC; border-radius: 16px; padding: 20px 24px; width: 100%; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 25px; box-sizing: border-box; }
+        .exp-banner-date { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .exp-banner-time { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+        .exp-banner-amount { font-size: 42px; font-weight: 700; }
+        
+        .exp-section-day-title { font-size: 18px; font-weight: 700; color: #64748B; text-align: center; width: 100%; margin-bottom: 12px; }
+        .exp-section-day-title span { color: #DC2626; }
+        
+        .exp-list-kehadiran { width: 100%; display: flex; flex-direction: column; margin-bottom: 20px; border-radius: 12px; overflow: hidden; }
+        
+        .exp-warga-row { width: 100%; padding: 12px 16px; font-size: 16px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; border-bottom: 2px solid #FFF; }
+        .exp-warga-row:last-child { border-bottom: none; }
+        .exp-warga-left { display: flex; align-items: center; gap: 14px; }
+        .exp-number-circle { width: 28px; height: 28px; background: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+        
+        .exp-warga-row.status-hadir { background-color: #D1F2D9; color: #065F46; }
+        .exp-warga-row.status-hadir .exp-number-circle { color: #065F46; }
+        .exp-warga-row.status-izin { background-color: #DBEAFE; color: #1E3A8A; } 
+        .exp-warga-row.status-izin .exp-number-circle { color: #1E3A8A; }
+        .exp-warga-row.status-absen { background-color: #FCD5CE; color: #991B1B; } 
+        .exp-warga-row.status-absen .exp-number-circle { color: #991B1B; }
+        .exp-status-text { font-size: 15px; font-weight: 700; }
+        
+        .exp-summary-pills { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; width: 100%; }
+        .exp-pill { padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 600; color: #333; }
+        .pill-hadir { background: #D1F2D9; }
+        .pill-izin { background: #DBEAFE; }
+        .pill-alpha { background: #FCD5CE; }
+        .pill-tot { background: #D1D5DB; }
+
+        .exp-catatan-section { width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+        .exp-catatan-container { width: 100%; background: transparent; border: 1px solid #94A3B8; border-radius: 12px; padding: 16px 20px; min-height: 120px; box-sizing: border-box; }
+        .exp-catatan-content { font-size: 15px; font-weight: 600; color: #334155; white-space: pre-wrap; margin-top: -4px; min-height: 80px; }
+
+        .exp-footer-info { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 4px; }
+        .exp-id-laporan-label { font-size: 14px; color: #64748B; font-weight: 400; text-align: center; }
+        .exp-id-laporan-val { font-size: 15px; color: #475569; font-weight: 700; margin-bottom: 16px; text-align: center; }
+        .exp-thanks-btn { background: #1155CC; color: #FFF; font-size: 15px; font-weight: 700; padding: 14px 20px; border-radius: 10px; width: 100%; text-align: center; box-sizing: border-box; letter-spacing: 0.5px; }
+
+        /* ================= CSS ALTRUIS & CUSTOM INPUT ================= */
+        .altruis-banner {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: #FFFFFF; padding: 12px 14px; border-radius: 12px; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .altruis-banner svg { width: 28px; height: 28px; flex-shrink: 0; }
+        .altruis-banner-text { display: flex; flex-direction: column; }
+        .altruis-banner-title { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
+        .altruis-banner-desc { font-size: 10.5px; font-weight: 500; opacity: 0.9; }
+
+        .altruis-input-group {
+            display: flex; gap: 6px; margin: 10px 12px;
+        }
+        .altruis-input {
+            flex: 1; padding: 6px 10px; border: 1.5px solid #CBD5E1; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #1E293B; outline: none; transition: border-color 0.2s; height: 30px;
+        }
+        .altruis-input:focus { border-color: #F59E0B; }
+        .btn-add-altruis {
+            background: #1155CC; color: white; border: none; padding: 0; width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;
+        }
+        .btn-add-altruis:hover { background: #0F47A1; }
+    </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+    <!-- HEADER & NAVIGASI -->
+    <div class="fixed-top-bar" id="fixedTopBar">
+        <header class="glass-header" id="mainHeader">
+            <div class="header-left">
+                <img class="header-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2">
+                <div class="header-text">
+                    <div class="header-title-text">RT 2 Online</div>
+                    <div class="header-slogan">Aplikasi Warga RT 2-RW 3, Pasekan Lor</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="title-card-panel" title="Halaman Ronda">
+            <div class="title-card-left">
+                <img class="scroll-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Ronda RT 2</span>
+            </div>
+            
+            <div class="title-card-right">
+                <!-- Tombol Trigger Menu Modal Fast -->
+                <button id="btnMenuToggle" class="btn-menu-dots" title="Menu Utama">
+                    <span>Menu</span>
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                        <circle cx="7" cy="7" r="2.5"></circle>
+                        <circle cx="17" cy="7" r="2.5"></circle>
+                        <circle cx="7" cy="17" r="2.5"></circle>
+                        <circle cx="17" cy="17" r="2.5"></circle>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- KONTEN UTAMA RONDA -->
+    <div class="main-content-area">
+        <div class="main-card">
+            <!-- HEADER DENGAN SUASANA WAKTU OTOMATIS & QR -->
+            <div class="ronda-top-container">
+                <div class="header-fancy" id="header-suasana-box">
+                    <div class="twinkle-star star-1"></div>
+                    <div class="twinkle-star star-2"></div>
+                    <div class="twinkle-star star-3"></div>
+
+                    <div class="dt-col">
+                        <span id="current-date" class="dt-val-date">Memuat...</span>
+                        <span id="current-time" class="dt-val-time">00:00 WIB</span>
+                    </div>
+                    
+                    <div class="time-icon-container" id="time-icon-container" title="Suasana Live">
+                        <!-- SVG disisipkan via JS -->
+                    </div>
+                </div>
+                
+                <a href="https://rt2pasekanlor.id/scanner" target="_self" class="btn-qr-scanner" id="btn-qr-scanner" title="QR Scanner">
+                    <div class="demo-badge">demo</div>
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
+                        <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
+                        <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
+                        <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
+                        <rect x="7" y="7" width="10" height="10" rx="1" stroke-width="1.5"></rect>
+                        <line x1="7" y1="12" x2="17" y2="12" stroke-width="2" stroke-dasharray="2 2"></line>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- 1. JIMPITAN -->
+            <div class="form-section">
+                <div class="section-label">
+                    <div class="sec-number-badge">1</div>
+                    <div class="sec-text-group">
+                        <span class="sec-title">Isi Nominal Hasil Jimpitan</span>
+                        <span class="sec-subtitle">Isi nominal & jangan lupa klik cetak nominal</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-icon-wrapper">Rp</div>
+                    <input type="text" id="nominal-field" class="nominal-input" placeholder="0" autocomplete="off" inputmode="numeric">
+                </div>
+                <div id="nominal-confirmed" class="nominal-confirmed-badge"></div>
+                <button type="button" id="btn-lanjut" class="btn-primary-custom" disabled>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>Cetak Nominal</span>
+                </button>
+            </div>
+
+            <!-- 2. PILIH HARI -->
+            <div class="form-section">
+                <div class="section-label">
+                    <div class="sec-number-badge">2</div>
+                    <div class="sec-text-group">
+                        <span class="sec-title">Pilih Hari Ronda (bebas pilih)</span>
+                        <span class="sec-subtitle">Dapat diisi ketika terlambat sampai berganti hari. <br>Khusus Altruis wajib mengisi juga.</span>
+                    </div>
+                </div>
+                <div id="loading-warga" class="loading-warga">
+                    <svg class="fa-spin" style="margin-right: 4px; vertical-align: middle;" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> 
+                    Menghubungkan data...
+                </div>
+                <select id="day-select" class="day-select" disabled>
+                    <option value="">- PILIH HARI -</option>
+                    <option value="SENIN">SENIN</option>
+                    <option value="SELASA">SELASA</option>
+                    <option value="RABU">RABU</option>
+                    <option value="KAMIS">KAMIS</option>
+                    <option value="JUM'AT">JUM'AT</option>
+                    <option value="SABTU">SABTU</option>
+                    <option value="MINGGU">MINGGU</option>
+                    <option value="ALTRUIS">🏆 ALTRUIS (Terima kasih orang baik)</option>
+                </select>
+
+                <div class="warga-container-direct" id="warga-container-block">
+                    <div id="warga-list-target"></div>
+                </div>
+            </div>
+
+            <!-- 3. CATATAN -->
+            <div class="form-section">
+                <div class="section-label">
+                    <div class="sec-number-badge">3</div>
+                    <div class="sec-text-group">
+                        <span class="sec-title">Catatan Laporan</span>
+                        <span class="sec-subtitle">Pilihan cepat / manual</span>
+                    </div>
+                </div>
+                <select id="catatan-dropdown" class="catatan-dropdown">
+                    <option value="">- PILIH CATATAN CEPAT DISINI -</option>
+                    <option value="Uang jimpitan berada di">💰 Uang jimpitan berada di ...</option>
+                    <option value="Situasi aman dan terkendali">✅ Situasi aman terkendali</option>
+                    <option value="Stok kopi habis">☕ Kopi habis</option>
+                    <option value="Stok gula habis">🍚 Gula habis</option>
+                    <option value="Galon air habis">💧 Galon air habis</option>
+                    <option value="Rekapitulasi uang jimpitan Bulan ( )// Sesi ( ) // Rp ( ) ">🧮 Rekapituasi</option>
+                    <option value="Lampu jalan ada yang mati di ">💡 Lampu mati</option>
+                    <option value="Masih ada beberapa warga yang belum pasang jimpitan. Mohon kerja samanya.">❌ Jimpitan zonk</option>
+                </select>
+                <textarea id="catatan-text" class="note-textarea" placeholder="Isi catatan kegiatan malam ini"></textarea>
+            </div>
+            
+            <!-- 4. SIMPAN & KIRIM -->
+            <div class="form-section">
+                <div class="section-label">
+                    <div class="sec-number-badge">4</div>
+                    <div class="sec-text-group">
+                        <span class="sec-title">Kirim Laporan</span>
+                        <span class="sec-subtitle">Langsung kirim hasil struk ke Grup WA</span>
+                    </div>
+                </div>
+                <button type="button" id="btn-download" class="btn-download" disabled>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Kirim Sekarang
+                </button>
+                <button type="button" id="btn-wa" class="btn-wa" disabled>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    Kirim Versi Teks
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ruang kosong untuk mendorong footer ke bawah -->
+    <div class="main-content-space">
+    </div>
+
+    <!-- MODAL MENU FAST -->
+    <div class="menu-modal-overlay" id="menuFastModal" onclick="closeMenuModal(event)">
+        <div class="menu-modal-content" onclick="event.stopPropagation()">
+            <!-- MENU UTAMA -->
+            <div class="main-menu-wrapper">
+                <!-- HOME -->
+                <a href="index" class="nav-item btn-home" title="Home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>HOME</span>
+                </a>
+                
+                <!-- WARGA -->
+                <a href="data-warga" class="nav-item btn-warga" title="Warga">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    <span>WARGA</span>
+                </a>
+                
+                <!-- INVENTARIS -->
+                <a href="inventaris" class="nav-item btn-inventaris" title="Inventaris">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>INVENTARIS</span>
+                </a>
+
+                <!-- LAPAK -->
+                <a href="lapak-warga" class="nav-item btn-lapak" title="Lapak">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span>LAPAK</span>
+                </a>
+
+                <!-- PENGURUS -->
+                <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>PENGURUS</span>        
+                </a>
+                
+                <!-- GALERI -->
+                <a href="galeri" class="nav-item btn-galeri" title="Galeri">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>GALERI</span>
+                </a>
+
+                <!-- TATA TERTIB -->
+                <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>TATA TERTIB</span>
+                </a>
+
+                <!-- RONDA -->
+                <a href="ronda" class="nav-item btn-ronda" title="Ronda">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>RONDA</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL UNIVERSAL -->
+    <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
+        <div class="univ-modal-box" onclick="event.stopPropagation()">
+            <div class="univ-modal-header">
+                <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
+                <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
+                    <svg viewBox="0 0 24 24" class="svg-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="univ-modal-body">
+                <iframe id="univModalIframe" src="" loading="lazy" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER TETAP (TANPA GARIS) -->
+    <footer class="main-footer">
+        <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
+        <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
+    </footer>
+</div> 
+
+<!-- AREA EXPORT STRUK (TEMA TERBARU RONDA_2.png) -->
+<div id="laporan-export">
+    <div class="exp-header-main">
+        <div class="exp-main-title">Laporan Ronda</div>
+        <div class="exp-sub-title">RT 2 - RW 3, Pasekan Lor, Balecatur</div>
+    </div>
+
+    <div class="exp-blue-banner">
+        <div class="exp-banner-date" id="exp-tanggal">-</div>
+        <div class="exp-banner-time" id="exp-waktu">00:00 WIB</div>
+        <div class="exp-banner-amount" id="exp-total-jimpitan">Rp0</div>
+    </div>
+
+    <div class="exp-section-day-title" id="exp-judul">Kehadiran Hari <span>-</span></div>
+    <div class="exp-list-kehadiran" id="exp-grid-target"></div>
+    
+    <div class="exp-summary-pills" id="exp-summary-pills"></div>
+
+    <div class="exp-catatan-section">
+        <div class="exp-section-day-title" id="exp-catatan-judul">Catatan Hari <span>-</span></div>
+        <div class="exp-catatan-container">
+            <div class="exp-catatan-content" id="exp-catatan-target">-</div>
+        </div>
+    </div>
+    
+    <div class="exp-footer-info">
+        <div class="exp-id-laporan-label">Id Laporan Ronda :</div>
+        <div class="exp-id-laporan-val" id="exp-id-string">id_laporan</div>
+        <div class="exp-thanks-btn">TERIMA KASIH. TETAP SEMANGAT!</div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+    /* ==========================================================
+       1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header)
+       ========================================================== */
+    const topBar = document.getElementById('fixedTopBar');
+    const menuFastModal = document.getElementById('menuFastModal');
+    const btnMenuToggle = document.getElementById('btnMenuToggle');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 30) {
+            topBar.classList.add('scrolled');
+        } else {
+            topBar.classList.remove('scrolled');
+        }
+        
+        if (menuFastModal.classList.contains('active')) {
+            closeMenuModal();
+        }
+    });
+
+    menuFastModal.addEventListener('touchmove', closeMenuModal, { passive: true });
+    menuFastModal.addEventListener('wheel', closeMenuModal, { passive: true });
+
+    btnMenuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuFastModal.classList.add('active');
+    });
+
+    function closeMenuModal(e) {
+        menuFastModal.classList.remove('active');
+    }
+
+    document.querySelectorAll('.main-menu-wrapper .nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            closeMenuModal();
+        });
+    });
+
+    const halamanAktifSaatIni = 'ronda'; 
+    const mapMenu = {
+        'home': 'btn-home',
+        'warga': 'btn-warga',
+        'inventaris': 'btn-inventaris',
+        'lapak': 'btn-lapak',
+        'pengurus': 'btn-pengurus',
+        'galeri': 'btn-galeri',
+        'tatatertib': 'btn-tatatertib',
+        'ronda': 'btn-ronda'
+    };
+
+    if (mapMenu[halamanAktifSaatIni]) {
+        const tombolAktif = document.querySelector('.' + mapMenu[halamanAktifSaatIni]);
+        if (tombolAktif) {
+            tombolAktif.classList.add('menu-tertekan');
+        }
+    }
+
+    /* UNIVERSAL MODAL */
+    const univModal = document.getElementById('univModalOverlay');
+    const univTitle = document.getElementById('univModalTitle');
+    const univIframe = document.getElementById('univModalIframe');
+    
+    function openUnivModal(title, docUrl) {
+        univTitle.innerText = title;
+        univIframe.src = docUrl;
+        univModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeUnivModal() {
+        univModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        setTimeout(() => { univIframe.src = ""; }, 350); 
+    }
+    function closeUnivModalOutside(e) { 
+        if (e.target === univModal) closeUnivModal(); 
+    }
+
+    /* ==========================================================
+       2. SCRIPT KHUSUS KONTEN & LOGIC RONDA
+       ========================================================== */
+    const fallbackData = {
+        "SENIN": ["TRI MADIYANTO", "WISNU PRABOWO", "ANANG DHIAN K.", "CUCU SUKMANA", "KARYADI", "RONI"],
+        "SELASA": ["SUGENG", "RENGGA D.", "TRI SUHARYANTO", "RUDIYANTO", "EKO B.", "NUR F.", "WIDODO"],
+        "RABU": ["YULIANTO", "SUPARDI", "TWENTY APRILIYAN", "DEDI S.", "MIKI", "GOODMAN MANULANG", "BAGUS HANDOKO", "AGUS H."],
+        "KAMIS": ["ARI SUPRIYANTO", "TRI SETYO WINARYANTO", "ARGA D. WICAKSANA", "DONI HARIYANTO", "HUDIYONO", "FERI", "SUNARDI"],
+        "JUM'AT": ["SATRIA", "IBNU", "RIZAL", "PEMUDA 1", "PEMUDA 2", "PEMUDA 3", "PEMUDA 4"],
+        "SABTU": ["NGADIMIN", "ARIS YUSWANTORO", "PRIYOTO", "SURAHYA", "ARI NUGROHO"],
+        "MINGGU": ["KARTI NURJANI", "SAMIJOKO", "TRISNA SANJAYA", "FAJAR YUNIANTO", "SARJIYO"],
+        "ALTRUIS": []
+    };
+
+    let dataRonda = {};
+    let originalDataRonda = {}; 
+    const namaHariID = ["MINGGU", "SENIN", "SELASA", "RABU", "KAMIS", "JUM'AT", "SABTU", "JUMAT", "ALTRUIS"]; 
+    let attendanceState = {}; 
+    
+    const daySelect = document.getElementById('day-select');
+    
+    const sunSvg = `<svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+    const moonSvg = `<svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+    function updateDateTime() {
+        const headerBox = document.getElementById('header-suasana-box');
+        const iconContainer = document.getElementById('time-icon-container');
+        const dateSpan = document.getElementById('current-date');
+        const timeSpan = document.getElementById('current-time');
+        const starsContainer = document.querySelectorAll('.twinkle-star');
+
+        if (!headerBox || !iconContainer || !dateSpan || !timeSpan) return;
+
+        const now = new Date();
+        const hours = now.getHours();
+        
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateSpan.textContent = now.toLocaleDateString('id-ID', options);
+        timeSpan.textContent = `${String(hours).padStart(2, '0')} : ${String(now.getMinutes()).padStart(2, '0')} WIB`;
+
+        headerBox.className = "header-fancy"; 
+        
+        if (hours >= 5 && hours < 11) {
+            headerBox.classList.add('header-pagi');
+            iconContainer.innerHTML = sunSvg; 
+            starsContainer.forEach(star => star.style.display = 'none');
+        } else if (hours >= 11 && hours < 15) {
+            headerBox.classList.add('header-siang');
+            iconContainer.innerHTML = sunSvg; 
+            starsContainer.forEach(star => star.style.display = 'none');
+        } else if (hours >= 15 && hours < 18) {
+            headerBox.classList.add('header-sore');
+            iconContainer.innerHTML = moonSvg; 
+            starsContainer.forEach(star => star.style.display = 'block');
+        } else {
+            headerBox.classList.add('header-malam');
+            iconContainer.innerHTML = moonSvg; 
+            starsContainer.forEach(star => star.style.display = 'block');
+        }
+    }
+    
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    function parseCSV(text) {
+        const result = [];
+        let row = [], cell = "", inQuotes = false;
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i], nextChar = text[i + 1];
+            if (char === '"') {
+                if (inQuotes && nextChar === '"') { cell += '"'; i++; } else { inQuotes = !inQuotes; }
+            } else if (char === ',' && !inQuotes) {
+                row.push(cell); cell = "";
+            } else if ((char === '\n' || char === '\r') && !inQuotes) {
+                if (char === '\r' && nextChar === '\n') i++; 
+                row.push(cell); result.push(row); row = []; cell = "";
+            } else { cell += char; }
+        }
+        if (cell !== "" || row.length > 0) { row.push(cell); result.push(row); }
+        return result;
+    }
+
+    async function fetchSheetData() {
+        const loadingIndicator = document.getElementById('loading-warga');
+        if (loadingIndicator) loadingIndicator.style.display = 'block';
+        
+        namaHariID.forEach(h => { dataRonda[h] = []; originalDataRonda[h] = []; });
+
+        const sheetId = '1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io';
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=305568271`;
+        
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Gagal akses API");
+            
+            const csvText = await response.text();
+            if(csvText.trim().toLowerCase().startsWith("<!doctype html>")) throw new Error("Spreadsheet Private");
+
+            const rows = parseCSV(csvText);
+            let headerRowIndex = -1, colToDayMap = {};
+            
+            for(let r=0; r<rows.length; r++) {
+                let matchCount = 0;
+                for(let c=0; c<rows[r].length; c++) {
+                    let cellValue = (rows[r][c] || "").toUpperCase().trim();
+                    if(cellValue === "JUMAT") cellValue = "JUM'AT";
+                    if(namaHariID.includes(cellValue)) { colToDayMap[c] = cellValue; matchCount++; }
+                }
+                if(matchCount >= 2) { headerRowIndex = r; break; }
+            }
+
+            if(headerRowIndex !== -1) {
+                for(let r = headerRowIndex + 1; r < rows.length; r++) {
+                    for(let c in colToDayMap) {
+                        let day = colToDayMap[c];
+                        let name = (rows[r][c] || "").trim();
+                        if(name !== "" && name !== "-") {
+                            dataRonda[day].push(name);
+                            originalDataRonda[day].push(name);
+                        }
+                    }
+                }
+            } else {
+                let hasData = false;
+                for(let r=0; r<rows.length; r++) {
+                    let colA = (rows[r][0] || "").toUpperCase().trim();
+                    if(colA === "JUMAT") colA = "JUM'AT";
+                    let colB = (rows[r][1] || "").trim();
+                    if(namaHariID.includes(colA) && colB !== "" && colB !== "-") { 
+                        dataRonda[colA].push(colB); 
+                        originalDataRonda[colA].push(colB);
+                        hasData = true; 
+                    }
+                }
+                if(!hasData) throw new Error("Format tidak dikenali.");
+            }
+            if(loadingIndicator) loadingIndicator.style.display = 'none';
+        } catch (error) {
+            dataRonda = JSON.parse(JSON.stringify(fallbackData)); 
+            originalDataRonda = JSON.parse(JSON.stringify(fallbackData));
+            if(loadingIndicator) {
+                loadingIndicator.innerHTML = `<svg style="margin-right: 4px; vertical-align: middle;" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Menggunakan data Offline.`;
+                loadingIndicator.style.color = '#DC2626';
+            }
+        }
+        
+        if (daySelect) {
+            daySelect.disabled = false;
+            const hariIniString = namaHariID[new Date().getDay()];
+            daySelect.value = hariIniString;
+            attendanceState = {}; 
+            renderWargaList(hariIniString);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', fetchSheetData);
+
+    const nominalField = document.getElementById('nominal-field');
+    const btnLanjut = document.getElementById('btn-lanjut');
+
+    if (nominalField) {
+        nominalField.addEventListener('input', function() {
+            let cleanVal = this.value.replace(/[^0-9]/g, '');
+            this.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('id-ID') : '';
+            
+            if (btnLanjut) {
+                if(this.value.trim().length > 0 && this.value !== '0') {
+                    btnLanjut.disabled = false;
+                } else {
+                    btnLanjut.disabled = true;
+                }
+            }
+            validateForm();
+        });
+    }
+
+    if (btnLanjut) {
+        btnLanjut.addEventListener('click', function() {
+            if(!nominalField.value.trim() || nominalField.value === '0') return alert("Masukkan nominal!");
+            const badge = document.getElementById('nominal-confirmed');
+            if (badge) {
+                badge.innerHTML = `<div style="display:flex; align-items:center; gap:6px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Tercetak: <strong>Rp ${nominalField.value}</strong></span></div>`;
+                badge.style.display = 'block';
+            }
+            validateForm();
+        });
+    }
+
+    if (daySelect) {
+        daySelect.addEventListener('change', function() { 
+            attendanceState = {};
+            renderWargaList(this.value); 
+        });
+    }
+
+    window.removeWarga = function(wargaName, day) {
+        if(dataRonda[day]) {
+            dataRonda[day] = dataRonda[day].filter(n => n !== wargaName);
+        }
+        delete attendanceState[wargaName];
+        renderWargaItems(day);
+        validateForm();
+    }
+
+    window.renderWargaItems = function(day) {
+        const container = document.getElementById('dynamic-warga-list');
+        if(!container) return;
+        container.innerHTML = '';
+        
+        const wargaHariIni = dataRonda[day] || [];
+        
+        if (wargaHariIni.length === 0) {
+             container.innerHTML = '<div style="padding:16px; text-align:center; color:#64748B; font-size:13px; font-weight:500;">Belum ada nama warga.</div>';
+        }
+        
+        wargaHariIni.forEach((warga, idx) => {
+            const isOriginal = originalDataRonda[day] && originalDataRonda[day].includes(warga);
+            let showDelete = !isOriginal || day === 'ALTRUIS'; 
+            let btnHapus = showDelete ? `<button type="button" style="background:#FEE2E2; border:none; color:#EF4444; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="removeWarga('${warga}', '${day}')" title="Hapus"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>` : '';
+
+            if(day === 'ALTRUIS') {
+                attendanceState[warga] = 'Hadir'; 
+                const card = document.createElement('div');
+                card.className = 'warga-card state-hadir';
+                card.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="warga-name" style="color:#16A34A;">${idx + 1}. ${warga} <span style="font-size:10px; background:#DCFCE7; padding:2px 6px; border-radius:4px; margin-left:6px;">ALTRUIS</span></div>
+                        ${btnHapus}
+                    </div>
+                `;
+                container.appendChild(card);
+            } else {
+                if (attendanceState[warga] === undefined) attendanceState[warga] = null;
+                
+                let activeHadir = attendanceState[warga] === 'Hadir' ? 'active' : '';
+                let activeIzin = attendanceState[warga] === 'Izin' ? 'active' : '';
+                let activeAbsen = attendanceState[warga] === 'Absen' ? 'active' : '';
+                
+                let stateClass = '';
+                if (attendanceState[warga] === 'Hadir') stateClass = 'state-hadir';
+                else if (attendanceState[warga] === 'Izin') stateClass = 'state-izin';
+                else if (attendanceState[warga] === 'Absen') stateClass = 'state-absen';
+
+                const card = document.createElement('div');
+                card.className = `warga-card ${stateClass}`;
+                card.id = `warga-card-${idx}`;
+                card.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="warga-name">${idx + 1}. ${warga}</div>
+                        ${btnHapus}
+                    </div>
+                    <div class="presence-buttons-group">
+                        <button type="button" class="pres-btn pres-btn-hadir ${activeHadir}" onclick="setPresensi('${warga}', ${idx}, 'Hadir')">Hadir</button>
+                        <button type="button" class="pres-btn pres-btn-izin ${activeIzin}" onclick="setPresensi('${warga}', ${idx}, 'Izin')">Izin</button>
+                        <button type="button" class="pres-btn pres-btn-absen ${activeAbsen}" onclick="setPresensi('${warga}', ${idx}, 'Absen')">Tdk Hdr/Alpha</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            }
+        });
+    }
+
+    function renderWargaList(selectedDay) {
+        const listTarget = document.getElementById('warga-list-target');
+        const containerBlock = document.getElementById('warga-container-block');
+
+        if (!listTarget || !containerBlock) return;
+
+        if(selectedDay === "JUMAT") selectedDay = "JUM'AT";
+
+        if(!selectedDay || !dataRonda[selectedDay]) {
+            containerBlock.classList.remove('show'); 
+            listTarget.innerHTML = ''; 
+            attendanceState = {}; 
+            validateForm(); 
+            return;
+        }
+
+        let htmlContent = '';
+        
+        if (selectedDay === 'ALTRUIS') {
+            htmlContent += `
+                <div class="altruis-banner">
+                    <svg viewBox="0 0 24 24">
+                        <defs>
+                            <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#FFDF73" />
+                                <stop offset="50%" stop-color="#F59E0B" />
+                                <stop offset="100%" stop-color="#B45309" />
+                            </linearGradient>
+                            <linearGradient id="red" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#EF4444" />
+                                <stop offset="100%" stop-color="#991B1B" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.11z" fill="url(#red)"/>
+                        <circle cx="12" cy="8" r="7" fill="url(#gold)"/>
+                        <circle cx="12" cy="8" r="4.5" fill="#FFF" fill-opacity="0.25"/>
+                    </svg>
+                    <div class="altruis-banner-text">
+                        <span class="altruis-banner-title">ALTRUIS</span>
+                        <span class="altruis-banner-desc">Tindakan baik & positif tanpa pamrih</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        htmlContent += `
+            <div id="dynamic-warga-list"></div>
+            <div class="altruis-input-group">
+                <input type="text" id="custom-name-input" class="altruis-input" placeholder="Isi nama tambahan..." autocomplete="off">
+                <button type="button" id="btn-add-custom" class="btn-add-altruis" title="Tambah Warga">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+            </div>
+        `;
+
+        listTarget.innerHTML = htmlContent;
+
+        if(!dataRonda[selectedDay]) dataRonda[selectedDay] = [];
+        renderWargaItems(selectedDay);
+
+        const btnAdd = document.getElementById('btn-add-custom');
+        const inputName = document.getElementById('custom-name-input');
+        
+        const addName = () => {
+            const name = inputName.value.trim();
+            if(name) {
+                if (!dataRonda[selectedDay].includes(name)) {
+                    dataRonda[selectedDay].push(name);
+                }
+                inputName.value = '';
+                renderWargaItems(selectedDay);
+                validateForm();
+            }
+        };
+        
+        if (btnAdd) {
+            btnAdd.addEventListener('click', addName);
+        }
+        
+        if (inputName) {
+            inputName.addEventListener('keypress', (e) => {
+                if(e.key === 'Enter') { e.preventDefault(); addName(); }
+            });
+        }
+
+        containerBlock.classList.add('show'); 
+        validateForm();
+    }
+
+    window.setPresensi = function(wargaName, index, status) {
+        attendanceState[wargaName] = status;
+        const card = document.getElementById(`warga-card-${index}`);
+        if (card) {
+            card.classList.remove('state-hadir', 'state-izin', 'state-absen');
+            card.querySelectorAll('.pres-btn').forEach(btn => btn.classList.remove('active'));
+
+            if (status === 'Hadir') { card.classList.add('state-hadir'); card.querySelector('.pres-btn-hadir').classList.add('active'); }
+            else if (status === 'Izin') { card.classList.add('state-izin'); card.querySelector('.pres-btn-izin').classList.add('active'); }
+            else if (status === 'Absen') { card.classList.add('state-absen'); card.querySelector('.pres-btn-absen').classList.add('active'); }
+        }
+        validateForm(); 
+    };
+
+    const catatanTextarea = document.getElementById('catatan-text');
+    const catatanDropdown = document.getElementById('catatan-dropdown');
+    
+    if (catatanDropdown) {
+        catatanDropdown.addEventListener('change', function() {
+            if(this.value !== "") {
+                if (catatanTextarea) {
+                    catatanTextarea.value = catatanTextarea.value.trim() === '' ? "- " + this.value : catatanTextarea.value.trim() + "\n- " + this.value;
+                }
+                this.value = ""; 
+                validateForm();
+            }
+        });
+    }
+    
+    if (catatanTextarea) {
+        catatanTextarea.addEventListener('input', validateForm);
+    }
+
+    const btnDownload = document.getElementById('btn-download');
+    const btnWa = document.getElementById('btn-wa');
+    
+    function validateForm() {
+        if (!nominalField || !daySelect || !catatanTextarea) return;
+
+        const hasNominal = nominalField.value.trim().length > 0 && nominalField.value !== '0';
+        const badge = document.getElementById('nominal-confirmed');
+        const hasConfirmed = badge && badge.style.display === 'block';
+        const hasDay = daySelect.value !== "";
+        const hasCatatan = catatanTextarea.value.trim().length >= 3;
+        
+        const wargaTerdaftar = Object.values(attendanceState);
+        const allWargaFilled = wargaTerdaftar.length > 0 && wargaTerdaftar.every(status => status !== null);
+
+        if (btnDownload && btnWa) {
+            if (hasNominal && hasConfirmed && hasDay && hasCatatan && allWargaFilled) {
+                btnDownload.disabled = false; 
+                btnWa.disabled = false;
+            } else {
+                btnDownload.disabled = true; 
+                btnWa.disabled = true;
+            }
+        }
+    }
+
+    // ==========================================
+    // TOMBOL "BAGIKAN STRUK JPG"
+    // ==========================================
+    if (btnDownload) {
+        btnDownload.addEventListener('click', async function() {
+            if (!daySelect || !nominalField || !catatanTextarea) return;
+            
+            let selectedDay = daySelect.value; if(selectedDay === "JUMAT") selectedDay = "JUM'AT";
+            
+            const now = new Date();
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const shortMonthNames = ["jan", "feb", "mar", "apr", "mei", "jun", "jul", "agu", "sep", "okt", "nov", "des"];
+            const actualDayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const actualDay = actualDayNames[now.getDay()];
+            
+            let cleanDay = selectedDay.replace("'", "");
+            cleanDay = cleanDay === 'ALTRUIS' ? 'ALTRUIS' : cleanDay.charAt(0).toUpperCase() + cleanDay.slice(1).toLowerCase();
+
+            const displayDay = selectedDay === 'ALTRUIS' ? actualDay : cleanDay;
+
+            const expTanggal = document.getElementById('exp-tanggal');
+            const expWaktu = document.getElementById('exp-waktu');
+            const expTotalJimpitan = document.getElementById('exp-total-jimpitan');
+            
+            if (expTanggal) expTanggal.textContent = `${displayDay}, ${now.getDate()} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+            if (expWaktu) expWaktu.textContent = `${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} WIB`;
+            if (expTotalJimpitan) expTotalJimpitan.textContent = `Rp${nominalField.value}`;
+            
+            const expJudul = document.getElementById('exp-judul');
+            const expCatatanJudul = document.getElementById('exp-catatan-judul');
+            const expCatatanTarget = document.getElementById('exp-catatan-target');
+
+            if (expJudul) expJudul.innerHTML = selectedDay === 'ALTRUIS' ? 'Daftar Kehadiran <span>Altruis</span>' : `Kehadiran Hari <span>${cleanDay}</span>`;
+            if (expCatatanJudul) expCatatanJudul.innerHTML = selectedDay === 'ALTRUIS' ? `Catatan Hari <span>${actualDay}</span>` : `Catatan Hari <span>${cleanDay}</span>`;
+            if (expCatatanTarget) expCatatanTarget.textContent = catatanTextarea.value;
+
+            const gridTarget = document.getElementById('exp-grid-target');
+            if (gridTarget) {
+                gridTarget.innerHTML = '';
+
+                const listWarga = dataRonda[selectedDay] || [];
+                let jmlHadir = 0, jmlIzin = 0, jmlAbsen = 0;
+
+                listWarga.forEach(warga => {
+                    const status = attendanceState[warga];
+                    let rowClass = '', statusLabel = '';
+
+                    if(status === 'Hadir') { rowClass = 'status-hadir'; statusLabel = '(HADIR)'; jmlHadir++; } 
+                    else if(status === 'Izin') { rowClass = 'status-izin'; statusLabel = '(IZIN)'; jmlIzin++; } 
+                    else if(status === 'Absen') { rowClass = 'status-absen'; statusLabel = '(ALPHA)'; jmlAbsen++; }
+
+                    const item = document.createElement('div');
+                    item.className = `exp-warga-row ${rowClass}`;
+                    item.innerHTML = `
+                        <div class="exp-warga-left">
+                            <span class="exp-number-circle">${++gridTarget.children.length}</span>
+                            <span>${warga}</span>
+                        </div>
+                        <span class="exp-status-text">${statusLabel}</span>
+                    `;
+                    gridTarget.appendChild(item);
+                });
+
+                const expSummaryPills = document.getElementById('exp-summary-pills');
+                if (expSummaryPills) {
+                    let total = jmlHadir + jmlIzin + jmlAbsen;
+                    expSummaryPills.innerHTML = `
+                        <div class="exp-pill pill-hadir">HADIR : ${jmlHadir}</div>
+                        <div class="exp-pill pill-izin">IZIN : ${jmlIzin}</div>
+                        <div class="exp-pill pill-alpha">ALPHA : ${jmlAbsen}</div>
+                        <div class="exp-pill pill-tot">TOT : ${total}</div>
+                    `;
+                }
+            }
+            
+            const reportDayStr = displayDay.toLowerCase();
+            const cleanNominal = nominalField.value.replace(/\./g, '');
+            const idString = `${reportDayStr}_${now.getDate()}${shortMonthNames[now.getMonth()]}${now.getFullYear()}_${cleanNominal}`;
+            
+            const expIdString = document.getElementById('exp-id-string');
+            if (expIdString) expIdString.textContent = idString;
+
+            const exportTarget = document.getElementById('laporan-export');
+            if (exportTarget) {
+                exportTarget.style.visibility = 'visible'; exportTarget.style.opacity = '1';
+
+                try {
+                    const canvas = await html2canvas(exportTarget, { scale: 2, backgroundColor: '#F9FAFB', logging: false, useCORS: true });
+                    exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
+                    
+                    canvas.toBlob(async (blob) => {
+                        const fileName = `Laporan_Ronda_${displayDay}.jpg`;
+                        const file = new File([blob], fileName, { type: 'image/jpeg' });
+                        
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            try {
+                                await navigator.share({
+                                    title: 'Struk Ronda',
+                                    text: 'Berikut adalah Laporan Ronda. Terima kasih dan Tetap Semangat!',
+                                    files: [file]
+                                });
+                            } catch (error) {
+                                console.log('Share dibatalkan atau error:', error);
+                            }
+                        } else {
+                            const link = document.createElement('a');
+                            link.download = fileName;
+                            link.href = canvas.toDataURL('image/jpeg', 0.98); 
+                            link.click();
+                        }
+                    }, 'image/jpeg', 0.98);
+                    
+                } catch (error) {
+                    exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
+                    console.error("Gagal membuat gambar struk:", error);
+                    alert("Terjadi kesalahan saat memproses gambar.");
+                }
+            }
+        });
+    }
+
+    // ==========================================
+    // TOMBOL "KIRIM TEKS KE GRUP WA"
+    // ==========================================
+    if (btnWa) {
+        btnWa.addEventListener('click', function() {
+            if (!daySelect || !nominalField || !catatanTextarea) return;
+
+            let selectedDay = daySelect.value; 
+            if(selectedDay === "JUMAT") selectedDay = "JUM'AT";
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WIB`;
+            const nominal = nominalField.value;
+            
+            let catatan = catatanTextarea.value.trim();
+            if (!catatan) catatan = "-";
+
+            let hadirList = [], izinList = [], absenList = [];
+
+            const listWarga = dataRonda[selectedDay] || [];
+            listWarga.forEach(warga => {
+                const status = attendanceState[warga];
+                if(status === 'Hadir') hadirList.push(warga);
+                else if(status === 'Izin') izinList.push(warga);
+                else if(status === 'Absen') absenList.push(warga);
+            });
+
+            let text = `LAPORAN RONDA RT 2\n`;
+            text += `RT 2-RW 3, Pasekan Lor\n`;
+            text += `--------------\n`;
+            text += `Tanggal: ${dateStr}\n`;
+            text += `Waktu: ${timeStr}\n`;
+            text += `Tim: ${selectedDay === 'ALTRUIS' ? 'ALTRUIS' : 'Hari ' + selectedDay}\n`;
+            text += `Jimpitan: Rp ${nominal}\n`;
+            text += `--------------\n\n`;
+
+            text += `HADIR (${hadirList.length})\n`;
+            if(hadirList.length > 0) { hadirList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
+            else { text += `  (Tidak ada)\n`; }
+            text += `\n`;
+
+            text += `IZIN (${izinList.length})\n`;
+            if(izinList.length > 0) { izinList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
+            else { text += `  (Tidak ada)\n`; }
+            text += `\n`;
+
+            text += `TDK HDR/ALPHA (${absenList.length})\n`;
+            if(absenList.length > 0) { absenList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
+            else { text += `  (Tidak ada)\n`; }
+            text += `\n`;
+
+            text += `CATATAN KEGIATAN:\n${catatan}\n\n`;
+            text += `_Terima kasih atas partisipasinya!_\n`;
+            text += `Sumber: https://rt2pasekanlor.id/`;
+
+            const encodedText = encodeURIComponent(text);
+            const waUrl = `https://wa.me/?text=${encodedText}`;
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).catch(err => {});
+            }
+
+            const link = document.createElement('a');
+            link.href = waUrl;
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    }
+</script>
+</body>
+</html>

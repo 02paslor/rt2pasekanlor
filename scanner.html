@@ -17,159 +17,111 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Library -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
-        /* RESET & TYPOGRAPHY - BESARKAN SKALA 15% UNTUK MALAM HARI */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
         body { background-color: #E2E8F0; display: flex; justify-content: center; padding: 12px 8px; color: #1E293B; overflow-x: hidden;}
         button, input, select { outline: none; }
 
-        .app-wrapper { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 10px; zoom: 1.15; } /* SKALA DIPERBESAR */
+        .app-wrapper { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 10px; zoom: 1.15; }
 
-        /* NAV KECIL SLIDE 1 & WAKTU GLOBAL (KIRI & KANAN) */
-        .top-nav-area { display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 4px; }
-        .btn-back-slide1 { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: #FFFFFF; color: #475569; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 13px; border: 1px solid #CBD5E1; transition: 0.2s; }
+        /* NAV GLOBAL */
+        .global-header-box {
+            background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px;
+            padding: 10px 14px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03); margin-bottom: 4px; width: 100%;
+        }
+        .btn-back-slide1 { display: inline-flex; align-items: center; justify-content: center; gap: 3px; background: #FFFFFF; color: #475569; padding: 8px 10px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 11px; border: 1px solid #CBD5E1; transition: 0.2s; }
         .btn-back-slide1:hover { background: #F8FAFC; color: #0F172A; }
         
-        .datetime-box { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
-        .time-text { font-size: 13px; font-weight: 600; color: #1155cc; line-height: 1.4; } /* DISAMAKAN UKURAN & BOLD */
+        .datetime-box { display: flex; align-items: flex-end; text-align: right; }
+        .time-text { font-size: 11px; font-weight: 500; color: #64748B; display: flex; align-items: center; gap: 6px; } 
 
-        /* PENGUMUMAN REFRESH */
-        .refresh-warning { background: #F8FAFC; color: #64748B; font-size: 11px; padding: 10px; border-radius: 8px; border: 1px dashed #CBD5E1; margin-bottom: 6px; line-height: 1.4; text-align: justify; }
-
-        /* SAPAAN PETUGAS */
-        .greeting-bar { color: #2A8054; padding: 0; font-size: 15px; font-weight: 600; text-align: left; display: none; margin-bottom: 8px; }
-
-        /* SLIDER SYSTEM -> 400% untuk 4 Slide */
+        /* SLIDER SYSTEM -> 300% untuk 3 Slide */
         .slider-viewport { width: 100%; overflow: hidden; position: relative; border-radius: 12px; background: transparent; }
-        .slider-track { display: flex; width: 400%; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-        .slide-panel { width: 25%; padding: 2px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; }
+        .slider-track { display: flex; width: 300%; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .slide-panel { width: 33.3333%; padding: 2px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; }
 
         /* KARTU SECTION */
-        .form-section { background: #FFFFFF; border-radius: 12px; overflow: hidden; border: 1px solid #E2E8F0; box-shadow: 0 4px 10px rgba(0,0,0,0.04); display: flex; flex-direction: column; }
-        .section-header { padding: 14px 16px; display: flex; align-items: center; gap: 12px; color: #FFF; }
-        .header-blue { background-color: #1155cc; }
-        .header-cyan { background-color: #0284C7; }
-        .header-green { background-color: #059669; }
+        .form-section { background: #FFFFFF; border-radius: 12px; overflow: hidden; border: 1px solid #E2E8F0; box-shadow: 0 4px 10px rgba(0,0,0,0.04); display: flex; flex-direction: column; text-align: center; }
+        .section-body { padding: 16px; display: flex; flex-direction: column; gap: 14px; align-items: center; justify-content: center; }
 
-        .sec-icon-badge { width: 32px; height: 32px; background: rgba(255,255,255,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
-        .sec-title { font-size: 14.5px; font-weight: 600; letter-spacing: 0.3px; }
-        .sec-subtitle { font-size: 11.5px; font-weight: 400; color: rgba(255,255,255,0.9); margin-top: 2px; }
-        .section-body { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
-
-        /* INPUTS & UI COMPACT */
-        .input-label { font-size: 12px; font-weight: 600; color: #64748B; margin-bottom: 4px; display: block; }
-        .input-label-nominal { font-size: 13px; font-weight: 600; color: #1E293B; margin-bottom: 6px; display: block; text-transform: uppercase; } /* DIPERBESAR & GELAP */
+        /* TYPOGRAPHY & LABEL (CENTER) */
+        .input-label { font-size: 12px; font-weight: 600; color: #64748B; margin-bottom: 6px; display: block; text-transform: uppercase; text-align: center; width: 100%;}
         
-        .smooth-dropdown {
-            padding: 10px 32px 10px 12px; border: 1px solid #CBD5E1; border-radius: 8px;
-            font-size: 13.5px; font-weight: 500; color: #1E293B; background-color: #F8FAFC;
-            cursor: pointer; appearance: none; -webkit-appearance: none; width: 100%;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 12px center;
+        /* TAHAP 1: GRID BUTTONS (FAST SMOOTH) */
+        .smooth-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+        .smooth-grid-day { grid-template-columns: repeat(4, 1fr); }
+        .btn-choice {
+            background: #F8FAFC; border: 1px solid #CBD5E1; color: #475569; padding: 10px 4px;
+            border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+            text-align: center;
         }
-        .smooth-dropdown:focus { border-color: #1155cc; background-color: #FFFFFF; }
-        .opt-done { background-color: #DCFCE7 !important; color: #15803D !important; font-weight: 600; }
-
-        /* Scanner */
-        #reader { width: 100%; border-radius: 8px; overflow: hidden; border: 1.5px solid #CBD5E1; background: #F1F5F9; min-height: 160px;}
-        #reader img { display: none !important; }
-        #reader button { background: #1155cc; color: white; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 500; font-size: 12px; cursor: pointer; margin-top: 6px; }
-
-        /* Tampilan Warga List Dropdown */
-        .id-box-inline { background: #E2E8F0; border: 1px solid #CBD5E1; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; color: #475569; display: inline-block; margin-right: 6px; }
-
-        /* Identitas Box Slide 2 */
-        .identitas-box { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; background: #F8FAFC; padding: 12px 14px; border-radius: 8px; border: 1px solid #E2E8F0; }
-        .id-warga-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-        .nama-warga-text { color: #0F172A; font-weight: 600; font-size: 14px; }
+        .btn-choice.active { background: #E0F2FE; border-color: #09AB5A; color: #09AB5A; box-shadow: 0 0 0 2px rgba(9, 171, 90, 0.2); }
+        .btn-choice-altruis { grid-column: span 1; }
         
-        .domisili-text { font-size: 11px; font-weight: 600; color: #0369A1; background: #E0F2FE; padding: 3px 8px; border-radius: 4px; display: inline-block;}
-        .badge-selesai { display: none; background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+        .smooth-reveal { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.4s ease-in-out; width: 100%; }
+        .smooth-reveal.show { max-height: 400px; opacity: 1; margin-top: 10px; }
 
-        /* Tombol Nominal */
-        .nominal-buttons-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .btn-nominal { background-color: #E2E8F0; color: #475569; border: 1px solid #CBD5E1; padding: 12px 4px; border-radius: 8px; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        /* BUTTONS MAIN */
+        .btn-action-main { width: 100%; background: #09AB5A; color: #FFF; padding: 14px; border-radius: 8px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s; text-align: center; }
+        .btn-action-main:disabled { background: #E2E8F0; color: #94A3B8; cursor: not-allowed; }
+        
+        /* TAHAP 2: LIST WARGA MODERN ACCORDION STYLE (CENTER) */
+        .manual-warga-list { max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px; width: 100%; }
+        .warga-item {
+            background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 8px; padding: 12px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer;
+            transition: all 0.2s ease; text-align: center; width: 100%; gap: 4px;
+        }
+        .warga-item:hover { background: #F8FAFC; border-color: #94A3B8; }
+        .warga-item.done { background: #F0FDF4; border-color: #86EFAC; opacity: 0.8; }
+        .warga-item .w-id { font-size: 10px; font-weight: 600; color: #64748B; background: #F1F5F9; padding: 2px 8px; border-radius: 6px; display: inline-block; }
+        .warga-item.done .w-id { background: #DCFCE7; color: #16A34A; }
+        .warga-item .w-nama { font-size: 14px; font-weight: 700; color: #1E293B; }
+
+        /* TAHAP 2: HEADER EDIT (CENTER) */
+        .active-petugas-header { display: flex; flex-direction: column; text-align: center; background: #F8FAFC; border: 1px solid #E2E8F0; padding: 12px 14px; border-radius: 8px; position: relative; margin-bottom: 12px; width: 100%; align-items: center; justify-content: center; }
+        
+        /* TAHAP 3: NOMINAL BUTTONS */
+        .nominal-buttons-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; width: 100%; }
+        .btn-nominal { background-color: #E2E8F0; color: #475569; border: 1px solid #CBD5E1; padding: 12px 4px; border-radius: 8px; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center; }
         .btn-nominal:active { transform: scale(0.95); }
         .btn-nominal.active-500 { background-color: #22C55E; color: #FFF; border-color: #16A34A; }
         .btn-nominal.active-1000 { background-color: #3B82F6; color: #FFF; border-color: #2563EB; }
         .btn-nominal.active-2000 { background-color: #A855F7; color: #FFF; border-color: #9333EA; }
         .btn-nominal.active-manual { background-color: #F59E0B; color: #FFF; border-color: #D97706; }
-        
         .btn-kosong { background-color: #E2E8F0; color: #475569; border-color: #CBD5E1; } 
-        .btn-kosong.active-kosong { background-color: #DC2626 !important; color: #FFF !important; border-color: #B91C1C !important; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.3) !important; } 
+        .btn-nominal.active-0 { background-color: #DC2626 !important; color: #FFF !important; border-color: #B91C1C !important; } 
         
-        .btn-manual, .btn-kosong { grid-column: span 1.5; }
+        .btn-manual { grid-column: span 2; }
+        .btn-kosong { grid-column: span 1; }
 
-        .custom-nominal-input { width: 100%; padding: 10px 14px 10px 38px; font-size: 14px; font-weight: 600; border: 1px solid #CBD5E1; border-radius: 8px; outline: none; }
+        .custom-nominal-input { width: 100%; padding: 10px; font-size: 15px; font-weight: 600; border: 1px solid #CBD5E1; border-radius: 8px; outline: none; margin-top: 8px; text-align: center; }
         
-        .btn-action-main { width: 100%; background: #1155cc; color: #FFF; padding: 14px; border-radius: 8px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s; }
-        .btn-action-main:disabled { background: #CBD5E1; color: #94A3B8; cursor: not-allowed; }
+        .nominal-text-preview { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px; margin-top: 10px; font-size: 18px; font-weight: 800; color: #09AB5A; opacity: 0; transition: opacity 0.3s; text-align: center; width: 100%; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
 
-        /* KOTAK REKAP SLIDE 1 */
-        .slide1-rekap-box { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 16px; margin-top: 6px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02);}
-        .slide1-rekap-title { font-size: 12px; font-weight: 500; color: #64748B; text-transform: uppercase; margin-bottom: 6px; }
-        .slide1-rekap-val { font-size: 26px; font-weight: 600; color: #16A34A; }
+        /* Scanner */
+        #reader { width: 85%; margin: 0 auto; border-radius: 8px; overflow: hidden; border: 1.5px solid #CBD5E1; background: #F1F5F9; min-height: 120px; max-height: 200px;}
+        #reader img { display: none !important; }
+        #reader button { background: #09AB5A; color: white; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 500; font-size: 12px; cursor: pointer; margin-top: 6px; }
+        .scan-success-glow { border: 2px solid #09AB5A !important; box-shadow: 0 0 0 5px rgba(9, 171, 90, 0.3) !important; background-color: #ECFDF5 !important; transition: 0.2s; }
 
-        /* Preview Kotak Laporan (Slide 3) */
-        .preview-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
-        .preview-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; border-bottom: 1px dashed #F1F5F9; padding-bottom: 8px; }
-        .preview-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .preview-label { color: #64748B; font-weight: 500; font-size: 12px; text-transform: uppercase;}
-        
-        .val-highlight { color: #16A34A; font-size: 15.5px; font-weight: 600; }
-        .val-waktu { color: #0F172A; font-size: 12px; font-weight: 500; line-height: 1.4; text-align: right;} 
-
-        /* Action Buttons */
-        .action-row-2 { display: flex; gap: 8px; width: 100%; margin-top: 8px; }
-        .btn-secondary { background: #FFFFFF; color:#475569; border: 1px solid #CBD5E1; padding:12px; border-radius:8px; font-weight:600; flex: 0.6; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;}
-        .btn-secondary:hover { background: #F1F5F9; }
-        .btn-success { background: #10B981; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:600; flex: 1.4; font-size: 14.5px; cursor:pointer;}
-        .btn-success:disabled { background: #E2E8F0; color: #94A3B8; cursor: not-allowed;}
-
-        /* Notifikasi Slide 3 */
-        .notif-banner { padding: 12px; border-radius: 8px; font-size: 13px; font-weight: 500; text-align: center; display: none; margin-bottom: 8px;}
-        .notif-success { background: #EFF6FF; color: #1155cc; border: 1px solid #BFDBFE; }
+        /* Notifikasi */
+        .notif-banner { padding: 12px; border-radius: 8px; font-size: 13px; font-weight: 500; text-align: center; display: none; margin-bottom: 8px; width: 100%;}
+        .notif-success { background: #ECFDF5; color: #09AB5A; border: 1px solid #A7F3D0; }
         .notif-loading { background: #FFFBEB; color: #D97706; border: 1px solid #FDE68A; }
         .notif-error { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
 
-        /* POST-SUBMIT ACTIONS */
-        .post-submit-area { display: none; flex-direction: column; gap: 8px; margin-top: 8px; }
-        .btn-lanjut-ambil { background: #1155cc; color: #FFF; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 13.5px; cursor: pointer;}
-        .btn-selesai-ambil { background: #0F172A; color: #FFF; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 13.5px; cursor: pointer;}
-
-        /* TABEL LAPORAN SEMENTARA (Slide 3) */
-        .table-container { background: #FFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px; margin-top: 8px; }
-        .tc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .tc-title { font-size: 12px; font-weight: 600; color: #475569; text-transform: uppercase; }
-        
-        .rekap-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
-        .rekap-table th { background: #F8FAFC; color: #64748B; text-align: left; padding: 8px; font-weight: 500; border-bottom: 1px solid #E2E8F0;}
-        .rekap-table td { padding: 8px; border-bottom: 1px dashed #F1F5F9; color: #1E293B; font-weight: 500; vertical-align: middle;}
-        .rekap-table tr:last-child td { border-bottom: none; }
-        .val-uang { color: #16A34A; font-weight: 600; text-align: right; }
-        
-        .warga-table-box { background: #F8FAFC; border: 1px solid #CBD5E1; padding: 6px 8px; border-radius: 6px; line-height:1.2; display: inline-block; width: 100%;}
-        
-        .total-row { background: #ECFDF5; border-top: 1px solid #A7F3D0; }
-        .total-row td { font-weight: 600; color: #047857; font-size: 12px; padding: 8px;}
-
-        /* =========================================================
-           STRUK LAPORAN INTERNAL (SLIDE 4)
-           ========================================================= */
-        .struk-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        .struk-table th { color: #047857; text-align: left; padding: 8px 4px; font-weight: 600; border-bottom: 2px solid #10B981; }
-        .struk-table td { padding: 8px 4px; border-bottom: 1px solid #E2E8F0; color: #1E293B; font-weight: 500; vertical-align: middle;}
-        .struk-table tr:last-child td { border-bottom: none; }
-        
-        .struk-ptg-box { background: #FFFFFF; border: 1px solid #10B981; color: #047857; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 11px; display: inline-block; white-space: nowrap; }
-        .struk-info-box { font-size: 11.5px; font-weight: 500; color: #1E293B; background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 4px; padding: 8px; text-align: center; margin-top: 10px; font-style: normal; }
+        /* MODAL LRD */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); z-index: 999; display: none; align-items: center; justify-content: center; padding: 12px; backdrop-filter: blur(2px); }
+        .modal-content-wrapper { background: #E2E8F0; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; border-radius: 12px; position: relative; padding: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .btn-close-modal { position: absolute; top: -10px; right: 12px; background: #DC2626; color: #FFF; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
         /* Copyright */
         .copyright { text-align: center; margin-top: 12px; padding-bottom: 16px;}
@@ -182,65 +134,58 @@
 <div class="app-wrapper">
 
     <!-- GLOBAL NAV & CALENDAR -->
-    <div class="top-nav-area" id="global-nav">
+    <div class="global-header-box" id="global-nav">
         <a href="https://rt2pasekanlor.id/ronda" target="_self" class="btn-back-slide1" id="btn-back-global">
             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            Halaman Ronda
+            Ronda
         </a>
         <div class="datetime-box">
-            <span class="time-text" id="live-datetime">Memuat...</span>
+            <span class="time-text" id="live-datetime">Sedang Memuat...</span>
         </div>
     </div>
-    
-    <div class="refresh-warning">⚠️ <b>Pemberitahuan:</b> Halaman (sengaja/tidak) ter-refresh aplikasi akan memulai dari awal namun data yang telah berhasil sudah berada di database.</div>
 
     <!-- SLIDER SYSTEM -->
     <div class="slider-viewport">
         <div class="slider-track" id="slider-track">
             
             <!-- ==============================================
-                 SLIDE 1: PILIH WARGA & SCANNER
+                 TAHAP 1: SETUP PETUGAS (FAST SMOOTH)
                  ============================================== -->
             <div class="slide-panel">
-                <!-- Sapaan Slide 1 -->
-                <div id="greet-1" class="greeting-bar"></div>
-
                 <div class="form-section">
-                    <div class="section-header header-blue">
-                        <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-                        <div class="sec-text-group"><span class="sec-title">1. Pilih Warga</span><span class="sec-subtitle">Arahkan kamera atau pilih nama</span></div>
-                    </div>
                     <div class="section-body">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                            <div>
-                                <span class="input-label">Hari Tugas</span>
-                                <select id="select-hari-ronda" class="smooth-dropdown">
-                                    <option value="Senin">Senin</option><option value="Selasa">Selasa</option>
-                                    <option value="Rabu">Rabu</option><option value="Kamis">Kamis</option>
-                                    <option value="Jumat">Jumat</option><option value="Sabtu">Sabtu</option>
-                                    <option value="Minggu">Minggu</option><option value="Altruis" class="opt-altruis">Altruis (Nama Lain)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <span class="input-label">Petugas Ronda</span>
-                                <select id="select-petugas" class="smooth-dropdown"></select>
-                                <input type="text" id="input-petugas-manual" class="smooth-dropdown" style="display:none; margin-top:4px;" placeholder="Ketik nama...">
-                            </div>
-                        </div>
-
-                        <div id="reader"></div>
-
-                        <div>
-                            <span class="input-label">Pilih Rumah Warga</span>
-                            <select id="select-id-rumah" class="smooth-dropdown">
-                                <option value="">- Rumah Warga -</option>
-                                <option value="Loading">Memuat data...</option>
-                            </select>
-                        </div>
                         
-                        <div class="slide1-rekap-box">
-                            <div class="slide1-rekap-title">Total Sementara Sesi Ini</div>
-                            <div class="slide1-rekap-val" id="slide1-total-uang">Rp 0</div>
+                        <!-- PILIH HARI -->
+                        <div class="input-label">PILIH HARI TUGAS</div>
+                        <div class="smooth-grid smooth-grid-day" id="grid-hari">
+                            <button class="btn-choice btn-day" data-val="SENIN">Senin</button>
+                            <button class="btn-choice btn-day" data-val="SELASA">Selasa</button>
+                            <button class="btn-choice btn-day" data-val="RABU">Rabu</button>
+                            <button class="btn-choice btn-day" data-val="KAMIS">Kamis</button>
+                            <button class="btn-choice btn-day" data-val="JUM'AT">Jum'at</button>
+                            <button class="btn-choice btn-day" data-val="SABTU">Sabtu</button>
+                            <button class="btn-choice btn-day" data-val="MINGGU">Minggu</button>
+                            <button class="btn-choice btn-day btn-choice-altruis" data-val="ALTRUIS">Altruis</button>
+                        </div>
+
+                        <!-- PILIH PETUGAS (MUNCUL SMOOTH) -->
+                        <div id="area-petugas" class="smooth-reveal">
+                            <div class="input-label" style="margin-top: 8px;">PILIH NAMA PETUGAS</div>
+                            <div class="smooth-grid" id="grid-petugas"></div>
+                            
+                            <input type="text" id="input-petugas-manual" class="custom-nominal-input" style="display:none; margin-top:8px;" placeholder="Ketik nama...">
+                        </div>
+
+                        <!-- TOMBOL BENAR (MUNCUL SMOOTH) -->
+                        <div id="area-benar" class="smooth-reveal">
+                            <button type="button" id="btn-benar-tahap1" class="btn-action-main">BENAR (LANJUT)</button>
+                        </div>
+
+                        <!-- TOMBOL BUKA LAPORAN KECIL CENTER -->
+                        <div style="margin-top: 10px; width: 100%; border-top: 1px dashed #E2E8F0; padding-top: 16px; text-align: center;">
+                            <button type="button" id="btn-buka-laporan" style="background: #F8FAFC; border: 1px solid #CBD5E1; color: #475569; font-weight: 600; padding: 8px 16px; font-size: 11px; border-radius: 6px; cursor: pointer; transition: 0.2s;" disabled>
+                                Buka Laporan
+                            </button>
                         </div>
 
                     </div>
@@ -248,32 +193,61 @@
             </div>
 
             <!-- ==============================================
-                 SLIDE 2: DETAIL JIMPITAN (NOMINAL)
+                 TAHAP 2: SCANNER & LIST MANUAL
                  ============================================== -->
             <div class="slide-panel">
-                <!-- Sapaan Slide 2 -->
-                <div id="greet-2" class="greeting-bar"></div>
+                <div id="scanner-notif" class="notif-banner" style="margin-bottom:6px; display:none;"></div>
 
                 <div class="form-section">
-                    <div class="section-header header-cyan">
-                        <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-                        <div class="sec-text-group"><span class="sec-title">2. Data Warga & Jimpitan</span><span class="sec-subtitle">Nominal uang yang ada ditempat</span></div>
-                    </div>
                     <div class="section-body">
                         
-                        <div class="identitas-box">
-                            <div class="id-warga-row">
-                                <div style="display:flex; align-items:center;">
-                                    <span class="id-box-inline" id="info-id-rumah">rt2_--</span>
-                                    <span class="nama-warga-text" id="info-nama-warga">PILIH WARGA</span>
-                                </div>
-                                <span id="badge-selesai" class="badge-selesai">SUDAH</span>
+                        <!-- HEADER PETUGAS AKTIF & EDIT CENTERED -->
+                        <div class="active-petugas-header">
+                            <div style="font-size: 11px; font-weight: 500; color: #64748B; margin-bottom: 2px;">
+                                Petugas Hari <span id="active-hari-text"></span>
                             </div>
-                            <span class="domisili-text" id="info-domisili">Domisili</span>
+                            <div id="active-petugas-text" style="color: #09AB5A; font-weight: 800; font-size: 16px;">-</div>
+                            <button type="button" id="btn-edit-petugas" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: #FFFFFF; border: 1px solid #CBD5E1; color: #475569; cursor: pointer; padding: 8px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
                         </div>
 
-                        <div>
-                            <span class="input-label-nominal">Pilih Nominal Uang Fisik</span> <!-- BESARKAN TEKS INI -->
+                        <!-- SCANNER -->
+                        <div id="reader"></div>
+
+                        <!-- DAFTAR MANUAL MODERN ACCORDION STYLE (CENTER) -->
+                        <div style="margin-top: 8px; width: 100%;">
+                            <div class="input-label">CARA MANUAL WARGA</div>
+                            <div class="manual-warga-list" id="manual-warga-list">
+                                <div style="text-align:center; color:#94A3B8; font-size:12px; padding:10px;">Memuat data...</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==============================================
+                 TAHAP 3: NOMINAL & AUTO-SAVE
+                 ============================================== -->
+            <div class="slide-panel">
+                <div class="form-section">
+                    <div class="section-body">
+                        
+                        <!-- IDENTITAS WARGA TERPILIH BOX CENTER -->
+                        <div class="active-petugas-header" style="background: #09AB5A; border: none; margin-bottom: 8px; padding: 16px 12px;">
+                            <button type="button" onclick="goToSlide(1)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; padding: 6px; border-radius: 6px; color: #FFF; cursor: pointer;">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            </button>
+                            
+                            <span class="id-box-inline" id="info-id-rumah" style="margin-bottom: 6px; font-size: 10px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); padding: 2px 10px; border-radius: 12px; color: #FFF;">rt2_--</span>
+                            <span class="nama-warga-text" id="info-nama-warga" style="font-size: 22px; font-weight: 800; width: 80%; line-height: 1.2; color: #FFF;">PILIH WARGA</span>
+                        </div>
+
+                        <div id="notif-banner" class="notif-banner"></div>
+
+                        <!-- NOMINAL BUTTONS (CENTER GRID) -->
+                        <div style="width: 100%;">
                             <div class="nominal-buttons-container">
                                 <button type="button" class="btn-nominal" data-value="500">500</button>
                                 <button type="button" class="btn-nominal" data-value="1000">1.000</button>
@@ -281,166 +255,24 @@
                                 <button type="button" class="btn-nominal btn-manual" data-value="manual">Manual</button>
                                 <button type="button" class="btn-nominal btn-kosong" data-value="0">Zonk</button> 
                             </div>
-                            <div id="manual-input-container" style="position: relative; width: 100%; margin-top: 8px; display: none;">
+                            <div id="manual-input-container" style="position: relative; width: 100%; display: none;">
                                 <div style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 600;">Rp</div>
                                 <input type="text" id="custom-nominal-input" class="custom-nominal-input" placeholder="Ketik nominal..." autocomplete="off" inputmode="numeric">
                             </div>
+
+                            <!-- HASIL NOMINAL BOX -->
+                            <div id="nominal-text-preview" class="nominal-text-preview"></div>
                         </div>
 
-                        <div style="display: flex; gap: 10px; margin-top: 6px;">
-                            <button type="button" class="btn-secondary" onclick="goToSlide(0)">
-                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="#10B981" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                                Kembali
-                            </button>
-                            <button type="button" id="btn-lanjut-konfirmasi" class="btn-action-main" disabled>Cetak & Lanjut</button>
+                        <!-- ACTIONS SIMPAN CENTER -->
+                        <div style="margin-top: 10px; width: 100%;" id="action-tahap3-awal">
+                            <button type="button" id="btn-lanjut-save" class="btn-action-main" disabled>Simpan</button>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ==============================================
-                 SLIDE 3: KONFIRMASI & LAPORAN
-                 ============================================== -->
-            <div class="slide-panel">
-                <!-- Sapaan Slide 3 -->
-                <div id="greet-3" class="greeting-bar"></div>
-
-                <div class="form-section">
-                    <div class="section-header header-green">
-                        <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-                        <div class="sec-text-group"><span class="sec-title">3. Cek kembali & Kirimkan</span><span class="sec-subtitle">Periksa dan kirim ke server</span></div>
-                    </div>
-                    <div class="section-body">
                         
-                        <div id="notif-banner" class="notif-banner"></div>
-
-                        <div class="preview-card" id="area-preview-data">
-                            <div class="preview-row" style="align-items: flex-start;">
-                                <span class="preview-label">Waktu</span>
-                                <div class="val-waktu" id="prev-waktu">(-)</div>
-                            </div>
-                            <div class="preview-row" style="align-items: flex-start; padding-top:6px;">
-                                <span class="preview-label">Warga</span>
-                                <div style="text-align: right;">
-                                    <span class="id-box-inline" id="prev-id" style="font-size:11px; margin-bottom:2px;">-</span><br>
-                                    <div style="color:#0F172A; font-weight:600; font-size: 13.5px; margin:2px 0;" id="prev-nama">-</div>
-                                    <span class="domisili-text" id="prev-domisili">-</span>
-                                </div>
-                            </div>
-                            <div class="preview-row">
-                                <span class="preview-label">Petugas</span>
-                                <div style="text-align: right;">
-                                    <span id="prev-petugas" style="color: #1155cc; font-weight: 600; font-size: 13px;">-</span> 
-                                    <span style="font-size: 11px; color: #64748B;" id="prev-hari">(-)</span>
-                                </div>
-                            </div>
-                            <div class="preview-row">
-                                <span class="preview-label">Nominal</span>
-                                <span class="val-highlight" id="prev-nominal">-</span>
-                            </div>
-                        </div>
-
-                        <!-- ACTION SEBELUM KIRIM -->
-                        <div class="action-row-2" id="action-pre-submit">
-                            <button type="button" class="btn-secondary" onclick="goToSlide(1)">
-                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 5 12 19"></polyline></svg>
-                                Kembali
-                            </button>
-                            <button type="button" id="btn-kirim" class="btn-success">Kirim Data</button>
-                        </div>
-
-                        <!-- ACTION SESUDAH KIRIM -->
-                        <div class="post-submit-area" id="action-post-submit">
-                            <button type="button" class="btn-lanjut-ambil" id="btn-lanjut-ambil">+ Lanjut Pengambilan</button>
-                            <button type="button" class="btn-selesai-ambil" id="btn-selesai-ambil">Pengambilan Selesai</button>
-                        </div>
-
-                        <!-- TABEL LAPORAN SEMENTARA -->
-                        <div class="table-container" id="area-cetak-slide3">
-                            <div class="tc-header">
-                                <span class="tc-title">Laporan Terkumpul Sementara</span>
-                            </div>
-                            <table class="rekap-table" id="table-log-slide3">
-                                <thead><tr><th>Warga</th><th>Petugas</th><th style="text-align:right;">Nominal</th></tr></thead>
-                                <tbody><tr><td colspan="3" style="text-align:center; color:#94A3B8;">Belum ada data</td></tr></tbody>
-                                <tfoot id="tfoot-slide3" style="display:none;">
-                                    <tr class="total-row"><td colspan="2">TOTAL</td><td class="val-uang" id="tot-uang-slide3">Rp 0</td></tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- ==============================================
-                 SLIDE 4: STRUK LAPORAN INTERNAL
-                 ============================================== -->
-            <div class="slide-panel">
-                <!-- Sapaan Slide 4 -->
-                <div id="greet-4" class="greeting-bar"></div>
-
-                <div class="form-section">
-                    <div class="section-header header-blue">
-                        <div class="sec-icon-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-                        <div class="sec-text-group"><span class="sec-title">4. Laporan Akhir</span><span class="sec-subtitle">Rekapitulasi total jimpitan hari ini</span></div>
-                    </div>
-                    <div class="section-body">
-                        
-                        <!-- INFO PRESENSI & TOMBOL DOWNLOAD DI ATAS CARD -->
-                        <div style="text-align: center; display: flex; flex-direction: column; gap: 10px; margin-bottom: 6px;">
-                            <span style="font-size: 13px; font-weight: 600; color: #475569;">Laporkan Hasil Jimpitan dan Presensi</span>
-                            <div style="display:flex; gap:10px; width:100%;">
-                                <button id="btn-siap-laporkan" class="btn-action-main" style="background:#10B981; flex:1;">Laporkan</button>
-                                <button id="btn-download-struk" class="btn-action-main" style="background:#1155cc; flex:1; font-size:13px; padding:10px;">Download</button>
-                            </div>
-                        </div>
-
-                        <!-- AREA CETAK STRUK -->
-                        <div id="area-cetak-struk" style="background: #FFFFFF; border: 2px solid #10B981; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 8px;">
-                            <div style="text-align: center; font-size: 15px; font-weight: 600; color: #047857;">STRUK LAPORAN RONDA INTERNAL</div>
-                            <div style="text-align: center; font-size: 11.5px; font-weight: 500; color: #64748B; margin-bottom: 6px;" id="struk-tgl">Tanggal</div>
-                            
-                            <!-- TABEL DETAIL -->
-                            <table class="struk-table" id="table-struk-detail" style="margin-bottom: 0;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 45%;">WARGA</th>
-                                        <th style="width: 25%; text-align: center;">PETUGAS</th>
-                                        <th style="width: 30%; text-align: right;">NOMINAL</th>
-                                    </tr>
-                                </thead>
-                                <tbody><!-- Diisi via JS --></tbody>
-                            </table>
-                            
-                            <div style="border-top: 1px solid #10B981; margin: 6px 0;"></div>
-                            
-                            <!-- STATS TERBANYAK & ZONK -->
-                            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
-                                <div style="display: flex; justify-content: space-between;">
-                                    <span style="color: #64748B; font-weight: 500;">Jimpitan Terbanyak:</span>
-                                    <span style="font-weight: 600; color: #16A34A; text-align: right; max-width: 60%; line-height: 1.3;" id="struk-top-warga">-</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between;">
-                                    <span style="color: #64748B; font-weight: 500;">Jimpitan Zonk:</span>
-                                    <span style="font-weight: 600; color: #DC2626; text-align: right; max-width: 60%; line-height: 1.3;" id="struk-zonk-warga">-</span>
-                                </div>
-                            </div>
-
-                            <div style="border-top: 1px solid #10B981; margin: 6px 0;"></div>
-
-                            <!-- TOTAL KESELURUHAN -->
-                            <table class="struk-table">
-                                <tr>
-                                    <td style="color:#1155cc; font-weight: 600; font-size: 13px; padding: 0;">TOTAL KESELURUHAN</td>
-                                    <td style="text-align:right; color:#1155cc; font-weight: 600; font-size: 15px; padding: 0;" id="struk-total-all">Rp 0</td>
-                                </tr>
-                            </table>
-
-                            <!-- PESAN BOX SOLID -->
-                            <div class="struk-info-box">
-                                * Lakukan Pencocokan hasil jimpitan digital dengan fisik
-                            </div>
+                        <!-- ACTIONS POST-SUBMIT CENTER -->
+                        <div style="margin-top: 10px; display: none; flex-direction: column; gap: 8px; width: 100%; align-items: center;" id="action-tahap3-sukses">
+                            <button type="button" id="btn-lanjut-ambil" class="btn-action-main">Lanjut Ambil</button>
+                            <button type="button" id="btn-selesai-ambil" style="background: transparent; border: none; color: #64748B; font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px;">Tugas Selesai</button>
                         </div>
 
                     </div>
@@ -457,91 +289,205 @@
     </div>
 </div> 
 
+<!-- ==============================================
+     MODAL LRD (LAPORAN RONDA DIGITAL)
+     ============================================== -->
+<div class="modal-overlay" id="modal-lrd">
+    <div class="modal-content-wrapper" style="margin-top: 20px;">
+        <button class="btn-close-modal" id="btn-tutup-modal">✕</button>
+
+        <!-- TOMBOL DOWNLOAD -->
+        <div style="display:flex; justify-content:center; margin-bottom: 12px; padding-top: 10px;">
+            <button id="btn-download-struk" class="btn-action-main" style="width: 90%; font-size:13px; padding:12px; display:flex; align-items:center; justify-content:center; gap:8px;">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download Laporan Terkirim
+            </button>
+        </div>
+
+        <!-- AREA CETAK STRUK LRD -->
+        <div id="area-cetak-struk" style="background: #FFFFFF; padding: 24px 20px; display: flex; flex-direction: column; width: 100%; box-sizing: border-box; font-family: 'Poppins', sans-serif; border-radius: 8px;">
+            
+            <!-- LRD HEADER -->
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <div style="font-size: 13px; font-weight: 500; color: #09AB5A;">Laporan Internal Petugas</div>
+                <div style="border: 1.5px solid #09AB5A; color: #09AB5A; font-weight: 700; padding: 2px 10px; border-radius: 8px; font-size: 11px;" id="lrd-hari-badge">HARI</div>
+            </div>
+            <div style="font-size: 28px; font-weight: 800; color: #09AB5A; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.1;">Laporan Ronda Digital</div>
+            <div style="font-size: 13px; color: #475569; font-weight: 500; margin-bottom: 16px;">
+                <span id="lrd-tgl">Tanggal</span> &nbsp;|&nbsp; <span id="lrd-jam">Jam</span>
+            </div>
+
+            <!-- MAIN TABLE -->
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 0; border: 1.5px solid #09AB5A;">
+                <thead>
+                    <tr style="background: #EAF5F0;">
+                        <th style="border: 1.5px solid #09AB5A; padding: 8px 4px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 10%;">No.</th>
+                        <th style="border: 1.5px solid #09AB5A; padding: 8px 4px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 45%;">Nama Warga</th>
+                        <th style="border: 1.5px solid #09AB5A; padding: 8px 4px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 25%;">Petugas</th>
+                        <th style="border: 1.5px solid #09AB5A; padding: 8px 4px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 20%;">Rp</th>
+                    </tr>
+                </thead>
+                <tbody id="lrd-tbody">
+                    <!-- JS Fill -->
+                </tbody>
+            </table>
+
+            <!-- LRD TOTAL -->
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; border: none;">
+                <tr>
+                    <td style="width: 55%; border: none;"></td>
+                    <td style="width: 45%; background: #EAF5F0; border: 1.5px solid #09AB5A; border-top: none; text-align: center; color: #09AB5A; font-size: 24px; font-weight: 800; padding: 12px;" id="lrd-total-all">0</td>
+                </tr>
+            </table>
+
+            <!-- Jimpitan Terbanyak -->
+            <div style="font-size: 16px; font-weight: 800; color: #09AB5A; margin-bottom: 6px;">Jimpitan Terbanyak</div>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1.5px solid #09AB5A;">
+                <thead>
+                    <tr style="background: #EAF5F0;">
+                        <th style="border: 1.5px solid #09AB5A; padding: 6px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 55%; text-align: center;">Nama Warga</th>
+                        <th style="border: 1.5px solid #09AB5A; padding: 6px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 25%; text-align: center;">Petugas</th>
+                        <th style="border: 1.5px solid #09AB5A; padding: 6px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 20%; text-align: center;">Rp</th>
+                    </tr>
+                </thead>
+                <tbody id="lrd-terbanyak-tbody">
+                    <!-- JS Fill -->
+                </tbody>
+            </table>
+
+            <!-- Jimpitan Zonk -->
+            <div style="font-size: 16px; font-weight: 800; color: #09AB5A; margin-bottom: 6px;">Jimpitan Zonk</div>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; border: 1.5px solid #09AB5A;">
+                <thead>
+                    <tr style="background: #EAF5F0;">
+                        <th style="border: 1.5px solid #09AB5A; padding: 6px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 55%; text-align: center;">Nama Warga</th>
+                        <th style="border: 1.5px solid #09AB5A; padding: 6px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 25%; text-align: center;">Petugas</th>
+                        <th style="border: 1.5px solid #09AB5A; padding: 6px; color: #09AB5A; font-size: 12px; font-weight: 700; width: 20%; text-align: center;">Rp</th>
+                    </tr>
+                </thead>
+                <tbody id="lrd-zonk-tbody">
+                    <!-- JS Fill -->
+                </tbody>
+            </table>
+
+            <!-- LRD FOOTER -->
+            <div style="text-align: center; font-size: 11px; font-weight: 500; color: #475569; line-height: 1.5;">
+                Lakukan Pencocokan hasil digital dengan fisik.<br>Dan Laporkan ke Grup WA dari halaman Ronda
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script>
     // =========================================================================
-    // FUNGSI SINGKATAN NAMA OTOMATIS
+    // GLOBAL VARS & HELPERS
     // =========================================================================
     function singkatanNama(nama) {
         if (!nama || nama === "-" || nama.toLowerCase() === "loading") return nama;
         let kata = nama.trim().split(/\s+/);
         if (kata.length <= 1) return nama;
         let hasil = kata[0];
-        for (let i = 1; i < kata.length; i++) {
-            hasil += " " + kata[i][0].toUpperCase() + ".";
-        }
+        for (let i = 1; i < kata.length; i++) { hasil += " " + kata[i][0].toUpperCase() + "."; }
         return hasil;
     }
 
-    // =========================================================================
-    // GLOBAL SLIDER & DATE LOGIC
-    // =========================================================================
     function goToSlide(index) {
-        document.getElementById("slider-track").style.transform = `translateX(-${index * 25}%)`;
-        document.getElementById("global-nav").style.display = index === 0 ? "flex" : "none";
+        document.getElementById("slider-track").style.transform = `translateX(-${index * 33.3333}%)`;
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     const monthArr = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
     const daysArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
     
-    // GANTI FORMAT JAM DI HEADER AGAR BOLD 600
     function updateLiveTime() {
         const now = new Date();
         const tgl = `${daysArr[now.getDay()]}, ${now.getDate()} ${monthArr[now.getMonth()]} ${now.getFullYear()}`;
         const jam = `${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} WIB`;
-        document.getElementById('live-datetime').innerHTML = `<span style="font-weight:600; color:#1155cc;">${tgl}</span><br><span style="font-weight:600; color:#1155cc;">(${jam})</span>`;
+        document.getElementById('live-datetime').innerHTML = `<span>${tgl}</span><span style="background: #F1F5F9; padding: 2px 6px; border-radius: 4px; border: 1px solid #CBD5E1;">${jam}</span>`;
     }
     setInterval(updateLiveTime, 1000); updateLiveTime();
 
     function getFormattedTimeFull() {
         const now = new Date();
-        const tgl = `${daysArr[now.getDay()]}, ${now.getDate()} ${monthArr[now.getMonth()]} ${now.getFullYear()}`;
-        const jam = `(${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} WIB)`;
-        return { string: `${tgl} ${jam}`, html: `${tgl}<br><span style="color:#1E293B; font-weight:500; font-size:12.5px;">${jam}</span>`, tglOnly: tgl };
+        const hariStr = daysArr[now.getDay()];
+        const tglStr = `${now.getDate()} ${monthArr[now.getMonth()]} ${now.getFullYear()}`;
+        const jamStr = `${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} WIB`;
+        return { 
+            string: `${hariStr}, ${tglStr} (${jamStr})`, 
+            tglOnly: `${hariStr}, ${tglStr}`,
+            jamSahaja: jamStr
+        };
     }
 
+    // =========================================================================
+    // MAIN LOGIC
+    // =========================================================================
     document.addEventListener("DOMContentLoaded", function() {
-        const selectHari = document.getElementById("select-hari-ronda");
-        const selectPetugas = document.getElementById("select-petugas");
+        // Elements Tahap 1
+        const btnDays = document.querySelectorAll(".btn-day");
+        const areaPetugas = document.getElementById("area-petugas");
+        const gridPetugas = document.getElementById("grid-petugas");
         const inputPetugasManual = document.getElementById("input-petugas-manual");
-        const selectIdRumah = document.getElementById("select-id-rumah");
-        
-        const greet1 = document.getElementById("greet-1");
-        const greet2 = document.getElementById("greet-2");
-        const greet3 = document.getElementById("greet-3");
-        const greet4 = document.getElementById("greet-4");
-        
+        const areaBenar = document.getElementById("area-benar");
+        const btnBenarTahap1 = document.getElementById("btn-benar-tahap1");
+        const btnBukaLaporan = document.getElementById("btn-buka-laporan");
+
+        // Elements Tahap 2
+        const manualWargaList = document.getElementById("manual-warga-list");
+        const btnEditPetugas = document.getElementById("btn-edit-petugas");
+        const scanNotif = document.getElementById("scanner-notif");
+
+        // Elements Tahap 3
         const infoIdRumah = document.getElementById("info-id-rumah");
         const infoNamaWarga = document.getElementById("info-nama-warga");
-        const infoDomisili = document.getElementById("info-domisili");
-        const badgeSelesai = document.getElementById("badge-selesai");
         const nominalButtons = document.querySelectorAll(".btn-nominal");
         const customNominalInput = document.getElementById("custom-nominal-input");
         const manualInputContainer = document.getElementById("manual-input-container");
-        const btnLanjutKonfirmasi = document.getElementById("btn-lanjut-konfirmasi");
+        const nominalTextPreview = document.getElementById("nominal-text-preview");
         
-        const prevWaktu = document.getElementById("prev-waktu");
-        const btnKirim = document.getElementById("btn-kirim");
-        const actionPreSubmit = document.getElementById("action-pre-submit");
-        const actionPostSubmit = document.getElementById("action-post-submit");
+        const actionTahap3Awal = document.getElementById("action-tahap3-awal");
+        const actionTahap3Sukses = document.getElementById("action-tahap3-sukses");
+        const btnLanjutSave = document.getElementById("btn-lanjut-save");
+        const btnLanjutAmbil = document.getElementById("btn-lanjut-ambil");
+        const btnSelesaiAmbil = document.getElementById("btn-selesai-ambil");
         const notifBanner = document.getElementById("notif-banner");
+
+        // Modal LRD Elements
+        const modalLrd = document.getElementById("modal-lrd");
+        const btnTutupModal = document.getElementById("btn-tutup-modal");
         
+        // Data Global
         window.submittedIds = new Set();
         let sessionLogData = []; 
         let totalJimpitanSesiIni = 0;
+        let selectedHari = "";
+        let selectedPetugas = "";
         let currentScannedData = null;
         let selectedNominalValue = null;
-        let isPostSubmit = false; 
-        window.currentLaporanWaktuStr = ""; 
         let jadwalRonda = {};
         let semuaPetugasSet = new Set();
+        let listWargaData = [];
         let html5QrCode;
         
-        // =========================================================================
-        // WAJIB GANTI: URL APLIKASI WEB GAS ANDA
-        // =========================================================================
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxtThzwmxtFFr5YxP7w-IEZiUWaVzUXW-lBARXOOYjuXnYF5wMp5qsKQm5fJoIW5TmO5Q/exec';
 
+        // Load LocalStorage
+        let savedSession = localStorage.getItem('jimpitan_sessionLog');
+        if (savedSession) {
+            sessionLogData = JSON.parse(savedSession);
+            totalJimpitanSesiIni = sessionLogData.reduce((sum, item) => sum + item.nominal, 0);
+            if(sessionLogData.length > 0) {
+                btnBukaLaporan.disabled = false;
+                btnBukaLaporan.style.background = "#09AB5A";
+                btnBukaLaporan.style.color = "#FFF";
+                btnBukaLaporan.style.borderColor = "#089B51";
+            }
+        }
+        let savedIds = localStorage.getItem('jimpitan_submittedIds');
+        if (savedIds) window.submittedIds = new Set(JSON.parse(savedIds));
+
+        // Parser CSV
         function parseCSV(text) {
             const result = []; let row = [], cell = "", inQuotes = false;
             for (let i = 0; i < text.length; i++) {
@@ -555,20 +501,17 @@
             return result;
         }
 
+        // Fetch Data
         async function fetchDataWarga() {
             const url = `https://docs.google.com/spreadsheets/d/1uNNZ0qqfhmw337Dqg6VfmVY7QAvID8r2mxR2T09_3Io/export?format=csv&gid=1159385762`;
             try {
                 const response = await fetch(url); const csvText = await response.text(); const rows = parseCSV(csvText);
-                selectIdRumah.innerHTML = '<option value="">- Rumah Warga -</option>';
+                listWargaData = [];
                 for(let r = 1; r < rows.length; r++) {
                     let idRumah = (rows[r][0] || "").trim(); let namaWarga = (rows[r][2] || "").trim(); let domisili = (rows[r][9] || "").trim();   
-                    if (idRumah) {
-                        let opt = document.createElement("option"); opt.value = idRumah;
-                        opt.setAttribute("data-nama", namaWarga || "-"); opt.setAttribute("data-domisili", domisili || "-");
-                        opt.innerHTML = `[${idRumah}] ${namaWarga || 'Tanpa Nama'}`;
-                        selectIdRumah.appendChild(opt);
-                    }
+                    if (idRumah && namaWarga.trim().toLowerCase() !== "rt2_jaya admin") listWargaData.push({id: idRumah, nama: namaWarga, domisili: domisili});
                 }
+                renderManualList();
             } catch (error) { console.error(error); }
         }
         
@@ -589,72 +532,18 @@
                         }
                     }
                 }
-                selectHari.dispatchEvent(new Event('change'));
+                
+                let dayMap = {"Minggu":"MINGGU", "Senin":"SENIN", "Selasa":"SELASA", "Rabu":"RABU", "Kamis":"KAMIS", "Jumat":"JUM'AT", "Sabtu":"SABTU"};
+                let todayStr = dayMap[daysArr[new Date().getDay()]];
+                const btnToday = Array.from(btnDays).find(b => b.getAttribute("data-val") === todayStr);
+                if(btnToday) btnToday.click();
+
             } catch (error) { console.error(error); }
         }
-
         fetchDataWarga(); fetchDataPetugas();
 
-        function getNamaPetugasFinal() { return selectPetugas.value === "Manual" ? (inputPetugasManual.value.trim() || "") : (selectPetugas.value || ""); }
-
-        function updateGreeting() {
-            let pName = getNamaPetugasFinal();
-            if(pName && pName !== "-" && pName !== "Manual") {
-                const setGreet = (el, msg, msgColor = "#1155cc") => {
-                    el.innerHTML = `Halo ${pName},<br><span style="color:${msgColor}; font-size:13px; font-weight:500;">${msg}</span>`;
-                    el.style.display = "block";
-                };
-
-                setGreet(greet1, "selamat bertugas!");
-                setGreet(greet2, "pilih uang jimpitan, semoga gak zonk!", "#1155cc");
-                
-                if (isPostSubmit) {
-                    setGreet(greet3, "Mau lanjut pengambilan atau selesai?", "#1155cc");
-                    greet3.innerHTML = `Berhasil, terima kasih ${pName},<br><span style="color:#1155cc; font-size:13px; font-weight:500;">mau lanjutkan/sudah selesai?</span>`;
-                    
-                    setGreet(greet4, "lanjutkan?", "#1155cc");
-                    greet4.innerHTML = `Terima kasih ${pName},<br><span style="color:#1155cc; font-size:13px; font-weight:500;">jaga kesehatan ya!</span>`;
-
-                } else {
-                    greet4.style.display = "none";
-                    if (selectedNominalValue === "0") { setGreet(greet3, "aduh zonk, gak masalah...tetap semangat!", "#1155cc"); } 
-                    else { setGreet(greet3, "cihui..semangat nih", "#1155cc"); }
-                }
-            } else {
-                greet1.style.display = "none"; greet2.style.display = "none"; greet3.style.display = "none"; greet4.style.display = "none";
-            }
-        }
-
-        selectHari.value = daysArr[new Date().getDay()];
-        selectHari.addEventListener("change", (e) => {
-            const h = e.target.value; selectPetugas.innerHTML = ""; inputPetugasManual.style.display = "none"; inputPetugasManual.value = "";
-            
-            if (h === "Altruis") {
-                Array.from(semuaPetugasSet).sort().forEach(n => selectPetugas.appendChild(new Option(n, n)));
-                selectPetugas.appendChild(new Option("+ Nama Lain (Ketik)", "Manual"));
-                
-                let opts = Array.from(selectPetugas.options);
-                let sami = opts.find(o => o.value.toUpperCase() === "SAMIJOKO");
-                if(sami) { selectPetugas.value = sami.value; } 
-                else { selectPetugas.insertBefore(new Option("SAMIJOKO", "SAMIJOKO"), selectPetugas.options[0]); selectPetugas.value = "SAMIJOKO"; }
-            } else {
-                if (jadwalRonda[h] && jadwalRonda[h].length > 0) { 
-                    jadwalRonda[h].forEach(n => selectPetugas.appendChild(new Option(n, n))); 
-                    selectPetugas.value = jadwalRonda[h][0]; 
-                }
-            }
-            updateGreeting(); checkLanjutStatus();
-        });
-
-        selectPetugas.addEventListener("change", (e) => {
-            if (e.target.value === "Manual") { inputPetugasManual.style.display = "block"; inputPetugasManual.focus(); } 
-            else { inputPetugasManual.style.display = "none"; }
-            updateGreeting(); checkLanjutStatus();
-        });
-        inputPetugasManual.addEventListener("input", () => { updateGreeting(); checkLanjutStatus(); });
-
+        // Audio System
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
         function playSuccessChime() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const t = audioCtx.currentTime;
@@ -665,7 +554,11 @@
             };
             playTone(523.25, t, 0.2); playTone(659.25, t+0.15, 0.3); playTone(783.99, t+0.3, 0.4); 
         }
-
+        function playQuickBeep() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime+0.1);
+        }
         function playHuuuSound() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const t = audioCtx.currentTime;
@@ -676,62 +569,160 @@
                 osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(t + 1.2);
             });
         }
-
         function playErrorBeep() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = 'square'; osc.frequency.setValueAtTime(200, audioCtx.currentTime);
             gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime+0.3);
         }
 
-        function showNotif(type, message) {
-            notifBanner.style.display = 'block'; notifBanner.className = 'notif-banner';
-            if(type === 'success') notifBanner.classList.add('notif-success');
-            else if(type === 'error') notifBanner.classList.add('notif-error');
-            else notifBanner.classList.add('notif-loading');
-            notifBanner.innerHTML = message;
-        }
+        // TAHAP 1: LOGIKA TOMBOL HARI & PETUGAS
+        btnDays.forEach(btn => {
+            btn.addEventListener("click", () => {
+                btnDays.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                selectedHari = btn.getAttribute("data-val");
+                
+                gridPetugas.innerHTML = "";
+                inputPetugasManual.style.display = "none";
+                inputPetugasManual.value = "";
+                selectedPetugas = "";
+                areaBenar.classList.remove("show");
 
-        selectIdRumah.addEventListener("change", function() {
-            if(this.value !== "") {
-                const opt = this.options[this.selectedIndex];
-                const nama = opt.getAttribute("data-nama"); const domisili = opt.getAttribute("data-domisili");
-                
-                infoIdRumah.textContent = this.value; infoNamaWarga.textContent = nama;
-                infoDomisili.textContent = domisili && domisili !== "-" ? domisili : "Domisili";
-                currentScannedData = { idRumah: this.value, namaWarga: nama, domisili: domisili };
-                
-                if (window.submittedIds.has(this.value)) { 
-                    badgeSelesai.style.display = "inline-block";
-                    infoIdRumah.style.color = "#94A3B8"; infoNamaWarga.style.color = "#94A3B8";
+                let pList = [];
+                if (selectedHari === "ALTRUIS") {
+                    pList = Array.from(semuaPetugasSet).sort();
+                    if(!pList.includes("SAMIJOKO")) pList.unshift("SAMIJOKO");
                 } else {
-                    badgeSelesai.style.display = "none";
-                    infoIdRumah.style.color = "#475569"; infoNamaWarga.style.color = "#0F172A";
+                    let key = selectedHari === "JUM'AT" ? "Jumat" : selectedHari.charAt(0).toUpperCase() + selectedHari.slice(1).toLowerCase();
+                    if(jadwalRonda[key]) pList = jadwalRonda[key];
+                    else if(jadwalRonda[selectedHari]) pList = jadwalRonda[selectedHari];
                 }
-                
-                setTimeout(() => goToSlide(1), 300);
-            } else { currentScannedData = null; }
-            checkLanjutStatus();
+
+                pList.forEach(nama => {
+                    let pb = document.createElement("button");
+                    pb.className = "btn-choice btn-petugas";
+                    pb.textContent = nama;
+                    pb.onclick = () => selectPetugasBtn(pb, nama);
+                    gridPetugas.appendChild(pb);
+                });
+
+                if(selectedHari === "ALTRUIS") {
+                    let pbM = document.createElement("button");
+                    pbM.className = "btn-choice btn-petugas";
+                    pbM.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`;
+                    pbM.title = "Tambah Petugas";
+                    pbM.onclick = () => { selectPetugasBtn(pbM, "Manual"); inputPetugasManual.style.display = "block"; inputPetugasManual.focus(); };
+                    gridPetugas.appendChild(pbM);
+                }
+
+                areaPetugas.classList.add("show");
+            });
         });
 
+        function selectPetugasBtn(btnEl, nama) {
+            document.querySelectorAll(".btn-petugas").forEach(b => b.classList.remove("active"));
+            btnEl.classList.add("active");
+            if(nama !== "Manual") { inputPetugasManual.style.display = "none"; selectedPetugas = nama; }
+            else { selectedPetugas = "Manual"; }
+            areaBenar.classList.add("show");
+        }
+
+        inputPetugasManual.addEventListener("input", () => {
+            if(inputPetugasManual.value.trim().length > 0) { areaBenar.classList.add("show"); }
+            else { areaBenar.classList.remove("show"); }
+        });
+
+        btnBenarTahap1.addEventListener("click", () => {
+            let finalPtg = selectedPetugas === "Manual" ? inputPetugasManual.value.trim() : selectedPetugas;
+            if(!finalPtg) return;
+
+            document.getElementById("active-hari-text").textContent = selectedHari;
+            document.getElementById("active-petugas-text").textContent = finalPtg;
+            
+            goToSlide(1);
+            if(!html5QrCode || !html5QrCode.isScanning) { startScanner(); }
+        });
+
+        btnEditPetugas.addEventListener("click", () => {
+            goToSlide(0);
+            if(html5QrCode && html5QrCode.isScanning) { html5QrCode.stop().catch(e => console.log(e)); }
+        });
+
+        // TAHAP 2: RENDER MANUAL LIST
+        function renderManualList() {
+            manualWargaList.innerHTML = "";
+            listWargaData.forEach(w => {
+                let isDone = window.submittedIds.has(w.id);
+                let btn = document.createElement("div");
+                btn.className = `warga-item ${isDone ? 'done' : ''}`;
+                btn.innerHTML = `<span class="w-id">${w.id}</span><span class="w-nama">${w.nama}</span>`;
+                btn.onclick = () => onWargaSelected(w.id, w.nama, w.domisili);
+                manualWargaList.appendChild(btn);
+            });
+        }
+
+        function onWargaSelected(id, nama, domisili) {
+            currentScannedData = { idRumah: id, namaWarga: nama, domisili: domisili };
+            infoIdRumah.textContent = id; infoNamaWarga.textContent = nama;
+            
+            if (html5QrCode && html5QrCode.isScanning) { html5QrCode.stop().catch(e => console.log(e)); }
+            
+            nominalButtons.forEach(btn => btn.className = "btn-nominal" + (btn.classList.contains("btn-manual") ? " btn-manual" : "") + (btn.classList.contains("btn-kosong") ? " btn-kosong" : ""));
+            selectedNominalValue = null;
+            nominalTextPreview.style.opacity = "0";
+            customNominalInput.value = ""; manualInputContainer.style.display = "none";
+            btnLanjutSave.disabled = true;
+            actionTahap3Awal.style.display = "block";
+            actionTahap3Sukses.style.display = "none";
+            notifBanner.style.display = "none";
+
+            goToSlide(2);
+        }
+
+        // TAHAP 2: SCANNER LOGIC
         function startScanner() {
             if (!html5QrCode) { html5QrCode = new Html5Qrcode("reader"); }
-            html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 200, height: 200 } }, onScanSuccess).catch(err => console.log(err));
+            html5QrCode.start(
+                { facingMode: "environment" }, 
+                { fps: 20, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0, formatsToSupport: [ Html5QrcodeSupportedFormats.QR_CODE ] }, 
+                onScanSuccess
+            ).catch(err => console.log(err));
         }
+
+        let lastScanTime = 0;
         function onScanSuccess(decodedText) {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+            let now = Date.now();
+            if (now - lastScanTime < 1500) return; 
+            
             let parts = decodedText.split('|').map(p => p.trim()); let scannedId = parts[0] || decodedText;
-            let opt = Array.from(selectIdRumah.options).find(o => o.value === scannedId);
-            if(opt) {
-                selectIdRumah.value = scannedId; selectIdRumah.dispatchEvent(new Event('change')); 
-                if (html5QrCode && html5QrCode.isScanning) { html5QrCode.stop().catch(e => console.log(e)); }
+            let targetWarga = listWargaData.find(w => w.id === scannedId);
+            
+            if(targetWarga) {
+                lastScanTime = now;
+                playQuickBeep();
+                
+                document.getElementById("reader").classList.add('scan-success-glow');
+                scanNotif.style.display = 'block'; scanNotif.className = 'notif-banner notif-success';
+                scanNotif.innerHTML = `✅ Scan Berhasil: ${targetWarga.nama}`;
+                
+                setTimeout(() => {
+                    document.getElementById("reader").classList.remove('scan-success-glow');
+                    scanNotif.style.display = 'none';
+                    onWargaSelected(targetWarga.id, targetWarga.nama, targetWarga.domisili);
+                }, 500); 
+            } else {
+                lastScanTime = now;
+                playErrorBeep();
+                scanNotif.style.display = 'block'; scanNotif.className = 'notif-banner notif-error';
+                scanNotif.innerHTML = `❌ Gagal: Warga dengan ID ${scannedId} tidak ditemukan.`;
+                setTimeout(() => { scanNotif.style.display = 'none'; }, 2000);
             }
         }
-        startScanner();
 
+        // TAHAP 3: NOMINAL LOGIC
         function checkLanjutStatus() {
-            const ptg = getNamaPetugasFinal();
-            if (currentScannedData && selectedNominalValue !== null && ptg !== "" && ptg !== "-") { btnLanjutKonfirmasi.disabled = false; } 
-            else { btnLanjutKonfirmasi.disabled = true; }
+            if (currentScannedData && selectedNominalValue !== null) { btnLanjutSave.disabled = false; } 
+            else { btnLanjutSave.disabled = true; }
         }
 
         nominalButtons.forEach(button => {
@@ -740,181 +731,219 @@
                 const val = button.getAttribute("data-value");
                 button.classList.add(`active-${val}`);
                 
-                if (val === "manual") { manualInputContainer.style.display = "block"; customNominalInput.focus(); selectedNominalValue = customNominalInput.value.replace(/[^0-9]/g, '') || null; } 
-                else { manualInputContainer.style.display = "none"; selectedNominalValue = val; }
+                if (val === "manual") { 
+                    manualInputContainer.style.display = "block"; customNominalInput.focus(); 
+                    selectedNominalValue = customNominalInput.value.replace(/[^0-9]/g, '') || null; 
+                    nominalTextPreview.style.opacity = "0";
+                } 
+                else { 
+                    manualInputContainer.style.display = "none"; 
+                    selectedNominalValue = val; 
+                    
+                    if(val === "0") {
+                        nominalTextPreview.style.color = "#DC2626";
+                        nominalTextPreview.textContent = "ZONK (0)";
+                    } else {
+                        nominalTextPreview.style.color = "#09AB5A";
+                        nominalTextPreview.textContent = `Rp ${parseInt(val).toLocaleString('id-ID')}`;
+                    }
+                    nominalTextPreview.style.opacity = "1";
+                }
                 
-                updateGreeting(); checkLanjutStatus();
+                checkLanjutStatus();
             });
         });
+
         customNominalInput.addEventListener("input", function() {
             let cleanVal = this.value.replace(/[^0-9]/g, ''); this.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('id-ID') : '';
-            selectedNominalValue = cleanVal; updateGreeting(); checkLanjutStatus();
+            selectedNominalValue = cleanVal;
+            
+            if(cleanVal) {
+                nominalTextPreview.style.color = "#09AB5A";
+                nominalTextPreview.textContent = `Rp ${parseInt(cleanVal).toLocaleString('id-ID')}`;
+                nominalTextPreview.style.opacity = "1";
+            } else {
+                nominalTextPreview.style.opacity = "0";
+            }
+            checkLanjutStatus();
         });
 
-        btnLanjutKonfirmasi.addEventListener("click", () => {
+        // TAHAP 3: AUTO-SAVE (KLIK SIMPAN)
+        btnLanjutSave.addEventListener("click", () => {
             let tId = currentScannedData.idRumah;
-            if(window.submittedIds.has(tId)) { if(!confirm("ID ini sudah disetor sebelumnya. Lanjut cetak ulang?")) return; }
+            if(window.submittedIds.has(tId)) { if(!confirm("ID ini sudah disetor sebelumnya. Lanjut simpan data ulang?")) return; }
 
             if (selectedNominalValue === "0") { playHuuuSound(); }
 
-            let tNom = selectedNominalValue === "0" ? "ZONK (Rp 0)" : "Rp " + parseInt(selectedNominalValue, 10).toLocaleString('id-ID');
+            btnLanjutSave.disabled = true; 
+            btnLanjutSave.textContent = "Menyimpan...";
             
+            let finalPtg = selectedPetugas === "Manual" ? inputPetugasManual.value.trim() : selectedPetugas;
             let ft = getFormattedTimeFull();
             window.currentLaporanWaktuStr = ft.string; 
-            
-            prevWaktu.innerHTML = ft.html; 
-            document.getElementById('prev-id').textContent = tId;
-            document.getElementById('prev-nama').textContent = currentScannedData.namaWarga;
-            document.getElementById('prev-domisili').textContent = currentScannedData.domisili && currentScannedData.domisili !== "-" ? currentScannedData.domisili : "-";
-            document.getElementById('prev-hari').textContent = `(${selectHari.value})`;
-            document.getElementById('prev-petugas').textContent = getNamaPetugasFinal();
-            
-            let nomEl = document.getElementById('prev-nominal');
-            nomEl.textContent = tNom; nomEl.style.color = selectedNominalValue === "0" ? "#DC2626" : "#16A34A";
-
-            isPostSubmit = false; updateGreeting();
-            actionPreSubmit.style.display = "flex"; actionPostSubmit.style.display = "none";
-            notifBanner.style.display = "none";
-            btnKirim.disabled = false; btnKirim.textContent = "Kirim Data";
-            
-            goToSlide(2);
-        });
-
-        btnKirim.addEventListener("click", () => {
-            btnKirim.disabled = true; btnKirim.textContent = "Mengirim...";
-            showNotif('loading', '⏳ Mohon tunggu sebentar, sedang kirim & sinkronisasi data');
-
             let iuranValue = selectedNominalValue === "0" ? "0" : selectedNominalValue;
-            let p_petugas = getNamaPetugasFinal();
 
             const params = new URLSearchParams({
                 id_rumah: currentScannedData.idRumah, nama_warga: currentScannedData.namaWarga, status_domisili: currentScannedData.domisili,
-                hari_tanggal: window.currentLaporanWaktuStr, iuran: iuranValue, petugas: p_petugas, hari_tugas: selectHari.value
+                hari_tanggal: window.currentLaporanWaktuStr, iuran: iuranValue, petugas: finalPtg, hari_tugas: selectedHari
             });
 
+            // FETCH TO GS
             fetch(scriptURL + "?" + params.toString(), { method: 'GET' })
             .then(res => res.json())
             .then(data => {
                 if(data.status === "success") {
                     playSuccessChime(); 
-                    showNotif('success', '✅ Berhasil tersimpan ke Server!');
                     
-                    isPostSubmit = true; updateGreeting(); 
-                    actionPreSubmit.style.display = "none"; actionPostSubmit.style.display = "flex";
+                    actionTahap3Awal.style.display = "none";
+                    actionTahap3Sukses.style.display = "flex";
+                    btnLanjutSave.textContent = "Simpan";
+                    
+                    notifBanner.style.display = 'block'; notifBanner.className = 'notif-banner notif-success';
+                    notifBanner.innerHTML = '✅ Berhasil tersimpan!';
                     
                     window.submittedIds.add(currentScannedData.idRumah);
-                    let opt = Array.from(selectIdRumah.options).find(o => o.value === currentScannedData.idRumah);
-                    if(opt && !opt.textContent.includes("✅")) { opt.textContent = "✅ " + opt.textContent; opt.classList.add("opt-done"); }
-
                     let numIuran = parseInt(iuranValue) || 0; totalJimpitanSesiIni += numIuran;
-                    sessionLogData.push({ id: currentScannedData.idRumah, nama: currentScannedData.namaWarga, petugas: p_petugas, nominal: numIuran });
-                    renderTableLog();
-                    document.getElementById("slide1-total-uang").textContent = `Rp ${totalJimpitanSesiIni.toLocaleString('id-ID')}`;
+                    sessionLogData.push({ id: currentScannedData.idRumah, nama: currentScannedData.namaWarga, petugas: finalPtg, nominal: numIuran });
+                    
+                    localStorage.setItem('jimpitan_sessionLog', JSON.stringify(sessionLogData));
+                    localStorage.setItem('jimpitan_submittedIds', JSON.stringify([...window.submittedIds]));
+
+                    btnBukaLaporan.disabled = false;
+                    btnBukaLaporan.style.background = "#09AB5A";
+                    btnBukaLaporan.style.color = "#FFF";
+                    btnBukaLaporan.style.borderColor = "#089B51";
+                    renderManualList(); 
 
                 } else { throw new Error(data.message); }
             })
             .catch((err) => {
-                console.error(err); playErrorBeep(); showNotif('error', '❌ Gagal. Pastikan URL & Script GAS benar.');
-                btnKirim.disabled = false; btnKirim.textContent = "Kirim Ulang";
+                console.error(err); playErrorBeep(); 
+                btnLanjutSave.disabled = false; btnLanjutSave.textContent = "Coba Simpan Ulang";
+                notifBanner.style.display = 'block'; notifBanner.className = 'notif-banner notif-error';
+                notifBanner.innerHTML = '❌ Gagal. Periksa koneksi internet.';
             });
         });
 
-        function renderTableLog() {
-            let tbody3 = document.querySelector("#table-log-slide3 tbody");
-            let tfoot3 = document.getElementById("tfoot-slide3");
-            let html = "";
-            
-            [...sessionLogData].reverse().forEach(log => {
-                let color = log.nominal === 0 ? '#DC2626' : '#1E293B';
-                let ptgShort = log.petugas.split(" ")[0]; 
-                
-                let identitasHTML = `
-                    <div class="warga-table-box">
-                        <span style="color:#64748B; font-size:10.5px;">${log.id}</span><br>
-                        <span style="color:#0F172A; font-size:12.5px;">${log.nama}</span>
-                    </div>
-                `;
+        // KEMBALI AMBIL & TUGAS SELESAI
+        btnLanjutAmbil.addEventListener("click", () => {
+            goToSlide(1); 
+            if (!html5QrCode || !html5QrCode.isScanning) { startScanner(); }
+        });
 
-                html += `<tr><td>${identitasHTML}</td><td>${ptgShort}</td><td class="val-uang" style="color:${color}">Rp ${log.nominal.toLocaleString('id-ID')}</td></tr>`;
-            });
-            
-            tbody3.innerHTML = html; tfoot3.style.display = "table-footer-group";
-            document.getElementById("tot-uang-slide3").textContent = `Rp ${totalJimpitanSesiIni.toLocaleString('id-ID')}`;
-        }
-
-        document.getElementById('btn-lanjut-ambil').addEventListener('click', () => {
-            currentScannedData = null; selectedNominalValue = null; selectIdRumah.value = ""; 
-            infoIdRumah.textContent = "rt2_--"; infoNamaWarga.textContent = "PILIH WARGA"; infoDomisili.textContent = "Domisili";
-            customNominalInput.value = ""; manualInputContainer.style.display = "none";
-            nominalButtons.forEach(btn => btn.className = "btn-nominal" + (btn.classList.contains("btn-manual") ? " btn-manual" : "") + (btn.classList.contains("btn-kosong") ? " btn-kosong" : ""));
-            checkLanjutStatus(); notifBanner.style.display = "none";
-            
-            isPostSubmit = false; updateGreeting();
-            goToSlide(0); 
-            if (html5QrCode && !html5QrCode.isScanning) { startScanner(); }
+        btnSelesaiAmbil.addEventListener("click", () => {
+            btnBukaLaporan.click(); 
         });
 
         // =========================================================================
-        // SLIDE 4: STRUK LAPORAN INTERNAL
+        // MODAL LRD LOGIC
         // =========================================================================
-        document.getElementById('btn-selesai-ambil').addEventListener('click', () => {
-            let maxNominal = -1; let topWargaList = []; let listZonk = [];
+        function buildLRD() {
+            let maxNominal = -1; 
+            sessionLogData.forEach(log => { if (log.nominal > maxNominal) { maxNominal = log.nominal; } });
+
+            let topWargaNames = [];
+            let topWargaPetugas = new Set();
+            let zonkWargaNames = [];
+            let zonkPetugas = new Set();
+
             let tbodyHTML = "";
-            
-            sessionLogData.forEach(log => {
-                if (log.nominal > maxNominal) { maxNominal = log.nominal; }
-            });
+            let i = 1;
 
             sessionLogData.forEach(log => {
                 let singkatanWarga = singkatanNama(log.nama);
-                let singkatanPetugas = singkatanNama(log.petugas);
+                let singkatanPtg = singkatanNama(log.petugas);
                 
-                if(log.nominal === maxNominal && maxNominal > 0) { topWargaList.push(singkatanWarga); }
-                if(log.nominal === 0) { listZonk.push(singkatanWarga); }
+                if(log.nominal === maxNominal && maxNominal > 0) { 
+                    topWargaNames.push(singkatanWarga);
+                    topWargaPetugas.add(singkatanPtg);
+                }
+                if(log.nominal === 0) { 
+                    zonkWargaNames.push(singkatanWarga);
+                    zonkPetugas.add(singkatanPtg);
+                }
                 
-                let color = log.nominal === 0 ? '#DC2626' : '#1E293B';
+                let nominalStr = log.nominal === 0 ? "0" : log.nominal.toLocaleString('id-ID');
+                let colorClass = log.nominal === 0 ? "#475569" : "#475569";
                 
-                tbodyHTML += `<tr>
-                    <td style="font-size:12px;">${singkatanWarga}</td>
-                    <td style="text-align:center;"><span class="struk-ptg-box">${singkatanPetugas}</span></td>
-                    <td class="uang" style="color:${color}; font-size:12px; text-align:right;">Rp ${log.nominal.toLocaleString('id-ID')}</td>
+                tbodyHTML += `
+                <tr>
+                    <td style="text-align: center; border: 1.5px solid #09AB5A; padding: 10px 4px; font-weight: 500; font-size: 13px; color: #475569;">${i}</td>
+                    <td style="border: 1.5px solid #09AB5A; padding: 10px 8px;">
+                        <div style="font-weight: 700; color: #09AB5A; font-size: 14px;">${singkatanWarga}</div>
+                        <div style="font-size: 8px; border: 1px solid #94A3B8; color: #64748B; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 4px;">${log.id}</div>
+                    </td>
+                    <td style="text-align: center; border: 1.5px solid #09AB5A; padding: 10px 4px; color: #475569; font-weight: 500; font-size: 13px;">${singkatanPtg}</td>
+                    <td style="text-align: center; border: 1.5px solid #09AB5A; padding: 10px 8px; color: ${colorClass}; font-weight: 600; font-size: 14px;">${nominalStr}</td>
                 </tr>`;
+                i++;
             });
             
-            document.querySelector("#table-struk-detail tbody").innerHTML = tbodyHTML || `<tr><td colspan="3" style="text-align:center;">Tidak ada data</td></tr>`;
+            document.getElementById("lrd-tbody").innerHTML = tbodyHTML || `<tr><td colspan="4" style="text-align:center; padding:10px; border: 1.5px solid #09AB5A; color:#94A3B8;">Tidak ada data</td></tr>`;
             
-            topWargaList = [...new Set(topWargaList)];
-            listZonk = [...new Set(listZonk)];
+            document.getElementById("lrd-total-all").textContent = totalJimpitanSesiIni.toLocaleString('id-ID');
+            
+            let dt = getFormattedTimeFull();
+            document.getElementById("lrd-tgl").innerHTML = dt.tglOnly; 
+            document.getElementById("lrd-jam").textContent = dt.jamSahaja; 
+            
+            let hariStr = selectedHari;
+            if(!hariStr) {
+                let dayMap = {"Minggu":"MINGGU", "Senin":"SENIN", "Selasa":"SELASA", "Rabu":"RABU", "Kamis":"KAMIS", "Jumat":"JUM'AT", "Sabtu":"SABTU"};
+                hariStr = dayMap[daysArr[new Date().getDay()]];
+            }
+            document.getElementById("lrd-hari-badge").textContent = hariStr; 
 
-            let htmlTop = topWargaList.length > 0 ? `${topWargaList.join(", ")}<br><span style="color:#16A34A;">(Rp ${maxNominal.toLocaleString('id-ID')})</span>` : "-";
-            
-            document.getElementById("struk-top-warga").innerHTML = htmlTop;
-            document.getElementById("struk-zonk-warga").innerHTML = listZonk.length > 0 ? listZonk.join(", ") : "Tidak ada";
-            document.getElementById("struk-total-all").textContent = "Rp " + totalJimpitanSesiIni.toLocaleString('id-ID');
-            document.getElementById("struk-tgl").textContent = getFormattedTimeFull().tglOnly; 
-            
-            goToSlide(3); 
-        });
-        
-        document.getElementById("btn-siap-laporkan").addEventListener("click", () => {
-            window.location.href = 'https://rt2pasekanlor.id/ronda';
+            // Render Stats Tables
+            function buildStatTable(names, petugasSet, nominal) {
+                if(names.length === 0) {
+                    return `<tr><td colspan="3" style="text-align:center; padding:10px; border: 1.5px solid #09AB5A; color:#94A3B8;">Tidak ada data</td></tr>`;
+                }
+                let nStr = names.join(", ");
+                let pStr = [...petugasSet].join(", ");
+                let nomStr = nominal === 0 ? "0" : nominal.toLocaleString('id-ID');
+                return `
+                <tr>
+                    <td style="border: 1.5px solid #09AB5A; padding: 10px 8px; color: #09AB5A; font-size: 13px; font-weight: 500; line-height: 1.5;">${nStr}</td>
+                    <td style="text-align: center; border: 1.5px solid #09AB5A; padding: 10px 4px; color: #09AB5A; font-weight: 500; font-size: 13px;">${pStr}</td>
+                    <td style="text-align: center; border: 1.5px solid #09AB5A; padding: 10px 8px; color: #09AB5A; font-weight: 600; font-size: 13px;">${nomStr}</td>
+                </tr>`;
+            }
+
+            document.getElementById("lrd-terbanyak-tbody").innerHTML = buildStatTable(topWargaNames, topWargaPetugas, maxNominal > 0 ? maxNominal : 0);
+            document.getElementById("lrd-zonk-tbody").innerHTML = buildStatTable(zonkWargaNames, zonkPetugas, 0);
+        }
+
+        btnBukaLaporan.addEventListener("click", () => {
+            buildLRD();
+            modalLrd.style.display = "flex";
         });
 
-        // FUNGSI AUTO-RENAME DOWNLOAD
+        btnTutupModal.addEventListener("click", () => {
+            modalLrd.style.display = "none";
+        });
+
+        // DOWNLOAD LRD
         document.getElementById("btn-download-struk").addEventListener("click", async function() {
             const areaCetak = document.getElementById("area-cetak-struk");
             const originalBtnText = this.innerHTML; this.innerHTML = "Memproses..."; this.disabled = true;
             try {
                 const canvas = await html2canvas(areaCetak, { scale: 2, backgroundColor: '#FFFFFF' });
                 
-                // Susun Nama File
-                let ptgName = getNamaPetugasFinal().split(" ")[0].replace(/[^a-zA-Z0-9]/g, ''); // Ambil kata pertama, hapus simbol
-                let hariRonda = selectHari.value;
+                let ptgName = selectedPetugas === "Manual" ? inputPetugasManual.value.trim() : selectedPetugas;
+                if(!ptgName && sessionLogData.length > 0) ptgName = sessionLogData[sessionLogData.length-1].petugas;
+                ptgName = (ptgName || "PETUGAS").split(" ")[0].replace(/[^a-zA-Z0-9]/g, ''); 
+                
+                let hariStr = selectedHari;
+                if(!hariStr) {
+                    let dayMap = {"Minggu":"MINGGU", "Senin":"SENIN", "Selasa":"SELASA", "Rabu":"RABU", "Kamis":"KAMIS", "Jumat":"JUM'AT", "Sabtu":"SABTU"};
+                    hariStr = dayMap[daysArr[new Date().getDay()]];
+                }
+                
                 const now = new Date();
-                const monthArr = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sept", "Okt", "Nov", "Des"];
                 let tglFormat = `${now.getDate()}${monthArr[now.getMonth()]}${now.getFullYear()}`;
                 
-                let fileName = `internal_${hariRonda}_${tglFormat}_${totalJimpitanSesiIni}_${ptgName}.jpg`;
+                let fileName = `LRD_${hariStr}_${tglFormat}_${totalJimpitanSesiIni}_${ptgName}.jpg`;
 
                 canvas.toBlob((blob) => {
                     const url = URL.createObjectURL(blob); const link = document.createElement('a');

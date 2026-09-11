@@ -132,26 +132,42 @@
         .modal-back-btn-absolute { position: absolute; top: 16px; left: 16px; background: #f1f5f9; color: #1155cc; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
 
         /* ================== FORM LOGIN CSS (DESAIN BARU) ================== */
-        .login-header-bg { background: linear-gradient(135deg, #1155CC, #0083E0); padding: 40px 20px 25px 20px; text-align: center; color: white; border-radius: 24px 24px 0 0; position: relative; }
-        .login-title { font-size: 22px; font-weight: 700; margin-bottom: 5px; letter-spacing: 0.5px; }
-        .login-subtitle { font-size: 13px; font-weight: 400; opacity: 0.9; }
-        .login-body { padding: 30px 24px; display: flex; flex-direction: column; gap: 18px; background: #ffffff; }
+        .login-wrapper { background: #f1f5f9; width: 100%; max-width: 400px; margin: 0 auto; border-radius: 28px; padding: 24px; position: relative; font-family: 'Poppins', sans-serif; }
+        .login-close-btn { position: absolute; top: 16px; right: 16px; background: #1155cc; color: #ffffff; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(17,85,204,0.3); transition: transform 0.2s; }
+        .login-close-btn:active { transform: scale(0.9); }
+        .login-title-text { font-size: 26px; font-weight: 800; color: #1155cc; margin-bottom: 24px; letter-spacing: 0.5px; }
         
-        .input-group { display: flex; flex-direction: column; gap: 8px; position: relative; }
-        .input-group label { font-size: 13px; font-weight: 600; color: #475569; }
-        .input-box { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1.5px solid #cbd5e1; font-size: 14.5px; outline: none; transition: all 0.3s; background: #f8fafc; color: #333; }
-        .input-box:focus { border-color: #1155CC; background: #ffffff; box-shadow: 0 0 0 4px rgba(17,85,204,0.1); }
-        .toggle-pw-btn { position: absolute; right: 16px; top: 40px; background: none; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .login-form-grid { display: grid; grid-template-columns: 1fr 100px; gap: 12px; margin-bottom: 16px; }
+        .login-inputs { display: flex; flex-direction: column; gap: 12px; }
+        .input-icon-group { position: relative; display: flex; align-items: center; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 0 14px; height: 50px; transition: border-color 0.2s; }
+        .input-icon-group:focus-within { border-color: #1155cc; box-shadow: 0 0 0 3px rgba(17,85,204,0.1); }
+        .input-icon-group svg.left-icon { width: 22px; height: 22px; color: #64748b; flex-shrink: 0; margin-right: 8px; }
+        .input-icon-group input { border: none; background: transparent; width: 100%; font-size: 14.5px; color: #333; outline: none; font-weight: 500; }
+        .input-icon-group input::placeholder { color: #94a3b8; font-weight: 400; }
+        .input-icon-group .toggle-pw-btn { background: none; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; margin-left: 8px; }
         
-        .login-submit-btn { background: #1155CC; color: #ffffff; border: none; padding: 16px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: all 0.2s; box-shadow: 0 4px 12px rgba(17, 85, 204, 0.3); }
-        .login-submit-btn:active { transform: scale(0.98); }
-        .login-submit-btn:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
+        .btn-monggo { background: #1155cc; color: #ffffff; border: none; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: transform 0.2s, background 0.2s; padding: 10px; line-height: 1.2; box-shadow: 0 4px 12px rgba(17,85,204,0.3); }
+        .btn-monggo:active { transform: scale(0.96); }
         
-        .login-error-msg { color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; display: none; margin-top: -5px; padding: 8px; background: #fef2f2; border-radius: 8px; border: 1px solid #fecaca; }
+        .login-error-msg { color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; display: none; padding: 8px; background: #fef2f2; border-radius: 10px; border: 1px solid #fecaca; margin-bottom: 16px; }
         
-        .register-link { text-align: center; margin-top: 10px; font-size: 13px; color: #64748b; }
-        .register-link a { color: #1155CC; font-weight: 700; text-decoration: none; padding: 4px 8px; border-radius: 6px; transition: background 0.2s; display: inline-block; margin-top: 4px; border: 1px solid #e2e8f0; }
-        .register-link a:active { background: #f1f5f9; }
+        .reg-box { border: 2px solid #cbd5e1; border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 10px; background: transparent; }
+        .reg-left { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .reg-title { font-size: 13.5px; font-weight: 700; color: #1155cc; letter-spacing: 0.3px; }
+        .reg-toggle-row { display: flex; align-items: center; gap: 10px; }
+        
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #94a3b8; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: #1155cc; }
+        input:checked + .slider:before { transform: translateX(18px); }
+        
+        .reg-desc { font-size: 11px; color: #475569; line-height: 1.3; font-weight: 500; }
+        
+        .btn-reg { background: #94a3b8; color: #ffffff; border: none; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11.5px; font-weight: 700; cursor: pointer; padding: 10px; text-decoration: none; text-align: center; width: 85px; transition: background 0.2s, transform 0.2s; pointer-events: none; }
+        .btn-reg.active { background: #1155cc; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: auto; }
+        .btn-reg:active { transform: scale(0.96); }
 
         /* ================== KARTU LUAR & WARNA ================== */
         .dashboard-section-card { border-radius: 24px; margin: 0 16px 24px 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); position: relative; z-index: 2; }
@@ -380,42 +396,54 @@
 
         <!-- ==================== AREA MODAL LOGIN ==================== -->
         <div class="slide-up-overlay" id="loginModalOverlay" onclick="closeLoginModalOutside(event)">
-            <div class="slide-up-content" onclick="event.stopPropagation()" style="max-height: 90vh;">
-                <button class="modal-close-btn-absolute" onclick="closeLoginModal()" title="Tutup">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
-                
-                <div class="login-header-bg">
-                    <div class="login-title">Masuk Akun</div>
-                    <div class="login-subtitle">Silakan isi data Anda untuk melanjutkan</div>
-                </div>
-                
-                <div class="login-body">
-                    <form id="loginForm" style="display: flex; flex-direction: column; gap: 16px;">
-                        <div class="input-group">
-                            <label for="loginUsername">ID Rumah / Username</label>
-                            <input type="text" id="loginUsername" class="input-box" placeholder="Contoh: paslor_01 atau rt2_jaya" required>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="loginPassword">Password / PIN</label>
-                            <input type="password" id="loginPassword" class="input-box" placeholder="Masukkan password Anda" required>
-                            <button type="button" class="toggle-pw-btn" onclick="togglePasswordVisibility()">
-                                <svg id="eyeIconPwOpen" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                <svg id="eyeIconPwClosed" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:block;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+            <div class="slide-up-content" onclick="event.stopPropagation()" style="background: transparent; box-shadow: none; align-items: center; padding: 0 16px;">
+                <div class="login-wrapper">
+                    <button class="login-close-btn" onclick="closeLoginModal()" title="Tutup">X</button>
+                    
+                    <div class="login-title-text">Masuk Akun</div>
+                    
+                    <form id="loginForm" style="margin: 0;">
+                        <div class="login-form-grid">
+                            <div class="login-inputs">
+                                <div class="input-icon-group">
+                                    <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    <input type="text" id="loginUsername" placeholder="user" required>
+                                </div>
+                                <div class="input-icon-group">
+                                    <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+                                    <input type="password" id="loginPassword" placeholder="Password" required>
+                                    <button type="button" class="toggle-pw-btn" onclick="togglePasswordVisibility()">
+                                        <svg id="eyeIconPwOpen" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                                        <svg id="eyeIconPwClosed" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:block;"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" id="btnSubmitLogin" class="btn-monggo">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                                <span>Monggo<br>Mlebet</span>
                             </button>
                         </div>
                         
                         <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
-                        
-                        <button type="submit" id="btnSubmitLogin" class="login-submit-btn">Masuk Sekarang</button>
-                        
-                        <!-- Link Pendaftaran Warga Baru -->
-                        <div class="register-link">
-                            Belum terdaftar? <br>
-                            <a href="data-warga">Pendaftaran Warga Baru &rarr;</a>
-                        </div>
                     </form>
+                    
+                    <div class="reg-box">
+                        <div class="reg-left">
+                            <div class="reg-title">Pendaftaran Warga Baru</div>
+                            <div class="reg-toggle-row">
+                                <label class="switch">
+                                  <input type="checkbox" id="regToggleCheck" onchange="toggleRegButton()">
+                                  <span class="slider"></span>
+                                </label>
+                                <div class="reg-desc">Setuju, saya akan mengisi dengan benar.</div>
+                            </div>
+                        </div>
+                        <a href="data-warga" id="btnLanjutReg" class="btn-reg">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                            <span>Lanjut<br>Registrasi</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -710,11 +738,7 @@
     // ==========================================
     // PENGATURAN LOGIN ADMIN & API SPREADSHEET
     // ==========================================
-    const ADMIN_USERNAME = "rt2_jaya";
-    const ADMIN_PASSWORD = "0203";
-    const ADMIN_NAME = "Admin Pengurus";
-    
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwxnY23ME-d7Nzv_hxkj2pslTjWnAXsufkPlA47XJZ-bYXADTr39X9BBBSDrSIh7RhyGQ/exec";
+      const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwxnY23ME-d7Nzv_hxkj2pslTjWnAXsufkPlA47XJZ-bYXADTr39X9BBBSDrSIh7RhyGQ/exec";
 
     // ==========================================
     // FUNGSI MANAJEMEN SESI (LOGIN & LOGOUT)
@@ -723,6 +747,9 @@
     const loginForm = document.getElementById('loginForm');
     const loginErrorMsg = document.getElementById('loginErrorMessage');
     const btnSubmitLogin = document.getElementById('btnSubmitLogin');
+    
+    // SVG untuk tombol submit agar desain persisten saat di-update oleh innerHTML
+    const loginBtnSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
 
     function checkLoginState() {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -762,6 +789,8 @@
         loginModalOverlay.classList.remove('active'); 
         document.body.style.overflow = 'auto'; 
         loginForm.reset();
+        const regToggle = document.getElementById('regToggleCheck');
+        if(regToggle) { regToggle.checked = false; toggleRegButton(); }
     }
     function closeLoginModalOutside(e) { if (e.target === loginModalOverlay) closeLoginModal(); }
 
@@ -783,6 +812,15 @@
             pwInput.type = "password"; eyeOpen.style.display = "none"; eyeClosed.style.display = "block";
         }
     }
+    
+    window.toggleRegButton = function() {
+        const chk = document.getElementById('regToggleCheck');
+        const btn = document.getElementById('btnLanjutReg');
+        if(chk && btn) {
+            if(chk.checked) btn.classList.add('active');
+            else btn.classList.remove('active');
+        }
+    }
 
     // ==========================================
     // PROSES SUBMIT FORM LOGIN
@@ -794,7 +832,7 @@
         const passInput = document.getElementById('loginPassword').value.trim();
         
         loginErrorMsg.style.display = 'none';
-        btnSubmitLogin.innerText = "Memeriksa...";
+        btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Memeriksa...</span>";
         btnSubmitLogin.disabled = true;
 
         // Mode Demo / Fallback jika GAS_API_URL belum diisi
@@ -806,13 +844,13 @@
                     localStorage.setItem('userName', 'Bambang'); 
                     localStorage.setItem('userFoto', ''); 
                     closeLoginModal(); checkLoginState();
-                    btnSubmitLogin.innerText = "Masuk Sekarang"; btnSubmitLogin.disabled = false;
+                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>"; btnSubmitLogin.disabled = false;
                 }, 800);
             } else {
                 loginErrorMsg.innerText = "Username atau Password salah!";
                 loginErrorMsg.style.color = '#ef4444';
                 loginErrorMsg.style.display = 'block';
-                btnSubmitLogin.innerText = "Masuk Sekarang"; btnSubmitLogin.disabled = false;
+                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>"; btnSubmitLogin.disabled = false;
             }
             return;
         }
@@ -860,7 +898,7 @@
             loginErrorMsg.style.color = '#ef4444';
             loginErrorMsg.style.display = 'block';
         }).finally(() => {
-            btnSubmitLogin.innerText = "Masuk Sekarang";
+            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>";
             btnSubmitLogin.disabled = false;
         });
     });

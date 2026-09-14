@@ -363,30 +363,38 @@
       modalBBObj = new bootstrap.Modal(document.getElementById('modalBB'));
     });
 
-    async function apiCall(payload) {
+async function apiCall(payload) {
       document.getElementById('global-loader').style.display = 'flex';
       try {
-        const req = await fetch(API_URL, {
+        // Mengirim data ke Google Apps Script
+        const response = await fetch(API_URL, {
           method: 'POST',
-          mode: 'no-cors', // Untuk bypass policy awal jika perlu, namun untuk terima balasan JSON harus CORS disetujui di GAS
-          headers: { 'Content-Type': 'text/plain' }, // App script lebih suka text/plain
+          headers: {
+            // Wajib text/plain agar Google tidak memblokir CORS dari Github Pages
+            'Content-Type': 'text/plain;charset=utf-8' 
+          },
           body: JSON.stringify(payload)
         });
         
-        // CATATAN GITHUB PAGES: karena fetch dengan 'no-cors' tidak bisa baca response body JSON,
-        // Kita asumsikan GAS membolehkan CORS dengan sendirinya di Web App 'Anyone'.
-        // Maka kita hapus mode: 'no-cors' agar data bisa dibaca.
-      } catch(e) { } // Bypass mock if local
-      
-      // REAL FETCH KODE:
-      try {
-        const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
-        const json = await res.json();
+        // Menangkap balasan dari Google dalam bentuk teks murni
+        const textResponse = await response.text(); 
+        
+        let json;
+        try {
+          // Mencoba merubah teks menjadi JSON
+          json = JSON.parse(textResponse); 
+        } catch (err) {
+          // JIKA ERROR JSON.PARSE TERJADI LAGI, INI PENYELAMATNYA:
+          console.error("Google tidak membalas dengan JSON. Balasan asli:", textResponse);
+          throw new Error("Koneksi diblokir Google. Pastikan Deploy Web App diatur 'Who has access: Anyone'");
+        }
+
         document.getElementById('global-loader').style.display = 'none';
         return json;
+
       } catch(e) {
         document.getElementById('global-loader').style.display = 'none';
-        console.error("API Error:", e);
+        alert("Gagal Terhubung: " + e.message);
         return { success: false, message: e.message };
       }
     }
@@ -425,7 +433,7 @@
       let pass = document.getElementById('log-pass').value;
       
       // Jika API_URL belum diisi (Testing local), kita bypass:
-      if(API_URL === "https://script.google.com/macros/s/AKfycbyaVXJ4O78nMwJg09Zeh_qhoNLf9yWAYq3BSvBqAENauCF6KpYpnxPK1s9WtnhGXEse/exec") {
+      if(API_URL === "https://script.google.com/macros/s/AKfycbwCDilzkuf8oIxj3yo-gii7I-GVdR9g1ClQAmR02FbstJGsM66gmDDNFYHMdetZ_Tzv/exec") {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('app-screen').style.display = 'block';
         nav('dashboard'); showToast("Mode Testing Lokal"); return;

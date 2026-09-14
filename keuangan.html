@@ -8,32 +8,28 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    /* VARIABLES & THEMES */
     :root {
       --bg-sidebar: #143061;
       --header-grad-1: #1155CC;
       --header-grad-2: #258F55;
       --text-main: #333;
       --bg-main: #f4f6f9;
-      
-      /* Kode Warna */
-      --c-kode1: #00804E; /* Hijau - Jimpitan */
-      --c-kode2: #ED7600; /* Orange - Jasa */
-      --c-kode3: #0d6efd; /* Biru - Sosial */
-      --c-kode4: #6f42c1; /* Ungu - Pembangunan */
-      --c-kode5: #dc3545; /* Merah - Arisan */
-      --c-kode6: #795548; /* Coklat - Kas Pemuda */
+      --c-kode1: #00804E; /* Jimpitan */
+      --c-kode2: #ED7600; /* Jasa */
+      --c-kode3: #0d6efd; /* Sosial */
+      --c-kode4: #6f42c1; /* Pembangunan */
+      --c-kode5: #dc3545; /* Arisan */
+      --c-kode6: #795548; /* Kas Pemuda */
     }
 
     body { font-family: 'Poppins', sans-serif; background: var(--bg-main); color: var(--text-main); overflow-x: hidden; }
     
-    /* LOGIN SCREEN */
+    /* LOGIN */
     #login-screen { position: fixed; inset: 0; background: #fff; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; background-image: url('data:image/svg+xml;utf8,<svg opacity="0.05" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23143061" fill-opacity="1" d="M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,165.3C672,171,768,213,864,224C960,235,1056,213,1152,181.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>'); background-size: cover; background-position: bottom;}
     .login-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; border: 1px solid #eee; }
     
-    /* LAYOUT */
+    /* LAYOUT UTAMA */
     #app-screen { display: none; }
     
     /* HEADER 1 */
@@ -43,30 +39,30 @@
     .header-title { font-size: 1.2rem; font-weight: 700; margin: 0; line-height: 1.2; text-transform: uppercase; }
     .header-subtitle { font-size: 0.8rem; letter-spacing: 1px; margin: 0; }
     
-    /* HEADER 2 (Slide Down) */
+    /* HEADER 2 */
     .header-2 { position: fixed; top: 75px; left: 250px; right: 0; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); padding: 10px 25px; z-index: 990; display: flex; gap: 10px; align-items: center; transform: translateY(-100%); transition: transform 0.3s ease; }
     .header-2.show { transform: translateY(0); }
     @media (max-width: 768px) { .header-2 { left: 0; flex-wrap: wrap; } }
 
     /* SIDEBAR */
     .sidebar { position: fixed; top: 75px; left: 0; bottom: 0; width: 250px; background: var(--bg-sidebar); color: white; transition: 0.3s; z-index: 995; overflow-y: auto; }
-    .nav-link { color: rgba(255,255,255,0.7); padding: 12px 25px; font-weight: 500; border-radius: 0 25px 25px 0; margin-right: 15px; display: flex; align-items: center; gap: 12px; }
+    .nav-link { color: rgba(255,255,255,0.7); padding: 12px 25px; font-weight: 500; border-radius: 0 25px 25px 0; margin-right: 15px; display: flex; align-items: center; gap: 12px; text-decoration: none;}
     .nav-link:hover, .nav-link.active { color: white; background: rgba(255,255,255,0.1); }
     
     /* MAIN CONTENT */
     .main-content { margin-left: 250px; margin-top: 135px; padding: 25px; min-height: calc(100vh - 135px); transition: 0.3s; }
     @media (max-width: 768px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } .main-content { margin-left: 0; padding: 15px; } }
 
-    /* SCROLL VERTICAL PANEL (Kanan Tengah) */
+    /* SCROLL VERTICAL PANEL */
     .scroll-panel { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
     .scroll-btn { background: rgba(20, 48, 97, 0.8); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); transition: 0.2s; cursor: pointer;}
     .scroll-btn:hover { background: var(--header-grad-2); transform: scale(1.1); }
 
-    /* TOAST NOTIFICATION CENTER */
+    /* TOAST */
     .toast-center { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); background: rgba(0,0,0,0.8); color: white; padding: 15px 30px; border-radius: 50px; z-index: 9999; opacity: 0; pointer-events: none; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .toast-center.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
 
-    /* BUKU BESAR TABLE */
+    /* TABEL BUKU BESAR */
     .table-bb { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); width: 100%; border-collapse: collapse; }
     .table-bb th { background: #f8f9fa; padding: 15px; font-weight: 600; color: #555; text-transform: uppercase; font-size: 0.8rem; border-bottom: 2px solid #eee; }
     .table-bb td { padding: 15px; border-bottom: 1px solid #f1f1f1; vertical-align: middle; }
@@ -74,22 +70,11 @@
     .bb-date-top { font-size: 0.8rem; color: #888; display: block; }
     .bb-date-bot { font-weight: 600; font-size: 0.95rem; }
     .bb-uraian { font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .kode-badge { padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; color: white; display: inline-block; cursor: help; }
+    .kode-badge { padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; color: white; display: inline-block; }
 
-    /* IOS TOGGLE */
-    .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider { position: absolute; cursor: pointer; inset: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-    .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-    input:checked + .slider { background-color: var(--header-grad-2); }
-    input:checked + .slider:before { transform: translateX(24px); }
-
-    /* UTILITIES */
     .card-rad { border-radius: 15px; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
     .btn-rad { border-radius: 10px; font-weight: 500; }
     .hidden { display: none !important; }
-    
-    /* Footer */
     .app-footer { margin-top: 40px; padding: 20px; text-align: center; font-size: 0.8rem; color: #888; border-top: 1px solid #ddd; }
   </style>
 </head>
@@ -98,28 +83,27 @@
   <!-- LOADING OVERLAY -->
   <div id="global-loader" style="position:fixed;inset:0;background:rgba(255,255,255,0.9);z-index:10000;display:flex;align-items:center;justify-content:center; flex-direction:column; display:none;">
     <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
-    <div class="mt-3 fw-bold text-primary" id="loader-text">Memproses Data...</div>
+    <div class="mt-3 fw-bold text-primary">Memproses Data...</div>
   </div>
 
-  <!-- TOAST CENTER -->
+  <!-- TOAST -->
   <div id="toast" class="toast-center"><i class="fas fa-check-circle text-success"></i> <span id="toast-msg">Sukses</span></div>
 
-  <!-- LOGIN -->
+  <!-- LOGIN SCREEN -->
   <div id="login-screen">
     <div class="login-box">
       <img id="login-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1400/Thumb%20-%20Putih.png" style="width:80px; margin-bottom: 20px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
       <h4 style="font-weight: 700; color: var(--bg-sidebar);">PORTAL ADMIN</h4>
       <p class="text-muted" style="font-size: 0.85rem;">Kementerian Keuangan RT 2 Pasekan Lor</p>
       
-      <input type="text" id="log-user" class="form-control mb-3 btn-rad text-center" placeholder="Username" style="background:#f9f9f9;">
-      <input type="password" id="log-pass" class="form-control mb-4 btn-rad text-center" placeholder="Password" style="background:#f9f9f9;">
+      <input type="text" id="log-user" class="form-control mb-3 btn-rad text-center" placeholder="Username (contoh: admin)" style="background:#f9f9f9;">
+      <input type="password" id="log-pass" class="form-control mb-4 btn-rad text-center" placeholder="Password (contoh: admin123)" style="background:#f9f9f9;">
       <button class="btn btn-primary w-100 btn-rad py-2" onclick="login()" style="background: var(--header-grad-1); border:none;">MASUK SISTEM</button>
     </div>
   </div>
 
-  <!-- APP -->
+  <!-- APP SCREEN -->
   <div id="app-screen">
-    <!-- HEADER 1 -->
     <header class="header-1">
       <div class="d-flex align-items-center">
         <i class="fas fa-bars fs-4 me-3 d-md-none" style="cursor:pointer;" onclick="document.getElementById('sidebar').classList.toggle('open')"></i>
@@ -132,17 +116,11 @@
       <div class="d-none d-md-block fs-5 fw-bold"><i class="fas fa-user-shield"></i> ADMIN</div>
     </header>
 
-    <!-- HEADER 2 (Dynamic Control Bar) -->
-    <div class="header-2" id="header-2">
-      <!-- Diisi via JS berdasarkan halaman aktif -->
-    </div>
+    <div class="header-2" id="header-2"></div>
 
-    <!-- SIDEBAR -->
     <nav class="sidebar" id="sidebar">
       <div class="p-4 pt-4 text-center">
-        <div style="width:60px;height:60px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;">
-          <i class="fas fa-wallet fs-3"></i>
-        </div>
+        <div style="width:60px;height:60px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;"><i class="fas fa-wallet fs-3"></i></div>
         <div class="fw-bold fs-6">SISTEM KEUANGAN</div>
       </div>
       <a href="#" class="nav-link active" onclick="nav('dashboard', this)"><i class="fas fa-chart-pie"></i> Dashboard</a>
@@ -150,39 +128,25 @@
       <a href="#" class="nav-link" onclick="nav('arisan', this)"><i class="fas fa-handshake"></i> Arisan Bapak</a>
       <a href="#" class="nav-link" onclick="nav('jimpitan', this)"><i class="fas fa-coins"></i> Jimpitan Ronda</a>
       <a href="#" class="nav-link" onclick="nav('kocokan', this)"><i class="fas fa-dice"></i> Kocokan Arisan</a>
-      <div style="margin-top: 40px;">
-        <a href="#" class="nav-link" onclick="nav('pengaturan', this)"><i class="fas fa-cog"></i> Pengaturan</a>
-      </div>
+      <div style="margin-top: 40px;"><a href="#" class="nav-link" onclick="nav('pengaturan', this)"><i class="fas fa-cog"></i> Pengaturan</a></div>
     </nav>
 
-    <!-- MAIN CONTENT AREA -->
     <main class="main-content" id="main-view">
       
       <!-- DASHBOARD -->
       <section id="view-dashboard">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3 class="fw-bold m-0" style="color:var(--bg-sidebar);">Rekap Buku Kas RT 2 Pasekan Lor</h3>
-          <span class="badge bg-secondary" id="last-update">Update: Hari Ini</span>
+          <span class="badge bg-secondary">Update: Real-Time</span>
         </div>
-        
-        <!-- Cards -->
         <div class="row g-3 mb-4">
           <div class="col-md-4"><div class="card card-rad p-4 text-center"><div class="text-muted text-uppercase fw-bold" style="font-size:0.8rem;">Total Pemasukan</div><h3 class="text-success fw-bold mt-2" id="dash-in">Rp 0</h3></div></div>
           <div class="col-md-4"><div class="card card-rad p-4 text-center"><div class="text-muted text-uppercase fw-bold" style="font-size:0.8rem;">Total Pengeluaran</div><h3 class="text-danger fw-bold mt-2" id="dash-out">Rp 0</h3></div></div>
           <div class="col-md-4"><div class="card card-rad p-4 text-center text-white" style="background:var(--header-grad-1);"><div class="text-white-50 text-uppercase fw-bold" style="font-size:0.8rem;">Saldo Akhir</div><h2 class="fw-bold mt-2" id="dash-saldo">Rp 0</h2></div></div>
         </div>
-
-        <!-- AI Analisa -->
         <div class="card card-rad p-4 mb-4" style="background: linear-gradient(to right, #f8f9fa, #e9ecef); border-left: 5px solid var(--c-kode4);">
           <div class="d-flex align-items-center gap-2 mb-2"><i class="fas fa-robot text-primary fs-4"></i> <h6 class="fw-bold m-0">Analisis Cerdas AI</h6></div>
-          <p id="ai-text" class="m-0 text-muted" style="font-size:0.9rem; line-height: 1.6;">Mengambil data analisa...</p>
-        </div>
-
-        <!-- Charts -->
-        <div class="row g-4">
-          <div class="col-md-4"><div class="card card-rad p-3 text-center"><h6 class="fw-bold mb-3">Pemasukan</h6><canvas id="chart-in"></canvas></div></div>
-          <div class="col-md-4"><div class="card card-rad p-3 text-center"><h6 class="fw-bold mb-3">Pengeluaran</h6><canvas id="chart-out"></canvas></div></div>
-          <div class="col-md-4"><div class="card card-rad p-3 text-center"><h6 class="fw-bold mb-3">Jimpitan Bulanan</h6><canvas id="chart-jim"></canvas></div></div>
+          <p id="ai-text" class="m-0 text-muted" style="font-size:0.9rem; line-height: 1.6;">Sedang menganalisa data kas...</p>
         </div>
       </section>
 
@@ -190,24 +154,17 @@
       <section id="view-bukubesar" class="hidden">
         <div style="overflow-x:auto;">
           <table class="table-bb">
-            <thead><tr><th>Tanggal</th><th>Kode</th><th>Uraian</th><th class="text-end">Pemasukan</th><th class="text-end">Pengeluaran</th><th class="text-end">Saldo</th><th class="text-center"><i class="fas fa-cogs"></i></th></tr></thead>
+            <thead><tr><th>Tanggal</th><th>Kode</th><th>Uraian</th><th class="text-end">Masuk</th><th class="text-end">Keluar</th><th class="text-end">Saldo</th><th class="text-center"><i class="fas fa-cogs"></i></th></tr></thead>
             <tbody id="bb-body"></tbody>
-            <tfoot><tr style="background:#f1f1f1; font-weight:700;"><td colspan="5" class="text-end py-3">TOTAL KAS RT 2:</td><td class="text-end py-3 text-primary fs-5" id="bb-total-saldo">Rp 0</td><td></td></tr></tfoot>
+            <tfoot><tr style="background:#f1f1f1; font-weight:700;"><td colspan="5" class="text-end py-3">TOTAL SALDO RT 2:</td><td class="text-end py-3 text-primary fs-5" id="bb-total-saldo">Rp 0</td><td></td></tr></tfoot>
           </table>
         </div>
       </section>
 
-      <!-- ARISAN BAPAK -->
-      <section id="view-arisan" class="hidden">
-        <div class="row g-3" id="arisan-grid">
-          <!-- Rendered via JS 12 months -->
-        </div>
-      </section>
-
-      <!-- JIMPITAN RONDA -->
+      <!-- JIMPITAN -->
       <section id="view-jimpitan" class="hidden">
         <div class="alert alert-info card-rad border-0 mb-4" style="background:#e0f3ff; color:#0c4a6e;">
-          <i class="fas fa-info-circle"></i> Input rekapitulasi Jimpitan sebanyak 2 sesi dalam sebulan. Sesi 1 (Pertengahan), Sesi 2 (Akhir). Jika sudah lengkap, setor ke Buku Besar.
+          <i class="fas fa-info-circle"></i> Input rekapitulasi Jimpitan sebanyak 2 sesi dalam sebulan. Jika sudah lengkap, Setor ke Buku Kas Besar.
         </div>
         <div class="row g-4">
           <div class="col-md-6">
@@ -225,70 +182,38 @@
             </div>
           </div>
         </div>
-        <!-- Temp Container -->
         <div class="card card-rad p-4 mt-4 text-center bg-light border-0">
-          <h6 class="fw-bold text-muted mb-3">DATA TAMPUNGAN SEBELUM DISETOR</h6>
           <div class="d-flex justify-content-center gap-5 mb-3">
-            <div><small>Sesi 1:</small> <br><b id="jim-temp-1" class="text-success fs-5">Rp 0</b></div>
-            <div><small>Sesi 2:</small> <br><b id="jim-temp-2" class="text-primary fs-5">Rp 0</b></div>
-            <div><small>Total:</small> <br><b id="jim-temp-tot" class="text-dark fs-5">Rp 0</b></div>
+            <div><small>Sesi 1:</small><br><b id="jim-temp-1" class="text-success fs-5">Rp 0</b></div>
+            <div><small>Sesi 2:</small><br><b id="jim-temp-2" class="text-primary fs-5">Rp 0</b></div>
+            <div><small>Total:</small><br><b id="jim-temp-tot" class="text-dark fs-5">Rp 0</b></div>
           </div>
           <button class="btn btn-warning fw-bold btn-rad w-50 mx-auto" onclick="setorJimpitan()">Setor ke Buku Kas Besar</button>
         </div>
       </section>
 
-      <!-- KOCOKAN ARISAN -->
+      <!-- KOCOKAN -->
       <section id="view-kocokan" class="hidden text-center mt-5">
         <i class="fas fa-gift text-danger mb-4" style="font-size: 80px;"></i>
         <h2 class="fw-bold" style="color:var(--bg-sidebar);">KOCOKAN ARISAN BULANAN</h2>
         <p class="text-muted mb-5">Tekan tombol di bawah untuk mengundi pemenang arisan bulan ini secara acak.</p>
-        
         <div id="winner-box" class="card card-rad p-5 mx-auto mb-4 hidden" style="max-width: 600px; background:linear-gradient(135deg, #ff9a9e, #fecfef);">
-          <h1 class="fw-bold text-danger" id="winner-name">BAPAK DONI</h1>
-          <h5 class="text-dark mt-2" id="winner-alamat">Blok C3</h5>
-          <hr class="my-4">
-          <p class="m-0 fw-bold">Pertemuan berikutnya di kediaman pemenang.</p>
+          <h1 class="fw-bold text-danger" id="winner-name"></h1>
+          <h5 class="text-dark mt-2" id="winner-alamat"></h5>
         </div>
-
         <button class="btn btn-danger btn-lg btn-rad px-5 py-3 fw-bold shadow" onclick="kocokArisan()"><i class="fas fa-random"></i> MULAI MENGUNDI</button>
       </section>
+      
+      <section id="view-arisan" class="hidden"><div class="alert alert-warning text-center">Modul Arisan sedang dalam tahap pengembangan struktur Database.</div></section>
+      <section id="view-pengaturan" class="hidden"><div class="alert alert-secondary text-center">Modul Pengaturan terhubung langsung di database Google Sheets Anda.</div></section>
 
-      <!-- PENGATURAN -->
-      <section id="view-pengaturan" class="hidden">
-        <div class="row g-4">
-          <div class="col-md-6">
-            <div class="card card-rad p-4 h-100">
-              <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="fas fa-palette"></i> Tampilan & Logo</h5>
-              <label class="small fw-bold">URL Logo / Ilustrasi Embed</label>
-              <input type="text" class="form-control btn-rad mb-3" id="set-logo" placeholder="https://...">
-              
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="small fw-bold">Tampilkan Laporan ke Web Warga</span>
-                <label class="switch"><input type="checkbox" id="set-publik"><span class="slider"></span></label>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="card card-rad p-4 h-100">
-              <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="fas fa-user-lock"></i> Kredensial Admin</h5>
-              <label class="small fw-bold">Username</label>
-              <input type="text" class="form-control btn-rad mb-2" id="set-user">
-              <label class="small fw-bold">Password Baru</label>
-              <input type="text" class="form-control btn-rad mb-3" id="set-pass">
-              <button class="btn btn-primary btn-rad w-100" onclick="saveSettings()">Simpan Pengaturan</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FOOTER -->
       <footer class="app-footer">
         <div>Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
         <div>Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
       </footer>
     </main>
 
-    <!-- SCROLL PANEL KANAN -->
+    <!-- SCROLL CONTROLS -->
     <div class="scroll-panel">
       <button class="scroll-btn shadow" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
       <button class="scroll-btn shadow" onclick="window.scrollTo({top: document.body.scrollHeight/2, behavior:'smooth'})"><i class="fas fa-bullseye"></i></button>
@@ -296,12 +221,12 @@
     </div>
   </div>
 
-  <!-- MODAL TRANSAKSI BUKU BESAR -->
+  <!-- MODAL BUKU BESAR -->
   <div class="modal fade" id="modalBB" tabindex="-1" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content card-rad border-0">
         <div class="modal-header text-white" id="modalBBHeader" style="background:var(--header-grad-1);">
-          <h5 class="modal-title fw-bold" id="modalBBTitle">Transaksi Baru</h5>
+          <h5 class="modal-title fw-bold">Transaksi Baru</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body p-4">
@@ -311,10 +236,6 @@
           </div>
           <input type="hidden" id="tx-type" value="">
           
-          <div class="mb-3">
-            <label class="small fw-bold text-muted">Waktu Transaksi</label>
-            <input type="text" id="tx-date" class="form-control btn-rad" readonly>
-          </div>
           <div class="mb-3">
             <label class="small fw-bold text-muted">Kode Kategori</label>
             <select id="tx-kode" class="form-select btn-rad">
@@ -334,80 +255,70 @@
             <label class="small fw-bold text-muted">Nominal (Rp)</label>
             <input type="text" id="tx-nominal" class="form-control btn-rad fs-4 fw-bold" oninput="formatRupiah(this)">
           </div>
-          <div class="mb-3">
-            <label class="small fw-bold text-muted">Upload Bukti (Struk/Nota)</label>
-            <input type="file" id="tx-file" class="form-control btn-rad" accept="image/*,application/pdf">
-          </div>
         </div>
         <div class="modal-footer border-0 p-3">
           <button type="button" class="btn btn-light btn-rad px-4" data-bs-dismiss="modal">Batal</button>
-          <button type="button" class="btn btn-primary btn-rad px-4 fw-bold" onclick="saveBukuBesar()" style="background:var(--header-grad-1); border:none;">Simpan Rekam</button>
+          <button type="button" class="btn btn-primary btn-rad px-4 fw-bold" onclick="saveBukuBesar()" style="background:var(--header-grad-1); border:none;">Simpan Transaksi</button>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     // ==========================================
-    // KONFIGURASI API (GANTI URL INI)
+    // 1. MASUKKAN URL GOOGLE APPS SCRIPT DI BAWAH INI
     // ==========================================
-    const API_URL = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL"; // <--- PASTE WEB APP URL DI SINI
+    const API_URL = "MASUKKAN_URL_WEB_APP_ANDA_DI_SINI"; 
 
-    // Global State
-    let currentView = 'dashboard';
+    // Global
     let gDataBB = [];
     let modalBBObj = null;
 
-    // --- Core Logic ---
     document.addEventListener("DOMContentLoaded", () => {
       modalBBObj = new bootstrap.Modal(document.getElementById('modalBB'));
     });
 
-async function apiCall(payload) {
+    // ==========================================
+    // 2. FUNGSI FETCH (CORS HANDLING & REDIRECT)
+    // ==========================================
+    async function apiCall(payload) {
       document.getElementById('global-loader').style.display = 'flex';
       try {
-        // Mengirim data ke Google Apps Script
         const response = await fetch(API_URL, {
           method: 'POST',
-          headers: {
-            // Wajib text/plain agar Google tidak memblokir CORS dari Github Pages
-            'Content-Type': 'text/plain;charset=utf-8' 
-          },
+          redirect: 'follow', // Menghindari block 302 dari Google
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
         
-        // Menangkap balasan dari Google dalam bentuk teks murni
         const textResponse = await response.text(); 
         
         let json;
         try {
-          // Mencoba merubah teks menjadi JSON
           json = JSON.parse(textResponse); 
         } catch (err) {
-          // JIKA ERROR JSON.PARSE TERJADI LAGI, INI PENYELAMATNYA:
-          console.error("Google tidak membalas dengan JSON. Balasan asli:", textResponse);
-          throw new Error("Koneksi diblokir Google. Pastikan Deploy Web App diatur 'Who has access: Anyone'");
+          console.error("Respon Server Asli:", textResponse);
+          throw new Error("Sistem ditahan Google. Pastikan URL sudah benar dan Otorisasi Google Script sudah selesai dilakukan.");
         }
 
         document.getElementById('global-loader').style.display = 'none';
         return json;
-
       } catch(e) {
         document.getElementById('global-loader').style.display = 'none';
-        alert("Gagal Terhubung: " + e.message);
-        return { success: false, message: e.message };
+        alert("Koneksi API Gagal: " + e.message);
+        return { success: false };
       }
     }
 
-    function showToast(msg, isErr = false) {
+    // --- UTILITIES ---
+    function showToast(msg) {
       let t = document.getElementById('toast');
       document.getElementById('toast-msg').innerText = msg;
-      t.innerHTML = isErr ? `<i class="fas fa-times-circle text-danger"></i> ${msg}` : `<i class="fas fa-check-circle text-success"></i> ${msg}`;
       t.classList.add('show');
       setTimeout(() => t.classList.remove('show'), 3000);
     }
 
-    // --- Formatters ---
     function formatRupiah(obj) {
       let angka = obj.value.replace(/[^,\d]/g, '').toString();
       let split = angka.split(','); let sisa = split[0].length % 3;
@@ -418,43 +329,39 @@ async function apiCall(payload) {
     }
     function cleanRp(val) { return parseInt(val.replace(/\./g, '')) || 0; }
     function numToRp(num) { return new Intl.NumberFormat('id-ID').format(num); }
-    
+
     function parseDateCustom(str) {
-      // Returns format: Atas = Hari, Bawah = Tgl (bold)
       const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
       const mths = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
       let d = new Date(str); if(isNaN(d)) d = new Date();
       return `<span class="bb-date-top">${days[d.getDay()]}</span><span class="bb-date-bot">${d.getDate()} ${mths[d.getMonth()]} ${d.getFullYear()}</span>`;
     }
 
-    // --- Authentication ---
+    // --- LOGIN SYSTEM ---
     async function login() {
       let user = document.getElementById('log-user').value;
       let pass = document.getElementById('log-pass').value;
       
-      // Jika API_URL belum diisi (Testing local), kita bypass:
-      if(API_URL === "https://script.google.com/macros/s/AKfycbzQIx4QzWT1vCOB3GxxyEnaNiWWnlLClpa_4C5--kMV81uB2FSSZuQyxRTOR-y7SBM8/exec") {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('app-screen').style.display = 'block';
-        nav('dashboard'); showToast("Mode Testing Lokal"); return;
+      if(API_URL === "MASUKKAN_URL_WEB_APP_ANDA_DI_SINI") {
+         alert("ERROR CODE: Anda belum memasukkan URL API Google Script di file HTML ini.");
+         return;
       }
 
       let res = await apiCall({ action: "login", user: user, pass: pass });
+      
       if (res && res.success) {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('app-screen').style.display = 'block';
-        if(res.settings.app_logo) {
+        if(res.settings && res.settings.app_logo) {
            document.getElementById('app-logo').src = res.settings.app_logo;
-           document.getElementById('set-logo').value = res.settings.app_logo;
         }
-        document.getElementById('set-user').value = user;
         nav('dashboard');
       } else {
-        alert(res.message || "Koneksi ke API Gagal");
+        alert("Kredensial salah! Pastikan Username dan Password benar.");
       }
     }
 
-    // --- Navigation & Headers ---
+    // --- NAVIGASI ---
     function nav(view, el=null) {
       document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
       document.getElementById(`view-${view}`).classList.remove('hidden');
@@ -463,38 +370,25 @@ async function apiCall(payload) {
         el.classList.add('active');
         if(window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
       }
-      currentView = view;
       buildHeader2(view);
-
-      // Trigger Load Data specific to view
+      
       if(view === 'bukubesar') loadBukuBesar();
       if(view === 'dashboard') loadDashboard();
-      if(view === 'arisan') loadArisanDummy(); // Pakai grid statis sbg UI
     }
 
     function buildHeader2(view) {
       let h2 = document.getElementById('header-2');
-      h2.innerHTML = '';
       h2.classList.add('show');
-
       if (view === 'dashboard') {
-        h2.innerHTML = `
-          <button class="btn btn-sm btn-outline-danger btn-rad" onclick="window.print()"><i class="fas fa-file-pdf"></i> PDF A4</button>
-          <button class="btn btn-sm btn-outline-success btn-rad"><i class="fas fa-file-excel"></i> XLS</button>
-        `;
+        h2.innerHTML = `<button class="btn btn-sm btn-outline-danger btn-rad" onclick="window.print()"><i class="fas fa-file-pdf"></i> Download Laporan PDF</button>`;
       } else if (view === 'bukubesar') {
-        h2.innerHTML = `
-          <button class="btn btn-sm btn-primary btn-rad fw-bold shadow-sm" onclick="openModalBB()" style="background:var(--header-grad-1); border:none;"><i class="fas fa-plus-circle"></i> Transaksi Baru</button>
-          <input type="text" class="form-control form-control-sm btn-rad" placeholder="Cari..." style="max-width:150px;">
-          <select class="form-select form-select-sm btn-rad" style="max-width:120px;"><option>Semua Kode</option></select>
-          <button class="btn btn-sm btn-light btn-rad"><i class="fas fa-sync"></i> Reset</button>
-        `;
+        h2.innerHTML = `<button class="btn btn-sm btn-primary btn-rad fw-bold shadow-sm" onclick="openModalBB()" style="background:var(--header-grad-1); border:none;"><i class="fas fa-plus-circle"></i> Transaksi Baru</button>`;
       } else {
-        h2.classList.remove('show'); // Sembunyikan jika bukan BB / Dash
+        h2.classList.remove('show');
       }
     }
 
-    // --- BUKU BESAR LOGIC ---
+    // --- BUKU BESAR ---
     function getColorByCode(codeStr) {
       if(codeStr.includes('1')) return 'var(--c-kode1)';
       if(codeStr.includes('2')) return 'var(--c-kode2)';
@@ -505,38 +399,26 @@ async function apiCall(payload) {
     }
 
     async function loadBukuBesar() {
-      // Mock data jika lokal
-      if(API_URL === "YOUR_GOOGLE_SCRIPT_WEB_APP_URL") {
-        gDataBB = [
-          ["ID","Tanggal","Kode","Uraian","Pemasukan","Pengeluaran","Saldo"],
-          ["1","2026-09-14","KODE 1","Jimpitan Tengah Bulan Sesi 1","450000","0","450000"],
-          ["2","2026-09-15","KODE 4","Beli Semen Pembangunan Gapura","0","150000","300000"]
-        ];
-        renderBB(); return;
-      }
-      
       let res = await apiCall({action: "getData", sheet: "BukuBesar"});
-      if(res.success) { gDataBB = res.data; renderBB(); }
+      if(res && res.success) { gDataBB = res.data; renderBB(); }
     }
 
     function renderBB() {
       let tbody = ''; let lastSaldo = 0;
       for(let i=1; i<gDataBB.length; i++) {
         let r = gDataBB[i];
-        let id = r[0], tgl = r[1], kode = r[2], uraian = r[3], inVal = cleanRp(r[4]||'0'), outVal = cleanRp(r[5]||'0'), saldo = cleanRp(r[6]||'0');
+        let tgl = r[1], kode = r[2], uraian = r[3], inVal = cleanRp(r[4]||'0'), outVal = cleanRp(r[5]||'0'), saldo = cleanRp(r[6]||'0');
         lastSaldo = saldo;
         let c = getColorByCode(kode);
         
         tbody += `<tr>
           <td>${parseDateCustom(tgl)}</td>
           <td><span class="kode-badge" style="background:${c};" title="${kode}">${kode.substring(0,6)}</span></td>
-          <td class="bb-uraian" title="${uraian}">${uraian}</td>
+          <td class="bb-uraian">${uraian}</td>
           <td class="text-end text-success fw-bold">${inVal>0 ? numToRp(inVal) : '-'}</td>
           <td class="text-end text-danger fw-bold">${outVal>0 ? numToRp(outVal) : '-'}</td>
           <td class="text-end fw-bold">${numToRp(saldo)}</td>
-          <td class="text-center">
-             <button class="btn btn-sm text-danger" onclick="delBB(${i})"><i class="fas fa-trash"></i></button>
-          </td>
+          <td class="text-center"><button class="btn btn-sm text-danger" onclick="delBB(${i})"><i class="fas fa-trash"></i></button></td>
         </tr>`;
       }
       document.getElementById('bb-body').innerHTML = tbody;
@@ -544,10 +426,6 @@ async function apiCall(payload) {
     }
 
     function openModalBB() {
-      const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-      const mths = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-      let d = new Date();
-      document.getElementById('tx-date').value = `${days[d.getDay()]}, ${d.getDate()} ${mths[d.getMonth()]} ${d.getFullYear()} jam ${d.getHours()}:${d.getMinutes()}`;
       setTxType('in');
       document.getElementById('tx-uraian').value = '';
       document.getElementById('tx-nominal').value = '';
@@ -561,17 +439,17 @@ async function apiCall(payload) {
       if(type === 'in') {
         btnIn.classList.replace('btn-outline-success', 'btn-success'); btnIn.classList.add('text-white');
         btnOut.classList.replace('btn-primary', 'btn-outline-primary'); btnOut.classList.remove('text-white');
-        document.getElementById('modalBBHeader').style.background = '#00804E'; // Hijau pemasukan
+        document.getElementById('modalBBHeader').style.background = '#00804E';
       } else {
         btnOut.classList.replace('btn-outline-primary', 'btn-primary'); btnOut.classList.add('text-white');
         btnIn.classList.replace('btn-success', 'btn-outline-success'); btnIn.classList.remove('text-white');
-        document.getElementById('modalBBHeader').style.background = '#1155cc'; // Biru pengeluaran
+        document.getElementById('modalBBHeader').style.background = '#1155cc';
       }
     }
 
     async function saveBukuBesar() {
       let type = document.getElementById('tx-type').value;
-      let tgl = new Date().toISOString(); // Simpan format raw ISO agar gampang diolah
+      let tgl = new Date().toISOString(); 
       let kode = document.getElementById('tx-kode').options[document.getElementById('tx-kode').selectedIndex].text;
       let uraian = document.getElementById('tx-uraian').value.toUpperCase();
       let nom = cleanRp(document.getElementById('tx-nominal').value);
@@ -579,49 +457,43 @@ async function apiCall(payload) {
       let inVal = type === 'in' ? nom : 0;
       let outVal = type === 'out' ? nom : 0;
       
-      // Ambil saldo terakhir
       let lastRow = gDataBB[gDataBB.length-1];
       let lastSaldo = lastRow ? cleanRp(lastRow[6]||'0') : 0;
       let newSaldo = lastSaldo + inVal - outVal;
 
-      let id = "TX"+Date.now();
-      let rowData = [id, tgl, kode, uraian, inVal, outVal, newSaldo, ""];
-
-      // Jika local bypass
-      if(API_URL === "YOUR_GOOGLE_SCRIPT_WEB_APP_URL") {
-        gDataBB.push(rowData); renderBB(); modalBBObj.hide(); showToast("Disimpan (Lokal)"); return;
-      }
+      let rowData = ["TX"+Date.now(), tgl, kode, uraian, inVal, outVal, newSaldo, ""];
 
       let res = await apiCall({action: "saveData", sheet: "BukuBesar", data: rowData});
       if(res.success) { showToast("Transaksi Berhasil Dicatat"); modalBBObj.hide(); loadBukuBesar(); }
-      else alert(res.message);
+    }
+
+    async function delBB(index) {
+      if(confirm("Yakin ingin menghapus data ini?")) {
+        let res = await apiCall({action: "deleteData", sheet: "BukuBesar", rowIndex: index + 1});
+        if(res.success) { showToast("Data dihapus!"); loadBukuBesar(); }
+      }
     }
 
     // --- DASHBOARD ---
-    function loadDashboard() {
-       // Heuristic AI Analysis
-       let inVal = 4500000; let outVal = 1200000; let sal = inVal - outVal;
-       if(gDataBB.length > 1) {
-          // Hitung real dari gDataBB jika sudah terload
-          let lastR = gDataBB[gDataBB.length-1];
-          sal = cleanRp(lastR[6]||'0');
+    async function loadDashboard() {
+       let res = await apiCall({action: "getData", sheet: "BukuBesar"});
+       if(res && res.success) {
+           let db = res.data;
+           let totalIn = 0; let totalOut = 0; let sal = 0;
+           for(let i=1; i<db.length; i++) {
+               totalIn += cleanRp(db[i][4]||'0');
+               totalOut += cleanRp(db[i][5]||'0');
+           }
+           sal = totalIn - totalOut;
+           
+           document.getElementById('dash-in').innerText = 'Rp ' + numToRp(totalIn);
+           document.getElementById('dash-out').innerText = 'Rp ' + numToRp(totalOut);
+           document.getElementById('dash-saldo').innerText = 'Rp ' + numToRp(sal);
+           document.getElementById('ai-text').innerHTML = `Analisa Otomatis: Pemasukan Kas tercatat Rp ${numToRp(totalIn)}, dengan pengeluaran Rp ${numToRp(totalOut)}. Kondisi keuangan Kas RT 2 terpantau <b>SEHAT</b> dan terkendali. Lanjutkan!`;
        }
-       
-       document.getElementById('dash-in').innerText = 'Rp ' + numToRp(inVal);
-       document.getElementById('dash-out').innerText = 'Rp ' + numToRp(outVal);
-       document.getElementById('dash-saldo').innerText = 'Rp ' + numToRp(sal);
-
-       let aiStr = `Kondisi kas RT 2 Pasekan Lor saat ini terpantau <b>SEHAT</b>. Terdapat surplus penahanan saldo sebesar Rp ${numToRp(sal)}. Evaluasi: Pemasukan jimpitan stabil, namun dihimbau kepada petugas ronda untuk lebih aktif mengisi kotak jimpitan agar target sosial bulan ini tercapai maksimal. Terus semangat jaga kerukunan!`;
-       document.getElementById('ai-text').innerHTML = aiStr;
-
-       // Render Charts
-       const ctx1 = document.getElementById('chart-in').getContext('2d');
-       new Chart(ctx1, { type:'doughnut', data:{ labels:['Jimpitan','Arisan','Lain'], datasets:[{data:[60,30,10], backgroundColor:['#00804E','#0d6efd','#ED7600']}] }});
-       const ctx2 = document.getElementById('chart-out').getContext('2d');
-       new Chart(ctx2, { type:'doughnut', data:{ labels:['Listrik','Sosial','Konsumsi'], datasets:[{data:[50,25,25], backgroundColor:['#dc3545','#6f42c1','#795548']}] }});
     }
 
-    // --- JIMPITAN TEMP LOGIC ---
+    // --- JIMPITAN ---
     let tempJim1 = 0, tempJim2 = 0;
     function saveJimpitanTemp(sesi) {
       let val = cleanRp(document.getElementById(`jim-val-${sesi}`).value);
@@ -630,42 +502,34 @@ async function apiCall(payload) {
       document.getElementById(`jim-temp-tot`).innerText = 'Rp ' + numToRp(tempJim1 + tempJim2);
       showToast(`Sesi ${sesi} ditampung.`);
     }
-    function setorJimpitan() {
-      if(tempJim1 + tempJim2 === 0) return alert("Belum ada nominal jimpitan yg diinput.");
-      alert(`Mensimulasikan setor ke Buku Besar KODE 1 sejumlah Rp ${numToRp(tempJim1+tempJim2)}... (Akan masuk ke tabel otomatis).`);
-      tempJim1 = 0; tempJim2 = 0;
-      document.getElementById('jim-temp-tot').innerText = "Rp 0";
-      showToast("Berhasil disetor!");
+    
+    async function setorJimpitan() {
+      let total = tempJim1 + tempJim2;
+      if(total === 0) return alert("Belum ada nominal yang diinput.");
+      if(!confirm(`Setor Rp ${numToRp(total)} ke Buku Besar?`)) return;
+      
+      let tgl = new Date().toISOString(); 
+      let lastRow = gDataBB[gDataBB.length-1];
+      let lastSaldo = lastRow ? cleanRp(lastRow[6]||'0') : 0;
+      let newSaldo = lastSaldo + total;
+      
+      let rowData = ["TX"+Date.now(), tgl, "KODE 1 (Jimpitan)", "SETORAN JIMPITAN BULAN INI", total, 0, newSaldo, ""];
+      let res = await apiCall({action: "saveData", sheet: "BukuBesar", data: rowData});
+      
+      if(res.success) { 
+          showToast("Jimpitan berhasil disetor ke Buku Besar!"); 
+          tempJim1 = 0; tempJim2 = 0;
+          document.getElementById('jim-val-1').value = ''; document.getElementById('jim-val-2').value = '';
+          document.getElementById('jim-temp-1').innerText = "Rp 0"; document.getElementById('jim-temp-2').innerText = "Rp 0";
+          document.getElementById('jim-temp-tot').innerText = "Rp 0";
+      }
     }
 
-    // --- ARISAN BAPAK (Grid 12 Cards) ---
-    function loadArisanDummy() {
-      let html = '';
-      const mths = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-      mths.forEach((m, i) => {
-        let isDone = i < 8; // Jan-Agustus Selesai
-        html += `
-          <div class="col-md-4 col-sm-6">
-            <div class="card card-rad h-100 ${isDone ? 'border-success' : 'border-warning'}" style="border-width: 2px;">
-              <div class="card-header fw-bold text-center text-white ${isDone ? 'bg-success' : 'bg-warning'}">Periode: ${m} 2026</div>
-              <div class="card-body">
-                <div class="small fw-bold text-muted mb-1">Status:</div>
-                <div class="mb-2 ${isDone ? 'text-success fw-bold' : 'text-warning fw-bold'}"><i class="fas ${isDone ? 'fa-check-circle' : 'fa-clock'}"></i> ${isDone ? 'Telah Terlaksana' : 'Belum Terlaksana'}</div>
-                ${isDone ? `<p class="small m-0">Tempat: Bpk Arga (C3)<br>Kehadiran: 45/50 Warga</p>` : `<button class="btn btn-sm btn-primary mt-2 w-100 btn-rad">Isi Form Data</button>`}
-              </div>
-            </div>
-          </div>
-        `;
-      });
-      document.getElementById('arisan-grid').innerHTML = html;
-    }
-
-    // --- KOCOKAN ARISAN & TTS ---
+    // --- KOCOKAN ARISAN (TTS) ---
     const warga = ["BAPAK DONI (C3)", "BAPAK ARGA (A4)", "BAPAK WISNU (B2)", "BAPAK ARI (D1)"];
     function kocokArisan() {
       let box = document.getElementById('winner-box');
       box.classList.add('hidden');
-      
       let timer = setInterval(() => {
         let random = warga[Math.floor(Math.random() * warga.length)];
         document.getElementById('winner-name').innerText = random.split(' (')[0];
@@ -682,12 +546,9 @@ async function apiCall(payload) {
         document.getElementById('winner-alamat').innerText = 'Blok ' + almt;
         box.classList.remove('hidden');
 
-        // Web Speech API (Suara Indonesia)
         if ('speechSynthesis' in window) {
-           let text = `Selamat kepada ${nama} di alamat Blok ${almt}. Anda memenangkan kocokan arisan bulan ini.`;
-           let utterance = new SpeechSynthesisUtterance(text);
-           utterance.lang = 'id-ID';
-           utterance.rate = 0.9;
+           let utterance = new SpeechSynthesisUtterance(`Selamat kepada ${nama} di alamat Blok ${almt}. Anda memenangkan kocokan arisan bulan ini.`);
+           utterance.lang = 'id-ID'; utterance.rate = 0.9;
            window.speechSynthesis.speak(utterance);
         }
       }, 3000);

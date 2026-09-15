@@ -112,8 +112,7 @@
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 500; z-index:-1;}
 
-        /* ================== MENU UTAMA ================== */
-        .main-menu-wrapper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 0 16px 20px 16px; width: 100%; z-index: 2; position: relative; }
+        /* ================== MODAL MENU GRID (SISA MENU BAWAH) ================== */
         .nav-item { color: #FFFFFF; text-decoration: none; border-radius: 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; padding: 10px 2px; border: none; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .nav-item:active { transform: scale(0.95); }
         .nav-item svg { width: 20px; height: 20px; margin-bottom: 6px; display: block; stroke: currentColor; stroke-width: 2 !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
@@ -293,16 +292,17 @@
         .himbauan-box { width: 100%; background: transparent; border: none; padding: 0; text-align: center; margin-top: 5px; }
         .himbauan-text { color: #1155CC; font-size: 13px; font-weight: 600; line-height: 1.4; text-transform: none; min-height: 48px; display: flex; align-items: center; justify-content: center; text-align: center;}
         
-        .main-footer { width: 100%; margin: 0px auto 180px auto; padding: 16px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
+        /* Jarak Footer yang lebih tinggi untuk ruang menu navigasi */
+        .main-footer { width: 100%; margin: 15px auto 250px auto; padding: 16px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
         .footer-line { color: #999999; line-height: 1.4; margin-bottom: 2px;}
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
         /* ================== FOOTER LAYER STYLING ================== */
-        /* Gunung Footer (Fixed di belakang secara statis di bawah / layer 1) */
+        /* Gunung Footer (Otomatis naik sesuai tinggi menu navigasi) */
         #footerFixedGunung {
             position: fixed;
-            bottom: 0;
+            bottom: 65px; 
             left: 0;
             right: 0;
             margin: 0 auto;
@@ -312,10 +312,10 @@
             pointer-events: none;
         }
 
-        /* Suasana Desa (Fast Smooth Slide Up/Down di depan Gunung Footer / layer 2) */
+        /* Suasana Desa (Otomatis naik sesuai tinggi menu navigasi) */
         #footerSlideImg {
             position: fixed;
-            bottom: 0;
+            bottom: 65px;
             left: 0;
             right: 0;
             margin: 0 auto;
@@ -325,6 +325,55 @@
             width: 100%;
             max-width: 480px;
             pointer-events: none;
+        }
+
+        /* ================== FIXED BOTTOM NAVIGATION (DESAIN BARU) ================== */
+        .bottom-nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
+            width: 100%; max-width: 480px; height: 65px;
+            background: #DEDEDE; /* Sesuai Permintaan: Latar Fixed #DEDEDE */
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .b-nav-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-decoration: none; color: #ffffff; font-size: 10px; font-weight: 600;
+            width: 20%; height: 100%; cursor: pointer; 
+            transition: background 0.2s, color 0.2s;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Shadow halus agar terlihat di atas warna abu terang */
+        }
+        
+        .b-nav-item svg { 
+            width: 24px; height: 24px; margin-bottom: 4px; stroke: #ffffff; stroke-width: 2; fill: none; 
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+        }
+
+        /* Sesuai Permintaan: Hover #05A87A */
+        .b-nav-item:hover { background-color: #05A87A; }
+        
+        /* Sesuai Permintaan: Tombol Modal Tengah #FF6400 */
+        .b-nav-all-menu { background-color: #FF6400; }
+        .b-nav-all-menu:hover { background-color: #05A87A; } /* Hover tetap ganti warna */
+
+        /* Modal Transparan Semua Menu */
+        .more-menu-overlay {
+            position: fixed; bottom: 65px; left: 0; right: 0; margin: 0 auto;
+            width: 100%; max-width: 480px; height: calc(100vh - 65px);
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(3px);
+            z-index: 1999; display: flex; align-items: flex-end;
+            visibility: hidden; opacity: 0; transition: all 0.3s ease;
+        }
+        .more-menu-overlay.active { visibility: visible; opacity: 1; }
+        .more-menu-content {
+            width: 100%; background: transparent; padding-bottom: 15px;
+            transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .more-menu-overlay.active .more-menu-content { transform: translateY(0); }
+        .modal-menu-grid {
+            background: rgba(0, 52, 143, 0.95); border-radius: 20px; margin: 0 16px; 
+            padding: 16px; border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
         }
 
         /* General Hover Effects */
@@ -388,6 +437,7 @@
      START AREA PENGATURAN MENU AKTIF
      ====================================================================== -->
 <style>
+    /* Styling khusus Modal Menu pop-up ketika aktif (Modal Dalam) */
     .nav-item.menu-tertekan {
         background: #A1A1A1 !important;
         box-shadow: inset 0 6px 10px rgba(0,0,0,0.5) !important; 
@@ -395,8 +445,20 @@
         color: #FFFFFF !important;
         pointer-events: none; 
         cursor: default;
+        border-radius: 12px;
     }
     .nav-item.menu-tertekan svg { filter: none !important; opacity: 0.7; }
+    
+    /* Sesuai Permintaan: Warna tombol aktif #A1A1A1, rata/flat (Bottom Nav Bar) */
+    .b-nav-item.menu-tertekan {
+        background-color: #A1A1A1 !important;
+        box-shadow: inset 0 4px 8px rgba(0,0,0,0.2) !important;
+        color: #FFFFFF !important;
+        pointer-events: none;
+        cursor: default;
+        transform: none !important; /* Dibuat Flat tidak mengecil */
+        border-radius: 0 !important; /* Dibuat Flat tanpa bingkai */
+    }
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -407,8 +469,9 @@
             'tatatertib': 'btn-tatatertib', 'ronda': 'btn-ronda'
         };
         if (mapMenu[halamanAktifSaatIni]) {
-            const tombolAktif = document.querySelector('.' + mapMenu[halamanAktifSaatIni]);
-            if (tombolAktif) tombolAktif.classList.add('menu-tertekan');
+            // Berlaku untuk Bottom Nav & Nav Modal
+            const tombolAktif = document.querySelectorAll('.' + mapMenu[halamanAktifSaatIni]);
+            tombolAktif.forEach(btn => btn.classList.add('menu-tertekan'));
         }
     });
 </script>
@@ -602,42 +665,6 @@
             </div>
         </section>
 
-        <!-- MENU UTAMA BEBAS AKSES KEMBALI -->
-        <div class="main-menu-wrapper">
-            <a href="#" class="nav-item btn-home" title="Home">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                <span>HOME</span>
-            </a>
-            <a href="data-warga" class="nav-item btn-warga" title="Warga">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                <span>WARGA</span>
-            </a>
-            <a href="inventaris" class="nav-item btn-inventaris" title="Inventaris">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                <span>INVENTARIS</span>
-            </a>
-            <a href="lapak-warga" class="nav-item btn-lapak" title="Lapak">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                <span>LAPAK</span>
-            </a>
-            <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span>PENGURUS</span>         
-            </a>
-            <a href="galeri" class="nav-item btn-galeri" title="Galeri">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                <span>GALERI</span>
-            </a>
-            <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                <span>TATA TERTIB</span>
-            </a>
-            <a href="ronda" class="nav-item btn-ronda" title="Ronda">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span>RONDA</span>
-            </a>
-        </div>
-
         <!-- SLIDER MODAL SLIDE DOWN PURE IMAGE (CENTER VIEW UTUH) -->
         <div class="slide-down-overlay" id="psModalOverlay" onclick="closePsModalOutside(event)">
             <div class="slide-down-content" onclick="event.stopPropagation()">
@@ -779,8 +806,8 @@
         </div>
 
         <footer class="main-footer">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXV9uai9NYOwne0RP0jKBb-ajPaFvOe91SnfYesBL2_mLHLQQ8KKXcATfn40usjlzQKzi00XIdu8DY1KrUGfcL0Z_PJVV3pZfqL4GjoFHSD47o4rGuz7h6OYWfRzHTr1gTA4zOpBJgdwx9y6SN5O_0w4YByoLioorYi6upHwl19Sb-um44FJbc3zUEArs/s1600/Thumb%20-%20Abu%2060.png" alt="Logo RT 2 Paslor" style="width: 190px; height: auto; margin: 0 auto 12px auto; display: block; opacity: 0.9;">
-            <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXV9uai9NYOwne0RP0jKBb-ajPaFvOe91SnfYesBL2_mLHLQQ8KKXcATfn40usjlzQKzi00XIdu8DY1KrUGfcL0Z_PJVV3pZfqL4GjoFHSD47o4rGuz7h6OYWfRzHTr1gTA4zOpBJgdwx9y6SN5O_0w4YByoLioorYi6upHwl19Sb-um44FJbc3zUEArs/s1600/Thumb%20-%20Abu%2060.png" alt="Logo RT 2 Paslor" style="width: 140px; height: auto; margin: 0 auto 12px auto; display: block; opacity: 0.9;">
+            <div class="footer-line f-bold">Copyright © 2026 RT 2 Pasekan Lor.</div>
             <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW.</div>
         </footer>
 
@@ -794,10 +821,94 @@
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEic4TqrZkjl9b8wsb4fPyKIKYOLpkbEcXtt2UaYbyIobglYQJ8o4r-8b4tjK5unnRdKUhhCSPfOpbk6CkIZ4e280-4XuYZGp6IaLt1QPcJLWZm_xxo_9WVaTzHEreSGSI_-_Pu0k5anPu6ANQULsptnbLNOJd4Q2jAc6aJU5261cf89n12souejh3Kl1z4/s1600/Suasana%20Desa.png" style="width: 100%; display: block;" alt="Suasana Desa">
         </div>
 
+        <!-- ==================== FIXED BOTTOM NAVIGATION (DESAIN BARU) ==================== -->
+        <nav class="bottom-nav-bar">
+            <!-- 1. HOME -->
+            <a href="#" class="b-nav-item btn-home">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+            </a>
+            
+            <!-- 2. INVENTARIS -->
+            <a href="inventaris" class="b-nav-item btn-inventaris">
+                <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <span>Inventaris</span>
+            </a>
+            
+            <!-- 3. ALL MENU (TOGGLE MODAL) -->
+            <div class="b-nav-item b-nav-all-menu" onclick="toggleMoreMenu()">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+                <span>All Menu</span>
+            </div>
+            
+            <!-- 4. TATA TERTIB -->
+            <a href="tatatertib" class="b-nav-item btn-tatatertib">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <span>Tata Tertib</span>
+            </a>
+            
+            <!-- 5. RONDA -->
+            <a href="ronda" class="b-nav-item btn-ronda">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Ronda</span>
+            </a>
+        </nav>
+
+        <!-- ==================== MODAL TRANSPARAN MENU LAINNYA ==================== -->
+        <div class="more-menu-overlay" id="moreMenuModal" onclick="closeMoreMenuOutside(event)">
+            <div class="more-menu-content" onclick="event.stopPropagation()">
+                <div class="modal-menu-grid">
+                    <a href="data-warga" class="nav-item btn-warga" title="Warga">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                        <span>WARGA</span>
+                    </a>
+                    <a href="lapak-warga" class="nav-item btn-lapak" title="Lapak">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        <span>LAPAK</span>
+                    </a>
+                    <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        <span>PENGURUS</span>         
+                    </a>
+                    <a href="galeri" class="nav-item btn-galeri" title="Galeri">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>GALERI</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div> 
 </div> 
 
 <script>
+    // ==========================================
+    // FUNGSI MODAL MENU BAWAH TOGGLE (KLIK 1 BUKA, KLIK 2 TUTUP)
+    // ==========================================
+    const moreMenuModal = document.getElementById('moreMenuModal');
+    
+    function toggleMoreMenu() {
+        if (moreMenuModal.classList.contains('active')) {
+            closeMoreMenu();
+        } else {
+            openMoreMenu();
+        }
+    }
+    
+    function openMoreMenu() { 
+        moreMenuModal.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    }
+    
+    function closeMoreMenu() { 
+        moreMenuModal.classList.remove('active'); 
+        document.body.style.overflow = 'auto'; 
+    }
+    
+    function closeMoreMenuOutside(e) { 
+        if(e.target === moreMenuModal) closeMoreMenu(); 
+    }
+
     // ==========================================
     // PENGATURAN LOGIN ADMIN & API SPREADSHEET
     // ==========================================

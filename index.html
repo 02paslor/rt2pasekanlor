@@ -39,10 +39,11 @@
             display: flex; flex-direction: column; z-index: 1;
         }
 
-        /* ================== HEADER STICKY & INSTANT EDGE-TO-EDGE ================== */
+        /* ================== HEADER STICKY & FAST SMOOTH EDGE-TO-EDGE ================== */
         .app-header-wrapper { 
             position: sticky; top: 0; width: 100%; max-width: 480px; 
             margin: 0 auto; padding: 12px 16px 6px 16px; z-index: 1000; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .app-header-wrapper.header-morphed {
             padding: 0 !important;
@@ -52,6 +53,7 @@
             background-color: rgba(0, 52, 143, 0.9);
             border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
             padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .app-header-wrapper.header-morphed .header-box {
             border-radius: 0 !important;
@@ -296,6 +298,35 @@
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
+        /* ================== FOOTER GAMBAR FIXED & SLIDE ================== */
+        /* Suasana Desa (Fixed di bawah) */
+        #footerFixedSuasana {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            z-index: 0;
+            width: 100%;
+            max-width: 480px;
+            pointer-events: none;
+        }
+
+        /* Gunung Footer (Fast Smooth Slide Up/Down) */
+        #footerSlideImg {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            z-index: 1;
+            transform: translateY(100%);
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            max-width: 480px;
+            pointer-events: none;
+        }
+
         /* General Hover Effects */
         .btn-doc-footer:hover { background-color: #bfdbfe !important; color: #1e3a8a !important; transform: translateY(-2px); }
         .btn-share-wa:hover { background-color: #bbf7d0 !important; color: #14532d !important; transform: translateY(-2px); }
@@ -390,7 +421,7 @@
 
 <div class="app-wrapper">
 
-    <!-- HEADER STICKY & INSTANT EDGE-TO-EDGE SAAT SCROLL -->
+    <!-- HEADER STICKY & FAST SMOOTH EDGE-TO-EDGE SAAT SCROLL -->
     <div class="app-header-wrapper" id="appHeaderWrapper">
         <header class="header-box" id="mainHeader">
             <div class="header-left-area">
@@ -753,8 +784,13 @@
             <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
         </footer>
 
-        <!-- Gambar Gunung Footer Fixed di Layar Bawah -->
-        <div style="position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto; z-index: 0; width: 100%; max-width: 480px; pointer-events: none;">
+        <!-- Suasana Desa (Fixed di bawah) -->
+        <div id="footerFixedSuasana">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEic4TqrZkjl9b8wsb4fPyKIKYOLpkbEcXtt2UaYbyIobglYQJ8o4r-8b4tjK5unnRdKUhhCSPfOpbk6CkIZ4e280-4XuYZGp6IaLt1QPcJLWZm_xxo_9WVaTzHEreSGSI_-_Pu0k5anPu6ANQULsptnbLNOJd4Q2jAc6aJU5261cf89n12souejh3Kl1z4/s1600/Suasana%20Desa.png" style="width: 100%; display: block;" alt="Suasana Desa">
+        </div>
+
+        <!-- Gunung Footer (Fast Smooth Slide Up/Down) -->
+        <div id="footerSlideImg">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitHJeSkFDKugWHQtqzpIvY7vj9HDjrtiHVlv7AKsYZvR0NOfZeAl7n8Yu7rLKOXyqVkgdoNbfyhlbq2LdX105rhh9p76-Q6zpZg4aprg6h_Auk1bqDPbPbZBPYOwyg4j4gE7mjHrLx5vHqoeliVcRX5E4mCj22_DsIz_KhDk1aY662Pdrp_KthMfCYvPM/s1600/gunung%20footer.png" style="width: 100%; display: block;" alt="Gunung Footer">
         </div>
 
@@ -935,14 +971,36 @@
     const GLOBAL_BLOG_URL = "https://rt2paslor.blogspot.com";
 
     // ==========================================
-    // HEADER INSTANT SWITCH SAAT SCROLL
+    // HEADER & FOOTER SLIDE ANIMASI SAAT SCROLL
     // ==========================================
     const appHeaderWrapper = document.getElementById('appHeaderWrapper');
+    const slideImg = document.getElementById('footerSlideImg');
+    let isScrolling = false;
+    let isFooterVisible = false;
+
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 15) {
-            appHeaderWrapper.classList.add('header-morphed');
-        } else {
-            appHeaderWrapper.classList.remove('header-morphed');
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                // Header Morph
+                if (window.scrollY > 15) {
+                    appHeaderWrapper.classList.add('header-morphed');
+                } else {
+                    appHeaderWrapper.classList.remove('header-morphed');
+                }
+
+                // Footer Slide Up/Down (Gunung Footer)
+                if (slideImg) {
+                    const docHeight = document.documentElement.scrollHeight;
+                    const scrollPos = window.scrollY + window.innerHeight;
+                    const shouldFooterShow = (docHeight - scrollPos < 100);
+                    if (shouldFooterShow !== isFooterVisible) {
+                        slideImg.style.transform = shouldFooterShow ? 'translateY(0)' : 'translateY(100%)';
+                        isFooterVisible = shouldFooterShow;
+                    }
+                }
+                isScrolling = false;
+            });
+            isScrolling = true;
         }
     }, { passive: true });
 

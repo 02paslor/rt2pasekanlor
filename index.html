@@ -293,14 +293,14 @@
         .himbauan-box { width: 100%; background: transparent; border: none; padding: 0; text-align: center; margin-top: 5px; }
         .himbauan-text { color: #1155CC; font-size: 13px; font-weight: 600; line-height: 1.4; text-transform: none; min-height: 48px; display: flex; align-items: center; justify-content: center; text-align: center;}
         
-        .main-footer { width: 100%; margin: 15px auto 25px auto; padding: 16px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
+        .main-footer { width: 100%; margin: 50px auto 25px auto; padding: 16px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
         .footer-line { color: #999999; line-height: 1.4; margin-bottom: 2px;}
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
-        /* ================== FOOTER GAMBAR FIXED & SLIDE ================== */
-        /* Suasana Desa (Fixed di bawah) */
-        #footerFixedSuasana {
+        /* ================== FOOTER LAYER STYLING ================== */
+        /* Gunung Footer (Fixed di belakang secara statis di bawah / layer 1) */
+        #footerFixedGunung {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -312,7 +312,7 @@
             pointer-events: none;
         }
 
-        /* Gunung Footer (Fast Smooth Slide Up/Down) */
+        /* Suasana Desa (Fast Smooth Slide Up/Down di depan Gunung Footer / layer 2) */
         #footerSlideImg {
             position: fixed;
             bottom: 0;
@@ -781,17 +781,17 @@
         <footer class="main-footer">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXV9uai9NYOwne0RP0jKBb-ajPaFvOe91SnfYesBL2_mLHLQQ8KKXcATfn40usjlzQKzi00XIdu8DY1KrUGfcL0Z_PJVV3pZfqL4GjoFHSD47o4rGuz7h6OYWfRzHTr1gTA4zOpBJgdwx9y6SN5O_0w4YByoLioorYi6upHwl19Sb-um44FJbc3zUEArs/s1600/Thumb%20-%20Abu%2060.png" alt="Logo RT 2 Paslor" style="width: 140px; height: auto; margin: 0 auto 12px auto; display: block; opacity: 0.9;">
             <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
-            <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
+            <div class="footer-line f-reg">Dikembangkan secara kolaboratif oleh Warga RT 2 Pasekan Lor.</div>
         </footer>
 
-        <!-- Suasana Desa (Fixed di bawah) -->
-        <div id="footerFixedSuasana">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEic4TqrZkjl9b8wsb4fPyKIKYOLpkbEcXtt2UaYbyIobglYQJ8o4r-8b4tjK5unnRdKUhhCSPfOpbk6CkIZ4e280-4XuYZGp6IaLt1QPcJLWZm_xxo_9WVaTzHEreSGSI_-_Pu0k5anPu6ANQULsptnbLNOJd4Q2jAc6aJU5261cf89n12souejh3Kl1z4/s1600/Suasana%20Desa.png" style="width: 100%; display: block;" alt="Suasana Desa">
+        <!-- Gunung Footer (Fixed di Belakang secara Statis / Layer 1) -->
+        <div id="footerFixedGunung">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitHJeSkFDKugWHQtqzpIvY7vj9HDjrtiHVlv7AKsYZvR0NOfZeAl7n8Yu7rLKOXyqVkgdoNbfyhlbq2LdX105rhh9p76-Q6zpZg4aprg6h_Auk1bqDPbPbZBPYOwyg4j4gE7mjHrLx5vHqoeliVcRX5E4mCj22_DsIz_KhDk1aY662Pdrp_KthMfCYvPM/s1600/gunung%20footer.png" style="width: 100%; display: block;" alt="Gunung Footer">
         </div>
 
-        <!-- Gunung Footer (Fast Smooth Slide Up/Down) -->
+        <!-- Suasana Desa (Fast Smooth Slide Up/Down di Depan Gunung Footer / Layer 2) -->
         <div id="footerSlideImg">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitHJeSkFDKugWHQtqzpIvY7vj9HDjrtiHVlv7AKsYZvR0NOfZeAl7n8Yu7rLKOXyqVkgdoNbfyhlbq2LdX105rhh9p76-Q6zpZg4aprg6h_Auk1bqDPbPbZBPYOwyg4j4gE7mjHrLx5vHqoeliVcRX5E4mCj22_DsIz_KhDk1aY662Pdrp_KthMfCYvPM/s1600/gunung%20footer.png" style="width: 100%; display: block;" alt="Gunung Footer">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEic4TqrZkjl9b8wsb4fPyKIKYOLpkbEcXtt2UaYbyIobglYQJ8o4r-8b4tjK5unnRdKUhhCSPfOpbk6CkIZ4e280-4XuYZGp6IaLt1QPcJLWZm_xxo_9WVaTzHEreSGSI_-_Pu0k5anPu6ANQULsptnbLNOJd4Q2jAc6aJU5261cf89n12souejh3Kl1z4/s1600/Suasana%20Desa.png" style="width: 100%; display: block;" alt="Suasana Desa">
         </div>
 
     </div> 
@@ -988,7 +988,7 @@
                     appHeaderWrapper.classList.remove('header-morphed');
                 }
 
-                // Footer Slide Up/Down (Gunung Footer)
+                // Footer Slide Up/Down (Suasana Desa)
                 if (slideImg) {
                     const docHeight = document.documentElement.scrollHeight;
                     const scrollPos = window.scrollY + window.innerHeight;

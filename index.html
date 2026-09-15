@@ -35,22 +35,41 @@
             background-image: linear-gradient(to bottom, #0083E0 0.5%, #FFFFFF 10%, #F0FAFF 20%);
             background-attachment: auto; background-size: cover; background-repeat: no-repeat;
             min-height: 3vh; position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.15); padding-bottom: 0; overflow-x: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15); padding-bottom: 0; overflow-x: clip;
             display: flex; flex-direction: column; z-index: 1;
         }
 
-        /* ================== HEADER NATURAL SCROLL (SANGAT RINGAN) ================== */
+        /* ================== HEADER STICKY & NEMPEL DI ATAS WINDOW ================== */
         .app-header-wrapper { 
-            position: relative; width: 100%; max-width: 480px; 
-            margin: 0 auto; padding: 16px 16px 5px 16px; z-index: 10; 
+            position: sticky; top: 0; width: 100%; max-width: 480px; 
+            margin: 0 auto; padding: 12px 16px 6px 16px; z-index: 1000; 
+            transition: all 0.25s ease;
+        }
+        /* Saat scroll, header nempel langsung di atas window tanpa jeda */
+        .app-header-wrapper.header-morphed {
+            padding: 0 16px 4px 16px;
         }
         .header-box { 
-            background-color: rgba(0, 52, 143, 0.85); /* Warna pekat, tanpa efek blur agar enteng */
+            background-color: rgba(0, 52, 143, 0.9);
             border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
             padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .app-header-wrapper.header-morphed .header-box {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-top: none;
+            background-color: rgba(0, 71, 191, 0.75) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-top: none;
+            box-shadow: 0 6px 20px rgba(0, 40, 120, 0.25);
+            padding: 6px 14px;
+        }
+
         .header-left-area { display: flex; align-items: center; gap: 10px; }
-        .header-logo-img { width: 55px; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        .header-logo-img { width: 72px; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); transition: width 0.3s ease; }
         .header-text-area { display: flex; flex-direction: column; line-height: 1.25; }
         .slogan-text-1 { color: #ffffff; font-size: 11px; font-weight: 500; opacity: 0.95; }
         .slogan-text-2 { color: #ffffff; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
@@ -58,16 +77,29 @@
         /* Area Login / Profil Warga */
         .login-btn-wrapper { 
             display: flex; align-items: center; justify-content: center; 
-            background-color: rgba(255, 255, 255, 0.2); width: 38px; height: 38px; border-radius: 50%; 
+            background-color: rgba(255, 255, 255, 0.2); width: 30px; height: 30px; border-radius: 50%; 
             color: #ffffff; text-decoration: none; cursor: pointer; transition: all 0.2s; 
             border: 1.5px solid rgba(255,255,255,0.4); overflow: hidden;
         }
         .login-btn-wrapper:active { background-color: rgba(255, 255, 255, 0.4); transform: scale(0.95); }
-        .login-icon { width: 20px; height: 20px; }
+        .login-icon { width: 16px; height: 16px; }
 
-        /* Menu Setelah Login */
-        .logged-in-menu { display: none; align-items: center; gap: 8px; }
-        .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        /* Menu Setelah Login (Foto Profil + Nama Singkat + Logout) */
+        .logged-in-menu { display: none; align-items: center; gap: 6px; }
+        .user-short-name {
+            color: #ffffff;
+            font-size: 11.5px;
+            font-weight: 600;
+            max-width: 65px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2;
+            text-align: right;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .logout-btn svg { width: 12px; height: 12px; }
         .logout-btn:active { transform: scale(0.9); }
 
         /* ================== MAIN BOARD & SLIDER ================== */
@@ -260,8 +292,8 @@
         .himbauan-box { width: 100%; background: transparent; border: none; padding: 0; text-align: center; margin-top: 5px; }
         .himbauan-text { color: #1155CC; font-size: 13px; font-weight: 600; line-height: 1.4; text-transform: none; min-height: 48px; display: flex; align-items: center; justify-content: center; text-align: center;}
         
-        .main-footer { width: 100%; margin: 10px auto 0 auto; padding: 16px 16px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
-        .footer-line { color: #999999; line-height: 1.3; margin-bottom: 2px;}
+        .main-footer { width: 100%; margin: 15px auto 25px auto; padding: 16px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
+        .footer-line { color: #999999; line-height: 1.4; margin-bottom: 2px;}
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
@@ -359,8 +391,8 @@
 
 <div class="app-wrapper">
 
-    <!-- HEADER NATURAL SCROLL (SANGAT RINGAN) -->
-    <div class="app-header-wrapper">
+    <!-- HEADER STICKY & MORPH SAAT SCROLL (NEMPEL DI ATAS WINDOW) -->
+    <div class="app-header-wrapper" id="appHeaderWrapper">
         <header class="header-box" id="mainHeader">
             <div class="header-left-area">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-img">
@@ -378,13 +410,16 @@
                 </svg>
             </div>
 
-            <!-- TAMPIL SAAT SUDAH LOGIN (FOTO PROFIL + TOMBOL LOGOUT) -->
+            <!-- TAMPIL SAAT SUDAH LOGIN (NAMA SINGKAT DI SISI KIRI + FOTO PROFIL + TOMBOL LOGOUT) -->
             <div id="loggedInMenu" class="logged-in-menu">
-                <a href="data-warga" title="Update Profil Warga" style="width: 36px; height: 36px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.4); display: block; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                    <img id="userAvatarImg" src="" alt="Profil" style="width:100%; height:100%; object-fit:cover;">
+                <a href="data-warga" title="Update Profil Warga" style="display: flex; align-items: center; gap: 6px; text-decoration: none;">
+                    <span id="userShortName" class="user-short-name"></span>
+                    <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.4); display: block; box-shadow: 0 2px 6px rgba(0,0,0,0.1); flex-shrink: 0;">
+                        <img id="userAvatarImg" src="" alt="Profil" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
                 </a>
                 <button onclick="logoutWarga()" class="logout-btn" title="Keluar">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                 </button>
             </div>
 
@@ -469,15 +504,15 @@
                             <div class="contact-details"><span class="emergency-label">Call Center Polri</span><span class="emergency-value">110</span></div>
                             <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
                         </a>
-                        <a href="tel:085173171912" target="blank" class="emergency-item">
+                        <a href="tel:085173171912" target="_blank" class="emergency-item">
                             <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><line x1="8" y1="9.5" x2="12" y2="9.5"/><line x1="10" y1="7.5" x2="10" y2="11.5"/></svg></div>
                             <div class="contact-details"><span class="emergency-label">Ambulan PKU Gamping</span><span class="emergency-value">0851 7317 1912</span></div>
-                            <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                            <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
                         </a>
                         <a href="tel:02742821346" target="_blank" class="emergency-item">
                             <div class="logo-wrapper"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-3.3 0-6 2.7-6 6 0 5 6 14 6 14s6-9 6-14c0-3.3-2.7-6-6-6z"/><path d="M12 12c-1.7 0-3-1.3-3-3s1.3-3 3-3-3 1.3 3 3-1.3 3-3 3z"/></svg></div>
                             <div class="contact-details"><span class="emergency-label">Damkar Godean Sleman</span><span class="emergency-value">(0274) 2821346</span></div>
-                            <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                            <div class="call-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
                         </a>
                         <a href="https://chat.whatsapp.com/31APr2lKc826zA46hGzoZK?s=sh&p=a&mlu=4&ilr=0" target="_blank" class="emergency-item wa">
                             <div class="logo-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></div>
@@ -672,19 +707,17 @@
 
             <div id="widget-umkm-rt2">
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-    <div class="filter-container" id="filter-kategori" style="flex-grow: 1;"></div>
-    <!-- Tombol pindah ke sini -->
-    <a href="lapak-warga" style="text-decoration: none; flex-shrink: 0;">
-        <button class="ds-pill-btn" style="padding: 6px 12px; font-size: 12px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background: #ffffff;">Lapak lain &rarr;</button>
-    </a>
-</div>
+                    <div class="filter-container" id="filter-kategori" style="flex-grow: 1;"></div>
+                    <a href="lapak-warga" style="text-decoration: none; flex-shrink: 0;">
+                        <button class="ds-pill-btn" style="padding: 6px 12px; font-size: 12px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background: #ffffff;">Lapak lain &rarr;</button>
+                    </a>
+                </div>
                 
                 <div class="umkm-slider" id="umkm-wrapper">
                     <div class="loading-teks">Memuat Data Lapak Warga...</div>
                 </div>
                 <div id="pagination-container" class="pagination-container"></div>
             </div>
-            
             
         </div>
 
@@ -716,21 +749,11 @@
         </div>
 
         <footer class="main-footer">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBIimC0Xev6ow-nDTXPpolimwYDqlypCgbUV04-8-79QYVhWTXHXgLGMunKdy1BNHaF9eXICfCtLlx1Q9gx_IjLSin16GKO85ak1v31Djd25v9qtlB2wi9KiYb7ylC9_4JYalJ8ha4-BhouHrjoScOGaWYjCXeQHzz2G4sfwblWTLrB7yIjNxlfd7XrVM/s1600/Thumb%20-%20Abu%2060.png" alt="RT 2 Pasekan Lor" style="width: 200px; margin: 0 auto 10px auto; display: block; opacity: 0.9;">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXV9uai9NYOwne0RP0jKBb-ajPaFvOe91SnfYesBL2_mLHLQQ8KKXcATfn40usjlzQKzi00XIdu8DY1KrUGfcL0Z_PJVV3pZfqL4GjoFHSD47o4rGuz7h6OYWfRzHTr1gTA4zOpBJgdwx9y6SN5O_0w4YByoLioorYi6upHwl19Sb-um44FJbc3zUEArs/s1600/Thumb%20-%20Abu%2060.png" alt="Logo RT 2 Paslor" style="width: 140px; height: auto; margin: 0 auto 12px auto; display: block; opacity: 0.9;">
             <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
             <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
         </footer>
 
-        <!-- Wadah Gambar Footer Bawah -->
-        <div style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: auto; z-index: 2;">
-            <a href="data-warga" target="_blank" rel="noopener noreferrer" class="link-lebah" style="position: absolute; bottom: 80px; right: 40%; z-index: 4; width: 15%;">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiya0ghKMImhXBX9dzFBDE_JUUH0Ub8fJFdCSRlYRPUB0iB3PK0Yq29CjfTEPRyoDqdur3vqtDpkbxHUZggHN1qb4-DLIRszqygidj10d848bgmNSYbEvWa-LGHW4xgGThzaKDwSLZAiYpbXwI_nDeYl9EPtPMbP2q1CaWlPKGOBimWcYseznSvz5bvBwo/s1600/lebah%20-%20senter%20-%20small.png" alt="Lebah" style="width: 80%; display: block;">
-            </a>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhNWaQOKzNxOXXJdKcaQvz89f58rx2eEzukj1SlZSmW7p8O_1jmGXpAOjGU_bz-7qBdJ-p52OkTdaZTTa3HzEIbSLTZ78DjnSLFzY_1VvVjELq0UhWvN9I1J-OgZLo8yIzUwvKKrVZcJI8fIvSo2uC0hsxto0DLTAYgnLc2ZlNi0VuH9S2qHCgbWkgrhGk/s1600/Footer%20Paslor%20600px.png" style="width: 100%; display: block; margin-bottom: -25px; position: relative; z-index: 2;" alt="Footer RT 2">
-        </div>
-        <div id="footerSlideImg" style="position: fixed; bottom: 20px; left: 0; right: 0; margin: 0 auto; z-index: 0; transform: translateY(150%); transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); width: 100%; max-width: 480px; pointer-events: none;">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEVrUepmKaBK9pBc1CnFkks7LLH4BXmgKOFv2WHgAO7yyG_JOlvXUpFhcQCsdFrUHaFYcwS532g9zKq9OzbWJe2rp8YytlJgsy27plTIrrfDGpYkJ-Bx8_nTF-fi3OzEBwtzh7hZtN4I3m094rg1cqHsFvwzXocbJtYlH2arEdkFSAqDxZCvFCYPKF03o/s1600/image1786676021" style="width: 100%; display: block;" alt="Animasi Footer">
-        </div>
     </div> 
 </div> 
 
@@ -761,17 +784,21 @@
         const btnOpenLogin = document.getElementById('openLoginModalBtn');
         const loggedInMenu = document.getElementById('loggedInMenu');
         const avatarImg = document.getElementById('userAvatarImg');
+        const userShortNameEl = document.getElementById('userShortName');
         const welcomeText = document.getElementById('liveWeather');
 
         if(isLoggedIn === 'true') {
+            const shortName = userName ? userName.trim().split(' ')[0] : 'Warga';
             welcomeText.innerText = "Sugeng Rawuh, " + userName;
             btnOpenLogin.style.display = 'none';
             loggedInMenu.style.display = 'flex';
             avatarImg.src = userFoto;
+            if(userShortNameEl) userShortNameEl.innerText = shortName;
         } else {
             welcomeText.innerText = "Selamat Datang Warga RT 2-RW 3, Pasekan Lor";
             btnOpenLogin.style.display = 'flex';
             loggedInMenu.style.display = 'none';
+            if(userShortNameEl) userShortNameEl.innerText = '';
         }
     }
 
@@ -879,7 +906,6 @@
                     localStorage.setItem('userName', 'Admin Pengurus');
                     localStorage.setItem('userFoto', 'https://ui-avatars.com/api/?name=Admin&background=10b981&color=fff');
                 } else {
-                    // Mengambil data spesifik dari index [0] karena format return GAS adalah Array
                     let warga = data.data && data.data.length > 0 ? data.data[0] : {}; 
                     localStorage.setItem('userName', warga.Nama || userInput);
                     localStorage.setItem('userFoto', warga.Foto_Profil || ''); 
@@ -888,7 +914,6 @@
                 closeLoginModal(); 
                 checkLoginState(); 
             } else {
-                // Menampilkan pesan error langsung dari Google Apps Script jika ada
                 loginErrorMsg.innerText = data.message || "ID Rumah atau Password salah!";
                 loginErrorMsg.style.color = '#ef4444';
                 loginErrorMsg.style.display = 'block';
@@ -905,27 +930,15 @@
 
     const GLOBAL_BLOG_URL = "https://rt2paslor.blogspot.com";
 
-    // ========================================== SCROLL ANIMASI ==========================================
-    let isScrolling = false;
-    let isFooterVisible = false;
-
+    // ==========================================
+    // HEADER FIXED NEMPEL DI ATAS WINDOW
+    // ==========================================
+    const appHeaderWrapper = document.getElementById('appHeaderWrapper');
     window.addEventListener('scroll', () => {
-        if (!isScrolling) {
-            window.requestAnimationFrame(() => {
-                const docHeight = document.documentElement.scrollHeight;
-                const scrollPos = window.scrollY + window.innerHeight;
-                const slideImg = document.getElementById('footerSlideImg');
-
-                if (slideImg) {
-                    const shouldFooterShow = (docHeight - scrollPos < 100);
-                    if (shouldFooterShow !== isFooterVisible) {
-                        slideImg.style.transform = shouldFooterShow ? 'translateY(0)' : 'translateY(150%)';
-                        isFooterVisible = shouldFooterShow;
-                    }
-                }
-                isScrolling = false;
-            });
-            isScrolling = true;
+        if (window.scrollY > 15) {
+            appHeaderWrapper.classList.add('header-morphed');
+        } else {
+            appHeaderWrapper.classList.remove('header-morphed');
         }
     }, { passive: true });
 

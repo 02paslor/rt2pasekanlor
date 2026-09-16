@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Keuangan RT 02</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Mengunci Font Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Mengunci font dan membatasi bold maksimal 600 */
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        b, strong, .font-bold { font-weight: 600 !important; }
+        .font-semibold { font-weight: 600 !important; }
+        .font-medium { font-weight: 500 !important; }
+
+        /* Background */
+        .main-bg {
+            background-color: #E6E6E6;
+            z-index: 1;
+        }
+        .bento-box {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Input Pencarian */
+        .search-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #d1d5db;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Animasi Bulat Kedip-kedip */
+        @keyframes blink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+        .dot-blink {
+            width: 10px;
+            height: 10px;
+            background-color: #22C55E;
+            border-radius: 50%;
+            animation: blink 1.5s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        /* Hover Keterangan Kode (Tooltip) */
+        .kode-container { position: relative; cursor: pointer; display: inline-flex; align-items: center;}
+        .kode-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid #e2e8f0;
+            color: #1f2937;
+            padding: 6px 12px;
+            border-radius: 6px;
+            white-space: nowrap;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .kode-container:hover .kode-tooltip {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Warna Selang-Seling Baris */
+        .row-even { background-color: #F5F5F5; }
+        .row-odd { background-color: #F5F5F5; }
+        
+        /* Fast Smooth Transitions */
+        .row-item {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .row-item:last-child { border-bottom: none; }
+        
+        /* Hover Color*/
+        .row-item:hover {
+            background-color: #FFFFFF !important;
+            transform: scale(1.002);
+            border-radius: 12px;
+            z-index: 10;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        /* Bulatan Angka */
+        .number-circle {
+            width: 20px;
+            height: 20px;
+            background-color: #CFCFCF;
+            color: #4b5563;
+            border-radius: 18%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+    </style>
+</head>
+<body class="main-bg min-h-screen p-2 md:p-6 relative overflow-x-hidden text-gray-800">
+    
+    <!-- Ornamen Latar Belakang -->
+    <div class="fixed top-[-10%] left-[-5%] w-[40%] h-[40%] rounded-full bg-[#8B5CF6]/10 blur-3xl -z-10 pointer-events-none"></div>
+    <div class="fixed bottom-[-10%] right-[-5%] w-[40%] h-[40%] rounded-full bg-[#1155CC]/10 blur-3xl -z-10 pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto space-y-4 relative">
+        
+        <!-- Header Bento Box (STICKY TOP) -->
+        <div class="bento-box rounded-xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sticky top-2 z-[60] shadow-sm">
+            <div>
+                <h1 class="text-[18px] md:text-[20px] font-bold" style="color: #1155CC;">Buku Kas RT 2</h1>
+                <p class="text-gray-700 mt-0.5 text-[11px] md:text-[12px]">Pengelolaan ini terhitung sejak oktober 2025</p>
+                <div class="flex items-center gap-2 mt-1.5">
+                    <div class="dot-blink"></div>
+                    <span class="font-medium text-gray-700 tracking-wide text-[11px] md:text-[12px]">Data Tersinkronisasi</span>
+                </div>
+            </div>
+            <div class="text-left md:text-right w-full md:w-auto flex flex-col md:items-end gap-2">
+                <div id="hari-tanggal" class="font-bold text-[13px] md:text-[15px]" style="color: #069446;"></div>
+                
+                <!-- Input Pencarian -->
+                <div class="relative w-full md:w-64 mt-1 md:mt-0">
+                    <input type="text" id="searchInput" class="search-input w-full px-3 py-1.5 pl-8 rounded-lg text-[13px]" placeholder="Pencarian data...">
+                    <svg class="w-4 h-4 text-gray-500 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabel Container -->
+        <div class="bento-box rounded-xl flex flex-col shadow-sm relative pb-2">
+            
+            <!-- Table Header Desktop (STICKY TOP diturunkan jadi 140px agar tidak menabrak) -->
+            <div class="hidden md:flex flex-row items-center font-semibold text-white px-3 py-3 text-[13px] sticky top-[140px] z-[50] rounded-t-xl" style="background-color: #1155CC; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                <div class="w-10 text-center">No.</div>
+                <div class="w-32 pl-2">Tanggal</div>
+                <div class="w-28 text-center">Kode</div>
+                <div class="flex-1 px-3">Deskripsi</div>
+                <div class="w-32 text-right">Masuk</div>
+                <div class="w-32 text-right">Keluar</div>
+                <div class="w-36 text-right pr-2">Saldo Kas</div>
+            </div>
+            
+            <!-- Loading Status -->
+            <div id="loadingStatus" class="p-6 text-center font-medium text-gray-600 text-[12px]">
+                Mengambil data terbaru...
+            </div>
+            
+            <!-- Table Body -->
+            <div id="table-body" class="flex flex-col p-2 gap-1 text-[13px]">
+                <!-- Baris tabel otomatis dari JS -->
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // Set Format Tanggal: Rabu, 16 September 2026
+        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('hari-tanggal').innerText = new Date().toLocaleDateString('id-ID', dateOptions);
+
+        // Keterangan Kode
+        const kodeInfo = {
+            1: "Jimpitan", 2: "Jasa Inventaris", 3: "Sosial",
+            4: "Pembangunan", 5: "Lain-lain", 6: "Kas Pemuda"
+        };
+        
+        // Warna Teks Kode Sesuai Instruksi
+        const kodeColor = {
+            1: "text-purple-600",
+            2: "text-green-600",
+            3: "text-blue-600",
+            4: "text-orange-600",
+            5: "text-gray-600",
+            6: "text-red-600"
+        };
+
+        // Warna Latar Kotak Kode (Lembut/Pastel)
+        const kodeBgColor = {
+            1: "bg-purple-100",
+            2: "bg-green-100",
+            3: "bg-blue-100",
+            4: "bg-orange-100",
+            5: "bg-gray-200",
+            6: "bg-red-100"
+        };
+
+        let dataLaporan = [];
+
+        function formatUang(value) {
+            if (!value) return '-';
+            return value.toString().replace(/Rp/g, 'Rp ').replace(/\s+/g, ' ').trim();
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = ''; 
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '<div class="p-4 text-center text-gray-500 font-medium">Data tidak ditemukan.</div>';
+                return;
+            }
+
+            data.forEach((row, index) => {
+                const rowClass = index % 2 === 0 ? 'row-even' : 'row-odd';
+                
+                const no = row[0] || '';
+                const tanggal = row[1] || '';
+                const kode = row[2] || '';
+                const deskripsi = row[3] || '';
+                const masuk = row[4] ? formatUang(row[4]) : '-';
+                const keluar = row[5] ? formatUang(row[5]) : '-';
+                const saldo = row[6] ? formatUang(row[6]) : '-';
+                
+                const labelKode = kodeInfo[kode] || "Tidak Diketahui";
+                const colorKode = kodeColor[kode] || "text-gray-800";
+                const bgKode = kodeBgColor[kode] || "bg-gray-100";
+
+                const html = `
+                    <div class="row-item ${rowClass} flex flex-col md:flex-row py-3 px-3 md:py-2 rounded-lg">
+                        
+                        <!-- ================= MOBILE VIEW ================= -->
+                        <div class="md:hidden flex flex-col w-full gap-2">
+                            <!-- Header Mobile: No, Tanggal, Kode (dengan kotak warna) -->
+                            <div class="flex items-center justify-between border-b border-gray-200 pb-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="number-circle shadow-sm">${no}</div>
+                                    <div class="text-gray-900 font-semibold text-[13px]">${tanggal}</div>
+                                </div>
+                                <div class="kode-container font-bold ${colorKode} ${bgKode} px-2.5 py-1 rounded-md text-[12px]">
+                                    Kode ${kode}
+                                    <div class="kode-tooltip">${labelKode}</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Deskripsi (Tanpa Border, Left Align) -->
+                            <div class="text-gray-800 font-medium text-[13px] leading-relaxed text-left mt-1">
+                                ${deskripsi}
+                            </div>
+                            
+                            <!-- Keuangan Left Aligned di Mobile -->
+                            <div class="flex flex-col gap-1.5 mt-2 bg-white/40 p-2.5 rounded-lg border border-gray-200/60">
+                                <div class="flex items-center text-left">
+                                    <span class="font-semibold text-gray-600 w-16">Masuk</span>
+                                    <span class="text-[#069446] font-bold">: ${masuk}</span>
+                                </div>
+                                <div class="flex items-center text-left">
+                                    <span class="font-semibold text-gray-600 w-16">Keluar</span>
+                                    <span class="text-[#EF4444] font-bold">: ${keluar}</span>
+                                </div>
+                                <div class="flex items-center text-left border-t border-gray-200 pt-1.5 mt-0.5">
+                                    <span class="font-semibold text-gray-600 w-16">Saldo</span>
+                                    <span class="text-[#1155CC] font-bold text-[14px]">: ${saldo}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ================= DESKTOP VIEW ================= -->
+                        <div class="hidden md:flex flex-row items-center w-full text-[13px]">
+                            
+                            <div class="w-10 flex justify-center">
+                                <div class="number-circle shadow-sm">${no}</div>
+                            </div>
+                            
+                            <div class="w-32 pl-2 text-gray-800 font-medium pr-2">
+                                ${tanggal}
+                            </div>
+                            
+                            <div class="w-28 text-center">
+                                <div class="kode-container font-semibold ${colorKode} ${bgKode} px-2.5 py-1 rounded-md">
+                                    Kode ${kode}
+                                    <div class="kode-tooltip">${labelKode}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex-1 px-3 text-gray-800 font-medium">
+                                ${deskripsi}
+                            </div>
+                            
+                            <div class="w-32 text-right font-semibold" style="color: #069446;">
+                                ${masuk}
+                            </div>
+                            
+                            <div class="w-32 text-right font-semibold text-[#EF4444]">
+                                ${keluar}
+                            </div>
+                            
+                            <div class="w-36 text-right pr-2 font-bold text-[#1155CC]">
+                                ${saldo}
+                            </div>
+
+                        </div>
+                    </div>
+                `;
+                tbody.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // Live Fetch Data dari URL Spreadsheet Gviz
+        const sheetId = '15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68';
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Sheet1&range=B9:H`;
+
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                const jsonStr = data.substring(47).slice(0, -2);
+                const json = JSON.parse(jsonStr);
+                
+                dataLaporan = [];
+                json.table.rows.forEach(row => {
+                    if (row.c) {
+                        const noAda = row.c[0] && row.c[0].v != null;
+                        const tglAda = row.c[1] && row.c[1].v != null;
+                        const kodeAda = row.c[2] && row.c[2].v != null;
+                        const descAda = row.c[3] && row.c[3].v != null;
+                        const saldoAda = row.c[6] && row.c[6].v != null;
+                        
+                        const masukAda = row.c[4] && row.c[4].v != null;
+                        const keluarAda = row.c[5] && row.c[5].v != null;
+
+                        if (noAda && tglAda && kodeAda && descAda && saldoAda && (masukAda || keluarAda)) {
+                            dataLaporan.push([
+                                row.c[0].v,                                     
+                                row.c[1].f || row.c[1].v,                       
+                                row.c[2].v,                                     
+                                row.c[3].v,                                     
+                                masukAda ? (row.c[4].f || row.c[4].v) : '',     
+                                keluarAda ? (row.c[5].f || row.c[5].v) : '',    
+                                row.c[6].f || row.c[6].v                        
+                            ]);
+                        }
+                    }
+                });
+                
+                document.getElementById('loadingStatus').style.display = 'none';
+                renderTable(dataLaporan);
+            })
+            .catch(error => {
+                console.error("Gagal menarik data:", error);
+                document.getElementById('loadingStatus').innerHTML = `
+                    <span class="text-red-500">Gagal mengambil data dari Google Sheet.</span>
+                `;
+            });
+
+        // Fitur Pencarian (Real-time Filter)
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const keyword = e.target.value.toLowerCase();
+            const filteredData = dataLaporan.filter(row => {
+                return row.some(cell => String(cell).toLowerCase().includes(keyword));
+            });
+            renderTable(filteredData);
+        });
+
+    </script>
+</body>
+</html>

@@ -85,8 +85,19 @@
         .login-btn-wrapper:active { background-color: rgba(255, 255, 255, 0.4); transform: scale(0.95); }
         .login-icon { width: 16px; height: 16px; }
 
-        /* Menu Setelah Login (Nama Singkat di Kiri + Foto Profil + Logout) */
-        .logged-in-menu { display: none; align-items: center; gap: 6px; }
+        /* Menu Setelah Login */
+        .logged-in-menu { 
+            display: none; 
+            align-items: center; 
+            gap: 8px; 
+            background: rgba(255, 255, 255, 0.15); 
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 4px 6px 4px 12px;
+            border-radius: 15px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
         .user-short-name {
             color: #5FDFF5;
             font-size: 10px;
@@ -111,14 +122,6 @@
         .slide { flex: 0 0 210px; width: 210px; height: 100px; scroll-snap-align: center; position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background-color: #ffffff; cursor: pointer; }
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 500; z-index:-1;}
-
-        /* ================== MODAL MENU GRID (SISA MENU BAWAH) ================== */
-        .nav-item { color: #FFFFFF; text-decoration: none; border-radius: 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; padding: 10px 2px; border: none; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        .nav-item:active { transform: scale(0.95); }
-        .nav-item svg { width: 20px; height: 20px; margin-bottom: 6px; display: block; stroke: currentColor; stroke-width: 2 !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
-        
-        .btn-home, .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-datawarga, .btn-tatatertib, .btn-lapak, .btn-disabled { background: #0047BF;}
-        .btn-disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
         /* ================== KOTAK KAS SALDO ================== */
         .hero-kas-container { padding: 0 16px 16px 16px; width: 100%; z-index: 2; position: relative; } 
@@ -163,7 +166,7 @@
         .modal-close-btn-absolute { position: absolute; top: 16px; right: 16px; background: #fef2f2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
         .modal-back-btn-absolute { position: absolute; top: 16px; left: 16px; background: #f1f5f9; color: #1155cc; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
 
-        /* ================== FORM LOGIN CSS (DESAIN BARU) ================== */
+        /* ================== FORM LOGIN CSS ================== */
         .login-wrapper { background: #f1f5f9; width: 100%; max-width: 400px; margin: 0 auto; border-radius: 28px; padding: 24px; position: relative; font-family: 'Poppins', sans-serif; }
         .login-close-btn { position: absolute; top: 16px; right: 16px; background: #1155cc; color: #ffffff; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(17,85,204,0.3); transition: transform 0.2s; }
         .login-close-btn:active { transform: scale(0.9); }
@@ -294,40 +297,26 @@
         
         /* Jarak Footer yang lebih tinggi untuk ruang menu navigasi */
         .main-footer { width: 100%; margin: 1px auto 250px auto; padding: 40px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
-        .footer-line { color: #1155CC; line-height: 1.4; margin-bottom: 2px;}
+        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 2px;}
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
         /* ================== FOOTER LAYER STYLING ================== */
-        /* Gunung Footer (Otomatis naik sesuai tinggi menu navigasi) */
         #footerFixedGunung {
-            position: fixed;
+            position: absolute;
             bottom: 8px; 
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            z-index: 0;
-            width: 100%;
-            max-width: 480px;
-            pointer-events: none;
+            left: 0; right: 0; margin: 0 auto;
+            z-index: 0; width: 100%; max-width: 480px; pointer-events: none;
         }
 
-        /* Suasana Desa (Otomatis naik sesuai tinggi menu navigasi) */
         #footerSlideImg {
-            position: fixed;
-            bottom: 55px;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            z-index: 1;
-            transform: translateY(100%);
-            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-            max-width: 480px;
-            pointer-events: none;
+            position: absolute;
+            bottom: 55px; 
+            left: 0; right: 0; margin: 0 auto;
+            z-index: 1; width: 100%; max-width: 480px; pointer-events: none;
         }
 
-/* ================== FIXED BOTTOM NAVIGATION (DESAIN BARU) ================== */
+        /* ================== FIXED BOTTOM NAVIGATION (1 BARIS) ================== */
         .bottom-nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
             width: 100%; max-width: 480px; height: 65px;
@@ -335,63 +324,55 @@
             display: flex; align-items: center; justify-content: space-between;
             z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
         }
-        
+
         .b-nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-decoration: none; color: #1155CC; font-size: 10px; font-weight: 600;
             width: 20%; height: 100%; cursor: pointer; 
             transition: background 0.2s, color 0.2s;
             text-transform: uppercase;
-            background-color: #ffffff; /* Latar tombol */
+            background-color: transparent;
         }
-        
+
         .b-nav-item svg { 
-            width: 24px; height: 24px; margin-bottom: 4px; stroke: #1155CC; stroke-width: 2; fill: none; 
-            transition: stroke 0.2s;
+            width: 24px; height: 24px; margin-bottom: 4px; stroke: #1155CC; stroke-width: 2; fill: none;
+            stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s;
         }
 
-        .b-nav-item:hover { 
-            background-color: #EDEDED !important; 
-            color: #E06500 !important; 
-        }
-
-        .b-nav-item:hover svg { 
-            stroke: #E06500 !important; 
-        }
-        
-        /* Tombol Modal Tengah (All Menu) */
-        .b-nav-all-menu { background-color: #EDEDED !important; color: #1155CC !important; }
-        .b-nav-all-menu svg { stroke: #1155CC !important; }
-        .b-nav-all-menu:hover { background-color: #EDEDED !important; color: #E06500 !important; }
-        .b-nav-all-menu:hover svg { stroke: #E06500 !important; }
-
-        /* Modal Transparan Semua Menu */
+        /* Modal Menu Transparan / Kotak Putih Besar */
         .more-menu-overlay {
-            position: fixed; bottom: 55px; left: 0; right: 0; margin: 0 auto;
-            width: 100%; max-width: 480px; height: calc(100vh - 55px);
-             background: rgba(0,0,0,0.6); backdrop-filter: blur(7px);
+            position: fixed; bottom: 65px; left: 0; right: 0; margin: 0 auto;
+            width: 100%; max-width: 480px; height: calc(100vh - 65px);
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
             z-index: 1999; display: flex; align-items: flex-end;
             visibility: hidden; opacity: 0; transition: all 0.3s ease;
         }
         .more-menu-overlay.active { visibility: visible; opacity: 1; }
+        
         .more-menu-content {
-            width: 100%; background: transparent; padding-bottom: 15px;
+            width: 100%; background: #ffffff; /* Kotak Putih Besar di Bawah */
+            padding: 20px 16px 28px 16px; border-radius: 24px 24px 0 0;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
             transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .more-menu-overlay.active .more-menu-content { transform: translateY(0); }
-        
-        /* Kotak besar wrap modal menu dihilangkan */
+
         .modal-menu-grid {
-            background: transparent !important; 
-            border-radius: 0; 
-            margin: 0 16px; 
-            padding: 0; 
-            border: none !important;
-            box-shadow: none !important; 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 6px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
         }
+        
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-decoration: none; color: #1155CC; font-size: 10px; font-weight: 600;
+            cursor: pointer; padding: 12px 4px; text-transform: uppercase;
+            border-radius: 14px; transition: background 0.2s;
+        }
+        .nav-item svg {
+            width: 26px; height: 26px; margin-bottom: 8px; stroke: #1155CC; stroke-width: 2; fill: none;
+            stroke-linecap: round; stroke-linejoin: round;
+        }
+        .nav-item:hover { background: #f1f5f9; color: #E06500; }
+        .nav-item:hover svg { stroke: #E06500; }
 
         /* General Hover Effects */
         .btn-doc-footer:hover { background-color: #bfdbfe !important; color: #1e3a8a !important; transform: translateY(-2px); }
@@ -454,54 +435,37 @@
      START AREA PENGATURAN MENU AKTIF
      ====================================================================== -->
 <style>
-    /* Hover & Active state Modal Menu Grid */
-    .nav-item:hover {
-        background: #FF7305 !important;
-        color: #ffffff !important;
-        text-shadow: none !important;
+    /* Efek Hover Umum */
+    .b-nav-item:hover { 
+        background-color: #EDEDED !important; 
+        color: #E06500 !important; 
     }
-    .nav-item:hover svg {
-        filter: none !important;
+    .b-nav-item:hover svg { 
+        stroke: #E06500 !important; 
     }
 
-    /* Styling khusus Modal Menu pop-up ketika aktif (Modal Dalam) */
-    .nav-item.menu-tertekan {
-        background: #FF7305 !important;
-        box-shadow: inset 0 4px 8px rgba(0,0,0,0.3) !important; 
-        transform: scale(0.95); 
-        color: #FFFFFF !important;
-        pointer-events: none; 
-        cursor: default;
-        border-radius: 12px;
-        text-shadow: none !important;
-    }
-    .nav-item.menu-tertekan svg { filter: none !important; opacity: 0.9; }
-    
-    /* Tampilan menu aktif (Bottom Nav Bar) */
+    /* Tampilan menu aktif di baris bawah (Bottom Nav Bar) */
     .b-nav-item.menu-tertekan {
-        background-color: transparent !important;
-        box-shadow: none !important;
-        border-top: 3px solid #FF7305 !important;
-        color: #1155CC !important;
+        background-color: #EDEDED !important;
+        color: #E06500 !important;
         pointer-events: none;
         cursor: default;
-        transform: none !important;
-        border-radius: 0 !important;
     }
     .b-nav-item.menu-tertekan svg {
-        stroke: #1155CC !important;
+        stroke: #E06500 !important;
     }
 </style>
 <script>
+    // Menyimpan nama halaman agar logika buka tutup modal menu tahu state aslinya
+    const halamanAktifSaatIni = 'home'; // Ganti dengan 'home', 'warga', 'inventaris', dll sesuai halaman aslinya
+
     document.addEventListener("DOMContentLoaded", function() {
-        const halamanAktifSaatIni = 'home'; 
         const mapMenu = {
             'home': 'btn-home', 'warga': 'btn-warga', 'inventaris': 'btn-inventaris',
             'lapak': 'btn-lapak', 'pengurus': 'btn-pengurus', 'galeri': 'btn-galeri',
-            'tatatertib': 'btn-tatatertib', 'ronda': 'btn-ronda'
+            'tatatertib': 'btn-tatatertib', 'ronda': 'btn-ronda', 'menu': 'btn-menu'
         };
         if (mapMenu[halamanAktifSaatIni]) {
-            // Berlaku untuk Bottom Nav & Nav Modal
             const tombolAktif = document.querySelectorAll('.' + mapMenu[halamanAktifSaatIni]);
             tombolAktif.forEach(btn => btn.classList.add('menu-tertekan'));
         }
@@ -523,7 +487,7 @@
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-img">
                 <div class="header-text-area">
                     <span class="slogan-text-1">RT 2 Online</span>
-                    <span class="slogan-text-2">Aplikasi Warga RT 2-RW 3, Pasekan Lor</span>
+                    <span class="slogan-text-2">Aplikasi Warga Mandiri</span>
                 </div>
             </div>
             
@@ -535,7 +499,7 @@
                 </svg>
             </div>
 
-            <!-- TAMPIL SAAT SUDAH LOGIN (NAMA SINGKAT DI KIRI FOTO + FOTO PROFIL + TOMBOL LOGOUT) -->
+            <!-- TAMPIL SAAT SUDAH LOGIN -->
             <div id="loggedInMenu" class="logged-in-menu">
                 <a href="data-warga" title="Update Profil Warga" style="display: flex; align-items: center; gap: 6px; text-decoration: none;">
                     <span id="userShortName" class="user-short-name"></span>
@@ -838,25 +802,26 @@
         </div>
 
         <footer class="main-footer">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png" alt="Logo RT 2 Paslor" style="width: 190px; height: auto; margin: 0 auto 12px auto; display: block; opacity: 0.9;">
-            <div class="footer-line f-bold">Copyright © 2026 RT 2 Pasekan Lor.</div>
-            <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW.</div>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXV9uai9NYOwne0RP0jKBb-ajPaFvOe91SnfYesBL2_mLHLQQ8KKXcATfn40usjlzQKzi00XIdu8DY1KrUGfcL0Z_PJVV3pZfqL4GjoFHSD47o4rGuz7h6OYWfRzHTr1gTA4zOpBJgdwx9y6SN5O_0w4YByoLioorYi6upHwl19Sb-um44FJbc3zUEArs/s1600/Thumb%20-%20Abu%2060.png" alt="Logo RT 2 Paslor" style="width: 190px; height: auto; margin: 0 auto 12px auto; display: block; opacity: 0.9;">
+            <div class="footer-line f-bold">Copyright © 2026</div>
+            <div class="footer-line f-bold">Aplikasi Warga RT 2-RW 3, Pasekan Lor</div>
+            <div class="footer-line f-reg">Dikerjakan mandiri oleh Warga RT 2 Paslor -AdW-</div>
         </footer>
 
-        <!-- Gunung Footer (Fixed di Belakang secara Statis / Layer 1) -->
+        <!-- Gunung Footer (Ikut scroll, diam di bawah) -->
         <div id="footerFixedGunung">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj-f-FCb746bDbY40AVuZj8ABXuy4Y0ERtX8KPEzWISTGEuPz7HGQhJCTADnmnRuwXx7wLGp-DZaHJ3HRnT505ksgW10sHy8xKvg_PYNUzsqXIigpJgCwrYvQKg3B7xgYRRnqp0OilxSKExbkJ8LHI9lvXYhg8RRxXSktgHk84Vg74X1mzOrKpGdDNzWHY/s1600/GUNUNG%20OK%20480%20px.png" style="width: 100%; display: block;" alt="Gunung Footer">
         </div>
 
-        <!-- Suasana Desa (Fast Smooth Slide Up/Down di Depan Gunung Footer / Layer 2) -->
+        <!-- Suasana Desa (Ikut scroll, diam di bawah) -->
         <div id="footerSlideImg">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEic4TqrZkjl9b8wsb4fPyKIKYOLpkbEcXtt2UaYbyIobglYQJ8o4r-8b4tjK5unnRdKUhhCSPfOpbk6CkIZ4e280-4XuYZGp6IaLt1QPcJLWZm_xxo_9WVaTzHEreSGSI_-_Pu0k5anPu6ANQULsptnbLNOJd4Q2jAc6aJU5261cf89n12souejh3Kl1z4/s1600/Suasana%20Desa.png" style="width: 100%; display: block;" alt="Suasana Desa">
         </div>
 
-        <!-- ==================== FIXED BOTTOM NAVIGATION (DESAIN BARU) ==================== -->
+        <!-- ==================== FIXED BOTTOM NAVIGATION (1 BARIS, 5 MENU) ==================== -->
         <nav class="bottom-nav-bar">
             <!-- 1. HOME -->
-            <a href="#" class="b-nav-item btn-home">
+            <a href="https://rt2pasekanlor.id/" class="b-nav-item btn-home">
                 <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 <span>Home</span>
             </a>
@@ -867,8 +832,8 @@
                 <span>Inventaris</span>
             </a>
             
-            <!-- 3. ALL MENU (TOGGLE MODAL) -->
-            <div class="b-nav-item b-nav-all-menu" onclick="toggleMoreMenu()">
+            <!-- 3. MENU (TOMBOL TENGAH) -->
+            <div class="b-nav-item btn-menu" onclick="toggleMoreMenu()">
                 <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
                 <span>MENU</span>
             </div>
@@ -886,25 +851,35 @@
             </a>
         </nav>
 
-        <!-- ==================== MODAL TRANSPARAN MENU LAINNYA ==================== -->
+        <!-- ==================== MODAL MENU LAINNYA (KOTAK PUTIH BESAR) ==================== -->
         <div class="more-menu-overlay" id="moreMenuModal" onclick="closeMoreMenuOutside(event)">
             <div class="more-menu-content" onclick="event.stopPropagation()">
+                <!-- Garis kecil di atas modal (Handlebar) -->
+                <div style="width: 40px; height: 5px; background: #cbd5e1; border-radius: 10px; margin: 0 auto 20px auto;"></div>
+                
                 <div class="modal-menu-grid">
-                    <a href="data-warga" class="nav-item btn-warga" title="Warga">
+                    <!-- WARGA -->
+                    <a href="data-warga" class="nav-item btn-warga">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                        <span>WARGA</span>
+                        <span>Warga</span>
                     </a>
-                    <a href="lapak-warga" class="nav-item btn-lapak" title="Lapak">
+                    
+                    <!-- LAPAK -->
+                    <a href="lapak-warga" class="nav-item btn-lapak">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                        <span>LAPAK</span>
+                        <span>Lapak</span>
                     </a>
-                    <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
+                    
+                    <!-- PENGURUS -->
+                    <a href="pengurus" class="nav-item btn-pengurus">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        <span>PENGURUS</span>         
+                        <span>Pengurus</span>         
                     </a>
-                    <a href="galeri" class="nav-item btn-galeri" title="Galeri">
+                    
+                    <!-- GALERI -->
+                    <a href="galeri" class="nav-item btn-galeri">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                        <span>GALERI</span>
+                        <span>Galeri</span>
                     </a>
                 </div>
             </div>
@@ -915,9 +890,10 @@
 
 <script>
     // ==========================================
-    // FUNGSI MODAL MENU BAWAH TOGGLE (KLIK 1 BUKA, KLIK 2 TUTUP)
+    // FUNGSI MODAL KOTAK MENU BAWAH (TOGGLE)
     // ==========================================
     const moreMenuModal = document.getElementById('moreMenuModal');
+    const btnMenuToggle = document.querySelector('.btn-menu');
     
     function toggleMoreMenu() {
         if (moreMenuModal.classList.contains('active')) {
@@ -929,11 +905,18 @@
     
     function openMoreMenu() { 
         moreMenuModal.classList.add('active'); 
+        btnMenuToggle.classList.add('menu-tertekan'); // Efek tombol menu menyala
         document.body.style.overflow = 'hidden'; 
     }
     
     function closeMoreMenu() { 
         moreMenuModal.classList.remove('active'); 
+        
+        // Hanya matikan efek menu menyala jika halaman saat ini BUKAN halaman menu
+        if (halamanAktifSaatIni !== 'menu') {
+            btnMenuToggle.classList.remove('menu-tertekan');
+        }
+        
         document.body.style.overflow = 'auto'; 
     }
     
@@ -1117,29 +1100,15 @@
     // HEADER & FOOTER SLIDE ANIMASI SAAT SCROLL
     // ==========================================
     const appHeaderWrapper = document.getElementById('appHeaderWrapper');
-    const slideImg = document.getElementById('footerSlideImg');
     let isScrolling = false;
-    let isFooterVisible = false;
 
     window.addEventListener('scroll', () => {
         if (!isScrolling) {
             window.requestAnimationFrame(() => {
-                // Header Morph
                 if (window.scrollY > 15) {
                     appHeaderWrapper.classList.add('header-morphed');
                 } else {
                     appHeaderWrapper.classList.remove('header-morphed');
-                }
-
-                // Footer Slide Up/Down (Suasana Desa)
-                if (slideImg) {
-                    const docHeight = document.documentElement.scrollHeight;
-                    const scrollPos = window.scrollY + window.innerHeight;
-                    const shouldFooterShow = (docHeight - scrollPos < 100);
-                    if (shouldFooterShow !== isFooterVisible) {
-                        slideImg.style.transform = shouldFooterShow ? 'translateY(0)' : 'translateY(100%)';
-                        isFooterVisible = shouldFooterShow;
-                    }
                 }
                 isScrolling = false;
             });
@@ -1698,7 +1667,7 @@
               <img src="${p.thumb}" alt="${p.nama}">
               <div class="produk-card-body">
                 <h4 class="produk-nama">${svgBox} ${p.nama}</h4>
-                ${p.harga ? `<div class="produk-harga">${svgWallet} ${p.harga}</div>` : ''}
+                ${p.harga ? `<div class="produk-harga">${svgWallet}${p.harga}</div>` : ''}
               </div>
             </div>
           `).join('') : '<div style="font-size:13px; color:#777; grid-column: span 2;">Belum ada etalase produk.</div>';
@@ -1710,7 +1679,7 @@
           <h2 class="nama-toko" style="font-size:18px;">${data.namaToko}</h2>
           ${data.deskripsi ? `<div class="teks-deskripsi-modal modal-teks-sama">${data.deskripsi}</div>` : ''}
           <div class="icon-text modal-teks-sama" style="margin-top: 0; margin-bottom: 10px;">${svgMap} <span>${data.alamat}</span></div>
-          ${data.waText ? `<a href="tel:+${data.waLink}" class="text-wa" title="Panggil/Telepon WA">${svgWa} ${data.waText}</a>` : ''}
+          ${data.waText ? `<a href="tel:+${data.waLink}" class="text-wa" title="Panggil/Telepon WA">${svgWa}${data.waText}</a>` : ''}
           <div class="produk-grid">${produkHTML}</div>
         `;
         modal.style.display = 'flex'; document.body.style.overflow = 'hidden';
@@ -1737,7 +1706,7 @@
               <h4 style="font-size: 15px; font-weight: 500; color: #333; margin: 0 0 10px 0; display: flex; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif;">
                 <span style="color: #666; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;">${svgBox}</span> ${p.nama}
               </h4>
-              ${p.harga ? `<div style="font-size: 16px; color: #1155cc; font-weight: 600; display: flex; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif;"><span style="width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;">${svgWallet}</span> ${p.harga}</div>` : ''}
+              ${p.harga ? `<div style="font-size: 16px; color: #1155cc; font-weight: 600; display: flex; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif;"><span style="width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;">${svgWallet}</span>${p.harga}</div>` : ''}
             </div>
           </div>
         `;

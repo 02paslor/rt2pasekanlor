@@ -299,10 +299,10 @@
         .f-reg { font-size: 10px; font-weight: 400; }
 
         /* ================== FOOTER LAYER STYLING ================== */
-        /* Gunung Footer (Otomatis naik sesuai tinggi menu navigasi) - diubah ke absolute spy natural namun nempel bawah */
+        /* Gunung Footer (Otomatis naik sesuai tinggi menu navigasi) */
         #footerFixedGunung {
-            position: absolute;
-            bottom: 65px; 
+            position: fixed;
+            bottom: 8px; 
             left: 0;
             right: 0;
             margin: 0 auto;
@@ -312,14 +312,16 @@
             pointer-events: none;
         }
 
-        /* Suasana Desa (Otomatis naik sesuai tinggi menu navigasi) - diubah ke absolute spy natural namun nempel bawah */
+        /* Suasana Desa (Otomatis naik sesuai tinggi menu navigasi) */
         #footerSlideImg {
-            position: absolute;
-            bottom: 65px;
+            position: fixed;
+            bottom: 55px;
             left: 0;
             right: 0;
             margin: 0 auto;
             z-index: 1;
+            transform: translateY(100%);
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             width: 100%;
             max-width: 480px;
             pointer-events: none;
@@ -362,10 +364,6 @@
         .b-nav-all-menu svg { stroke: #1155CC !important; }
         .b-nav-all-menu:hover { background-color: #EDEDED !important; color: #E06500 !important; }
         .b-nav-all-menu:hover svg { stroke: #E06500 !important; }
-
-        /* Warna Tombol saat Modal Terbuka Sesuai Permintaan */
-        .b-nav-all-menu.active-menu-btn { background-color: #EDEDED !important; color: #FA6700 !important; }
-        .b-nav-all-menu.active-menu-btn svg { stroke: #FA6700 !important; }
 
         /* Modal Transparan Semua Menu */
         .more-menu-overlay {
@@ -610,6 +608,14 @@
             </div>
         </div>
 
+        <!-- ==================== SLIDER BANNER ==================== -->
+        <div class="hero-slider-wrapper">
+            <div class="slider-container">
+                <div class="status-msg" id="ps-status-loading">Slider</div>
+                <div class="ps-slider-container" id="ps-slider-track"></div>
+            </div>
+        </div>
+
         <!-- EM Modal -->
         <div class="em-modal-overlay slide-up-overlay" id="emModalOverlay" onclick="closeEmModalOutside(event)">
             <div class="em-modal-content slide-up-content" onclick="event.stopPropagation()">
@@ -642,6 +648,55 @@
             </div>
         </div>
 
+        <!-- KOTAK KAS -->
+        <section class="hero-kas-container" id="kotakKas">
+            <div class="kas-card new-kas-design">
+                <div class="kas-weather-top">
+                    <div class="welcome-text-container">
+                        <span class="static-welcome" id="liveWeather">Selamat Datang Warga RT 2-RW 3, Pasekan Lor</span>
+                    </div>
+                </div>
+                <div class="kas-body-wrapper">
+                    <div class="kas-left">
+                        <div class="calendar-display">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            <div class="date-block">
+                                <span class="date-day" id="liveDayName">Memuat...</span>
+                                <span class="date-full" id="liveDateFull"></span>
+                            </div>
+                        </div>
+                        <div class="clock-display">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            <span class="clock-text" id="liveClock">00:00 WIB</span>
+                        </div>
+                    </div>
+                    <div class="kas-right">
+                        <div>
+                            <div class="saldo-label">Saldo Kas RT 2 <div class="saldo-dot"></div></div>
+                            <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                <div class="saldo-value" id="saldoKas">Rp...</div>
+                                <button id="toggleSaldoBtn" style="background:none; border:none; color:#ccff00; cursor:pointer; padding: 0; display:flex; align-items:center;" aria-label="Toggle Saldo Visibility">
+                                    <svg id="eyeIconOpen" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <svg id="eyeIconClosed" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="kas-action-buttons" style="justify-content: flex-end;">
+                    <a href="https://docs.google.com/spreadsheets/d/15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68/edit?gid=0#gid=0" target="_blank" class="btn-kas-small btn-kas-detail">
+                        Buku Kas Besar
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <button class="btn-kas-small btn-kas-trx" onclick="openUnivModal('https://rt2pasekanlor.id/rekapbukukas.html')">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Transaksi & Rekap Kas
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- SLIDER MODAL SLIDE DOWN PURE IMAGE (CENTER VIEW UTUH) -->
         <div class="slide-down-overlay" id="psModalOverlay" onclick="closePsModalOutside(event)">
             <div class="slide-down-content" onclick="event.stopPropagation()">
@@ -661,6 +716,19 @@
                 <div class="modal-scroll-area no-padding" style="height: 100%; width: 100%;">
                     <iframe id="univModalIframe" src="" loading="lazy" allowfullscreen style="width: 100%; height: 100%; border: none; display: block; border-radius: 20px;"></iframe>
                 </div>
+            </div>
+        </div>
+
+        <!-- ==================== BAGIAN AGENDA WARGA ==================== -->
+        <div class="dashboard-section-card card-kegiatan ds-agenda">
+            <div class="ds-header">KEGIATAN WARGA RT 2</div>
+            <div class="ds-content">
+                <div class="cards-list" id="infoCardsContainer">
+                    <div class="loading-text" style="color: #64748b;">Menyinkronkan info agenda...</div>
+                </div>
+            </div>
+            <div class="ds-footer" id="footerBtnArsipLain" style="display: none;">
+                <button class="ds-pill-btn" onclick="openListModal()">Arsip Lain</button>
             </div>
         </div>
 
@@ -697,6 +765,16 @@
             </div>
         </div>
 
+        <!-- ==================== BAGIAN BERITA & INTERMEZO ==================== -->
+        <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
+            <div style="background: #8AA2BF; color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                BERITA & INTERMEZO
+            </div>
+            <div class="news-slider-container" id="newsCardsContainer" style="padding-bottom: 10px;">
+                <div class="loading-text" style="color: #64748b;">-- Berita & Intermezo --</div>
+            </div>
+        </div>
+
         <!-- Berita Artikel -->
         <div class="slide-up-overlay" id="articleModal" onclick="closeArticleModalOutside(event)">
             <div class="slide-up-content" onclick="event.stopPropagation()">
@@ -710,6 +788,28 @@
             </div>
         </div>
 
+        <!-- ==================== BAGIAN LAPAK WARGA ==================== -->
+        <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
+            <div style="background:#8AA2BF; color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                LAPAK WARGA
+            </div>
+
+            <div id="widget-umkm-rt2">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <div class="filter-container" id="filter-kategori" style="flex-grow: 1;"></div>
+                    <a href="lapak-warga" style="text-decoration: none; flex-shrink: 0;">
+                        <button class="ds-pill-btn" style="padding: 6px 12px; font-size: 12px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background: #ffffff;">Lapak lain &rarr;</button>
+                    </a>
+                </div>
+                
+                <div class="umkm-slider" id="umkm-wrapper">
+                    <div class="loading-teks">Memuat Data Lapak Warga...</div>
+                </div>
+                <div id="pagination-container" class="pagination-container"></div>
+            </div>
+            
+        </div>
+
         <!-- Modal Lapak -->
         <div id="modal-umkm" class="modal-overlay">
             <div class="modal-content-lw" id="modal-body"></div>
@@ -718,122 +818,6 @@
             <span class="close-zoom">&times;</span>
             <div id="zoom-content" class="zoom-content-wrapper"></div>
         </div>
-
-
-        <!-- ==================== AREA SPA DYNAMIC CONTENT ==================== -->
-        <!-- Bagian ini digunakan untuk load halaman (SPA) mempertahankan login global -->
-        <div id="app-dynamic-page-content">
-            
-            <!-- HALAMAN UTAMA (HOME) -->
-            <div id="home-view">
-                <!-- ==================== SLIDER BANNER ==================== -->
-                <div class="hero-slider-wrapper">
-                    <div class="slider-container">
-                        <div class="status-msg" id="ps-status-loading">Slider</div>
-                        <div class="ps-slider-container" id="ps-slider-track"></div>
-                    </div>
-                </div>
-
-                <!-- KOTAK KAS -->
-                <section class="hero-kas-container" id="kotakKas">
-                    <div class="kas-card new-kas-design">
-                        <div class="kas-weather-top">
-                            <div class="welcome-text-container">
-                                <span class="static-welcome" id="liveWeather">Selamat Datang Warga RT 2-RW 3, Pasekan Lor</span>
-                            </div>
-                        </div>
-                        <div class="kas-body-wrapper">
-                            <div class="kas-left">
-                                <div class="calendar-display">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                    <div class="date-block">
-                                        <span class="date-day" id="liveDayName">Memuat...</span>
-                                        <span class="date-full" id="liveDateFull"></span>
-                                    </div>
-                                </div>
-                                <div class="clock-display">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                                    <span class="clock-text" id="liveClock">00:00 WIB</span>
-                                </div>
-                            </div>
-                            <div class="kas-right">
-                                <div>
-                                    <div class="saldo-label">Saldo Kas RT 2 <div class="saldo-dot"></div></div>
-                                    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
-                                        <div class="saldo-value" id="saldoKas">Rp...</div>
-                                        <button id="toggleSaldoBtn" style="background:none; border:none; color:#ccff00; cursor:pointer; padding: 0; display:flex; align-items:center;" aria-label="Toggle Saldo Visibility">
-                                            <svg id="eyeIconOpen" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                            <svg id="eyeIconClosed" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="kas-action-buttons" style="justify-content: flex-end;">
-                            <a href="https://docs.google.com/spreadsheets/d/15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68/edit?gid=0#gid=0" target="_blank" class="btn-kas-small btn-kas-detail">
-                                Buku Kas Besar
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </a>
-                            <button class="btn-kas-small btn-kas-trx" onclick="openUnivModal('https://rt2pasekanlor.id/rekapbukukas.html')">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                Transaksi & Rekap Kas
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ==================== BAGIAN AGENDA WARGA ==================== -->
-                <div class="dashboard-section-card card-kegiatan ds-agenda">
-                    <div class="ds-header">KEGIATAN WARGA RT 2</div>
-                    <div class="ds-content">
-                        <div class="cards-list" id="infoCardsContainer">
-                            <div class="loading-text" style="color: #64748b;">Menyinkronkan info agenda...</div>
-                        </div>
-                    </div>
-                    <div class="ds-footer" id="footerBtnArsipLain" style="display: none;">
-                        <button class="ds-pill-btn" onclick="openListModal()">Arsip Lain</button>
-                    </div>
-                </div>
-
-                <!-- ==================== BAGIAN BERITA & INTERMEZO ==================== -->
-                <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
-                    <div style="background: #8AA2BF; color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                        BERITA & INTERMEZO
-                    </div>
-                    <div class="news-slider-container" id="newsCardsContainer" style="padding-bottom: 10px;">
-                        <div class="loading-text" style="color: #64748b;">-- Berita & Intermezo --</div>
-                    </div>
-                </div>
-
-                <!-- ==================== BAGIAN LAPAK WARGA ==================== -->
-                <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
-                    <div style="background:#8AA2BF; color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                        LAPAK WARGA
-                    </div>
-
-                    <div id="widget-umkm-rt2">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                            <div class="filter-container" id="filter-kategori" style="flex-grow: 1;"></div>
-                            <a href="lapak-warga" style="text-decoration: none; flex-shrink: 0;">
-                                <button class="ds-pill-btn" style="padding: 6px 12px; font-size: 12px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background: #ffffff;">Lapak lain &rarr;</button>
-                            </a>
-                        </div>
-                        
-                        <div class="umkm-slider" id="umkm-wrapper">
-                            <div class="loading-teks">Memuat Data Lapak Warga...</div>
-                        </div>
-                        <div id="pagination-container" class="pagination-container"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- WADAH HALAMAN LAIN (HASIL LOAD FETCH) -->
-            <div id="other-view" style="display: none;"></div>
-
-        </div>
-        <!-- ==================== END AREA SPA DYNAMIC CONTENT ==================== -->
-
 
         <!-- ==================== Area Footer ==================== -->
         <div class="sub-footer-section">
@@ -859,12 +843,12 @@
             <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW.</div>
         </footer>
 
-        <!-- Gunung Footer (Ikut scroll, diposisikan secara natural di paling bawah footer area) -->
+        <!-- Gunung Footer (Fixed di Belakang secara Statis / Layer 1) -->
         <div id="footerFixedGunung">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj-f-FCb746bDbY40AVuZj8ABXuy4Y0ERtX8KPEzWISTGEuPz7HGQhJCTADnmnRuwXx7wLGp-DZaHJ3HRnT505ksgW10sHy8xKvg_PYNUzsqXIigpJgCwrYvQKg3B7xgYRRnqp0OilxSKExbkJ8LHI9lvXYhg8RRxXSktgHk84Vg74X1mzOrKpGdDNzWHY/s1600/GUNUNG%20OK%20480%20px.png" style="width: 100%; display: block;" alt="Gunung Footer">
         </div>
 
-        <!-- Suasana Desa (Ikut scroll, tanpa animasi interaktif scroll) -->
+        <!-- Suasana Desa (Fast Smooth Slide Up/Down di Depan Gunung Footer / Layer 2) -->
         <div id="footerSlideImg">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEic4TqrZkjl9b8wsb4fPyKIKYOLpkbEcXtt2UaYbyIobglYQJ8o4r-8b4tjK5unnRdKUhhCSPfOpbk6CkIZ4e280-4XuYZGp6IaLt1QPcJLWZm_xxo_9WVaTzHEreSGSI_-_Pu0k5anPu6ANQULsptnbLNOJd4Q2jAc6aJU5261cf89n12souejh3Kl1z4/s1600/Suasana%20Desa.png" style="width: 100%; display: block;" alt="Suasana Desa">
         </div>
@@ -872,13 +856,13 @@
         <!-- ==================== FIXED BOTTOM NAVIGATION (DESAIN BARU) ==================== -->
         <nav class="bottom-nav-bar">
             <!-- 1. HOME -->
-            <a href="rt2pasekanlor.id" class="b-nav-item btn-home menu-tertekan">
+            <a href="#" class="b-nav-item btn-home">
                 <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 <span>Home</span>
             </a>
             
             <!-- 2. INVENTARIS -->
-            <a href="inventaris.html" class="b-nav-item btn-inventaris">
+            <a href="inventaris" class="b-nav-item btn-inventaris">
                 <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                 <span>Inventaris</span>
             </a>
@@ -890,13 +874,13 @@
             </div>
             
             <!-- 4. TATA TERTIB -->
-            <a href="tatatertib.html" class="b-nav-item btn-tatatertib">
+            <a href="tatatertib" class="b-nav-item btn-tatatertib">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                 <span>Tata Tertib</span>
             </a>
             
             <!-- 5. RONDA -->
-            <a href="ronda.html" class="b-nav-item btn-ronda">
+            <a href="ronda" class="b-nav-item btn-ronda">
                 <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 <span>Ronda</span>
             </a>
@@ -906,19 +890,19 @@
         <div class="more-menu-overlay" id="moreMenuModal" onclick="closeMoreMenuOutside(event)">
             <div class="more-menu-content" onclick="event.stopPropagation()">
                 <div class="modal-menu-grid">
-                    <a href="data-warga.html" class="nav-item btn-warga" title="Warga">
+                    <a href="data-warga" class="nav-item btn-warga" title="Warga">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
                         <span>WARGA</span>
                     </a>
-                    <a href="lapak-warga.html" class="nav-item btn-lapak" title="Lapak">
+                    <a href="lapak-warga" class="nav-item btn-lapak" title="Lapak">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                         <span>LAPAK</span>
                     </a>
-                    <a href="pengurus.html" class="nav-item btn-pengurus" title="Pengurus">
+                    <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                         <span>PENGURUS</span>         
                     </a>
-                    <a href="galeri.html" class="nav-item btn-galeri" title="Galeri">
+                    <a href="galeri" class="nav-item btn-galeri" title="Galeri">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                         <span>GALERI</span>
                     </a>
@@ -930,72 +914,6 @@
 </div> 
 
 <script>
-    // ==========================================
-    // LOGIKA SINGLE PAGE APPLICATION (SPA) ROUTING
-    // ==========================================
-    document.addEventListener('click', function(e) {
-        const navLink = e.target.closest('a.b-nav-item, a.nav-item');
-        if (navLink) {
-            const url = navLink.getAttribute('href');
-            // Intercept URL page biasa (kecuali tel:, mailto:, url luar, atau anchor hash)
-            if (url && !url.startsWith('http') && !url.startsWith('tel:') && !url.startsWith('mailto:') && url !== '#') {
-                e.preventDefault();
-                
-                const homeView = document.getElementById('home-view');
-                const otherView = document.getElementById('other-view');
-                
-                if (url === 'home') {
-                    homeView.style.display = 'block';
-                    otherView.style.display = 'none';
-                    otherView.innerHTML = '';
-                } else {
-                    homeView.style.display = 'none';
-                    otherView.style.display = 'block';
-                    otherView.innerHTML = '<div style="padding: 60px 20px; text-align: center; color: #1155cc; font-weight: 600; font-size: 14px;">Memuat halaman...</div>';
-                    
-                    // Fetch isi halaman baru
-                    fetch(url)
-                        .then(res => { if(!res.ok) throw new Error("Gagal load " + url); return res.text(); })
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-                            
-                            // Ambil konten utama jika ada, atau kembalikan ke seluruh body
-                            const fetchedContent = doc.querySelector('.main-content-board') 
-                                ? doc.querySelector('.main-content-board').innerHTML 
-                                : doc.body.innerHTML;
-                                
-                            otherView.innerHTML = fetchedContent;
-                            
-                            // Eksekusi skrip dari halaman yang di-fetch secara aman
-                            const scripts = otherView.querySelectorAll('script');
-                            scripts.forEach(oldScript => {
-                                const newScript = document.createElement('script');
-                                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                                newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                                oldScript.parentNode.replaceChild(newScript, oldScript);
-                            });
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            otherView.innerHTML = '<div style="padding: 60px 20px; text-align: center; color: #ef4444; font-weight: 600;">Gagal memuat halaman. Silakan periksa koneksi Anda.</div>';
-                        });
-                }
-
-                // Perbarui Status Aktif Tombol Navigasi
-                document.querySelectorAll('.b-nav-item, .nav-item').forEach(el => el.classList.remove('menu-tertekan'));
-                navLink.classList.add('menu-tertekan');
-                
-                // Tutup menu modal apabila memilih salah satu menu didalamnya
-                if(document.getElementById('moreMenuModal').classList.contains('active')) {
-                    closeMoreMenu();
-                }
-                
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-    });
-
     // ==========================================
     // FUNGSI MODAL MENU BAWAH TOGGLE (KLIK 1 BUKA, KLIK 2 TUTUP)
     // ==========================================
@@ -1012,19 +930,11 @@
     function openMoreMenu() { 
         moreMenuModal.classList.add('active'); 
         document.body.style.overflow = 'hidden'; 
-        
-        // Logika mengubah warna tombol menu menjadi #FA6700
-        const btnToggleMenu = document.querySelector('.b-nav-all-menu');
-        if(btnToggleMenu) btnToggleMenu.classList.add('active-menu-btn');
     }
     
     function closeMoreMenu() { 
         moreMenuModal.classList.remove('active'); 
         document.body.style.overflow = 'auto'; 
-        
-        // Menghapus pewarnaan #FA6700 jika menu tertutup
-        const btnToggleMenu = document.querySelector('.b-nav-all-menu');
-        if(btnToggleMenu) btnToggleMenu.classList.remove('active-menu-btn');
     }
     
     function closeMoreMenuOutside(e) { 
@@ -1204,11 +1114,12 @@
     const GLOBAL_BLOG_URL = "https://rt2paslor.blogspot.com";
 
     // ==========================================
-    // HEADER ANIMASI SAAT SCROLL
-    // (Note: Animasi Footer Gambar sudah dihilangkan sesuai perintah)
+    // HEADER & FOOTER SLIDE ANIMASI SAAT SCROLL
     // ==========================================
     const appHeaderWrapper = document.getElementById('appHeaderWrapper');
+    const slideImg = document.getElementById('footerSlideImg');
     let isScrolling = false;
+    let isFooterVisible = false;
 
     window.addEventListener('scroll', () => {
         if (!isScrolling) {
@@ -1218,6 +1129,17 @@
                     appHeaderWrapper.classList.add('header-morphed');
                 } else {
                     appHeaderWrapper.classList.remove('header-morphed');
+                }
+
+                // Footer Slide Up/Down (Suasana Desa)
+                if (slideImg) {
+                    const docHeight = document.documentElement.scrollHeight;
+                    const scrollPos = window.scrollY + window.innerHeight;
+                    const shouldFooterShow = (docHeight - scrollPos < 100);
+                    if (shouldFooterShow !== isFooterVisible) {
+                        slideImg.style.transform = shouldFooterShow ? 'translateY(0)' : 'translateY(100%)';
+                        isFooterVisible = shouldFooterShow;
+                    }
                 }
                 isScrolling = false;
             });

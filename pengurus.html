@@ -19,235 +19,181 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ================= CSS MASTER TEMPLATE ================= */
+        /* ======================================================================
+           AREA PENGATURAN TAMPILAN GLOBAL (DARI TEMPLATE UTAMA)
+           ====================================================================== */
+        * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
+        *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
-        body { background-color: #B4C3D4; display: flex; justify-content: center; }
-        button, input, textarea, select, a { font-family: 'Poppins', sans-serif !important; }
+        body { background-color: #FFFFFF; min-height: 100vh; display: flex; justify-content: center; }
 
         .app-wrapper {
             width: 100%; max-width: 480px;
-            background-color: #F2F2F2; 
-            min-height: 100vh; position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.15);
-            padding-top: 135px; /* Jarak untuk header oranye saat fixed */
-            padding-bottom: 30px; overflow-x: hidden;
-            transition: padding-bottom 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            background-color: transparent; 
+            background-image: linear-gradient(to bottom, #0083E0 0.5%, #FFFFFF 10%, #F0FAFF 20%);
+            background-attachment: auto; background-size: cover; background-repeat: no-repeat;
+            min-height: 3vh; position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15); padding-bottom: 0; overflow-x: clip;
+            display: flex; flex-direction: column; z-index: 1;
         }
 
-        svg { display: inline-block; vertical-align: middle; }
-
-        /* Animasi Loading Muter untuk Ikon SVG */
-        @keyframes spinAnim { 100% { transform: rotate(360deg); } }
-        .spin-icon { animation: spinAnim 1s linear infinite; display: inline-block; vertical-align: middle; }
-
-        /* Kontainer Utama Wrapper Header */
-        .fixed-top-bar { 
-            position: absolute; 
-            top: 0; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 100%; 
-            max-width: 480px; 
-            z-index: 999; 
-            display: flex; 
-            flex-direction: column; 
+        /* ================== HEADER STICKY & FAST SMOOTH ================== */
+        .app-header-wrapper { 
+            position: sticky; top: 0; width: 100%; max-width: 480px; 
+            margin: 0 auto; padding: 12px 16px 6px 16px; z-index: 1000; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        /* Ketika scroll, area ini menjadi fixed di atas layar */
-        .fixed-top-bar.scrolled { 
-            position: fixed; 
+        .app-header-wrapper.header-morphed {
+            padding: 0 !important;
+            max-width: 100% !important;
         }
-        
-        /* Header Biru #1155cc ikut naik ke atas saat discroll */
-        .glass-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 3px 12px; 
-            background-color: #1155CC; 
-            box-shadow: 0 4px 12px rgba(17, 85, 204, 0.25); 
-            z-index: 1; 
-            position: relative;
-            transition: transform 0.3s ease, opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
+        .header-box { 
+            background-color: rgba(0, 52, 143, 0.9);
+            border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
+            padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .fixed-top-bar.scrolled .glass-header { 
-            transform: translateY(-100%);
-            opacity: 0;
-            max-height: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-            pointer-events: none;
+        .app-header-wrapper.header-morphed .header-box {
+            border-radius: 0 !important; border-left: none !important; border-right: none !important; border-top: none !important;
+            background-color: rgba(0, 52, 143, 0.95) !important;
+            backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding: 10px 16px !important; width: 100% !important;
         }
 
-        .header-left { display: flex; align-items: center; gap: 8px; max-width: 100%; }
-        .header-logo { width: 70px; height: 70px; object-fit: contain; flex-shrink: 0; }
-        .header-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; white-space: normal; }
-        .header-title-text { font-size: 11pt; font-weight: 600; color: #ffffff; line-height: 1.2; }
-        .header-slogan { font-size: 8pt; font-weight: 400; color: rgba(255, 255, 255, 0.9); line-height: 1.3; margin-top: 0; overflow: hidden; text-overflow: ellipsis; }
-        .header-logo + .header-text { flex: 1; }
+        .header-left-area { display: flex; align-items: center; gap: 10px; }
+        .header-logo-img { width: 72px; height: auto;}
+        .header-text-area { display: flex; flex-direction: column; line-height: 1.5; }
+        .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 700;}
+        .slogan-text-2 { color: #ffffff; font-size: 9px; font-weight: 500;}
 
-        /* Tombol Ikon Menu */
-        .btn-menu-dots { background: #1155CC; border: 0px solid rgba(255, 255, 255, 0.4); color: #ffffff; border-radius: 8px; height: 32px; padding: 0 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; transition: all 0.2s; backdrop-filter: blur(4px); }
-        .btn-menu-dots:active { transform: scale(0.92); filter: brightness(0.9); }
+        /* Area Login / Profil Warga */
+        .login-btn-wrapper { 
+            display: flex; align-items: center; justify-content: center; 
+            background-color: rgba(255, 255, 255, 0.2); width: 30px; height: 30px; border-radius: 50%; 
+            color: #ffffff; text-decoration: none; cursor: pointer; transition: all 0.2s; 
+            border: 1.5px solid rgba(255,255,255,0.4); overflow: hidden;
+        }
+        .login-btn-wrapper:active { background-color: rgba(255, 255, 255, 0.4); transform: scale(0.95); }
+        .login-icon { width: 16px; height: 16px; }
 
-        /* Header Oranye Judul Halaman yang Fixed */
-        .title-card-panel { 
-            background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
-            color: #ffffff; 
-            padding: 12px 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-radius: 0; 
-            box-shadow: none; 
-            z-index: 2; 
-            position: relative; 
-            flex-shrink: 0;
-            transition: padding 0.3s ease, box-shadow 0.3s ease;
+        .logged-in-menu { 
+            display: none; align-items: center; gap: 8px; 
+            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 4px 6px 4px 12px; border-radius: 15px;
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
+        .user-short-name { color: #5FDFF5; font-size: 10px; font-weight: 500; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; text-align: right; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .logout-btn svg { width: 12px; height: 12px; }
+        .logout-btn:active { transform: scale(0.9); }
 
-        .fixed-top-bar.scrolled .title-card-panel {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            padding: 12px 20px;
-        }
+        .main-content-board { background-color: transparent; padding-top: 5px; position: relative; z-index: 10; display: flex; flex-direction: column; min-height: calc(100vh - 100px); } 
 
-        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; min-width: 0; }
-        .title-card-left i { font-size: 18px; }
-        .title-card-right { display: flex; align-items: center; margin-left: auto; }
-        .scroll-logo { width: 0; height: 0; object-fit: contain; opacity: 0; transform: scale(0.7); transition: width 0.22s ease, height 0.22s ease, opacity 0.18s ease, transform 0.22s ease; }
-        .fixed-top-bar.scrolled .scroll-logo { width: 60px; height: 60px; opacity: 1; transform: scale(1); flex-shrink: 0; margin-right: 4px; }
-        
-        /* ================== MENU MODAL FAST CONTAINER ================== */
-        .menu-modal-overlay { 
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
-            background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px); 
-            display: flex; justify-content: center; align-items: center; 
-            padding: 16px; z-index: 25000; opacity: 0; visibility: hidden; 
-            transition: all 0.2s ease; 
-        }
-        .menu-modal-overlay.active { opacity: 1; visibility: visible; }
-        
-        .menu-modal-content { 
-            background: transparent; 
-            box-shadow: none; 
-            border: none; 
-            padding: 0; 
-            width: 100%; 
-            max-width: 440px; 
-            transform: scale(0.92); 
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-        }
-        .menu-modal-overlay.active .menu-modal-content { transform: scale(1); }
+        /* ================== MODAL ANIMASI & OVERLAY ================== */
+        .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 75px 16px 20px 16px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
+        .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
+        .slide-up-content { background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
+        .slide-up-overlay.active .slide-up-content { transform: scale(1); opacity: 1; }
 
-        /* =========================================================
-            MENU UTAMA — BENTUK TOMBOL PERSEGI PANJANG (ORANGE)
-            ========================================================= */
-        :root {
-            --bg-primary: #1155CC;
-            --bg-white: #FFFFFF;
-            --text-white: #FFFFFF;
-            --btn-blue: #0047BF;
-            --btn-active: #A1A1A1;
-            --shadow-inset: #000000;
-        }
+        /* ================== FORM LOGIN CSS ================== */
+        .login-wrapper { background: #f1f5f9; width: 100%; max-width: 400px; margin: 0 auto; border-radius: 28px; padding: 24px; position: relative; }
+        .login-close-btn { position: absolute; top: 16px; right: 16px; background: #1155cc; color: #ffffff; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(17,85,204,0.3); transition: transform 0.2s; }
+        .login-close-btn:active { transform: scale(0.9); }
+        .login-title-text { font-size: 26px; font-weight: 800; color: #1155cc; margin-bottom: 24px; letter-spacing: 0.5px; }
+        .login-form-grid { display: grid; grid-template-columns: 1fr 100px; gap: 12px; margin-bottom: 16px; }
+        .login-inputs { display: flex; flex-direction: column; gap: 12px; }
+        .input-icon-group { position: relative; display: flex; align-items: center; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 0 14px; height: 50px; transition: border-color 0.2s; }
+        .input-icon-group:focus-within { border-color: #1155cc; box-shadow: 0 0 0 3px rgba(17,85,204,0.1); }
+        .input-icon-group svg.left-icon { width: 22px; height: 22px; color: #64748b; flex-shrink: 0; margin-right: 8px; }
+        .input-icon-group input { border: none; background: transparent; width: 100%; font-size: 14.5px; color: #333; outline: none; font-weight: 500; }
+        .input-icon-group input::placeholder { color: #94a3b8; font-weight: 400; }
+        .input-icon-group .toggle-pw-btn { background: none; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; margin-left: 8px; }
+        .btn-monggo { background: #1155cc; color: #ffffff; border: none; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: transform 0.2s, background 0.2s; padding: 10px; line-height: 1.2; box-shadow: 0 4px 12px rgba(17,85,204,0.3); }
+        .btn-monggo:active { transform: scale(0.96); }
+        .login-error-msg { color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; display: none; padding: 8px; background: #fef2f2; border-radius: 10px; border: 1px solid #fecaca; margin-bottom: 16px; }
 
-        .main-menu-wrapper {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            padding: 0 4px;
-            width: 100%;
-        }
-        
-        .nav-item { 
-            color: var(--text-white); text-decoration: none; border-radius: 12px; 
-            font-size: 11px; font-weight: 600; letter-spacing: 0.2px; cursor: pointer; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: transform 0.2s, box-shadow 0.2s, background 0.3s; text-align: center; 
-            width: 100%; min-height: 84px; padding: 12px 4px; border: none; line-height: 1.2;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-        }
-        
-        .nav-item:active { transform: scale(0.94); }
-        
-        .nav-item svg { width: 26px; height: 26px; margin-bottom: 6px; display: block; stroke: currentColor; stroke-width: 2 !important; } 
-        
-        /* WARNA TOMBOL ALL MENU JADI ORANGE */
-        .btn-home, .btn-inventaris, .btn-pengurus, .btn-ronda, .btn-warga, .btn-galeri, .btn-datawarga, .btn-tatatertib, .btn-lapak { background: #FA6800; }
-
-        /* EFEK TOMBOL AKTIF */
-        .nav-item.menu-tertekan {
-            background: var(--btn-active) !important; 
-            box-shadow: inset 0 6px 10px var(--shadow-inset) !important; 
-            transform: scale(0.95); 
-            color: var(--text-white) !important; 
-            pointer-events: none; 
-            cursor: default;
-        }
-        .nav-item.menu-tertekan svg {
-            filter: none !important; 
-            opacity: 0.7;
-        }
-
-        @media (max-width: 380px) {
-            .main-menu-wrapper { gap: 8px; padding: 0 2px; }
-            .nav-item { font-size: 9.5px; min-height: 72px; padding: 10px 2px; border-radius: 10px; }
-            .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; }
-        }
-
-        .univ-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s; padding: 16px; }
-        .univ-modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
-        .univ-modal-box { width: 100%; max-width: 440px; height: 80vh; background: #ffffff; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; transform: scale(0.95) translateY(15px); transition: transform 0.3s ease-out; }
-        .univ-modal-overlay.active .univ-modal-box { transform: scale(1) translateY(0); }
-        .univ-modal-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc; font-weight: 600; color: #1e293b; }
-        .univ-modal-title { font-size: 16px; text-transform: uppercase; }
-        .btn-close-univ { background: #fef2f2; border: none; color: #ef4444; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;}
-        .btn-close-univ:hover { background: #FEE2E2; }
-        .univ-modal-body { flex: 1; width: 100%; height: 100%; background: #f1f5f9; }
-        .univ-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
-
-        .main-content-space { flex: 1; }
-        
-        /* Garis border atas footer dihilangkan */
+        /* ================== FOOTER GLOBAL ================== */
         .main-footer { 
-            width: 100%; 
-            margin: auto auto 0 auto; 
-            padding: 16px 16px; 
+            width: 85%; 
+            margin: 40px auto 100px auto; 
+            padding-top: 16px; 
             text-align: center; 
-            border-top: none !important; 
+            border-top: 1.5px solid #cbd5e1; 
             display: block; 
+            position: relative; 
+            z-index: 2; 
         }
-        .footer-line { color: #64748b; line-height: 1.3; margin-bottom: 2px; }
-        .f-bold { font-size: 11px; font-weight: 600; }
+        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 3px;}
+        .f-bold { font-size: 11px; font-weight: 500; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
-        /* ================= CSS KHUSUS HALAMAN PENGURUS ================= */
+        /* ================== FIXED BOTTOM NAVIGATION ================== */
+        .bottom-nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto; width: 100%; max-width: 480px; height: 65px;
+            background: #ffffff; display: flex; align-items: center; justify-content: space-between; z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+        }
+        .b-nav-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #1155CC; font-size: 10px; font-weight: 600; width: 20%; height: 100%; cursor: pointer; transition: background 0.2s, color 0.2s; text-transform: uppercase; background-color: transparent;
+        }
+        .b-nav-item svg { width: 24px; height: 24px; margin-bottom: 4px; stroke: #1155CC; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s; }
+        .b-nav-item:hover { background-color: #EDEDED !important; color: #E06500 !important; }
+        .b-nav-item:hover svg { stroke: #E06500 !important; }
+        .b-nav-item.menu-tertekan { background-color: #EDEDED !important; color: #E06500 !important; pointer-events: none; cursor: default; }
+        .b-nav-item.menu-tertekan svg { stroke: #E06500 !important; }
+
+        /* More Menu Transparan */
+        .more-menu-overlay { position: fixed; bottom: 65px; left: 0; right: 0; margin: 0 auto; width: 100%; max-width: 480px; height: calc(100vh - 65px); background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1999; display: flex; align-items: flex-end; visibility: hidden; opacity: 0; transition: all 0.1s ease; }
+        .more-menu-overlay.active { visibility: visible; opacity: 1; }
+        .more-menu-content { width: 100%; background: #ffffff; padding: 20px 16px 28px 16px; border-radius: 24px 24px 0 0; box-shadow: 0 -10px 25px rgba(0,0,0,0.1); transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .more-menu-overlay.active .more-menu-content { transform: translateY(0); }
+        .modal-menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #1155CC; font-size: 10px; font-weight: 600; cursor: pointer; padding: 12px 4px; text-transform: uppercase; border-radius: 14px; transition: background 0.2s; }
+        .nav-item svg { width: 26px; height: 26px; margin-bottom: 8px; stroke: #1155CC; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .nav-item:hover { background: #f1f5f9; color: #E06500; }
+        .nav-item:hover svg { stroke: #E06500; }
+        .nav-item.menu-tertekan { background: #f1f5f9; color: #E06500; pointer-events: none; opacity: 0.7; }
+        .nav-item.menu-tertekan svg { stroke: #E06500; }
         
-        /* Area Konten dengan padding dari tepi layar */
-        .main-content-area { 
-            width: 100%; 
-            margin-top: 20px; 
-            padding: 0 20px; /* Jarak agar tidak mepet layar HP */
+        svg { display: inline-block; vertical-align: middle; }
+
+        /* ======================================================================
+           CSS KHUSUS HALAMAN PENGURUS
+           ====================================================================== */
+        /* Title Card Pengurus */
+        .title-card-panel { 
+            background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
+            color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; 
+            align-items: center; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            z-index: 2; position: relative; margin: 10px 16px 20px 16px;
+        }
+        .title-card-left { font-size: 15px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; }
+        .title-card-left svg { stroke-width: 2.5; }
+        
+        .title-card-right { display: flex; align-items: center; justify-content: flex-end; }
+        .title-card-right img { 
+            height: 60px; 
+            width: auto; 
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); 
         }
 
-        /* Card Besar (Container Utama) */
+        .main-content-space { flex: 1; }
+        .main-content-area { width: 100%; margin-top: 5px; padding: 0 16px; position: relative; z-index: 2; }
+
         .main-card { 
             background: #FFFFFF; 
-            border-radius: 24px; 
-            padding: 24px 20px; /* Padding dalam card besar */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            border-radius: 16px; 
+            padding: 24px 16px; 
             border: 1px solid #e2e8f0; 
             display: flex; 
             flex-direction: column; 
+            gap: 20px; 
+            margin: 0; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         /* Container List Pengurus */
@@ -259,7 +205,7 @@
 
         /* Desain Card Kecil per Nama */
         .pg-card {
-            background: #F8FAFC; /* Warna beda agar menonjol dari card besar */
+            background: #F8FAFC; 
             border-radius: 16px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             border: 1px solid #e2e8f0;
@@ -341,298 +287,395 @@
 <body>
 
 <div class="app-wrapper">
-    <!-- HEADER & NAVIGASI -->
-    <div class="fixed-top-bar" id="fixedTopBar">
-        <header class="glass-header" id="mainHeader">
-            <div class="header-left">
-                <img class="header-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2">
-                <div class="header-text">
-                    <div class="header-title-text">RT 2 Online</div>
-                    <div class="header-slogan">Aplikasi Warga RT 2-RW 3, Pasekan Lor</div>
-                </div>
-            </div>
-        </header>
 
-        <div class="title-card-panel" title="Halaman Pengurus">
-            <div class="title-card-left">
-                <img class="scroll-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span>Pengurus RT 2</span>
+    <!-- HEADER STICKY -->
+    <div class="app-header-wrapper" id="appHeaderWrapper">
+        <header class="header-box" id="mainHeader">
+            <div class="header-left-area">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-img">
+                <div class="header-text-area">
+                    <span class="slogan-text-1">RT 2 Online</span>
+                    <span class="slogan-text-2">Aplikasi Warga Mandiri</span>
+                </div>
             </div>
             
+            <!-- TOMBOL LOGIN / PROFIL WARGA -->
+            <div id="openLoginModalBtn" class="login-btn-wrapper">
+                <svg id="loginIconSvg" class="login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+
+            <!-- TAMPIL SAAT SUDAH LOGIN -->
+            <div id="loggedInMenu" class="logged-in-menu">
+                <a href="data-warga" title="Update Profil Warga" style="display: flex; align-items: center; gap: 6px; text-decoration: none;">
+                    <span id="userShortName" class="user-short-name"></span>
+                    <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.4); display: block; box-shadow: 0 2px 6px rgba(0,0,0,0.1); flex-shrink: 0;">
+                        <img id="userAvatarImg" src="" alt="Profil" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                </a>
+                <button onclick="logoutWarga()" class="logout-btn" title="Keluar">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                </button>
+            </div>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT BOARD -->
+    <div class="main-content-board">
+
+        <!-- AREA MODAL LOGIN -->
+        <div class="slide-up-overlay" id="loginModalOverlay" onclick="closeLoginModalOutside(event)">
+            <div class="slide-up-content" onclick="event.stopPropagation()" style="background: transparent; box-shadow: none; align-items: center; padding: 0 16px;">
+                <div class="login-wrapper">
+                    <button class="login-close-btn" onclick="closeLoginModal()" title="Tutup">X</button>
+                    <div class="login-title-text">Masuk Akun</div>
+                    <form id="loginForm" style="margin: 0;">
+                        <div class="login-form-grid">
+                            <div class="login-inputs">
+                                <div class="input-icon-group">
+                                    <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    <input type="text" id="loginUsername" placeholder="user" required>
+                                </div>
+                                <div class="input-icon-group">
+                                    <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+                                    <input type="password" id="loginPassword" placeholder="Password" required>
+                                    <button type="button" class="toggle-pw-btn" onclick="togglePasswordVisibility()">
+                                        <svg id="eyeIconPwOpen" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                                        <svg id="eyeIconPwClosed" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:block;"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" id="btnSubmitLogin" class="btn-monggo">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                                <span>Monggo<br>Mlebet</span>
+                            </button>
+                        </div>
+                        <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TITLE CARD PENGURUS ==================== -->
+        <div class="title-card-panel" title="Halaman Pengurus">
+            <div class="title-card-left">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Pengurus RT 2</span>
+            </div>
             <div class="title-card-right">
-                <!-- Tombol Trigger Menu Modal Fast -->
-                <button id="btnMenuToggle" class="btn-menu-dots" title="Menu Utama">
-                    <span>Menu</span>
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-                        <circle cx="7" cy="7" r="2.5"></circle>
-                        <circle cx="17" cy="7" r="2.5"></circle>
-                        <circle cx="7" cy="17" r="2.5"></circle>
-                        <circle cx="17" cy="17" r="2.5"></circle>
-                    </svg>
-                </button>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQ7IVomIkb-mV0q7VdknjHyQqSB4BnWfCUMC6ojydIhF0uOokTpEJRwcFrcYPXUnCQgZhXIbDHB9ThmUSynhKSEIkydOESr2GkLs3GpwZhGCMZm_mJybCZV1_cLyLhRE-Hur8xmS5ue2lRQOGmk7zykgcq4jLBCqUmSJJyCVxrMVMceGYPpOoeGzVmirs/s1600/lebah%20-%20senter.png" alt="Logo RT 2">
             </div>
         </div>
-    </div>
 
-    <!-- KONTEN UTAMA PENGURUS -->
-    <div class="main-content-area">
-        <div class="main-card">
-            <!-- CONTAINER DAFTAR PENGURUS -->
-            <div class="pengurus-container" id="pengurusContainer">
-                
-                <div class="pg-card">
-                    <div class="pg-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+        <!-- ==================== KONTEN UTAMA PENGURUS ==================== -->
+        <div class="main-content-area">
+            <div class="main-card">
+                <!-- CONTAINER DAFTAR PENGURUS -->
+                <div class="pengurus-container" id="pengurusContainer">
+                    
+                    <div class="pg-card">
+                        <div class="pg-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                        </div>
+                        <div class="pg-info">
+                            <div class="pg-name">Andri Septiyanto, S.H.</div>
+                            <div class="pg-role">Lurah Balecatur</div>
+                        </div>
                     </div>
-                    <div class="pg-info">
-                        <div class="pg-name">Andri Septiyanto, S.H.</div>
-                        <div class="pg-role">Lurah Balecatur</div>
+                    
+                    <div class="pg-card">
+                        <div class="pg-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                        </div>
+                        <div class="pg-info">
+                            <div class="pg-name">Hafizh Anshori, S.E.</div>
+                            <div class="pg-role">Dukuh Pasekan</div>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="pg-card">
-                    <div class="pg-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
-                    </div>
-                    <div class="pg-info">
-                        <div class="pg-name">Hafizh Anshori, S.E.</div>
-                        <div class="pg-role">Dukuh Pasekan</div>
-                    </div>
-                </div>
 
-                <div class="pg-card">
-                    <div class="pg-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    <div class="pg-card">
+                        <div class="pg-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                        </div>
+                        <div class="pg-info">
+                            <div class="pg-name">Bambang Purwono</div>
+                            <div class="pg-role">Penasehat RT 2</div>
+                        </div>
                     </div>
-                    <div class="pg-info">
-                        <div class="pg-name">Bambang Purwono</div>
-                        <div class="pg-role">Penasehat RT 2</div>
-                    </div>
-                </div>
 
-                <div class="pg-card">
-                    <div class="pg-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    <div class="pg-card">
+                        <div class="pg-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                        </div>
+                        <div class="pg-info">
+                            <div class="pg-name">Fajar Yunianto</div>
+                            <div class="pg-role">Ketua RW 3</div>
+                        </div>
                     </div>
-                    <div class="pg-info">
-                        <div class="pg-name">Fajar Yunianto</div>
-                        <div class="pg-role">Ketua RW 3</div>
-                    </div>
-                </div>
 
-                <div class="pg-card">
-                    <div class="pg-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    <div class="pg-card">
+                        <div class="pg-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                        </div>
+                        <div class="pg-info">
+                            <div class="pg-name">Katri Nurjani</div>
+                            <div class="pg-role">Ketua RT 2</div>
+                        </div>
                     </div>
-                    <div class="pg-info">
-                        <div class="pg-name">Katri Nurjani</div>
-                        <div class="pg-role">Ketua RT 2</div>
-                    </div>
-                </div>
 
-                <div class="pg-card">
-                    <div class="pg-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    <div class="pg-card">
+                        <div class="pg-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                        </div>
+                        <div class="pg-info">
+                            <div class="pg-name">Ari Suprianto</div>
+                            <div class="pg-role">Sekretaris RT 2</div>
+                        </div>
                     </div>
-                    <div class="pg-info">
-                        <div class="pg-name">Ari Suprianto</div>
-                        <div class="pg-role">Sekretaris RT 2</div>
-                    </div>
-                </div>
 
-                <div class="pg-card">
-                    <div class="pg-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    <div class="pg-card">
+                        <div class="pg-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                        </div>
+                        <div class="pg-info">
+                            <div class="pg-name">Twenty Aprilian</div>
+                            <div class="pg-role">Bendahara RT 2</div>
+                        </div>
                     </div>
-                    <div class="pg-info">
-                        <div class="pg-name">Twenty Aprilian</div>
-                        <div class="pg-role">Bendahara RT 2</div>
-                    </div>
-                </div>
 
-                <div class="pg-card">
-                    <div class="pg-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    <div class="pg-card">
+                        <div class="pg-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                        </div>
+                        <div class="pg-info">
+                            <div class="pg-name">Samijoko</div>
+                            <div class="pg-role">Keamanan RT 2</div>
+                        </div>
                     </div>
-                    <div class="pg-info">
-                        <div class="pg-name">Samijoko</div>
-                        <div class="pg-role">Keamanan RT 2</div>
-                    </div>
-                </div>
 
-                <div class="pg-card">
-                    <div class="pg-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                    <div class="pg-card">
+                        <div class="pg-avatar">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLRFHYBuXrcxhlXG_vFXgc4JWSDKbHFlWrn1fMEMmGWA&s=10" alt="Avatar">
+                        </div>
+                        <div class="pg-info">
+                            <div class="pg-name">Agustinus Yuna</div>
+                            <div class="pg-role">Keamanan RT 2</div>
+                        </div>
                     </div>
-                    <div class="pg-info">
-                        <div class="pg-name">Agustinus Yuna</div>
-                        <div class="pg-role">Keamanan RT 2</div>
-                    </div>
+                    
                 </div>
-                
             </div>
         </div>
-    </div>
 
-    <!-- Ruang kosong untuk mendorong footer ke bawah -->
-    <div class="main-content-space">
-    </div>
+        <!-- Ruang kosong untuk mendorong footer ke bawah -->
+        <div class="main-content-space"></div>
 
-    <!-- MODAL MENU FAST -->
-    <div class="menu-modal-overlay" id="menuFastModal" onclick="closeMenuModal(event)">
-        <div class="menu-modal-content" onclick="event.stopPropagation()">
-            <!-- MENU UTAMA -->
-            <div class="main-menu-wrapper">
-                <!-- HOME -->
-                <a href="https://rt2pasekanlor.id/" class="nav-item btn-home" title="Home">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    <span>HOME</span>
-                </a>
-                
-                <!-- WARGA -->
-                <a href="data-warga" class="nav-item btn-warga" title="Warga">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                    <span>WARGA</span>
-                </a>
-                
-                <!-- INVENTARIS -->
-                <a href="inventaris" class="nav-item btn-inventaris" title="Inventaris">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    <span>INVENTARIS</span>
-                </a>
+    </div> 
 
-                <!-- LAPAK -->
-                <a href="lapak-warga" class="nav-item btn-lapak" title="Lapak">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                    <span>LAPAK</span>
-                </a>
-
-                <!-- PENGURUS -->
-                <a href="pengurus" class="nav-item btn-pengurus" title="Pengurus">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>PENGURUS</span>        
-                </a>
-                
-                <!-- GALERI -->
-                <a href="galeri" class="nav-item btn-galeri" title="Galeri">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    <span>GALERI</span>
-                </a>
-
-                <!-- TATA TERTIB -->
-                <a href="tatatertib" class="nav-item btn-tatatertib" title="Tata Tertib">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    <span>TATA TERTIB</span>
-                </a>
-
-                <!-- RONDA -->
-                <a href="ronda" class="nav-item btn-ronda" title="Ronda">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span>RONDA</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL UNIVERSAL -->
-    <div class="univ-modal-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
-        <div class="univ-modal-box" onclick="event.stopPropagation()">
-            <div class="univ-modal-header">
-                <h2 class="univ-modal-title" id="univModalTitle">Judul</h2>
-                <button class="btn-close-univ" onclick="closeUnivModal()" title="Tutup">
-                    <svg viewBox="0 0 24 24" class="svg-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-            </div>
-            <div class="univ-modal-body">
-                <iframe id="univModalIframe" src="" loading="lazy" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER TETAP (TANPA GARIS) -->
+    <!-- FOOTER TETAP -->
     <footer class="main-footer">
-        <div class="footer-line f-bold">Copyright © 2026 RT 2 Paslor. All rights Reserved.</div>
-        <div class="footer-line f-reg">Dikerjakan secara mandiri oleh Warga RT 2 Paslor. AdW</div>
+        <div class="footer-line f-bold">Copyright © 2026. Aplikasi Warga RT 2-RW 3, Pasekan Lor</div>
+        <div class="footer-line f-reg">Dikerjakan mandiri oleh Warga RT 2 Paslor -AdW-</div>
     </footer>
+
+    <!-- FIXED BOTTOM NAVIGATION -->
+    <nav class="bottom-nav-bar">
+        <a href="https://rt2pasekanlor.id/" class="b-nav-item btn-home">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Home</span>
+        </a>
+        <a href="inventaris" class="b-nav-item btn-inventaris">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            <span>Inventaris</span>
+        </a>
+        <div class="b-nav-item btn-menu" onclick="toggleMoreMenu()">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+            <span>MENU</span>
+        </div>
+        <a href="tatatertib" class="b-nav-item btn-tatatertib">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span>Tata Tertib</span>
+        </a>
+        <a href="ronda" class="b-nav-item btn-ronda">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Ronda</span>
+        </a>
+    </nav>
+
+    <!-- MODAL MENU LAINNYA -->
+    <div class="more-menu-overlay" id="moreMenuModal" onclick="closeMoreMenuOutside(event)">
+        <div class="more-menu-content" onclick="event.stopPropagation()">
+            <div style="width: 40px; height: 5px; background: #cbd5e1; border-radius: 10px; margin: 0 auto 20px auto;"></div>
+            <div class="modal-menu-grid">
+                <a href="data-warga" class="nav-item btn-warga">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    <span>Warga</span>
+                </a>
+                <a href="lapak-warga" class="nav-item btn-lapak">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span>Lapak</span>
+                </a>
+                <a href="pengurus" class="nav-item btn-pengurus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Pengurus</span>         
+                </a>
+                <a href="galeri" class="nav-item btn-galeri">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>Galeri</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
 </div> 
 
 <script>
     /* ==========================================================
-       1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header)
+       1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header & Login)
        ========================================================== */
-    const topBar = document.getElementById('fixedTopBar');
-    const menuFastModal = document.getElementById('menuFastModal');
-    const btnMenuToggle = document.getElementById('btnMenuToggle');
+    const topBar = document.getElementById('appHeaderWrapper');
+    const menuFastModal = document.getElementById('moreMenuModal');
+    const btnMenuToggle = document.querySelector('.btn-menu');
     
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 30) {
-            topBar.classList.add('scrolled');
+        if (window.scrollY > 15) {
+            topBar.classList.add('header-morphed');
         } else {
-            topBar.classList.remove('scrolled');
+            topBar.classList.remove('header-morphed');
         }
         
         if (menuFastModal.classList.contains('active')) {
-            closeMenuModal();
+            closeMoreMenu();
         }
-    });
+    }, { passive: true });
 
-    menuFastModal.addEventListener('touchmove', closeMenuModal, { passive: true });
-    menuFastModal.addEventListener('wheel', closeMenuModal, { passive: true });
-
-    btnMenuToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menuFastModal.classList.add('active');
-    });
-
-    function closeMenuModal(e) {
-        menuFastModal.classList.remove('active');
+    function toggleMoreMenu() {
+        if (moreMenuModal.classList.contains('active')) closeMoreMenu();
+        else openMoreMenu();
     }
+    function openMoreMenu() { 
+        moreMenuModal.classList.add('active'); 
+        btnMenuToggle.classList.add('menu-tertekan');
+        document.body.style.overflow = 'hidden'; 
+    }
+    function closeMoreMenu() { 
+        moreMenuModal.classList.remove('active'); 
+        if (halamanAktifSaatIni !== 'menu') btnMenuToggle.classList.remove('menu-tertekan');
+        document.body.style.overflow = 'auto'; 
+    }
+    function closeMoreMenuOutside(e) { if(e.target === moreMenuModal) closeMoreMenu(); }
 
-    document.querySelectorAll('.main-menu-wrapper .nav-item').forEach(item => {
-        item.addEventListener('click', () => {
-            closeMenuModal();
-        });
-    });
-
+    // DI SINI SET HALAMAN AKTIF KE 'pengurus'
     const halamanAktifSaatIni = 'pengurus'; 
     const mapMenu = {
-        'home': 'btn-home',
-        'warga': 'btn-warga',
-        'inventaris': 'btn-inventaris',
-        'lapak': 'btn-lapak',
-        'pengurus': 'btn-pengurus',
-        'galeri': 'btn-galeri',
-        'tatatertib': 'btn-tatatertib',
-        'ronda': 'btn-ronda'
+        'home': 'btn-home', 'warga': 'btn-warga', 'inventaris': 'btn-inventaris',
+        'lapak': 'btn-lapak', 'pengurus': 'btn-pengurus', 'galeri': 'btn-galeri',
+        'tatatertib': 'btn-tatatertib', 'ronda': 'btn-ronda', 'menu': 'btn-menu'
     };
 
     if (mapMenu[halamanAktifSaatIni]) {
-        const tombolAktif = document.querySelector('.' + mapMenu[halamanAktifSaatIni]);
-        if (tombolAktif) {
-            tombolAktif.classList.add('menu-tertekan');
+        const tombolAktif = document.querySelectorAll('.' + mapMenu[halamanAktifSaatIni]);
+        tombolAktif.forEach(btn => btn.classList.add('menu-tertekan'));
+    }
+
+    // ==========================================
+    // PENGATURAN LOGIN Warga (Sinkron & Persisten)
+    // ==========================================
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwxnY23ME-d7Nzv_hxkj2pslTjWnAXsufkPlA47XJZ-bYXADTr39X9BBBSDrSIh7RhyGQ/exec";
+    const loginModalOverlay = document.getElementById('loginModalOverlay');
+    const loginForm = document.getElementById('loginForm');
+    const loginErrorMsg = document.getElementById('loginErrorMessage');
+    const btnSubmitLogin = document.getElementById('btnSubmitLogin');
+    
+    function checkLoginState() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const userName = localStorage.getItem('userName');
+        const userFotoRaw = localStorage.getItem('userFoto');
+        const userFoto = (userFotoRaw && userFotoRaw.trim() !== '') ? userFotoRaw : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(userName || 'Warga') + '&background=1155CC&color=fff&bold=true';
+        
+        const btnOpenLogin = document.getElementById('openLoginModalBtn');
+        const loggedInMenu = document.getElementById('loggedInMenu');
+        const avatarImg = document.getElementById('userAvatarImg');
+        const userShortNameEl = document.getElementById('userShortName');
+
+        if(isLoggedIn === 'true') {
+            const shortName = userName ? userName.trim().split(' ')[0] : 'Warga';
+            btnOpenLogin.style.display = 'none';
+            loggedInMenu.style.display = 'flex';
+            avatarImg.src = userFoto;
+            if(userShortNameEl) userShortNameEl.innerText = shortName;
+        } else {
+            btnOpenLogin.style.display = 'flex';
+            loggedInMenu.style.display = 'none';
+            if(userShortNameEl) userShortNameEl.innerText = '';
         }
     }
 
-    /* UNIVERSAL MODAL */
-    const univModal = document.getElementById('univModalOverlay');
-    const univTitle = document.getElementById('univModalTitle');
-    const univIframe = document.getElementById('univModalIframe');
+    document.addEventListener("DOMContentLoaded", () => checkLoginState());
+    document.getElementById('openLoginModalBtn').addEventListener('click', () => {
+        loginErrorMsg.style.display = 'none'; loginModalOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; 
+    });
+
+    function closeLoginModal() { 
+        loginModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; loginForm.reset(); 
+    }
+    function closeLoginModalOutside(e) { if (e.target === loginModalOverlay) closeLoginModal(); }
     
-    function openUnivModal(title, docUrl) {
-        univTitle.innerText = title;
-        univIframe.src = docUrl;
-        univModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+    function logoutWarga() {
+        localStorage.removeItem('isLoggedIn'); localStorage.removeItem('userRole');
+        localStorage.removeItem('userName'); localStorage.removeItem('userFoto');
+        checkLoginState();
     }
-    function closeUnivModal() {
-        univModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-        setTimeout(() => { univIframe.src = ""; }, 350); 
+
+    function togglePasswordVisibility() {
+        const pwInput = document.getElementById('loginPassword');
+        const eyeOpen = document.getElementById('eyeIconPwOpen');
+        const eyeClosed = document.getElementById('eyeIconPwClosed');
+        if (pwInput.type === "password") { pwInput.type = "text"; eyeOpen.style.display = "block"; eyeClosed.style.display = "none"; } 
+        else { pwInput.type = "password"; eyeOpen.style.display = "none"; eyeClosed.style.display = "block"; }
     }
-    function closeUnivModalOutside(e) { 
-        if (e.target === univModal) closeUnivModal(); 
-    }
+
+    const loginBtnSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const userInput = document.getElementById('loginUsername').value.trim();
+        const passInput = document.getElementById('loginPassword').value.trim();
+        loginErrorMsg.style.display = 'none';
+        btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Memeriksa...</span>";
+        btnSubmitLogin.disabled = true;
+
+        if (GAS_API_URL === "") {
+            setTimeout(() => { closeLoginModal(); checkLoginState(); btnSubmitLogin.disabled = false; }, 800);
+            return;
+        }
+
+        fetch(GAS_API_URL, {
+            method: 'POST', body: JSON.stringify({ token: "RT2_PASEKAN_AMAN_2026", action: "login", payload: { Id_Rumah: userInput, Password: passInput } })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === "success") {
+                localStorage.setItem('isLoggedIn', 'true'); localStorage.setItem('userRole', data.role);
+                if (data.role === "admin") {
+                    localStorage.setItem('userName', 'Admin Pengurus'); localStorage.setItem('userFoto', 'https://ui-avatars.com/api/?name=Admin&background=10b981&color=fff');
+                } else {
+                    let warga = data.data && data.data.length > 0 ? data.data[0] : {}; 
+                    localStorage.setItem('userName', warga.Nama || userInput); localStorage.setItem('userFoto', warga.Foto_Profil || ''); 
+                }
+                closeLoginModal(); checkLoginState(); 
+            } else {
+                loginErrorMsg.innerText = data.message || "ID Rumah atau Password salah!";
+                loginErrorMsg.style.color = '#ef4444'; loginErrorMsg.style.display = 'block';
+            }
+        }).catch(err => {
+            loginErrorMsg.innerText = "Koneksi terputus. Silakan coba lagi.";
+            loginErrorMsg.style.color = '#ef4444'; loginErrorMsg.style.display = 'block';
+        }).finally(() => {
+            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>"; btnSubmitLogin.disabled = false;
+        });
+    });
 </script>
 </body>
 </html>

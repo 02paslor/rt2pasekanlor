@@ -28,19 +28,19 @@
 
         :root { --color-primary: #1155CC; }
         
-        .fade-enter-active, .fade-leave-active { transition: opacity 0.25s ease; }
+        /* Modal Dipercepat */
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.1s ease; }
         .fade-enter-from, .fade-leave-to { opacity: 0; }
 
-        /* Animasi Custom Dropdown */
         .dropdown-enter-active, .dropdown-leave-active {
-            transition: opacity 0.2s ease-out, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.1s ease-out, transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .dropdown-enter-from, .dropdown-leave-to {
             opacity: 0;
             transform: scaleY(0.95) translateY(-5px);
         }
 
-        .btn-primary { background-color: #1155CC; color: #FFFFFF; transition: all 0.3s ease; }
+        .btn-primary { background-color: #1155CC; color: #FFFFFF; transition: all 0.2s ease; }
         .btn-primary:hover { background-color: #000F2E; transform: scale(1.02); box-shadow: 0 8px 15px -3px rgba(17, 85, 204, 0.25); }
         
         .spinner { border: 3px solid rgba(17, 85, 204, 0.1); border-radius: 50%; border-top: 3px solid #1155CC; width: 24px; height: 24px; animation: spin 1s linear infinite; }
@@ -57,7 +57,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
         .accordion-enter-active, .accordion-leave-active {
-            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+            transition: max-height 0.2s ease-in-out, opacity 0.15s ease-in-out;
             overflow: hidden;
         }
         .accordion-enter-from, .accordion-leave-to { max-height: 0; opacity: 0; }
@@ -218,16 +218,20 @@
                     </select>
                 </div>
 
-                <div class="mt-auto flex justify-between items-center mb-2 px-1">
+                <!-- Tombol Urutkan Naik ke sini -->
+                <div class="flex justify-between items-center mb-4 px-1">
                     <span class="text-white font-[500] text-[11px] drop-shadow-sm">Urutkan A-Z</span>
                     <div class="bg-[#1864D9] rounded-lg flex overflow-hidden shadow-sm border border-blue-400/30">
                         <button @click="sortOrder = 'asc'" class="px-2 py-1 text-white text-[10px] font-[500]" :class="sortOrder === 'asc' ? 'bg-white/30' : 'hover:bg-white/20'"><i class="fas fa-arrow-up"></i></button>
                         <button @click="sortOrder = 'desc'" class="px-2 py-1 text-white border-l border-blue-400/30 text-[10px] font-[500]" :class="sortOrder === 'desc' ? 'bg-white/30' : 'hover:bg-white/20'"><i class="fas fa-arrow-down"></i></button>
                     </div>
                 </div>
-                <button @click="resetFilters" class="w-full mb-3 bg-[#EF4444] hover:bg-[#DC2626] text-white font-[500] py-1.5 rounded-xl text-[11px] transition-colors shadow-sm flex items-center justify-center gap-1.5">
-                    <i class="fas fa-sync-alt"></i> Reset Pencarian
-                </button>
+
+                <div class="mt-auto">
+                    <button @click="resetFilters" class="w-full mb-3 bg-[#EF4444] hover:bg-[#DC2626] text-white font-[500] py-1.5 rounded-xl text-[11px] transition-colors shadow-sm flex items-center justify-center gap-1.5">
+                        <i class="fas fa-sync-alt"></i> Reset Pencarian
+                    </button>
+                </div>
             </div>
 
             <!-- Profil Administrator Sidebar Bawah -->
@@ -335,7 +339,7 @@
 
                         <!-- TAMPILAN KARTU (GRID VIEW) COMPACT -->
                         <div v-if="viewMode === 'card' || userRole === 'warga'" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 w-full items-start">
-                            <div v-for="(w, index) in filteredWarga" :key="index + '_' + w.Nama" @click="openDetailModal(w)" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all flex flex-col relative group cursor-pointer w-full">
+                            <div v-for="(w, index) in filteredWarga" :key="index + '_' + w.Nama" @click="openDetailModal(w)" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col relative group cursor-pointer w-full">
                                 
                                 <!-- Body Content -->
                                 <div class="p-4 flex gap-4">
@@ -348,6 +352,7 @@
                                     
                                     <div class="flex-1 min-w-0">
                                         <div class="flex justify-between items-start mb-0.5">
+                                            <!-- Nama Warga Bold 600 -->
                                             <h3 class="text-[15px] font-[600] text-gray-900 capitalize truncate leading-tight group-hover:text-primary transition-colors pr-2">{{ w.Nama }}</h3>
                                             <span class="text-[10px] font-[500] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 border border-gray-200 whitespace-nowrap">{{ w.Id_Rumah || '-' }}</span>
                                         </div>
@@ -490,6 +495,7 @@
                                             <button v-if="form.QR_Code" @click.prevent.stop="removeFile('QR_Code')" class="absolute right-2 bg-[#EF4444] text-[#FFFFFF] rounded-full w-5 h-5 flex items-center justify-center z-20 hover:bg-[#DC2626] shadow-sm"><i class="fas fa-times text-[10px]"></i></button>
                                             <div v-if="form.QR_Code && form.QR_Code.startsWith('data:')" class="h-full flex items-center justify-center"><img :src="form.QR_Code" class="max-h-full rounded object-contain"></div>
                                             <div v-else-if="form.QR_Code && form.QR_Code.startsWith('http')" class="h-full flex items-center justify-center"><img crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.QR_Code" class="max-h-full rounded object-contain"></div>
+                                            <div v-else-if="form.QrCode" class="h-full flex items-center justify-center"><img crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.QrCode" class="max-h-full rounded object-contain"></div>
                                             <div v-else class="flex items-center gap-2 text-[#9CA3AF] group-hover:text-[#0F2E70]"><i class="fas fa-qrcode"></i> <span class="text-[13px] font-[500]">Upload QR</span></div>
                                         </div>
                                     </div>
@@ -671,6 +677,8 @@
                                         <div v-if="detailModal.data.QR_Code || detailModal.data.QrCode" class="flex flex-col items-center gap-1.5">
                                             <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.QR_Code || detailModal.data.QrCode" class="w-[60px] h-[60px] object-contain bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors" @click="openLightbox(detailModal.data.QR_Code || detailModal.data.QrCode)">
                                             <span class="text-[11px] font-[500] text-gray-500">QR Code</span>
+                                            <!-- Tombol Download QR -->
+                                            <a :href="detailModal.data.QR_Code || detailModal.data.QrCode" target="_blank" download="QR_Code.png" @click.stop class="mt-0.5 text-[10px] bg-blue-50 text-blue-600 border border-blue-200 px-2 py-0.5 rounded hover:bg-blue-600 hover:text-white transition-colors flex items-center gap-1"><i class="fas fa-download"></i> Unduh</a>
                                         </div>
                                         <div v-if="detailModal.data.Data_Lain" class="flex flex-col items-center gap-1.5">
                                             <img v-if="detailModal.data.Data_Lain.includes('lh3.googleusercontent.com')" crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.Data_Lain" class="w-[60px] h-[60px] object-cover bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors" @click="openLightbox(detailModal.data.Data_Lain)">
@@ -816,7 +824,7 @@
 
         const { createApp, ref, computed } = Vue;
 
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwCtWluwDrOKuCBiZuRW-XGUNpFE1Y2sPXmUUii6LvUyYqw4Elw_6MCE72tDvVA3XZjKw/exec"; 
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbynAbJ-Aw96h3yqoodhYxqGNWPP2z_CuEx7Jo9gZWFS6hYznRt5PeOIHiWemJP8Yrok6A/exec"; 
         const SECRET_TOKEN = "RT2_PASEKAN_AMAN_2026";
 
         const callAPI = async (action, payload = {}) => {
@@ -833,7 +841,6 @@
                     result = JSON.parse(textResult);
                 } catch (parseError) {
                     console.error("Error dari Server:", textResult);
-                    // PERBAIKAN: Menampilkan error yang jujur jika Google Server sibuk, bukan menutupi sebagai "Timeout"
                     throw new Error("Respons server gagal. Silakan coba simpan sekali lagi.");
                 }
                 
@@ -877,7 +884,6 @@
                 const filterStatus = ref('');
                 const sortOrder = ref('asc');
 
-                // PERBAIKAN: Mengganti kurban menjadi keterangan_lain di template form
                 const emptyForm = () => ({
                     Id_Rumah: 'rt2_', Password: '', Nama: '', Tempat_Lahir: '', Tanggal_Lahir: '', 
                     Jenis_Kelamin: '', Gol_Darah: '', Agama: '', Status_Perkawinan: '', 
@@ -1010,7 +1016,6 @@
                 const addKeterangan = () => { form.value.KeteranganList.push({ pertemuan: '', dansos: '', keterangan_lain: '' }); };
                 const removeKeterangan = (index) => { form.value.KeteranganList.splice(index, 1); };
 
-                // PERBAIKAN: Menangani mapping variabel kurban -> keterangan_lain
                 const parseKeterangan = (ketStr) => {
                     if (!ketStr) return [];
                     if (Array.isArray(ketStr)) return ketStr; 
@@ -1112,7 +1117,6 @@
                         });
                         form.value.Anggota_Keluarga = famArr.length > 0 ? famArr.join('\n') : 'Tidak ada Data';
                         
-                        // PERBAIKAN: Memfilter berdasarkan keterangan_lain
                         let filteredKetList = form.value.KeteranganList.filter(k => k.pertemuan.trim() || k.dansos.trim() || k.keterangan_lain.trim());
                         form.value.KeteranganList = filteredKetList.length > 0 ? filteredKetList : [{ pertemuan: '', dansos: '', keterangan_lain: '' }];
                         form.value.Keterangan = JSON.stringify(filteredKetList);

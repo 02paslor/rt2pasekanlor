@@ -35,36 +35,25 @@
         /* Scrolled Header State */
         #main-header {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background-color: #1155CC; /* Warna Baru Header */
-            box-shadow: 0 4px 20px rgba(17, 85, 204, 0.2);
-        }
-        
-        @media (max-width: 768px) {
-            #main-header.is-scrolled #header-subtitle {
-                display: none; /* Sembunyikan keterangan pada mobile saat di-scroll */
-            }
-            #main-header.is-scrolled #header-title {
-                font-size: 18px; /* Lebih besar dari sebelumnya (16px) */
-            }
-            #main-header.is-scrolled #hari-tanggal {
-                font-size: 13px;
-            }
-            #main-header.is-scrolled {
-                gap: 0.75rem; 
-            }
+            background-color: #1155CC; /* Warna Header */
+            box-shadow: 0 4px 20px rgba(17, 85, 204, 0.3);
         }
 
-        /* Input Pencarian & Filter */
-        .search-input {
+        /* Input Pencarian, Filter & Sort Button */
+        .search-input, .sort-btn {
             background: #ffffff;
             border: 1px solid #d1d5db;
             transition: all 0.2s;
-            color: #1f2937; /* Teks input tetap gelap agar kontras dengan bg input putih */
+            color: #1f2937;
         }
-        .search-input:focus {
+        .search-input:focus, .sort-btn:focus {
             outline: none;
             border-color: #8B5CF6;
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+        .sort-btn:active {
+            transform: scale(0.95);
+            background-color: #f3f4f6;
         }
 
         /* Animasi Bulat Kedip-kedip */
@@ -73,9 +62,9 @@
             50% { opacity: 0.4; transform: scale(0.85); }
         }
         .dot-blink {
-            width: 12px;
-            height: 12px;
-            background-color: #4ADE80; /* Diterangkan sedikit agar kontras di biru */
+            width: 10px;
+            height: 10px;
+            background-color: #4ADE80;
             border-radius: 50%;
             animation: blink 1.5s infinite ease-in-out;
             display: inline-block;
@@ -114,13 +103,13 @@
             border: 1px solid #d1d5db; 
             background-color: #ffffff;
             border-radius: 12px;
-            margin-bottom: 12px; /* Margin diperbesar agar jarak antar transaksi lega */
+            margin-bottom: 12px; 
         }
         .row-item:last-child { margin-bottom: 0; }
         
         /* Hover Color */
         .row-item:hover {
-            transform: scale(1.005);
+            transform: scale(1.003);
             z-index: 10;
             position: relative;
             box-shadow: 0 6px 16px rgba(0,0,0,0.06);
@@ -152,27 +141,43 @@
 
     <div class="max-w-6xl mx-auto space-y-4 relative">
         
-        <!-- Header Utama (STICKY TOP) -->
-        <div id="main-header" class="rounded-xl p-4 md:p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sticky top-2 z-[60]">
-            <div>
-                <!-- Semua teks dibuat jadi text-white -->
-                <h1 id="header-title" class="text-[22px] md:text-[26px] font-bold text-white">Pembukuan Kas RT 2</h1>
-                <div id="header-subtitle">
-                    <p class="text-white/85 mt-1 text-[13px] md:text-[14px]">Pengelolaan ini terhitung sejak oktober 2025</p>
-                    <div class="flex items-center gap-2 mt-2">
-                        <div class="dot-blink"></div>
-                        <span class="font-medium text-white tracking-wide text-[13px] md:text-[14px]">Data Tersinkronisasi</span>
+        <!-- Header Utama (STICKY TOP) - Desain Compact di Mobile -->
+        <div id="main-header" class="rounded-xl p-3 md:p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sticky top-2 z-[60]">
+            
+            <!-- Judul & Tanggal (Sejajar di Mobile) -->
+            <div class="flex justify-between w-full md:w-auto items-center md:items-start md:flex-col md:gap-0">
+                <div>
+                    <h1 class="text-[17px] md:text-[26px] font-bold text-white flex items-center gap-2">
+    Pembukuan Kas RT 2
+</h1>
+                    <!-- Subtitle hanya muncul di Desktop -->
+                    <div class="hidden md:block">
+                        <p class="text-white/85 mt-1 text-[14px]">Pengelolaan ini terhitung sejak oktober 2025</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <div class="dot-blink"></div>
+                            <span class="font-medium text-white tracking-wide text-[14px]">Data Tersinkronisasi</span>
+                        </div>
                     </div>
                 </div>
+                <!-- Tanggal -->
+                <div id="hari-tanggal" class="font-bold text-white/90 text-[12px] md:text-[16px]"></div>
             </div>
-            <div class="text-left md:text-right w-full md:w-auto flex flex-col md:items-end gap-3">
-                <div id="hari-tanggal" class="font-bold text-white text-[14px] md:text-[16px]"></div>
+            
+            <!-- Area Input & Tombol (Compact Grid di Mobile) -->
+            <div class="w-full md:w-auto flex flex-col gap-2">
                 
-                <!-- Input Pencarian & Filter -->
-                <div class="flex flex-row gap-2 w-full mt-1 md:mt-0">
-                    
+                <!-- Input Pencarian Teks (Full Width di Mobile) -->
+                <div class="relative w-full md:w-80">
+                    <input type="text" id="searchInput" class="search-input w-full px-3 py-2 pl-9 rounded-lg text-[14px] md:text-[15px] shadow-sm font-medium" placeholder="Pencarian data...">
+                    <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                
+                <!-- Filter Kode & Tombol Urutkan -->
+                <div class="flex gap-2 w-full md:justify-end items-stretch">
                     <!-- Filter Kode -->
-                    <select id="filterKode" class="search-input px-3 py-2.5 rounded-lg text-[14px] md:text-[15px] w-[140px] md:w-40 cursor-pointer font-medium shadow-sm">
+                    <select id="filterKode" class="search-input px-2 py-2 rounded-lg text-[13px] md:text-[15px] flex-1 md:flex-none md:w-40 cursor-pointer font-medium shadow-sm">
                         <option value="">Semua Kode</option>
                         <option value="1">1 - Jimpitan</option>
                         <option value="2">2 - Jasa Inv</option>
@@ -181,23 +186,23 @@
                         <option value="5">5 - Lain-lain</option>
                         <option value="6">6 - Kas Pemuda</option>
                     </select>
-
-                    <!-- Input Pencarian Teks -->
-                    <div class="relative flex-1 md:w-72">
-                        <input type="text" id="searchInput" class="search-input w-full px-3 py-2.5 pl-9 rounded-lg text-[14px] md:text-[15px] shadow-sm" placeholder="Pencarian data...">
-                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    
+                    <!-- Tombol Urutkan (Hanya Ikon) -->
+                    <button id="sortBtn" title="Ubah urutan data" class="sort-btn px-3 flex-shrink-0 rounded-lg cursor-pointer shadow-sm flex items-center justify-center text-[#1155CC]">
+                        <svg id="sortIcon" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
                         </svg>
-                    </div>
+                    </button>
                 </div>
+
             </div>
         </div>
 
         <!-- Tabel Container -->
-        <div class="bento-box rounded-xl flex flex-col relative pb-3 mt-2">
+        <div class="bento-box rounded-xl flex flex-col relative pb-3 mt-1">
             
-            <!-- Table Header Desktop (Diperbesar) -->
-            <div class="hidden md:flex flex-row items-center font-semibold text-white px-4 py-4 text-[14px] sticky top-[100px] z-[50] rounded-t-xl" style="background-color: #0c43a3; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+            <!-- Table Header Desktop -->
+            <div class="hidden md:flex flex-row items-center font-semibold text-white px-4 py-4 text-[14px] sticky top-[110px] z-[50] rounded-t-xl" style="background-color: #0c43a3; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
                 <div class="w-12 text-center">No.</div>
                 <div class="w-40 pl-3">Tanggal</div>
                 <div class="w-32 text-center">Kode</div>
@@ -221,37 +226,26 @@
     </div>
 
     <script>
-        // Set Format Tanggal: Rabu, 16 September 2026
+        // Set Format Tanggal
         const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('hari-tanggal').innerText = new Date().toLocaleDateString('id-ID', dateOptions);
 
-        // Keterangan Kode
+        // Keterangan & Warna Kode
         const kodeInfo = {
             1: "Jimpitan", 2: "Jasa Inventaris", 3: "Sosial",
             4: "Pembangunan", 5: "Lain-lain", 6: "Kas Pemuda"
         };
-        
-        // Warna Teks Kode Sesuai Instruksi
         const kodeColor = {
-            1: "text-purple-700",
-            2: "text-green-700",
-            3: "text-blue-700",
-            4: "text-orange-700",
-            5: "text-gray-700",
-            6: "text-red-700"
+            1: "text-purple-700", 2: "text-green-700", 3: "text-blue-700",
+            4: "text-orange-700", 5: "text-gray-700", 6: "text-red-700"
         };
-
-        // Warna Latar Kotak Kode (Lembut/Pastel)
         const kodeBgColor = {
-            1: "bg-purple-100",
-            2: "bg-green-100",
-            3: "bg-blue-100",
-            4: "bg-orange-100",
-            5: "bg-gray-200",
-            6: "bg-red-100"
+            1: "bg-purple-100", 2: "bg-green-100", 3: "bg-blue-100",
+            4: "bg-orange-100", 5: "bg-gray-200", 6: "bg-red-100"
         };
 
-        let dataLaporan = [];
+        let dataLaporanLengkap = []; // Data asli tanpa filter
+        let isUrutDariAtas = true; // Status awal: Normal dari atas ke bawah
 
         function formatUang(value) {
             if (!value) return '-';
@@ -283,9 +277,8 @@
                 const html = `
                     <div class="row-item flex flex-col md:flex-row py-4 px-4 md:py-3 shadow-sm">
                         
-                        <!-- ================= MOBILE VIEW (Ukuran Diperbesar) ================= -->
+                        <!-- ================= MOBILE VIEW ================= -->
                         <div class="md:hidden flex flex-col w-full gap-3">
-                            <!-- Header Mobile: No, Tanggal, Kode -->
                             <div class="flex items-center justify-between border-b border-gray-200 pb-3">
                                 <div class="flex items-center gap-3">
                                     <div class="number-circle shadow-sm">${no}</div>
@@ -297,12 +290,10 @@
                                 </div>
                             </div>
                             
-                            <!-- Deskripsi -->
                             <div class="text-gray-800 font-medium text-[15px] leading-relaxed text-left">
                                 ${deskripsi}
                             </div>
                             
-                            <!-- Keuangan Mobile -->
                             <div class="flex flex-col gap-2 mt-2 bg-gray-50 p-3.5 rounded-lg border border-gray-100">
                                 <div class="flex items-center text-left">
                                     <span class="font-semibold text-gray-500 w-20 text-[14px]">Masuk</span>
@@ -321,38 +312,20 @@
 
                         <!-- ================= DESKTOP VIEW ================= -->
                         <div class="hidden md:flex flex-row items-center w-full text-[14px]">
-                            
                             <div class="w-12 flex justify-center">
                                 <div class="number-circle shadow-sm">${no}</div>
                             </div>
-                            
-                            <div class="w-40 pl-3 text-gray-800 font-medium pr-2">
-                                ${tanggal}
-                            </div>
-                            
+                            <div class="w-40 pl-3 text-gray-800 font-medium pr-2">${tanggal}</div>
                             <div class="w-32 text-center">
                                 <div class="kode-container font-bold ${colorKode} ${bgKode} px-3 py-1.5 rounded-md text-[13px]">
                                     Kode ${kode}
                                     <div class="kode-tooltip">${labelKode}</div>
                                 </div>
                             </div>
-                            
-                            <div class="flex-1 px-4 text-gray-800 font-medium text-[15px] leading-snug">
-                                ${deskripsi}
-                            </div>
-                            
-                            <div class="w-36 text-right font-bold text-[15px]" style="color: #069446;">
-                                ${masuk}
-                            </div>
-                            
-                            <div class="w-36 text-right font-bold text-[15px] text-[#EF4444]">
-                                ${keluar}
-                            </div>
-                            
-                            <div class="w-40 text-right pr-4 font-bold text-[15px] text-[#1155CC]">
-                                ${saldo}
-                            </div>
-
+                            <div class="flex-1 px-4 text-gray-800 font-medium text-[15px] leading-snug">${deskripsi}</div>
+                            <div class="w-36 text-right font-bold text-[15px]" style="color: #069446;">${masuk}</div>
+                            <div class="w-36 text-right font-bold text-[15px] text-[#EF4444]">${keluar}</div>
+                            <div class="w-40 text-right pr-4 font-bold text-[15px] text-[#1155CC]">${saldo}</div>
                         </div>
                     </div>
                 `;
@@ -360,7 +333,7 @@
             });
         }
 
-        // Live Fetch Data dari URL Spreadsheet Gviz
+        // Live Fetch Data
         const sheetId = '15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68';
         const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Sheet1&range=B9:H`;
 
@@ -370,7 +343,7 @@
                 const jsonStr = data.substring(47).slice(0, -2);
                 const json = JSON.parse(jsonStr);
                 
-                dataLaporan = [];
+                dataLaporanLengkap = [];
                 json.table.rows.forEach(row => {
                     if (row.c) {
                         const noAda = row.c[0] && row.c[0].v != null;
@@ -383,7 +356,7 @@
                         const keluarAda = row.c[5] && row.c[5].v != null;
 
                         if (noAda && tglAda && kodeAda && descAda && saldoAda && (masukAda || keluarAda)) {
-                            dataLaporan.push([
+                            dataLaporanLengkap.push([
                                 row.c[0].v,                                     
                                 row.c[1].f || row.c[1].v,                       
                                 row.c[2].v,                                     
@@ -396,47 +369,64 @@
                     }
                 });
                 
-                // Urutan Dibalik (Last Update di Atas)
-                dataLaporan.reverse();
-                
                 document.getElementById('loadingStatus').style.display = 'none';
-                renderTable(dataLaporan);
+                applyFilters(); // Langsung render menggunakan logika filter
             })
             .catch(error => {
                 console.error("Gagal menarik data:", error);
-                document.getElementById('loadingStatus').innerHTML = `
-                    <span class="text-red-500">Gagal mengambil data dari Google Sheet.</span>
-                `;
+                document.getElementById('loadingStatus').innerHTML = `<span class="text-red-500">Gagal mengambil data dari Google Sheet.</span>`;
             });
 
-        // Logika Filter (Pencarian Teks & Dropdown Kode)
+        // Logika Filter & Sorting Terintegrasi
         function applyFilters() {
             const keyword = document.getElementById('searchInput').value.toLowerCase();
             const filterKode = document.getElementById('filterKode').value;
             
-            const filteredData = dataLaporan.filter(row => {
+            // 1. Lakukan Filtering
+            let filteredData = dataLaporanLengkap.filter(row => {
                 const rowTextMatch = row.some(cell => String(cell).toLowerCase().includes(keyword));
                 const kodeMatch = filterKode === "" || String(row[2]) === filterKode;
-                
                 return rowTextMatch && kodeMatch;
             });
+            
+            // 2. Lakukan Sorting berdasarkan status tombol
+            if (!isUrutDariAtas) {
+                filteredData.reverse(); // Dibalik jika statusnya "Dari Bawah"
+            }
+            
             renderTable(filteredData);
         }
 
+        // Listener Filter
         document.getElementById('searchInput').addEventListener('input', applyFilters);
         document.getElementById('filterKode').addEventListener('change', applyFilters);
+
+        // Listener Tombol Urutan (Tanpa Teks)
+        document.getElementById('sortBtn').addEventListener('click', () => {
+            isUrutDariAtas = !isUrutDariAtas; // Toggle status boolean
+            
+            const sortIcon = document.getElementById('sortIcon');
+            
+            if (isUrutDariAtas) {
+                sortIcon.style.transform = "rotate(0deg)";
+            } else {
+                sortIcon.style.transform = "rotate(180deg)"; // Putar panah 180 derajat
+            }
+            
+            applyFilters();
+        });
 
         // Scroll Effect Pada Header Mobile
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             if (window.scrollY > 20) {
                 header.classList.add('is-scrolled');
-                header.classList.remove('top-2', 'p-4', 'md:p-5');
-                header.classList.add('top-0', 'p-3');
+                header.classList.remove('top-2', 'p-3', 'md:p-5');
+                header.classList.add('top-0', 'p-2', 'md:p-4');
                 header.style.borderRadius = '0 0 12px 12px';
             } else {
-                header.classList.remove('is-scrolled', 'top-0', 'p-3');
-                header.classList.add('top-2', 'p-4', 'md:p-5');
+                header.classList.remove('is-scrolled', 'top-0', 'p-2', 'md:p-4');
+                header.classList.add('top-2', 'p-3', 'md:p-5');
                 header.style.borderRadius = '0.75rem';
             }
         });

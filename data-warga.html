@@ -16,7 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;500;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
         
         body, html {
             font-family: 'Poppins', sans-serif !important; 
@@ -88,11 +88,11 @@
                             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" 
                                  alt="Logo RT 2" class="h-[50px] sm:h-[60px] w-auto object-contain drop-shadow-sm">
                             <div class="flex-1 min-w-0">
-                                <h2 class="text-[#1155CC] font-[500] text-[15px] sm:text-[17px] leading-[1.2] tracking-tight text-left">
-                                    Aplikasi Data Terpadu<br>Warga RT 2-RW 3
+                                <h2 class="text-[#1155CC] font-[700] text-[17px] sm:text-[17px] leading-[1.2] tracking-tight text-left">
+                                    Aplikasi Data Warga
                                 </h2>
-                                <p class="text-[#8C8C8C] font-[500] text-[9px] sm:text-[10px] mt-1 leading-snug text-left">
-                                    Pasekan Lor, Balecatur, Gamping, Sleman, D. I. Yogyakarta, 55295
+                                <p class="text-[#8C8C8C] font-[500] text-[10px] sm:text-[10px] mt-1 leading-snug text-left">
+                                    RT 2-RW 3, Pasekan Lor, Balecatur, Gamping, Sleman
                                 </p>
                             </div>
                         </div>
@@ -105,12 +105,12 @@
                             </div>
                             <div class="relative">
                                 <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-[#6B7280] text-[13px]"></i>
-                                <input :type="showPassword ? 'text' : 'password'" v-model="loginPassword" placeholder="Password" required class="w-full pl-9 pr-9 py-2 rounded-xl border border-[#D1D5DB] bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-left text-[12px] sm:text-[13px] tracking-widest font-[500] shadow-sm">
+                                <input :type="showPassword ? 'text' : 'password'" v-model="loginPassword" placeholder="Password" required class="w-full pl-9 pr-9 py-2 rounded-xl border border-[#D1D5DB] bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-left text-[14px] sm:text-[14px] tracking-widest font-[500] shadow-sm">
                                 <div class="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 flex items-center justify-center cursor-pointer text-[#6B7280] hover:text-[#374151] transition-colors" @click="showPassword = !showPassword" title="Lihat Password">
-                                    <i class="fas text-[12px]" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                    <i class="fas text-[14px]" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
                                 </div>
                             </div>
-                            <button type="submit" :disabled="loading" class="btn-primary w-full py-2 rounded-xl font-[500] text-[12px] sm:text-[13px] flex justify-center items-center shadow-md disabled:opacity-70 gap-2 bg-[#1155CC] text-white hover:bg-blue-500 transition-colors">
+                            <button type="submit" :disabled="loading" class="btn-primary w-full py-2 rounded-xl font-[500] text-[14px] sm:text-[14px] flex justify-center items-center shadow-md disabled:opacity-70 gap-2 bg-[#1155CC] text-white hover:bg-blue-500 transition-colors">
                                 <i v-if="!loading" class="fas fa-sign-in-alt text-[13px]"></i>
                                 <span v-if="loading" class="spinner border-t-white w-3.5 h-3.5 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
                                 <span v-if="!loading">Masuk</span>
@@ -119,31 +119,30 @@
                         </form>
 
                         <!-- BOX REGISTRASI -->
-                        <div class="relative bg-[#E5E7EB]/80 rounded-xl p-2.5 sm:p-3 border border-gray-200/80 shadow-inner mb-4 flex items-center">
-                            <div class="absolute -bottom-1 -left-8 sm:-left-10 z-20 pointer-events-none">
-                                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh4LoZQQKzzykZGTio3vdyEBC6ZX5nHBcPDV1NIvVr1v1epiv8BV7NIiCqj4W0HYFb3LytbBtc4OWdHbLiG33njTW01Mgsk9IWxAg5DNweYtPF4Rw65jH4u8Q_Xnn39lFPQqXbq75C3LgXiebILzi5d67DVA-usW5qygOyqWCaaR7_qgHedIjzEkz0v9-A/s1500/lebah%20-%20merah%20putih%20(small).png" 
-                                     alt="Maskot Lebah" class="w-[120px] sm:w-[150px] max-w-none object-contain drop-shadow-xl -scale-x-2">
-                            </div>
-                            
-                            <div class="flex flex-col gap-1.5 pl-[70px] sm:pl-[80px] w-full relative z-10">
-                                <h3 class="text-[#1155CC] font-[500] text-[11px] sm:text-[12px] leading-tight text-left">Registrasi warga baru</h3>
-                                <div class="flex items-start gap-1.5 mt-0.5">
-                                    <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
-                                        <input type="checkbox" v-model="isSetujuRegis" class="sr-only peer">
-                                        <div class="w-7 h-4 bg-[#9CA3AF] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#22C55E] shadow-inner"></div>
-                                    </label>
-                                    <span class="text-[9px] sm:text-[10px] text-[#4B5563] font-[500] leading-tight text-left">Saya akan mengisi data dengan yang sebenarnya.</span>
-                                </div>
-                                <button @click="bukaHalamanRegistrasi" :disabled="!isSetujuRegis" class="w-full py-1.5 rounded-lg font-[500] text-[11px] sm:text-[12px] flex items-center justify-center gap-1.5 transition-all shadow-sm border mt-0.5" :class="isSetujuRegis ? 'bg-[#1155CC] text-white hover:bg-[#000F2E] cursor-pointer' : 'bg-white text-gray-400 border-gray-200 cursor-not-allowed opacity-60'">
-                                    <i class="fas fa-id-card text-[11px]"></i><span>Setuju & Registrasi</span>
-                                </button>
-                            </div>
-                        </div>
+<div class="relative bg-[#E5E7EB]/80 rounded-xl p-2.5 sm:p-3 border border-gray-200/80 shadow-inner mb-4 flex items-center">
+    
+    <!-- pl-[70px] dan sm:pl-[80px] dihapus pada div di bawah ini -->
+    <div class="flex flex-col gap-1.5 w-full relative z-10">
+        <h3 class="text-[#1155CC] font-[600] text-[13px] sm:text-[13px] leading-tight text-left">Registrasi warga baru (Kepala Keluarga)</h3>
+        
+        <div class="flex items-start gap-1.5 mt-0.5">
+            <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+                <input type="checkbox" v-model="isSetujuRegis" class="sr-only peer">
+                <div class="w-7 h-4 bg-[#9CA3AF] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#22C55E] shadow-inner"></div>
+            </label>
+            <span class="text-[12px] sm:text-[12px] text-[#4B5563] font-[400] leading-tight text-left">Saya akan mengisi data dengan yang sebenarnya.</span>
+        </div>
+        
+        <button @click="bukaHalamanRegistrasi" :disabled="!isSetujuRegis" class="w-full py-1.5 rounded-lg font-[500] text-[12px] sm:text-[12px] flex items-center justify-center gap-1.5 transition-all shadow-sm border mt-0.5" :class="isSetujuRegis ? 'bg-[#1155CC] text-white hover:bg-[#000F2E] cursor-pointer' : 'bg-white text-gray-400 border-gray-200 cursor-not-allowed opacity-60'">
+            <i class="fas fa-id-card text-[11px]"></i><span>Setuju & Registrasi</span>
+        </button>
+    </div>
+</div>
 
                         <!-- WEB LINK -->
                         <div class="pt-3 border-t border-gray-200/80 text-center">
-                            <a href="https://rt2pasekanlor.id/" target="_blank" class="inline-flex items-center justify-center gap-1.5 w-full py-1.5 rounded-xl text-[#1155CC] hover:text-[#000F2E] hover:bg-blue-50/50 text-[11px] sm:text-[12px] font-[500] transition-colors">
-                                <i class="fas fa-arrow-left text-[11px]"></i><span>www.rt2pasekanlor.id</span>
+                            <a href="https://rt2pasekanlor.id/" target="_blank" class="inline-flex items-center justify-center gap-1.5 w-full py-1.5 rounded-xl text-[#1155CC] hover:text-[#000F2E] hover:bg-blue-50/50 text-[12px] sm:text-[12px] font-[500] transition-colors">
+                                </i><span>www.rt2pasekanlor.id</span>
                             </a>
                         </div>
                     </div>
@@ -151,7 +150,7 @@
                     <!-- COPYRIGHT TEXT -->
                     <div class="mt-4 text-center px-4 relative z-10">
                         <p class="text-[10px] sm:text-[11px] font-[500] text-gray-500/70 tracking-wide drop-shadow-sm">
-                            Aplikasi Data Warga Terpadu RT 2 Pasekan Lor. AdW.
+                            Aplikasi Data Warga Terpadu RT 2 Pasekan Lor.
                         </p>
                     </div>
 
@@ -207,7 +206,7 @@
                 <label class="text-white font-[500] text-[12px] mb-1.5 block drop-shadow-sm">Kategori Lainnya</label>
                 <div class="relative w-full mb-2.5">
                     <select v-model="filterRonda" @change="searchQuery=''" class="w-full pl-3 pr-6 py-1.5 rounded-full bg-white text-[#0A2666] font-[500] text-[11px] shadow-sm outline-none cursor-pointer">
-                        <option value="">Semua Jadwal Ronda</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jum'at</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option>
+                        <option value="">Semua Jadwal Ronda</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option>
                     </select>
                 </div>
                 <div class="relative w-full mb-2.5">
@@ -336,40 +335,6 @@
 
                     <!-- ================== MENU 1: DAFTAR WARGA ================== -->
                     <div v-show="activeMenu === 'list' && !loading" class="space-y-4">
-                        
-                        <!-- FILTER ACCORDION (Mode Mobile Saja - Untuk Admin) -->
-                        <div v-if="userRole === 'admin'" class="bg-[#FFFFFF] rounded-2xl shadow-md border border-[#E5E7EB] mb-6 overflow-hidden block lg:hidden">
-                            <div @click="isFilterOpen = !isFilterOpen" class="bg-[#F8FAFC] border-b border-[#F1F5F9] p-4 sm:p-5 flex flex-wrap justify-between items-center cursor-pointer hover:bg-[#F1F5F9] transition-colors select-none gap-2">
-                                <div class="flex items-center gap-3">
-                                    <div class="bg-[#F5F3FF] text-[#2F3E61] w-8 h-8 rounded-lg flex items-center justify-center"><i class="fas fa-filter text-sm"></i></div>
-                                    <span class="font-[500] text-[#374151] text-[15px] sm:text-[16px]">Filter Pencarian Mobile</span>
-                                    <span class="bg-[#F5F3FF] text-[#2F3E61] px-3 py-1 rounded-full text-[11px] sm:text-[12px] font-[500] border border-[#DDD6FE] shadow-sm ml-2">
-                                        Hasil: {{ filteredWarga.length }}
-                                    </span>
-                                </div>
-                                <i class="fas fa-chevron-up transition-transform duration-300 text-gray-400 bg-white w-8 h-8 rounded-full flex items-center justify-center border border-gray-200 shadow-sm" :class="{'rotate-180': !isFilterOpen}"></i>
-                            </div>
-                            
-                            <transition name="accordion">
-                                <div v-show="isFilterOpen">
-                                    <div class="px-4 sm:px-5 pb-5 pt-4">
-                                        <div class="flex flex-wrap items-center gap-3">
-                                            <button @click="applySingleFilter('domisili', filterDomisili === 'Tempat Tinggal' ? '' : 'Tempat Tinggal')" :class="filterDomisili === 'Tempat Tinggal' ? 'bg-[#2F3E61] text-[#FFFFFF] shadow-md border-transparent' : 'bg-[#F3F4F6] text-[#4B5563] hover:bg-[#E5E7EB] border-[#E5E7EB]'" class="px-4 py-2 rounded-lg text-[13px] font-[500] border transition-all">Domisili Tinggal</button>
-                                            <button @click="applySingleFilter('domisili', filterDomisili === 'Kontrak / Kost' ? '' : 'Kontrak / Kost')" :class="filterDomisili === 'Kontrak / Kost' ? 'bg-[#2F3E61] text-[#FFFFFF] shadow-md border-transparent' : 'bg-[#F3F4F6] text-[#4B5563] hover:bg-[#E5E7EB] border-[#E5E7EB]'" class="px-4 py-2 rounded-lg text-[13px] font-[500] border transition-all">Kontrak/Kost</button>
-                                            
-                                            <div class="relative w-full max-w-[200px] z-[40] font-['Poppins']">
-                                                <select v-model="filterRonda" @change="searchQuery=''" class="w-full bg-[#F3F4F6] hover:bg-[#E5E7EB] text-[#4B5563] font-[500] py-2 px-4 rounded-lg text-[13px] text-left transition-all border border-[#E5E7EB] outline-none cursor-pointer">
-                                                    <option value="">- Pilih Jadwal Ronda -</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jum'at</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option>
-                                                </select>
-                                            </div>
-
-                                            <button @click="toggleSort" class="w-[36px] h-[36px] rounded-lg text-[15px] font-[500] transition-all bg-[#F8FAFC] text-[#2F3E61] hover:bg-[#F1F5F9] border border-[#E2E8F0] flex items-center justify-center shadow-sm shrink-0" title="Urutkan A-Z"><i class="fas" :class="sortOrder === 'asc' ? 'fa-sort-alpha-down' : 'fa-sort-alpha-up'"></i></button>
-                                            <button v-if="hasActiveFilters || searchQuery" @click="resetFilters" class="w-[36px] h-[36px] rounded-lg text-[15px] font-[500] transition-all bg-[#FEF2F2] text-[#EF4444] hover:bg-[#FEE2E2] border border-red-100 flex items-center justify-center shadow-sm shrink-0" title="Reset Filter"><i class="fas fa-times"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </transition>
-                        </div>
 
                         <div v-if="filteredWarga.length === 0" class="bg-[#FFFFFF] rounded-2xl p-10 text-center shadow-md border border-[#E5E7EB]">
                             <i class="fas fa-folder-open text-[48px] text-[#2F3E61] mb-4"></i><p class="text-[#2F3E61] font-[400] text-[15px]">Wah...Maap, tidak ada data warga RT 2 yang sesuai.</p>
@@ -379,21 +344,18 @@
                         <div v-if="viewMode === 'card' || userRole === 'warga'" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 w-full items-start">
                             <div v-for="(w, index) in filteredWarga" :key="index + '_' + w.Nama" @click="openDetailModal(w)" class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all flex flex-col relative group cursor-pointer w-full">
                                 
-                                <!-- Top Bar -->
-                                <div class="h-1.5 w-full" :class="w.Jenis_Kelamin === 'Perempuan' ? 'bg-[#C955A1]' : 'bg-[#1155CC]'"></div>
-                                
                                 <!-- Body Content -->
                                 <div class="p-4 flex gap-4">
                                     <div class="shrink-0 relative">
                                         <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(w)" class="w-[60px] h-[60px] rounded-full object-cover border border-gray-200 shadow-sm" :class="!w.Foto_Profil ? 'grayscale opacity-70' : ''" @click.stop="openLightbox(getAvatar(w))">
-                                        <div v-if="w.QR_Code" class="absolute -bottom-1 -right-1 bg-white p-0.5 rounded-full shadow border border-gray-100 cursor-pointer hover:scale-110 transition-transform" @click.stop="openLightbox(w.QR_Code)">
-                                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="w.QR_Code" class="w-4 h-4 object-contain rounded-full">
+                                        <div v-if="w.QR_Code || w.QrCode" class="absolute -bottom-1 -right-1 bg-white p-0.5 rounded-full shadow border border-gray-100 cursor-pointer hover:scale-110 transition-transform" @click.stop="openLightbox(w.QR_Code || w.QrCode)">
+                                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="w.QR_Code || w.QrCode" class="w-4 h-4 object-contain rounded-full">
                                         </div>
                                     </div>
                                     
                                     <div class="flex-1 min-w-0">
                                         <div class="flex justify-between items-start mb-0.5">
-                                            <h3 class="text-[15px] font-[500] text-gray-900 capitalize truncate leading-tight group-hover:text-primary transition-colors pr-2">{{ w.Nama }}</h3>
+                                            <h3 class="text-[15px] font-[600] text-gray-900 capitalize truncate leading-tight group-hover:text-primary transition-colors pr-2">{{ w.Nama }}</h3>
                                             <span class="text-[10px] font-[500] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 border border-gray-200 whitespace-nowrap">{{ w.Id_Rumah || '-' }}</span>
                                         </div>
                                         <p class="text-[10px] text-gray-500 mb-2 truncate">{{ formatTTL(w) }}</p>
@@ -401,7 +363,8 @@
                                         <div class="grid grid-cols-2 gap-y-1.5 gap-x-2 text-[11px] text-gray-500">
                                             <div class="flex items-center gap-1.5 truncate"><i class="fas fa-map-marker-alt w-3 text-center text-red-500"></i><span class="truncate uppercase text-[9px] font-[500] tracking-wide">{{ w.Status_Domisili === 'Kontrak / Kost' ? 'Kost' : 'Tinggal' }}</span></div>
                                             <div class="flex items-center gap-1.5 truncate" title="Jadwal Ronda"><i class="fas fa-shield-alt w-3 text-center text-green-500"></i><span class="truncate font-[500]" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-500' : 'text-green-500'">{{ w.Ronda || '-' }}</span></div>
-                                            <div class="flex items-center gap-1.5 truncate col-span-2" title="Pekerjaan"><i class="fas fa-briefcase w-3 text-center text-blue-500"></i><span class="truncate">{{ w.Pekerjaan || '-' }}</span></div>
+                                            <div class="flex items-center gap-1.5 truncate" title="Agama"><i class="fas fa-star-and-crescent w-3 text-center text-purple-500"></i><span class="truncate">{{ w.Agama || '-' }}</span></div>
+                                            <div class="flex items-center gap-1.5 truncate" title="Pekerjaan"><i class="fas fa-briefcase w-3 text-center text-blue-500"></i><span class="truncate">{{ w.Pekerjaan || '-' }}</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -446,10 +409,10 @@
                                                 <div class="flex items-center gap-3">
                                                     <div class="relative shrink-0">
                                                         <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(w)" class="w-[40px] h-[40px] rounded-full object-cover border border-gray-200 shadow-sm" :class="!w.Foto_Profil ? 'grayscale opacity-70' : ''">
-                                                        <img v-if="w.QR_Code" crossorigin="anonymous" referrerpolicy="no-referrer" :src="w.QR_Code" class="w-[16px] h-[16px] absolute -bottom-1 -right-1 bg-white p-[2px] rounded-full shadow border border-gray-200">
+                                                        <img v-if="w.QR_Code || w.QrCode" crossorigin="anonymous" referrerpolicy="no-referrer" :src="w.QR_Code || w.QrCode" class="w-[16px] h-[16px] absolute -bottom-1 -right-1 bg-white p-[2px] rounded-full shadow border border-gray-200">
                                                     </div>
                                                     <div class="flex flex-col">
-                                                        <div class="font-[500] text-gray-900 capitalize text-[14px] group-hover:text-primary">{{ w.Nama }}</div>
+                                                        <div class="font-[600] text-gray-900 capitalize text-[14px] group-hover:text-primary">{{ w.Nama }}</div>
                                                         <div class="text-[11px] text-gray-500 font-[500] mt-0.5 flex items-center gap-1.5">
                                                             <span :class="w.Jenis_Kelamin === 'Perempuan' ? 'text-pink-500' : 'text-blue-500'" class="bg-gray-100 border border-gray-200 px-1.5 rounded shadow-sm">{{ w.Id_Rumah || '-' }}</span>
                                                             <span class="sm:hidden font-[500]" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-[#EF4444]' : 'text-[#16A34A]'">• {{ w.Ronda || '-' }}</span>
@@ -632,7 +595,7 @@
                     <thead>
                         <tr class="bg-gray-200">
                             <th class="border border-gray-500 p-2 text-center w-10 font-[500]">No</th>
-                            <th class="border border-gray-500 p-2 font-[500]">Nama Warga</th>
+                            <th class="border border-gray-600 p-2 font-[600]">Nama Warga</th>
                             <th class="border border-gray-500 p-2 text-center font-[500]">No. Rumah</th>
                             <th class="border border-gray-500 p-2 text-center font-[500]">No. WA</th>
                             <th class="border border-gray-500 p-2 text-center font-[500]">Agama</th>
@@ -642,7 +605,7 @@
                     <tbody>
                         <tr v-for="(w, i) in filteredWarga" :key="'dl_'+i">
                             <td class="border border-gray-500 p-2 text-center">{{ i+1 }}</td>
-                            <td class="border border-gray-500 p-2 font-[500]">{{ w.Nama }}</td>
+                            <td class="border border-gray-600 p-2 font-[600]">{{ w.Nama }}</td>
                             <td class="border border-gray-500 p-2 text-center">{{ w.Id_Rumah }}</td>
                             <td class="border border-gray-500 p-2 text-center">{{ formatDashPhone(w.No_Tlp) }}</td>
                             <td class="border border-gray-500 p-2 text-center">{{ w.Agama || '-' }}</td>
@@ -667,7 +630,7 @@
                         <div class="flex items-center gap-4 mt-2 sm:mt-0">
                             <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(detailModal.data)" class="w-[80px] h-[80px] rounded-full border-2 border-[#FFFFFF] object-cover shadow-md bg-[#FFFFFF] cursor-pointer" :class="!detailModal.data.Foto_Profil ? 'grayscale opacity-70' : ''" @click="openLightbox(getAvatar(detailModal.data))">
                             <div>
-                                <h3 class="text-[20px] font-[500] leading-tight text-[#FFFFFF] capitalize">{{ detailModal.data.Nama }}</h3>
+                                <h3 class="text-[20px] font-[600] leading-tight text-[#FFFFFF] capitalize">{{ detailModal.data.Nama }}</h3>
                                 <p class="text-blue-100 font-mono text-[14px] mt-1 flex items-center gap-2 flex-wrap">
                                     <span class="bg-[#5D98E3] text-[#FFFFFF] px-2 py-0.5 rounded shadow-sm font-[500] border border-[#4887D9]">ID: {{ detailModal.data.Id_Rumah || '-' }}</span> 
                                     <span class="font-[500]" v-if="userRole === 'admin'">| Sandi: Akses Admin</span>
@@ -712,8 +675,8 @@
                                 <div class="bg-[#F9FAFB] p-4 rounded-2xl border border-[#E5E7EB]">
                                     <h4 class="font-[500] text-[#000000] border-b border-[#E5E7EB] pb-1.5 mb-2 text-[14px]"><i class="fas fa-photo-video mr-1.5 text-primary"></i>Media Tersimpan</h4>
                                     <div class="flex flex-wrap gap-4 items-center">
-                                        <div v-if="detailModal.data.QR_Code" class="flex flex-col items-center gap-1.5">
-                                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.QR_Code" class="w-[60px] h-[60px] object-contain bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors" @click="openLightbox(detailModal.data.QR_Code)">
+                                        <div v-if="detailModal.data.QR_Code || detailModal.data.QrCode" class="flex flex-col items-center gap-1.5">
+                                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.QR_Code || detailModal.data.QrCode" class="w-[60px] h-[60px] object-contain bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-colors" @click="openLightbox(detailModal.data.QR_Code || detailModal.data.QrCode)">
                                             <span class="text-[11px] font-[500] text-gray-500">QR Code</span>
                                         </div>
                                         <div v-if="detailModal.data.Data_Lain" class="flex flex-col items-center gap-1.5">
@@ -723,7 +686,7 @@
                                             </button>
                                             <span class="text-[11px] font-[500] text-gray-500">Data Lain</span>
                                         </div>
-                                        <div v-if="!detailModal.data.QR_Code && !detailModal.data.Data_Lain" class="text-[12px] text-gray-400 italic">Tidak ada file media terlampir.</div>
+                                        <div v-if="!(detailModal.data.QR_Code || detailModal.data.QrCode) && !detailModal.data.Data_Lain" class="text-[12px] text-gray-400 italic">Tidak ada file media terlampir.</div>
                                     </div>
                                 </div>
                             </div>
@@ -860,7 +823,7 @@
 
         const { createApp, ref, computed } = Vue;
 
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwxnY23ME-d7Nzv_hxkj2pslTjWnAXsufkPlA47XJZ-bYXADTr39X9BBBSDrSIh7RhyGQ/exec"; 
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwCtWluwDrOKuCBiZuRW-XGUNpFE1Y2sPXmUUii6LvUyYqw4Elw_6MCE72tDvVA3XZjKw/exec"; 
         const SECRET_TOKEN = "RT2_PASEKAN_AMAN_2026";
 
         const callAPI = async (action, payload = {}) => {
@@ -934,7 +897,9 @@
                 const deleteConfirm = ref({ show: false, nama: '', idRumah: '' });
 
                 const filteredWarga = computed(() => {
-                    let result = [...wargaList.value];
+                    // Filter baris kosong yang mungkin terbaca dari spreadsheet
+                    let result = wargaList.value.filter(w => w.Nama && w.Nama.toString().trim() !== '');
+                    
                     if (sortOrder.value === 'desc') result.reverse();
                     
                     if(searchQuery.value && searchQuery.value.trim() !== '') {

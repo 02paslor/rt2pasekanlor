@@ -166,43 +166,74 @@
         .modal-close-btn-absolute { position: absolute; top: 16px; right: 16px; background: #fef2f2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
         .modal-back-btn-absolute { position: absolute; top: 16px; left: 16px; background: #f1f5f9; color: #1155cc; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
 
-        /* ================== FORM LOGIN CSS ================== */
-        .login-wrapper { background: #f1f5f9; width: 100%; max-width: 400px; margin: 0 auto; border-radius: 28px; padding: 24px; position: relative; font-family: 'Poppins', sans-serif; }
-        .login-close-btn { position: absolute; top: 16px; right: 16px; background: #1155cc; color: #ffffff; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(17,85,204,0.3); transition: transform 0.2s; }
+        /* ================== FORM LOGIN CSS (DESAIN DATA-WARGA) ================== */
+        .login-wrapper { 
+            background: #F8F9FA; width: 100%; max-width: 380px; margin: 0 auto; 
+            border-radius: 24px; padding: 20px; position: relative; font-family: 'Poppins', sans-serif;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border: 1px solid #f3f4f6;
+        }
+        .login-close-btn { 
+            position: absolute; top: -12px; right: -12px; background: #ef4444; color: #ffffff; 
+            border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; font-weight: 700; font-size: 14px; 
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.2s; z-index: 20;
+        }
         .login-close-btn:active { transform: scale(0.9); }
-        .login-title-text { font-size: 26px; font-weight: 800; color: #1155cc; margin-bottom: 24px; letter-spacing: 0.5px; }
         
-        .login-form-grid { display: grid; grid-template-columns: 1fr 100px; gap: 12px; margin-bottom: 16px; }
-        .login-inputs { display: flex; flex-direction: column; gap: 12px; }
-        .input-icon-group { position: relative; display: flex; align-items: center; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 0 14px; height: 50px; transition: border-color 0.2s; }
-        .input-icon-group:focus-within { border-color: #1155cc; box-shadow: 0 0 0 3px rgba(17,85,204,0.1); }
-        .input-icon-group svg.left-icon { width: 22px; height: 22px; color: #64748b; flex-shrink: 0; margin-right: 8px; }
-        .input-icon-group input { border: none; background: transparent; width: 100%; font-size: 14.5px; color: #333; outline: none; font-weight: 500; }
-        .input-icon-group input::placeholder { color: #94a3b8; font-weight: 400; }
-        .input-icon-group .toggle-pw-btn { background: none; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; margin-left: 8px; }
+        .login-header-new { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .login-header-new img { height: 60px; width: auto; object-fit: contain; }
+        .login-header-text { display: flex; flex-direction: column; }
+        .login-header-text h2 { color: #1155CC; font-size: 17px; font-weight: 700; line-height: 1.2; margin: 0; text-align: left; }
+        .login-header-text p { color: #8C8C8C; font-size: 10px; font-weight: 500; margin: 4px 0 0 0; line-height: 1.3; text-align: left; }
+
+        .login-form-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; width: 100%; }
+        .input-group-new { position: relative; display: flex; align-items: center; width: 100%; }
+        .input-group-new svg.left-icon { position: absolute; left: 14px; width: 14px; height: 14px; color: #6B7280; }
+        .input-group-new input {
+            width: 100%; height: 42px; padding: 0 14px 0 38px; border-radius: 12px; border: 1px solid #D1D5DB;
+            background: #ffffff; font-size: 13px; font-family: 'Poppins', sans-serif; font-weight: 500; outline: none; transition: all 0.2s; box-sizing: border-box;
+        }
+        .input-group-new input:focus { border-color: #1155CC; box-shadow: 0 0 0 3px rgba(17,85,204,0.1); }
+        .input-group-new input::placeholder { color: #9CA3AF; font-weight: 400; }
+        .input-group-new .toggle-pw-btn { position: absolute; right: 12px; cursor: pointer; color: #6B7280; background: none; border: none; padding: 0; display: flex; align-items: center; justify-content: center; }
         
-        .btn-monggo { background: #1155cc; color: #ffffff; border: none; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: transform 0.2s, background 0.2s; padding: 10px; line-height: 1.2; box-shadow: 0 4px 12px rgba(17,85,204,0.3); }
-        .btn-monggo:active { transform: scale(0.96); }
-        
-        .login-error-msg { color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; display: none; padding: 8px; background: #fef2f2; border-radius: 10px; border: 1px solid #fecaca; margin-bottom: 16px; }
-        
-        .reg-box { border: 2px solid #cbd5e1; border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 10px; background: transparent; }
-        .reg-left { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-        .reg-title { font-size: 13.5px; font-weight: 700; color: #1155cc; letter-spacing: 0.3px; }
-        .reg-toggle-row { display: flex; align-items: center; gap: 10px; }
-        
-        .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
+        .btn-masuk-new {
+            width: 100%; height: 42px; background: #1155CC; color: #ffffff; border: none; border-radius: 12px; 
+            font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: 0.2s; font-family: 'Poppins', sans-serif;
+        }
+        .btn-masuk-new:active { transform: scale(0.97); background: #0f47a1; }
+        .btn-masuk-new:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .login-error-msg { color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; display: none; padding: 8px; background: #fef2f2; border-radius: 10px; border: 1px solid #fecaca; margin-bottom: 12px; }
+
+        .reg-box-new {
+            background: rgba(229, 231, 235, 0.8); border: 1px solid rgba(229, 231, 235, 0.8);
+            border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+        }
+        .reg-box-new h3 { color: #1155CC; font-size: 13px; font-weight: 600; margin: 0; line-height: 1.2; text-align: left; }
+        .reg-toggle-row { display: flex; align-items: flex-start; gap: 8px; margin-top: 2px; }
+        .reg-toggle-row p { font-size: 12px; color: #4B5563; margin: 0; line-height: 1.2; text-align: left; font-weight: 400;}
+
+        /* Switch Toggle Kecil */
+        .switch { position: relative; display: inline-block; width: 28px; height: 16px; flex-shrink: 0; margin-top: 2px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #94a3b8; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        input:checked + .slider { background-color: #1155cc; }
-        input:checked + .slider:before { transform: translateX(18px); }
-        
-        .reg-desc { font-size: 11px; color: #475569; line-height: 1.3; font-weight: 500; }
-        
-        .btn-reg { background: #94a3b8; color: #ffffff; border: none; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11.5px; font-weight: 700; cursor: pointer; padding: 10px; text-decoration: none; text-align: center; width: 85px; transition: background 0.2s, transform 0.2s; pointer-events: none; }
-        .btn-reg.active { background: #1155cc; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: auto; }
-        .btn-reg:active { transform: scale(0.96); }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #9CA3AF; transition: .3s; border-radius: 34px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 2px; bottom: 2px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .switch input:checked + .slider { background-color: #22C55E; }
+        .switch input:checked + .slider:before { transform: translateX(12px); }
+
+        .btn-reg-new {
+            width: 100%; padding: 8px; border-radius: 8px; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; transition: 0.2s; margin-top: 4px; border: 1px solid #e5e7eb; box-sizing: border-box;
+        }
+        .btn-reg-new.disabled { background: #ffffff; color: #9CA3AF; cursor: not-allowed; opacity: 0.6; pointer-events: none; }
+        .btn-reg-new.active { background: #1155CC; color: #ffffff; border-color: #1155CC; box-shadow: 0 2px 4px rgba(0,0,0,0.1); pointer-events: auto; cursor: pointer; }
+        .btn-reg-new.active:active { transform: scale(0.97); }
+
+        .web-link-new { margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(229, 231, 235, 0.8); text-align: center; }
+        .web-link-new a { color: #1155CC; font-size: 12px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .web-link-new a:hover { color: #000F2E; }
 
         /* ================== KARTU LUAR & WARNA ================== */
         .dashboard-section-card { border-radius: 24px; margin: 0 16px 24px 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); position: relative; z-index: 2; }
@@ -501,7 +532,7 @@
 
             <!-- TAMPIL SAAT SUDAH LOGIN -->
             <div id="loggedInMenu" class="logged-in-menu">
-                <a href="data-warga" title="Update Profil Warga" style="display: flex; align-items: center; gap: 6px; text-decoration: none;">
+                <a href="https://rt2pasekanlor.id/data-warga" title="Update Profil Warga" style="display: flex; align-items: center; gap: 6px; text-decoration: none;">
                     <span id="userShortName" class="user-short-name"></span>
                     <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.4); display: block; box-shadow: 0 2px 6px rgba(0,0,0,0.1); flex-shrink: 0;">
                         <img id="userAvatarImg" src="" alt="Profil" style="width:100%; height:100%; object-fit:cover;">
@@ -524,49 +555,55 @@
                 <div class="login-wrapper">
                     <button class="login-close-btn" onclick="closeLoginModal()" title="Tutup">X</button>
                     
-                    <div class="login-title-text">Masuk Akun</div>
+                    <div class="login-header-new">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" alt="Logo RT 2">
+                        <div class="login-header-text">
+                            <h2>Aplikasi Data Warga</h2>
+                            <p>RT 2-RW 3, Pasekan Lor, Balecatur, Gamping, Sleman</p>
+                        </div>
+                    </div>
                     
                     <form id="loginForm" style="margin: 0;">
                         <div class="login-form-grid">
-                            <div class="login-inputs">
-                                <div class="input-icon-group">
-                                    <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                                    <input type="text" id="loginUsername" placeholder="user" required>
-                                </div>
-                                <div class="input-icon-group">
-                                    <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
-                                    <input type="password" id="loginPassword" placeholder="Password" required>
-                                    <button type="button" class="toggle-pw-btn" onclick="togglePasswordVisibility()">
-                                        <svg id="eyeIconPwOpen" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                                        <svg id="eyeIconPwClosed" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:block;"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
-                                    </button>
-                                </div>
+                            <div class="input-group-new">
+                                <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                <input type="text" id="loginUsername" placeholder="User" required>
                             </div>
-                            
-                            <button type="submit" id="btnSubmitLogin" class="btn-monggo">
-                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                                <span>Monggo<br>Mlebet</span>
-                            </button>
+                            <div class="input-group-new">
+                                <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+                                <input type="password" id="loginPassword" placeholder="Password" required>
+                                <button type="button" class="toggle-pw-btn" onclick="togglePasswordVisibility()">
+                                    <svg id="eyeIconPwOpen" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display:none;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                                    <svg id="eyeIconPwClosed" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display:block;"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                                </button>
+                            </div>
                         </div>
                         
                         <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
+
+                        <button type="submit" id="btnSubmitLogin" class="btn-masuk-new">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                            <span>Masuk</span>
+                        </button>
                     </form>
                     
-                    <div class="reg-box">
-                        <div class="reg-left">
-                            <div class="reg-title">Pendaftaran Warga Baru</div>
-                            <div class="reg-toggle-row">
-                                <label class="switch">
-                                  <input type="checkbox" id="regToggleCheck" onchange="toggleRegButton()">
-                                  <span class="slider"></span>
-                                </label>
-                                <div class="reg-desc">Setuju, saya akan mengisi dengan benar.</div>
-                            </div>
+                    <div class="reg-box-new">
+                        <h3>Registrasi warga baru (Kepala Keluarga)</h3>
+                        <div class="reg-toggle-row">
+                            <label class="switch">
+                                <input type="checkbox" id="regToggleCheck" onchange="toggleRegButton()">
+                                <span class="slider"></span>
+                            </label>
+                            <p>Saya akan mengisi data dengan yang sebenarnya.</p>
                         </div>
-                        <a href="data-warga" id="btnLanjutReg" class="btn-reg">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                            <span>Lanjut<br>Registrasi</span>
+                        <a href="https://rt2pasekanlor.id/data-warga#registrasi" id="btnLanjutReg" class="btn-reg-new disabled">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <span>Setuju & Registrasi</span>
                         </a>
+                    </div>
+
+                    <div class="web-link-new">
+                        <a href="https://rt2pasekanlor.id/" target="_blank">www.rt2pasekanlor.id</a>
                     </div>
                 </div>
             </div>
@@ -927,7 +964,7 @@
     // ==========================================
     // PENGATURAN LOGIN ADMIN & API SPREADSHEET
     // ==========================================
-      const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwxnY23ME-d7Nzv_hxkj2pslTjWnAXsufkPlA47XJZ-bYXADTr39X9BBBSDrSIh7RhyGQ/exec";
+      const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
 
     // ==========================================
     // FUNGSI MANAJEMEN SESI (LOGIN & LOGOUT)
@@ -936,9 +973,6 @@
     const loginForm = document.getElementById('loginForm');
     const loginErrorMsg = document.getElementById('loginErrorMessage');
     const btnSubmitLogin = document.getElementById('btnSubmitLogin');
-    
-    // SVG untuk tombol submit agar desain persisten saat di-update oleh innerHTML
-    const loginBtnSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
 
     function checkLoginState() {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -1010,10 +1044,18 @@
         const chk = document.getElementById('regToggleCheck');
         const btn = document.getElementById('btnLanjutReg');
         if(chk && btn) {
-            if(chk.checked) btn.classList.add('active');
-            else btn.classList.remove('active');
+            if(chk.checked) {
+                btn.classList.add('active');
+                btn.classList.remove('disabled');
+            } else {
+                btn.classList.remove('active');
+                btn.classList.add('disabled');
+            }
         }
     }
+
+    // SVG untuk tombol submit agar desain persisten saat di-update oleh innerHTML
+    const loginBtnSvg = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
 
     // ==========================================
     // PROSES SUBMIT FORM LOGIN
@@ -1025,7 +1067,7 @@
         const passInput = document.getElementById('loginPassword').value.trim();
         
         loginErrorMsg.style.display = 'none';
-        btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Memeriksa...</span>";
+        btnSubmitLogin.innerHTML = "<span>Mohon tunggu...</span>";
         btnSubmitLogin.disabled = true;
 
         // Mode Demo / Fallback jika GAS_API_URL belum diisi
@@ -1036,14 +1078,14 @@
                     localStorage.setItem('userRole', 'warga');
                     localStorage.setItem('userName', 'Bambang'); 
                     localStorage.setItem('userFoto', ''); 
-                    closeLoginModal(); checkLoginState();
-                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>"; btnSubmitLogin.disabled = false;
+                    closeLoginModal(); // Tutup modal login
+                    checkLoginState(); // Refresh header agar nama muncul
+                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>"; btnSubmitLogin.disabled = false;
                 }, 800);
             } else {
                 loginErrorMsg.innerText = "Username atau Password salah!";
-                loginErrorMsg.style.color = '#ef4444';
                 loginErrorMsg.style.display = 'block';
-                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>"; btnSubmitLogin.disabled = false;
+                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>"; btnSubmitLogin.disabled = false;
             }
             return;
         }
@@ -1052,21 +1094,20 @@
         // KODE FETCH (TERHUBUNG KE BACKEND GAS)
         // ==========================================
         fetch(GAS_API_URL, {
+            redirect: "follow", // <-- Mencegah Network/CORS Error
             method: 'POST',
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({
                 token: "RT2_PASEKAN_AMAN_2026",
                 action: "login",
-                payload: {
-                    Id_Rumah: userInput,
-                    Password: passInput
-                }
+                payload: { Id_Rumah: userInput, Password: passInput }
             })
         })
         .then(res => res.json())
         .then(data => {
             if(data.status === "success") {
                 localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('userRole', data.role); // Menyimpan 'admin' atau 'warga'
+                localStorage.setItem('userRole', data.role);
                 
                 if (data.role === "admin") {
                     localStorage.setItem('userName', 'Admin Pengurus');
@@ -1077,19 +1118,18 @@
                     localStorage.setItem('userFoto', warga.Foto_Profil || ''); 
                 }
                 
-                closeLoginModal(); 
-                checkLoginState(); 
+                closeLoginModal(); // Tutup modal otomatis
+                checkLoginState(); // Memunculkan foto/nama di header secara instan
+                
             } else {
                 loginErrorMsg.innerText = data.message || "ID Rumah atau Password salah!";
-                loginErrorMsg.style.color = '#ef4444';
                 loginErrorMsg.style.display = 'block';
             }
         }).catch(err => {
             loginErrorMsg.innerText = "Koneksi terputus. Silakan coba lagi.";
-            loginErrorMsg.style.color = '#ef4444';
             loginErrorMsg.style.display = 'block';
         }).finally(() => {
-            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>";
+            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>";
             btnSubmitLogin.disabled = false;
         });
     });

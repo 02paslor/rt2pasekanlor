@@ -119,25 +119,23 @@
                         </form>
 
                         <!-- BOX REGISTRASI -->
-<div class="relative bg-[#E5E7EB]/80 rounded-xl p-2.5 sm:p-3 border border-gray-200/80 shadow-inner mb-4 flex items-center">
-    
-    <!-- pl-[70px] dan sm:pl-[80px] dihapus pada div di bawah ini -->
-    <div class="flex flex-col gap-1.5 w-full relative z-10">
-        <h3 class="text-[#1155CC] font-[600] text-[13px] sm:text-[13px] leading-tight text-left">Registrasi warga baru (Kepala Keluarga)</h3>
-        
-        <div class="flex items-start gap-1.5 mt-0.5">
-            <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
-                <input type="checkbox" v-model="isSetujuRegis" class="sr-only peer">
-                <div class="w-7 h-4 bg-[#9CA3AF] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#22C55E] shadow-inner"></div>
-            </label>
-            <span class="text-[12px] sm:text-[12px] text-[#4B5563] font-[400] leading-tight text-left">Saya akan mengisi data dengan yang sebenarnya.</span>
-        </div>
-        
-        <button @click="bukaHalamanRegistrasi" :disabled="!isSetujuRegis" class="w-full py-1.5 rounded-lg font-[500] text-[12px] sm:text-[12px] flex items-center justify-center gap-1.5 transition-all shadow-sm border mt-0.5" :class="isSetujuRegis ? 'bg-[#1155CC] text-white hover:bg-[#000F2E] cursor-pointer' : 'bg-white text-gray-400 border-gray-200 cursor-not-allowed opacity-60'">
-            <i class="fas fa-id-card text-[11px]"></i><span>Setuju & Registrasi</span>
-        </button>
-    </div>
-</div>
+                        <div class="relative bg-[#E5E7EB]/80 rounded-xl p-2.5 sm:p-3 border border-gray-200/80 shadow-inner mb-4 flex items-center">
+                            <div class="flex flex-col gap-1.5 w-full relative z-10">
+                                <h3 class="text-[#1155CC] font-[600] text-[13px] sm:text-[13px] leading-tight text-left">Registrasi warga baru (Kepala Keluarga)</h3>
+                                
+                                <div class="flex items-start gap-1.5 mt-0.5">
+                                    <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+                                        <input type="checkbox" v-model="isSetujuRegis" class="sr-only peer">
+                                        <div class="w-7 h-4 bg-[#9CA3AF] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#22C55E] shadow-inner"></div>
+                                    </label>
+                                    <span class="text-[12px] sm:text-[12px] text-[#4B5563] font-[400] leading-tight text-left">Saya akan mengisi data dengan yang sebenarnya.</span>
+                                </div>
+                                
+                                <button @click="bukaHalamanRegistrasi" :disabled="!isSetujuRegis" class="w-full py-1.5 rounded-lg font-[500] text-[12px] sm:text-[12px] flex items-center justify-center gap-1.5 transition-all shadow-sm border mt-0.5" :class="isSetujuRegis ? 'bg-[#1155CC] text-white hover:bg-[#000F2E] cursor-pointer' : 'bg-white text-gray-400 border-gray-200 cursor-not-allowed opacity-60'">
+                                    <i class="fas fa-id-card text-[11px]"></i><span>Setuju & Registrasi</span>
+                                </button>
+                            </div>
+                        </div>
 
                         <!-- WEB LINK -->
                         <div class="pt-3 border-t border-gray-200/80 text-center">
@@ -206,7 +204,7 @@
                 <label class="text-white font-[500] text-[12px] mb-1.5 block drop-shadow-sm">Kategori Lainnya</label>
                 <div class="relative w-full mb-2.5">
                     <select v-model="filterRonda" @change="searchQuery=''" class="w-full pl-3 pr-6 py-1.5 rounded-full bg-white text-[#0A2666] font-[500] text-[11px] shadow-sm outline-none cursor-pointer">
-                        <option value="">Semua Jadwal Ronda</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option>
+                        <option value="">Semua Jadwal Ronda</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jum'at</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option>
                     </select>
                 </div>
                 <div class="relative w-full mb-2.5">
@@ -286,11 +284,6 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap lg:flex-nowrap items-center gap-3 w-full justify-between">
                     
                     <div class="flex items-center gap-2 sm:gap-3 w-full lg:w-auto">
-                        <div class="relative flex-1 sm:w-[220px] sm:flex-none group" v-if="userRole === 'admin' && activeMenu === 'list'">
-                            <input type="text" v-model="searchQuery" @input="handleSearchInput" placeholder="Pencarian" class="w-full pl-10 pr-3 py-2.5 rounded-xl bg-white/15 border border-white/20 text-white placeholder-white/80 focus:bg-[#FFFFFF] focus:text-[#374151] outline-none text-[13px] transition-all shadow-inner font-[500]">
-                            <i class="fas fa-search absolute left-3.5 top-3 text-white/80 group-focus-within:text-[#2F3E61] text-[14px] transition-colors"></i>
-                        </div>
-
                         <div class="flex items-center gap-1 bg-black/20 p-1 rounded-xl shrink-0 shadow-inner" v-if="userRole === 'admin' && activeMenu === 'list'">
                             <button @click="viewMode = 'card'" :class="viewMode === 'card' ? 'text-[#2F3E61] bg-[#FFFFFF] shadow-sm font-[500]' : 'text-white/80 hover:text-white font-[500]'" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-2 text-[13px]"><i class="fas fa-th-large text-[14px]"></i></button>
                             <button @click="viewMode = 'table'" :class="viewMode === 'table' ? 'text-[#2F3E61] bg-[#FFFFFF] shadow-sm font-[500]' : 'text-white/80 hover:text-white font-[500]'" class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-2 text-[13px]"><i class="fas fa-list text-[14px]"></i></button>
@@ -337,7 +330,7 @@
                     <div v-show="activeMenu === 'list' && !loading" class="space-y-4">
 
                         <div v-if="filteredWarga.length === 0" class="bg-[#FFFFFF] rounded-2xl p-10 text-center shadow-md border border-[#E5E7EB]">
-                            <i class="fas fa-folder-open text-[48px] text-[#2F3E61] mb-4"></i><p class="text-[#2F3E61] font-[400] text-[15px]">Wah...Maap, tidak ada data warga RT 2 yang sesuai.</p>
+                            <i class="fas fa-folder-open text-[48px] text-[#2F3E61] mb-4"></i><p class="text-[#2F3E61] font-[400] text-[15px]">Tidak ada data warga RT 2 yang sesuai.</p>
                         </div>
 
                         <!-- TAMPILAN KARTU (GRID VIEW) COMPACT -->
@@ -555,7 +548,7 @@
                                             </div>
                                             <div>
                                                 <label class="sm:hidden block text-[11px] font-[500] text-[#6B7280] mb-1">Keterangan Lain</label>
-                                                <textarea v-model="ket.kurban" rows="2" class="w-full rounded-xl border border-[#D1D5DB] p-3 bg-[#F9FAFB] focus:bg-[#FFFFFF] focus:border-[#0F2E70] outline-none text-[13px] resize-y transition-all font-[500]" placeholder="Ket. Lain"></textarea>
+                                                <textarea v-model="ket.keterangan_lain" rows="2" class="w-full rounded-xl border border-[#D1D5DB] p-3 bg-[#F9FAFB] focus:bg-[#FFFFFF] focus:border-[#0F2E70] outline-none text-[13px] resize-y transition-all font-[500]" placeholder="Ket. Lain"></textarea>
                                             </div>
                                         </div>
                                         
@@ -693,7 +686,7 @@
                         </div>
 
                         <!-- Keterangan Historis di Modal -->
-                        <div v-if="userRole === 'admin' && parseKeterangan(detailModal.data.Keterangan).length > 0 && (parseKeterangan(detailModal.data.Keterangan)[0].pertemuan !== '' || parseKeterangan(detailModal.data.Keterangan)[0].dansos !== '' || parseKeterangan(detailModal.data.Keterangan)[0].kurban !== '')" class="bg-[#F5F3FF] p-4 rounded-2xl border border-[#DDD6FE] mt-2 w-full flex flex-col">
+                        <div v-if="userRole === 'admin' && parseKeterangan(detailModal.data.Keterangan).length > 0 && (parseKeterangan(detailModal.data.Keterangan)[0].pertemuan !== '' || parseKeterangan(detailModal.data.Keterangan)[0].dansos !== '' || parseKeterangan(detailModal.data.Keterangan)[0].keterangan_lain !== '')" class="bg-[#F5F3FF] p-4 rounded-2xl border border-[#DDD6FE] mt-2 w-full flex flex-col">
                             <h4 class="font-[500] text-[14px] text-[#000000] border-b border-[#C4B5FD] pb-2 mb-3 shrink-0"><i class="fas fa-sticky-note mr-2 text-[#8B5CF6]"></i>Catatan & Keterangan Tambahan</h4>
                             <div class="overflow-y-auto max-h-[300px] custom-scrollbar pr-1.5">
                                 <table class="w-full text-left text-[13px] sm:text-[14px] text-[#000000] break-words">
@@ -705,7 +698,7 @@
                                             <td class="py-2.5 pr-2 text-center font-[500] text-[#8B5CF6] align-top w-[40px]">{{ i + 1 }}</td>
                                             <td class="py-2.5 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.pertemuan || '-' }}</td>
                                             <td class="py-2.5 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.dansos || '-' }}</td>
-                                            <td class="py-2.5 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.kurban || '-' }}</td>
+                                            <td class="py-2.5 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.keterangan_lain || '-' }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -796,7 +789,7 @@
     </div>
 
     <script>
-        // TAMBAHAN: FUNGSI KOMPRESI GAMBAR (Ditempatkan di luar Vue agar ringan)
+        // FUNGSI KOMPRESI GAMBAR
         const compressImage = (base64Str, maxWidth = 500, quality = 0.7) => {
             return new Promise((resolve) => {
                 let img = new Image();
@@ -817,7 +810,7 @@
                     ctx.drawImage(img, 0, 0, width, height);
                     resolve(canvas.toDataURL('image/jpeg', quality));
                 };
-                img.onerror = () => resolve(base64Str); // Jika error, kembalikan base64 aslinya
+                img.onerror = () => resolve(base64Str); 
             });
         };
 
@@ -830,20 +823,22 @@
             try {
                 const response = await fetch(GAS_WEB_APP_URL, {
                     method: 'POST',
-                    // TAMBAHAN: Cegah CORS Error di Google Apps Script
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
                     body: JSON.stringify({ token: SECRET_TOKEN, action: action, payload: payload })
                 });
                 
                 const textResult = await response.text();
+                let result;
                 try {
-                    const result = JSON.parse(textResult);
-                    if (result.status === "error") throw new Error(result.message);
-                    return result;
+                    result = JSON.parse(textResult);
                 } catch (parseError) {
-                    console.error("Error dari Server (Bukan JSON):", textResult);
-                    throw new Error("Koneksi Timeout: Waktu habis karena file terlalu besar.");
+                    console.error("Error dari Server:", textResult);
+                    // PERBAIKAN: Menampilkan error yang jujur jika Google Server sibuk, bukan menutupi sebagai "Timeout"
+                    throw new Error("Respons server gagal. Silakan coba simpan sekali lagi.");
                 }
+                
+                if (result.status === "error") throw new Error(result.message);
+                return result;
             } catch (error) { throw error; }
         };
 
@@ -882,11 +877,12 @@
                 const filterStatus = ref('');
                 const sortOrder = ref('asc');
 
+                // PERBAIKAN: Mengganti kurban menjadi keterangan_lain di template form
                 const emptyForm = () => ({
                     Id_Rumah: 'rt2_', Password: '', Nama: '', Tempat_Lahir: '', Tanggal_Lahir: '', 
                     Jenis_Kelamin: '', Gol_Darah: '', Agama: '', Status_Perkawinan: '', 
                     Pekerjaan: '', Status_Domisili: '', No_Tlp: '', Ronda: '', 
-                    Anggota_Keluarga: '', AnggotaList: [{n: '', s: ''}], Keterangan: '', KeteranganList: [{ pertemuan: '', dansos: '', kurban: '' }], Foto_Profil: '', QR_Code: '', Data_Lain: ''
+                    Anggota_Keluarga: '', AnggotaList: [{n: '', s: ''}], Keterangan: '', KeteranganList: [{ pertemuan: '', dansos: '', keterangan_lain: '' }], Foto_Profil: '', QR_Code: '', Data_Lain: ''
                 });
                 const form = ref(emptyForm());
                 const isEditing = ref(false);
@@ -897,7 +893,7 @@
                 const deleteConfirm = ref({ show: false, nama: '', idRumah: '' });
 
                 const filteredWarga = computed(() => {
-                    // Filter baris kosong yang mungkin terbaca dari spreadsheet
+                    // Filter baris kosong dari spreadsheet (menghilangkan card yang kosong)
                     let result = wargaList.value.filter(w => w.Nama && w.Nama.toString().trim() !== '');
                     
                     if (sortOrder.value === 'desc') result.reverse();
@@ -1011,17 +1007,18 @@
 
                 const addFam = () => { form.value.AnggotaList.push({ n: '', s: '' }); };
                 const removeFam = (index) => { form.value.AnggotaList.splice(index, 1); };
-                const addKeterangan = () => { form.value.KeteranganList.push({ pertemuan: '', dansos: '', kurban: '' }); };
+                const addKeterangan = () => { form.value.KeteranganList.push({ pertemuan: '', dansos: '', keterangan_lain: '' }); };
                 const removeKeterangan = (index) => { form.value.KeteranganList.splice(index, 1); };
 
+                // PERBAIKAN: Menangani mapping variabel kurban -> keterangan_lain
                 const parseKeterangan = (ketStr) => {
                     if (!ketStr) return [];
                     if (Array.isArray(ketStr)) return ketStr; 
                     try {
                         let parsed = JSON.parse(ketStr);
-                        if (Array.isArray(parsed)) return parsed;
+                        if (Array.isArray(parsed)) return parsed.map(k => ({...k, keterangan_lain: k.keterangan_lain || k.kurban || ''}));
                     } catch (e) {}
-                    return ketStr.split('\n').map(k => ({ pertemuan: k.replace(/^\d+\.\s*/, '').trim(), dansos: '', kurban: '' }));
+                    return ketStr.split('\n').map(k => ({ pertemuan: k.replace(/^\d+\.\s*/, '').trim(), dansos: '', keterangan_lain: '' }));
                 };
 
                 const removeFile = (field) => { form.value[field] = ''; };
@@ -1098,7 +1095,7 @@
                     if (form.value.AnggotaList.length === 0) form.value.AnggotaList.push({ n: '', s: '' });
                     
                     form.value.KeteranganList = parseKeterangan(form.value.Keterangan);
-                    if (form.value.KeteranganList.length === 0) form.value.KeteranganList = [{ pertemuan: '', dansos: '', kurban: '' }];
+                    if (form.value.KeteranganList.length === 0) form.value.KeteranganList = [{ pertemuan: '', dansos: '', keterangan_lain: '' }];
                     
                     activeMenu.value = 'register'; scrollTo('top');
                 };
@@ -1115,8 +1112,9 @@
                         });
                         form.value.Anggota_Keluarga = famArr.length > 0 ? famArr.join('\n') : 'Tidak ada Data';
                         
-                        let filteredKetList = form.value.KeteranganList.filter(k => k.pertemuan.trim() || k.dansos.trim() || k.kurban.trim());
-                        form.value.KeteranganList = filteredKetList.length > 0 ? filteredKetList : [{ pertemuan: '', dansos: '', kurban: '' }];
+                        // PERBAIKAN: Memfilter berdasarkan keterangan_lain
+                        let filteredKetList = form.value.KeteranganList.filter(k => k.pertemuan.trim() || k.dansos.trim() || k.keterangan_lain.trim());
+                        form.value.KeteranganList = filteredKetList.length > 0 ? filteredKetList : [{ pertemuan: '', dansos: '', keterangan_lain: '' }];
                         form.value.Keterangan = JSON.stringify(filteredKetList);
                         if(!form.value.Ronda) form.value.Ronda = 'Belum ada data';
 
@@ -1141,7 +1139,6 @@
                     finally { saving.value = false; }
                 };
 
-                // TAMBAHAN: FUNGSI UPLOAD YANG SUDAH MENERAPKAN KOMPRESI
                 const handleFileUpload = (e, field) => {
                     const file = e.target.files[0]; 
                     if(!file) return;
@@ -1156,16 +1153,11 @@
                     const reader = new FileReader();
                     reader.onload = async (ev) => { 
                         let base64Data = ev.target.result;
-                        
-                        // Cek jika ini gambar, maka jalankan fungsi compressImage
                         if (base64Data.startsWith('data:image')) {
                             try {
-                                base64Data = await compressImage(base64Data, 500, 0.7); // Lebar 500px, Kualitas 70%
-                            } catch (err) {
-                                console.error("Gagal melakukan kompresi gambar", err);
-                            }
+                                base64Data = await compressImage(base64Data, 500, 0.7);
+                            } catch (err) { console.error("Gagal kompresi", err); }
                         }
-                        
                         form.value[field] = base64Data; 
                     };
                     reader.readAsDataURL(file);

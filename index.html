@@ -37,11 +37,12 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; z-index: 1;
         }
 
-        /* ================== HEADER STICKY ================== */
+        /* ================== HEADER STICKY (PERBAIKAN TOMBOL) ================== */
         .app-header-wrapper { 
             position: absolute; top: 0; left: 0; right: 0; width: 100%; max-width: 480px; 
             margin: 0 auto; padding: 12px 16px 6px 16px; z-index: 1000; 
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none; /* FIX: Mencegah wrapper blanking klik ke iframe di bawahnya */
         }
         .app-header-wrapper.header-morphed {
             padding: 0 !important;
@@ -49,6 +50,7 @@
             position: fixed;
         }
         .header-box { 
+            pointer-events: auto; /* FIX: Kembalikan fungsi klik khusus untuk isi header */
             background-color: rgba(0, 52, 143, 0.9);
             border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
             padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -63,15 +65,16 @@
             padding: 10px 16px !important; width: 100% !important;
         }
 
-        .header-left-area { display: flex; align-items: center; gap: 10px; }
-        .header-logo-img { width: 72px; height: auto;}
-        .header-text-area { display: flex; flex-direction: column; line-height: 1.5; }
-        .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 700;}
-        .slogan-text-2 { color: #ffffff; font-size: 9px; font-weight: 500;}
+        /* FIX: Proteksi area layout agar tombol di kanan tidak terdorong keluar layar */
+        .header-left-area { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+        .header-logo-img { width: 72px; height: auto; flex-shrink: 0;}
+        .header-text-area { display: flex; flex-direction: column; line-height: 1.5; flex: 1; min-width: 0; }
+        .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;}
+        .slogan-text-2 { color: #ffffff; font-size: 9px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;}
 
         /* Area Login / Profil Warga */
         .login-btn-wrapper { 
-            display: flex; align-items: center; justify-content: center; 
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
             background-color: rgba(255, 255, 255, 0.2); width: 30px; height: 30px; border-radius: 50%; 
             color: #ffffff; text-decoration: none; cursor: pointer; transition: all 0.2s; 
             border: 1.5px solid rgba(255,255,255,0.4); overflow: hidden;
@@ -80,7 +83,7 @@
         .login-icon { width: 16px; height: 16px; }
 
         .logged-in-menu { 
-            display: none; align-items: center; gap: 8px; 
+            display: none; align-items: center; gap: 8px; flex-shrink: 0;
             background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.25);
             padding: 4px 6px 4px 12px; border-radius: 15px;
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -92,7 +95,8 @@
 
         /* ================== KONTEN UTAMA IFRAME & EFEK LOADING ================== */
         .content-container {
-            flex: 1; width: 100%; position: relative; margin-bottom: 65px; background: transparent;
+            /* FIX: margin-bottom disesuaikan (95px) agar tidak tertutup floating menu baru */
+            flex: 1; width: 100%; position: relative; margin-bottom: 95px; background: transparent;
         }
         #dynamic-content {
             width: 100%; height: 100%; border: none; background: transparent; display: block;
@@ -157,44 +161,91 @@
         .btn-reg.active { background: #1155cc; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: auto; }
         .btn-reg:active { transform: scale(0.96); }
 
-        /* ================== FIXED BOTTOM NAVIGATION ================== */
+        /* ================== FIXED BOTTOM NAVIGATION (REDESIGN: CANGGIH & MODERN) ================== */
         .bottom-nav-bar {
-            position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
-            width: 100%; max-width: 480px; height: 65px;
-            background: #ffffff;
+            position: fixed; bottom: 20px; left: 0; right: 0; margin: 0 auto;
+            width: calc(100% - 32px); max-width: 448px; height: 70px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             display: flex; align-items: center; justify-content: space-between;
-            z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+            z-index: 2000; box-shadow: 0 10px 30px rgba(0, 52, 143, 0.12);
+            border-radius: 24px; padding: 0 8px;
         }
 
         .b-nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: #1155CC; font-size: 10px; font-weight: 600;
+            text-decoration: none; color: #94A3B8; font-size: 10px; font-weight: 600;
             width: 20%; height: 100%; cursor: pointer; 
-            transition: background 0.2s, color 0.2s;
-            text-transform: uppercase; background-color: transparent; border: none; outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: capitalize; background-color: transparent; border: none; outline: none;
+            position: relative;
         }
 
         .b-nav-item svg { 
-            width: 24px; height: 24px; margin-bottom: 4px; stroke: #1155CC; stroke-width: 2; fill: none;
-            stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s;
+            width: 24px; height: 24px; margin-bottom: 4px; stroke: #94A3B8; stroke-width: 2; fill: none;
+            stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ================== MODAL MENU ACCORDION (DIPENDEKKAN) ================== */
+        /* Hover & Active State Modern */
+        .b-nav-item:hover, .b-nav-item.menu-tertekan { 
+            background-color: transparent !important; 
+            color: #1155CC !important; 
+        }
+        .b-nav-item:hover svg, .b-nav-item.menu-tertekan svg { 
+            stroke: #1155CC !important; 
+            transform: translateY(-4px);
+            filter: drop-shadow(0 4px 6px rgba(17,85,204,0.2));
+        }
+
+        /* Indikator Dot Keren untuk Menu Aktif */
+        .b-nav-item::after {
+            content: ''; position: absolute; bottom: 10px; width: 5px; height: 5px;
+            background-color: #1155CC; border-radius: 50%;
+            opacity: 0; transform: scale(0.5); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .b-nav-item.menu-tertekan::after {
+            opacity: 1; transform: scale(1);
+        }
+
+        /* Cegah klik berulang, KECUALI tombol toggle MENU agar bisa ditutup kembali */
+        .b-nav-item.menu-tertekan:not(.btn-menu) { pointer-events: none; }
+
+        /* Tombol MENU (Tengah) bergaya Floating Action Button (FAB) */
+        .b-nav-item.btn-menu {
+            transform: translateY(-20px);
+            background: linear-gradient(135deg, #0083E0 0%, #1155CC 100%);
+            box-shadow: 0 10px 24px rgba(17,85,204,0.4);
+            width: 58px; height: 58px;
+            border-radius: 50%;
+            color: #ffffff !important;
+            margin: 0 5px; border: 4px solid #ffffff;
+        }
+        .b-nav-item.btn-menu svg { stroke: #ffffff !important; margin-bottom: 0; width: 24px; height: 24px; }
+        .b-nav-item.btn-menu span { display: none; /* Sembunyikan teks khusus tombol tengah agar lebih bersih */ }
+        .b-nav-item.btn-menu:hover, .b-nav-item.btn-menu.menu-tertekan {
+            transform: translateY(-24px) scale(1.05);
+            box-shadow: 0 12px 28px rgba(17,85,204,0.6);
+            background: linear-gradient(135deg, #1155CC 0%, #0083E0 100%);
+        }
+        .b-nav-item.btn-menu::after { display: none; }
+
+        /* ================== MODAL MENU ACCORDION (REDESIGN) ================== */
         .more-menu-overlay {
-            position: fixed; bottom: 65px; left: 0; right: 0; margin: 0 auto;
-            width: 100%; max-width: 480px; height: calc(100vh - 65px);
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(2px);
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; margin: 0 auto;
+            width: 100%; max-width: 480px; height: 100vh;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
             z-index: 1999; display: flex; align-items: flex-end;
-            visibility: hidden; opacity: 0; transition: all 0.2s ease;
+            visibility: hidden; opacity: 0; transition: all 0.3s ease;
         }
         .more-menu-overlay.active { visibility: visible; opacity: 1; }
         
         .more-menu-content {
             width: 100%; background: #ffffff; 
-            padding: 16px;
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -4px 25px rgba(0,0,0,0.15); 
-            transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 24px 16px 110px 16px; /* Padding bawah ekstra untuk menu floating */
+            border-radius: 32px 32px 0 0;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.2); 
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .more-menu-overlay.active .more-menu-content { transform: translateY(0); }
 
@@ -202,34 +253,19 @@
         
         .nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: #1155CC; font-size: 10px; font-weight: 600;
-            cursor: pointer; padding: 10px 4px; text-transform: uppercase;
-            border-radius: 14px; transition: background 0.2s;
+            text-decoration: none; color: #475569; font-size: 11px; font-weight: 600;
+            cursor: pointer; padding: 12px 4px; text-transform: capitalize;
+            border-radius: 20px; transition: all 0.3s ease; background: #F8FAFC;
+            border: 1px solid transparent;
         }
-        .nav-item svg { width: 26px; height: 26px; margin-bottom: 8px; stroke: #1155CC; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .nav-item svg { width: 26px; height: 26px; margin-bottom: 10px; stroke: #1155CC; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease; }
 
-        /* ================== EFEK HOVER & MENU AKTIF ================== */
-        
-        /* 1. Baris Bawah (Bottom Nav) */
-        .b-nav-item:hover, .b-nav-item.menu-tertekan { 
-            background-color: #EDEDED !important; 
-            color: #E06500 !important; 
-        }
-        .b-nav-item:hover svg, .b-nav-item.menu-tertekan svg { 
-            stroke: #E06500 !important; 
-        }
-        /* Cegah klik berulang, KECUALI tombol toggle MENU (titik 4) agar bisa ditutup kembali */
-        .b-nav-item.menu-tertekan:not(.btn-menu) { 
-            pointer-events: none; 
-        }
-
-        /* 2. Menu di Kotak Putih (Accordion) */
         .nav-item:hover, .nav-item.menu-tertekan { 
-            background: #f1f5f9; color: #E06500; 
-            pointer-events: none; 
+            background: #F0FAFF; color: #1155CC; border-color: rgba(17,85,204,0.2);
+            pointer-events: none; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(17,85,204,0.1);
         }
         .nav-item:hover svg, .nav-item.menu-tertekan svg { 
-            stroke: #E06500; 
+            stroke: #1155CC; transform: scale(1.1);
         }
 
     </style>
@@ -366,7 +402,7 @@
     
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/tatatertib">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        <span>Tata Tertib</span>
+        <span>Aturan</span>
     </a>
     
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/ronda">
@@ -391,7 +427,7 @@
             
             <a href="#" class="nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/pengurus">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span>Pengurus</span>         
+                <span>Pengurus</span>        
             </a>
             
             <a href="#" class="nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/galeri">
@@ -427,8 +463,8 @@
     function closeMoreMenu() { 
         moreMenuModal.classList.remove('active'); 
         
-        // Pengecekan cerdas: Jangan matikan warna orange di tombol MENU (titik 4)
-        // JIKA user sebenarnya sedang berada di dalam halaman sub-menu (misal Keuangan)
+        // Pengecekan cerdas: Jangan matikan warna di tombol MENU
+        // JIKA user sebenarnya sedang berada di dalam halaman sub-menu
         const hasActiveSubMenu = document.querySelector('.more-menu-content .menu-tertekan');
         if(!hasActiveSubMenu) {
             btnMenuToggle.classList.remove('menu-tertekan');
@@ -446,7 +482,7 @@
     const dynamicContent = document.getElementById('dynamic-content');
     const iframeOverlay = document.getElementById('iframeLoadingOverlay');
 
-    // Mencegah overlay loading nyangkut jika iframe gagal memuat sempurna (fallback)
+    // Mencegah overlay loading nyangkut jika iframe gagal memuat sempurna
     dynamicContent.addEventListener('load', () => {
         iframeOverlay.style.display = 'none';
         initIframeScroll(); // Pasang ulang sensor scroll setelah halaman berubah
@@ -462,11 +498,10 @@
             this.classList.add("menu-tertekan");
 
             // 3. Jika tombol berasal dari dalam Sub-Menu (kotak putih),
-            // pastikan tombol MENU TITIK 4 menyala sebagai indikator
+            // pastikan tombol MENU menyala sebagai indikator
             if(this.closest('.more-menu-content')) {
                 btnMenuToggle.classList.add("menu-tertekan");
             } else {
-                // Jika dari menu utama, matikan titik 4
                 btnMenuToggle.classList.remove("menu-tertekan");
             }
 

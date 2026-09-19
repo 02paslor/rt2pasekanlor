@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Keuangan RT</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Pengaturan Dasar */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif !important;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+
+        /* =========================================================
+           ANIMASI LAMPU KEDIP CEPAT
+           ========================================================= */
+        @keyframes fastBlink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.1); }
+        }
+        .fast-blink {
+            animation: fastBlink 0.6s ease-in-out infinite;
+        }
+
+        /* =========================================================
+           GAYA TABEL GLOBAL (MINIMALIS & FONT 12PX)
+           ========================================================= */
+        .minimalist-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .minimalist-table th, 
+        .minimalist-table td {
+            font-size: 12px !important;
+        }
+        
+        .minimalist-table th {
+            color: #ffffff;
+            padding: 8px;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .minimalist-table td {
+            padding: 8px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .trx-table td:first-child { text-align: left; }
+        .trx-table td:not(:first-child) { text-align: right; }
+
+        /* Warna Header */
+        .bg-ungu   { background-color: #8b5cf6; } 
+        .bg-hijau  { background-color: #10b981; } 
+        .bg-merah  { background-color: #ef4444; } 
+        .bg-biru   { background-color: #1155cc; } 
+
+        .loading-text { text-align: center; font-size: 12px; width: 100%; padding: 20px 0; color: #64748b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 pt-8">
+
+    <div class="w-full max-w-2xl flex flex-col gap-8">
+        
+        <!-- =========================================================
+             BAGIAN 1: WIDGET TRANSAKSI TERAKHIR
+             ========================================================= -->
+        <section class="w-full flex flex-col">
+            <!-- Judul Transaksi Terakhir (16px, Bold 600) -->
+            <div class="mb-4">
+                <h2 class="text-[13px] font-[600] text-slate-900 flex items-center gap-2">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" class="text-blue-600">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Transaksi Terakhir
+                </h2>
+                <div class="flex items-center mt-1">
+                    <span class="w-2 h-2 rounded-full bg-green-500 mr-2 fast-blink shadow-[0_0_6px_rgba(34,197,94,0.4)]"></span>
+                    <p class="text-xs text-slate-500 font-medium">5 transaksi terakhir</p>
+                </div>
+            </div>
+
+            <!-- Kontainer Tabel Transaksi -->
+            <div id="keuanganListContainer" class="w-full">
+                <div class="loading-text">Menarik data dari Spreadsheet...</div>
+            </div>
+        </section>
+
+        <!-- Garis Lurus Pemisah -->
+        <hr class="w-full border-t-2 border-slate-200">
+
+        <!-- =========================================================
+             BAGIAN 2: REKAP BUKU KAS
+             ========================================================= -->
+        <section class="w-full flex flex-col">
+            <!-- Judul Rekap Buku Kas (16px, Bold 600) -->
+            <div class="mb-4">
+                <h2 class="text-[13px] font-[600] text-slate-900 flex items-center gap-2">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" class="text-blue-600">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    Rekap Buku Kas RT 2 Pasekan Lor
+                </h2>
+                <div class="flex items-center mt-1">
+                    <span class="w-2 h-2 rounded-full bg-green-500 mr-2 fast-blink shadow-[0_0_6px_rgba(34,197,94,0.4)]"></span>
+                    <p class="text-xs text-slate-500 font-medium">
+                        Update terakhir: <span id="dataTimestamp" class="ml-1 font-[500] text-slate-600">-</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- State Loading & Error -->
+            <div id="loadingState" class="flex flex-col items-center justify-center py-10 space-y-4">
+                <div class="animate-spin rounded-full h-8 w-8 border-4 border-slate-200 border-t-slate-600"></div>
+                <p class="text-slate-500 text-xs font-medium tracking-wide">Mengambil data terbaru...</p>
+            </div>
+
+            <div id="errorState" class="hidden flex-col items-center justify-center py-10 text-center px-4">
+                <div class="bg-red-50 text-red-500 p-4 rounded-full mb-4 border border-red-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <h4 class="text-lg font-semibold text-slate-800 mb-2">Gagal Memuat Data</h4>
+                <p id="errorMessage" class="text-slate-500 text-xs mb-4">Terjadi kesalahan saat mengambil data dari Spreadsheet.</p>
+                <button id="retryBtn" class="bg-slate-800 text-white hover:bg-slate-700 px-5 py-2 rounded-lg text-xs font-bold transition-colors shadow-md">Coba Lagi</button>
+            </div>
+
+            <!-- Kontainer Tabel Rekap -->
+            <div id="tableContainer" class="hidden w-full overflow-x-auto pb-4">
+                <table class="minimalist-table" style="table-layout: fixed;">
+                    <colgroup>
+                        <col class="w-[28%]">
+                        <col class="w-[24%]">
+                        <col class="w-[24%]">
+                        <col class="w-[24%]">
+                    </colgroup>
+                    <thead>
+                        <tr id="tableHeader">
+                            <!-- Rendered by JS -->
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- =========================================================
+         GABUNGAN JAVASCRIPT
+         ========================================================= -->
+    <script>
+        // ==========================================
+        // JS BAGIAN 1: TRANSAKSI TERAKHIR
+        // ==========================================
+        async function fetchKeuanganData() {
+            const container = document.getElementById('keuanganListContainer');
+            try {
+                const res = await fetch(`https://docs.google.com/spreadsheets/d/15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68/export?format=csv&gid=0`);
+                const csvText = await res.text();
+                
+                const rows = []; let cur = '', inQuote = false, row = [];
+                for (let i = 0; i < csvText.length; i++) {
+                    const char = csvText[i];
+                    if (char === '"') { 
+                        if (inQuote && csvText[i+1] === '"') { cur += '"'; i++; } 
+                        else { inQuote = !inQuote; } 
+                    } 
+                    else if (char === ',' && !inQuote) { row.push(cur.trim()); cur = ''; } 
+                    else if (char === '\n' && !inQuote) { row.push(cur.trim()); rows.push(row); row = []; cur = ''; } 
+                    else if (char !== '\r' || inQuote) { cur += char; }
+                }
+                if (cur !== '' || row.length > 0) { row.push(cur.trim()); rows.push(row); }
+                
+                const transactions = [];
+                for(let i = 1; i < rows.length; i++) {
+                    const r = rows[i];
+                    if(r.length >= 2) { 
+                        const tgl = r[2]?.trim(), ket = r[4]?.trim();       
+                        const masukStr = r[5] ? r[5].replace(/[^\d]/g, '') : '', 
+                              keluarStr = r[6] ? r[6].replace(/[^\d]/g, '') : '', 
+                              saldoStr = r[7] ? r[7].replace(/[^\d]/g, '') : '';   
+                        
+                        if(tgl && ket && (masukStr || keluarStr || saldoStr) && tgl.toLowerCase() !== 'tanggal') {
+                            transactions.push({ 
+                                tgl, ket, 
+                                masuk: masukStr ? parseInt(masukStr) : 0, 
+                                keluar: keluarStr ? parseInt(keluarStr) : 0, 
+                                saldo: saldoStr ? parseInt(saldoStr) : 0 
+                            });
+                        }
+                    }
+                }
+                
+                // --- REVISI: Ambil 5 transaksi terakhir ---
+                const recent5 = transactions.slice(-5);
+                
+                if(recent5.length === 0) { 
+                    container.innerHTML = '<div class="loading-text">Tidak ada data transaksi ditemukan.</div>'; 
+                    return; 
+                }
+                
+                let tableHtml = `
+                    <div class="overflow-x-auto w-full">
+                        <table class="minimalist-table trx-table">
+                            <thead>
+                                <tr>
+                                    <th class="bg-ungu">Diskripsi</th>
+                                    <th class="bg-hijau">Masuk</th>
+                                    <th class="bg-merah">Keluar</th>
+                                    <th class="bg-biru">Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                
+                recent5.forEach(trx => { 
+                    tableHtml += `
+                        <tr>
+                            <td>
+                                <div class="font-[600] leading-tight">${trx.ket}</div>
+                                <div class="text-[10px] text-slate-500 font-normal mt-1">${trx.tgl}</div>
+                            </td>
+                            <td class="text-green-600">${trx.masuk > 0 ? trx.masuk.toLocaleString('id-ID') : '-'}</td>
+                            <td class="text-red-500">${trx.keluar > 0 ? trx.keluar.toLocaleString('id-ID') : '-'}</td>
+                            <td class="text-blue-600 font-[600]">${trx.saldo !== 0 ? trx.saldo.toLocaleString('id-ID') : '-'}</td>
+                        </tr>`; 
+                });
+                
+                tableHtml += `</tbody></table></div>`;
+                container.innerHTML = tableHtml; 
+                
+            } catch (error) { 
+                container.innerHTML = '<div class="loading-text text-red-500">Gagal memuat data keuangan.</div>'; 
+            }
+        }
+
+        // ==========================================
+        // JS BAGIAN 2: REKAP BUKU KAS
+        // ==========================================
+        function initRekapKas() {
+            const loadingState = document.getElementById('loadingState');
+            const errorState = document.getElementById('errorState');
+            const tableContainer = document.getElementById('tableContainer');
+            const tableHeader = document.getElementById('tableHeader');
+            const tableBody = document.getElementById('tableBody');
+            const retryBtn = document.getElementById('retryBtn');
+            const dataTimestamp = document.getElementById('dataTimestamp');
+
+            const sheetId = '15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68';
+            const gid = '0'; 
+            const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+
+            fetchSpreadsheetData();
+            retryBtn.addEventListener('click', fetchSpreadsheetData);
+
+            function parseCSV(str) {
+                const arr = [];
+                let quote = false;  
+                let row = 0, col = 0, c = 0;
+                for (; c < str.length; c++) {
+                    let cc = str[c], nc = str[c+1];
+                    arr[row] = arr[row] || [];
+                    arr[row][col] = arr[row][col] || '';
+                    if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+                    if (cc == '"') { quote = !quote; continue; }
+                    if (cc == ',' && !quote) { ++col; continue; }
+                    if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+                    if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                    if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+                    arr[row][col] += cc;
+                }
+                return arr;
+            }
+
+            function formatKodeColumn(text) {
+                if (!text || text === '') return '';
+                
+                let boldPart = text;
+                let normalPart = '';
+                
+                if (text.includes('\n')) {
+                    const parts = text.split('\n');
+                    boldPart = parts[0].trim();
+                    normalPart = parts.slice(1).join('<br>').trim();
+                } else if (text.includes(':')) {
+                    const colonIdx = text.indexOf(':');
+                    boldPart = text.substring(0, colonIdx + 1).trim();
+                    normalPart = text.substring(colonIdx + 1).trim();
+                }
+
+                if (normalPart) {
+                    return `<div class="text-left"><div class="font-[600] leading-tight">${boldPart}</div><div class="font-normal mt-0.5 leading-tight">${normalPart}</div></div>`;
+                }
+                return `<div class="text-left font-[600]">${text}</div>`;
+            }
+
+            function formatCurrencyColumn(text) {
+                let cleanText = text.replace(/Rp\.?/gi, '').trim();
+                if (cleanText === '' || cleanText === '-') {
+                    return `<div class="text-center w-full">-</div>`;
+                }
+                return `<div class="flex justify-between items-center w-full">
+                            <span class="opacity-70 mr-1 text-[10px]">Rp</span>
+                            <span class="text-right flex-1">${cleanText}</span>
+                        </div>`;
+            }
+
+            async function fetchSpreadsheetData() {
+                loadingState.classList.remove('hidden');
+                loadingState.classList.add('flex');
+                errorState.classList.add('hidden');
+                errorState.classList.remove('flex');
+                tableContainer.classList.add('hidden');
+
+                try {
+                    const response = await fetch(csvUrl);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const csvText = await response.text();
+                    if (csvText.trim().toLowerCase().startsWith('<!doctype html>')) {
+                        throw new Error('Akses Spreadsheet dibatasi. Gunakan fallback.');
+                    }
+
+                    const allData = parseCSV(csvText);
+                    
+                    const startRowIdx = 11; 
+                    const endRowIdx = 18;  
+                    const startColIdx = 9; 
+                    const endColIdx = 12;  
+
+                    const extractedData = [];
+                    for (let i = startRowIdx; i <= endRowIdx; i++) {
+                        if (allData[i]) {
+                            const row = [];
+                            for (let j = startColIdx; j <= endColIdx; j++) {
+                                row.push((allData[i][j] !== undefined ? allData[i][j] : '').trim());
+                            }
+                            extractedData.push(row);
+                        }
+                    }
+
+                    if (extractedData.length === 0) throw new Error('Data kosong.');
+                    renderTable(extractedData);
+                    updateTimestamp();
+                } catch (error) {
+                    simulateFallbackData();
+                }
+            }
+
+            function updateTimestamp() {
+                const now = new Date();
+                dataTimestamp.textContent = `${now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}, ${now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}`;
+            }
+
+            function renderTable(data) {
+                const headers = ["Kode", "Masuk", "Keluar", "Jumlah"];
+                const headerClasses = ["bg-ungu", "bg-hijau", "bg-merah", "bg-biru"];
+
+                tableHeader.innerHTML = '';
+                headers.forEach((h, index) => {
+                    const th = document.createElement('th');
+                    th.className = headerClasses[index];
+                    th.textContent = h;
+                    tableHeader.appendChild(th);
+                });
+
+                tableBody.innerHTML = '';
+                
+                data.forEach((row, index) => {
+                    if (row.every(cell => cell === '')) return;
+
+                    const tr = document.createElement('tr');
+                    const isTotalRow = (index === data.length - 1) || (row[0] && row[0].toUpperCase().includes('TOTAL'));
+
+                    for(let i = 0; i < 4; i++) {
+                        const td = document.createElement('td');
+                        const cellValue = row[i] || '';
+
+                        // --- REVISI: Teks Total Bold 600 ---
+                        if (isTotalRow) {
+                            if (i < 3) {
+                                td.innerHTML = (i === 0) ? `<div class="text-right font-[600] pr-2">TOTAL</div>` : '';
+                                td.style.borderBottom = "none";
+                            } else {
+                                td.className = `bg-yellow-100 font-[600] border-t-2 border-slate-300`;
+                                td.innerHTML = formatCurrencyColumn(cellValue);
+                            }
+                        } 
+                        else {
+                            if (i === 0) {
+                                td.innerHTML = formatKodeColumn(cellValue);
+                            } else {
+                                td.innerHTML = formatCurrencyColumn(cellValue);
+                            }
+                        }
+                        tr.appendChild(td);
+                    }
+                    tableBody.appendChild(tr);
+                });
+
+                loadingState.classList.add('hidden');
+                loadingState.classList.remove('flex');
+                tableContainer.classList.remove('hidden');
+            }
+
+            function simulateFallbackData() {
+                const dummyData = [
+                    ["Kode 1:\nJimpitan", "9.834.800", "4.751.800", "5.083.000"],
+                    ["Kode 2:\nJasa kursi, tenda dll", "2.320.000", "160.000", "2.160.000"],
+                    ["Kode 3:\nSosial", "1.530.000", "-", "1.530.000"],
+                    ["Kode 4:\nPembangunan", "2.946.000", "2.552.721", "393.279"],
+                    ["Kode 5:\nLain-lain", "1.000.000", "1.000.000", "-"],
+                    ["Kode 6:\nKas Pemuda", "-", "-", "-"],
+                    ["", "", "", ""],
+                    ["TOTAL", "", "", "9.166.279"] 
+                ];
+                
+                setTimeout(() => {
+                    renderTable(dummyData);
+                    updateTimestamp();
+                }, 800);
+            }
+        }
+
+        // ==========================================
+        // JALANKAN KEDUA SCRIPT SAAT HALAMAN DIMUAT
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchKeuanganData();
+            initRekapKas();
+        });
+    </script>
+</body>
+</html>

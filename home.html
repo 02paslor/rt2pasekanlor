@@ -181,21 +181,32 @@
         .himbauan-text { color: #1155CC; font-size: 13px; font-weight: 600; line-height: 1.4; text-transform: none; min-height: 48px; display: flex; align-items: center; justify-content: center; text-align: center;}
         
         /* ================== FOOTER STYLING ================== */
-        .main-footer { width: 100%; margin: 1px auto 180px auto; padding: 40px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
-        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 2px;}
+.main-footer { width: 100%; margin: 50px auto 60px auto; padding: 40px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
+        .footer-line { color: #ffffff; line-height: 1.4; margin-bottom: 2px;}
         .f-bold { font-size: 11px; font-weight: 600; }
         .f-reg { font-size: 10px; font-weight: 400; }
+        .footer-line { 
+            color: #ffffff; 
+            line-height: 1.4; 
+            margin-bottom: 2px; 
+            text-shadow: 
+                2px 2px 4px #033896, 
+                -2px -2px 4px #033896, 
+                2px -2px 4px #033896, 
+                -2px 2px 4px #033896,
+                0px 5px 15px #033896; 
+        }
 
         #footerFixedGunung {
             position: absolute;
-            bottom: 8px; 
+            bottom: 30px; 
             left: 0; right: 0; margin: 0 auto;
             z-index: 0; width: 100%; max-width: 480px; pointer-events: none;
         }
 
         #footerSlideImg {
             position: absolute;
-            bottom: 55px; 
+            bottom: 10px; 
             left: 0; right: 0; margin: 0 auto;
             z-index: 1; width: 100%; max-width: 480px; pointer-events: none;
         }
@@ -493,8 +504,9 @@
         </div>
 
         <!-- Teks Copyright Footer -->
+        <!-- Teks Copyright Footer -->
         <footer class="main-footer">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXV9uai9NYOwne0RP0jKBb-ajPaFvOe91SnfYesBL2_mLHLQQ8KKXcATfn40usjlzQKzi00XIdu8DY1KrUGfcL0Z_PJVV3pZfqL4GjoFHSD47o4rGuz7h6OYWfRzHTr1gTA4zOpBJgdwx9y6SN5O_0w4YByoLioorYi6upHwl19Sb-um44FJbc3zUEArs/s1600/Thumb%20-%20Abu%2060.png" alt="Logo RT 2 Paslor" style="width: 190px; height: auto; margin: 0 auto 12px auto; display: block; opacity: 0.9;">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXV9uai9NYOwne0RP0jKBb-ajPaFvOe91SnfYesBL2_mLHLQQ8KKXcATfn40usjlzQKzi00XIdu8DY1KrUGfcL0Z_PJVV3pZfqL4GjoFHSD47o4rGuz7h6OYWfRzHTr1gTA4zOpBJgdwx9y6SN5O_0w4YByoLioorYi6upHwl19Sb-um44FJbc3zUEArs/s1600/Thumb%20-%20Abu%2060.png" alt="Logo RT 2 Paslor" style="width: 190px; height: auto; margin: 0 auto 12px auto; display: block; filter: brightness(0) invert(1) drop-shadow(2px 2px 2px #033896) drop-shadow(-2px -2px 2px #033896) drop-shadow(0px 5px 15px #033896);">
             <div class="footer-line f-bold">Copyright © 2026</div>
             <div class="footer-line f-bold">Aplikasi Warga RT 2-RW 3, Pasekan Lor</div>
             <div class="footer-line f-reg">Dikerjakan mandiri oleh Warga</div>
@@ -520,16 +532,22 @@
       const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
 
     // ==========================================
-    // FUNGSI MANAJEMEN SESI UNTUK MENAMPILKAN NAMA
+    // FUNGSI MANAJEMEN SESI UNTUK MENAMPILKAN NAMA (TELAH DIPERBARUI)
     // ==========================================
     
     function checkLoginState() {
+        // Mengambil data status login dan nama dari penyimpanan browser
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
         const userName = localStorage.getItem('userName');
+        
+        // Mencari elemen teks sapaan di dalam Kotak Saldo
         const welcomeText = document.getElementById('liveWeather');
-
-        if(localStorage.getItem('isLoggedIn') === 'true') {
-            welcomeText.innerText = "Sugeng Rawuh, " + (userName || 'Warga');
-        } else {
+        
+        if (isLoggedIn === 'true' && welcomeText) {
+            // Jika sudah login, ubah teks menjadi nama warga
+            welcomeText.innerText = "Sugeng Rawuh, " + userName;
+        } else if (welcomeText) {
+            // Jika belum login atau baru saja logout, kembalikan ke teks asli
             welcomeText.innerText = "Selamat Datang Warga RT 2-RW 3, Pasekan Lor";
         }
     }

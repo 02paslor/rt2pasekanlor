@@ -13,8 +13,8 @@
     <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1600/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Struktur Pengurus RT 2 - RW 3, Pasekan Lor. Warga Kreatif, Mandiri & Berbudaya.">
-    <title>Struktur Pengurus - Warga RT 2 Paslor</title>
+    <meta name="description" content="Struktur Pengurus RT 2/RW 3, Pasekan Lor">
+    <title>Pengurus | Warga RT 2 Pasekan Lor</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,48 +28,17 @@
         *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
-        body { background-color: #FFFFFF; min-height: 100vh; display: flex; justify-content: center; }
+        body { background-color: transparent; min-height: 100vh; display: flex; justify-content: center; }
 
         .app-wrapper {
             width: 100%; max-width: 480px;
             background-color: transparent; 
-            background-image: linear-gradient(to bottom, #0083E0 0.5%, #FFFFFF 10%, #F0FAFF 20%);
+            background-image: none;
             background-attachment: auto; background-size: cover; background-repeat: no-repeat;
             min-height: 3vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15); padding-bottom: 0; overflow-x: clip;
             display: flex; flex-direction: column; z-index: 1;
         }
-
-        /* ================== HEADER STICKY & FAST SMOOTH ================== */
-        .app-header-wrapper { 
-            position: sticky; top: 0; width: 100%; max-width: 480px; 
-            margin: 0 auto; padding: 12px 16px 6px 16px; z-index: 1000; 
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .app-header-wrapper.header-morphed {
-            padding: 0 !important;
-            max-width: 100% !important;
-        }
-        .header-box { 
-            background-color: rgba(0, 52, 143, 0.9);
-            border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
-            padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .app-header-wrapper.header-morphed .header-box {
-            border-radius: 0 !important; border-left: none !important; border-right: none !important; border-top: none !important;
-            background-color: rgba(0, 52, 143, 0.95) !important;
-            backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            padding: 10px 16px !important; width: 100% !important;
-        }
-
-        .header-left-area { display: flex; align-items: center; gap: 10px; }
-        .header-logo-img { width: 72px; height: auto;}
-        .header-text-area { display: flex; flex-direction: column; line-height: 1.5; }
-        .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 700;}
-        .slogan-text-2 { color: #ffffff; font-size: 9px; font-weight: 500;}
 
         /* Area Login / Profil Warga */
         .login-btn-wrapper { 
@@ -91,8 +60,6 @@
         .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
         .logout-btn svg { width: 12px; height: 12px; }
         .logout-btn:active { transform: scale(0.9); }
-
-        .main-content-board { background-color: transparent; padding-top: 5px; position: relative; z-index: 10; display: flex; flex-direction: column; min-height: calc(100vh - 100px); } 
 
         /* ================== MODAL ANIMASI & OVERLAY ================== */
         .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 75px 16px 20px 16px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
@@ -120,7 +87,7 @@
         /* ================== FOOTER GLOBAL ================== */
         .main-footer { 
             width: 85%; 
-            margin: 40px auto 100px auto; 
+            margin: 40px auto 50px auto; 
             padding-top: 16px; 
             text-align: center; 
             border-top: 1.5px solid #cbd5e1; 
@@ -132,38 +99,27 @@
         .f-bold { font-size: 11px; font-weight: 500; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
-        /* ================== FIXED BOTTOM NAVIGATION ================== */
-        .bottom-nav-bar {
-            position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto; width: 100%; max-width: 480px; height: 65px;
-            background: #ffffff; display: flex; align-items: center; justify-content: space-between; z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-        }
-        .b-nav-item {
-            display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #1155CC; font-size: 10px; font-weight: 600; width: 20%; height: 100%; cursor: pointer; transition: background 0.2s, color 0.2s; text-transform: uppercase; background-color: transparent;
-        }
-        .b-nav-item svg { width: 24px; height: 24px; margin-bottom: 4px; stroke: #1155CC; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s; }
-        .b-nav-item:hover { background-color: #EDEDED !important; color: #E06500 !important; }
-        .b-nav-item:hover svg { stroke: #E06500 !important; }
-        .b-nav-item.menu-tertekan { background-color: #EDEDED !important; color: #E06500 !important; pointer-events: none; cursor: default; }
-        .b-nav-item.menu-tertekan svg { stroke: #E06500 !important; }
-
-        /* More Menu Transparan */
-        .more-menu-overlay { position: fixed; bottom: 65px; left: 0; right: 0; margin: 0 auto; width: 100%; max-width: 480px; height: calc(100vh - 65px); background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1999; display: flex; align-items: flex-end; visibility: hidden; opacity: 0; transition: all 0.1s ease; }
-        .more-menu-overlay.active { visibility: visible; opacity: 1; }
-        .more-menu-content { width: 100%; background: #ffffff; padding: 20px 16px 28px 16px; border-radius: 24px 24px 0 0; box-shadow: 0 -10px 25px rgba(0,0,0,0.1); transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
-        .more-menu-overlay.active .more-menu-content { transform: translateY(0); }
-        .modal-menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #1155CC; font-size: 10px; font-weight: 600; cursor: pointer; padding: 12px 4px; text-transform: uppercase; border-radius: 14px; transition: background 0.2s; }
-        .nav-item svg { width: 26px; height: 26px; margin-bottom: 8px; stroke: #1155CC; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-        .nav-item:hover { background: #f1f5f9; color: #E06500; }
-        .nav-item:hover svg { stroke: #E06500; }
-        .nav-item.menu-tertekan { background: #f1f5f9; color: #E06500; pointer-events: none; opacity: 0.7; }
-        .nav-item.menu-tertekan svg { stroke: #E06500; }
-        
         svg { display: inline-block; vertical-align: middle; }
 
         /* ======================================================================
            CSS KHUSUS HALAMAN PENGURUS
            ====================================================================== */
+           
+        /* 
+           KODE UNTUK GESER NAIK / TURUN KONTEN PENGURUS:
+           - margin-top: mengatur seberapa jauh konten dari batas atas.
+           - Ubah "margin-top: 15px" (naik) atau "margin-top: 40px" (geser turun).
+        */   
+        .main-content-board { 
+            background-color: transparent; 
+            margin-top: 70px; /* <--- UBAH ANGKA INI UNTUK GESER TURUN / NAIK */
+            position: relative; 
+            z-index: 10; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: calc(100vh - 100px); 
+        }    
+           
         /* Title Card Pengurus */
         .title-card-panel { 
             background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
@@ -287,40 +243,6 @@
 <body>
 
 <div class="app-wrapper">
-
-    <!-- HEADER STICKY -->
-    <div class="app-header-wrapper" id="appHeaderWrapper">
-        <header class="header-box" id="mainHeader">
-            <div class="header-left-area">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-img">
-                <div class="header-text-area">
-                    <span class="slogan-text-1">RT 2 Online</span>
-                    <span class="slogan-text-2">Aplikasi Warga Mandiri</span>
-                </div>
-            </div>
-            
-            <!-- TOMBOL LOGIN / PROFIL WARGA -->
-            <div id="openLoginModalBtn" class="login-btn-wrapper">
-                <svg id="loginIconSvg" class="login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </div>
-
-            <!-- TAMPIL SAAT SUDAH LOGIN -->
-            <div id="loggedInMenu" class="logged-in-menu">
-                <a href="data-warga" title="Update Profil Warga" style="display: flex; align-items: center; gap: 6px; text-decoration: none;">
-                    <span id="userShortName" class="user-short-name"></span>
-                    <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.4); display: block; box-shadow: 0 2px 6px rgba(0,0,0,0.1); flex-shrink: 0;">
-                        <img id="userAvatarImg" src="" alt="Profil" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
-                </a>
-                <button onclick="logoutWarga()" class="logout-btn" title="Keluar">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                </button>
-            </div>
-        </header>
-    </div>
 
     <!-- MAIN CONTENT BOARD -->
     <div class="main-content-board">
@@ -476,58 +398,8 @@
 
     <!-- FOOTER TETAP -->
     <footer class="main-footer">
-        <div class="footer-line f-bold">Copyright © 2026. Aplikasi Warga RT 2-RW 3, Pasekan Lor</div>
-        <div class="footer-line f-reg">Dikerjakan mandiri oleh Warga RT 2 Paslor -AdW-</div>
+        <div class="footer-line f-bold">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
     </footer>
-
-    <!-- FIXED BOTTOM NAVIGATION -->
-    <nav class="bottom-nav-bar">
-        <a href="https://rt2pasekanlor.id/" class="b-nav-item btn-home">
-            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>Home</span>
-        </a>
-        <a href="inventaris" class="b-nav-item btn-inventaris">
-            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-            <span>Inventaris</span>
-        </a>
-        <div class="b-nav-item btn-menu" onclick="toggleMoreMenu()">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-            <span>MENU</span>
-        </div>
-        <a href="tatatertib" class="b-nav-item btn-tatatertib">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            <span>Tata Tertib</span>
-        </a>
-        <a href="ronda" class="b-nav-item btn-ronda">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Ronda</span>
-        </a>
-    </nav>
-
-    <!-- MODAL MENU LAINNYA -->
-    <div class="more-menu-overlay" id="moreMenuModal" onclick="closeMoreMenuOutside(event)">
-        <div class="more-menu-content" onclick="event.stopPropagation()">
-            <div style="width: 40px; height: 5px; background: #cbd5e1; border-radius: 10px; margin: 0 auto 20px auto;"></div>
-            <div class="modal-menu-grid">
-                <a href="data-warga" class="nav-item btn-warga">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                    <span>Warga</span>
-                </a>
-                <a href="lapak-warga" class="nav-item btn-lapak">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                    <span>Lapak</span>
-                </a>
-                <a href="pengurus" class="nav-item btn-pengurus">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>Pengurus</span>         
-                </a>
-                <a href="galeri" class="nav-item btn-galeri">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    <span>Galeri</span>
-                </a>
-            </div>
-        </div>
-    </div>
 
 </div> 
 
@@ -540,32 +412,35 @@
     const btnMenuToggle = document.querySelector('.btn-menu');
     
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 15) {
-            topBar.classList.add('header-morphed');
-        } else {
-            topBar.classList.remove('header-morphed');
+        if (topBar) {
+            if (window.scrollY > 15) {
+                topBar.classList.add('header-morphed');
+            } else {
+                topBar.classList.remove('header-morphed');
+            }
         }
         
-        if (menuFastModal.classList.contains('active')) {
+        if (menuFastModal && menuFastModal.classList.contains('active')) {
             closeMoreMenu();
         }
     }, { passive: true });
 
     function toggleMoreMenu() {
-        if (moreMenuModal.classList.contains('active')) closeMoreMenu();
+        if (!menuFastModal) return;
+        if (menuFastModal.classList.contains('active')) closeMoreMenu();
         else openMoreMenu();
     }
     function openMoreMenu() { 
-        moreMenuModal.classList.add('active'); 
-        btnMenuToggle.classList.add('menu-tertekan');
+        if (menuFastModal) menuFastModal.classList.add('active'); 
+        if (btnMenuToggle) btnMenuToggle.classList.add('menu-tertekan');
         document.body.style.overflow = 'hidden'; 
     }
     function closeMoreMenu() { 
-        moreMenuModal.classList.remove('active'); 
-        if (halamanAktifSaatIni !== 'menu') btnMenuToggle.classList.remove('menu-tertekan');
+        if (menuFastModal) menuFastModal.classList.remove('active'); 
+        if (halamanAktifSaatIni !== 'menu' && btnMenuToggle) btnMenuToggle.classList.remove('menu-tertekan');
         document.body.style.overflow = 'auto'; 
     }
-    function closeMoreMenuOutside(e) { if(e.target === moreMenuModal) closeMoreMenu(); }
+    function closeMoreMenuOutside(e) { if(e.target === menuFastModal) closeMoreMenu(); }
 
     // DI SINI SET HALAMAN AKTIF KE 'pengurus'
     const halamanAktifSaatIni = 'pengurus'; 
@@ -602,24 +477,32 @@
 
         if(isLoggedIn === 'true') {
             const shortName = userName ? userName.trim().split(' ')[0] : 'Warga';
-            btnOpenLogin.style.display = 'none';
-            loggedInMenu.style.display = 'flex';
-            avatarImg.src = userFoto;
-            if(userShortNameEl) userShortNameEl.innerText = shortName;
+            if (btnOpenLogin) btnOpenLogin.style.display = 'none';
+            if (loggedInMenu) loggedInMenu.style.display = 'flex';
+            if (avatarImg) avatarImg.src = userFoto;
+            if (userShortNameEl) userShortNameEl.innerText = shortName;
         } else {
-            btnOpenLogin.style.display = 'flex';
-            loggedInMenu.style.display = 'none';
-            if(userShortNameEl) userShortNameEl.innerText = '';
+            if (btnOpenLogin) btnOpenLogin.style.display = 'flex';
+            if (loggedInMenu) loggedInMenu.style.display = 'none';
+            if (userShortNameEl) userShortNameEl.innerText = '';
         }
     }
 
     document.addEventListener("DOMContentLoaded", () => checkLoginState());
-    document.getElementById('openLoginModalBtn').addEventListener('click', () => {
-        loginErrorMsg.style.display = 'none'; loginModalOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; 
-    });
+    
+    const openLoginBtn = document.getElementById('openLoginModalBtn');
+    if (openLoginBtn) {
+        openLoginBtn.addEventListener('click', () => {
+            if(loginErrorMsg) loginErrorMsg.style.display = 'none'; 
+            if(loginModalOverlay) loginModalOverlay.classList.add('active'); 
+            document.body.style.overflow = 'hidden'; 
+        });
+    }
 
     function closeLoginModal() { 
-        loginModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; loginForm.reset(); 
+        if(loginModalOverlay) loginModalOverlay.classList.remove('active'); 
+        document.body.style.overflow = 'auto'; 
+        if(loginForm) loginForm.reset(); 
     }
     function closeLoginModalOutside(e) { if (e.target === loginModalOverlay) closeLoginModal(); }
     
@@ -633,49 +516,62 @@
         const pwInput = document.getElementById('loginPassword');
         const eyeOpen = document.getElementById('eyeIconPwOpen');
         const eyeClosed = document.getElementById('eyeIconPwClosed');
-        if (pwInput.type === "password") { pwInput.type = "text"; eyeOpen.style.display = "block"; eyeClosed.style.display = "none"; } 
-        else { pwInput.type = "password"; eyeOpen.style.display = "none"; eyeClosed.style.display = "block"; }
+        
+        if (!pwInput) return;
+        
+        if (pwInput.type === "password") { pwInput.type = "text"; if(eyeOpen) eyeOpen.style.display = "block"; if(eyeClosed) eyeClosed.style.display = "none"; } 
+        else { pwInput.type = "password"; if(eyeOpen) eyeOpen.style.display = "none"; if(eyeClosed) eyeClosed.style.display = "block"; }
     }
 
     const loginBtnSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const userInput = document.getElementById('loginUsername').value.trim();
-        const passInput = document.getElementById('loginPassword').value.trim();
-        loginErrorMsg.style.display = 'none';
-        btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Memeriksa...</span>";
-        btnSubmitLogin.disabled = true;
-
-        if (GAS_API_URL === "") {
-            setTimeout(() => { closeLoginModal(); checkLoginState(); btnSubmitLogin.disabled = false; }, 800);
-            return;
-        }
-
-        fetch(GAS_API_URL, {
-            method: 'POST', body: JSON.stringify({ token: "RT2_PASEKAN_AMAN_2026", action: "login", payload: { Id_Rumah: userInput, Password: passInput } })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === "success") {
-                localStorage.setItem('isLoggedIn', 'true'); localStorage.setItem('userRole', data.role);
-                if (data.role === "admin") {
-                    localStorage.setItem('userName', 'Admin Pengurus'); localStorage.setItem('userFoto', 'https://ui-avatars.com/api/?name=Admin&background=10b981&color=fff');
-                } else {
-                    let warga = data.data && data.data.length > 0 ? data.data[0] : {}; 
-                    localStorage.setItem('userName', warga.Nama || userInput); localStorage.setItem('userFoto', warga.Foto_Profil || ''); 
-                }
-                closeLoginModal(); checkLoginState(); 
-            } else {
-                loginErrorMsg.innerText = data.message || "ID Rumah atau Password salah!";
-                loginErrorMsg.style.color = '#ef4444'; loginErrorMsg.style.display = 'block';
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userInput = document.getElementById('loginUsername').value.trim();
+            const passInput = document.getElementById('loginPassword').value.trim();
+            if(loginErrorMsg) loginErrorMsg.style.display = 'none';
+            if(btnSubmitLogin) {
+                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Memeriksa...</span>";
+                btnSubmitLogin.disabled = true;
             }
-        }).catch(err => {
-            loginErrorMsg.innerText = "Koneksi terputus. Silakan coba lagi.";
-            loginErrorMsg.style.color = '#ef4444'; loginErrorMsg.style.display = 'block';
-        }).finally(() => {
-            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>"; btnSubmitLogin.disabled = false;
+
+            if (GAS_API_URL === "") {
+                setTimeout(() => { closeLoginModal(); checkLoginState(); if(btnSubmitLogin) btnSubmitLogin.disabled = false; }, 800);
+                return;
+            }
+
+            fetch(GAS_API_URL, {
+                method: 'POST', body: JSON.stringify({ token: "RT2_PASEKAN_AMAN_2026", action: "login", payload: { Id_Rumah: userInput, Password: passInput } })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    localStorage.setItem('isLoggedIn', 'true'); localStorage.setItem('userRole', data.role);
+                    if (data.role === "admin") {
+                        localStorage.setItem('userName', 'Admin Pengurus'); localStorage.setItem('userFoto', 'https://ui-avatars.com/api/?name=Admin&background=10b981&color=fff');
+                    } else {
+                        let warga = data.data && data.data.length > 0 ? data.data[0] : {}; 
+                        localStorage.setItem('userName', warga.Nama || userInput); localStorage.setItem('userFoto', warga.Foto_Profil || ''); 
+                    }
+                    closeLoginModal(); checkLoginState(); 
+                } else {
+                    if(loginErrorMsg) {
+                        loginErrorMsg.innerText = data.message || "ID Rumah atau Password salah!";
+                        loginErrorMsg.style.color = '#ef4444'; loginErrorMsg.style.display = 'block';
+                    }
+                }
+            }).catch(err => {
+                if(loginErrorMsg) {
+                    loginErrorMsg.innerText = "Koneksi terputus. Silakan coba lagi.";
+                    loginErrorMsg.style.color = '#ef4444'; loginErrorMsg.style.display = 'block';
+                }
+            }).finally(() => {
+                if(btnSubmitLogin) {
+                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>"; btnSubmitLogin.disabled = false;
+                }
+            });
         });
-    });
+    }
 </script>
 </body>
 </html>

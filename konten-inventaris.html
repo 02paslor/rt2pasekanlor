@@ -55,7 +55,7 @@
             --text-gray: #64748b;  
         }
 
-        /* REVISI: Area Sticky Header HANYA untuk pencarian dan filter */
+        /* REVISI: Area Sticky Header */
         .sticky-top-section {
             position: sticky;
             top: 0;
@@ -63,9 +63,11 @@
             background: rgba(255, 255, 255, 0.85); /* Glassmorphism transparan */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding-top: 15px; /* Padding dikurangi karena judul sudah dikeluarkan */
-            padding-bottom: 15px;
+            /* REVISI: Padding kiri-kanan (16px) ditambahkan agar konten tidak mepet pinggir */
+            padding: 15px 16px;
             border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+            margin: 0 16px;
+            border-radius: 0 0 12px 12px;
         }
 
         /* Title Card Inventaris */
@@ -73,7 +75,7 @@
             background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
             color: #ffffff; padding: 10px 16px; display: flex; justify-content: space-between; 
             align-items: center; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            z-index: 2; position: relative; margin: 25px 16px 20px 16px; height: 55px; /* Margin atas ditambah agar maskot tidak terpotong */
+            z-index: 2; position: relative; margin: 25px 16px 20px 16px; height: 55px; 
         }
         .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; z-index: 3; position: relative; }
         .title-card-left svg { stroke-width: 2.5; }
@@ -94,7 +96,7 @@
         
         .list-item { 
             display: flex; flex-direction: row; align-items: stretch; background: #ffffff; border-radius: 16px; 
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15); /* REVISI: Shadow dipertegas */
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
             border: 1px solid #e2e8f0; color: #1e293b; cursor: pointer; transition: all 0.2s ease; height: 85px; min-height: 85px; 
             opacity: 0; transform: translateY(15px); animation: slideUpList 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; overflow: hidden; position: relative;
         }
@@ -132,7 +134,7 @@
         .list-container.grid-view .card-kondisi-wrapper { width: 100%; justify-content: space-between; padding: 4px 6px; }
 
         /* Modal Detail Inventaris */
-        .inv-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.65); display: none; justify-content: center; align-items: center; z-index: 10000; padding: 20px; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(6px); }
+        .inv-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.1); display: none; justify-content: center; align-items: center; z-index: 10000; padding: 20px; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
         .inv-modal-overlay.show { opacity: 1; display: flex; }
         .inv-modal-card { width: 100%; max-width: 420px; background: #ffffff; border-radius: 20px; overflow: hidden; transform: scale(0.95); opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); max-height: 85vh; display: flex; flex-direction: column; margin: auto; box-shadow: 0 15px 50px rgba(0,0,0,0.2); }
         .inv-modal-overlay.show .inv-modal-card { transform: scale(1); opacity: 1; }
@@ -164,7 +166,8 @@
         .inv-btn-icon-close-modal { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .inv-btn-icon-close-modal:active { background: #fee2e2; transform: scale(0.9); }
 
-        .inv-lightbox-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 20000; padding: 10px; opacity: 0; transition: opacity 0.3s ease; }
+        /* Lightbox Gambar */
+        .inv-lightbox-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.1); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 20000; padding: 10px; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
         .inv-lightbox-overlay.show { opacity: 1; display: flex; }
         .inv-lightbox-overlay img { max-width: 100%; max-height: 75vh; border-radius: 12px; transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1); }
         .inv-lightbox-overlay.show img { transform: scale(1); }
@@ -199,7 +202,7 @@
         <div class="sticky-top-section">
             
             <!-- Area Info & Pencarian -->
-            <div class="header-info-row" style="display: flex; justify-content: space-between; align-items: flex-end; padding: 0 16px;">
+            <div class="header-info-row" style="display: flex; justify-content: space-between; align-items: flex-end; padding: 0;">
                 <div class="info-left" style="font-size: 13px; font-weight: 500; color: #5C5C5C; line-height: 1.4;">
                     <div style="font-size: 10px; color: #5C5C5C; margin-bottom: 4px;">Pencatatan awal: 7 September 2025</div>
                     Total Barang:<br><strong id="invTotalItems" style="color: #1155CC; font-weight: 500; font-size: 18px;">0 Macam</strong>

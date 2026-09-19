@@ -42,7 +42,6 @@
             position: absolute; top: 0; left: 0; right: 0; width: 100%; max-width: 480px; 
             margin: 0 auto; padding: 12px 16px 6px 16px; z-index: 1000; 
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            /* REVISI: Header mati 100% terhadap interaksi touch agar Iframe di bawahnya bisa diklik! */
             pointer-events: none !important; 
         }
         .app-header-wrapper.header-morphed {
@@ -52,9 +51,10 @@
         }
         .header-box { 
             background-color: rgba(0, 52, 143, 0.9);
-            border-radius: 20px; display: flex; align-items: center; justify-content: center; /* Teks otomatis rata tengah */
+            border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
             padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: auto; /* Mengembalikan fungsi klik hanya untuk kotak header */
         }
         .app-header-wrapper.header-morphed .header-box {
             border-radius: 0 !important; border-left: none !important; border-right: none !important; border-top: none !important;
@@ -65,15 +65,35 @@
             padding: 10px 16px !important; width: 100% !important;
         }
 
-        .header-left-area { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; }
+        .header-left-area { display: flex; align-items: center; justify-content: flex-start; gap: 10px; flex: 1; overflow: hidden;}
         .header-logo-img { width: 72px; height: auto; flex-shrink: 0;}
-        .header-text-area { display: flex; flex-direction: column; line-height: 1.5; }
-        .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 700; white-space: nowrap; }
-        .slogan-text-2 { color: #ffffff; font-size: 9px; font-weight: 500; white-space: nowrap; }
+        .header-text-area { display: flex; flex-direction: column; line-height: 1.5; overflow: hidden;}
+        .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+        .slogan-text-2 { color: #ffffff; font-size: 9px; font-weight: 500; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+
+        /* Area Login / Profil Warga (Dikembalikan ke Atas) */
+        .login-btn-wrapper { 
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            background-color: rgba(255, 255, 255, 0.2); width: 30px; height: 30px; border-radius: 50%; 
+            color: #ffffff; text-decoration: none; cursor: pointer; transition: all 0.2s; 
+            border: 1.5px solid rgba(255,255,255,0.4); overflow: hidden;
+        }
+        .login-btn-wrapper:active { background-color: rgba(255, 255, 255, 0.4); transform: scale(0.95); }
+        .login-icon { width: 16px; height: 16px; }
+
+        .logged-in-menu { 
+            display: none; align-items: center; gap: 8px; flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 4px 6px 4px 12px; border-radius: 15px;
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .user-short-name { color: #5FDFF5; font-size: 10px; font-weight: 500; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; text-align: right; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .logout-btn svg { width: 12px; height: 12px; }
+        .logout-btn:active { transform: scale(0.9); }
 
         /* ================== KONTEN UTAMA IFRAME FULL LAYAR ================== */
         .content-container {
-            /* REVISI: Konten ukuran full membentang tanpa hambatan margin */
             flex: 1; width: 100%; position: relative; margin-bottom: 0; background: transparent; height: 100vh;
         }
         #dynamic-content {
@@ -82,7 +102,7 @@
         
         /* Loading Overlay Style */
         #iframeLoadingOverlay {
-            display: flex; /* Aktif sejak pertama kali diload */
+            display: flex;
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
@@ -139,26 +159,29 @@
         .btn-reg.active { background: #1155cc; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: auto; }
         .btn-reg:active { transform: scale(0.96); }
 
-        /* ================== FIXED BOTTOM NAVIGATION (REVISI: FULL, SERAGAM, KONTRAS) ================== */
+        /* ================== FIXED BOTTOM NAVIGATION (8x1 FOOTER) ================== */
         .bottom-nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
             width: 100%; max-width: 480px; height: 65px;
-            background: #00348F; /* Warna sangat kontras (Dark Blue Solid) */
+            background: #00348F; 
             display: flex; align-items: center; justify-content: space-between;
             z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+            /* Memastikan semua muat di 1 baris */
+            overflow-x: auto; white-space: nowrap;
         }
 
         .b-nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 600;
-            width: 20%; height: 100%; cursor: pointer; 
+            text-decoration: none; color: rgba(255,255,255,0.7); font-size: 8px; font-weight: 600;
+            width: 12.5%; /* 100% dibagi 8 tombol */
+            height: 100%; cursor: pointer; 
             transition: all 0.3s ease;
             text-transform: capitalize; background-color: transparent; border: none; outline: none;
-            position: relative;
+            position: relative; flex-shrink: 0;
         }
 
         .b-nav-item svg { 
-            width: 24px; height: 24px; margin-bottom: 4px; stroke: rgba(255,255,255,0.7); stroke-width: 2; fill: none;
+            width: 20px; height: 20px; margin-bottom: 4px; stroke: rgba(255,255,255,0.7); stroke-width: 2; fill: none;
             stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease;
         }
 
@@ -172,47 +195,9 @@
             transform: translateY(-2px);
         }
 
-        /* Cegah klik berulang, KECUALI tombol toggle MENU agar bisa ditutup kembali */
-        .b-nav-item.menu-tertekan:not(.btn-menu) { 
+        /* Cegah klik berulang */
+        .b-nav-item.menu-tertekan { 
             pointer-events: none; 
-        }
-
-        /* ================== MODAL MENU ACCORDION (TERSEMBUNYI) ================== */
-        .more-menu-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; margin: 0 auto;
-            width: 100%; max-width: 480px; height: 100vh;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            z-index: 1999; display: flex; align-items: flex-end;
-            visibility: hidden; opacity: 0; transition: all 0.3s ease;
-        }
-        .more-menu-overlay.active { visibility: visible; opacity: 1; }
-        
-        .more-menu-content {
-            width: 100%; background: #ffffff; 
-            padding: 24px 16px 85px 16px; /* Padding bawah ekstra untuk menu footer 65px */
-            border-radius: 32px 32px 0 0;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.2); 
-            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .more-menu-overlay.active .more-menu-content { transform: translateY(0); }
-
-        .modal-menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        
-        .nav-item {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: #475569; font-size: 11px; font-weight: 600;
-            cursor: pointer; padding: 12px 4px; text-transform: capitalize;
-            border-radius: 20px; transition: all 0.3s ease; background: #F8FAFC;
-            border: 1px solid transparent;
-        }
-        .nav-item svg { width: 26px; height: 26px; margin-bottom: 10px; stroke: #1155CC; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease; }
-
-        .nav-item:hover, .nav-item.menu-tertekan { 
-            background: #F0FAFF; color: #1155CC; border-color: rgba(17,85,204,0.2);
-            pointer-events: none; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(17,85,204,0.1);
-        }
-        .nav-item:hover svg, .nav-item.menu-tertekan svg { 
-            stroke: #1155CC; transform: scale(1.1);
         }
 
     </style>
@@ -230,6 +215,27 @@
                     <span class="slogan-text-1">RT 2 Online</span>
                     <span class="slogan-text-2">Informasi Warga RT2, Pasekan Lor</span>
                 </div>
+            </div>
+
+            <!-- TOMBOL LOGIN (BELUM LOGIN) -->
+            <div id="openLoginModalBtn" class="login-btn-wrapper">
+                <svg id="loginIconSvg" class="login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+
+            <!-- TAMPIL SAAT SUDAH LOGIN & BERFUNGSI SEBAGAI TOMBOL EDIT PROFIL -->
+            <div id="loggedInMenu" class="logged-in-menu">
+                <a href="#" id="btnProfileEditModal" title="Update Profil Warga" style="display: flex; align-items: center; gap: 6px; text-decoration: none;">
+                    <span id="userShortName" class="user-short-name"></span>
+                    <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.4); display: block; box-shadow: 0 2px 6px rgba(0,0,0,0.1); flex-shrink: 0;">
+                        <img id="userAvatarImg" src="" alt="Profil" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                </a>
+                <button onclick="logoutWarga()" class="logout-btn" title="Keluar">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                </button>
             </div>
         </header>
     </div>
@@ -258,7 +264,7 @@
                         </div>
                         <button type="submit" id="btnSubmitLogin" class="btn-monggo">
                             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                            <span>Masuk</span>
+                            <span>Selamat<br>Datang</span>
                         </button>
                     </div>
                     <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
@@ -283,15 +289,14 @@
         </div>
     </div>
 
-    <!-- ================= AREA MODAL KONFIRMASI PROFIL & LOGOUT ================= -->
+    <!-- ================= AREA MODAL KONFIRMASI PROFIL ================= -->
     <div class="slide-up-overlay" id="profileEditConfirmModal" onclick="closeProfileConfirmOutside(event)">
         <div class="slide-up-content" onclick="event.stopPropagation()" style="background: #fff; max-width: 320px; margin: auto; padding: 24px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-            <h3 style="color: #1155cc; margin-bottom: 10px; font-weight: 700;">Profil Akun Warga</h3>
-            <p style="font-size: 13.5px; color: #475569; margin-bottom: 24px;">Silakan pilih tindakan untuk akun Anda.</p>
-            <div style="display: flex; gap: 8px; justify-content: center;">
-                <button onclick="closeProfileConfirmModal()" style="padding: 10px 10px; border-radius: 12px; border: 1px solid #cbd5e1; background: #f1f5f9; color: #475569; font-weight: 600; cursor: pointer; flex: 1; font-size: 13px;">Batal</button>
-                <button onclick="logoutWarga(); closeProfileConfirmModal();" style="padding: 10px 10px; border-radius: 12px; border: none; background: #ef4444; color: #fff; font-weight: 600; cursor: pointer; flex: 1; font-size: 13px;">Keluar</button>
-                <button onclick="window.open('https://rt2pasekanlor.id/data-warga', '_blank'); closeProfileConfirmModal();" style="padding: 10px 10px; border-radius: 12px; border: none; background: #1155cc; color: #fff; font-weight: 600; cursor: pointer; flex: 1.2; font-size: 13px;">Edit Profil</button>
+            <h3 style="color: #1155cc; margin-bottom: 10px; font-weight: 700;">Profil Warga</h3>
+            <p style="font-size: 13.5px; color: #475569; margin-bottom: 24px;">Anda sudah login, apakah ingin mengubah data?</p>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button onclick="closeProfileConfirmModal()" style="padding: 10px 20px; border-radius: 12px; border: 1px solid #cbd5e1; background: #f1f5f9; color: #475569; font-weight: 600; cursor: pointer; flex: 1;">Batal</button>
+                <button onclick="window.open('https://rt2pasekanlor.id/data-warga', '_blank'); closeProfileConfirmModal();" style="padding: 10px 20px; border-radius: 12px; border: none; background: #1155cc; color: #fff; font-weight: 600; cursor: pointer; flex: 1;">Edit Profil</button>
             </div>
         </div>
     </div>
@@ -309,103 +314,43 @@
 
 </div> 
 
-<!-- ================= AREA FOOTER (MENU UTAMA KONTRAST & SERAGAM) ================= -->
+<!-- ================= AREA FOOTER (8x1) ================= -->
 <nav class="bottom-nav-bar">
     <a href="#" class="b-nav-item footer-menu-btn menu-tertekan" data-url="https://rt2pasekanlor.id/home">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         <span>Home</span>
     </a>
-    
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/inventaris">
         <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
         <span>Inventaris</span>
     </a>
-    
-    <!-- TOMBOL MENU TOGGLE ACCORDION -->
-    <div class="b-nav-item btn-menu" onclick="toggleMoreMenu(event)">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-        <span>Menu</span>
-    </div>
-    
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/tatatertib">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         <span>Aturan</span>
     </a>
-    
-    <!-- REVISI: Tombol Login Akun digeser ke bawah agar mudah di sentuh -->
-    <div id="btnAkunFooter" class="b-nav-item">
-        <div id="footerAvatarWrapper" style="display:none; width: 24px; height: 24px; border-radius: 50%; overflow: hidden; margin-bottom: 4px; border: 1.5px solid #fff;">
-             <img id="footerAvatarImg" src="" style="width:100%; height:100%; object-fit:cover;">
-        </div>
-        <svg id="footerLoginIcon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        <span id="textAkunFooter">Akun</span>
-    </div>
+    <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/ronda">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Ronda</span>
+    </a>
+    <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/keuangan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+        <span>Keuangan</span>
+    </a>
+    <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/lapak-warga">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <span>Lapak</span>
+    </a>
+    <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/pengurus">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Pengurus</span>        
+    </a>
+    <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/galeri">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Galeri</span>
+    </a>
 </nav>
 
-<!-- ================= AREA MODAL SUB-MENU ACCORDION ================= -->
-<div class="more-menu-overlay" id="moreMenuModal" onclick="closeMoreMenuOutside(event)">
-    <div class="more-menu-content" onclick="event.stopPropagation()">
-        <div class="modal-menu-grid">
-            <a href="#" class="nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/keuangan">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                <span>Keuangan</span>
-            </a>
-            
-            <a href="#" class="nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/lapak-warga">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                <span>Lapak</span>
-            </a>
-            
-            <a href="#" class="nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/pengurus">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span>Pengurus</span>        
-            </a>
-            
-            <a href="#" class="nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/galeri">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                <span>Galeri</span>
-            </a>
-        </div>
-    </div>
-</div>
-
 <script>
-    // ==========================================
-    // LOGIKA MODAL SUB-MENU
-    // ==========================================
-    const moreMenuModal = document.getElementById('moreMenuModal');
-    const btnMenuToggle = document.querySelector('.btn-menu');
-    
-    function toggleMoreMenu(event) {
-        event.stopPropagation();
-        if (moreMenuModal.classList.contains('active')) {
-            closeMoreMenu();
-        } else {
-            openMoreMenu();
-        }
-    }
-
-    function openMoreMenu() { 
-        moreMenuModal.classList.add('active'); 
-        btnMenuToggle.classList.add('menu-tertekan');
-        document.body.style.overflow = 'hidden'; 
-    }
-
-    function closeMoreMenu() { 
-        moreMenuModal.classList.remove('active'); 
-        
-        // Pengecekan cerdas: Jangan matikan warna di tombol MENU
-        // JIKA user sebenarnya sedang berada di dalam halaman sub-menu
-        const hasActiveSubMenu = document.querySelector('.more-menu-content .menu-tertekan');
-        if(!hasActiveSubMenu) {
-            btnMenuToggle.classList.remove('menu-tertekan');
-        }
-
-        document.body.style.overflow = 'auto'; 
-    }
-
-    function closeMoreMenuOutside(e) { if(e.target === moreMenuModal) closeMoreMenu(); }
-
     // ==========================================
     // LOGIKA IFRAME & MENU TERPILIH
     // ==========================================
@@ -416,35 +361,22 @@
     // Mencegah overlay loading nyangkut jika iframe gagal memuat sempurna
     dynamicContent.addEventListener('load', () => {
         iframeOverlay.style.display = 'none';
-        initIframeScroll(); // Pasang ulang sensor scroll setelah halaman berubah
+        initIframeScroll(); 
     });
 
     footerBtns.forEach(btn => {
         btn.addEventListener("click", function(e) {
             e.preventDefault();
             
-            // 1. Matikan tanda pasif/aktif di SEMUA menu link
+            // Matikan tanda aktif di SEMUA menu link
             footerBtns.forEach(m => m.classList.remove("menu-tertekan"));
-            // 2. Beri tanda aktif pada tombol yang diklik
+            // Beri tanda aktif pada tombol yang diklik
             this.classList.add("menu-tertekan");
 
-            // 3. Jika tombol berasal dari dalam Sub-Menu (kotak putih),
-            // pastikan tombol MENU menyala sebagai indikator
-            if(this.closest('.more-menu-content')) {
-                btnMenuToggle.classList.add("menu-tertekan");
-            } else {
-                btnMenuToggle.classList.remove("menu-tertekan");
-            }
-
-            // 4. Tutup otomatis modal submenu jika sedang terbuka
-            if(moreMenuModal.classList.contains('active')) {
-                closeMoreMenu();
-            }
-
-            // 5. Update iframe & Munculkan Overlay Loading
+            // Update iframe & Munculkan Overlay Loading
             const targetUrl = this.getAttribute("data-url");
             if(targetUrl) {
-                iframeOverlay.style.display = 'flex'; // Munculkan Logo Zoom in
+                iframeOverlay.style.display = 'flex'; 
                 dynamicContent.src = targetUrl;
             }
         });
@@ -466,38 +398,31 @@
         const userFotoRaw = localStorage.getItem('userFoto');
         const userFoto = (userFotoRaw && userFotoRaw.trim() !== '') ? userFotoRaw : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(userName || 'Warga') + '&background=1155CC&color=fff&bold=true';
         
-        const footerAvatarWrapper = document.getElementById('footerAvatarWrapper');
-        const footerLoginIcon = document.getElementById('footerLoginIcon');
-        const footerAvatarImg = document.getElementById('footerAvatarImg');
-        const textAkunFooter = document.getElementById('textAkunFooter');
+        const btnOpenLogin = document.getElementById('openLoginModalBtn');
+        const loggedInMenu = document.getElementById('loggedInMenu');
+        const avatarImg = document.getElementById('userAvatarImg');
+        const userShortNameEl = document.getElementById('userShortName');
 
         if(isLoggedIn === 'true') {
             const shortName = userName ? userName.trim().split(' ')[0] : 'Warga';
-            if(footerLoginIcon) footerLoginIcon.style.display = 'none';
-            if(footerAvatarWrapper) footerAvatarWrapper.style.display = 'block';
-            if(footerAvatarImg) footerAvatarImg.src = userFoto;
-            if(textAkunFooter) textAkunFooter.innerText = shortName;
+            if(btnOpenLogin) btnOpenLogin.style.display = 'none';
+            if(loggedInMenu) loggedInMenu.style.display = 'flex';
+            if(avatarImg) avatarImg.src = userFoto;
+            if(userShortNameEl) userShortNameEl.innerText = shortName;
         } else {
-            if(footerLoginIcon) footerLoginIcon.style.display = 'block';
-            if(footerAvatarWrapper) footerAvatarWrapper.style.display = 'none';
-            if(textAkunFooter) textAkunFooter.innerText = 'Akun';
+            if(btnOpenLogin) btnOpenLogin.style.display = 'flex';
+            if(loggedInMenu) loggedInMenu.style.display = 'none';
+            if(userShortNameEl) userShortNameEl.innerText = '';
         }
     }
 
     document.addEventListener("DOMContentLoaded", () => checkLoginState());
 
-    // REVISI: Logika trigger dari Menu Footer (Tombol Akun Paling Kanan)
-    const btnAkunFooter = document.getElementById('btnAkunFooter');
-    if(btnAkunFooter) {
-        btnAkunFooter.addEventListener('click', (e) => {
-            e.preventDefault();
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            if(isLoggedIn === 'true') {
-                document.getElementById('profileEditConfirmModal').classList.add('active');
-            } else {
-                loginErrorMsg.style.display = 'none';
-                loginModalOverlay.classList.add('active'); 
-            }
+    const btnOpenLogin = document.getElementById('openLoginModalBtn');
+    if(btnOpenLogin) {
+        btnOpenLogin.addEventListener('click', () => {
+            loginErrorMsg.style.display = 'none';
+            loginModalOverlay.classList.add('active'); 
             document.body.style.overflow = 'hidden'; 
         });
     }
@@ -518,7 +443,6 @@
         localStorage.removeItem('userFoto');
         checkLoginState();
         
-        // Refresh konten iframe saat logout
         if(dynamicContent && dynamicContent.contentWindow) {
             dynamicContent.contentWindow.location.reload();
         }
@@ -562,13 +486,13 @@
                     localStorage.setItem('userFoto', ''); 
                     closeLoginModal(); checkLoginState();
                     if(dynamicContent && dynamicContent.contentWindow) dynamicContent.contentWindow.location.reload();
-                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>"; btnSubmitLogin.disabled = false;
+                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Selamat<br>Datang</span>"; btnSubmitLogin.disabled = false;
                 }, 800);
             } else {
                 loginErrorMsg.innerText = "Username atau Password salah!";
                 loginErrorMsg.style.color = '#ef4444';
                 loginErrorMsg.style.display = 'block';
-                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>"; btnSubmitLogin.disabled = false;
+                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Selamat<br>Datang</span>"; btnSubmitLogin.disabled = false;
             }
             return;
         }
@@ -594,7 +518,6 @@
                 }
                 closeLoginModal(); checkLoginState(); 
                 
-                // Refresh iframe
                 if(dynamicContent && dynamicContent.contentWindow) dynamicContent.contentWindow.location.reload();
             } else {
                 loginErrorMsg.innerText = data.message || "ID Rumah atau Password salah!";
@@ -607,10 +530,19 @@
             loginErrorMsg.style.display = 'block';
             console.error("Fetch Error:", err);
         }).finally(() => {
-            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Monggo<br>Mlebet</span>";
+            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Selamat<br>Datang</span>";
             btnSubmitLogin.disabled = false;
         });
     });
+
+    const btnProfileEditModal = document.getElementById('btnProfileEditModal');
+    if(btnProfileEditModal) {
+        btnProfileEditModal.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('profileEditConfirmModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
 
     function closeProfileConfirmModal() {
         document.getElementById('profileEditConfirmModal').classList.remove('active');

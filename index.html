@@ -37,32 +37,17 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; z-index: 1;
         }
 
-        /* ================== HEADER STICKY (SOLUSI BUG LAYAR SENTUH) ================== */
+        /* ================== HEADER (IKUT SCROLL DENGAN KONTEN) ================== */
         .app-header-wrapper { 
             position: absolute; top: 0; left: 0; right: 0; width: 100%; max-width: 480px; 
             margin: 0 auto; padding: 12px 16px 6px 16px; z-index: 1000; 
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: none !important; 
-        }
-        .app-header-wrapper.header-morphed {
-            padding: 0 !important;
-            max-width: 100% !important;
-            position: fixed;
         }
         .header-box { 
             background-color: rgba(0, 52, 143, 0.9);
             border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
             padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: auto; /* Mengembalikan fungsi klik hanya untuk kotak header */
-        }
-        .app-header-wrapper.header-morphed .header-box {
-            border-radius: 0 !important; border-left: none !important; border-right: none !important; border-top: none !important;
-            background-color: rgba(0, 52, 143, 0.95) !important;
-            backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            padding: 10px 16px !important; width: 100% !important;
         }
 
         .header-left-area { display: flex; align-items: center; justify-content: flex-start; gap: 10px; flex: 1; overflow: hidden;}
@@ -118,8 +103,14 @@
             animation: pulseZoom 1.2s infinite ease-in-out;
         }
 
-        /* ================== MODAL ANIMASI & OVERLAY ================== */
-        .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 75px 16px 20px 16px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
+        /* ================== MODAL ANIMASI & OVERLAY (JARAK ATAS 90PX) ================== */
+        .slide-up-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; 
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center; 
+            padding: 90px 16px 20px 16px; /* REVISI: Geser ke atas, jarak 90px dari atas */
+            visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; 
+        }
         .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
         .slide-up-content { background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
         .slide-up-overlay.active .slide-up-content { transform: scale(1); opacity: 1; }
@@ -130,7 +121,7 @@
         .login-close-btn:active { transform: scale(0.9); }
         .login-title-text { font-size: 16px; font-weight: 700; color: #1155cc; margin-bottom: 24px; letter-spacing: 0.5px; }
         
-        .login-form-grid { display: grid; grid-template-columns: 1fr 100px; gap: 12px; margin-bottom: 16px; }
+        .login-form-grid { display: grid; grid-template-columns: 1fr 100px; gap: 12px; margin-bottom: 12px; }
         .login-inputs { display: flex; flex-direction: column; gap: 12px; }
         .input-icon-group { position: relative; display: flex; align-items: center; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 0 14px; height: 50px; transition: border-color 0.2s; }
         .input-icon-group:focus-within { border-color: #1155cc; box-shadow: 0 0 0 3px rgba(17,85,204,0.1); }
@@ -206,7 +197,7 @@
 
 <div class="app-wrapper">
 
-    <!-- ================= AREA HEADER ================= -->
+    <!-- ================= AREA HEADER (IKUT SCROLL) ================= -->
     <div class="app-header-wrapper" id="appHeaderWrapper">
         <header class="header-box" id="mainHeader">
             <div class="header-left-area">
@@ -262,11 +253,19 @@
                                 </button>
                             </div>
                         </div>
+                        <!-- REVISI: Tombol Selamat Datang diganti menjadi Masuk -->
                         <button type="submit" id="btnSubmitLogin" class="btn-monggo">
                             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                            <span>Selamat<br>Datang</span>
+                            <span>Masuk</span>
                         </button>
                     </div>
+
+                    <!-- REVISI: Radio button Simpan Password -->
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px; padding-left: 2px;">
+                        <input type="radio" id="rememberPasswordRadio" name="simpan_pass" style="width: 16px; height: 16px; accent-color: #1155cc; cursor: pointer;">
+                        <label for="rememberPasswordRadio" style="font-size: 12px; color: #475569; cursor: pointer; user-select: none; font-weight: 500;">Simpan Password</label>
+                    </div>
+
                     <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
                 </form>
                 <div class="reg-box">
@@ -357,6 +356,7 @@
     const footerBtns = document.querySelectorAll('.footer-menu-btn');
     const dynamicContent = document.getElementById('dynamic-content');
     const iframeOverlay = document.getElementById('iframeLoadingOverlay');
+    const appHeaderWrapper = document.getElementById('appHeaderWrapper');
 
     // Mencegah overlay loading nyangkut jika iframe gagal memuat sempurna
     dynamicContent.addEventListener('load', () => {
@@ -378,6 +378,8 @@
             if(targetUrl) {
                 iframeOverlay.style.display = 'flex'; 
                 dynamicContent.src = targetUrl;
+                // Kembalikan posisi header ke awal saat berpindah halaman
+                appHeaderWrapper.style.transform = 'translateY(0px)';
             }
         });
     });
@@ -390,7 +392,21 @@
     const loginForm = document.getElementById('loginForm');
     const loginErrorMsg = document.getElementById('loginErrorMessage');
     const btnSubmitLogin = document.getElementById('btnSubmitLogin');
+    const rememberPasswordRadio = document.getElementById('rememberPasswordRadio');
     const loginBtnSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
+
+    // Fitur toggle klik untuk radio button Simpan Password
+    if (rememberPasswordRadio) {
+        let wasChecked = false;
+        rememberPasswordRadio.addEventListener('mousedown', function() {
+            wasChecked = this.checked;
+        });
+        rememberPasswordRadio.addEventListener('click', function() {
+            if (wasChecked) {
+                this.checked = false;
+            }
+        });
+    }
 
     function checkLoginState() {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -402,6 +418,15 @@
         const loggedInMenu = document.getElementById('loggedInMenu');
         const avatarImg = document.getElementById('userAvatarImg');
         const userShortNameEl = document.getElementById('userShortName');
+
+        // Memuat password tersimpan jika sebelumnya dicentang
+        const savedUser = localStorage.getItem('savedUsername');
+        const savedPass = localStorage.getItem('savedPassword');
+        if (savedUser && savedPass) {
+            document.getElementById('loginUsername').value = savedUser;
+            document.getElementById('loginPassword').value = savedPass;
+            if (rememberPasswordRadio) rememberPasswordRadio.checked = true;
+        }
 
         if(isLoggedIn === 'true') {
             const shortName = userName ? userName.trim().split(' ')[0] : 'Warga';
@@ -430,9 +455,17 @@
     function closeLoginModal() { 
         loginModalOverlay.classList.remove('active'); 
         document.body.style.overflow = 'auto'; 
-        loginForm.reset();
+        loginForm.reset(); 
         const regToggle = document.getElementById('regToggleCheck');
         if(regToggle) { regToggle.checked = false; toggleRegButton(); }
+        // Pulihkan credential tersimpan jika ada
+        const savedUser = localStorage.getItem('savedUsername');
+        const savedPass = localStorage.getItem('savedPassword');
+        if (savedUser && savedPass) {
+            document.getElementById('loginUsername').value = savedUser;
+            document.getElementById('loginPassword').value = savedPass;
+            if (rememberPasswordRadio) rememberPasswordRadio.checked = true;
+        }
     }
     function closeLoginModalOutside(e) { if (e.target === loginModalOverlay) closeLoginModal(); }
 
@@ -473,6 +506,15 @@
         const userInput = document.getElementById('loginUsername').value.trim();
         const passInput = document.getElementById('loginPassword').value.trim();
         
+        // Simpan / hapus password berdasarkan status radio button
+        if (rememberPasswordRadio && rememberPasswordRadio.checked) {
+            localStorage.setItem('savedUsername', userInput);
+            localStorage.setItem('savedPassword', passInput);
+        } else {
+            localStorage.removeItem('savedUsername');
+            localStorage.removeItem('savedPassword');
+        }
+
         loginErrorMsg.style.display = 'none';
         btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Memeriksa...</span>";
         btnSubmitLogin.disabled = true;
@@ -486,13 +528,13 @@
                     localStorage.setItem('userFoto', ''); 
                     closeLoginModal(); checkLoginState();
                     if(dynamicContent && dynamicContent.contentWindow) dynamicContent.contentWindow.location.reload();
-                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Selamat<br>Datang</span>"; btnSubmitLogin.disabled = false;
+                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>"; btnSubmitLogin.disabled = false;
                 }, 800);
             } else {
                 loginErrorMsg.innerText = "Username atau Password salah!";
                 loginErrorMsg.style.color = '#ef4444';
                 loginErrorMsg.style.display = 'block';
-                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Selamat<br>Datang</span>"; btnSubmitLogin.disabled = false;
+                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>"; btnSubmitLogin.disabled = false;
             }
             return;
         }
@@ -530,7 +572,7 @@
             loginErrorMsg.style.display = 'block';
             console.error("Fetch Error:", err);
         }).finally(() => {
-            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Selamat<br>Datang</span>";
+            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>";
             btnSubmitLogin.disabled = false;
         });
     });
@@ -551,18 +593,13 @@
     function closeProfileConfirmOutside(e) { if(e.target === document.getElementById('profileEditConfirmModal')) closeProfileConfirmModal(); }
 
     // ==========================================
-    // ANIMASI HEADER SCROLL FIXED
+    // LOGIKA HEADER IKUT SCROLL KONTEN
     // ==========================================
-    const appHeaderWrapper = document.getElementById('appHeaderWrapper');
-
     function initIframeScroll() {
         try {
             dynamicContent.contentWindow.addEventListener('scroll', () => {
-                if (dynamicContent.contentWindow.scrollY > 15) {
-                    appHeaderWrapper.classList.add('header-morphed');
-                } else {
-                    appHeaderWrapper.classList.remove('header-morphed');
-                }
+                let scrollY = dynamicContent.contentWindow.scrollY;
+                appHeaderWrapper.style.transform = `translateY(-${scrollY}px)`;
             }, { passive: true });
         } catch (e) {
             console.log("Sensor scroll iframe standby...");

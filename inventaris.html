@@ -37,8 +37,22 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.15); padding-bottom: 0; overflow-x: clip;
             display: flex; flex-direction: column; z-index: 1;
         }
-
-        .main-content-board { background-color: transparent; padding-top: 0; position: relative; z-index: 10; display: flex; flex-direction: column; min-height: 100vh; } 
+        
+        /* 
+           KODE UNTUK GESER NAIK / TURUN KONTEN INVENTARIS:
+           - margin-top: mengatur jarak elemen ini dari sisi paling atas.
+           - Ubah "margin-top: 15px" (naik) atau "margin-top: 50px" (geser turun).
+        */   
+        .main-content-board { 
+            background-color: transparent; 
+            margin-top: 65px; /* <--- UBAH ANGKA INI UNTUK GESER TURUN / NAIK */
+            padding-top: 0; 
+            position: relative; 
+            z-index: 10; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        } 
 
         /* ================== FOOTER (COPYRIGHT SAJA) ================== */
         .main-footer { width: 100%; margin: 20px auto 30px auto; padding: 2px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
@@ -58,12 +72,11 @@
         /* REVISI: Area Sticky Header */
         .sticky-top-section {
             position: sticky;
-            top: 0;
+            top: 65px; /* <--- Sudah diubah menjadi 65px */
             z-index: 100;
-            background: rgba(255, 255, 255, 0.85); /* Glassmorphism transparan */
+            background: #FFEB9E; 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            /* REVISI: Padding kiri-kanan (16px) ditambahkan agar konten tidak mepet pinggir */
             padding: 15px 16px;
             border-bottom: 1px solid rgba(226, 232, 240, 0.7);
             margin: 0 16px;
@@ -253,7 +266,7 @@
 
         <!-- ==================== FOOTER (COPYRIGHT SAJA) ==================== -->
         <footer class="main-footer">
-            <div class="footer-line f-reg">Copyright © 2026. Aplikasi Warga RT 2-RW 3, Pasekan Lor.</div>
+            <div class="footer-line f-reg">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
         </footer>
 
     </div> 

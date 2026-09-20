@@ -20,7 +20,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-
+        /* ======================================================================
+           AREA PENGATURAN TAMPILAN
+           ====================================================================== */
         * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
         *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
 
@@ -35,6 +37,7 @@
             display: flex; flex-direction: column; z-index: 1;
         }
 
+        /* ================== MAIN BOARD & SLIDER ================== */
         .main-content-board { background-color: transparent; padding-top: 70px; position: relative; z-index: 10; display: flex; flex-direction: column; min-height: 100vh; } 
         .hero-slider-wrapper { position: relative; z-index: 2; width: 100%; margin: 5px auto 15px auto; }
         .slider-container { position: relative; padding: 0 !important; }
@@ -43,7 +46,7 @@
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 500; z-index:-1;}
 
-
+        /* ================== KOTAK KAS SALDO ================== */
         .hero-kas-container { padding: 0 16px 16px 16px; width: 100%; z-index: 2; position: relative; } 
         .kas-card.new-kas-design { background: #1155CC; color: #ffffff; border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
         .kas-weather-top { display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 10px; margin-bottom: 12px; width: 100%; z-index: 2; }
@@ -67,9 +70,9 @@
         .kas-action-buttons { display: flex; gap: 10px; margin-top: 14px; z-index: 2; justify-content: center; }
         
         .btn-kas-small { flex: 1; padding: 6px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px;}
-        .btn-kas-trx { background: #3171E0; !important; border: none !important; color: white !important; }
+        .btn-kas-trx { background: #F07100; !important; border: none !important; color: white !important; }
 
-
+        /* ================== MODAL ANIMASI & OVERLAY ================== */
         .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 75px 16px 20px 16px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
         .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
         .slide-up-content { background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
@@ -85,8 +88,9 @@
         .modal-close-btn-absolute { position: absolute; top: 16px; right: 16px; background: #fef2f2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
         .modal-back-btn-absolute { position: absolute; top: 16px; left: 16px; background: #f1f5f9; color: #1155cc; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
 
+        /* ================== KARTU LUAR & WARNA ================== */
         .dashboard-section-card { border-radius: 24px; margin: 0 16px 24px 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); position: relative; z-index: 2; }
-        .card-kegiatan { background: #8AA2BF; } .card-kegiatan .ds-footer { background: #8AA2BF; }
+        .card-kegiatan { background: #51BD6F; } .card-kegiatan .ds-footer { background: #51BD6F; }
         .ds-header { padding: 16px 10px; text-align: center; color: #ffffff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
         .ds-content { background-color: #f1f5f9; padding: 20px 16px; border-radius: 20px; }
         .ds-footer { padding: 16px; display: flex; justify-content: center; align-items: center; }
@@ -94,7 +98,7 @@
         .ds-pill-btn { background-color: #ffffff; color: #383838; border: none; padding: 10px 24px; border-radius: 50px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .ds-pill-btn:active { transform: scale(0.95); }
 
-
+        /* ================== ELEMEN AGENDA ================== */
         .cards-list { display: flex; flex-direction: column; gap: 16px; }
         .info-card { background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; border: 1px solid #D4D4D4; }
         .card-header { padding: 12px 16px; color: #ffffff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
@@ -139,7 +143,7 @@
         .doc-modal-text { background: #F8FAFC; color: #383838; padding: 20px; border-radius: 20px; width: 100%; border: 1px solid #e2e8f0; margin-top: 10px; }
         .loading-text { text-align: center; color: #64748b; padding: 40px; font-size: 14px; width: 100%; text-shadow: none; }
 
-
+        /* ================== ELEMEN BERITA ================== */
         .news-slider-container { width: calc(100% + 32px); margin: 0 -16px; overflow-x: auto; display: flex; gap: 16px; padding: 0 16px 10px 16px; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; box-sizing: border-box; }
         .news-card { flex: 0 0 85%; width: 85%; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; flex-shrink: 0; scroll-snap-align: center; border: 1px solid #e2e8f0; }
         .news-thumb-wrapper { position: relative; width: 100%; height: 180px; background-color: #eaeaea; overflow: hidden; }
@@ -156,7 +160,7 @@
         .article-body-text a strong, .article-body-text a span { pointer-events: auto; cursor: pointer; }
         .article-body-text img { width: 100% !important; height: auto !important; border-radius: 12px; margin: 12px 0; display: block; pointer-events: none; }
 
-
+        /* ================== KOMPONEN BAWAH ================== */
         .btn-darurat-caution { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background-color: #ffcc00; background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0, 0, 0, 0.1) 10px, rgba(0, 0, 0, 0.1) 20px); color: #383838; border: 1px solid #383838; padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; width: auto; max-width: 260px; box-shadow: 4px 4px 0 #7D7D7D; transition: transform 0.1s ease, box-shadow 0.1s ease; margin: 0 auto; white-space: nowrap; }
         .btn-darurat-caution:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #383838; }
 
@@ -185,7 +189,9 @@
         svg { display: inline-block; vertical-align: middle; }
     </style>
     
-
+<!-- ======================================================================
+     START AREA EDIT WIDGET LAPAK WARGA 
+     ====================================================================== -->
     <style>
         #widget-umkm-rt2, #modal-umkm, #zoom-overlay { font-family: 'Poppins', sans-serif; color: #333; box-sizing: border-box; text-align: left; }
         #widget-umkm-rt2 { width: 100%; max-width: 800px; margin: 0 auto; padding: 0; }
@@ -235,13 +241,13 @@
 
 <div class="app-wrapper">
 
-
+    <!-- MAIN CONTENT BOARD -->
     <div class="main-content-board">
 
-
+        <!-- ==================== SLIDER BANNER ==================== -->
         <div class="hero-slider-wrapper">
             <div class="slider-container">
-                <div class="status-msg" id="ps-status-loading">Slider</div>
+                <div class="status-msg" id="ps-status-loading">[Poster]</div>
                 <div class="ps-slider-container" id="ps-slider-track"></div>
             </div>
         </div>
@@ -278,17 +284,17 @@
             </div>
         </div>
 
-
+        <!-- KOTAK KAS BARU -->
 <section class="hero-kas-container" id="kotakKas">
     <div class="kas-card new-kas-design">
-
+        <!-- Header Sambutan / Waktu -->
         <div class="kas-weather-top">
             <div class="welcome-text-container">
                 <span class="static-welcome" id="liveWeather">Selamat Datang Warga RT 2-RW 3, Pasekan Lor</span>
             </div>
         </div>
 
-
+        <!-- Body Utama: Informasi Tanggal/Jam & Saldo -->
         <div class="kas-body-wrapper">
             <div class="kas-left">
                 <div class="calendar-display">
@@ -312,17 +318,17 @@
             </div>
         </div>
         
-
+        <!-- Tombol Aksi Single (Lebih Compact & Center) -->
         <div class="kas-action-buttons">
             <button class="btn-kas-small btn-kas-trx" onclick="openUnivModal('https://rt2pasekanlor.id/rekapbukukas.html')">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                5 transaksi Terakhir & Rekap Buku Kas
+                Transaksi Terakhir & Rekap Buku Kas
             </button>
         </div>
     </div>
 </section>
 
-
+        <!-- SLIDER MODAL SLIDE DOWN PURE IMAGE (CENTER VIEW UTUH) -->
         <div class="slide-down-overlay" id="psModalOverlay" onclick="closePsModalOutside(event)">
             <div class="slide-down-content" onclick="event.stopPropagation()">
                 <button class="modal-close-btn-absolute" id="psCloseModal" aria-label="Tutup" style="background: rgba(255,255,255,0.85); color:#ef4444; border:none; top: -16px; right: -16px;">
@@ -332,6 +338,7 @@
             </div>
         </div>
 
+        <!-- UNIV MODAL TRANSAKSI KAS CENTER CARD -->
         <div class="slide-up-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
             <div class="slide-up-content" onclick="event.stopPropagation()" style="height: 75vh; width: 100%; border-radius: 20px;">
                 <button class="modal-close-btn-absolute" onclick="closeUnivModal()" title="Tutup" style="z-index: 100; background: #fef2f2;">
@@ -343,12 +350,12 @@
             </div>
         </div>
 
-
+        <!-- ==================== BAGIAN AGENDA WARGA ==================== -->
         <div class="dashboard-section-card card-kegiatan ds-agenda">
             <div class="ds-header">KEGIATAN WARGA RT 2</div>
             <div class="ds-content">
                 <div class="cards-list" id="infoCardsContainer">
-                    <div class="loading-text" style="color: #64748b;">Menyinkronkan info agenda...</div>
+                    <div class="loading-text" style="color: #64748b;">[Kegiatan]</div>
                 </div>
             </div>
             <div class="ds-footer" id="footerBtnArsipLain" style="display: none;">
@@ -356,7 +363,7 @@
             </div>
         </div>
 
-
+        <!-- Modal List Arsip -->
         <div class="slide-up-overlay" id="listModal" onclick="closeListModalOutside(event)">
             <div class="slide-up-content" onclick="event.stopPropagation()">
                 <button class="modal-close-btn-absolute" onclick="closeListModal()">
@@ -379,6 +386,7 @@
             </div>
         </div>
 
+        <!-- Lightbox Hasil Kegiatan -->
         <div class="slide-up-overlay" id="docModalOverlay" onclick="closeDocModalOutside(event)">
             <div class="slide-up-content" onclick="event.stopPropagation()">
                 <button class="modal-close-btn-absolute" onclick="closeDocModal()">
@@ -388,13 +396,13 @@
             </div>
         </div>
 
-
+        <!-- ==================== BAGIAN BERITA & INTERMEZO ==================== -->
         <div style="padding: 0 16px 24px 16px; position: relative; z-index: 2;">
             <div style="background: #8AA2BF; color: #ffffff; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; padding: 10px; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                 BERITA & INTERMEZO
             </div>
             <div class="news-slider-container" id="newsCardsContainer" style="padding-bottom: 10px;">
-                <div class="loading-text" style="color: #64748b;">-- Berita & Intermezo --</div>
+                <div class="loading-text" style="color: #64748b;">Berita & Intermezo</div>
             </div>
         </div>
 

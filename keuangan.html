@@ -10,7 +10,7 @@
       gtag('config', 'G-V6G930LME8');
     </script>
     
-    <!-- Tailwind CSS (Ditambahkan untuk modul keuangan) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1600/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
@@ -33,7 +33,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif !important; }
         body { background-color: transparent; min-height: 100vh; display: flex; justify-content: center; font-weight: 400; }
         
-        /* Utility override dari bawaan keuangan */
         b, strong, .font-bold { font-weight: 600 !important; }
         .font-semibold { font-weight: 600 !important; }
         .font-medium { font-weight: 500 !important; }
@@ -41,128 +40,150 @@
         .app-wrapper {
             width: 100%; max-width: 480px;
             background-color: transparent; 
-            background-image: none;
-            background-attachment: auto; background-size: cover; background-repeat: no-repeat;
             min-height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15); padding-bottom: 0; overflow-x: clip;
             display: flex; flex-direction: column; z-index: 1;
         }
 
-        /* Area Login / Profil Warga */
-        .login-btn-wrapper { 
-            display: flex; align-items: center; justify-content: center; 
-            background-color: rgba(255, 255, 255, 0.2); width: 30px; height: 30px; border-radius: 50%; 
-            color: #ffffff; text-decoration: none; cursor: pointer; transition: all 0.2s; 
-            border: 1.5px solid rgba(255,255,255,0.4); overflow: hidden;
-        }
-        .login-btn-wrapper:active { background-color: rgba(255, 255, 255, 0.4); transform: scale(0.95); }
-        .login-icon { width: 16px; height: 16px; }
-
-        .logged-in-menu { 
-            display: none; align-items: center; gap: 8px; 
-            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.25);
-            padding: 4px 6px 4px 12px; border-radius: 15px;
-            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .user-short-name { color: #5FDFF5; font-size: 10px; font-weight: 500; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; text-align: right; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
-        .logout-btn svg { width: 12px; height: 12px; }
-        .logout-btn:active { transform: scale(0.9); }
-
-        .main-content-board { background-color: transparent; padding-top: 5px; position: relative; z-index: 10; display: flex; flex-direction: column; min-height: calc(100vh - 100px); } 
-
-        /* ================== MODAL LOGIN ================== */
-        .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 75px 16px 20px 16px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
-        .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
-        .slide-up-content { background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
-        .slide-up-overlay.active .slide-up-content { transform: scale(1); opacity: 1; }
-        
-        .login-wrapper { background: #f1f5f9; width: 100%; max-width: 400px; margin: 0 auto; border-radius: 28px; padding: 24px; position: relative; font-family: 'Poppins', sans-serif; }
-        .login-close-btn { position: absolute; top: 16px; right: 16px; background: #1155cc; color: #ffffff; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(17,85,204,0.3); transition: transform 0.2s; }
-        .login-close-btn:active { transform: scale(0.9); }
-        .login-title-text { font-size: 26px; font-weight: 800; color: #1155cc; margin-bottom: 24px; letter-spacing: 0.5px; }
-        
-        .login-form-grid { display: grid; grid-template-columns: 1fr 100px; gap: 12px; margin-bottom: 16px; }
-        .login-inputs { display: flex; flex-direction: column; gap: 12px; }
-        .input-icon-group { position: relative; display: flex; align-items: center; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 0 14px; height: 50px; transition: border-color 0.2s; }
-        .input-icon-group:focus-within { border-color: #1155cc; box-shadow: 0 0 0 3px rgba(17,85,204,0.1); }
-        .input-icon-group svg.left-icon { width: 22px; height: 22px; color: #64748b; flex-shrink: 0; margin-right: 8px; }
-        .input-icon-group input { border: none; background: transparent; width: 100%; font-size: 14.5px; color: #333; outline: none; font-weight: 500; }
-        .input-icon-group input::placeholder { color: #94a3b8; font-weight: 400; }
-        .input-icon-group .toggle-pw-btn { background: none; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; margin-left: 8px; }
-        
-        .btn-monggo { background: #1155cc; color: #ffffff; border: none; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: transform 0.2s, background 0.2s; padding: 10px; line-height: 1.2; box-shadow: 0 4px 12px rgba(17,85,204,0.3); }
-        .btn-monggo:active { transform: scale(0.96); }
-        .login-error-msg { color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; display: none; padding: 8px; background: #fef2f2; border-radius: 10px; border: 1px solid #fecaca; margin-bottom: 16px; }
-        
-        .reg-box { border: 2px solid #cbd5e1; border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 10px; background: transparent; }
-        .reg-left { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-        .reg-title { font-size: 13.5px; font-weight: 700; color: #1155cc; letter-spacing: 0.3px; }
-        .reg-toggle-row { display: flex; align-items: center; gap: 10px; }
-        
-        .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #94a3b8; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        input:checked + .slider { background-color: #1155cc; }
-        input:checked + .slider:before { transform: translateX(18px); }
-        
-        .reg-desc { font-size: 11px; color: #475569; line-height: 1.3; font-weight: 500; }
-        .btn-reg { background: #94a3b8; color: #ffffff; border: none; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11.5px; font-weight: 700; cursor: pointer; padding: 10px; text-decoration: none; text-align: center; width: 85px; transition: background 0.2s, transform 0.2s; pointer-events: none; }
-        .btn-reg.active { background: #1155cc; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: auto; }
-        .btn-reg:active { transform: scale(0.96); }
-
-        /* ================== FOOTER ================== */
-        .main-footer { width: 100%; margin: -2px auto 50px auto; padding: 2px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
-        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 2px;}
-        .f-reg { font-size: 10px; font-weight: 400; }
-        
-        /* ======================================================================
-            CSS KHUSUS HALAMAN KEUANGAN
-            ====================================================================== */
-        .content-keuangan-wrapper {
+        .main-content-board { 
+            background-color: transparent; 
             margin-top: 65px; 
-            position: relative;
+            padding-top: 0; 
+            position: relative; 
+            z-index: 10; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        } 
+
+        /* ================== TITLE CARD ORANGE (SAMA DENGAN INVENTARIS) ================== */
+        .title-card-panel { 
+            background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
+            color: #ffffff; padding: 10px 16px; display: flex; justify-content: space-between; 
+            align-items: center; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            z-index: 2; position: relative; margin: 25px 16px 14px 16px; height: 55px; 
         }
-           
-        /* Card Solid (Tidak Transparan) */
-        .bento-box { background: #ffffff; border: 1px solid #e5e7eb; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); }
+        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; z-index: 3; position: relative; }
+        .title-card-left svg { stroke-width: 2.5; }
+        .title-card-right { display: flex; align-items: center; justify-content: flex-end; }
+        .title-card-right img { height: 70px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); position: absolute; right: 10px; bottom: 0; z-index: 0; }
 
+        /* ================== AREA FILTER COMPACT (#9E9E9E) ================== */
+        .filter-top-section {
+            position: relative;
+            background: #9E9E9E; 
+            padding: 8px 12px;
+            margin: 0 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 2;
+        }
 
-        .search-input, .sort-btn { background: #ffffff; border: 1px solid #999999; transition: all 0.2s; color: #1ffffff; }
-        .search-input:focus, .sort-btn:focus { outline: none; border-color: #8B5CF6; box-shadow: 0 0 0 3px rgba(171, 171, 171, 0.3); }
-        .sort-btn:active { transform: scale(0.95); background-color: #999999; }
+        .header-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-input { 
+            background: #ffffff; 
+            color: #1e293b; 
+            border-radius: 8px; 
+            padding: 6px 10px; 
+            border: 1px solid transparent; 
+            font-size: 11px; 
+            font-weight: 500; 
+            outline: none; 
+            transition: all 0.25s ease; 
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); 
+        }
+        .search-input::placeholder { color: #94a3b8; }
+        .search-input:focus { border: 1px solid #FA6800; }
+
+        .select-filter {
+            background: #ffffff; 
+            color: #1e293b; 
+            border-radius: 8px; 
+            padding: 6px 8px; 
+            border: 1px solid transparent; 
+            font-size: 11px; 
+            font-weight: 500; 
+            outline: none; 
+            cursor: pointer;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .select-filter:focus { border: 1px solid #FA6800; }
         
+        .btn-sort-action { 
+            background: #ffffff; 
+            border: 1px solid transparent; 
+            color: #1155CC; 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 14px; 
+            transition: all 0.2s; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+            flex-shrink: 0;
+        }
+        .btn-sort-action:active { transform: scale(0.92); }
 
-        .search-input::placeholder { color: #374151; opacity: 0.8; }
+        /* ================== LIST KONTEN KEUANGAN ================== */
+        .info-dashboard-container { 
+            padding: 12px 16px 20px 16px; 
+            position: relative; 
+            z-index: 2; 
+            flex: 1; 
+        }
 
-        /* Animasi Bulat Kedip-kedip */
-        @keyframes blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
-        .dot-blink { width: 10px; height: 10px; background-color: #4ADE80; border-radius: 50%; animation: blink 1.5s infinite ease-in-out; display: inline-block; }
+        .bento-box { 
+            background: #ffffff; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06); 
+        }
 
-        /* Hover Keterangan Kode (Tooltip) */
-        .kode-container { position: relative; cursor: pointer; display: inline-flex; align-items: center;}
+        .row-item { 
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); 
+            border: 1px solid #e2e8f0; 
+            background-color: #ffffff; 
+            border-radius: 14px; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+        .row-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 18px rgba(17, 85, 204, 0.12); 
+            border-color: #bfdbfe; 
+        }
+
+        .number-circle { 
+            width: 24px; 
+            height: 24px; 
+            background-color: #eff6ff; 
+            color: #1155cc; 
+            border: 1px solid #bfdbfe;
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 11px; 
+            font-weight: 700; 
+            flex-shrink: 0; 
+        }
+
+        .kode-container { position: relative; cursor: pointer; display: inline-flex; align-items: center; }
         .kode-tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(255, 255, 255, 0.98); border: 1px solid #e2e8f0; color: #1f2937; padding: 6px 10px; border-radius: 6px; white-space: nowrap; font-size: 11px; font-weight: 600; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 50; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .kode-container:hover .kode-tooltip { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
-        
-        /* Batas Jelas Card per Transaksi */
-        .row-item { transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #d1d5db; background-color: #ffffff; border-radius: 12px; }
-        .row-item:hover { transform: scale(1.01); z-index: 10; position: relative; box-shadow: 0 6px 16px rgba(0,0,0,0.06); border-color: #8B5CF6; }
 
-        /* Bulatan Angka Diperbesar */
-        .number-circle { width: 24px; height: 24px; background-color: #E5E7EB; color: #374151; border-radius: 20%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
-        
-        /* Sticky Action Bar dihapus sifat sticky-nya agar ikut melakukan scroll ke atas secara normal */
-        .sticky-action-bar {
-            position: relative;
-            z-index: 10;
-            background-color: #CFF1FF;
-            padding: 12px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-
+        /* ================== FOOTER ================== */
+        .main-footer { width: 100%; margin: 20px auto 30px auto; padding: 2px; text-align: center; border-top: none; display: block; position: relative; z-index: 2; }
+        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 50px; }
+        .f-reg { font-size: 10px; font-weight: 400; }
     </style>
 </head>
 <body>
@@ -172,106 +193,55 @@
     <!-- ==================== MAIN CONTENT BOARD ==================== -->
     <div class="main-content-board">
 
-        <!-- ==================== AREA MODAL LOGIN ==================== -->
-        <div class="slide-up-overlay" id="loginModalOverlay" onclick="closeLoginModalOutside(event)">
-            <div class="slide-up-content" onclick="event.stopPropagation()" style="background: transparent; box-shadow: none; align-items: center; padding: 0 16px;">
-                <div class="login-wrapper">
-                    <button class="login-close-btn" onclick="closeLoginModal()" title="Tutup">X</button>
-                    <div class="login-title-text">Masuk Akun</div>
-                    <form id="loginForm" style="margin: 0;">
-                        <div class="login-form-grid">
-                            <div class="login-inputs">
-                                <div class="input-icon-group">
-                                    <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                                    <input type="text" id="loginUsername" placeholder="user" required>
-                                </div>
-                                <div class="input-icon-group">
-                                    <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
-                                    <input type="password" id="loginPassword" placeholder="Password" required>
-                                    <button type="button" class="toggle-pw-btn" onclick="togglePasswordVisibility()">
-                                        <svg id="eyeIconPwOpen" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                                        <svg id="eyeIconPwClosed" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:block;"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <button type="submit" id="btnSubmitLogin" class="btn-monggo">
-                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                                <span>Masuk</span>
-                            </button>
-                        </div>
-                        <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
-                    </form>
-                    <div class="reg-box">
-                        <div class="reg-left">
-                            <div class="reg-title">Pendaftaran Warga Baru</div>
-                            <div class="reg-toggle-row">
-                                <label class="switch">
-                                 <input type="checkbox" id="regToggleCheck" onchange="toggleRegButton()">
-                                 <span class="slider"></span>
-                                </label>
-                                <div class="reg-desc">Setuju, saya akan mengisi dengan benar.</div>
-                            </div>
-                        </div>
-                        <a href="https://rt2pasekanlor.id/data-warga#registrasi" id="btnLanjutReg" class="btn-reg">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                            <span>Registrasi</span>
-                        </a>
-                    </div>
-                </div>
+        <!-- Title Card Keuangan (Nuansa Orange Identik Inventaris) -->
+        <div class="title-card-panel" title="Halaman Keuangan">
+            <div class="title-card-left">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/>
+                    <line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+                <span>Keuangan RT 2</span>
+            </div>
+            <div class="title-card-right">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1CtWf8OQyvJ3e6WU1N2UeLPpvnk_wZ6neZLoX_XldFj_5ApGAuh6wAP2CGolHSvQacRlTBiYUH9ttrGH8YHlJ8ceOaDUTGo2LlXc90EJLNDFhrDZM1V2YU70XDvCBKUMjWYRaJyLnyy5MUEF9VuqlI7IvPYu5velhoG8Rf51a4Xh8EyfBDTHIQ5dHcJo/s1600/lebah%20-%20bendera%20(small).png" alt="Maskot Lebah">
             </div>
         </div>
 
-        <!-- ==================== KONTEN KEUANGAN ==================== -->
-        <div class="content-keuangan-wrapper w-full px-4 relative z-10 flex flex-col gap-3 mb-6 text-gray-800">
-            
-            <!-- Info Header -->
-            <div id="info-header" class="rounded-xl p-4 flex flex-col transition-all duration-300" style="background-color: #1155CC; box-shadow: 0 4px 15px rgba(17, 85, 204, 0.25);">
-                <div class="flex justify-between items-start w-full">
-                    <div>
-                        <h1 class="text-[20px] font-bold text-white flex items-center gap-2">Keuangan RT 2</h1>
-                        <p class="text-white/85 mt-1 text-[11px] leading-tight">Pengelolaan terhitung sejak Oktober 2025</p>
-                        <div class="flex items-center gap-1.5 mt-1"> 
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Area Input & Tombol Filter (Ikut Scroll ke Atas) -->
-            <div id="stickyActionBar" class="sticky-action-bar w-full flex flex-col gap-2">
-                <div class="relative w-full">
-                    <input type="text" id="searchInput" class="search-input w-full px-3 py-2 pl-9 rounded-lg text-[13px] shadow-sm font-medium" placeholder="Pencarian data...">
-                    <svg class="w-4 h-4 text-gray-700 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <!-- ==================== AREA PENCARIAN & FILTER COMPACT (#9E9E9E) ==================== -->
+        <div class="filter-top-section">
+            <div class="header-info-row">
+                <div class="relative flex-1">
+                    <input type="text" id="searchInput" class="search-input w-full" placeholder="Pencarian data...">
                 </div>
                 
-                <div class="flex gap-2 w-full">
-                    <select id="filterKode" class="search-input px-2 py-2 rounded-lg text-[12px] flex-1 cursor-pointer font-medium shadow-sm">
-                        <option value="">Semua Kode</option>
-                        <option value="1">Kode 1 - Jimpitan</option>
-                        <option value="2">Kode 2 - Jasa Inventaris/Aset</option>
-                        <option value="3">Kode 3 - Sosial</option>
-                        <option value="4">Kode 4 - Pembangunan</option>
-                        <option value="5">Kode 5 - Lain-lain</option>
-                        <option value="6">Kode 6 - Kas Pemuda</option>
-                    </select>
-                    
-                    <button id="sortBtn" title="Urutkan" class="sort-btn px-3 flex-shrink-0 rounded-lg cursor-pointer shadow-sm flex items-center justify-center text-[#1155CC]">
-                        <svg id="sortIcon" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path></svg>
-                    </button>
-                </div>
+                <select id="filterKode" class="select-filter w-28">
+                    <option value="">Semua Kode</option>
+                    <option value="1">Kode 1 - Jimpitan</option>
+                    <option value="2">Kode 2 - Jasa Inventaris</option>
+                    <option value="3">Kode 3 - Sosial</option>
+                    <option value="4">Kode 4 - Pembangunan</option>
+                    <option value="5">Kode 5 - Lain-lain</option>
+                    <option value="6">Kode 6 - Kas Pemuda</option>
+                </select>
+                
+                <button id="sortBtn" title="Urutkan" class="btn-sort-action">
+                    <svg id="sortIcon" class="w-3.5 h-3.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
+                    </svg>
+                </button>
             </div>
+        </div>
 
-            <!-- Tabel Container -->
-            <div class="bento-box rounded-xl flex flex-col relative pb-1 mt-2">
-                <div id="loadingStatus" class="p-6 text-center font-medium text-gray-500 text-[13px]">
+        <!-- ==================== DAFTAR TRANSAKSI KEUANGAN ==================== -->
+        <div class="info-dashboard-container">
+            <div class="bento-box rounded-xl flex flex-col relative pb-1">
+                <div id="loadingStatus" class="p-6 text-center font-medium text-gray-500 text-[12px]">
                     Mengambil data terbaru...
                 </div>
-                <!-- Table Body -->
-                <div id="table-body" class="flex flex-col p-3 bg-gray-50/50 rounded-xl gap-3">
-                    <!-- Baris tabel otomatis dari JS -->
+                <div id="table-body" class="flex flex-col p-3 bg-slate-50/50 rounded-xl gap-2.5">
+                    <!-- Baris transaksi otomatis dirender JS -->
                 </div>
             </div>
-            
         </div>
 
         <!-- ==================== FOOTER ==================== -->
@@ -284,61 +254,8 @@
 
 <script>
     // ==========================================
-    // MENU AKTIF
-    // ==========================================
-    const halamanAktifSaatIni = 'keuangan';
-
-    // ==========================================
-    // PENGATURAN LOGIN WARGA & ADMIN
-    // ==========================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
-    const loginModalOverlay = document.getElementById('loginModalOverlay');
-    const loginForm = document.getElementById('loginForm');
-    const loginErrorMsg = document.getElementById('loginErrorMessage');
-    const btnSubmitLogin = document.getElementById('btnSubmitLogin');
-    
-    function checkLoginState() {
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-        const userName = localStorage.getItem('userName');
-    }
-
-    document.addEventListener("DOMContentLoaded", () => checkLoginState());
-
-    function closeLoginModal() { 
-        if(loginModalOverlay) loginModalOverlay.classList.remove('active'); 
-        document.body.style.overflow = 'auto'; 
-        if(loginForm) loginForm.reset(); 
-        const regToggle = document.getElementById('regToggleCheck');
-        if(regToggle) { regToggle.checked = false; toggleRegButton(); }
-    }
-    function closeLoginModalOutside(e) { if (e.target === loginModalOverlay) closeLoginModal(); }
-    
-    function togglePasswordVisibility() {
-        const pwInput = document.getElementById('loginPassword');
-        const eyeOpen = document.getElementById('eyeIconPwOpen');
-        const eyeClosed = document.getElementById('eyeIconPwClosed');
-        if (pwInput && pwInput.type === "password") { pwInput.type = "text"; eyeOpen.style.display = "block"; eyeClosed.style.display = "none"; } 
-        else if (pwInput) { pwInput.type = "password"; eyeOpen.style.display = "none"; eyeClosed.style.display = "block"; }
-    }
-
-    window.toggleRegButton = function() {
-        const chk = document.getElementById('regToggleCheck');
-        const btn = document.getElementById('btnLanjutReg');
-        if(chk && btn) {
-            if(chk.checked) btn.classList.add('active');
-            else btn.classList.remove('active');
-        }
-    }
-
-    // ==========================================
     // LOGIKA DASHBOARD KEUANGAN KAS
     // ==========================================
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const hariTanggal = document.getElementById('hari-tanggal');
-    if(hariTanggal) {
-        hariTanggal.innerText = new Date().toLocaleDateString('id-ID', dateOptions);
-    }
-
     const kodeInfo = {
         1: "Jimpitan", 2: "Jasa Inventaris", 3: "Sosial",
         4: "Pembangunan", 5: "Lain-lain", 6: "Kas Pemuda"
@@ -366,7 +283,7 @@
         tbody.innerHTML = ''; 
         
         if (data.length === 0) {
-            tbody.innerHTML = '<div class="p-6 text-center text-gray-500 font-medium text-[13px]">Data tidak ditemukan.</div>';
+            tbody.innerHTML = '<div class="p-6 text-center text-gray-500 font-medium text-[12px]">Data tidak ditemukan.</div>';
             return;
         }
 
@@ -385,32 +302,32 @@
 
             const html = `
                 <div class="row-item flex flex-col w-full gap-2 p-3">
-                    <div class="flex items-center justify-between border-b border-gray-200 pb-2">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-2">
                         <div class="flex items-center gap-2">
-                            <div class="number-circle shadow-sm">${no}</div>
-                            <div class="text-gray-900 font-bold text-[13px]">${tanggal}</div>
+                            <div class="number-circle">${no}</div>
+                            <div class="text-gray-900 font-semibold text-[12.5px]">${tanggal}</div>
                         </div>
-                        <div class="kode-container font-bold ${colorKode} ${bgKode} px-2 py-1 rounded text-[11px]">
+                        <div class="kode-container font-semibold ${colorKode} ${bgKode} px-2 py-0.5 rounded text-[10.5px]">
                             Kode ${kode}
                             <div class="kode-tooltip">${labelKode}</div>
                         </div>
                     </div>
                     
-                    <div class="text-gray-800 font-medium text-[13px] leading-snug text-left">
+                    <div class="text-gray-800 font-medium text-[12.5px] leading-snug text-left">
                         ${deskripsi}
                     </div>
                     
-                    <div class="flex flex-col gap-1.5 mt-1 bg-gray-50 p-2.5 rounded border border-gray-100">
-                        <div class="flex items-center text-left text-[12px]">
-                            <span class="font-semibold text-gray-500 w-16">Masuk</span>
-                            <span class="text-[#069446] font-bold">: ${masuk}</span>
+                    <div class="flex flex-col gap-1 mt-1 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                        <div class="flex items-center text-left text-[11.5px]">
+                            <span class="font-medium text-gray-500 w-16">Masuk</span>
+                            <span class="text-[#059669] font-semibold">: ${masuk}</span>
                         </div>
-                        <div class="flex items-center text-left text-[12px]">
-                            <span class="font-semibold text-gray-500 w-16">Keluar</span>
-                            <span class="text-[#EF4444] font-bold">: ${keluar}</span>
+                        <div class="flex items-center text-left text-[11.5px]">
+                            <span class="font-medium text-gray-500 w-16">Keluar</span>
+                            <span class="text-[#DC2626] font-semibold">: ${keluar}</span>
                         </div>
-                        <div class="flex items-center text-left border-t border-gray-200 pt-1.5 mt-0.5 text-[13px]">
-                            <span class="font-semibold text-gray-500 w-16">Saldo</span>
+                        <div class="flex items-center text-left border-t border-gray-200/80 pt-1 mt-0.5 text-[12px]">
+                            <span class="font-medium text-gray-500 w-16">Saldo</span>
                             <span class="text-[#1155CC] font-bold">: ${saldo}</span>
                         </div>
                     </div>
@@ -462,7 +379,7 @@
         .catch(error => {
             console.error("Gagal menarik data:", error);
             const loadingStatus = document.getElementById('loadingStatus');
-            if(loadingStatus) loadingStatus.innerHTML = `<span class="text-red-500">Gagal mengambil data dari Google Sheet.</span>`;
+            if(loadingStatus) loadingStatus.innerHTML = `<span class="text-red-500 text-[12px]">Gagal mengambil data dari Google Sheet.</span>`;
         });
 
     function applyFilters() {

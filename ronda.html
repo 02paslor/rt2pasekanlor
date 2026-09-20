@@ -22,8 +22,8 @@
     
     <style>
         /* ======================================================================
-           AREA PENGATURAN TAMPILAN GLOBAL (DARI TEMPLATE UTAMA)
-           ====================================================================== */
+            AREA PENGATURAN TAMPILAN GLOBAL (DARI TEMPLATE UTAMA)
+            ====================================================================== */
         * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
         *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
 
@@ -102,39 +102,34 @@
         svg { display: inline-block; vertical-align: middle; }
 
         /* ======================================================================
-           CSS KHUSUS HALAMAN RONDA
-           ====================================================================== */
-           
-        /* 
-           KODE UNTUK GESER NAIK / TURUN KONTEN:
-           - margin-top: mengatur jarak elemen ini dari sisi paling atas.
-           - Ubah "margin-top: 10px" (naik) atau "margin-top: 50px" (semakin turun).
-        */
+            CSS KHUSUS HALAMAN RONDA
+            ====================================================================== */
         .main-content-board { 
             background-color: transparent; 
-            margin-top: 70px; /* <--- UBAH ANGKA INI UNTUK GESER TURUN / NAIK */
+            margin-top: 65px; 
             position: relative; 
             z-index: 10; 
             display: flex; 
             flex-direction: column; 
             min-height: calc(100vh - 100px); 
         } 
-           
-        /* Title Card Ronda */
+            
+        /* Title Card Ronda (Nuansa Orange) */
         .title-card-panel { 
             background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
-            color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; 
-            align-items: center; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            z-index: 2; position: relative; margin: 10px 16px 20px 16px;
+            color: #ffffff; padding: 10px 16px; display: flex; justify-content: space-between; 
+            align-items: center; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            z-index: 2; position: relative; margin: 25px 16px 20px 16px; height: 55px;
         }
-        .title-card-left { font-size: 15px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; }
+        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; z-index: 3; position: relative; }
         .title-card-left svg { stroke-width: 2.5; }
         
         .title-card-right { display: flex; align-items: center; justify-content: flex-end; }
         .title-card-right img { 
-            height: 80px; 
+            height: 70px; 
             width: auto; 
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); 
+            position: absolute; right: 10px; bottom: 0; z-index: 0;
         }
 
         .main-content-space { flex: 1; }
@@ -154,12 +149,12 @@
 
         .ronda-top-container {
             display: flex;
-            gap: 10px;
-            align-items: stretch;
+            width: 100%;
         }
 
         .header-fancy {
-            border-radius: 14px; padding: 12px; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease; flex: 1;
+            width: 100%;
+            border-radius: 14px; padding: 14px 18px; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease;
         }
         .header-pagi { background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%); }   
         .header-siang { background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%); }   
@@ -167,10 +162,10 @@
         .header-malam { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); }   
 
         .dt-col { display: flex; flex-direction: column; gap: 4px; z-index: 2; }
-        .dt-val-date { font-size: 13px; font-weight: 600; color: #FFFFFF; }
-        .dt-val-time { font-size: 12px; font-weight: 500; color: #FFFFFF; }
+        .dt-val-date { font-size: 14px; font-weight: 600; color: #FFFFFF; }
+        .dt-val-time { font-size: 13px; font-weight: 500; color: #FFFFFF; }
 
-        .time-icon-container { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; position: relative; z-index: 2; }
+        .time-icon-container { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; position: relative; z-index: 2; }
         .icon-sun { color: #FEF08A; }
         .icon-moon { color: #FDE047; }
 
@@ -182,36 +177,6 @@
         @keyframes twinkleAnim {
             0% { opacity: 0.1; transform: scale(0.6); }
             100% { opacity: 1; transform: scale(1.4); }
-        }
-        
-        .btn-qr-scanner {
-            position: relative;
-            background: #0F47A1;
-            border-radius: 14px;
-            width: 66px;
-            height: 66px;
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-            text-decoration: none;
-        }
-        .btn-qr-scanner:hover { background: #1F995D; border-color: #0F47A1; }
-        .btn-qr-scanner:active { transform: scale(0.95); }
-
-        .demo-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background-color: #FFD721;
-            color: #0F47A1;
-            font-size: 9px;
-            font-weight: 500;
-            padding: 2px 5px;
-            border-radius: 4px;
         }
 
         .form-section { display: flex; flex-direction: column; gap: 12px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.15); padding-bottom: 16px; }
@@ -328,28 +293,28 @@
         .exp-id-laporan-val { font-size: 15px; color: #475569; font-weight: 700; margin-bottom: 16px; text-align: center; }
         .exp-thanks-btn { background: #1155CC; color: #FFF; font-size: 15px; font-weight: 700; padding: 14px 20px; border-radius: 10px; width: 100%; text-align: center; box-sizing: border-box; letter-spacing: 0.5px; }
 
-        /* ================= ALTRUIS & CUSTOM INPUT ================= */
-        .altruis-banner {
+        /* ================= ISTIMEWA & CUSTOM INPUT ================= */
+        .istimewa-banner {
             background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
             color: #FFFFFF; padding: 12px 14px; border-radius: 12px; margin-bottom: 12px;
             display: flex; align-items: center; gap: 12px;
         }
-        .altruis-banner svg { width: 28px; height: 28px; flex-shrink: 0; }
-        .altruis-banner-text { display: flex; flex-direction: column; }
-        .altruis-banner-title { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
-        .altruis-banner-desc { font-size: 10.5px; font-weight: 500; opacity: 0.9; }
+        .istimewa-banner svg { width: 28px; height: 28px; flex-shrink: 0; }
+        .istimewa-banner-text { display: flex; flex-direction: column; }
+        .istimewa-banner-title { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
+        .istimewa-banner-desc { font-size: 10.5px; font-weight: 500; opacity: 0.9; }
 
-        .altruis-input-group {
+        .istimewa-input-group {
             display: flex; gap: 6px; margin: 10px 12px;
         }
-        .altruis-input {
+        .istimewa-input {
             flex: 1; padding: 6px 10px; border: 1.5px solid #CBD5E1; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #1E293B; outline: none; transition: border-color 0.2s; height: 30px;
         }
-        .altruis-input:focus { border-color: #F59E0B; }
-        .btn-add-altruis {
+        .istimewa-input:focus { border-color: #F59E0B; }
+        .btn-add-istimewa {
             background: #1155CC; color: white; border: none; padding: 0; width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;
         }
-        .btn-add-altruis:hover { background: #0F47A1; }
+        .btn-add-istimewa:hover { background: #0F47A1; }
     </style>
 </head>
 <body>
@@ -392,7 +357,7 @@
             </div>
         </div>
 
-        <!-- ==================== TITLE CARD RONDA ==================== -->
+        <!-- ==================== TITLE CARD RONDA (SERAGAM ORANGE) ==================== -->
         <div class="title-card-panel" title="Halaman Ronda">
             <div class="title-card-left">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -406,7 +371,7 @@
         <!-- ==================== KONTEN UTAMA RONDA ==================== -->
         <div class="main-content-area">
             <div class="main-card">
-                <!-- HEADER DENGAN SUASANA WAKTU OTOMATIS & QR -->
+                <!-- HEADER DENGAN SUASANA WAKTU OTOMATIS PENUH (TANPA TOMBOL QR SCANNER) -->
                 <div class="ronda-top-container">
                     <div class="header-fancy" id="header-suasana-box">
                         <div class="twinkle-star star-1"></div>
@@ -420,18 +385,6 @@
                         
                         <div class="time-icon-container" id="time-icon-container" title="Suasana Live"></div>
                     </div>
-                    
-                    <a href="javascript:void(0)" target="_self" class="btn-qr-scanner" id="btn-qr-scanner" title="QR Scanner">
-                        <div class="demo-badge">demo</div>
-                        <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
-                            <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
-                            <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
-                            <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
-                            <rect x="7" y="7" width="10" height="10" rx="1" stroke-width="1.5"></rect>
-                            <line x1="7" y1="12" x2="17" y2="12" stroke-width="2" stroke-dasharray="2 2"></line>
-                        </svg>
-                    </a>
                 </div>
 
                 <!-- 1. JIMPITAN -->
@@ -454,13 +407,13 @@
                     </button>
                 </div>
 
-                <!-- 2. PILIH HARI -->
+                <!-- 2. PILIH HARI (POSISI KEMBALI ASLI) -->
                 <div class="form-section">
                     <div class="section-label">
                         <div class="sec-number-badge">2</div>
                         <div class="sec-text-group">
                             <span class="sec-title">Pilih Hari Ronda (bebas pilih)</span>
-                            <span class="sec-subtitle">Dapat diisi ketika terlambat sampai berganti hari. <br>Khusus Altruis wajib mengisi juga.</span>
+                            <span class="sec-subtitle">Dapat diisi ketika terlambat sampai berganti hari. <br>Khusus Istimewa wajib mengisi juga.</span>
                         </div>
                     </div>
                     <div id="loading-warga" class="loading-warga">
@@ -476,7 +429,7 @@
                         <option value="JUM'AT">JUM'AT</option>
                         <option value="SABTU">SABTU</option>
                         <option value="MINGGU">MINGGU</option>
-                        <option value="ALTRUIS">🏆 ALTRUIS (Terima kasih orang baik)</option>
+                        <option value="ISTIMEWA">🏆 ISTIMEWA (Terima kasih orang baik)</option>
                     </select>
 
                     <div class="warga-container-direct" id="warga-container-block">
@@ -540,7 +493,7 @@
 
 </div> 
 
-<!-- AREA EXPORT STRUK (TEMA TERBARU) -->
+<!-- AREA EXPORT STRUK -->
 <div id="laporan-export">
     <div class="exp-header-main">
         <div class="exp-main-title">Laporan Ronda</div>
@@ -576,57 +529,12 @@
 
 <script>
     /* ==========================================================
-       1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header & Login)
+       1. SCRIPT MASTER TEMPLATE (Navigasi & Login)
        ========================================================== */
-    const topBar = document.getElementById('appHeaderWrapper');
-    const menuFastModal = document.getElementById('moreMenuModal');
-    const btnMenuToggle = document.querySelector('.btn-menu');
-    
-    window.addEventListener('scroll', () => {
-        if (topBar) {
-            if (window.scrollY > 15) {
-                topBar.classList.add('header-morphed');
-            } else {
-                topBar.classList.remove('header-morphed');
-            }
-        }
-        
-        if (menuFastModal && menuFastModal.classList.contains('active')) {
-            closeMoreMenu();
-        }
-    }, { passive: true });
-
-    function toggleMoreMenu() {
-        if (!menuFastModal) return;
-        if (menuFastModal.classList.contains('active')) closeMoreMenu();
-        else openMoreMenu();
-    }
-    function openMoreMenu() { 
-        if (menuFastModal) menuFastModal.classList.add('active'); 
-        if (btnMenuToggle) btnMenuToggle.classList.add('menu-tertekan');
-        document.body.style.overflow = 'hidden'; 
-    }
-    function closeMoreMenu() { 
-        if (menuFastModal) menuFastModal.classList.remove('active'); 
-        if (halamanAktifSaatIni !== 'menu' && btnMenuToggle) btnMenuToggle.classList.remove('menu-tertekan');
-        document.body.style.overflow = 'auto'; 
-    }
-    function closeMoreMenuOutside(e) { if(e.target === menuFastModal) closeMoreMenu(); }
-
     const halamanAktifSaatIni = 'ronda'; 
-    const mapMenu = {
-        'home': 'btn-home', 'warga': 'btn-warga', 'inventaris': 'btn-inventaris',
-        'lapak': 'btn-lapak', 'pengurus': 'btn-pengurus', 'galeri': 'btn-galeri',
-        'tatatertib': 'btn-tatatertib', 'ronda': 'btn-ronda', 'menu': 'btn-menu'
-    };
-
-    if (mapMenu[halamanAktifSaatIni]) {
-        const tombolAktif = document.querySelectorAll('.' + mapMenu[halamanAktifSaatIni]);
-        tombolAktif.forEach(btn => btn.classList.add('menu-tertekan'));
-    }
 
     // ==========================================
-    // PENGATURAN LOGIN Warga (Sinkron & Persisten)
+    // PENGATURAN LOGIN Warga
     // ==========================================
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwxnY23ME-d7Nzv_hxkj2pslTjWnAXsufkPlA47XJZ-bYXADTr39X9BBBSDrSIh7RhyGQ/exec";
     const loginModalOverlay = document.getElementById('loginModalOverlay');
@@ -660,15 +568,6 @@
 
     document.addEventListener("DOMContentLoaded", () => checkLoginState());
     
-    const openLoginBtn = document.getElementById('openLoginModalBtn');
-    if(openLoginBtn) {
-        openLoginBtn.addEventListener('click', () => {
-            if(loginErrorMsg) loginErrorMsg.style.display = 'none'; 
-            if(loginModalOverlay) loginModalOverlay.classList.add('active'); 
-            document.body.style.overflow = 'hidden'; 
-        });
-    }
-
     function closeLoginModal() { 
         if(loginModalOverlay) loginModalOverlay.classList.remove('active'); 
         document.body.style.overflow = 'auto'; 
@@ -753,12 +652,12 @@
         "JUM'AT": ["SATRIA", "IBNU", "RIZAL", "PEMUDA 1", "PEMUDA 2", "PEMUDA 3", "PEMUDA 4"],
         "SABTU": ["NGADIMIN", "ARIS YUSWANTORO", "PRIYOTO", "SURAHYA", "ARI NUGROHO"],
         "MINGGU": ["KARTI NURJANI", "SAMIJOKO", "TRISNA SANJAYA", "FAJAR YUNIANTO", "SARJIYO"],
-        "ALTRUIS": []
+        "ISTIMEWA": []
     };
 
     let dataRonda = {};
     let originalDataRonda = {}; 
-    const namaHariID = ["MINGGU", "SENIN", "SELASA", "RABU", "KAMIS", "JUM'AT", "SABTU", "JUMAT", "ALTRUIS"]; 
+    const namaHariID = ["MINGGU", "SENIN", "SELASA", "RABU", "KAMIS", "JUM'AT", "SABTU", "JUMAT", "ISTIMEWA"]; 
     let attendanceState = {}; 
     
     const daySelect = document.getElementById('day-select');
@@ -959,16 +858,16 @@
         
         wargaHariIni.forEach((warga, idx) => {
             const isOriginal = originalDataRonda[day] && originalDataRonda[day].includes(warga);
-            let showDelete = !isOriginal || day === 'ALTRUIS'; 
+            let showDelete = !isOriginal || day === 'ISTIMEWA'; 
             let btnHapus = showDelete ? `<button type="button" style="background:#FEE2E2; border:none; color:#EF4444; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="removeWarga('${warga}', '${day}')" title="Hapus"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>` : '';
 
-            if(day === 'ALTRUIS') {
+            if(day === 'ISTIMEWA') {
                 attendanceState[warga] = 'Hadir'; 
                 const card = document.createElement('div');
                 card.className = 'warga-card state-hadir';
                 card.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div class="warga-name" style="color:#16A34A;">${idx + 1}. ${warga} <span style="font-size:10px; background:#DCFCE7; padding:2px 6px; border-radius:4px; margin-left:6px;">ALTRUIS</span></div>
+                        <div class="warga-name" style="color:#16A34A;">${idx + 1}. ${warga} <span style="font-size:10px; background:#DCFCE7; padding:2px 6px; border-radius:4px; margin-left:6px;">ISTIMEWA</span></div>
                         ${btnHapus}
                     </div>
                 `;
@@ -1022,9 +921,9 @@
 
         let htmlContent = '';
         
-        if (selectedDay === 'ALTRUIS') {
+        if (selectedDay === 'ISTIMEWA') {
             htmlContent += `
-                <div class="altruis-banner">
+                <div class="istimewa-banner">
                     <svg viewBox="0 0 24 24">
                         <defs>
                             <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1041,9 +940,9 @@
                         <circle cx="12" cy="8" r="7" fill="url(#gold)"/>
                         <circle cx="12" cy="8" r="4.5" fill="#FFF" fill-opacity="0.25"/>
                     </svg>
-                    <div class="altruis-banner-text">
-                        <span class="altruis-banner-title">ALTRUIS</span>
-                        <span class="altruis-banner-desc">Tindakan baik & positif tanpa pamrih</span>
+                    <div class="istimewa-banner-text">
+                        <span class="istimewa-banner-title">ISTIMEWA</span>
+                        <span class="istimewa-banner-desc">Tindakan baik & positif tanpa pamrih</span>
                     </div>
                 </div>
             `;
@@ -1051,9 +950,9 @@
 
         htmlContent += `
             <div id="dynamic-warga-list"></div>
-            <div class="altruis-input-group">
-                <input type="text" id="custom-name-input" class="altruis-input" placeholder="Isi nama tambahan..." autocomplete="off">
-                <button type="button" id="btn-add-custom" class="btn-add-altruis" title="Tambah Warga">
+            <div class="istimewa-input-group">
+                <input type="text" id="custom-name-input" class="istimewa-input" placeholder="Isi nama tambahan..." autocomplete="off">
+                <button type="button" id="btn-add-custom" class="btn-add-istimewa" title="Tambah Warga">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
             </div>
@@ -1168,9 +1067,9 @@
             const actualDay = actualDayNames[now.getDay()];
             
             let cleanDay = selectedDay.replace("'", "");
-            cleanDay = cleanDay === 'ALTRUIS' ? 'ALTRUIS' : cleanDay.charAt(0).toUpperCase() + cleanDay.slice(1).toLowerCase();
+            cleanDay = cleanDay === 'ISTIMEWA' ? 'ISTIMEWA' : cleanDay.charAt(0).toUpperCase() + cleanDay.slice(1).toLowerCase();
 
-            const displayDay = selectedDay === 'ALTRUIS' ? actualDay : cleanDay;
+            const displayDay = selectedDay === 'ISTIMEWA' ? actualDay : cleanDay;
 
             const expTanggal = document.getElementById('exp-tanggal');
             const expWaktu = document.getElementById('exp-waktu');
@@ -1184,8 +1083,8 @@
             const expCatatanJudul = document.getElementById('exp-catatan-judul');
             const expCatatanTarget = document.getElementById('exp-catatan-target');
 
-            if (expJudul) expJudul.innerHTML = selectedDay === 'ALTRUIS' ? 'Daftar Kehadiran <span>Altruis</span>' : `Kehadiran Hari <span>${cleanDay}</span>`;
-            if (expCatatanJudul) expCatatanJudul.innerHTML = selectedDay === 'ALTRUIS' ? `Catatan Hari <span>${actualDay}</span>` : `Catatan Hari <span>${cleanDay}</span>`;
+            if (expJudul) expJudul.innerHTML = selectedDay === 'ISTIMEWA' ? 'Daftar Kehadiran <span>Istimewa</span>' : `Kehadiran Hari <span>${cleanDay}</span>`;
+            if (expCatatanJudul) expCatatanJudul.innerHTML = selectedDay === 'ISTIMEWA' ? `Catatan Hari <span>${actualDay}</span>` : `Catatan Hari <span>${cleanDay}</span>`;
             if (expCatatanTarget) expCatatanTarget.textContent = catatanTextarea.value;
 
             const gridTarget = document.getElementById('exp-grid-target');
@@ -1306,7 +1205,7 @@
             text += `--------------\n`;
             text += `Tanggal: ${dateStr}\n`;
             text += `Waktu: ${timeStr}\n`;
-            text += `Tim: ${selectedDay === 'ALTRUIS' ? 'ALTRUIS' : 'Hari ' + selectedDay}\n`;
+            text += `Tim: ${selectedDay === 'ISTIMEWA' ? 'ISTIMEWA' : 'Hari ' + selectedDay}\n`;
             text += `Jimpitan: Rp ${nominal}\n`;
             text += `--------------\n\n`;
 

@@ -36,12 +36,14 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; z-index: 1;
         }
 
-     
+        /* ========================================================
+           PEMBARUAN HEADER: DIGESER LEBIH KE ATAS
+           ======================================================== */
         .app-header-wrapper { 
             position: fixed;
             top: 0; left: 0; right: 0; width: 100%; max-width: 480px; 
             margin: 0 auto; 
-            padding: 8px 16px 0 16px; 
+            padding: 8px 16px 0 16px; /* REVISI: Jarak atas dikurangi dari 16px menjadi 8px */
             z-index: 1000; 
             pointer-events: none !important; 
             transition: padding 0.3s ease; 
@@ -102,27 +104,29 @@
             width: 100%; height: 100%; border: none; background: transparent; display: block;
         }
 
-        
+        /* ========================================================
+           PEMBARUAN OVERLAY: SLIDE DARI ATAS LAYAR & TAMPIL UTUH
+           ======================================================== */
         .slide-up-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; 
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center; 
-            padding: 75px 16px 20px 16px; 
+            padding: 75px 16px 20px 16px; /* Menyesuaikan posisi header yang sudah naik */
             visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; 
         }
         .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
         
         .slide-up-content { 
             background: #ffffff; width: 100%; max-width: 480px; height: auto; 
-            max-height: calc(100vh - 95px); 
+            max-height: calc(100vh - 95px); /* REVISI: Memastikan card utuh dan bisa discroll kalau layar kekecilan */
             display: flex; flex-direction: column; 
             overflow-y: auto; overflow-x: hidden; 
             border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; 
-            transform: translateY(-100vh); 
+            transform: translateY(-100vh); /* REVISI: Mulai dari atas layar */
             opacity: 0; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s; 
         }
         .slide-up-overlay.active .slide-up-content { 
-            transform: translateY(0); 
+            transform: translateY(0); /* REVISI: Meluncur ke posisi normal di bawah header */
             opacity: 1; 
         }
 
@@ -202,25 +206,25 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: 65px 65px;
-            width: 100%; height: 130px;
+            width: 100%; height: 100px;
             background: #ffffff;
         }
 
         .b-nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: #64748b; font-size: 11px; font-weight: 500;
+            text-decoration: none; color: #64748b; font-size: 11px; font-weight: 600;
             width: 100%; height: 100%; cursor: pointer; 
             transition: all 0.3s ease;
             text-transform: capitalize; border: none; outline: none;
-            border-right: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
+            border-right: 2px solid #e2e8f0;
+            border-bottom: 2px solid #e2e8f0;
             position: relative;
         }
 
         .b-nav-item:nth-child(4n) { border-right: none; }
         .b-nav-item:nth-child(n+5) { border-bottom: none; }
 
-        .b-nav-item:nth-child(1) { background-color: #ffffff; }
+        .b-nav-item:nth-child(1) { background-color: #D9D9D9; }
         .b-nav-item:nth-child(2) { background-color: #f8fafc; }
         .b-nav-item:nth-child(3) { background-color: #ffffff; }
         .b-nav-item:nth-child(4) { background-color: #f8fafc; }
@@ -231,7 +235,7 @@
 
         .b-nav-item svg { 
             width: 20px; height: 20px; margin-bottom: 4px; stroke: #64748b; stroke-width: 2; fill: none;
-            stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease;
+            stroke-linecap: round; stroke-linejoin: round; transition: all 0.1s ease;
         }
 
         .b-nav-item:hover, .b-nav-item.menu-tertekan { 

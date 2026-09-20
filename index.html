@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<!-- Google tag (gtag.js) -->
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6G930LME8"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -9,20 +9,18 @@
   gtag('js', new Date());
   gtag('config', 'G-V6G930LME8');
 </script>
-    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1600/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyfuGc_fXDcYnfWzyQzcRZ6n9XwRuYCrX3D4PNthp05MIwg9VjbDoCBPtGg6jc374QSSOKKLt3jBGAkPtlwVKRSDc-PhZewr5S3X91KheaVSjIs1IDedm_zm1BR9_EyJ9CdJuFHGGu4l0pF3hF8cbMViD5lucqgvffwoxPWPQBuJfyZntChlwC1d7Ad6Q/w640-h640/favicon%20rt2.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RT 2 Online | Informasi Warga RT2/RW3, Pasekan Lor</title>
-    <meta name="description" content="Portal informasi digital resmi untuk warga RT 2/RW 3, Pasekan Lor.">
+    <title>RT 2 Online | Warga RT2/RW3, Pasekan Lor</title>
+    <meta name="description" content="Portal informasi digital resmi warga RT 2/RW 3, Pasekan Lor.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ======================================================================
-           AREA PENGATURAN TAMPILAN MASTER
-           ====================================================================== */
+
         * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
         *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
 
@@ -32,23 +30,28 @@
         .app-wrapper {
             width: 100%; max-width: 480px;
             background-color: transparent; 
-            background-image: linear-gradient(to bottom, #0083E0 0.5%, #FFFFFF 10%, #F0FAFF 20%);
+            background-image: linear-gradient(to bottom, #87CEFA 2%, #FFFFFF 25%, #FFFFFF 70%,#87CEFA 100%);
             background-attachment: auto; background-size: cover; background-repeat: no-repeat;
             height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; z-index: 1;
         }
 
-        /* ================== HEADER (IKUT SCROLL DENGAN KONTEN) ================== */
+
         .app-header-wrapper { 
-            position: absolute; top: 0; left: 0; right: 0; width: 100%; max-width: 480px; 
-            margin: 0 auto; padding: 12px 16px 6px 16px; z-index: 1000; 
+            position: fixed;
+            top: 0; left: 0; right: 0; width: 100%; max-width: 480px; 
+            margin: 0 auto; padding: 0; z-index: 1000; 
             pointer-events: none !important; 
         }
         .header-box { 
-            background-color: rgba(0, 52, 143, 0.9);
-            border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
-            padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            pointer-events: auto; /* Mengembalikan fungsi klik hanya untuk kotak header */
+            background-color: #033387; /* REVISI: Solid background */
+            border-radius: 0; 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 10px 16px; 
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            pointer-events: auto;
         }
 
         .header-left-area { display: flex; align-items: center; justify-content: flex-start; gap: 10px; flex: 1; overflow: hidden;}
@@ -57,7 +60,6 @@
         .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
         .slogan-text-2 { color: #ffffff; font-size: 9px; font-weight: 500; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 
-        /* Area Login / Profil Warga */
         .login-btn-wrapper { 
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
             background-color: rgba(255, 255, 255, 0.2); width: 30px; height: 30px; border-radius: 50%; 
@@ -74,19 +76,19 @@
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .user-short-name { color: #5FDFF5; font-size: 10px; font-weight: 500; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; text-align: right; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
         .logout-btn svg { width: 12px; height: 12px; }
         .logout-btn:active { transform: scale(0.9); }
 
-        /* ================== KONTEN UTAMA IFRAME FULL LAYAR ================== */
+
         .content-container {
             flex: 1; width: 100%; position: relative; margin-bottom: 0; background: transparent; height: 100vh;
         }
         #dynamic-content {
-            width: 100%; height: 100%; border: none; background: #FFFFFF; display: block;
+            width: 100%; height: 100%; border: none; background: transparent; display: block;
         }
 
-        /* ================== MODAL ANIMASI & OVERLAY ================== */
+
         .slide-up-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; 
@@ -98,11 +100,12 @@
         .slide-up-content { background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
         .slide-up-overlay.active .slide-up-content { transform: scale(1); opacity: 1; }
 
-        /* ================== FORM LOGIN CSS ================== */
+
         .login-wrapper { background: #f1f5f9; width: 100%; max-width: 400px; margin: 0 auto; border-radius: 16px; padding: 24px; position: relative; }
         .login-close-btn { position: absolute; top: 16px; right: 16px; background: #1155cc; color: #ffffff; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(17,85,204,0.3); transition: transform 0.2s; }
         .login-close-btn:active { transform: scale(0.9); }
-        .login-title-text { font-size: 16px; font-weight: 700; color: #1155cc; margin-bottom: 24px; letter-spacing: 0.5px; }
+        .login-title-text { font-size: 16px; font-weight: 700; color: #1155cc; margin-bottom: 12px; letter-spacing: 0.5px; }
+        .info-box-sync { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 10px; border-radius: 10px; font-size: 11.5px; font-weight: 500; margin-bottom: 20px; text-align: center; line-height: 1.4; }
         
         .login-form-grid { display: grid; grid-template-columns: 1fr 100px; gap: 12px; margin-bottom: 12px; }
         .login-inputs { display: flex; flex-direction: column; gap: 12px; }
@@ -133,11 +136,11 @@
         .btn-reg.active { background: #1155cc; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: auto; }
         .btn-reg:active { transform: scale(0.96); }
 
-        /* ================== FIXED BOTTOM NAVIGATION (8x1 FOOTER) ================== */
+
         .bottom-nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
             width: 100%; max-width: 480px; height: 65px;
-            background: #00348F; /* Latar dasar jika ada celah */
+            background: #00348F;
             display: flex; align-items: center; justify-content: space-between;
             z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
             overflow-x: auto; white-space: nowrap;
@@ -154,11 +157,10 @@
             position: relative; flex-shrink: 0;
         }
         
-        /* Pewarnaan Nuansa Biru Bergradasi Per Tombol */
+
         .b-nav-item:nth-child(1) { background-color: #002870; border-right-color: #001d54; }
         .b-nav-item:nth-child(2) { background-color: #003082; border-right-color: #002363; }
         .b-nav-item:nth-child(3) { background-color: #003896; border-right-color: #002a75; }
-        /* nth-child(4) adalah RONDA, ditangani di class khusus di bawah */
         .b-nav-item:nth-child(5) { background-color: #0040aa; border-right-color: #003087; }
         .b-nav-item:nth-child(6) { background-color: #0048be; border-right-color: #003699; }
         .b-nav-item:nth-child(7) { background-color: #0050d4; border-right-color: #003cab; }
@@ -169,7 +171,7 @@
             stroke-linecap: round; stroke-linejoin: round; transition: all 0.3s ease;
         }
 
-        /* Hover & Menu Aktif Highlight Cemerlang */
+
         .b-nav-item:hover, .b-nav-item.menu-tertekan { 
             background-color: #001540 !important; 
             color: #FACC15 !important; 
@@ -179,7 +181,17 @@
             transform: translateY(-2px);
         }
 
-        /* ================== SPESIAL TOMBOL RONDA MENYALA ================== */
+        .b-nav-item.btn-kas.menu-tertekan {
+            background-color: #10B981 !important;
+            color: #FFFFFF !important;
+            border-right: 1px solid #047857;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+        .b-nav-item.btn-kas.menu-tertekan svg {
+            stroke: #FFFFFF !important;
+        }
+
+
         @keyframes nyalaRondaBiru {
             0% { background-color: #0c43a8; box-shadow: 0 0 5px rgba(17, 85, 204, 0.4); }
             50% { background-color: #1155cc; box-shadow: 0 0 16px rgba(17, 85, 204, 0.95), inset 0 0 8px rgba(255,255,255,0.25); }
@@ -198,7 +210,6 @@
             filter: drop-shadow(0 0 2px rgba(255,255,255,0.4));
         }
         
-        /* Kondisi Saat Ronda Ditekan/Di-hover (Animasi berhenti) */
         .b-nav-item.btn-ronda:hover, .b-nav-item.btn-ronda.menu-tertekan {
             animation: none !important;
             background-color: #001540 !important;
@@ -211,13 +222,17 @@
             filter: none;
         }
 
+        .b-nav-item.menu-tertekan { 
+            pointer-events: none; 
+        }
+
     </style>
 </head>
 <body>
 
 <div class="app-wrapper">
 
-    <!-- ================= AREA HEADER (IKUT SCROLL) ================= -->
+
     <div class="app-header-wrapper" id="appHeaderWrapper">
         <header class="header-box" id="mainHeader">
             <div class="header-left-area">
@@ -228,7 +243,7 @@
                 </div>
             </div>
 
-            <!-- TOMBOL LOGIN (BELUM LOGIN) -->
+
             <div id="openLoginModalBtn" class="login-btn-wrapper">
                 <svg id="loginIconSvg" class="login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -236,7 +251,7 @@
                 </svg>
             </div>
 
-            <!-- TAMPIL SAAT SUDAH LOGIN & BERFUNGSI SEBAGAI TOMBOL EDIT PROFIL -->
+
             <div id="loggedInMenu" class="logged-in-menu">
                 <a href="#" id="btnProfileEditModal" title="Update Profil Warga" style="display: flex; align-items: center; gap: 6px; text-decoration: none;">
                     <span id="userShortName" class="user-short-name"></span>
@@ -251,12 +266,18 @@
         </header>
     </div>
 
-    <!-- ================= AREA MODAL LOGIN ================= -->
+
     <div class="slide-up-overlay" id="loginModalOverlay" onclick="closeLoginModalOutside(event)">
         <div class="slide-up-content" onclick="event.stopPropagation()" style="background: transparent; box-shadow: none; align-items: center; padding: 0 16px;">
             <div class="login-wrapper">
                 <button class="login-close-btn" onclick="closeLoginModal()" title="Tutup">X</button>
                 <div class="login-title-text">Masuk Akun<br> Khusus Warga RT 2</div>
+                
+
+                <div class="info-box-sync">
+                    Apabila gagal simpan klik tombol refresh/sync.
+                </div>
+
                 <form id="loginForm" style="margin: 0;">
                     <div class="login-form-grid">
                         <div class="login-inputs">
@@ -306,7 +327,7 @@
         </div>
     </div>
 
-    <!-- ================= AREA MODAL KONFIRMASI PROFIL ================= -->
+
     <div class="slide-up-overlay" id="profileEditConfirmModal" onclick="closeProfileConfirmOutside(event)">
         <div class="slide-up-content" onclick="event.stopPropagation()" style="background: #fff; max-width: 320px; margin: auto; padding: 24px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
             <h3 style="color: #1155cc; margin-bottom: 10px; font-weight: 700;">Profil Warga</h3>
@@ -318,17 +339,17 @@
         </div>
     </div>
 
-    <!-- ================= AREA KONTEN UTAMA IFRAME ================= -->
+
     <div class="content-container">
-        <!-- IFRAME HALAMAN -->
+
         <iframe id="dynamic-content" src="https://rt2pasekanlor.id/home"></iframe>
     </div>
 
 </div> 
 
-<!-- ================= AREA FOOTER (8x1) ================= -->
+
 <nav class="bottom-nav-bar">
-    <a href="#" class="b-nav-item footer-menu-btn menu-tertekan" data-url="https://rt2pasekanlor.id/home">
+    <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/home">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         <span>HOME</span>
     </a>
@@ -344,7 +365,7 @@
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span>RONDA</span>
     </a>
-    <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/keuangan">
+    <a href="#" class="b-nav-item footer-menu-btn btn-kas" data-url="https://rt2pasekanlor.id/keuangan">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path>
             <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path>
@@ -362,14 +383,12 @@
     </a>
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/galeri">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>MEDIA</span>
+        <span>GALERI</span>
     </a>
 </nav>
 
 <script>
-    // ==========================================
-    // LOGIKA IFRAME & MENU TERPILIH
-    // ==========================================
+
     const footerBtns = document.querySelectorAll('.footer-menu-btn');
     const dynamicContent = document.getElementById('dynamic-content');
     const appHeaderWrapper = document.getElementById('appHeaderWrapper');
@@ -382,24 +401,27 @@
         btn.addEventListener("click", function(e) {
             e.preventDefault();
             
-            // Matikan tanda aktif di SEMUA menu link
+
             footerBtns.forEach(m => m.classList.remove("menu-tertekan"));
-            // Beri tanda aktif pada tombol yang diklik
+
             this.classList.add("menu-tertekan");
 
-            // Update iframe 
+
             const targetUrl = this.getAttribute("data-url");
             if(targetUrl) {
                 dynamicContent.src = targetUrl;
-                // Kembalikan posisi header ke awal saat berpindah halaman
-                appHeaderWrapper.style.transform = 'translateY(0px)';
+            }
+
+
+            if (!this.classList.contains("btn-kas")) {
+                setTimeout(() => {
+                    this.classList.remove("menu-tertekan");
+                }, 300);
             }
         });
     });
 
-    // ==========================================
-    // LOGIKA LOGIN & PERBAIKAN FETCH ERROR
-    // ==========================================
+
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
     const loginModalOverlay = document.getElementById('loginModalOverlay');
     const loginForm = document.getElementById('loginForm');
@@ -408,7 +430,7 @@
     const rememberPasswordRadio = document.getElementById('rememberPasswordRadio');
     const loginBtnSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
 
-    // Fitur toggle klik untuk radio button Simpan Password
+
     if (rememberPasswordRadio) {
         let wasChecked = false;
         rememberPasswordRadio.addEventListener('mousedown', function() {
@@ -471,7 +493,7 @@
         loginForm.reset(); 
         const regToggle = document.getElementById('regToggleCheck');
         if(regToggle) { regToggle.checked = false; toggleRegButton(); }
-        // Pulihkan credential tersimpan jika ada
+
         const savedUser = localStorage.getItem('savedUsername');
         const savedPass = localStorage.getItem('savedPassword');
         if (savedUser && savedPass) {
@@ -519,7 +541,7 @@
         const userInput = document.getElementById('loginUsername').value.trim();
         const passInput = document.getElementById('loginPassword').value.trim();
         
-        // Simpan / hapus password berdasarkan status radio button
+
         if (rememberPasswordRadio && rememberPasswordRadio.checked) {
             localStorage.setItem('savedUsername', userInput);
             localStorage.setItem('savedPassword', passInput);
@@ -605,18 +627,9 @@
     }
     function closeProfileConfirmOutside(e) { if(e.target === document.getElementById('profileEditConfirmModal')) closeProfileConfirmModal(); }
 
-    // ==========================================
-    // LOGIKA HEADER IKUT SCROLL KONTEN
-    // ==========================================
+
     function initIframeScroll() {
-        try {
-            dynamicContent.contentWindow.addEventListener('scroll', () => {
-                let scrollY = dynamicContent.contentWindow.scrollY;
-                appHeaderWrapper.style.transform = `translateY(-${scrollY}px)`;
-            }, { passive: true });
-        } catch (e) {
-            console.log("Sensor scroll iframe standby...");
-        }
+
     }
 
 </script>

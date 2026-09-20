@@ -86,17 +86,16 @@
 
         /* ================== FOOTER GLOBAL ================== */
         .main-footer { 
-            width: 85%; 
-            margin: 40px auto 50px auto; 
-            padding-top: 16px; 
+            width: 100%; 
+            margin: 20px auto 30px auto; 
+            padding: 2px; 
             text-align: center; 
-            border-top: 1.5px solid #cbd5e1; 
+            border-top: none; 
             display: block; 
             position: relative; 
             z-index: 2; 
         }
-        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 3px;}
-        .f-bold { font-size: 11px; font-weight: 500; }
+        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 50px; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
         svg { display: inline-block; vertical-align: middle; }
@@ -104,50 +103,46 @@
         /* ======================================================================
            CSS KHUSUS HALAMAN PENGURUS
            ====================================================================== */
-           
-        /* 
-           KODE UNTUK GESER NAIK / TURUN KONTEN PENGURUS:
-           - margin-top: mengatur seberapa jauh konten dari batas atas.
-           - Ubah "margin-top: 15px" (naik) atau "margin-top: 40px" (geser turun).
-        */   
         .main-content-board { 
             background-color: transparent; 
-            margin-top: 70px; /* <--- UBAH ANGKA INI UNTUK GESER TURUN / NAIK */
+            margin-top: 65px; 
+            padding-top: 0;
             position: relative; 
             z-index: 10; 
             display: flex; 
             flex-direction: column; 
-            min-height: calc(100vh - 100px); 
+            min-height: 100vh; 
         }    
            
         /* Title Card Pengurus */
         .title-card-panel { 
             background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
-            color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; 
-            align-items: center; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            z-index: 2; position: relative; margin: 10px 16px 20px 16px;
+            color: #ffffff; padding: 10px 16px; display: flex; justify-content: space-between; 
+            align-items: center; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            z-index: 2; position: relative; margin: 25px 16px 14px 16px; height: 55px;
         }
-        .title-card-left { font-size: 15px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; }
+        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; z-index: 3; position: relative; }
         .title-card-left svg { stroke-width: 2.5; }
         
         .title-card-right { display: flex; align-items: center; justify-content: flex-end; }
         .title-card-right img { 
-            height: 60px; 
+            height: 70px; 
             width: auto; 
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); 
+            position: absolute; right: 10px; bottom: 0; z-index: 0;
         }
 
         .main-content-space { flex: 1; }
-        .main-content-area { width: 100%; margin-top: 5px; padding: 0 16px; position: relative; z-index: 2; }
+        .main-content-area { width: 100%; margin-top: 0; padding: 12px 16px 20px 16px; position: relative; z-index: 2; }
 
         .main-card { 
             background: #FFFFFF; 
             border-radius: 16px; 
-            padding: 24px 16px; 
+            padding: 16px; 
             border: 1px solid #e2e8f0; 
             display: flex; 
             flex-direction: column; 
-            gap: 20px; 
+            gap: 16px; 
             margin: 0; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
@@ -156,25 +151,25 @@
         .pengurus-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
-        /* Desain Card Kecil per Nama */
+        /* Desain Card per Nama */
         .pg-card {
             background: #F8FAFC; 
-            border-radius: 16px;
+            border-radius: 14px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             border: 1px solid #e2e8f0;
             transition: all 0.2s ease;
-            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+            animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: 12px 14px;
-            gap: 14px;
+            padding: 10px 12px;
+            gap: 12px;
         }
 
-        /* Efek Hover Card Kecil */
+        /* Efek Hover Card */
         .pg-card:hover {
             background-color: #FFFFFF;
             transform: translateY(-2px);
@@ -184,15 +179,15 @@
 
         /* Avatar Gambar */
         .pg-avatar {
-            width: 52px;
-            height: 52px;
-            border-radius: 12px; 
+            width: 46px;
+            height: 46px;
+            border-radius: 10px; 
             overflow: hidden;
             flex-shrink: 0;
             background-color: #FFFFFF; 
             display: flex; justify-content: center; align-items: center;
-            border: 2px solid #FFFFFF;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1.5px solid #FFFFFF;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
         .pg-avatar img {
@@ -204,10 +199,10 @@
         }
 
         /* Info Text */
-        .pg-info { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+        .pg-info { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
         
         .pg-name { 
-            font-size: 14.5px; font-weight: 600; color: #0f172a; 
+            font-size: 13.5px; font-weight: 600; color: #0f172a; 
             transition: color 0.3s ease; line-height: 1.3;
         }
         .pg-card:hover .pg-name { color: #1155CC; }
@@ -215,27 +210,27 @@
         /* Jabatan Soft Badge */
         .pg-role {
             display: inline-block;
-            font-size: 10.5px; font-weight: 600; color: #1d4ed8;
-            background: #eff6ff; padding: 3px 10px;
-            border-radius: 8px;
+            font-size: 10px; font-weight: 600; color: #1d4ed8;
+            background: #eff6ff; padding: 2px 8px;
+            border-radius: 6px;
             border: 1px solid #bfdbfe;
             transition: all 0.3s ease;
             width: fit-content;
         }
 
-        /* Staggered Animation Delay for Initial Load */
+        /* Staggered Animation Delay */
         .pg-card:nth-child(1) { animation-delay: 0.05s; }
-        .pg-card:nth-child(2) { animation-delay: 0.15s; }
-        .pg-card:nth-child(3) { animation-delay: 0.25s; }
-        .pg-card:nth-child(4) { animation-delay: 0.35s; }
-        .pg-card:nth-child(5) { animation-delay: 0.45s; }
-        .pg-card:nth-child(6) { animation-delay: 0.55s; }
-        .pg-card:nth-child(7) { animation-delay: 0.65s; }
-        .pg-card:nth-child(8) { animation-delay: 0.75s; }
-        .pg-card:nth-child(9) { animation-delay: 0.85s; }
+        .pg-card:nth-child(2) { animation-delay: 0.10s; }
+        .pg-card:nth-child(3) { animation-delay: 0.15s; }
+        .pg-card:nth-child(4) { animation-delay: 0.20s; }
+        .pg-card:nth-child(5) { animation-delay: 0.25s; }
+        .pg-card:nth-child(6) { animation-delay: 0.30s; }
+        .pg-card:nth-child(7) { animation-delay: 0.35s; }
+        .pg-card:nth-child(8) { animation-delay: 0.40s; }
+        .pg-card:nth-child(9) { animation-delay: 0.45s; }
 
         @keyframes slideUpFade {
-            0% { opacity: 0; transform: translateY(25px); }
+            0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -287,7 +282,7 @@
                 <span>Pengurus RT 2</span>
             </div>
             <div class="title-card-right">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQ7IVomIkb-mV0q7VdknjHyQqSB4BnWfCUMC6ojydIhF0uOokTpEJRwcFrcYPXUnCQgZhXIbDHB9ThmUSynhKSEIkydOESr2GkLs3GpwZhGCMZm_mJybCZV1_cLyLhRE-Hur8xmS5ue2lRQOGmk7zykgcq4jLBCqUmSJJyCVxrMVMceGYPpOoeGzVmirs/s1600/lebah%20-%20senter.png" alt="Logo RT 2">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1CtWf8OQyvJ3e6WU1N2UeLPpvnk_wZ6neZLoX_XldFj_5ApGAuh6wAP2CGolHSvQacRlTBiYUH9ttrGH8YHlJ8ceOaDUTGo2LlXc90EJLNDFhrDZM1V2YU70XDvCBKUMjWYRaJyLnyy5MUEF9VuqlI7IvPYu5velhoG8Rf51a4Xh8EyfBDTHIQ5dHcJo/s1600/lebah%20-%20bendera%20(small).png" alt="Maskot Lebah">
             </div>
         </div>
 
@@ -398,7 +393,7 @@
 
     <!-- FOOTER TETAP -->
     <footer class="main-footer">
-        <div class="footer-line f-bold">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
+        <div class="footer-line f-reg">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
     </footer>
 
 </div> 
@@ -407,53 +402,7 @@
     /* ==========================================================
        1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header & Login)
        ========================================================== */
-    const topBar = document.getElementById('appHeaderWrapper');
-    const menuFastModal = document.getElementById('moreMenuModal');
-    const btnMenuToggle = document.querySelector('.btn-menu');
-    
-    window.addEventListener('scroll', () => {
-        if (topBar) {
-            if (window.scrollY > 15) {
-                topBar.classList.add('header-morphed');
-            } else {
-                topBar.classList.remove('header-morphed');
-            }
-        }
-        
-        if (menuFastModal && menuFastModal.classList.contains('active')) {
-            closeMoreMenu();
-        }
-    }, { passive: true });
-
-    function toggleMoreMenu() {
-        if (!menuFastModal) return;
-        if (menuFastModal.classList.contains('active')) closeMoreMenu();
-        else openMoreMenu();
-    }
-    function openMoreMenu() { 
-        if (menuFastModal) menuFastModal.classList.add('active'); 
-        if (btnMenuToggle) btnMenuToggle.classList.add('menu-tertekan');
-        document.body.style.overflow = 'hidden'; 
-    }
-    function closeMoreMenu() { 
-        if (menuFastModal) menuFastModal.classList.remove('active'); 
-        if (halamanAktifSaatIni !== 'menu' && btnMenuToggle) btnMenuToggle.classList.remove('menu-tertekan');
-        document.body.style.overflow = 'auto'; 
-    }
-    function closeMoreMenuOutside(e) { if(e.target === menuFastModal) closeMoreMenu(); }
-
-    // DI SINI SET HALAMAN AKTIF KE 'pengurus'
     const halamanAktifSaatIni = 'pengurus'; 
-    const mapMenu = {
-        'home': 'btn-home', 'warga': 'btn-warga', 'inventaris': 'btn-inventaris',
-        'lapak': 'btn-lapak', 'pengurus': 'btn-pengurus', 'galeri': 'btn-galeri',
-        'tatatertib': 'btn-tatatertib', 'ronda': 'btn-ronda', 'menu': 'btn-menu'
-    };
-
-    if (mapMenu[halamanAktifSaatIni]) {
-        const tombolAktif = document.querySelectorAll('.' + mapMenu[halamanAktifSaatIni]);
-        tombolAktif.forEach(btn => btn.classList.add('menu-tertekan'));
-    }
 
     // ==========================================
     // PENGATURAN LOGIN Warga (Sinkron & Persisten)

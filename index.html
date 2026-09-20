@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RT 2 Online | Informasi Warga RT2/RW3, Pasekan Lor</title>
+    <meta name="description" content="Portal informasi digital resmi untuk warga RT 2/RW 3, Pasekan Lor.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,7 +57,7 @@
         .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
         .slogan-text-2 { color: #ffffff; font-size: 9px; font-weight: 500; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 
-        /* Area Login / Profil Warga (Dikembalikan ke Atas) */
+        /* Area Login / Profil Warga */
         .login-btn-wrapper { 
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
             background-color: rgba(255, 255, 255, 0.2); width: 30px; height: 30px; border-radius: 50%; 
@@ -73,7 +74,7 @@
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .user-short-name { color: #5FDFF5; font-size: 10px; font-weight: 500; max-width: 65px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; text-align: right; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .logout-btn { background: rgba(239, 68, 68, 0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
         .logout-btn svg { width: 12px; height: 12px; }
         .logout-btn:active { transform: scale(0.9); }
 
@@ -82,33 +83,15 @@
             flex: 1; width: 100%; position: relative; margin-bottom: 0; background: transparent; height: 100vh;
         }
         #dynamic-content {
-            width: 100%; height: 100%; border: none; background: transparent; display: block;
-        }
-        
-        /* Loading Overlay Style */
-        #iframeLoadingOverlay {
-            display: flex;
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-            z-index: 999; flex-direction: column; justify-content: center; align-items: center;
-        }
-        @keyframes pulseZoom {
-            0% { transform: scale(0.8); opacity: 0.6; }
-            50% { transform: scale(1.15); opacity: 1; }
-            100% { transform: scale(0.8); opacity: 0.6; }
-        }
-        .zoom-in-loading {
-            width: 75px; height: auto;
-            animation: pulseZoom 1.2s infinite ease-in-out;
+            width: 100%; height: 100%; border: none; background: #FFFFFF; display: block;
         }
 
-        /* ================== MODAL ANIMASI & OVERLAY (JARAK ATAS 90PX) ================== */
+        /* ================== MODAL ANIMASI & OVERLAY ================== */
         .slide-up-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; 
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center; 
-            padding: 90px 16px 20px 16px; /* REVISI: Geser ke atas, jarak 90px dari atas */
+            padding: 90px 16px 20px 16px; 
             visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; 
         }
         .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
@@ -154,22 +137,32 @@
         .bottom-nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
             width: 100%; max-width: 480px; height: 65px;
-            background: #00348F; 
+            background: #00348F; /* Latar dasar jika ada celah */
             display: flex; align-items: center; justify-content: space-between;
             z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
-            /* Memastikan semua muat di 1 baris */
             overflow-x: auto; white-space: nowrap;
         }
 
         .b-nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-decoration: none; color: rgba(255,255,255,0.7); font-size: 9px; font-weight: 600;
-            width: 12.5%; /* 100% dibagi 8 tombol */
+            width: 12.5%; 
             height: 100%; cursor: pointer; 
             transition: all 0.3s ease;
-            text-transform: capitalize; background-color: transparent; border: none; outline: none;
+            text-transform: capitalize; border: none; outline: none;
+            border-right: 1px solid #012F80;
             position: relative; flex-shrink: 0;
         }
+        
+        /* Pewarnaan Nuansa Biru Bergradasi Per Tombol */
+        .b-nav-item:nth-child(1) { background-color: #002870; border-right-color: #001d54; }
+        .b-nav-item:nth-child(2) { background-color: #003082; border-right-color: #002363; }
+        .b-nav-item:nth-child(3) { background-color: #003896; border-right-color: #002a75; }
+        /* nth-child(4) adalah RONDA, ditangani di class khusus di bawah */
+        .b-nav-item:nth-child(5) { background-color: #0040aa; border-right-color: #003087; }
+        .b-nav-item:nth-child(6) { background-color: #0048be; border-right-color: #003699; }
+        .b-nav-item:nth-child(7) { background-color: #0050d4; border-right-color: #003cab; }
+        .b-nav-item:nth-child(8) { background-color: #0058e8; border-right: none; }
 
         .b-nav-item svg { 
             width: 20px; height: 20px; margin-bottom: 4px; stroke: rgba(255,255,255,0.7); stroke-width: 2; fill: none;
@@ -178,7 +171,7 @@
 
         /* Hover & Menu Aktif Highlight Cemerlang */
         .b-nav-item:hover, .b-nav-item.menu-tertekan { 
-            background-color: rgba(255,255,255,0.1) !important; 
+            background-color: #001540 !important; 
             color: #FACC15 !important; 
         }
         .b-nav-item:hover svg, .b-nav-item.menu-tertekan svg { 
@@ -186,9 +179,36 @@
             transform: translateY(-2px);
         }
 
-        /* Cegah klik berulang */
-        .b-nav-item.menu-tertekan { 
-            pointer-events: none; 
+        /* ================== SPESIAL TOMBOL RONDA MENYALA ================== */
+        @keyframes nyalaRondaBiru {
+            0% { background-color: #0c43a8; box-shadow: 0 0 5px rgba(17, 85, 204, 0.4); }
+            50% { background-color: #1155cc; box-shadow: 0 0 16px rgba(17, 85, 204, 0.95), inset 0 0 8px rgba(255,255,255,0.25); }
+            100% { background-color: #0c43a8; box-shadow: 0 0 5px rgba(17, 85, 204, 0.4); }
+        }
+
+        .b-nav-item.btn-ronda {
+            animation: nyalaRondaBiru 1.5s infinite ease-in-out;
+            color: #FFFFFF !important;
+            border-right: 1px solid #012F80;
+            z-index: 10;
+        }
+        
+        .b-nav-item.btn-ronda svg {
+            stroke: #FFFFFF !important;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.4));
+        }
+        
+        /* Kondisi Saat Ronda Ditekan/Di-hover (Animasi berhenti) */
+        .b-nav-item.btn-ronda:hover, .b-nav-item.btn-ronda.menu-tertekan {
+            animation: none !important;
+            background-color: #001540 !important;
+            color: #FACC15 !important;
+            box-shadow: none;
+        }
+        
+        .b-nav-item.btn-ronda:hover svg, .b-nav-item.btn-ronda.menu-tertekan svg {
+            stroke: #FACC15 !important;
+            filter: none;
         }
 
     </style>
@@ -253,14 +273,12 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- REVISI: Tombol Selamat Datang diganti menjadi Masuk -->
                         <button type="submit" id="btnSubmitLogin" class="btn-monggo">
                             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
                             <span>Masuk</span>
                         </button>
                     </div>
 
-                    <!-- REVISI: Radio button Simpan Password -->
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px; padding-left: 2px;">
                         <input type="radio" id="rememberPasswordRadio" name="simpan_pass" style="width: 16px; height: 16px; accent-color: #1155cc; cursor: pointer;">
                         <label for="rememberPasswordRadio" style="font-size: 12px; color: #475569; cursor: pointer; user-select: none; font-weight: 500;">Simpan Password</label>
@@ -300,13 +318,8 @@
         </div>
     </div>
 
-    <!-- ================= AREA KONTEN UTAMA IFRAME & LOADING ================= -->
+    <!-- ================= AREA KONTEN UTAMA IFRAME ================= -->
     <div class="content-container">
-        <!-- Overlay Loading Animasi Logo -->
-        <div id="iframeLoadingOverlay">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png" alt="Loading" class="zoom-in-loading">
-        </div>
-
         <!-- IFRAME HALAMAN -->
         <iframe id="dynamic-content" src="https://rt2pasekanlor.id/home"></iframe>
     </div>
@@ -321,19 +334,23 @@
     </a>
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/inventaris">
         <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-        <span>INVENTARIS</span>
+        <span>ASET</span>
     </a>
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/tatatertib">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         <span>ATURAN</span>
     </a>
-    <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/ronda">
+    <a href="#" class="b-nav-item footer-menu-btn btn-ronda" data-url="https://rt2pasekanlor.id/ronda">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span>RONDA</span>
     </a>
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/keuangan">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-        <span>KEUANGAN</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path>
+            <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path>
+            <path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path>
+        </svg>
+        <span>KAS</span>
     </a>
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/lapak-warga">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
@@ -341,11 +358,11 @@
     </a>
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/pengurus">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        <span>PENGURUS</span>        
+        <span>BAGAN</span>        
     </a>
     <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/galeri">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>GALERI</span>
+        <span>MEDIA</span>
     </a>
 </nav>
 
@@ -355,12 +372,9 @@
     // ==========================================
     const footerBtns = document.querySelectorAll('.footer-menu-btn');
     const dynamicContent = document.getElementById('dynamic-content');
-    const iframeOverlay = document.getElementById('iframeLoadingOverlay');
     const appHeaderWrapper = document.getElementById('appHeaderWrapper');
 
-    // Mencegah overlay loading nyangkut jika iframe gagal memuat sempurna
     dynamicContent.addEventListener('load', () => {
-        iframeOverlay.style.display = 'none';
         initIframeScroll(); 
     });
 
@@ -373,10 +387,9 @@
             // Beri tanda aktif pada tombol yang diklik
             this.classList.add("menu-tertekan");
 
-            // Update iframe & Munculkan Overlay Loading
+            // Update iframe 
             const targetUrl = this.getAttribute("data-url");
             if(targetUrl) {
-                iframeOverlay.style.display = 'flex'; 
                 dynamicContent.src = targetUrl;
                 // Kembalikan posisi header ke awal saat berpindah halaman
                 appHeaderWrapper.style.transform = 'translateY(0px)';

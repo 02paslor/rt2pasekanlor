@@ -86,17 +86,16 @@
 
         /* ================== FOOTER GLOBAL ================== */
         .main-footer { 
-            width: 85%; 
-            margin: 40px auto 50px auto; 
-            padding-top: 16px; 
+            width: 100%; 
+            margin: 20px auto 30px auto; 
+            padding: 2px; 
             text-align: center; 
-            border-top: 1.5px solid #cbd5e1; 
+            border-top: none; 
             display: block; 
             position: relative; 
             z-index: 2; 
         }
-        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 3px;}
-        .f-bold { font-size: 11px; font-weight: 500; }
+        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 50px; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
         svg { display: inline-block; vertical-align: middle; }
@@ -104,74 +103,90 @@
         /* ======================================================================
            CSS KHUSUS HALAMAN LAPAK WARGA
            ====================================================================== */
-           
-        /* 
-           KODE UNTUK GESER NAIK / TURUN KONTEN LAPAK WARGA:
-           - margin-top: mengatur jarak elemen ini dari sisi paling atas.
-           - Ubah "margin-top: 15px" (naik) atau "margin-top: 50px" (geser turun).
-        */   
         .main-content-board { 
             background-color: transparent; 
-            margin-top: 65px; /* <--- UBAH ANGKA INI UNTUK GESER TURUN / NAIK */
+            margin-top: 65px; 
+            padding-top: 0;
             position: relative; 
             z-index: 10; 
             display: flex; 
             flex-direction: column; 
-            min-height: calc(100vh - 100px); 
+            min-height: 100vh; 
         }    
            
+        /* Title Card Lapak Warga */
         .title-card-panel { 
             background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
-            color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; 
-            align-items: center; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            z-index: 2; position: relative; margin: 10px 16px 20px 16px;
+            color: #ffffff; padding: 10px 16px; display: flex; justify-content: space-between; 
+            align-items: center; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            z-index: 2; position: relative; margin: 25px 16px 14px 16px; height: 55px;
         }
-        .title-card-left { font-size: 15px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; }
+        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; z-index: 3; position: relative; }
+        .title-card-left svg { stroke-width: 2.5; }
         
         .title-card-right { display: flex; align-items: center; justify-content: flex-end; }
-        .title-card-right img { height: 80px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
+        .title-card-right img { 
+            height: 70px; 
+            width: auto; 
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); 
+            position: absolute; right: 10px; bottom: 0; z-index: 0;
+        }
+
+        /* Area Panel Filter Tombol Compact (#9E9E9E) */
+        .filter-top-section {
+            position: relative;
+            background: #9E9E9E; 
+            padding: 8px 12px;
+            margin: 0 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 2;
+        }
+
+        .filter-container { 
+            display: flex; 
+            overflow-x: auto; 
+            gap: 6px; 
+            align-items: center;
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
+        }
+        .filter-container::-webkit-scrollbar { display: none; }
+        
+        .filter-btn { 
+            background: rgba(255, 255, 255, 0.25); 
+            color: #ffffff; 
+            border: 1px solid transparent; 
+            padding: 6px 14px; 
+            border-radius: 8px; 
+            font-size: 11.5px; 
+            font-family: 'Poppins', sans-serif; 
+            font-weight: 500; 
+            cursor: pointer; 
+            white-space: nowrap; 
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .filter-btn:active { transform: scale(0.96); }
+        .filter-btn.active { 
+            background: #ffffff; 
+            color: #FA6800; 
+            border-color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+        }
 
         .main-content-space { flex: 1; }
-        .main-content-area { width: 100%; margin-top: 15px; position: relative; z-index: 2; }
-
-        /* Animasi Loading Muter untuk Ikon SVG */
-        @keyframes spinAnim { 100% { transform: rotate(360deg); } }
-        .spin-icon { animation: spinAnim 1s linear infinite; display: inline-block; vertical-align: middle; }
+        .main-content-area { width: 100%; margin-top: 0; padding: 12px 16px 20px 16px; position: relative; z-index: 2; }
 
         #widget-umkm-rt2, #modal-umkm { font-family: 'Poppins', sans-serif; color: #333; box-sizing: border-box; text-align: left; }
-        #widget-umkm-rt2 { width: 100%; max-width: 480px; margin: 0 auto; padding: 0 16px; }
-        .loading-teks { font-weight: 500; text-align: center; padding: 25px; color: #666; font-size: 12px; border: 1px dashed #ccc; border-radius: 8px; grid-column: span 2; }
-
-        /* --- FILTER KATEGORI --- */
-        .filter-container { display: flex; overflow-x: auto; gap: 8px; margin-bottom: 16px; padding-top: 4px; padding-bottom: 4px; scrollbar-width: none; -ms-overflow-style: none; }
-        .filter-container::-webkit-scrollbar { display: none; }
-        .filter-btn { 
-            background: #ffffff; color: #555; border: 1px solid #cbd5e1; padding: 6px 15px; border-radius: 10px; 
-            font-size: 11.5px; font-family: 'Poppins', sans-serif; font-weight: 500; cursor: pointer; 
-            white-space: nowrap; transition: transform 0.25s ease, background 0.2s, color 0.2s, border-color 0.2s; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-        
-        .filter-btn.active { 
-            background: #eff6ff; 
-            border-color: #bfdbfe; 
-            color: #1155CC; 
-            box-shadow: inset 0 2px 4px rgba(17,85,204,0.1); 
-            transform: scale(1.06); 
-        }
-
-        @keyframes btnZoomIn {
-            0% { transform: scale(0.92); opacity: 0.8; }
-            60% { transform: scale(1.14); }
-            100% { transform: scale(1.06); opacity: 1; }
-        }
-        .filter-btn.zoom-in { 
-            animation: btnZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; 
-        }
+        #widget-umkm-rt2 { width: 100%; margin: 0 auto; padding: 0; }
+        .loading-teks { font-weight: 500; text-align: center; padding: 25px; color: #666; font-size: 12px; border: 1px dashed #ccc; border-radius: 12px; grid-column: span 2; background: #ffffff; }
 
         /* Animasi Zoom In Masuk untuk Card */
         @keyframes cardZoomIn {
-            0% { opacity: 0; transform: scale(0.82); }
+            0% { opacity: 0; transform: scale(0.88); }
             100% { opacity: 1; transform: scale(1); }
         }
 
@@ -193,14 +208,11 @@
             padding: 3px 7px; border-radius: 6px; font-weight: 600; margin: 0; border: 1px solid #bfdbfe;
         }
         
-        /* Nama toko warna #1155cc */
         .nama-toko { font-size: 13.5px; font-weight: 700; margin: 0 0 4px 0; color: #1155cc; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* Teks deskripsi dibuat sedikit lebih kecil & rapi */
         .teks-deskripsi-depan { font-size: 8.5pt; color: #64748b; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.38; }
         .teks-deskripsi-modal { font-size: 9pt; color: #444; margin-bottom: 12px; line-height: 1.5; }
 
-        /* Alamat pada card depan dibuat proporsional dan ringkas */
         .icon-text { display: flex; align-items: flex-start; gap: 5px; font-size: 10.5px; color: #64748b; margin-top: auto; line-height: 1.35; }
         .icon-text svg { width: 12px; height: 12px; flex-shrink: 0; margin-top: 1px; color: #94a3b8; }
         
@@ -295,21 +307,25 @@
             </div>
         </div>
 
-        <!-- ==================== TITLE CARD LAPAK WARGA ==================== -->
+        <!-- ==================== TITLE CARD LAPAK WARGA (SERAGAM ORANGE) ==================== -->
         <div class="title-card-panel" title="Halaman Lapak Warga">
             <div class="title-card-left">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 <span>Lapak Warga RT 2</span>
             </div>
             <div class="title-card-right">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQ7IVomIkb-mV0q7VdknjHyQqSB4BnWfCUMC6ojydIhF0uOokTpEJRwcFrcYPXUnCQgZhXIbDHB9ThmUSynhKSEIkydOESr2GkLs3GpwZhGCMZm_mJybCZV1_cLyLhRE-Hur8xmS5ue2lRQOGmk7zykgcq4jLBCqUmSJJyCVxrMVMceGYPpOoeGzVmirs/s1600/lebah%20-%20senter.png" alt="Maskot Lebah">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1CtWf8OQyvJ3e6WU1N2UeLPpvnk_wZ6neZLoX_XldFj_5ApGAuh6wAP2CGolHSvQacRlTBiYUH9ttrGH8YHlJ8ceOaDUTGo2LlXc90EJLNDFhrDZM1V2YU70XDvCBKUMjWYRaJyLnyy5MUEF9VuqlI7IvPYu5velhoG8Rf51a4Xh8EyfBDTHIQ5dHcJo/s1600/lebah%20-%20bendera%20(small).png" alt="Maskot Lebah">
             </div>
+        </div>
+
+        <!-- ==================== AREA FILTER TOMBOL (COMPACT #9E9E9E) ==================== -->
+        <div class="filter-top-section">
+            <div class="filter-container" id="filter-kategori"></div>
         </div>
 
         <!-- ==================== KONTEN UTAMA LAPAK WARGA ==================== -->
         <div class="main-content-area">
             <div id="widget-umkm-rt2">
-                <div class="filter-container" id="filter-kategori"></div>
                 <div class="umkm-grid" id="umkm-wrapper">
                     <div class="loading-teks">Memuat Data Lapak Warga...</div>
                 </div>
@@ -323,7 +339,7 @@
 
     <!-- FOOTER TETAP -->
     <footer class="main-footer">
-        <div class="footer-line f-bold">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
+        <div class="footer-line f-reg">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
     </footer>
 
     <!-- Modal / Popup Identitas Lapak -->
@@ -343,53 +359,7 @@
     /* ==========================================================
        1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header & Login)
        ========================================================== */
-    const topBar = document.getElementById('appHeaderWrapper');
-    const menuFastModal = document.getElementById('moreMenuModal');
-    const btnMenuToggle = document.querySelector('.btn-menu');
-    
-    window.addEventListener('scroll', () => {
-        if (topBar) {
-            if (window.scrollY > 15) {
-                topBar.classList.add('header-morphed');
-            } else {
-                topBar.classList.remove('header-morphed');
-            }
-        }
-        
-        if (menuFastModal && menuFastModal.classList.contains('active')) {
-            closeMoreMenu();
-        }
-    }, { passive: true });
-
-    function toggleMoreMenu() {
-        if (!menuFastModal) return;
-        if (menuFastModal.classList.contains('active')) closeMoreMenu();
-        else openMoreMenu();
-    }
-    function openMoreMenu() { 
-        if (menuFastModal) menuFastModal.classList.add('active'); 
-        if (btnMenuToggle) btnMenuToggle.classList.add('menu-tertekan');
-        document.body.style.overflow = 'hidden'; 
-    }
-    function closeMoreMenu() { 
-        if (menuFastModal) menuFastModal.classList.remove('active'); 
-        if (halamanAktifSaatIni !== 'menu' && btnMenuToggle) btnMenuToggle.classList.remove('menu-tertekan');
-        document.body.style.overflow = 'auto'; 
-    }
-    function closeMoreMenuOutside(e) { if(e.target === menuFastModal) closeMoreMenu(); }
-
-    // DI SINI SET HALAMAN AKTIF KE 'lapak'
     const halamanAktifSaatIni = 'lapak'; 
-    const mapMenu = {
-        'home': 'btn-home', 'warga': 'btn-warga', 'inventaris': 'btn-inventaris',
-        'lapak': 'btn-lapak', 'pengurus': 'btn-pengurus', 'galeri': 'btn-galeri',
-        'tatatertib': 'btn-tatatertib', 'ronda': 'btn-ronda', 'menu': 'btn-menu'
-    };
-
-    if (mapMenu[halamanAktifSaatIni]) {
-        const tombolAktif = document.querySelectorAll('.' + mapMenu[halamanAktifSaatIni]);
-        tombolAktif.forEach(btn => btn.classList.add('menu-tertekan'));
-    }
 
     // ==========================================
     // PENGATURAN LOGIN Warga (Sinkron & Persisten)
@@ -601,16 +571,10 @@
     window.filterData = function(kat, element) {
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.classList.remove('active');
-            btn.classList.remove('zoom-in');
         });
         
         if (element) {
             element.classList.add('active');
-            element.classList.add('zoom-in');
-            
-            setTimeout(() => {
-                element.classList.remove('zoom-in');
-            }, 300);
         }
 
         renderCards(kat);

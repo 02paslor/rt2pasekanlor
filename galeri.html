@@ -61,8 +61,8 @@
         .logout-btn svg { width: 12px; height: 12px; }
         .logout-btn:active { transform: scale(0.9); }
 
-        /* ================== MODAL ANIMASI & OVERLAY (Diturunkan 70px) ================== */
-        .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 145px 16px 20px 16px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
+        /* ================== MODAL ANIMASI & OVERLAY ================== */
+        .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 75px 16px 20px 16px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
         .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
         .slide-up-content { background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
         .slide-up-overlay.active .slide-up-content { transform: scale(1); opacity: 1; }
@@ -86,17 +86,16 @@
 
         /* ================== FOOTER GLOBAL ================== */
         .main-footer { 
-            width: 85%; 
-            margin: 40px auto 50px auto; 
-            padding-top: 16px; 
+            width: 100%; 
+            margin: 20px auto 30px auto; 
+            padding: 2px; 
             text-align: center; 
-            border-top: 1.5px solid #cbd5e1; 
+            border-top: none; 
             display: block; 
             position: relative; 
             z-index: 2; 
         }
-        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 3px;}
-        .f-bold { font-size: 11px; font-weight: 500; }
+        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 50px; }
         .f-reg { font-size: 10px; font-weight: 400; }
 
         svg { display: inline-block; vertical-align: middle; }
@@ -107,65 +106,133 @@
         .main-content-board { 
             background-color: transparent; 
             margin-top: 65px; 
+            padding-top: 0;
             position: relative; 
             z-index: 10; 
             display: flex; 
             flex-direction: column; 
-            min-height: calc(100vh - 100px); 
+            min-height: 100vh; 
         }   
             
+        /* Title Card Galeri (Nuansa Orange) */
         .title-card-panel { 
             background: linear-gradient(135deg, #FA6800 0%, #e65c00 100%); 
-            color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; 
-            align-items: center; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            z-index: 2; position: relative; margin: 10px 16px 20px 16px;
+            color: #ffffff; padding: 10px 16px; display: flex; justify-content: space-between; 
+            align-items: center; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            z-index: 2; position: relative; margin: 25px 16px 14px 16px; height: 55px;
         }
-        .title-card-left { font-size: 15px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; }
+        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; z-index: 3; position: relative; }
+        .title-card-left svg { stroke-width: 2.5; }
         
         .title-card-right { display: flex; align-items: center; justify-content: flex-end; }
-        .title-card-right img { height: 80px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
+        .title-card-right img { 
+            height: 70px; 
+            width: auto; 
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); 
+            position: absolute; right: 10px; bottom: 0; z-index: 0;
+        }
+
+        /* Area Panel Pencarian Compact (#9E9E9E) */
+        .filter-top-section {
+            position: relative;
+            background: #9E9E9E; 
+            padding: 8px 12px;
+            margin: 0 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 2;
+        }
+
+        .header-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-left {
+            font-size: 12px;
+            font-weight: 500;
+            color: #ffffff;
+            line-height: 1.2;
+            flex-shrink: 0;
+        }
+
+        .info-left strong {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .stats-left {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .search-input { 
+            background: #ffffff; 
+            color: #1e293b; 
+            border-radius: 8px; 
+            padding: 6px 10px; 
+            border: 1px solid transparent; 
+            width: 105px; 
+            text-align: left; 
+            font-size: 11px; 
+            font-weight: 500; 
+            outline: none; 
+            transition: all 0.25s ease; 
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); 
+        }
+        .search-input::placeholder { color: #94a3b8; }
+        .search-input:focus { border: 1px solid #FA6800; width: 120px; }
+
+        .year-select-compact {
+            background: #ffffff;
+            color: #1e293b;
+            border-radius: 8px;
+            padding: 6px 6px;
+            border: 1px solid transparent;
+            font-size: 11px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+            transition: border-color 0.2s;
+        }
+        .year-select-compact:focus { border: 1px solid #FA6800; }
+
+        .view-controls { display: flex; gap: 4px; }
+        .btn-view { 
+            background: #ffffff; 
+            border: 1px solid transparent; 
+            color: #64748b; 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 14px; 
+            transition: all 0.2s; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+        }
+        .btn-view:active { transform: scale(0.92); }
+        .btn-view.active { background: #eff6ff; border-color: #bfdbfe; color: #1155CC; }
 
         .main-content-space { flex: 1; }
-        .main-content-area { width: 100%; margin-top: 15px; position: relative; z-index: 2; }
+        .main-content-area { width: 100%; margin-top: 0; padding: 12px 16px 20px 16px; position: relative; z-index: 2; }
 
         /* Animasi Loading Muter untuk Ikon SVG */
         @keyframes spinAnim { 100% { transform: rotate(360deg); } }
         .spin-icon { animation: spinAnim 1s linear infinite; display: inline-block; vertical-align: middle; }
 
-        .info-dashboard-container { padding: 0 16px 20px 16px; }
-        
-        .stats-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;}
-        .stats-info { font-size: 12px; font-weight: 500; color: #5C5C5C; line-height: 1.4; }
-        .stats-info strong { color: #1155CC; font-size: 14px; }
-        
-        /* Tombol Toggle View (Grid / List) */
-        .view-toggle-group { display: flex; gap: 4px; background: #e2e8f0; padding: 3px; border-radius: 8px; }
-        .view-btn { background: transparent; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; color: #64748b; font-size: 13px; transition: all 0.2s; }
-        .view-btn.active { background: #ffffff; color: #1155CC; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .info-dashboard-container { padding: 0; }
 
-        .filter-group { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 8px; 
-            width: 100%; 
-            margin-bottom: 14px;
-        }
-        .search-input, .year-select { 
-            width: 100%; 
-            background: #ffffff; 
-            color: #1e293b; 
-            border-radius: 8px; 
-            border: 1px solid #cbd5e1; 
-            font-size: 12px; 
-            outline: none; 
-            transition: all 0.3s ease; 
-        }
-        .search-input { padding: 10px 12px; }
-        .search-input:focus { border: 1.5px solid #1155CC; box-shadow: 0 0 0 3px rgba(17,85,204,0.1); }
-        .year-select { padding: 10px; font-weight: 500; cursor: pointer; }
-        
         /* Layout Grid Mode (Default) */
-        .gallery-grid.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        .gallery-grid.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         
         /* Layout List Mode */
         .gallery-grid.list-mode { display: flex; flex-direction: column; gap: 10px; }
@@ -174,13 +241,13 @@
         .gallery-grid.list-mode .gallery-info { padding: 8px 12px; }
 
         .gallery-item { 
-            background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
+            background: #ffffff; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
             border: 1px solid #e2e8f0; overflow: hidden; cursor: pointer; transition: all 0.25s ease; 
             display: flex; flex-direction: column; opacity: 0; transform: translateY(15px); 
             animation: slideUpList 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .gallery-item:active { transform: scale(0.95); }
+        .gallery-item:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(17, 85, 204, 0.1); border-color: #cbd5e1; }
+        .gallery-item:active { transform: scale(0.97); }
         @keyframes slideUpList { to { opacity: 1; transform: translateY(0); } }
         
         .gallery-thumb-wrapper { width: 100%; padding-top: 100%; background: #f1f5f9; position: relative; overflow: hidden; }
@@ -190,16 +257,16 @@
         .gallery-badge-count {
             position: absolute; bottom: 8px; right: 8px;
             background: rgba(15, 23, 42, 0.7); color: #fff;
-            font-size: 10px; font-weight: 600; padding: 4px 8px;
-            border-radius: 20px; backdrop-filter: blur(4px);
+            font-size: 10px; font-weight: 600; padding: 3px 7px;
+            border-radius: 12px; backdrop-filter: blur(4px);
             display: flex; align-items: center; gap: 4px;
         }
 
         .gallery-info { padding: 10px 12px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
-        .gallery-title { font-size: 12px; font-weight: 600; line-height: 1.4; color: #0f172a; margin-bottom: 4px; word-wrap: break-word; }
+        .gallery-title { font-size: 12.5px; font-weight: 600; line-height: 1.35; color: #0f172a; margin-bottom: 4px; word-wrap: break-word; }
         .gallery-date { font-size: 10px; font-weight: 500; color: #64748b; display: flex; align-items: center; gap: 4px; }
 
-        /* ================= MODAL ISI ALBUM (Diperpendek & Diturunkan 70px) ================= */
+        /* ================= MODAL ISI ALBUM ================= */
         .album-modal-overlay { 
             position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
             background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px);
@@ -235,7 +302,6 @@
         }
         .btn-kembali-header:active { background: #e2e8f0; transform: scale(0.9); }
         
-        /* Tombol Exit Tambahan di Kanan Header Album */
         .btn-exit-header {
             background: #1155cc; color: #ffffff; border: none;
             width: 36px; height: 36px; border-radius: 50%;
@@ -328,14 +394,38 @@
             </div>
         </div>
 
-        <!-- ==================== TITLE CARD GALERI ==================== -->
+        <!-- ==================== TITLE CARD GALERI (SERAGAM ORANGE) ==================== -->
         <div class="title-card-panel" title="Halaman Galeri">
             <div class="title-card-left">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 <span>Galeri Warga RT 2</span>
             </div>
             <div class="title-card-right">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQ7IVomIkb-mV0q7VdknjHyQqSB4BnWfCUMC6ojydIhF0uOokTpEJRwcFrcYPXUnCQgZhXIbDHB9ThmUSynhKSEIkydOESr2GkLs3GpwZhGCMZm_mJybCZV1_cLyLhRE-Hur8xmS5ue2lRQOGmk7zykgcq4jLBCqUmSJJyCVxrMVMceGYPpOoeGzVmirs/s1600/lebah%20-%20senter.png" alt="Maskot Lebah">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1CtWf8OQyvJ3e6WU1N2UeLPpvnk_wZ6neZLoX_XldFj_5ApGAuh6wAP2CGolHSvQacRlTBiYUH9ttrGH8YHlJ8ceOaDUTGo2LlXc90EJLNDFhrDZM1V2YU70XDvCBKUMjWYRaJyLnyy5MUEF9VuqlI7IvPYu5velhoG8Rf51a4Xh8EyfBDTHIQ5dHcJo/s1600/lebah%20-%20bendera%20(small).png" alt="Maskot Lebah">
+            </div>
+        </div>
+
+        <!-- ==================== AREA INFO & PENCARIAN (COMPACT #9E9E9E) ==================== -->
+        <div class="filter-top-section">
+            <div class="header-info-row">
+                <div class="info-left">
+                    Album: <strong id="totalAlbums">0</strong>
+                </div>
+                
+                <div class="stats-left">
+                    <input type="text" id="gallerySearchInput" class="search-input" placeholder="Cari kegiatan..." onkeyup="filterGalleryList()">
+                    <select id="yearFilter" class="year-select-compact" onchange="filterGalleryList()">
+                        <option value="">Semua</option>
+                    </select>
+                    <div class="view-controls">
+                        <button class="btn-view active" id="btnGridMode" onclick="setViewMode('grid')" title="Tampilan Grid">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        </button>
+                        <button class="btn-view" id="btnListMode" onclick="setViewMode('list')" title="Tampilan List">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -344,30 +434,8 @@
             <div class="info-dashboard-container">
                 
                 <!-- Pemberitahuan Kirim Foto -->
-                <div style="font-size: 11px; font-weight: 500; color: #787878; background: #E6E6E6; padding: 10px 12px; border-radius: 8px; margin-bottom: 14px; text-align: center;">
-                    Bagi yang memiliki dokumentasi foto/ video mohon kirimkan ke admin<br> Terima kasih.
-                </div>
-
-                <div class="stats-bar">
-                    <div class="stats-info">
-                        ALBUM FOLDER: <strong id="totalAlbums">0</strong> | TOTAL FOTO: <strong id="totalPhotos">0</strong>
-                    </div>
-                    <!-- Tombol Mode View (Grid & List) -->
-                    <div class="view-toggle-group">
-                        <button class="view-btn active" id="btnGridMode" onclick="setViewMode('grid')" title="Tampilan Grid">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                        </button>
-                        <button class="view-btn" id="btnListMode" onclick="setViewMode('list')" title="Tampilan List">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <input type="text" id="gallerySearchInput" class="search-input" placeholder="Cari Kegiatan..." onkeyup="filterGalleryList()">
-                    <select id="yearFilter" class="year-select" onchange="filterGalleryList()">
-                        <option value="">SEMUA TAHUN</option>
-                    </select>
+                <div style="font-size: 11px; font-weight: 500; color: #64748b; background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 10px; margin-bottom: 12px; text-align: center;">
+                    Bagi yang memiliki dokumentasi foto/video mohon kirimkan ke admin. Terima kasih.
                 </div>
                 
                 <!-- Wadah Daftar Album -->
@@ -386,7 +454,7 @@
 
     <!-- FOOTER TETAP -->
     <footer class="main-footer">
-        <div class="footer-line f-bold">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
+        <div class="footer-line f-reg">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
     </footer>
 
     <!-- MODAL ISI ALBUM -->
@@ -402,7 +470,6 @@
                         <p id="albumModalSubtitle">-</p>
                     </div>
                 </div>
-                <!-- Tombol Exit Jelas di Kanan -->
                 <button class="btn-exit-header" onclick="closeAlbumModal()" title="Tutup">X</button>
             </div>
             <div class="album-modal-body" id="albumModalBody">
@@ -417,52 +484,7 @@
     /* ==========================================================
        1. SCRIPT MASTER TEMPLATE (Navigasi, Modal Header & Login)
        ========================================================== */
-    const topBar = document.getElementById('appHeaderWrapper');
-    const menuFastModal = document.getElementById('moreMenuModal');
-    const btnMenuToggle = document.querySelector('.btn-menu');
-    
-    window.addEventListener('scroll', () => {
-        if (topBar) {
-            if (window.scrollY > 15) {
-                topBar.classList.add('header-morphed');
-            } else {
-                topBar.classList.remove('header-morphed');
-            }
-        }
-        
-        if (menuFastModal && menuFastModal.classList.contains('active')) {
-            closeMoreMenu();
-        }
-    }, { passive: true });
-
-    function toggleMoreMenu() {
-        if (!menuFastModal) return;
-        if (menuFastModal.classList.contains('active')) closeMoreMenu();
-        else openMoreMenu();
-    }
-    function openMoreMenu() { 
-        if (menuFastModal) menuFastModal.classList.add('active'); 
-        if (btnMenuToggle) btnMenuToggle.classList.add('menu-tertekan');
-        document.body.style.overflow = 'hidden'; 
-    }
-    function closeMoreMenu() { 
-        if (menuFastModal) menuFastModal.classList.remove('active'); 
-        if (halamanAktifSaatIni !== 'menu' && btnMenuToggle) btnMenuToggle.classList.remove('menu-tertekan');
-        document.body.style.overflow = 'auto'; 
-    }
-    function closeMoreMenuOutside(e) { if(e.target === menuFastModal) closeMoreMenu(); }
-
     const halamanAktifSaatIni = 'galeri'; 
-    const mapMenu = {
-        'home': 'btn-home', 'warga': 'btn-warga', 'inventaris': 'btn-inventaris',
-        'lapak': 'btn-lapak', 'pengurus': 'btn-pengurus', 'galeri': 'btn-galeri',
-        'tatatertib': 'btn-tatatertib', 'ronda': 'btn-ronda', 'menu': 'btn-menu'
-    };
-
-    if (mapMenu[halamanAktifSaatIni]) {
-        const tombolAktif = document.querySelectorAll('.' + mapMenu[halamanAktifSaatIni]);
-        tombolAktif.forEach(btn => btn.classList.add('menu-tertekan'));
-    }
 
     // ==========================================
     // PENGATURAN LOGIN Warga (Sinkron & Persisten)
@@ -652,30 +674,22 @@
         });
 
         populateYearFilter();
-        updateStats(galleryData.length, totalAllImages);
         renderGalleryList(galleryData);
     };
 
     function populateYearFilter() {
         const select = document.getElementById('yearFilter');
         if(!select) return;
-        select.innerHTML = '<option value="">SEMUA TAHUN</option>';
+        select.innerHTML = '<option value="">Semua</option>';
         let yearsArray = Array.from(uniqueYears).sort((a, b) => b - a);
         yearsArray.forEach(yr => {
             if (yr !== 'UNKNOWN') {
                 let option = document.createElement('option');
                 option.value = yr;
-                option.textContent = "Tahun " + yr;
+                option.textContent = yr;
                 select.appendChild(option);
             }
         });
-    }
-
-    function updateStats(albumCount, photoCount) {
-        const tAlbums = document.getElementById('totalAlbums');
-        const tPhotos = document.getElementById('totalPhotos');
-        if (tAlbums) tAlbums.innerText = albumCount;
-        if (tPhotos) tPhotos.innerText = photoCount;
     }
 
     function toTitleCase(str) {
@@ -705,9 +719,12 @@
 
     function renderGalleryList(data) {
         const container = document.getElementById('galleryListBody');
+        const tAlbums = document.getElementById('totalAlbums');
         if(!container) return;
         container.innerHTML = '';
         
+        if (tAlbums) tAlbums.innerText = `${data.length} Album`;
+
         if(data.length === 0) {
             container.innerHTML = '<div class="loading-text" style="grid-column: span 2;">Album tidak ditemukan.</div>';
             return;

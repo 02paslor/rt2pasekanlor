@@ -9,7 +9,7 @@
   gtag('js', new Date());
   gtag('config', 'G-V6G930LME8');
 </script>
-    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyfuGc_fXDcYnfWzyQzcRZ6n9XwRuYCrX3D4PNthp05MIwg9VjbDoCBPtGg6jc374QSSOKKLt3jBGAkPtlwVKRSDc-PhZewr5S3X91KheaVSjIs1IDedm_zm1BR9_EyJ9CdJuFHGGu4l0pF3hF8cbMViD5lucqgvffwoxPWPQBuJfyZntChlwC1d7Ad6Q/w640-h640/favicon%20rt2.png">
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_2YvjhstwaWYipZK6jiys9jITMg9ySrBUG9MaZ7hHIz7tKMbCQ8uNaBM-ZEtyw2f6tWzTaVYhbZq-OCPmNq1SdRsNEqtgHEg1PoYRLAqJo3kNxYg8OkwEFu1YWYe2fAfVGmnViZL1YdURObjmMDMiEUAinqn58etTmoGXFVBTc1oL64P8iPKbtV1Jago/s1600/logo-new.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RT 2 Online | Warga RT2/RW3, Pasekan Lor</title>
@@ -83,6 +83,8 @@
 
         .content-container {
             flex: 1; width: 100%; position: relative; margin-bottom: 0; background: transparent; height: 100vh;
+            padding-top: 0px; 
+            padding-bottom: 0px;
         }
         #dynamic-content {
             width: 100%; height: 100%; border: none; background: transparent; display: block;
@@ -222,6 +224,7 @@
             filter: none;
         }
 
+        /* Ini akan mencegah klik berulang pada menu yang sedang terbuka/aktif */
         .b-nav-item.menu-tertekan { 
             pointer-events: none; 
         }
@@ -349,7 +352,8 @@
 
 
 <nav class="bottom-nav-bar">
-    <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/home">
+    <!-- REVISI: Tombol HOME ditandai menyala saat pertama kali dibuka -->
+    <a href="#" class="b-nav-item footer-menu-btn menu-tertekan" data-url="https://rt2pasekanlor.id/home">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         <span>HOME</span>
     </a>
@@ -404,19 +408,14 @@
 
             footerBtns.forEach(m => m.classList.remove("menu-tertekan"));
 
+            // REVISI: Tombol kini akan terus menyala setelah diklik, 
+            // menonaktifkan klik ganda pada dirinya sendiri, hingga tombol menu lain diklik.
             this.classList.add("menu-tertekan");
 
 
             const targetUrl = this.getAttribute("data-url");
             if(targetUrl) {
                 dynamicContent.src = targetUrl;
-            }
-
-
-            if (!this.classList.contains("btn-kas")) {
-                setTimeout(() => {
-                    this.classList.remove("menu-tertekan");
-                }, 300);
             }
         });
     });

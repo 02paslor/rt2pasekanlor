@@ -25,8 +25,8 @@
     
     <style>
         /* ======================================================================
-           AREA PENGATURAN TAMPILAN GLOBAL (CORE APP)
-           ====================================================================== */
+            AREA PENGATURAN TAMPILAN GLOBAL (CORE APP)
+            ====================================================================== */
         * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
         *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
 
@@ -118,14 +118,8 @@
         .f-reg { font-size: 10px; font-weight: 400; }
         
         /* ======================================================================
-           CSS KHUSUS HALAMAN KEUANGAN
-           ====================================================================== */
-        
-        /* 
-           KODE UNTUK GESER NAIK / TURUN KONTEN KEUANGAN:
-           - margin-top: digunakan untuk mengatur jarak tabel dan header dari atas layar. 
-           - Ubah "margin-top: 10px" (geser naik) atau "margin-top: 40px" (geser turun).
-        */
+            CSS KHUSUS HALAMAN KEUANGAN
+            ====================================================================== */
         .content-keuangan-wrapper {
             margin-top: 65px; 
             position: relative;
@@ -134,10 +128,13 @@
         /* Card Solid (Tidak Transparan) */
         .bento-box { background: #ffffff; border: 1px solid #e5e7eb; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); }
 
-        /* Input Pencarian, Filter & Sort Button */
-        .search-input, .sort-btn { background: #ffffff; border: 1px solid #d1d5db; transition: all 0.2s; color: #1f2937; }
-        .search-input:focus, .sort-btn:focus { outline: none; border-color: #8B5CF6; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3); }
-        .sort-btn:active { transform: scale(0.95); background-color: #f3f4f6; }
+
+        .search-input, .sort-btn { background: #ffffff; border: 1px solid #999999; transition: all 0.2s; color: #1ffffff; }
+        .search-input:focus, .sort-btn:focus { outline: none; border-color: #8B5CF6; box-shadow: 0 0 0 3px rgba(171, 171, 171, 0.3); }
+        .sort-btn:active { transform: scale(0.95); background-color: #999999; }
+        
+
+        .search-input::placeholder { color: #374151; opacity: 0.8; }
 
         /* Animasi Bulat Kedip-kedip */
         @keyframes blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
@@ -155,28 +152,15 @@
         /* Bulatan Angka Diperbesar */
         .number-circle { width: 24px; height: 24px; background-color: #E5E7EB; color: #374151; border-radius: 20%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
         
-        /* Modifikasi transisi menu pencarian untuk sticky */
+        /* Sticky Action Bar dihapus sifat sticky-nya agar ikut melakukan scroll ke atas secara normal */
         .sticky-action-bar {
-            position: sticky;
-            top: 65px; /* <--- SUDAH DISESUAIKAN MENJADI 65px */
-            z-index: 1000;
-            background-color: transparent;
-            padding: 10px 0;
+            position: relative;
+            z-index: 10;
+            background-color: #CFF1FF;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
-        }
-
-        .sticky-action-bar.scrolled {
-            /* KODE UNTUK MENGUBAH WARNA BACKGROUND SAAT STICKY AKTIF (Contoh: menggunakan rgba transparan)
-               Ganti rgba(255, 255, 255, 0.95) menjadi kode warna lain, misal background-color: #1155CC; 
-            */
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            padding: 10px 16px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 0 0 16px 16px;
-            margin-left: -16px;
-            margin-right: -16px;
-            width: calc(100% + 32px);
         }
 
     </style>
@@ -222,8 +206,8 @@
                             <div class="reg-title">Pendaftaran Warga Baru</div>
                             <div class="reg-toggle-row">
                                 <label class="switch">
-                                  <input type="checkbox" id="regToggleCheck" onchange="toggleRegButton()">
-                                  <span class="slider"></span>
+                                 <input type="checkbox" id="regToggleCheck" onchange="toggleRegButton()">
+                                 <span class="slider"></span>
                                 </label>
                                 <div class="reg-desc">Setuju, saya akan mengisi dengan benar.</div>
                             </div>
@@ -240,38 +224,35 @@
         <!-- ==================== KONTEN KEUANGAN ==================== -->
         <div class="content-keuangan-wrapper w-full px-4 relative z-10 flex flex-col gap-3 mb-6 text-gray-800">
             
-            <!-- Info Header (Hilang saat scroll) -->
+            <!-- Info Header -->
             <div id="info-header" class="rounded-xl p-4 flex flex-col transition-all duration-300" style="background-color: #1155CC; box-shadow: 0 4px 15px rgba(17, 85, 204, 0.25);">
                 <div class="flex justify-between items-start w-full">
                     <div>
                         <h1 class="text-[20px] font-bold text-white flex items-center gap-2">Keuangan RT 2</h1>
-                        <h1 class="text-[13px] font-bold text-white flex items-center gap-2">Pembukuan Kas RT 2</h1>
                         <p class="text-white/85 mt-1 text-[11px] leading-tight">Pengelolaan terhitung sejak Oktober 2025</p>
-                        <div class="flex items-center gap-1.5 mt-1">
-                            <div class="dot-blink" style="width:6px;height:6px;"></div>
-                            <span class="font-medium text-white/90 text-[10px] tracking-wide">Tersinkronisasi</span>
+                        <div class="flex items-center gap-1.5 mt-1"> 
                         </div>
                     </div>
-                    <div id="hari-tanggal" class="font-bold text-white/90 text-[11px] text-right max-w-[80px] leading-tight"></div>
+
                 </div>
             </div>
 
-            <!-- Area Input & Tombol Filter (Sticky Menu) -->
+            <!-- Area Input & Tombol Filter (Ikut Scroll ke Atas) -->
             <div id="stickyActionBar" class="sticky-action-bar w-full flex flex-col gap-2">
                 <div class="relative w-full">
                     <input type="text" id="searchInput" class="search-input w-full px-3 py-2 pl-9 rounded-lg text-[13px] shadow-sm font-medium" placeholder="Pencarian data...">
-                    <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <svg class="w-4 h-4 text-gray-700 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
                 
                 <div class="flex gap-2 w-full">
                     <select id="filterKode" class="search-input px-2 py-2 rounded-lg text-[12px] flex-1 cursor-pointer font-medium shadow-sm">
                         <option value="">Semua Kode</option>
-                        <option value="1">1 - Jimpitan</option>
-                        <option value="2">2 - Jasa Inv</option>
-                        <option value="3">3 - Sosial</option>
-                        <option value="4">4 - Pembangunan</option>
-                        <option value="5">5 - Lain-lain</option>
-                        <option value="6">6 - Kas Pemuda</option>
+                        <option value="1">Kode 1 - Jimpitan</option>
+                        <option value="2">Kode 2 - Jasa Inventaris/Aset</option>
+                        <option value="3">Kode 3 - Sosial</option>
+                        <option value="4">Kode 4 - Pembangunan</option>
+                        <option value="5">Kode 5 - Lain-lain</option>
+                        <option value="6">Kode 6 - Kas Pemuda</option>
                     </select>
                     
                     <button id="sortBtn" title="Urutkan" class="sort-btn px-3 flex-shrink-0 rounded-lg cursor-pointer shadow-sm flex items-center justify-center text-[#1155CC]">
@@ -303,30 +284,9 @@
 
 <script>
     // ==========================================
-    // MENU AKTIF & SCROLL LOGIC
+    // MENU AKTIF
     // ==========================================
     const halamanAktifSaatIni = 'keuangan';
-    
-    // Logika scroll untuk membuat menu bar pencarian sticky, tetapi menyembunyikan header biru utamanya
-    const stickyActionBar = document.getElementById('stickyActionBar');
-    let isScrolling = false;
-    
-    window.addEventListener('scroll', () => {
-        if (!isScrolling) {
-            window.requestAnimationFrame(() => {
-                if (stickyActionBar) {
-                    if (window.scrollY > 120) {
-                        stickyActionBar.classList.add('scrolled');
-                    } else {
-                        stickyActionBar.classList.remove('scrolled');
-                    }
-                }
-                isScrolling = false;
-            });
-            isScrolling = true;
-        }
-    }, { passive: true });
-
 
     // ==========================================
     // PENGATURAN LOGIN WARGA & ADMIN
@@ -340,8 +300,6 @@
     function checkLoginState() {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         const userName = localStorage.getItem('userName');
-        // Fitur login disesuaikan tapi tidak memiliki button untuk interaksi sesuai instruksi penghapusan menu.
-        // Jika dibutuhkan kembali bisa mengaktifkan ID yang relevan.
     }
 
     document.addEventListener("DOMContentLoaded", () => checkLoginState());
@@ -485,12 +443,12 @@
 
                     if (noAda && tglAda && kodeAda && descAda && saldoAda && (masukAda || keluarAda)) {
                         dataLaporanLengkap.push([
-                            row.c[0].v,                                     
-                            row.c[1].f || row.c[1].v,                        
-                            row.c[2].v,                                     
-                            row.c[3].v,                                     
-                            masukAda ? (row.c[4].f || row.c[4].v) : '',     
-                            keluarAda ? (row.c[5].f || row.c[5].v) : '',    
+                            row.c[0].v,                            
+                            row.c[1].f || row.c[1].v,                           
+                            row.c[2].v,                            
+                            row.c[3].v,                            
+                            masukAda ? (row.c[4].f || row.c[4].v) : '',    
+                            keluarAda ? (row.c[5].f || row.c[5].v) : '',   
                             row.c[6].f || row.c[6].v                        
                         ]);
                     }

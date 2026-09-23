@@ -131,7 +131,7 @@
             position: absolute; right: 10px; bottom: 0; z-index: 0;
         }
 
-        /* Area Panel Filter (Kotak wrap abu-abu luar dihilangkan, langsung tombol) */
+        /* Area Panel Filter */
         .filter-top-section {
             position: relative;
             background: transparent; 
@@ -176,24 +176,22 @@
         }
 
         .main-content-space { flex: 1; }
-        .main-content-area { width: 100%; margin-top: 0; padding: 0 16px 20px 16px; position: relative; z-index: 2; }
+        .main-content-area { width: 100%; margin-top: 0; padding: 0 16px 10px 16px; position: relative; z-index: 2; }
 
         #widget-umkm-rt2, #modal-umkm { font-family: 'Poppins', sans-serif; color: #333; box-sizing: border-box; text-align: left; }
         #widget-umkm-rt2 { width: 100%; margin: 0 auto; padding: 0; }
         .loading-teks { font-weight: 500; text-align: center; padding: 25px; color: #666; font-size: 12px; border: 1px dashed #ccc; border-radius: 12px; grid-column: span 2; background: #ffffff; }
 
-        /* Animasi Zoom In Masuk untuk Card */
         @keyframes cardZoomIn {
             0% { opacity: 0; transform: scale(0.88); }
             100% { opacity: 1; transform: scale(1); }
         }
 
-        /* --- DESAIN CARD DEPAN (SHADOW DITAMBAH) --- */
         .umkm-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         
         .umkm-card {
             background: #fff; border-radius: 16px; 
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08); /* Shadow ditambah */
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
             overflow: hidden; cursor: pointer; border: 1px solid #e2e8f0; height: 100%; 
             display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
             animation: cardZoomIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -209,14 +207,13 @@
         
         .nama-toko { font-size: 13.5px; font-weight: 700; margin: 0 0 4px 0; color: #1155cc; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* Ukuran teks deskripsi diperbesar sedikit */
         .teks-deskripsi-depan { font-size: 9.5pt; color: #475569; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
         .teks-deskripsi-modal { font-size: 10pt; color: #334155; margin-bottom: 12px; line-height: 1.55; }
 
         .icon-text { display: flex; align-items: flex-start; gap: 5px; font-size: 10.5px; color: #64748b; margin-top: auto; line-height: 1.35; }
         .icon-text svg { width: 12px; height: 12px; flex-shrink: 0; margin-top: 1px; color: #94a3b8; }
         
-        /* --- DESAIN MODAL (BLUR BACKGROUND, KONTEN BISA DI-SCROLL) --- */
+        /* Modal Toko */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); 
@@ -225,8 +222,7 @@
         .modal-overlay.show { opacity: 1; display: flex; }
         .modal-content {
             background: #fff; width: 100%; max-width: 420px; max-height: 85vh; border-radius: 24px; 
-            overflow-y: auto; /* Bisa di-scroll */
-            -webkit-overflow-scrolling: touch;
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
             position: relative; padding: 20px; box-shadow: 0 15px 50px rgba(0,0,0,0.15);
             transform: scale(0.95); opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -250,14 +246,13 @@
         .text-wa:hover { filter: brightness(0.95); }
         .text-wa svg { width: 14px; height: 14px; }
 
-        /* --- ETALASE PRODUK (CARD KLIK MEMBESAR SEMUA) --- */
+        /* Etalase Produk */
         .produk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-top: 1px dashed #cbd5e1; padding-top: 15px; }
         
         .produk-card { 
             background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; 
             display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.02); 
-            cursor: pointer; /* Seluruh card bisa diklik */
-            transition: transform 0.2s, box-shadow 0.2s; 
+            cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; 
         }
         .produk-card:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(17,85,204,0.12); }
         .produk-card img { width: 100%; height: 110px; object-fit: cover; background: #f1f5f9; display: block; border-bottom: 1px solid #e2e8f0; }
@@ -267,12 +262,39 @@
         .produk-harga { font-size: 11.5px; color: #1155cc; font-weight: 600; margin-top: auto; padding-top: 6px; display: flex; align-items: center; gap: 4px; }
         .produk-harga svg { width: 12px; height: 12px; }
 
-        /* --- ZOOM OVERLAY (BLUR BACKGROUND) --- */
-        .zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 20000; justify-content: center; align-items: center; padding: 10px; opacity: 0; transition: opacity 0.3s ease; }
+        /* Zoom Overlay (Card Popup Lengkap untuk Etalase Produk & Full Image untuk Thumbnail Toko) */
+        .zoom-overlay { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); 
+            z-index: 20000; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; 
+        }
         .zoom-overlay.show { opacity: 1; display: flex; }
-        .zoom-overlay img { max-width: 100%; max-height: 75vh; border-radius: 12px; transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1); }
-        .zoom-overlay.show img { transform: scale(1); }
-        .close-zoom { position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%); z-index: 21000; background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; width: 45px; height: 45px; font-size: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); line-height: 1; }
+        
+        .zoom-card-popup {
+            background: #fff; border-radius: 20px; overflow: hidden; width: 100%; max-width: 320px;
+            display: flex; flex-direction: column; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            animation: cardZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; position: relative;
+        }
+        .zoom-card-popup img { width: 100%; height: 260px; object-fit: cover; display: block; border-bottom: 1px solid #f1f5f9; }
+        .zoom-card-info { padding: 16px; text-align: left; }
+        .zoom-card-title { font-size: 14.5px; font-weight: 600; color: #1e293b; margin: 0 0 8px 0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.35; }
+        .zoom-card-title svg { width: 15px; height: 15px; color: #64748b; margin-top: 2px; flex-shrink: 0; }
+        .zoom-card-price { font-size: 16px; color: #1155cc; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .zoom-card-price svg { width: 15px; height: 15px; }
+
+        /* Full Image View (Untuk Thumbnail Toko) */
+        .zoom-full-img {
+            max-width: 100%; max-height: 75vh; border-radius: 12px; object-fit: contain;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: cardZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .close-zoom { 
+            position: absolute; top: 15px; right: 15px; color: #ef4444; background: #fef2f2; 
+            width: 34px; height: 34px; font-size: 20px; border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+            line-height: 1; z-index: 10; transition: transform 0.2s;
+        }
+        .close-zoom:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
@@ -326,7 +348,7 @@
             </div>
         </div>
 
-        <!-- ==================== AREA FILTER TOMBOL (TANPA KOTAK ABU-ABU) ==================== -->
+        <!-- ==================== AREA FILTER TOMBOL ==================== -->
         <div class="filter-top-section">
             <div class="filter-container" id="filter-kategori"></div>
         </div>
@@ -337,6 +359,13 @@
                 <div class="umkm-grid" id="umkm-wrapper">
                     <div class="loading-teks">Memuat Data Lapak Warga...</div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Keterangan Tambahan di Bawah Daftar Card Toko -->
+        <div style="margin: 0 16px 20px 16px;">
+            <div style="font-size: 11px; font-weight: 500; color: #64748b; background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px; border-radius: 12px; text-align: center; line-height: 1.4;">
+                Bagi yang ingin lapak usahanya ditampilkan di web, mohon hubungi admin. Terima kasih.
             </div>
         </div>
 
@@ -355,10 +384,11 @@
         <div class="modal-content" id="modal-body"></div>
     </div>
 
-    <!-- Zoom Overlay -->
+    <!-- Zoom Overlay (Card Popup untuk Produk / Full Image untuk Thumbnail Toko) -->
     <div id="zoom-overlay" class="zoom-overlay" onclick="tutupZoom()">
-        <img id="zoom-img" src="" alt="Zoom Image" onclick="event.stopPropagation();">
-        <span class="close-zoom" onclick="tutupZoom()">&times;</span>
+        <div id="zoom-container" style="position: relative; display: flex; justify-content: center; align-items: center;" onclick="event.stopPropagation();">
+            <!-- Render konten zoom dinamis lewat JS -->
+        </div>
     </div>
 
 </div> 
@@ -639,7 +669,7 @@
             const data = storesData[index];
             
             let produkHTML = data.produkArray.length > 0 ? data.produkArray.map(p => `
-                <div class="produk-card" onclick="event.stopPropagation(); bukaZoom('${p.thumb}')">
+                <div class="produk-card" onclick="event.stopPropagation(); bukaZoomProduk('${p.thumb}', '${escapeHtml(p.nama)}', '${escapeHtml(p.harga || '')}')">
                   <img src="${p.thumb}" alt="${p.nama}">
                   <div class="produk-card-body">
                     <h4 class="produk-nama">${svgBox} ${p.nama}</h4>
@@ -650,7 +680,7 @@
 
             modalBody.innerHTML = `
               <div class="close-modal" onclick="tutupModal()">&times;</div>
-              <img src="${data.thumbToko}" class="modal-toko-thumb" onclick="event.stopPropagation(); bukaZoom('${data.thumbToko}')" alt="${data.namaToko}">
+              <img src="${data.thumbToko}" class="modal-toko-thumb" onclick="event.stopPropagation(); bukaZoomFull('${data.thumbToko}')" alt="${data.namaToko}">
               
               <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px;">
                 ${data.badgeHTML}
@@ -678,9 +708,35 @@
             document.body.style.overflow = 'auto';
         };
 
-        window.bukaZoom = function(src) {
+        // ZOOM THUMBNAIL TOKO (GAMBAR UTUH)
+        window.bukaZoomFull = function(src) {
             if(!zoomOverlay) return;
-            document.getElementById('zoom-img').src = src;
+            const container = document.getElementById('zoom-container');
+            container.innerHTML = `
+                <span class="close-zoom" onclick="tutupZoom()">&times;</span>
+                <img src="${src}" class="zoom-full-img" alt="Full Image">
+            `;
+            zoomOverlay.style.display = 'flex';
+            setTimeout(() => { zoomOverlay.classList.add('show'); }, 10);
+        };
+
+        // ZOOM PRODUK ETALASE (CARD DENGAN NAMA DAN HARGA)
+        window.bukaZoomProduk = function(src, nama, harga) {
+            if(!zoomOverlay) return;
+            const container = document.getElementById('zoom-container');
+            
+            let priceHtml = (harga && harga.trim() !== '') ? `<div class="zoom-card-price">${svgWallet} ${harga}</div>` : '';
+
+            container.innerHTML = `
+                <div class="zoom-card-popup" onclick="event.stopPropagation();">
+                    <span class="close-zoom" onclick="tutupZoom()">&times;</span>
+                    <img src="${src}" alt="${nama}">
+                    <div class="zoom-card-info">
+                        <h4 class="zoom-card-title">${svgBox} ${nama}</h4>
+                        ${priceHtml}
+                    </div>
+                </div>
+            `;
             zoomOverlay.style.display = 'flex';
             setTimeout(() => { zoomOverlay.classList.add('show'); }, 10);
         };
@@ -688,8 +744,15 @@
         window.tutupZoom = function() {
             if(!zoomOverlay) return;
             zoomOverlay.classList.remove('show');
-            setTimeout(() => { zoomOverlay.style.display = 'none'; document.getElementById('zoom-img').src = ''; }, 300);
+            setTimeout(() => { 
+                zoomOverlay.style.display = 'none'; 
+                document.getElementById('zoom-container').innerHTML = ''; 
+            }, 300);
         };
+
+        function escapeHtml(text) {
+            return text.replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+        }
 
         if (modal) modal.addEventListener('click', e => { if (e.target === modal) tutupModal(); });
     });

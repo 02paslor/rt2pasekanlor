@@ -32,7 +32,7 @@
         .app-wrapper {
             width: 100%; max-width: 480px;
             background-color: transparent; 
-            min-height: 3vh; position: relative;
+            min-height: 100vh; position: relative;
             padding-bottom: 0; overflow-x: clip;
             display: flex; flex-direction: column; z-index: 1;
         }
@@ -72,20 +72,20 @@
         .btn-kas-small { flex: 1; padding: 6px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px;}
         .btn-kas-trx { background: #F07100; !important; border: none !important; color: white !important; }
 
-        /* ================== MODAL ANIMASI & OVERLAY ================== */
-        .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 75px 16px 20px 16px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
+        /* ================== MODAL ANIMASI & OVERLAY (HANYA BLUR) ================== */
+        .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
         .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
-        .slide-up-content { background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
+        .slide-up-content { background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
         .slide-up-overlay.active .slide-up-content { transform: scale(1); opacity: 1; }
 
-        .slide-down-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(4px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 75px 20px 20px 20px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
+        .slide-down-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
         .slide-down-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
         .slide-down-content { background: transparent; width: auto; max-width: 100%; display: flex; flex-direction: column; position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
         .slide-down-overlay.active .slide-down-content { transform: scale(1); opacity: 1; }
 
         .modal-scroll-area { flex: 1; overflow-y: auto; width: 100%; padding: 60px 20px 20px 20px; }
         .modal-scroll-area.no-padding { padding: 0; }
-        .modal-close-btn-absolute { position: absolute; top: 16px; right: 16px; background: #fef2f2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
+        .modal-close-btn-absolute { position: absolute; top: 16px; right: 16px; background: #fef2f2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100000; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
         .modal-back-btn-absolute { position: absolute; top: 16px; left: 16px; background: #f1f5f9; color: #1155cc; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
 
         /* ================== KARTU LUAR & WARNA ================== */
@@ -216,9 +216,9 @@
         .teks-deskripsi-modal { margin-bottom: 12px; background: #fff; padding: 10px 12px; border-radius: 8px; border: 1px solid #eaeaea; }
         .icon-text { display: flex; align-items: flex-start; gap: 6px; font-size: 13px; color: #555; margin-bottom: 6px; line-height: 1.4; }
         .icon-text svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; color: #777; }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(4px); padding: 75px 16px 20px 16px; }
-        .modal-content-lw { background: #F7F7F7; width: 100%; max-width: 480px; max-height: 100%; border-radius: 24px; overflow-y: auto; position: relative; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-        .close-modal-lw { position: absolute; top: 12px; right: 15px; font-size: 26px; cursor: pointer; color: #fff; background: #1155cc; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content-lw { background: #F7F7F7; width: 100%; max-width: 480px; max-height: 80vh; border-radius: 24px; overflow-y: auto; position: relative; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+        .close-modal-lw { position: absolute; top: 16px; right: 16px; cursor: pointer; color: #ef4444; background: #fef2f2; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.15); transition: 0.2s; }
         .modal-toko-thumb { width: 100%; height: 180px; border-radius: 12px; object-fit: cover; border: 1px solid #eaeaea; display: block; margin-bottom: 12px; cursor: pointer; }
         .text-wa { display: inline-flex; align-items: center; gap: 6px; background: #e8f5e9; color: #0b6623; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; margin-top: 4px; margin-bottom: 12px; border: 1px solid #c8e6c9; }
         .text-wa svg { width: 16px; height: 16px; }
@@ -231,9 +231,9 @@
         .produk-nama svg { width: 12px; height: 12px; color: #64748b; margin-top: 2px; flex-shrink: 0; }
         .produk-harga { font-size: 13px; color: #1155cc; font-weight: 700; margin-top: 6px; display: flex; align-items: center; gap: 4px; }
         .produk-harga svg { width: 13px; height: 13px; }
-        .zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 99999; justify-content: center; align-items: center; padding: 20px;}
+        .zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 99999; justify-content: center; align-items: center; padding: 20px;}
         .zoom-content-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; padding: 20px; }
-        .close-zoom { position: absolute; color: #ef4444; top: 20px; right: 25px; font-size: 32px; cursor: pointer; font-weight: 700; line-height: 1; z-index: 100000; background: rgba(255,255,255,0.85); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;}
+        .close-zoom { position: fixed; top: 20px; right: 20px; color: #ef4444; background: #fef2f2; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: 700; z-index: 100000; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
     </style>
 
 </head>
@@ -331,7 +331,7 @@
         <!-- SLIDER MODAL SLIDE DOWN PURE IMAGE (CENTER VIEW UTUH) -->
         <div class="slide-down-overlay" id="psModalOverlay" onclick="closePsModalOutside(event)">
             <div class="slide-down-content" onclick="event.stopPropagation()">
-                <button class="modal-close-btn-absolute" id="psCloseModal" aria-label="Tutup" style="background: rgba(255,255,255,0.85); color:#ef4444; border:none; top: -16px; right: -16px;">
+                <button class="modal-close-btn-absolute" id="psCloseModal" aria-label="Tutup" style="position: fixed; top: 20px; right: 20px; z-index: 100000; background: #fef2f2; color:#ef4444; border:none;">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
                 <div id="psModalBody" style="width: auto; height: auto; display: flex; align-items: center; justify-content: center; background:transparent;"></div>
@@ -341,7 +341,7 @@
         <!-- UNIV MODAL TRANSAKSI KAS CENTER CARD -->
         <div class="slide-up-overlay" id="univModalOverlay" onclick="closeUnivModalOutside(event)">
             <div class="slide-up-content" onclick="event.stopPropagation()" style="height: 75vh; width: 100%; border-radius: 20px;">
-                <button class="modal-close-btn-absolute" onclick="closeUnivModal()" title="Tutup" style="z-index: 100; background: #fef2f2;">
+                <button class="modal-close-btn-absolute" onclick="closeUnivModal()" title="Tutup">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
                 <div class="modal-scroll-area no-padding" style="height: 100%; width: 100%;">
@@ -443,12 +443,12 @@
             <div class="modal-content-lw" id="modal-body"></div>
         </div>
         <div id="zoom-overlay" class="zoom-overlay">
-            <span class="close-zoom">&times;</span>
+            <span class="close-zoom"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
             <div id="zoom-content" class="zoom-content-wrapper"></div>
         </div>
 
         <!-- ==================== Area Bawah & Footer ==================== -->
-        <div class="sub-footer-section" style="margin-bottom: 20px;">
+        <div class="sub-footer-section" style="margin-bottom: 1px;">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXV9uai9NYOwne0RP0jKBb-ajPaFvOe91SnfYesBL2_mLHLQQ8KKXcATfn40usjlzQKzi00XIdu8DY1KrUGfcL0Z_PJVV3pZfqL4GjoFHSD47o4rGuz7h6OYWfRzHTr1gTA4zOpBJgdwx9y6SN5O_0w4YByoLioorYi6upHwl19Sb-um44FJbc3zUEArs/s1600/Thumb%20-%20Abu%2060.png" alt="Logo RT 2 Paslor" style="width: 200px; height: auto; margin: 0 auto 10px auto; display: block; filter: grayscale(100%) opacity(0.6);">
             
             <div class="himbauan-box">
@@ -484,6 +484,9 @@
             </div>
             
         </div>
+        
+        <!-- SPACER AGAR SCROLL MENTOK SAMPAI BAWAH (TIDAK TERTUTUP FOOTER NAV) -->
+        <div style="height: 95px; width: 100%; flex-shrink: 0;"></div>
 
     </div> 
 </div> 
@@ -1066,7 +1069,7 @@
           `).join('') : '<div style="font-size:13px; color:#777; grid-column: span 2;">Belum ada etalase produk.</div>';
 
         modalBody.innerHTML = `
-          <div class="close-modal-lw">&times;</div>
+          <div class="close-modal-lw"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
           <img src="${data.thumbToko}" class="modal-toko-thumb" onclick="bukaZoom('${data.thumbToko}')">
           <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px;">${data.badgeHTML}</div>
           <h2 class="nama-toko" style="font-size:18px;">${data.namaToko}</h2>
@@ -1081,7 +1084,7 @@
       const tutupModal = () => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; };
       const tutupZoom = () => zoomOverlay.style.display = 'none';
 
-      modal.addEventListener('click', e => { if (e.target === modal || e.target.classList.contains('close-modal-lw')) tutupModal(); });
+      modal.addEventListener('click', e => { if (e.target === modal || e.target.classList.contains('close-modal-lw') || e.target.closest('.close-modal-lw')) tutupModal(); });
       zoomOverlay.addEventListener('click', tutupZoom);
       
       window.bukaZoom = function(src) { 

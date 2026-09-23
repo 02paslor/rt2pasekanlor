@@ -22,8 +22,8 @@
     
     <style>
         /* ======================================================================
-            AREA PENGATURAN TAMPILAN GLOBAL (DARI TEMPLATE UTAMA)
-            ====================================================================== */
+           AREA PENGATURAN TAMPILAN GLOBAL (DARI TEMPLATE UTAMA)
+           ====================================================================== */
         * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
         *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
 
@@ -35,7 +35,7 @@
             background-color: transparent; 
             background-image: none;
             background-attachment: auto; background-size: cover; background-repeat: no-repeat;
-            min-height: 3vh; position: relative;
+            min-height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15); padding-bottom: 0; overflow-x: clip;
             display: flex; flex-direction: column; z-index: 1;
         }
@@ -84,26 +84,24 @@
         .btn-monggo:active { transform: scale(0.96); }
         .login-error-msg { color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; display: none; padding: 8px; background: #fef2f2; border-radius: 10px; border: 1px solid #fecaca; margin-bottom: 16px; }
 
-        /* ================== FOOTER GLOBAL ================== */
+        /* ================== FOOTER GLOBAL (DISEMPURNAKAN SEPERTI HALAMAN LAINNYA) ================== */
         .main-footer { 
-            width: 85%; 
-            margin: 40px auto 50px auto; 
-            padding-top: 16px; 
+            width: 100%; 
+            margin: 20px auto 20px auto; 
+            padding: 2px; 
             text-align: center; 
-            border-top: 1.5px solid #cbd5e1; 
             display: block; 
             position: relative; 
             z-index: 2; 
         }
-        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 3px;}
-        .f-bold { font-size: 11px; font-weight: 500; }
-        .f-reg { font-size: 10px; font-weight: 400; }
+        .footer-line { color: #64748b; line-height: 1.4; }
+        .f-reg { font-size: 11px; font-weight: 400; }
 
         svg { display: inline-block; vertical-align: middle; }
 
         /* ======================================================================
-            CSS KHUSUS HALAMAN RONDA
-            ====================================================================== */
+           CSS KHUSUS HALAMAN RONDA
+           ====================================================================== */
         .main-content-board { 
             background-color: transparent; 
             margin-top: 65px; 
@@ -111,7 +109,7 @@
             z-index: 10; 
             display: flex; 
             flex-direction: column; 
-            min-height: calc(100vh - 100px); 
+            min-height: calc(100vh - 65px); 
         } 
             
         /* Title Card Ronda (Nuansa Orange) */
@@ -156,10 +154,10 @@
             width: 100%;
             border-radius: 14px; padding: 14px 18px; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease;
         }
-        .header-pagi { background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%); }   
-        .header-siang { background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%); }   
-        .header-sore { background: linear-gradient(135deg, #C2410C 0%, #FB923C 100%); }   
-        .header-malam { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); }   
+        .header-pagi { background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%); }    
+        .header-siang { background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%); }    
+        .header-sore { background: linear-gradient(135deg, #C2410C 0%, #FB923C 100%); }    
+        .header-malam { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); }    
 
         .dt-col { display: flex; flex-direction: column; gap: 4px; z-index: 2; }
         .dt-val-date { font-size: 14px; font-weight: 600; color: #FFFFFF; }
@@ -371,7 +369,7 @@
         <!-- ==================== KONTEN UTAMA RONDA ==================== -->
         <div class="main-content-area">
             <div class="main-card">
-                <!-- HEADER DENGAN SUASANA WAKTU OTOMATIS PENUH (TANPA TOMBOL QR SCANNER) -->
+                <!-- HEADER DENGAN SUASANA WAKTU OTOMATIS PENUH -->
                 <div class="ronda-top-container">
                     <div class="header-fancy" id="header-suasana-box">
                         <div class="twinkle-star star-1"></div>
@@ -407,7 +405,7 @@
                     </button>
                 </div>
 
-                <!-- 2. PILIH HARI (POSISI KEMBALI ASLI) -->
+                <!-- 2. PILIH HARI -->
                 <div class="form-section">
                     <div class="section-label">
                         <div class="sec-number-badge">2</div>
@@ -484,13 +482,12 @@
         <!-- Ruang kosong untuk mendorong footer ke bawah -->
         <div class="main-content-space"></div>
 
+        <!-- ==================== FOOTER (BERSIH SEPERTI HALAMAN LAIN) ==================== -->
+        <footer class="main-footer">
+            <div class="footer-line f-reg">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
+        </footer>
+
     </div> 
-
-    <!-- FOOTER TETAP -->
-    <footer class="main-footer">
-        <div class="footer-line f-bold">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
-    </footer>
-
 </div> 
 
 <!-- AREA EXPORT STRUK -->

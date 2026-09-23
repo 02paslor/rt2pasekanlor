@@ -167,13 +167,14 @@
         .btn-reg:active { transform: scale(0.96); }
 
         /* ========================================================
-           PEMBARUAN FOOTER MENU: HYBRID & KONTRAS TINGGI
+           PEMBARUAN FOOTER MENU: HYBRID & WARNA BIRU UTAMA
            ======================================================== */
         .bottom-nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
             width: 100%; max-width: 480px; 
             height: 75px;
-            background: #033387;
+            background: #033387; /* Warna latar belakang sama persis dengan footer/header utama */
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
             z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
@@ -218,10 +219,9 @@
             color: #ffffff !important;
             box-shadow: 0 4px 12px rgba(17,85,204,0.4);
             transform: scale(0.95); 
-            pointer-events: none; /* MEMATIKAN KLIK SAAT AKTIF AGAR TIDAK DOUBLE CLICK */
+            pointer-events: none; 
         }
         
-        /* === PERBAIKAN: KHUSUS TOMBOL LAINNYA TETAP BISA DIKLIK SAAT AKTIF === */
         #btnMoreMenu.menu-tertekan {
             pointer-events: auto !important; 
         }
@@ -256,7 +256,7 @@
         .b-nav-item.btn-ronda svg { stroke: #ef4444; }
 
         /* ========================================================
-           MODAL CARD "MENU LAINNYA" (Hanya di dekat footer)
+           MODAL CARD "MENU LAINNYA" (WARNA LATAR BIRU #033387)
            ======================================================== */
         .more-menu-card {
             position: fixed;
@@ -265,11 +265,11 @@
             right: 16px;
             margin: 0 auto;
             max-width: 448px;
-            background: #ffffff;
+            background: #033387; /* Disamakan persis dengan warna latar footer utama */
             border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 1px solid #e2e8f0;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             z-index: 1999;
             visibility: hidden; 
             opacity: 0; 
@@ -283,22 +283,19 @@
             transform: translateY(0) scale(1);
         }
 
-        .sheet-title {
-            font-size: 14px; font-weight: 500; color: #D1D1D1; margin-bottom: 16px; text-align: left; padding-left: 4px;
-        }
-
         .sheet-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
         }
 
         .sheet-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-decoration: none; color: #475569; font-size: 9px; font-weight: 700;
-            background: #f8fafc; border-radius: 14px; padding: 14px 4px;
+            background: #ffffff; border-radius: 14px; padding: 12px 4px;
             transition: all 0.2s; border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
         }
         .sheet-item svg { width: 22px; height: 22px; stroke: #64748b; stroke-width: 2.5; fill: none; margin-bottom: 6px; transition: stroke 0.2s; }
-        .sheet-item:active { transform: scale(0.92); background: #e2e8f0; }
+        .sheet-item:active { transform: scale(0.92); background: #f8fafc; }
 
         /* State Menu Terpilih di dalam Sheet */
         .sheet-item.menu-tertekan {
@@ -344,12 +341,14 @@
     </div>
 
     <div class="slide-up-overlay" id="loginModalOverlay" onclick="closeLoginModalOutside(event)">
-        <!-- Modal Login tidak disentuh -->
         <div class="slide-up-content" onclick="event.stopPropagation()">
             <div class="login-wrapper">
                 <button class="login-close-btn" onclick="closeLoginModal()" title="Tutup">X</button>
                 <div class="login-title-text">Masuk Akun Terdaftar</div>
-                <div class="info-box-sync">Saat edit jika gagal simpan klik refresh/sync.</div>
+                
+                <div class="info-box-sync">
+                    Saat edit jika gagal simpan klik refresh/sync.
+                </div>
 
                 <form id="loginForm" style="margin: 0;">
                     <div class="login-form-grid">
@@ -401,7 +400,6 @@
     </div>
 
     <div class="slide-up-overlay" id="profileEditConfirmModal" onclick="closeProfileConfirmOutside(event)">
-        <!-- Modal Edit Profil tidak disentuh -->
         <div class="slide-up-content" onclick="event.stopPropagation()" style="background: #fff; max-width: 320px; margin: auto; padding: 24px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
             <h3 style="color: #1155cc; margin-bottom: 10px; font-weight: 700;">Profil Warga</h3>
             <p style="font-size: 13.5px; color: #475569; margin-bottom: 24px;">Anda sudah login, apakah ingin mengubah data?</p>
@@ -418,9 +416,8 @@
 
 </div> 
 
-<!-- MODAL CARD (Hanya Popup di atas Footer Menu) -->
+<!-- MODAL CARD (TANPA TEKS MENU LAIN, WARNA LATAR BIRU #033387) -->
 <div class="more-menu-card" id="moreMenuCard">
-    <div class="sheet-title">Menu Lain</div>
     <div class="sheet-grid">
         <a href="#" class="sheet-item footer-menu-btn" data-url="https://rt2pasekanlor.id/pengurus">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -731,7 +728,9 @@
     }
     function closeProfileConfirmOutside(e) { if(e.target === document.getElementById('profileEditConfirmModal')) closeProfileConfirmModal(); }
 
-
+    // ==========================================
+    // LOGIKA HIDE-ON-SCROLL HEADER & FOOTER
+    // ==========================================
     let lastScrollTop = 0; 
 
     function initIframeScroll() {

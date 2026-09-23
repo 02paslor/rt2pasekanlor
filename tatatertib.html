@@ -106,8 +106,8 @@
             position: relative; 
             z-index: 2; 
         }
-        .footer-line { color: #828282; line-height: 1.4; margin-bottom: 50px; }
-        .f-reg { font-size: 10px; font-weight: 400; }
+        .footer-line { color: #64748b; line-height: 1.4; }
+        .f-reg { font-size: 11px; font-weight: 400; }
 
         svg { display: inline-block; vertical-align: middle; }
 
@@ -186,16 +186,16 @@
             overflow: hidden; 
         }
         .dt-col { display: flex; flex-direction: column; gap: 3px; z-index: 2; }
-        .dt-val-title { font-size: 13.5px; font-weight: 700; color: #FFFFFF; text-transform: uppercase; line-height: 1.3; }
-        .dt-val-subtitle { font-size: 11.5px; font-weight: 400; color: #FFFFFF; opacity: 0.9; }
+        .dt-val-title { font-size: 14.5px; font-weight: 700; color: #FFFFFF; text-transform: uppercase; line-height: 1.3; }
+        .dt-val-subtitle { font-size: 12.5px; font-weight: 400; color: #FFFFFF; opacity: 0.9; }
 
-        /* Tab Content Section */
+        /* Tab Content Section (Ukuran teks sedikit diperbesar) */
         .tab-content { 
             display: none; 
             animation: fadeIn 0.4s ease; 
             background: #FFFFFF; 
             border-radius: 16px; 
-            padding: 16px; 
+            padding: 18px; 
             border: 1px solid #E2E8F0; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
             margin-bottom: 10px;
@@ -203,11 +203,11 @@
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Judul Dokumen */
-        .doc-title-main { font-size: 15px; font-weight: 700; color: #1155CC; text-transform: uppercase; margin-bottom: 3px; line-height: 1.3; }
-        .doc-subtitle-main { font-size: 12px; font-weight: 600; color: #FA6800; text-transform: uppercase; margin-bottom: 12px; line-height: 1.3; }
+        /* Judul Dokumen (Diperbesar) */
+        .doc-title-main { font-size: 16.5px; font-weight: 700; color: #1155CC; text-transform: uppercase; margin-bottom: 3px; line-height: 1.3; }
+        .doc-subtitle-main { font-size: 13px; font-weight: 600; color: #FA6800; text-transform: uppercase; margin-bottom: 14px; line-height: 1.3; }
         
-        .paragraf-awal { font-size: 13px; color: #334155; margin-bottom: 16px; line-height: 1.5;}
+        .paragraf-awal { font-size: 14px; color: #334155; margin-bottom: 18px; line-height: 1.6;}
 
         /* Button Dokumen Asli */
         .btn-link-doc { 
@@ -217,9 +217,9 @@
             gap: 8px; 
             background: linear-gradient(135deg, #10B981, #059669); 
             color: white; 
-            padding: 10px 16px; 
+            padding: 12px 16px; 
             border-radius: 10px; 
-            font-size: 12.5px; 
+            font-size: 13.5px; 
             font-weight: 600; 
             text-decoration: none; 
             width: 100%; 
@@ -232,30 +232,30 @@
         .btn-link-doc:active { transform: scale(0.98); }
 
         /* Grup Aturan */
-        .rule-group { margin-bottom: 20px; }
+        .rule-group { margin-bottom: 22px; }
         .rule-group:last-child { margin-bottom: 0; }
-        .rule-title { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; color: #1E293B; margin-bottom: 10px; border-bottom: 1.5px solid rgba(17,85,204,0.1); padding-bottom: 8px; }
-        .rule-title svg { color: #1155CC; width: 18px; height: 18px; }
+        .rule-title { display: flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 700; color: #1E293B; margin-bottom: 12px; border-bottom: 1.5px solid rgba(17,85,204,0.1); padding-bottom: 8px; }
+        .rule-title svg { color: #1155CC; width: 20px; height: 20px; }
         
-        /* List Styling */
-        .rule-list { list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 8px; }
-        .rule-list > li { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; color: #334155; line-height: 1.45; background: #F8FAFC; padding: 10px 12px; border-radius: 10px; border: 1px solid #E2E8F0; }
-        .rule-list > li > svg { flex-shrink: 0; width: 16px; height: 16px; margin-top: 2px; color: #2563EB; }
+        /* List Styling (Diperbesar) */
+        .rule-list { list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 10px; }
+        .rule-list > li { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: #334155; line-height: 1.5; background: #F8FAFC; padding: 12px 14px; border-radius: 12px; border: 1px solid #E2E8F0; }
+        .rule-list > li > svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; color: #2563EB; }
         
         .rule-list.larangan > li { background: #FEF2F2; border-color: #FECACA; }
         .rule-list.larangan > li > svg { color: #DC2626; }
 
         /* Sub-list (Ol/Ul) */
-        .rule-list ol { margin-top: 8px; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
-        .rule-list ol li { font-size: 12px; color: #475569; list-style-type: decimal; padding-left: 2px; }
+        .rule-list ol { margin-top: 8px; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+        .rule-list ol li { font-size: 13px; color: #475569; list-style-type: decimal; padding-left: 2px; }
 
         /* Catatan Box */
-        .notes-box { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 10px; padding: 12px 14px; margin-top: 18px; }
-        .notes-box h3 { color: #D97706; font-size: 12.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-weight: 700; }
-        .notes-box p, .notes-box ul { font-size: 11.5px; color: #92400E; margin:0; line-height: 1.5; }
+        .notes-box { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 12px; padding: 14px 16px; margin-top: 20px; }
+        .notes-box h3 { color: #D97706; font-size: 13.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-weight: 700; }
+        .notes-box p, .notes-box ul { font-size: 12.5px; color: #92400E; margin:0; line-height: 1.55; }
         .notes-box ul { padding-left: 18px; margin-top: 6px; }
 
-        .signature-block { margin-top: 24px; text-align: left; font-size: 12.5px; color: #334155; }
+        .signature-block { margin-top: 28px; text-align: left; font-size: 13.5px; color: #334155; }
         .signature-block span { display: block; font-weight: 600; margin-top: 40px; text-decoration: underline; }
     </style>
 </head>
@@ -299,11 +299,11 @@
             </div>
         </div>
 
-        <!-- ==================== TITLE CARD TATA TERTIB (SERAGAM ORANGE) ==================== -->
+        <!-- ==================== TITLE CARD TATA TERTIB (JUDUL DIGANTI TATA TERTIB WARGA) ==================== -->
         <div class="title-card-panel" title="Halaman Tata Tertib">
             <div class="title-card-left">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                <span>Tata Tertib RT 2</span>
+                <span>Tata Tertib Warga</span>
             </div>
             <div class="title-card-right">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1CtWf8OQyvJ3e6WU1N2UeLPpvnk_wZ6neZLoX_XldFj_5ApGAuh6wAP2CGolHSvQacRlTBiYUH9ttrGH8YHlJ8ceOaDUTGo2LlXc90EJLNDFhrDZM1V2YU70XDvCBKUMjWYRaJyLnyy5MUEF9VuqlI7IvPYu5velhoG8Rf51a4Xh8EyfBDTHIQ5dHcJo/s1600/lebah%20-%20bendera%20(small).png" alt="Maskot Lebah">
@@ -484,13 +484,12 @@
         <!-- Ruang kosong untuk mendorong footer ke bawah -->
         <div class="main-content-space"></div>
 
+        <!-- FOOTER -->
+        <footer class="main-footer">
+            <div class="footer-line f-reg">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
+        </footer>
+
     </div> 
-
-    <!-- FOOTER -->
-    <footer class="main-footer">
-        <div class="footer-line f-reg">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
-    </footer>
-
 </div> 
 
 <script>

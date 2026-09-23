@@ -90,7 +90,7 @@
 
         /* ================== KARTU LUAR & WARNA ================== */
         .dashboard-section-card { border-radius: 24px; margin: 0 16px 24px 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); position: relative; z-index: 2; }
-        .card-kegiatan { background: #28A646; } .card-kegiatan .ds-footer { background: #28A646; }
+        .card-kegiatan { background: #51BD6F; } .card-kegiatan .ds-footer { background: #51BD6F; }
         .ds-header { padding: 16px 10px; text-align: center; color: #ffffff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
         .ds-content { background-color: #f1f5f9; padding: 20px 16px; border-radius: 20px; }
         .ds-footer { padding: 16px; display: flex; justify-content: center; align-items: center; }
@@ -218,7 +218,7 @@
         .icon-text svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; color: #777; }
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
         .modal-content-lw { background: #F7F7F7; width: 100%; max-width: 480px; max-height: 80vh; border-radius: 24px; overflow-y: auto; position: relative; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
-        .close-modal-lw { position: absolute; top: 16px; right: 16px; cursor: pointer; color: #ef4444; background: #fef2f2; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.15); transition: 0.2s; }
+        .close-modal-lw { position: absolute; top: 16px; right: 16px; cursor: pointer; color: #ef4444; background: #fef2f2; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.2s; }
         .modal-toko-thumb { width: 100%; height: 180px; border-radius: 12px; object-fit: cover; border: 1px solid #eaeaea; display: block; margin-bottom: 12px; cursor: pointer; }
         .text-wa { display: inline-flex; align-items: center; gap: 6px; background: #e8f5e9; color: #0b6623; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; margin-top: 4px; margin-bottom: 12px; border: 1px solid #c8e6c9; }
         .text-wa svg { width: 16px; height: 16px; }
@@ -454,15 +454,13 @@
             <div class="himbauan-box">
                 <div class="himbauan-text" id="himbauanAnim">Mari Kita Jaga Keamanan, Ketertiban, Kebersihan dan Kenyamanan di Lingkungan Sekitar Kita</div>
             </div>
-            
-            <div style="font-size: 11px; color: #64748b; font-weight: 400; text-align: center; margin-top: 5px;">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
         </div>
         
-        <!-- Area Pemandangan Footer & Tombol Darurat -->
-        <div style="position: relative; display: grid; grid-template-columns: 1fr; margin-top: auto; padding-top: 20px;">
+        <!-- Tombol Darurat & Copyright (Jarak 20px dari bawah) -->
+        <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: auto; padding-top: 20px; padding-bottom: 20px;">
             
             <!-- Tombol Darurat -->
-            <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: center; z-index: 10; margin-top: 5px;">
+            <div>
                 <button class="btn-darurat-caution" id="openEmModalBtn">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
                         <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
@@ -473,19 +471,12 @@
                 </button>
             </div>
 
-            <!-- Gunung Footer (Padding bawah diperbesar jadi 110px) -->
-            <div style="grid-row: 1; grid-column: 1; align-self: end; z-index: 0; padding-bottom: 110px; pointer-events: none;">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj-f-FCb746bDbY40AVuZj8ABXuy4Y0ERtX8KPEzWISTGEuPz7HGQhJCTADnmnRuwXx7wLGp-DZaHJ3HRnT505ksgW10sHy8xKvg_PYNUzsqXIigpJgCwrYvQKg3B7xgYRRnqp0OilxSKExbkJ8LHI9lvXYhg8RRxXSktgHk84Vg74X1mzOrKpGdDNzWHY/s1600/GUNUNG%20OK%20480%20px.png" style="width: 100%; display: block;" alt="Gunung Footer">
-            </div>
-
-            <!-- Suasana Desa (Padding bawah diperbesar jadi 90px) -->
-            <div style="grid-row: 1; grid-column: 1; align-self: end; z-index: 1; padding-bottom: 90px; pointer-events: none;">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEic4TqrZkjl9b8wsb4fPyKIKYOLpkbEcXtt2UaYbyIobglYQJ8o4r-8b4tjK5unnRdKUhhCSPfOpbk6CkIZ4e280-4XuYZGp6IaLt1QPcJLWZm_xxo_9WVaTzHEreSGSI_-_Pu0k5anPu6ANQULsptnbLNOJd4Q2jAc6aJU5261cf89n12souejh3Kl1z4/s1600/Suasana%20Desa.png" style="width: 100%; display: block;" alt="Suasana Desa">
+            <!-- Copyright dengan jarak 20px dari bawah -->
+            <div style="font-size: 11px; color: #64748b; font-weight: 400; text-align: center;">
+                Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.
             </div>
             
         </div>
-        
-        <!-- DIV SPACER 95px DI SINI DIHAPUS SAJA -->
 
     </div> 
 </div> 

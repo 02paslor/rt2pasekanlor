@@ -90,7 +90,7 @@
 
         /* ================== KARTU LUAR & WARNA ================== */
         .dashboard-section-card { border-radius: 24px; margin: 0 16px 24px 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); position: relative; z-index: 2; }
-        .card-kegiatan { background: #51BD6F; } .card-kegiatan .ds-footer { background: #51BD6F; }
+        .card-kegiatan { background: #46BD5C; } .card-kegiatan .ds-footer { background: #46BD5C; }
         .ds-header { padding: 16px 10px; text-align: center; color: #ffffff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
         .ds-content { background-color: #f1f5f9; padding: 20px 16px; border-radius: 20px; }
         .ds-footer { padding: 16px; display: flex; justify-content: center; align-items: center; }
@@ -675,17 +675,37 @@
         
         const currentTotalMinutes = sekarang.getHours() * 60 + sekarang.getMinutes();
         const eventTotalMinutes = startHour * 60 + startMinute;
+        const jamSekarang = sekarang.getHours();
         
         if (isManualDone) return { text: 'Sudah Selesai', color: '#1155CC', type: 'done' };
-        if (currentTotalMinutes < eventTotalMinutes) return { text: 'Belum Terlaksana', color: '#FF0000', type: 'upcoming' };
-        if (currentTotalMinutes >= eventTotalMinutes && currentTotalMinutes <= eventTotalMinutes + 180) return { text: 'Sedang Berlangsung', color: '#008A0D', type: 'ongoing' };
-        return { text: 'Sudah Selesai', color: '#1155CC', type: 'done' };
+        
+        // Jika sudah jam 10 malam (22:00) atau lebih
+        if (jamSekarang >= 22) return { text: 'Sudah Selesai', color: '#1155CC', type: 'done' };
+        
+        // Jika tepat waktu jadwal sampai selesai / lewat
+        if (currentTotalMinutes >= eventTotalMinutes && currentTotalMinutes <= eventTotalMinutes + 180) {
+            return { text: 'Sedang Berlangsung', color: '#008A0D', type: 'ongoing' };
+        }
+        
+        // Jika pada hari itu mulai jam 6 pagi (360 menit) sampai sebelum waktu acara
+        if (currentTotalMinutes >= 360 && currentTotalMinutes < eventTotalMinutes) {
+            return { text: 'Acara Hari Ini', color: '#FF0000', type: 'today' };
+        }
+        
+        if (currentTotalMinutes > eventTotalMinutes + 180) return { text: 'Sudah Selesai', color: '#1155CC', type: 'done' };
+        
+        return { text: 'Belum Terlaksana', color: '#FF0000', type: 'upcoming' };
     }
 
     function renderStatusHtml(statusData) {
         let icon = '';
-        if (statusData.type === 'done') icon = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
-        else icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="${statusData.type === 'ongoing' ? 'M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01' : 'M3 4h18v18H3z"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10'}"/></svg>`;
+        if (statusData.type === 'done') {
+            icon = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+        } else if (statusData.type === 'today') {
+            icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+        } else {
+            icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="${statusData.type === 'ongoing' ? 'M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01' : 'M3 4h18v18H3z"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10'}"/></svg>`;
+        }
         
         return {
             bodyHtml: `<div class="status-text-container" style="color:${statusData.color}; display:flex; align-items:center; gap:1px;">${icon} ${statusData.text}</div>`,

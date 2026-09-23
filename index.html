@@ -37,20 +37,23 @@
         }
 
         /* ========================================================
-           PEMBARUAN HEADER: DIGESER LEBIH KE ATAS
+           PEMBARUAN HEADER: IKUT SCROLL FAST (HIDE/SHOW)
            ======================================================== */
         .app-header-wrapper { 
             position: fixed;
             top: 0; left: 0; right: 0; width: 100%; max-width: 480px; 
             margin: 0 auto; 
-            padding: 8px 16px 0 16px; /* REVISI: Jarak atas dikurangi dari 16px menjadi 8px */
+            padding: 8px 16px 0 16px; 
             z-index: 1000; 
             pointer-events: none !important; 
-            transition: padding 0.3s ease; 
+            /* Transisi cepat untuk transform (ikut scroll) */
+            transition: transform 0.25s ease-out, padding 0.25s ease; 
         }
 
         .app-header-wrapper.scrolled {
             padding: 0; 
+            /* Geser header ke atas agar terlihat seperti discroll */
+            transform: translateY(-100%);
         }
 
         .header-box { 
@@ -105,28 +108,30 @@
         }
 
         /* ========================================================
-           PEMBARUAN OVERLAY: SLIDE DARI ATAS LAYAR & TAMPIL UTUH
+           PEMBARUAN OVERLAY & MODAL: PADDING BAWAH DITAMBAH
            ======================================================== */
         .slide-up-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; 
             display: flex; flex-direction: column; justify-content: flex-start; align-items: center; 
-            padding: 75px 16px 20px 16px; /* Menyesuaikan posisi header yang sudah naik */
+            /* Jarak bawah diperbesar menjadi 85px agar tidak ketutup menu footer */
+            padding: 75px 16px 85px 16px; 
             visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; 
         }
         .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
         
         .slide-up-content { 
             background: #ffffff; width: 100%; max-width: 480px; height: auto; 
-            max-height: calc(100vh - 95px); /* REVISI: Memastikan card utuh dan bisa discroll kalau layar kekecilan */
+            /* Max height disesuaikan agar sisa ruang untuk padding atas-bawah pas */
+            max-height: calc(100vh - 160px); 
             display: flex; flex-direction: column; 
             overflow-y: auto; overflow-x: hidden; 
             border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; 
-            transform: translateY(-100vh); /* REVISI: Mulai dari atas layar */
+            transform: translateY(-100vh); 
             opacity: 0; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s; 
         }
         .slide-up-overlay.active .slide-up-content { 
-            transform: translateY(0); /* REVISI: Meluncur ke posisi normal di bawah header */
+            transform: translateY(0); 
             opacity: 1; 
         }
 
@@ -165,10 +170,13 @@
         .btn-reg.active { background: #1155cc; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: auto; }
         .btn-reg:active { transform: scale(0.96); }
 
+        /* ========================================================
+           PEMBARUAN FOOTER: DIPERKECIL UNTUK MOBILE
+           ======================================================== */
         .bottom-nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
             width: 100%; max-width: 480px; 
-            height: 85px; 
+            height: 70px; /* Diperkecil dari 85px */
             background: #ffffff;
             display: flex; flex-direction: column;
             z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
@@ -181,11 +189,11 @@
         }
 
         .bottom-nav-bar.expanded {
-            height: 150px; 
+            height: 125px; /* Diperkecil dari 150px */
         }
 
         .nav-toggle-bar {
-            width: 100%; height: 20px;
+            width: 100%; height: 15px; /* Diperkecil sedikit */
             display: flex; justify-content: center; align-items: center;
             background: #f8fafc; cursor: pointer; flex-shrink: 0;
             border-bottom: 1px solid #e2e8f0;
@@ -205,14 +213,16 @@
         .nav-grid-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: 65px 65px;
-            width: 100%; height: 100px;
+            grid-template-rows: 55px 55px; /* Diperkecil dari 65px */
+            width: 100%; height: 110px;
             background: #ffffff;
         }
 
         .b-nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: #64748b; font-size: 11px; font-weight: 600;
+            text-decoration: none; color: #64748b; 
+            font-size: 9.5px; /* Diperkecil agar proporsional */
+            font-weight: 600;
             width: 100%; height: 100%; cursor: pointer; 
             transition: all 0.3s ease;
             text-transform: capitalize; border: none; outline: none;
@@ -234,7 +244,8 @@
         .b-nav-item:nth-child(8) { background-color: #ffffff; }
 
         .b-nav-item svg { 
-            width: 20px; height: 20px; margin-bottom: 4px; stroke: #64748b; stroke-width: 2; fill: none;
+            width: 18px; height: 18px; /* Diperkecil */
+            margin-bottom: 2px; stroke: #64748b; stroke-width: 2; fill: none;
             stroke-linecap: round; stroke-linejoin: round; transition: all 0.1s ease;
         }
 
@@ -687,15 +698,23 @@
     }
     function closeProfileConfirmOutside(e) { if(e.target === document.getElementById('profileEditConfirmModal')) closeProfileConfirmModal(); }
 
+
+    /* ========================================================
+       LOGIKA HEADER IKUT SCROLL BERDASARKAN ARAH SCROLL
+       ======================================================== */
+    let lastScrollTop = 0; 
+
     function initIframeScroll() {
         try {
             const iframeWin = dynamicContent.contentWindow;
             iframeWin.addEventListener('scroll', function() {
-                if (iframeWin.scrollY > 15) {
-                    appHeaderWrapper.classList.add('scrolled');
+                let currentScroll = iframeWin.scrollY;
+                if (currentScroll > 15 && currentScroll > lastScrollTop) {
+                    appHeaderWrapper.classList.add('scrolled'); // Sembunyikan saat scroll turun
                 } else {
-                    appHeaderWrapper.classList.remove('scrolled');
+                    appHeaderWrapper.classList.remove('scrolled'); // Munculkan saat scroll naik
                 }
+                lastScrollTop = currentScroll;
             });
         } catch (error) {
             console.log("Iframe beda domain (Cross-Origin), menggunakan fallback event Listener.");
@@ -704,11 +723,13 @@
 
     window.addEventListener('message', function(e) {
         if (e.data && e.data.type === 'iframeScroll') {
-            if (e.data.scrollTop > 15) {
+            let currentScroll = e.data.scrollTop;
+            if (currentScroll > 15 && currentScroll > lastScrollTop) {
                 appHeaderWrapper.classList.add('scrolled');
             } else {
                 appHeaderWrapper.classList.remove('scrolled');
             }
+            lastScrollTop = currentScroll;
         }
     });
 

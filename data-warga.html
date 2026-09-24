@@ -8,7 +8,7 @@
     <title>Sistem Data Warga Terpadu RT 2</title>
     
     <!-- Script Library -->
-    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1500/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1ik/s1500/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -447,7 +447,9 @@
                                     <div class="shrink-0 w-full md:w-36 flex flex-col items-center gap-3">
                                         <label class="block text-[13px] font-[600] text-gray-700 text-center w-full">Foto Profil <span class="text-red-500">*</span><br><span class="text-[10px] text-red-500 font-[500]">(Wajib Diunggah)</span></label>
                                         <div class="w-36 h-36 border-2 border-[#CBD5E1] border-dashed rounded-full bg-gray-50 hover:border-[#1155CC] hover:bg-blue-50 relative flex justify-center items-center overflow-hidden cursor-pointer group transition-all shadow-sm">
+                                            <!-- FIX: Dihapus atribut required agar popup toast custom bisa berjalan kalau kosong -->
                                             <input type="file" accept="image/*" @change="e => handleFileUpload(e, 'Foto_Profil')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
+                                            
                                             <button v-if="form.Foto_Profil" @click.prevent.stop="removeFile('Foto_Profil')" class="absolute top-2 right-4 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center z-20 hover:bg-red-600 shadow-md transition-transform hover:scale-110"><i class="fas fa-times text-[12px]"></i></button>
                                             <img v-if="form.Foto_Profil" crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.Foto_Profil" class="w-full h-full object-cover">
                                             <i v-else class="fas fa-camera text-[32px] text-gray-300 group-hover:text-[#1155CC] transition-colors drop-shadow-sm"></i>
@@ -793,8 +795,8 @@
         </transition>
 
         <!-- Toasts -->
-        <div class="fixed top-20 right-4 z-[110] flex flex-col gap-3 pointer-events-none">
-            <transition-group name="fade">
+        <div class="fixed top-20 right-4 z-[9999] flex flex-col gap-3 pointer-events-none">
+            <transition-group name="fade" tag="div">
                 <div v-for="t in toasts" :key="t.id" class="px-5 py-4 rounded-xl shadow-2xl flex items-center text-white text-[13px] font-[600] min-w-[280px] border" :class="t.type === 'error' ? 'bg-red-500 border-red-400' : 'bg-emerald-500 border-emerald-400'">
                     <i :class="t.type === 'error' ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle'" class="mr-3 text-[20px]"></i>{{ t.message }}
                 </div>
@@ -1155,7 +1157,7 @@
                         } 
                         else { 
                             showToast(res.message); 
-                            // SINKRONISASI OTOMATIS: Tanpa perlu request fetchData() yang memberatkan server
+                            // SINKRONISASI OTOMATIS
                             wargaList.value = res.data; 
                             activeMenu.value = 'list'; 
                             resetForm(); 
@@ -1165,6 +1167,7 @@
                     finally { saving.value = false; }
                 };
 
+                const confirmDelete = (w) => { deleteConfirm.value = { show:true, nama: w.Nama, idRumah: w.Id_Rumah }; };
                 const executeDelete = async () => {
                     saving.value = true;
                     try {

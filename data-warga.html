@@ -1141,18 +1141,22 @@
 
                         let finalData = { ...form.value }; delete finalData.AnggotaList;
 
-                        const res = await callAPI('save', finalData);
+                        // BUNGKUS PAYLOAD AGAR BACKEND LANGSUNG MEMBALAS DENGAN DATA TERBARU
+                        const res = await callAPI('save', { 
+                            formData: finalData, 
+                            role: userRole.value, 
+                            loggedInId: loggedInId.value 
+                        });
                         
-                        // JIKA REGISTRASI BARU
                         if(userRole.value === 'new_warga') { 
                             const assignedId = res.newId || finalData.Id_Rumah;
                             alert(`✅ PENDAFTARAN BERHASIL!\n\nUser ID Anda : ${assignedId}\nPassword Anda : ${finalData.Password}\n\nPENTING: Harap catat/screenshot User ID di atas untuk keperluan Login Anda.`);
                             setTimeout(() => { logout(); }, 500); 
                         } 
-                        // JIKA EDIT DATA / ADMIN MENAMBAH
                         else { 
                             showToast(res.message); 
-                            await fetchData(); 
+                            // SINKRONISASI OTOMATIS: Tanpa perlu request fetchData() yang memberatkan server
+                            wargaList.value = res.data; 
                             activeMenu.value = 'list'; 
                             resetForm(); 
                             scrollTo('top'); 
@@ -1161,12 +1165,20 @@
                     finally { saving.value = false; }
                 };
 
-                const confirmDelete = (w) => { deleteConfirm.value = { show:true, nama: w.Nama, idRumah: w.Id_Rumah }; };
                 const executeDelete = async () => {
                     saving.value = true;
                     try {
-                        const res = await callAPI('delete', { Nama: deleteConfirm.value.nama, Id_Rumah: deleteConfirm.value.idRumah });
-                        showToast(res.message); deleteConfirm.value.show = false; await fetchData();
+                        const res = await callAPI('delete', { 
+                            Nama: deleteConfirm.value.nama, 
+                            Id_Rumah: deleteConfirm.value.idRumah,
+                            role: userRole.value,
+                            loggedInId: loggedInId.value
+                        });
+                        showToast(res.message); 
+                        deleteConfirm.value.show = false; 
+                        
+                        // SINKRONISASI OTOMATIS HAPUS
+                        wargaList.value = res.data;
                     } catch(e) { showToast(e.message || 'Gagal menghapus', 'error'); } 
                     finally { saving.value = false; }
                 };

@@ -1,54 +1,30 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6G930LME8"></script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sistem Data Warga Terpadu RT 2</title>
     
-    <!-- Script Library -->
     <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1500/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
+    <!-- Cropper.js untuk Geser Foto -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
-        body, html {
-            font-family: 'Poppins', sans-serif !important; 
-            background-color: #F4F7F9;
-            color: #333333;
-            margin: 0; padding: 0;
-            overflow: hidden; 
-        }
+        body, html { font-family: 'Poppins', sans-serif !important; background-color: #F4F7F9; color: #333333; margin: 0; padding: 0; overflow: hidden; }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08); }
+        .modern-card { background: #FFFFFF; border-radius: 20px; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04); border: 1px solid #F0F2F5; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease; }
+        .modern-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -4px rgba(15, 46, 112, 0.12); border-color: #E2E8F0; }
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
-        }
-        
-        .modern-card {
-            background: #FFFFFF;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
-            border: 1px solid #F0F2F5;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-        }
-        .modern-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px -4px rgba(15, 46, 112, 0.12);
-            border-color: #E2E8F0;
-        }
-
-        .card-list-enter-active, .card-list-leave-active {
-            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .card-list-enter-active, .card-list-leave-active { transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .card-list-enter-from { opacity: 0; transform: scale(0.6) translateY(20px); }
         .card-list-leave-to { opacity: 0; transform: scale(0.6) translateY(-20px); }
         .card-list-move { transition: transform 0.4s ease-out; }
@@ -56,92 +32,78 @@
         .fade-enter-active, .fade-leave-active { transition: opacity 0.2s ease; }
         .fade-enter-from, .fade-leave-to { opacity: 0; }
 
-        .btn-primary { 
-            background: linear-gradient(135deg, #1155CC 0%, #0A3688 100%);
-            color: #FFFFFF; 
-            transition: all 0.3s ease; 
-        }
-        .btn-primary:hover { 
-            background: linear-gradient(135deg, #0A3688 0%, #051B44 100%);
-            transform: scale(1.02); 
-            box-shadow: 0 8px 15px -3px rgba(17, 85, 204, 0.3); 
-        }
-        
+        .btn-primary { background: linear-gradient(135deg, #1155CC 0%, #0A3688 100%); color: #FFFFFF; transition: all 0.3s ease; }
+        .btn-primary:hover { transform: scale(1.02); box-shadow: 0 8px 15px -3px rgba(17, 85, 204, 0.3); }
         .spinner { border: 3px solid rgba(17,85,204,0.1); border-radius: 50%; border-top: 3px solid #1155CC; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
     </style>
 </head>
 <body>
     <div id="app" class="min-h-screen relative flex w-full text-[14px]">
         
-        <!-- ================== HALAMAN LOGIN ================== -->
+        <!-- CROPPER MODAL -->
+        <transition name="fade">
+            <div v-if="showCropper" class="fixed inset-0 z-[99999] bg-black/90 flex flex-col justify-center items-center p-4">
+                <div class="bg-white p-5 rounded-2xl w-full max-w-sm flex flex-col gap-4 shadow-2xl">
+                    <h3 class="font-[700] text-center text-[#0F2E70] text-[16px]">Geser & Paskan Foto</h3>
+                    <div class="relative w-full h-[300px] bg-gray-100 overflow-hidden rounded-xl">
+                        <img id="cropperImage" :src="cropperSrc" class="max-w-full block">
+                    </div>
+                    <div class="flex gap-3 mt-2">
+                        <button type="button" @click="cancelCrop" class="flex-1 py-2.5 bg-gray-200 text-gray-700 font-[600] rounded-xl hover:bg-gray-300 transition-colors">Batal</button>
+                        <button type="button" @click="applyCrop" class="flex-1 py-2.5 bg-blue-600 text-white font-[600] rounded-xl hover:bg-blue-700 transition-colors shadow-md">Terapkan Foto</button>
+                    </div>
+                </div>
+            </div>
+        </transition>
+
+        <!-- HALAMAN LOGIN -->
         <transition name="fade">
             <div v-if="!isLoggedIn" class="min-h-screen flex flex-col justify-center items-center p-4 w-full absolute inset-0 z-50 overflow-y-auto" style="background: radial-gradient(circle at top right, #EBF4FF, #F4F7F9); background-image: radial-gradient(#CBD5E1 1px, transparent 1px); background-size: 30px 30px;">
-                
                 <div class="w-full max-w-[380px] flex flex-col items-center my-auto relative z-10">
                     <div class="glass-panel rounded-[28px] p-6 w-full flex flex-col relative z-10 border-t-2 border-t-white">
-                        
                         <div class="flex items-center gap-4 mb-6">
-                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" 
-                                 alt="Logo RT 2" class="h-[60px] w-auto object-contain drop-shadow-md">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" class="h-[60px] w-auto drop-shadow-md">
                             <div class="flex-1">
-                                <h2 class="text-[#0F2E70] font-[700] text-[18px] leading-tight tracking-tight">Data Warga</h2>
-                                <p class="text-[#64748B] font-[500] text-[10px] mt-0.5 leading-snug">RT 2-RW 3, Pasekan Lor<br>Gamping, Sleman</p>
+                                <h2 class="text-[#0F2E70] font-[700] text-[18px] leading-tight">Data Warga</h2>
+                                <p class="text-[#64748B] font-[500] text-[10px] mt-0.5">RT 2-RW 3, Pasekan Lor<br>Gamping, Sleman</p>
                             </div>
                         </div>
 
                         <form @submit.prevent="handleLogin" class="flex flex-col gap-3 w-full mb-5">
                             <div class="relative">
                                 <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8]"></i>
-                                <input type="text" v-model="loginIdRumah" placeholder="User ID / Id Rumah" required class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-[#E2E8F0] bg-white/70 focus:bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-[13px] font-[500]">
+                                <input type="text" v-model="loginIdRumah" placeholder="User ID / Id Rumah" required class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-[#E2E8F0] bg-white/70 focus:bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all font-[500]">
                             </div>
                             <div class="relative">
                                 <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8]"></i>
-                                <input :type="showPassword ? 'text' : 'password'" v-model="loginPassword" placeholder="Password" required class="w-full pl-10 pr-10 py-2.5 rounded-xl border border-[#E2E8F0] bg-white/70 focus:bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-[14px] tracking-widest font-[500]">
-                                <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer text-[#94A3B8] hover:text-[#0F2E70] transition-colors" @click="showPassword = !showPassword">
-                                    <i class="fas text-[14px]" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-                                </div>
+                                <input :type="showPassword ? 'text' : 'password'" v-model="loginPassword" placeholder="Password" required class="w-full pl-10 pr-10 py-2.5 rounded-xl border border-[#E2E8F0] bg-white/70 focus:bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all tracking-widest font-[500]">
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer text-[#94A3B8]" @click="showPassword = !showPassword"><i class="fas" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i></div>
                             </div>
-                            <button type="submit" :disabled="loading" class="btn-primary w-full py-2.5 rounded-xl font-[600] text-[14px] flex justify-center items-center mt-1 disabled:opacity-70 gap-2">
+                            <button type="submit" :disabled="loading" class="btn-primary w-full py-2.5 rounded-xl font-[600] flex justify-center items-center mt-1 disabled:opacity-70 gap-2">
                                 <i v-if="!loading" class="fas fa-sign-in-alt"></i>
-                                <span v-if="loading" class="spinner border-t-white w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
+                                <span v-if="loading" class="spinner border-t-white w-4 h-4 rounded-full border-2"></span>
                                 <span>{{ loading ? 'Memproses...' : 'Masuk Sistem' }}</span>
                             </button>
                         </form>
 
-                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 border border-blue-100 mb-4 flex flex-col gap-2.5 text-center">
-                            <h3 class="text-[#0F2E70] font-[600] text-[13px] text-left"><i class="fas fa-user-plus mr-1"></i> Warga Baru?</h3>
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 border border-blue-100 mb-4 text-center">
+                            <h3 class="text-[#0F2E70] font-[600] text-[13px] text-left mb-2.5"><i class="fas fa-user-plus mr-1"></i> Warga Baru?</h3>
                             <a href="?page=registrasi" @click.prevent="bukaHalamanRegistrasi" class="w-full py-2.5 rounded-xl font-[600] text-[13px] flex items-center justify-center gap-2 bg-[#0F2E70] text-white hover:bg-black transition-all shadow-sm cursor-pointer">
-                                <i class="fas fa-id-card text-[12px]"></i> Pendaftaran Warga Baru
+                                <i class="fas fa-id-card"></i> Pendaftaran Warga Baru
                             </a>
                         </div>
-
-                        <div class="pt-3 border-t border-gray-200 text-center flex justify-between items-center px-2">
-                            <a href="https://rt2pasekanlor.id/" target="_self" class="inline-flex items-center gap-1.5 text-[#1155CC] hover:text-[#0F2E70] text-[12px] font-[600] transition-colors">
-                                <i class="fas fa-globe"></i> <span>Web Beranda</span>
-                            </a>
-                            <span class="text-gray-300">|</span>
-                            <a href="javascript:void(0)" @click="logout" class="inline-flex items-center gap-1.5 text-red-500 hover:text-red-700 text-[12px] font-[600] transition-colors">
-                                <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="mt-5 text-center px-4 relative z-10">
-                        <p class="text-[11px] font-[500] text-[#64748B]">© 2026 Aplikasi Data Warga RT 2.</p>
                     </div>
                 </div>
             </div>
         </transition>
 
-        <!-- ================== SIDEBAR KIRI (ADMIN CERAH) ================== -->
-        <aside v-if="isLoggedIn && userRole === 'admin'" 
-               class="hidden lg:flex fixed left-0 top-0 h-screen w-[260px] bg-[#0A1635] shadow-[5px_0_30px_rgba(0,0,0,0.1)] z-40 flex-col border-r border-[#1B2B56] overflow-y-auto custom-scrollbar transition-all duration-300">
-            
+        <!-- SIDEBAR KIRI (ADMIN) -->
+        <aside v-if="isLoggedIn && userRole === 'admin'" class="hidden lg:flex fixed left-0 top-0 h-screen w-[260px] bg-[#0A1635] shadow-[5px_0_30px_rgba(0,0,0,0.1)] z-40 flex-col border-r border-[#1B2B56] overflow-y-auto custom-scrollbar transition-all duration-300">
             <div class="p-5 flex flex-col flex-1">
                 <div class="flex justify-between items-center mb-6 text-white">
                     <span class="font-[600] text-[14px] tracking-wide flex items-center gap-2"><i class="fas fa-filter text-[#38BDF8]"></i> Navigasi & Filter</span>
@@ -153,14 +115,24 @@
                         <input type="text" v-model="searchQuery" @input="handleSearchInput" placeholder="Cari Nama / ID..." class="bg-transparent border-none text-white focus:outline-none w-full ml-2.5 font-[500] text-[12px] placeholder:text-[#64748B]">
                     </div>
 
+                    <!-- TOMBOL TAMPILAN VIEW GRID & LIST -->
                     <div class="flex gap-2 p-1 bg-[#1B2B56] rounded-xl">
                         <button @click="viewMode = 'card'" class="flex-1 py-1.5 rounded-lg text-[11px] font-[600] flex items-center justify-center gap-1.5 transition-all" :class="viewMode === 'card' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635] shadow-sm'"><i class="fas fa-th-large"></i> Kartu</button>
                         <button @click="viewMode = 'table'" class="flex-1 py-1.5 rounded-lg text-[11px] font-[600] flex items-center justify-center gap-1.5 transition-all" :class="viewMode === 'table' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635] shadow-sm'"><i class="fas fa-list"></i> Tabel</button>
                     </div>
 
+                    <!-- TOMBOL EXPORT DATA -->
                     <button @click="openExportModal" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-[600] py-2 rounded-xl text-[12px] transition-all flex items-center justify-center gap-2 shadow-sm border border-emerald-400">
-                        <i class="fas fa-print"></i> Cetak / Export Data
+                        <i class="fas fa-print"></i> Export Data PDF
                     </button>
+
+                    <!-- REPORT DUPLIKAT -->
+                    <div v-if="duplicateDataReport.length > 0" class="bg-red-500/10 border border-red-500/30 rounded-xl p-3">
+                        <h4 class="text-red-400 font-[600] text-[11px] mb-2 flex items-center gap-1.5"><i class="fas fa-exclamation-triangle"></i> Peringatan ID Ganda</h4>
+                        <ul class="text-[10px] text-red-300 space-y-1 max-h-[80px] overflow-y-auto custom-scrollbar pr-1">
+                            <li v-for="(d, i) in duplicateDataReport" :key="i" class="truncate">• {{d.Id_Rumah}} ({{d.Nama}})</li>
+                        </ul>
+                    </div>
 
                     <div class="flex items-center justify-between bg-[#1B2B56] p-3 rounded-xl border border-[#2A3D73]">
                         <span class="text-[#E2E8F0] text-[12px] font-[500] flex items-center gap-2"><i class="fas fa-file-invoice-dollar text-[#FBBF24]"></i> Laporan Warga</span>
@@ -172,56 +144,51 @@
 
                     <div class="w-full h-px bg-[#1B2B56] my-4"></div>
 
+                    <label class="text-[#94A3B8] font-[600] text-[11px] uppercase tracking-wider mb-2 block">Urutkan Data</label>
+                    <select v-model="sortMode" class="w-full pl-3 pr-6 py-2 rounded-lg bg-[#2A4178] text-white outline-none cursor-pointer mb-4 font-[500] text-[11px]">
+                        <option value="id_asc">ID Rumah (Kecil - Besar)</option>
+                        <option value="id_desc">ID Rumah (Besar - Kecil)</option>
+                        <option value="nama_asc">Nama (A - Z)</option>
+                        <option value="nama_desc">Nama (Z - A)</option>
+                    </select>
+
                     <label class="text-[#94A3B8] font-[600] text-[11px] uppercase tracking-wider mb-2 block">Domisili</label>
                     <div class="grid grid-cols-2 gap-2 mb-4">
-                        <button @click="applySingleFilter('domisili', 'Tempat Tinggal')" class="py-2 rounded-lg text-[11px] font-[600] border border-transparent transition-all shadow-sm" :class="filterDomisili === 'Tempat Tinggal' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635]'">Tinggal</button>
-                        <button @click="applySingleFilter('domisili', 'Kontrak / Kost')" class="py-2 rounded-lg text-[11px] font-[600] border border-transparent transition-all shadow-sm" :class="filterDomisili === 'Kontrak / Kost' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635]'">Kontrak</button>
+                        <button @click="applySingleFilter('domisili', 'Tempat Tinggal')" class="py-2 rounded-lg text-[11px] font-[600] transition-all shadow-sm" :class="filterDomisili === 'Tempat Tinggal' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Tinggal</button>
+                        <button @click="applySingleFilter('domisili', 'Kontrak / Kost')" class="py-2 rounded-lg text-[11px] font-[600] transition-all shadow-sm" :class="filterDomisili === 'Kontrak / Kost' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Kontrak</button>
                     </div>
 
                     <label class="text-[#94A3B8] font-[600] text-[11px] uppercase tracking-wider mb-2 block">Jenis Kelamin</label>
                     <div class="grid grid-cols-2 gap-2 mb-4">
-                        <button @click="applySingleFilter('jk', 'Laki-laki')" class="py-2 rounded-lg text-[11px] font-[600] border border-transparent transition-all shadow-sm" :class="filterJK === 'Laki-laki' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635]'">Pria</button>
-                        <button @click="applySingleFilter('jk', 'Perempuan')" class="py-2 rounded-lg text-[11px] font-[600] border border-transparent transition-all shadow-sm" :class="filterJK === 'Perempuan' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635]'">Wanita</button>
+                        <button @click="applySingleFilter('jk', 'Laki-laki')" class="py-2 rounded-lg text-[11px] font-[600] transition-all shadow-sm" :class="filterJK === 'Laki-laki' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Pria</button>
+                        <button @click="applySingleFilter('jk', 'Perempuan')" class="py-2 rounded-lg text-[11px] font-[600] transition-all shadow-sm" :class="filterJK === 'Perempuan' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Wanita</button>
                     </div>
 
                     <label class="text-[#94A3B8] font-[600] text-[11px] uppercase tracking-wider mb-2 block">Lainnya</label>
-                    <select v-model="filterRonda" @change="searchQuery=''" class="w-full pl-3 pr-6 py-2 rounded-lg bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635] font-[500] text-[11px] outline-none cursor-pointer mb-2 transition-colors shadow-sm">
+                    <select v-model="filterRonda" @change="applySingleFilter('ronda', filterRonda)" class="w-full pl-3 pr-6 py-2 rounded-lg bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635] font-[500] text-[11px] outline-none cursor-pointer mb-2 transition-colors shadow-sm">
                         <option value="">Semua Jadwal Ronda</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option>
                     </select>
                     
-                    <div class="flex justify-between items-center mt-5 mb-4 px-1">
-                        <span class="text-[#94A3B8] font-[600] text-[11px] uppercase">Urutkan A-Z</span>
-                        <div class="bg-[#2A4178] rounded-md flex overflow-hidden border border-[#2A3D73] shadow-sm">
-                            <button @click="sortOrder = 'asc'" class="px-2.5 py-1 text-white text-[10px] transition-colors" :class="sortOrder === 'asc' ? 'bg-[#38BDF8] text-[#0A1635]' : 'hover:bg-[#38BDF8] hover:text-[#0A1635]'"><i class="fas fa-arrow-up"></i></button>
-                            <button @click="sortOrder = 'desc'" class="px-2.5 py-1 text-white text-[10px] border-l border-[#1B2B56] transition-colors" :class="sortOrder === 'desc' ? 'bg-[#38BDF8] text-[#0A1635]' : 'hover:bg-[#38BDF8] hover:text-[#0A1635]'"><i class="fas fa-arrow-down"></i></button>
-                        </div>
-                    </div>
-                    
-                    <button @click="resetFilters" class="w-full mt-2 bg-[#EF4444]/10 border border-[#EF4444]/20 hover:bg-[#EF4444] text-[#EF4444] hover:text-white font-[600] py-2 rounded-xl text-[11px] transition-all flex items-center justify-center gap-1.5 shadow-sm">
+                    <button @click="resetFilters" class="w-full mt-2 bg-[#EF4444]/10 text-[#EF4444] font-[600] py-2 rounded-xl text-[11px] transition-all flex items-center justify-center gap-1.5 hover:bg-[#EF4444] hover:text-white">
                         <i class="fas fa-sync-alt"></i> Reset Filter
                     </button>
                 </div>
             </div>
 
-            <div class="mt-auto p-4 flex flex-col gap-3 bg-[#06112E] border-t border-[#1B2B56] shrink-0">
+            <div class="mt-auto p-4 flex flex-col gap-3 bg-[#06112E] border-t border-[#1B2B56]">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#38BDF8] to-[#1155CC] flex items-center justify-center text-white shrink-0 shadow-md">
-                        <i class="fas fa-user-shield text-[16px]"></i>
-                    </div>
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyfuGc_fXDcYnfWzyQzcRZ6n9XwRuYCrX3D4PNthp05MIwg9VjbDoCBPtGg6jc374QSSOKKLt3jBGAkPtlwVKRSDc-PhZewr5S3X91KheaVSjIs1IDedm_zm1BR9_EyJ9CdJuFHGGu4l0pF3hF8cbMViD5lucqgvffwoxPWPQBuJfyZntChlwC1d7Ad6Q/w640-h640/favicon%20rt2.png" class="w-10 h-10 rounded-full object-cover shadow-md border-2 border-[#38BDF8]">
                     <div class="flex-1 min-w-0">
                         <h3 class="font-[600] text-white text-[13px] truncate">Admin Pusat</h3>
                         <p class="text-[10px] text-[#94A3B8] truncate">Kendali Sistem RT 2</p>
                     </div>
                 </div>
-                <button @click="logout" class="w-full py-2 bg-[#EF4444]/10 border border-[#EF4444]/20 hover:bg-[#EF4444] text-[#EF4444] hover:text-white rounded-lg text-[12px] font-[600] transition-colors flex items-center justify-center gap-2">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
+                <button @click="logout" class="w-full py-2 bg-[#EF4444]/10 text-[#EF4444] hover:bg-[#EF4444] hover:text-white rounded-lg text-[12px] font-[600] transition-colors flex justify-center items-center gap-2"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </aside>
 
-        <!-- ================== KONTEN UTAMA & HEADER ================== -->
-        <div v-if="isLoggedIn" class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative transition-all duration-300"
-             :class="(userRole === 'admin') ? 'lg:pl-[260px]' : ''">
+        <!-- KONTEN UTAMA & HEADER -->
+        <div v-if="isLoggedIn" class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative transition-all duration-300" :class="(userRole === 'admin') ? 'lg:pl-[260px]' : ''">
             
             <header class="bg-white w-full border-b border-gray-200 shrink-0 shadow-sm relative z-30">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center w-full">
@@ -236,23 +203,19 @@
                     </div>
                     
                     <div class="hidden lg:flex items-center gap-3">
-                        <div v-if="userRole === 'admin'" class="flex bg-gray-100 p-1 rounded-xl shadow-inner mr-2 border border-gray-200">
-                            <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-white text-[#0F2E70] shadow-sm border border-gray-200' : 'text-gray-500 hover:text-gray-700'" class="px-4 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex items-center gap-2"><i class="fas fa-users"></i> Warga</button>
-                            <button @click="bukaFormKosong()" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm border border-gray-200' : 'text-gray-500 hover:text-gray-700'" class="px-4 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex items-center gap-2"><i class="fas fa-user-plus"></i> Tambah Baru</button>
+                        <div v-if="userRole === 'admin'" class="flex bg-gray-100 p-1 rounded-xl border border-gray-200 mr-2">
+                            <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="px-4 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex gap-2"><i class="fas fa-users"></i> Warga</button>
+                            <button @click="bukaFormKosong()" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="px-4 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex gap-2"><i class="fas fa-user-plus"></i> Tambah Baru</button>
                         </div>
-                        <div class="flex gap-2 shrink-0">
-                            <button v-if="userRole !== 'new_warga'" @click="fetchData" class="px-4 py-2 rounded-xl text-[12px] font-[600] text-[#0F2E70] bg-blue-50 border border-blue-100 hover:bg-blue-100 transition-all flex items-center"><i class="fas fa-sync-alt text-[#1155CC]" :class="{'animate-spin': loading}"></i> <span class="ml-2">Sinkron</span></button>
-                            <button @click="logout" class="px-4 py-2 rounded-xl text-[12px] font-[600] text-red-600 bg-red-50 border border-red-100 hover:bg-red-100 transition-all flex items-center shadow-sm">
-                                <i class="fas fa-sign-out-alt"></i> <span class="ml-2">Logout</span>
-                            </button>
+                        <div class="flex gap-2" v-if="userRole === 'admin'">
+                            <button @click="fetchData" class="px-4 py-2 rounded-xl text-[12px] font-[600] text-[#0F2E70] bg-blue-50 hover:bg-blue-100 transition-all flex items-center"><i class="fas fa-sync-alt text-[#1155CC]" :class="{'animate-spin': loading}"></i> <span class="ml-2">Sinkron</span></button>
+                            <button @click="logout" class="px-4 py-2 rounded-xl text-[12px] font-[600] text-red-600 bg-red-50 hover:bg-red-100 transition-all flex items-center"><i class="fas fa-sign-out-alt"></i> <span class="ml-2">Logout</span></button>
                         </div>
                     </div>
 
-                    <div class="flex gap-2 shrink-0 lg:hidden">
-                        <button v-if="userRole !== 'new_warga'" @click="fetchData" class="w-9 h-9 flex items-center justify-center rounded-xl text-blue-600 bg-blue-50 border border-blue-100"><i class="fas fa-sync-alt" :class="{'animate-spin': loading}"></i></button>
-                        <button @click="logout" class="w-9 h-9 flex items-center justify-center rounded-xl text-red-600 bg-red-50 border border-red-100 shadow-sm">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
+                    <div class="flex gap-2 lg:hidden" v-if="userRole === 'admin'">
+                        <button @click="fetchData" class="w-9 h-9 rounded-xl text-blue-600 bg-blue-50 flex items-center justify-center"><i class="fas fa-sync-alt" :class="{'animate-spin': loading}"></i></button>
+                        <button @click="logout" class="w-9 h-9 rounded-xl text-red-600 bg-red-50 flex items-center justify-center"><i class="fas fa-sign-out-alt"></i></button>
                     </div>
                 </div>
             </header>
@@ -275,30 +238,23 @@
                         </div>
 
                         <div class="flex w-full bg-gray-100 p-1.5 rounded-xl shadow-inner border border-gray-200" v-if="userRole === 'admin'">
-                            <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500 hover:text-gray-700'" class="flex-1 py-2 rounded-lg text-[12px] font-[600] transition-all flex items-center justify-center gap-1.5"><i class="fas fa-users"></i> Warga</button>
-                            <button @click="bukaFormKosong()" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500 hover:text-gray-700'" class="flex-1 py-2 rounded-lg text-[12px] font-[600] transition-all flex items-center justify-center gap-1.5"><i class="fas fa-plus"></i> Tambah</button>
+                            <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="flex-1 py-2 rounded-lg text-[12px] font-[600] flex justify-center gap-1.5"><i class="fas fa-users"></i> Warga</button>
+                            <button @click="bukaFormKosong()" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="flex-1 py-2 rounded-lg text-[12px] font-[600] flex justify-center gap-1.5"><i class="fas fa-plus"></i> Tambah</button>
                         </div>
 
                         <div class="flex w-full bg-gray-100 p-1.5 rounded-xl shadow-inner border border-gray-200" v-if="userRole === 'new_warga'">
-                            <button class="w-full py-2 rounded-lg text-[12px] font-[600] bg-white text-[#0F2E70] shadow-sm flex items-center justify-center gap-2">
-                                <i class="fas fa-id-card"></i> Formulir Registrasi Warga Baru
-                            </button>
+                            <button class="w-full py-2 text-[12px] font-[600] bg-white text-[#0F2E70] flex justify-center gap-2 shadow-sm"><i class="fas fa-id-card"></i> Formulir Registrasi Warga Baru</button>
                         </div>
 
-                        <div class="flex w-full" v-if="userRole === 'warga'">
-                            <button v-if="activeMenu === 'list'" @click="editWarga(filteredWarga[0])" class="w-full py-2.5 rounded-xl text-[13px] font-[600] transition-all flex items-center justify-center gap-2 bg-[#0F2E70] text-white shadow-md">
-                                <i class="fas fa-pen"></i> Edit Profil Saya
-                            </button>
-                            <button v-if="activeMenu === 'register'" @click="changeMenu('list')" class="w-full py-2.5 rounded-xl text-[13px] font-[600] transition-all flex items-center justify-center gap-2 bg-gray-200 text-gray-700 shadow-sm border border-gray-300">
-                                <i class="fas fa-arrow-left"></i> Batal Edit
-                            </button>
+                        <div class="flex w-full" v-if="userRole === 'warga' && activeMenu !== 'register'">
+                            <button @click="editWarga(filteredWarga[0])" class="w-full py-2.5 rounded-xl text-[13px] font-[600] bg-[#0F2E70] text-white flex justify-center gap-2 shadow-md"><i class="fas fa-pen"></i> Edit Profil Saya</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- CONTAINER AREA KERJA UTAMA -->
-            <div class="flex-1 overflow-y-auto w-full custom-scrollbar flex flex-col relative bg-[#F4F7F9]" id="scrollArea">
+            <!-- SCROLL AREA UTAMA -->
+            <div class="flex-1 overflow-y-auto w-full custom-scrollbar relative bg-[#F4F7F9]" id="scrollArea">
                 <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 pb-32 flex flex-col flex-1 relative">
                     
                     <div v-if="loading" class="flex flex-col items-center justify-center py-32">
@@ -306,68 +262,42 @@
                         <p class="text-[#0F2E70] font-[600] text-[15px] tracking-wide">Sinkronisasi Data...</p>
                     </div>
 
-                    <!-- ================== MENU 1: DAFTAR WARGA ================== -->
                     <div v-show="activeMenu === 'list' && !loading" class="w-full relative">
-
-                        <div v-if="filteredWarga.length === 0" class="glass-panel rounded-3xl p-12 text-center border border-gray-200 mt-10">
-                            <i class="fas fa-folder-open text-[50px] text-gray-300 mb-4"></i>
-                            <p class="text-gray-500 font-[500] text-[15px]">Tidak ada data warga yang sesuai.</p>
-                        </div>
-
-                        <!-- TAMPILAN KARTU (GRID VIEW) COMPACT -->
-                        <div v-if="viewMode === 'card' || userRole === 'warga'">
-                            <transition-group name="card-list" tag="div" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 w-full items-start">
-                                <div v-for="(w, index) in filteredWarga" :key="w.Id_Rumah + '_' + w.Nama" 
-                                     :style="{ transitionDelay: (index * 0.03) + 's' }"
-                                     @click="openDetailModal(w)" class="modern-card overflow-hidden flex flex-col relative cursor-pointer w-full group">
-                                    
-                                    <div class="p-5 flex gap-4">
-                                        <div class="shrink-0 relative">
-                                            <div class="w-[64px] h-[64px] rounded-full p-1 bg-gradient-to-tr from-[#38BDF8] to-[#1155CC]">
-                                                <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(w)" class="w-full h-full rounded-full object-cover border-2 border-white bg-white" :class="!w.Foto_Profil ? 'grayscale opacity-80' : ''" @click.stop="openLightbox(getAvatar(w))">
-                                            </div>
-                                            <div v-if="w.QR_Code || w.QrCode" class="absolute -bottom-1 -right-1 bg-white p-1 rounded-full shadow-md border border-gray-100 cursor-pointer hover:scale-110 transition-transform" @click.stop="openLightbox(w.QR_Code || w.QrCode)">
-                                                <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="w.QR_Code || w.QrCode" class="w-4 h-4 object-contain rounded-full">
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="flex-1 min-w-0 flex flex-col justify-center">
-                                            <div class="flex justify-between items-start mb-1">
-                                                <h3 class="text-[16px] font-[700] text-gray-900 capitalize truncate group-hover:text-[#1155CC] transition-colors pr-2">{{ w.Nama }}</h3>
-                                                <span class="text-[10px] font-[600] px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200 whitespace-nowrap">{{ w.Id_Rumah || '-' }}</span>
-                                            </div>
-                                            
-                                            <div class="grid grid-cols-2 gap-y-1.5 gap-x-2 text-[11px] text-gray-600 mt-2 font-[500]">
-                                                <div class="flex items-center gap-2 truncate"><i class="fas fa-map-marker-alt w-3 text-center text-red-500"></i><span class="truncate uppercase text-[10px] tracking-wide">{{ w.Status_Domisili === 'Kontrak / Kost' ? 'Kost' : 'Tinggal' }}</span></div>
-                                                <div class="flex items-center gap-2 truncate" title="Jadwal Ronda"><i class="fas fa-shield-alt w-3 text-center" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-400' : 'text-emerald-500'"></i><span class="truncate" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-500' : 'text-emerald-600'">{{ w.Ronda || '-' }}</span></div>
-                                                <div class="flex items-center gap-2 truncate" title="Agama"><i class="fas fa-star-and-crescent w-3 text-center text-indigo-400"></i><span class="truncate">{{ w.Agama || '-' }}</span></div>
-                                                <div class="flex items-center gap-2 truncate" title="Gol. Darah"><i class="fas fa-tint w-3 text-center text-rose-500"></i><span class="truncate font-[600] text-rose-600">{{ w.Gol_Darah || '-' }}</span></div>
-                                            </div>
+                        <transition-group name="card-list" tag="div" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 w-full items-start">
+                            <div v-for="(w, index) in filteredWarga" :key="w.Id_Rumah + '_' + w.Nama" :style="{ transitionDelay: (index * 0.03) + 's' }" @click="openDetailModal(w)" class="modern-card overflow-hidden flex flex-col cursor-pointer w-full group">
+                                <div class="p-5 flex gap-4">
+                                    <div class="shrink-0 relative">
+                                        <div class="w-[64px] h-[64px] rounded-full p-1 bg-gradient-to-tr from-[#38BDF8] to-[#1155CC]">
+                                            <img :src="getAvatar(w)" class="w-full h-full rounded-full object-cover border-2 border-white bg-white" :class="!w.Foto_Profil ? 'grayscale opacity-80' : ''" @click.stop="openLightbox(getAvatar(w))">
                                         </div>
                                     </div>
-                                    
-                                    <div class="bg-gray-50/80 px-5 py-2.5 border-t border-gray-100 flex justify-between items-center" :class="{'rounded-b-[20px]': !(userRole === 'admin' || (userRole === 'warga' && fiturWacanaOn))}">
-                                        <a @click.stop :href="'https://wa.me/' + formatWhatsApp(w.No_Tlp)" target="_blank" class="flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-[600] text-[11px] transition-colors bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-                                            <i class="fab fa-whatsapp text-[14px]"></i> <span>{{ formatDashPhone(w.No_Tlp) }}</span>
-                                        </a>
-                                        <div class="flex gap-2">
-                                            <button @click.stop="editWarga(w)" class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-pen text-[11px]"></i></button>
-                                            <button v-if="userRole === 'admin'" @click.stop="confirmDelete(w)" class="w-7 h-7 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-600 hover:text-white flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-trash text-[11px]"></i></button>
+                                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                                        <div class="flex justify-between items-start mb-1">
+                                            <h3 class="text-[16px] font-[700] text-gray-900 capitalize truncate group-hover:text-[#1155CC]">{{ w.Nama }}</h3>
+                                            <span class="text-[10px] font-[600] px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 whitespace-nowrap border border-blue-200">{{ w.Id_Rumah || '-' }}</span>
                                         </div>
-                                    </div>
-
-                                    <div v-if="userRole === 'admin' || (userRole === 'warga' && fiturWacanaOn)" 
-                                         @click.stop="openWacanaModal(w)"
-                                         class="bg-gradient-to-r from-[#1155CC] to-[#0A3688] px-5 py-2 flex justify-between items-center cursor-pointer transition-colors rounded-b-[20px] text-white">
-                                        <span class="font-[600] text-[11px] tracking-wide"><i class="fas fa-file-invoice-dollar mr-2 text-yellow-300"></i> Laporan Bulanan</span>
-                                        <i class="fas fa-chevron-right text-[10px] opacity-80 group-hover:translate-x-1 transition-transform"></i>
+                                        <div class="grid grid-cols-2 gap-y-1.5 gap-x-2 text-[11px] text-gray-600 mt-2 font-[500]">
+                                            <div class="flex items-center gap-2 truncate"><i class="fas fa-map-marker-alt w-3 text-red-500"></i>{{ w.Status_Domisili === 'Kontrak / Kost' ? 'Kost' : 'Tinggal' }}</div>
+                                            <div class="flex items-center gap-2 truncate"><i class="fas fa-shield-alt w-3" :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-400' : 'text-emerald-500'"></i><span :class="['Bebas Tugas', 'Belum ada data', ''].includes(w.Ronda) ? 'text-red-500' : 'text-emerald-600'">{{ w.Ronda || '-' }}</span></div>
+                                            <div class="flex items-center gap-2 truncate"><i class="fas fa-star-and-crescent w-3 text-indigo-400"></i>{{ w.Agama || '-' }}</div>
+                                            <div class="flex items-center gap-2 truncate"><i class="fas fa-tint w-3 text-rose-500"></i><span class="text-rose-600 font-[600]">{{ w.Gol_Darah || '-' }}</span></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </transition-group>
-                        </div>
+                                <div class="bg-gray-50/80 px-5 py-2.5 border-t border-gray-100 flex justify-between items-center rounded-b-[20px]">
+                                    <a @click.stop :href="'https://wa.me/' + formatWhatsApp(w.No_Tlp)" target="_blank" class="flex items-center gap-1.5 text-emerald-600 font-[600] text-[11px] bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+                                        <i class="fab fa-whatsapp text-[14px]"></i> <span>{{ formatDashPhone(w.No_Tlp) }}</span>
+                                    </a>
+                                    <div class="flex gap-2">
+                                        <button @click.stop="editWarga(w)" class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 flex justify-center items-center"><i class="fas fa-pen text-[11px]"></i></button>
+                                        <button v-if="userRole === 'admin'" @click.stop="confirmDelete(w)" class="w-7 h-7 rounded-lg bg-red-50 text-red-600 border border-red-200 flex justify-center items-center"><i class="fas fa-trash text-[11px]"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition-group>
 
                         <!-- TAMPILAN TABEL (LIST VIEW) -->
-                        <div v-if="viewMode === 'table' && userRole === 'admin'" class="modern-card overflow-hidden w-full fade-enter-active">
+                        <div v-if="viewMode === 'table' && userRole === 'admin'" class="modern-card overflow-hidden w-full fade-enter-active mt-4">
                             <div class="overflow-x-auto w-full custom-scrollbar">
                                 <table class="w-full text-left whitespace-nowrap text-[13px] font-[500]">
                                     <thead class="bg-gray-50 text-gray-500 uppercase text-[11px] tracking-wider border-b border-gray-200">
@@ -419,464 +349,228 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div v-show="activeMenu === 'list'" class="fixed bottom-20 sm:bottom-12 right-4 sm:right-10 flex flex-col gap-2 z-[60]">
+                            <button @click="scrollTo('top')" class="w-10 h-10 bg-[#1155CC] text-white rounded-full shadow-xl flex items-center justify-center border border-white/50 hover:bg-[#0A3688] transition-colors"><i class="fas fa-chevron-up text-[14px]"></i></button>
+                            <button @click="scrollTo('middle')" class="w-10 h-10 bg-[#38BDF8] text-white rounded-full shadow-xl flex items-center justify-center border border-white/50 hover:bg-[#0284C7] transition-colors"><i class="fas fa-minus text-[14px]"></i></button>
+                            <button @click="scrollTo('bottom')" class="w-10 h-10 bg-[#1155CC] text-white rounded-full shadow-xl flex items-center justify-center border border-white/50 hover:bg-[#0A3688] transition-colors"><i class="fas fa-chevron-down text-[14px]"></i></button>
+                        </div>
                     </div>
 
-                    <!-- ================== MENU 2: FORM REGISTRASI / EDIT ================== -->
+                    <!-- FORM REGISTRASI / EDIT -->
                     <div v-show="activeMenu === 'register'" class="w-full max-w-4xl mx-auto fade-enter-active">
                         <form @submit.prevent="saveData" class="space-y-6">
-                            
                             <div class="modern-card p-6 sm:p-8">
-                                <h3 class="font-[600] text-[16px] sm:text-[18px] text-[#0F2E70] border-b-2 border-blue-100 pb-3 mb-6 flex items-center">
-                                    <i class="fas" :class="isEditing ? 'fa-user-edit' : 'fa-id-card'" class="mr-2.5 text-xl text-blue-500"></i> 
-                                    {{ isEditing ? 'Edit Profil Warga' : 'Registrasi Identitas Baru' }}
-                                </h3>
-                                
+                                <h3 class="font-[600] text-[16px] sm:text-[18px] text-[#0F2E70] border-b-2 border-blue-100 pb-3 mb-6 flex items-center"><i class="fas" :class="isEditing ? 'fa-user-edit' : 'fa-id-card'" class="mr-2.5 text-xl text-blue-500"></i> {{ isEditing ? 'Edit Profil ' + (form.Nama || 'Warga') : 'Registrasi Identitas Baru' }}</h3>
                                 <div class="flex flex-col md:flex-row gap-8">
                                     <div class="shrink-0 w-full md:w-36 flex flex-col items-center gap-3">
-                                        <label class="block text-[13px] font-[600] text-gray-700 text-center w-full">Foto Profil <span class="text-red-500">*</span><br><span class="text-[10px] text-red-500 font-[500]">(Wajib Diunggah)</span></label>
-                                        <div class="w-36 h-36 border-2 border-[#CBD5E1] border-dashed rounded-full bg-gray-50 hover:border-[#1155CC] hover:bg-blue-50 relative flex justify-center items-center overflow-hidden cursor-pointer group transition-all shadow-sm">
+                                        <label class="block text-[13px] font-[600] text-gray-700 text-center w-full">Foto Profil <span class="text-red-500">*</span><br><span class="text-[10px] text-gray-400 font-[400]">(Wajib, bisa digeser)</span></label>
+                                        <div class="w-36 h-36 border-2 border-[#CBD5E1] border-dashed rounded-full bg-gray-50 hover:border-[#1155CC] relative flex justify-center items-center overflow-hidden cursor-pointer group">
                                             <input type="file" accept="image/*" @change="e => handleFileUpload(e, 'Foto_Profil')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
-                                            <button v-if="form.Foto_Profil" @click.prevent.stop="removeFile('Foto_Profil')" class="absolute top-2 right-4 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center z-20 hover:bg-red-600 shadow-md transition-transform hover:scale-110"><i class="fas fa-times text-[12px]"></i></button>
-                                            <img v-if="form.Foto_Profil" crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.Foto_Profil" class="w-full h-full object-cover">
-                                            <i v-else class="fas fa-camera text-[32px] text-gray-300 group-hover:text-[#1155CC] transition-colors drop-shadow-sm"></i>
+                                            <button v-if="form.Foto_Profil" @click.prevent.stop="removeFile('Foto_Profil')" class="absolute top-2 right-4 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center z-20"><i class="fas fa-times text-[12px]"></i></button>
+                                            <img v-if="form.Foto_Profil" :src="form.Foto_Profil" class="w-full h-full object-cover">
+                                            <i v-else class="fas fa-camera text-[32px] text-gray-300 group-hover:text-[#1155CC]"></i>
                                         </div>
                                     </div>
-                                    
                                     <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-5">
                                         <div>
-                                            <label class="block text-[13px] font-[600] text-gray-700 mb-1">
-                                                ID Rumah <span class="text-red-500">*</span>
-                                                <span v-if="!isEditing" class="text-[10px] text-gray-400 font-normal block leading-tight mt-0.5">Otomatis tambah huruf jika ID sudah dipakai keluarga (misal: rt2_90A)</span>
-                                            </label>
-                                            <input type="text" v-model="form.Id_Rumah" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-[600] text-[#0F2E70]" placeholder="rt2_A12">
+                                            <label class="block text-[13px] font-[600] text-gray-700 mb-1">ID Rumah <span class="text-red-500">*</span></label>
+                                            <input type="text" v-model="form.Id_Rumah" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] outline-none font-[600] text-[#0F2E70]">
                                         </div>
                                         <div>
-                                            <label class="block text-[13px] font-[600] text-gray-700 mb-1">Buat Password <span class="text-red-500">*</span><span class="text-[10px] text-gray-400 font-normal block leading-tight mt-0.5">Digunakan untuk masuk ke sistem</span></label>
-                                            <input type="text" v-model="form.Password" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-mono tracking-widest text-[15px] font-[600]" placeholder="Masukkan Password">
+                                            <label class="block text-[13px] font-[600] text-gray-700 mb-1">Buat Password <span class="text-red-500">*</span></label>
+                                            <input type="text" v-model="form.Password" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] outline-none font-mono font-[600]">
                                         </div>
                                         <div class="md:col-span-2">
-                                            <label class="block text-[13px] font-[600] text-gray-700 mb-1">Nama Lengkap (Sesuai KTP) <span class="text-red-500">*</span></label>
-                                            <input type="text" v-model="form.Nama" @input="capitalizeName" required class="w-full rounded-xl border border-gray-300 p-3.5 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-[600] text-[16px]" placeholder="Nama Lengkap">
+                                            <label class="block text-[13px] font-[600] text-gray-700 mb-1">Nama Lengkap Sesuai KTP <span class="text-red-500">*</span></label>
+                                            <input type="text" v-model="form.Nama" @input="capitalizeName" required class="w-full rounded-xl border border-gray-300 p-3.5 bg-gray-50 focus:bg-white focus:border-[#1155CC] outline-none font-[600] text-[16px]">
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="modern-card p-6 sm:p-8">
-                                <h3 class="font-[600] text-[16px] sm:text-[18px] text-[#0F2E70] border-b-2 border-blue-100 pb-3 mb-6 flex items-center">
-                                    <i class="fas fa-briefcase mr-2.5 text-xl text-blue-500"></i> Profil Personal & Kontak
-                                </h3>
-                                
+                                <h3 class="font-[600] text-[16px] sm:text-[18px] text-[#0F2E70] border-b-2 border-blue-100 pb-3 mb-6 flex items-center"><i class="fas fa-briefcase mr-2.5 text-xl text-blue-500"></i> Profil Personal & Kontak</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Tempat Lahir</label><input type="text" v-model="form.Tempat_Lahir" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none transition-all font-[500]"></div>
-                                    <div class="relative"><label class="block text-[13px] font-[600] text-gray-700 mb-1">Tanggal Lahir</label><input type="date" v-model="form.Tanggal_Lahir" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none pr-16 transition-all font-[500]"><div v-if="calculatedAge" class="absolute right-3 top-9 text-[11px] font-[600] bg-blue-100 text-blue-700 px-2 py-1 rounded-md">{{ calculatedAge }} Thn</div></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Jenis Kelamin</label><select v-model="form.Jenis_Kelamin" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none cursor-pointer text-[14px] transition-all font-[500]"><option value="">- Pilih -</option><option>Laki-laki</option><option>Perempuan</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Gol. Darah</label><select v-model="form.Gol_Darah" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none cursor-pointer text-[14px] transition-all font-[500]"><option value="">-</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Agama</label><select v-model="form.Agama" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none cursor-pointer text-[14px] transition-all font-[500]"><option value="">- Pilih -</option><option>Islam</option><option>Kristen</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Status Kawin</label><select v-model="form.Status_Perkawinan" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none cursor-pointer text-[14px] transition-all font-[500]"><option value="">- Pilih -</option><option>Belum Menikah</option><option>Sudah Menikah</option><option>Pisah Hidup</option><option>Pisah Meninggal</option><option>Belum Jelas</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Pekerjaan</label><select v-model="form.Pekerjaan" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none cursor-pointer text-[14px] transition-all font-[500]"><option value="">- Pilih -</option><option>Karyawan Swasta</option><option>Wiraswasta / Pengusaha</option><option>Petani / Peternak</option><option>TNI / Polri</option><option>Tenaga Pendidik</option><option>Pelajar / Mahasiswa</option><option>Pensiunan</option><option>Serabutan</option><option>Lainnya</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Status Domisili</label><select v-model="form.Status_Domisili" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none cursor-pointer text-[14px] transition-all font-[500]"><option value="">- Pilih -</option><option>Tempat Tinggal</option><option>Kontrak / Kost</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">No. WhatsApp (+62)</label><input type="text" v-model="form.No_Tlp" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none font-mono text-[14px] transition-all font-[500]" placeholder="+62 XXX-XXXX-XXXX"></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Jadwal Ronda</label><select v-model="form.Ronda" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none cursor-pointer text-[14px] transition-all font-[500]"><option value="">- Pilih -</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option></select></div>
-                                    
-                                    <div>
-                                        <label class="block text-[13px] font-[600] text-gray-700 mb-1">QR Code <span class="text-[10px] text-gray-400 font-normal">(Opsional)</span></label>
-                                        <div class="w-full rounded-xl border border-gray-300 border-dashed p-2 bg-gray-50 hover:bg-blue-50 hover:border-[#1155CC] relative overflow-hidden h-[48px] flex justify-center items-center group cursor-pointer transition-all">
-                                            <input v-if="!form.QR_Code" type="file" accept="image/*" @change="e => handleFileUpload(e, 'QR_Code')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
-                                            <button v-if="form.QR_Code" @click.prevent.stop="removeFile('QR_Code')" class="absolute right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center z-20 hover:bg-red-600 shadow-sm"><i class="fas fa-times text-[10px]"></i></button>
-                                            <div v-if="form.QR_Code && form.QR_Code.startsWith('data:')" class="h-full flex items-center justify-center"><img :src="form.QR_Code" class="max-h-full rounded object-contain"></div>
-                                            <div v-else-if="form.QR_Code && form.QR_Code.startsWith('http')" class="h-full flex items-center justify-center"><img crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.QR_Code" class="max-h-full rounded object-contain"></div>
-                                            <div v-else-if="form.QrCode" class="h-full flex items-center justify-center"><img crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.QrCode" class="max-h-full rounded object-contain"></div>
-                                            <div v-else class="flex items-center gap-2 text-gray-400 group-hover:text-[#1155CC]"><i class="fas fa-qrcode"></i> <span class="text-[12px] font-[500]">Upload QR</span></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-[13px] font-[600] text-gray-700 mb-1">Data Lain <span class="text-[10px] text-gray-400 font-normal">(Opsional, Img/PDF)</span></label>
-                                        <div class="w-full rounded-xl border border-gray-300 border-dashed p-2 bg-gray-50 hover:bg-blue-50 hover:border-[#1155CC] relative overflow-hidden h-[48px] flex justify-center items-center group cursor-pointer transition-all">
-                                            <input v-if="!form.Data_Lain" type="file" accept="image/*,.pdf" @change="e => handleFileUpload(e, 'Data_Lain')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
-                                            <button v-if="form.Data_Lain" @click.prevent.stop="removeFile('Data_Lain')" class="absolute right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center z-20 hover:bg-red-600 shadow-sm"><i class="fas fa-times text-[10px]"></i></button>
-
-                                            <div v-if="form.Data_Lain && form.Data_Lain.startsWith('data:') && form.Data_Lain.includes('image')" class="h-full flex items-center justify-center"><img :src="form.Data_Lain" class="max-h-full rounded object-contain"></div>
-                                            <div v-else-if="form.Data_Lain && form.Data_Lain.startsWith('http')" class="h-full flex items-center justify-center">
-                                                <img v-if="form.Data_Lain.includes('lh3.googleusercontent.com')" crossorigin="anonymous" referrerpolicy="no-referrer" :src="form.Data_Lain" class="max-h-full rounded object-contain">
-                                                <div v-else class="text-emerald-500 text-[13px] font-[600] flex items-center gap-1"><i class="fas fa-file-pdf"></i> PDF OK</div>
-                                            </div>
-                                            <div v-else class="flex items-center gap-2 text-gray-400 group-hover:text-[#1155CC]"><i class="fas fa-file-upload"></i> <span class="text-[12px] font-[500]">Upload File</span></div>
-                                        </div>
-                                    </div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Tempat Lahir</label><input type="text" v-model="form.Tempat_Lahir" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"></div>
+                                    <div class="relative"><label class="block text-[13px] font-[600] text-gray-700 mb-1">Tanggal Lahir</label><input type="date" v-model="form.Tanggal_Lahir" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none pr-16"><div v-if="calculatedAge" class="absolute right-3 top-9 text-[11px] font-[600] bg-blue-100 text-blue-700 px-2 py-1 rounded-md">{{ calculatedAge }} Thn</div></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Jenis Kelamin</label><select v-model="form.Jenis_Kelamin" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Laki-laki</option><option>Perempuan</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Gol. Darah</label><select v-model="form.Gol_Darah" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">-</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Agama</label><select v-model="form.Agama" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Islam</option><option>Kristen</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Status Kawin</label><select v-model="form.Status_Perkawinan" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Belum Menikah</option><option>Sudah Menikah</option><option>Pisah Hidup</option><option>Pisah Meninggal</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Pekerjaan</label><select v-model="form.Pekerjaan" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Karyawan Swasta</option><option>Wiraswasta / Pengusaha</option><option>Petani / Peternak</option><option>TNI / Polri</option><option>Tenaga Pendidik</option><option>Pelajar</option><option>Pensiunan</option><option>Lainnya</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Status Domisili</label><select v-model="form.Status_Domisili" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Tempat Tinggal</option><option>Kontrak / Kost</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">No. WhatsApp (+62)</label><input type="text" v-model="form.No_Tlp" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none font-mono" placeholder="+62 XXX"></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Jadwal Ronda</label><select v-model="form.Ronda" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option></select></div>
                                 </div>
-                                
                                 <hr class="border-gray-200 mb-6">
                                 <h4 class="font-[600] text-[15px] text-[#0F2E70] mb-4 flex items-center"><i class="fas fa-users text-orange-500 mr-2"></i> Anggota Keluarga Se-rumah</h4>
-                                <p class="text-[11px] text-gray-500 mb-4 -mt-3">Contoh format Status: Istri, Anak Pertama, dll.</p>
-                                
                                 <div class="space-y-4 max-w-3xl">
-                                    <div v-for="(fam, index) in form.AnggotaList" :key="index" class="flex items-start gap-3 relative pb-4 border-b border-gray-100 last:border-b-0 last:pb-0">
-                                        <div class="w-[35px] h-[35px] shrink-0 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-[600] text-[13px] border border-blue-100">{{ index + 1 }}</div>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
-                                            <input type="text" v-model="fam.n" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none text-[13px] transition-all font-[500]" placeholder="Nama Lengkap">
-                                            <input type="text" v-model="fam.s" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 outline-none text-[13px] transition-all font-[500]" placeholder="Status">
+                                    <div v-for="(fam, index) in form.AnggotaList" :key="index" class="flex items-center gap-3 relative pb-4 border-b border-gray-100 last:border-0">
+                                        <div class="w-[30px] h-[30px] shrink-0 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-[600] text-[12px] border border-blue-100">{{ index + 1 }}</div>
+                                        <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <input type="text" v-model="fam.n" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Nama Lengkap">
+                                            <input type="text" v-model="fam.s" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Status (Istri/Anak)">
                                         </div>
-                                        <button v-if="form.AnggotaList.length > 1" @click.prevent="removeFam(index)" class="mt-2 text-red-500 hover:text-red-700 transition-colors p-2 bg-red-50 hover:bg-red-100 rounded-lg" title="Hapus Anggota"><i class="fas fa-trash text-[13px]"></i></button>
+                                        <button v-if="form.AnggotaList.length > 1" @click.prevent="removeFam(index)" class="text-red-500 hover:bg-red-100 p-2 rounded-md"><i class="fas fa-trash text-[13px]"></i></button>
                                     </div>
-                                    <button @click.prevent="addFam" class="px-5 py-2.5 mt-2 bg-blue-50 text-[#1155CC] font-[600] rounded-xl hover:bg-blue-100 transition-colors text-[13px] flex items-center border border-blue-200"><i class="fas fa-plus mr-2"></i> Tambah Anggota</button>
+                                    <button @click.prevent="addFam" class="px-5 py-2 bg-blue-50 text-[#1155CC] font-[600] rounded-xl text-[12px] border border-blue-200"><i class="fas fa-plus mr-2"></i> Tambah Anggota</button>
                                 </div>
                             </div>
-
+                            
+                            <!-- CATATAN ADMIN -->
                             <div v-if="userRole === 'admin'" class="modern-card p-6 sm:p-8">
                                 <h3 class="font-[600] text-[16px] sm:text-[18px] text-[#0F2E70] border-b-2 border-indigo-100 pb-3 mb-6 flex items-center"><i class="fas fa-sticky-note text-indigo-500 mr-2.5 text-xl"></i> Catatan Historis</h3>
-                                
                                 <div class="space-y-4">
-                                    <div class="hidden sm:grid grid-cols-[40px_1fr_1fr_1fr_40px] gap-3 px-2 text-[12px] font-[600] text-gray-500 text-center uppercase tracking-wider">
-                                        <div>No</div><div>Pertemuan RT</div><div>Kegiatan Sosial</div><div>Keterangan Lain</div><div></div>
-                                    </div>
-                                    
-                                    <div v-for="(ket, index) in form.KeteranganList" :key="index" class="flex flex-col sm:flex-row items-start sm:items-center gap-3 pb-4 border-b border-gray-100 last:border-b-0 last:pb-0">
-                                        <div class="w-[35px] h-[35px] shrink-0 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center font-[600] text-[13px] mx-auto sm:mx-0 border border-indigo-100">{{ index + 1 }}</div>
-                                        
-                                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
-                                            <div>
-                                                <label class="sm:hidden block text-[12px] font-[600] text-gray-500 mb-1">Pertemuan RT</label>
-                                                <textarea v-model="ket.pertemuan" rows="2" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-[13px] resize-y transition-all font-[500]" placeholder="Ket. Pertemuan"></textarea>
-                                            </div>
-                                            <div>
-                                                <label class="sm:hidden block text-[12px] font-[600] text-gray-500 mb-1">Kegiatan Sosial</label>
-                                                <textarea v-model="ket.dansos" rows="2" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-[13px] resize-y transition-all font-[500]" placeholder="Ket. Sosial"></textarea>
-                                            </div>
-                                            <div>
-                                                <label class="sm:hidden block text-[12px] font-[600] text-gray-500 mb-1">Keterangan Lain</label>
-                                                <textarea v-model="ket.keterangan_lain" rows="2" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none text-[13px] resize-y transition-all font-[500]" placeholder="Ket. Lain"></textarea>
-                                            </div>
+                                    <div v-for="(ket, index) in form.KeteranganList" :key="index" class="flex flex-col sm:flex-row gap-3 pb-4 border-b border-gray-100 last:border-b-0">
+                                        <div class="w-[30px] h-[30px] shrink-0 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center font-[600] text-[12px] border border-indigo-100">{{ index + 1 }}</div>
+                                        <div class="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                            <textarea v-model="ket.pertemuan" rows="2" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Pertemuan RT"></textarea>
+                                            <textarea v-model="ket.dansos" rows="2" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Kegiatan Sosial"></textarea>
+                                            <textarea v-model="ket.keterangan_lain" rows="2" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Keterangan Lain"></textarea>
                                         </div>
-                                        
-                                        <button v-if="form.KeteranganList.length > 1" @click.prevent="removeKeterangan(index)" class="mt-2 sm:mt-0 text-red-500 hover:text-red-700 transition-colors p-2 bg-red-50 hover:bg-red-100 rounded-lg self-center sm:self-auto" title="Hapus Baris"><i class="fas fa-trash text-[13px]"></i></button>
+                                        <button v-if="form.KeteranganList.length > 1" @click.prevent="removeKeterangan(index)" class="text-red-500 hover:bg-red-100 p-2 rounded-md"><i class="fas fa-trash text-[13px]"></i></button>
                                     </div>
-                                    <button @click.prevent="addKeterangan" class="px-5 py-2.5 mt-2 bg-indigo-50 text-indigo-600 font-[600] rounded-xl hover:bg-indigo-100 transition-colors text-[13px] flex items-center border border-indigo-200"><i class="fas fa-plus mr-2"></i> Tambah Keterangan</button>
+                                    <button @click.prevent="addKeterangan" class="px-5 py-2 bg-indigo-50 text-indigo-600 font-[600] rounded-xl text-[12px] border border-indigo-200"><i class="fas fa-plus mr-2"></i> Tambah Keterangan</button>
                                 </div>
+                            </div>
+                            
+                            <!-- CATATAN WARGA BAWAH FORM -->
+                            <div v-if="userRole === 'warga'" class="text-center text-[11px] text-gray-500 bg-blue-50/50 p-3 rounded-xl border border-blue-100">
+                                <i class="fas fa-info-circle text-[#1155CC] mr-1"></i> Saat edit/update jika gagal sistem klik <b>sinkron</b> sampai keluar tanda sukses (harap maklum database gratisan..hehe)
                             </div>
                         </form>
                     </div>
 
-                    <!-- TOMBOL SCROLL -->
-                    <div v-show="activeMenu === 'list'" class="fixed bottom-12 right-6 lg:right-10 flex flex-col gap-3 z-[60]">
-                        <button @click="scrollTo('top')" class="w-11 h-11 bg-[#1155CC] text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-[#0F2E70] transition-all border-2 border-white/50 hover:-translate-y-1" title="Ke Atas">
-                            <i class="fas fa-chevron-up text-[16px]"></i>
-                        </button>
-                        <button @click="scrollTo('middle')" class="w-11 h-11 bg-[#38BDF8] text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-[#0EA5E9] transition-all border-2 border-white/50 hover:scale-105" title="Ke Tengah">
-                            <i class="fas fa-minus text-[16px]"></i>
-                        </button>
-                        <button @click="scrollTo('bottom')" class="w-11 h-11 bg-[#1155CC] text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-[#0F2E70] transition-all border-2 border-white/50 hover:translate-y-1" title="Ke Bawah">
-                            <i class="fas fa-chevron-down text-[16px]"></i>
-                        </button>
-                    </div>
-
                 </main>
 
-                <!-- FIXED ACTION BAR KHUSUS FORM (DI ATAS FOOTER) -->
-                <div v-show="activeMenu === 'register'" class="fixed bottom-[37px] left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] py-2.5 px-4 transition-all duration-300" :class="(userRole === 'admin') ? 'lg:pl-[260px]' : ''">
+                <!-- FOOOTER GLOBAL KHUSUS WARGA (MEMBER) 1 BARIS COMPACT -->
+                <div v-if="userRole === 'warga'" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex items-center justify-between px-2 sm:px-10 py-1.5 pb-safe shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
+                    <a href="https://rt2pasekanlor.id/" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-[#1155CC] py-1 cursor-pointer">
+                        <i class="fas fa-globe text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">Web</span>
+                    </a>
+                    <button @click="handleBatal()" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-[#1155CC] py-1">
+                        <i class="fas fa-times text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">Batal</span>
+                    </button>
+                    <!-- SIMPAN TENGAH BESAR -->
+                    <button @click="saveData" :disabled="saving" class="flex flex-col items-center justify-center flex-1 text-[#1155CC] transition-colors py-1 relative">
+                        <div class="w-12 h-12 bg-gradient-to-tr from-[#38BDF8] to-[#1155CC] rounded-full flex items-center justify-center -mt-6 mb-1 border-4 border-white shadow-md text-white">
+                            <i v-if="!saving" class="fas fa-save text-[20px]"></i><span v-else class="spinner w-5 h-5 border-t-white border-2"></span>
+                        </div>
+                        <span class="text-[10px] sm:text-[11px] font-[700] leading-none text-[#0F2E70]">Simpan</span>
+                    </button>
+                    <button @click="fetchData" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-[#1155CC] py-1">
+                        <i class="fas fa-sync-alt text-[18px] mb-1" :class="{'animate-spin': loading}"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">Sinkron</span>
+                    </button>
+                    <button @click="logout" class="flex flex-col items-center justify-center flex-1 text-red-500 hover:text-red-700 py-1">
+                        <i class="fas fa-sign-out-alt text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">Logout</span>
+                    </button>
+                </div>
+
+                <!-- FOOOTER FORM ADMIN & NEW WARGA (DESKTOP/TAB BARIS) -->
+                <div v-if="activeMenu === 'register' && userRole !== 'warga'" class="fixed bottom-0 sm:bottom-[37px] left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] py-3 sm:py-2.5 px-4" :class="(userRole === 'admin') ? 'lg:pl-[260px]' : ''">
                     <div class="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-2 sm:gap-3">
-                        <button type="button" @click="changeMenu('list')" class="px-5 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-all font-[600] text-[12px] sm:text-[13px] shadow-sm">
-                            {{ isEditing ? 'Batal Edit' : 'Batal Daftar' }}
-                        </button>
-                        <button type="button" @click="saveData" :disabled="saving" class="px-7 py-2.5 btn-primary rounded-xl flex justify-center items-center font-[600] disabled:opacity-70 text-[12px] sm:text-[13px] shadow-md min-w-[140px]">
-                            <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-2"></span>
-                            {{ saving ? 'Menyimpan...' : 'Simpan Data' }}
-                        </button>
-                        <button type="button" @click="fetchData" class="px-5 py-2.5 text-[#0F2E70] bg-blue-50 border border-blue-100 hover:bg-blue-100 rounded-xl transition-all font-[600] text-[12px] sm:text-[13px] flex items-center gap-1.5 shadow-sm">
-                            <i class="fas fa-sync-alt" :class="{'animate-spin': loading}"></i> Sinkron
-                        </button>
-                        <button type="button" @click="logout" class="px-5 py-2.5 text-red-600 bg-red-50 border border-red-100 hover:bg-red-100 rounded-xl transition-all font-[600] text-[12px] sm:text-[13px] flex items-center gap-1.5 shadow-sm">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
+                        <button type="button" @click="handleBatal()" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 font-[600] text-[12px] sm:text-[13px] border border-gray-300 shadow-sm">Batal Daftar</button>
+                        <button type="button" @click="saveData" :disabled="saving" class="px-8 py-2.5 btn-primary rounded-xl flex items-center font-[600] text-[12px] sm:text-[13px] shadow-md"><span v-if="saving" class="spinner border-t-white w-4 h-4 mr-2"></span>Simpan Data</button>
+                        <a v-if="userRole === 'new_warga'" href="https://rt2pasekanlor.id/" @click="logout" class="px-5 py-2.5 text-[#1155CC] bg-blue-50 border border-blue-100 hover:bg-blue-100 rounded-xl font-[600] text-[12px] sm:text-[13px] flex items-center gap-1.5 shadow-sm"><i class="fas fa-globe"></i> Ke Web</a>
                     </div>
                 </div>
 
-                <footer class="w-full bg-white border-t border-gray-200 shrink-0 py-2.5 fixed bottom-0 z-10 transition-all duration-300" :class="(userRole === 'admin') ? 'lg:pl-[260px]' : ''">
-                    <div class="text-center px-4"><p class="text-[11px] font-[500] text-gray-400">© 2026 Aplikasi Data Warga Terpadu RT 2 Pasekan Lor.</p></div>
-                </footer>
             </div>
         </div>
 
-        <!-- ================== MODAL EXPORT PDF/JPG ================== -->
+        <!-- ================== MODAL EXPORT PDF/EXCEL ================== -->
         <transition name="fade">
             <div v-if="exportModal" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex justify-center items-center p-4" @click.self="closeExportModal">
-                <div class="bg-white rounded-[24px] w-full max-w-md flex flex-col shadow-2xl overflow-hidden relative">
-                    <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                        <h3 class="font-[600] text-[16px] text-[#0F2E70]"><i class="fas fa-print mr-2 text-[#38BDF8]"></i> Pengaturan Cetak Data</h3>
-                        <button @click="closeExportModal" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-[16px]"></i></button>
+                <div class="bg-white rounded-[24px] w-full max-w-sm flex flex-col shadow-2xl overflow-hidden relative">
+                    <div class="px-5 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                        <h3 class="font-[600] text-[15px] text-[#0F2E70]"><i class="fas fa-print mr-2 text-[#38BDF8]"></i> Setelan Export Data</h3>
+                        <button @click="closeExportModal" class="text-gray-400 hover:text-red-500"><i class="fas fa-times text-[16px]"></i></button>
                     </div>
                     
-                    <div class="p-6 space-y-4">
-                        <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                            <span class="text-[13px] font-[500] text-gray-700">Kop Surat / Header RT 2</span>
+                    <div class="p-5 space-y-3 max-h-[50vh] overflow-y-auto custom-scrollbar bg-white">
+                        <div class="flex items-center justify-between py-1.5 border-b border-gray-50">
+                            <span class="text-[12px] font-[500] text-gray-700">Gunakan Header / Kop</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" v-model="printSettings.header" class="sr-only peer">
-                                <div class="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
+                                <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
                             </label>
                         </div>
-                        <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                            <span class="text-[13px] font-[500] text-gray-700">Tanggal Lahir (TTL)</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" v-model="printSettings.ttl" class="sr-only peer">
-                                <div class="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
-                            </label>
+                        <div v-if="printSettings.header" class="pl-2 border-l-2 border-emerald-500 text-[11px] text-gray-500 py-1">
+                            <p class="mb-1 text-[10px]">Logo Kop Custom (Opsional)</p>
+                            <input type="file" accept="image/*" @change="uploadCustomLogo" class="text-[10px] file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
                         </div>
-                        <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                            <span class="text-[13px] font-[500] text-gray-700">Pekerjaan</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" v-model="printSettings.pekerjaan" class="sr-only peer">
-                                <div class="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
-                            </label>
-                        </div>
-                        <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                            <span class="text-[13px] font-[500] text-gray-700">Jadwal Ronda</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" v-model="printSettings.ronda" class="sr-only peer">
-                                <div class="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
-                            </label>
-                        </div>
-                        <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                            <span class="text-[13px] font-[500] text-gray-700">Nomor WhatsApp Warga</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" v-model="printSettings.kontak" class="sr-only peer">
-                                <div class="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
-                            </label>
-                        </div>
-                        <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                            <span class="text-[13px] font-[500] text-gray-700">Footer Catatan & Waktu Cetak</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" v-model="printSettings.footer" class="sr-only peer">
-                                <div class="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
-                            </label>
-                        </div>
+
+                        <!-- Toggles Setup -->
+                        <template v-for="(val, key) in printSettings.fields" :key="key">
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-50">
+                                <span class="text-[12px] font-[500] text-gray-700 capitalize">{{ key.replace(/_/g, ' ') }}</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" v-model="printSettings.fields[key]" class="sr-only peer">
+                                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
+                                </label>
+                            </div>
+                        </template>
                     </div>
                     
-                    <div class="p-6 bg-gray-50 flex gap-3 border-t border-gray-100">
-                        <button @click="executeExport('pdf')" :disabled="saving" class="flex-1 py-2.5 bg-red-500 text-white font-[600] rounded-xl hover:bg-red-600 transition-colors shadow-sm flex justify-center items-center gap-2">
-                            <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-1"></span> <i v-else class="fas fa-file-pdf"></i> PDF A4
+                    <div class="p-5 bg-gray-50 flex flex-col gap-2 border-t border-gray-100">
+                        <button @click="executeExport('pdf')" :disabled="saving" class="w-full py-2.5 bg-red-500 text-white font-[600] rounded-xl hover:bg-red-600 shadow-sm flex justify-center items-center gap-2">
+                            <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-1"></span> <i v-else class="fas fa-file-pdf"></i> Export PDF (A4 Portrait)
                         </button>
-                        <button @click="executeExport('jpg')" :disabled="saving" class="flex-1 py-2.5 bg-[#1155CC] text-white font-[600] rounded-xl hover:bg-[#0A3688] transition-colors shadow-sm flex justify-center items-center gap-2">
-                            <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-1"></span> <i v-else class="fas fa-file-image"></i> Image JPG
+                        <button @click="executeExport('excel')" :disabled="saving" class="w-full py-2.5 bg-[#10B981] text-white font-[600] rounded-xl hover:bg-[#059669] shadow-sm flex justify-center items-center gap-2">
+                            <i class="fas fa-file-excel"></i> Export Excel (CSV) Lengkap
                         </button>
                     </div>
                 </div>
             </div>
         </transition>
 
-        <!-- ================== HIDDEN PRINT AREA A4 ================== -->
-        <div id="print-container-wrapper" style="position: fixed; left: -9999px; top: 0; width: 1123px; z-index: -9999; opacity: 0; pointer-events: none; background: white;">
-            <div id="print-area-a4" class="w-[1123px] bg-white text-black p-8 box-border text-[11px] font-sans">
+        <!-- HIDDEN PRINT AREA A4 -->
+        <div id="print-container-wrapper" style="position: fixed; left: -9999px; top: 0; width: 794px; z-index: -9999; opacity: 0; pointer-events: none; background: white;">
+            <div id="print-area-a4" class="w-[794px] min-h-[1123px] bg-white text-black p-8 box-border font-sans relative" style="font-family: 'Poppins', sans-serif !important;">
                 
-                <div v-if="printSettings.header" class="flex items-center border-b-2 border-black pb-4 mb-6">
-                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" class="h-16 mr-5 object-contain">
+                <div v-if="printSettings.header" class="flex items-center border-b-[3px] border-black pb-3 mb-5">
+                    <img :src="customLogoBase64 || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png'" class="h-16 mr-4 object-contain max-w-[100px]">
                     <div>
-                        <h1 class="text-2xl font-[700] uppercase tracking-wide">Data Warga Terpadu</h1>
-                        <p class="text-[13px] font-[500] mt-1">RT 2-RW 3, Pasekan Lor, Balecatur, Gamping, Sleman</p>
+                        <h1 class="text-[22px] font-[700] uppercase tracking-wide leading-tight">Data Warga Terpadu</h1>
+                        <p class="text-[12px] font-[500] mt-0.5 text-gray-700">RT 2-RW 3, Pasekan Lor, Balecatur, Gamping, Sleman</p>
                     </div>
                 </div>
                 
-                <table class="w-full text-left border-collapse border border-black text-[10px]">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="border border-black p-1.5 text-center font-[700] w-8">No</th>
-                            <th class="border border-black p-1.5 font-[700] w-40">Nama & ID Rumah</th>
-                            <th class="border border-black p-1.5 text-center font-[700] w-8">L/P</th>
-                            <th v-if="printSettings.ttl" class="border border-black p-1.5 text-center font-[700]">TTL</th>
-                            <th class="border border-black p-1.5 text-center font-[700]">Agama</th>
-                            <th class="border border-black p-1.5 text-center font-[700] w-10">Darah</th>
-                            <th class="border border-black p-1.5 text-center font-[700]">Status</th>
-                            <th v-if="printSettings.pekerjaan" class="border border-black p-1.5 text-center font-[700]">Pekerjaan</th>
-                            <th class="border border-black p-1.5 text-center font-[700]">Domisili</th>
-                            <th v-if="printSettings.kontak" class="border border-black p-1.5 text-center font-[700]">No. WA</th>
-                            <th v-if="printSettings.ronda" class="border border-black p-1.5 text-center font-[700]">Ronda</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(w, i) in filteredWarga" :key="'print_'+i">
-                            <td class="border border-black p-1.5 text-center align-top">{{ i+1 }}</td>
-                            <td class="border border-black p-1.5 align-top">
-                                <div class="font-[600]">{{ w.Nama }}</div>
-                                <div class="text-[9px] text-gray-600">{{ w.Id_Rumah }}</div>
-                            </td>
-                            <td class="border border-black p-1.5 text-center align-top">{{ w.Jenis_Kelamin === 'Laki-laki' ? 'L' : (w.Jenis_Kelamin === 'Perempuan' ? 'P' : '-') }}</td>
-                            <td v-if="printSettings.ttl" class="border border-black p-1.5 align-top">{{ formatTTL(w) }}</td>
-                            <td class="border border-black p-1.5 text-center align-top">{{ w.Agama || '-' }}</td>
-                            <td class="border border-black p-1.5 text-center align-top font-[600]">{{ w.Gol_Darah || '-' }}</td>
-                            <td class="border border-black p-1.5 text-center align-top">{{ w.Status_Perkawinan || '-' }}</td>
-                            <td v-if="printSettings.pekerjaan" class="border border-black p-1.5 align-top">{{ w.Pekerjaan || '-' }}</td>
-                            <td class="border border-black p-1.5 text-center align-top">{{ w.Status_Domisili === 'Kontrak / Kost' ? 'Kost' : 'Tinggal' }}</td>
-                            <td v-if="printSettings.kontak" class="border border-black p-1.5 text-center align-top">{{ formatDashPhone(w.No_Tlp) }}</td>
-                            <td v-if="printSettings.ronda" class="border border-black p-1.5 text-center align-top">{{ w.Ronda || '-' }}</td>
-                        </tr>
-                    </tbody>
+                <table class="w-full text-left border-collapse border border-black text-[9.5px]">
+                    <template v-for="(w, i) in filteredWarga" :key="'print_'+i">
+                        <tbody class="border-b-[1.5px] border-black">
+                            <tr>
+                                <td :rowspan="hasSubRow ? 2 : 1" class="border-r border-black text-center font-[700] p-1 w-6 align-middle">{{i+1}}</td>
+                                <td v-if="printSettings.fields.nama" class="p-1 font-[700] border-r border-black bg-gray-50/50 w-36">{{w.Nama}}</td>
+                                <td v-if="printSettings.fields.id_rumah" class="p-1 border-r border-black text-center w-12"><span class="bg-gray-200 px-1 rounded">{{w.Id_Rumah}}</span></td>
+                                <td v-if="printSettings.fields.jenis_kelamin" class="p-1 border-r border-black text-center">{{w.Jenis_Kelamin === 'Laki-laki' ? 'L' : (w.Jenis_Kelamin === 'Perempuan' ? 'P' : '-')}}</td>
+                                <td v-if="printSettings.fields.gol_darah" class="p-1 border-r border-black text-center text-red-600 font-[700]">{{w.Gol_Darah || '-'}}</td>
+                                <td v-if="printSettings.fields.agama" class="p-1 border-r border-black text-center">{{w.Agama || '-'}}</td>
+                                <td v-if="printSettings.fields.status_kawin" class="p-1 text-center">{{w.Status_Perkawinan || '-'}}</td>
+                            </tr>
+                            <tr v-if="hasSubRow" class="text-gray-800">
+                                <td colspan="6" class="p-1.5 border-t border-dashed border-gray-400">
+                                    <div class="flex flex-wrap gap-x-3 gap-y-1">
+                                        <span v-if="printSettings.fields.tempat_tanggal_lahir"><b>TTL:</b> {{formatTTL(w)}}</span>
+                                        <span v-if="printSettings.fields.pekerjaan"><b>Pekerjaan:</b> {{w.Pekerjaan || '-'}}</span>
+                                        <span v-if="printSettings.fields.domisili"><b>Domisili:</b> {{w.Status_Domisili || '-'}}</span>
+                                        <span v-if="printSettings.fields.no_whatsapp"><b>WA:</b> {{w.No_Tlp || '-'}}</span>
+                                        <span v-if="printSettings.fields.jadwal_ronda"><b>Ronda:</b> {{w.Ronda || '-'}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </template>
                 </table>
                 
-                <div v-if="printSettings.footer" class="mt-8 text-[9px] text-gray-500 flex justify-between border-t border-gray-300 pt-2">
+                <div class="mt-6 text-[8px] text-gray-500 flex justify-between border-t border-gray-300 pt-1.5">
                     <span>Dicetak dari: <b>Aplikasi Data Warga Terpadu (rt2pasekanlor.id)</b></span>
-                    <span>Tanggal & Waktu Cetak: <b>{{ new Date().toLocaleString('id-ID') }}</b></span>
+                    <span>Waktu Cetak: <b>{{ new Date().toLocaleString('id-ID') }}</b></span>
                 </div>
             </div>
         </div>
 
-        <!-- ================== MODAL IDENTITAS (DETAIL) ================== -->
-        <transition name="fade">
-            <div v-if="detailModal.show" class="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex justify-center items-center p-4 cursor-pointer overflow-y-auto pt-[50px] pb-[50px]" @click.self="closeDetailModal">
-                <div class="bg-white rounded-[24px] w-full max-w-4xl flex flex-col shadow-2xl overflow-hidden cursor-default relative my-auto border border-gray-100">
-                    <div class="bg-gradient-to-r from-[#1155CC] to-[#0A3688] px-6 py-6 relative">
-                        <div class="absolute top-4 right-4 flex gap-2">
-                            <button @click="editWarga(detailModal.data); closeDetailModal()" class="w-9 h-9 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-colors shadow-sm backdrop-blur-md border border-white/20" title="Edit Data"><i class="fas fa-pen text-[12px]"></i></button>
-                            <button @click="closeDetailModal" class="w-9 h-9 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-colors shadow-sm backdrop-blur-md border border-white/20" title="Tutup"><i class="fas fa-times text-[14px]"></i></button>
-                        </div>
-                        <div class="flex items-center gap-5 mt-3 sm:mt-0">
-                            <div class="w-[84px] h-[84px] rounded-full p-1 bg-white/20 backdrop-blur-md">
-                                <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="getAvatar(detailModal.data)" class="w-full h-full rounded-full border-2 border-white object-cover shadow-inner bg-white cursor-pointer" :class="!detailModal.data.Foto_Profil ? 'grayscale opacity-90' : ''" @click="openLightbox(getAvatar(detailModal.data))">
-                            </div>
-                            <div>
-                                <h3 class="text-[22px] font-[700] leading-tight text-white capitalize drop-shadow-md">{{ detailModal.data.Nama }}</h3>
-                                <p class="text-blue-100 font-mono text-[13px] mt-1.5 flex items-center gap-2 flex-wrap drop-shadow-sm">
-                                    <span class="bg-blue-500/50 backdrop-blur-sm text-white px-2 py-0.5 rounded-md font-[600] border border-blue-400/50">ID: {{ detailModal.data.Id_Rumah || '-' }}</span> 
-                                    <span class="font-[500] text-blue-200" v-if="userRole === 'admin'">| Mode Admin</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 md:p-8 overflow-y-auto space-y-6 bg-white">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-6">
-                                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm">
-                                    <h4 class="font-[600] text-[#0F2E70] border-b border-gray-200 pb-2 mb-3 text-[14px] uppercase tracking-wide"><i class="fas fa-id-card mr-2 text-[#1155CC]"></i>Data Diri</h4>
-                                    <div class="space-y-2.5">
-                                        <p class="text-[13px] flex"><span class="text-gray-500 w-[110px] shrink-0 font-[500]">Lahir</span><span class="font-[600] text-gray-900">: {{ formatTTL(detailModal.data) }}</span></p>
-                                        <p class="text-[13px] flex"><span class="text-gray-500 w-[110px] shrink-0 font-[500]">Jenis Kelamin</span><span class="font-[600] text-gray-900">: {{ detailModal.data.Jenis_Kelamin || '-' }}</span></p>
-                                        <p class="text-[13px] flex"><span class="text-gray-500 w-[110px] shrink-0 font-[500]">Gol. Darah</span><span class="font-[600] text-rose-600">: {{ detailModal.data.Gol_Darah || '-' }}</span></p>
-                                        <p class="text-[13px] flex"><span class="text-gray-500 w-[110px] shrink-0 font-[500]">Agama</span><span class="font-[600] text-gray-900">: {{ detailModal.data.Agama || '-' }}</span></p>
-                                        <p class="text-[13px] flex"><span class="text-gray-500 w-[110px] shrink-0 font-[500]">Status</span><span class="font-[600] text-gray-900">: {{ detailModal.data.Status_Perkawinan || '-' }}</span></p>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm">
-                                    <h4 class="font-[600] text-[#0F2E70] border-b border-gray-200 pb-2 mb-3 text-[14px] uppercase tracking-wide"><i class="fas fa-map-marker-alt mr-2 text-red-500"></i>Lingkungan</h4>
-                                    <div class="space-y-2.5">
-                                        <p class="text-[13px] flex items-center"><span class="text-gray-500 w-[110px] shrink-0 font-[500]">Domisili</span><span class="font-[600] text-gray-900 flex items-center gap-2">: {{ detailModal.data.Status_Domisili || '-' }}<span v-if="detailModal.data.Id_Rumah && detailModal.data.Status_Domisili === 'Tempat Tinggal'" class="bg-[#1155CC] text-white text-[10px] font-[600] px-1.5 py-0.5 rounded-md">{{ getHouseNumber(detailModal.data.Id_Rumah) }}</span></span></p>
-                                        <p class="text-[13px] flex"><span class="text-gray-500 w-[110px] shrink-0 font-[500]">Pekerjaan</span><span class="font-[600] text-gray-900">: {{ detailModal.data.Pekerjaan || '-' }}</span></p>
-                                        <p class="text-[13px] flex items-center"><span class="text-gray-500 w-[110px] shrink-0 font-[500]">WhatsApp</span><a :href="'https://wa.me/' + formatWhatsApp(detailModal.data.No_Tlp)" target="_blank" class="font-[600] text-emerald-600 hover:underline flex items-center gap-1 group">: <i class="fab fa-whatsapp group-hover:scale-110 transition-transform"></i> {{ detailModal.data.No_Tlp || '-' }}</a></p>
-                                        <p class="text-[13px] flex"><span class="text-gray-500 w-[110px] shrink-0 font-[500]">Ronda</span><span class="font-[600]" :class="['Bebas Tugas', 'Belum ada data', ''].includes(detailModal.data.Ronda) ? 'text-red-500' : 'text-emerald-600'">: {{ detailModal.data.Ronda || 'Belum ada data' }}</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="space-y-6 flex flex-col">
-                                <div class="bg-orange-50/70 p-5 rounded-2xl border border-orange-200 flex-1 shadow-sm">
-                                    <h4 class="font-[600] text-orange-700 border-b border-orange-200 pb-2 mb-3 text-[14px] uppercase tracking-wide"><i class="fas fa-users mr-2 text-orange-500"></i>Keluarga Se-rumah</h4>
-                                    <div class="flex flex-col text-[13px] font-[500] text-gray-800 leading-relaxed w-full">
-                                        <template v-if="detailModal.data.Anggota_Keluarga && detailModal.data.Anggota_Keluarga !== 'Tidak ada Data'">
-                                            <div v-for="(line, i) in detailModal.data.Anggota_Keluarga.split('\n')" :key="i" class="border-b border-orange-100/50 pb-2 mb-2 last:border-0 last:pb-0 last:mb-0">{{ line }}</div>
-                                        </template>
-                                        <span v-else class="text-gray-400 italic">- Tidak ada data keluarga</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm">
-                                    <h4 class="font-[600] text-[#0F2E70] border-b border-gray-200 pb-2 mb-3 text-[14px] uppercase tracking-wide"><i class="fas fa-photo-video mr-2 text-[#1155CC]"></i>Media Tersimpan</h4>
-                                    <div class="flex flex-wrap gap-5 items-center">
-                                        <div v-if="detailModal.data.QR_Code || detailModal.data.QrCode" class="flex flex-col items-center gap-2">
-                                            <img crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.QR_Code || detailModal.data.QrCode" class="w-[64px] h-[64px] object-contain bg-white border border-gray-300 rounded-xl cursor-pointer hover:border-[#1155CC] hover:shadow-md transition-all p-1" @click="openLightbox(detailModal.data.QR_Code || detailModal.data.QrCode)">
-                                            <span class="text-[11px] font-[600] text-gray-500">QR Code</span>
-                                            <a :href="detailModal.data.QR_Code || detailModal.data.QrCode" target="_blank" download="QR_Code.png" @click.stop class="mt-0.5 text-[10px] bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-md hover:bg-blue-600 hover:text-white transition-colors flex items-center gap-1 font-[500]"><i class="fas fa-download"></i> Unduh</a>
-                                        </div>
-                                        <div v-if="detailModal.data.Data_Lain" class="flex flex-col items-center gap-2">
-                                            <img v-if="detailModal.data.Data_Lain.includes('lh3.googleusercontent.com')" crossorigin="anonymous" referrerpolicy="no-referrer" :src="detailModal.data.Data_Lain" class="w-[64px] h-[64px] object-cover bg-white border border-gray-300 rounded-xl cursor-pointer hover:border-[#1155CC] hover:shadow-md transition-all p-1" @click="openLightbox(detailModal.data.Data_Lain)">
-                                            <button v-else @click="openLightbox(detailModal.data.Data_Lain)" class="w-[64px] h-[64px] bg-gray-100 text-red-500 rounded-xl shadow-sm border border-gray-300 hover:bg-gray-200 hover:border-red-400 transition-all flex items-center justify-center">
-                                                <i class="fas fa-file-pdf text-[26px]"></i>
-                                            </button>
-                                            <span class="text-[11px] font-[600] text-gray-500">Data Lain</span>
-                                        </div>
-                                        <div v-if="!(detailModal.data.QR_Code || detailModal.data.QrCode) && !detailModal.data.Data_Lain" class="text-[12px] text-gray-400 italic">Tidak ada file media terlampir.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div v-if="userRole === 'admin' && parseKeterangan(detailModal.data.Keterangan).length > 0 && (parseKeterangan(detailModal.data.Keterangan)[0].pertemuan !== '' || parseKeterangan(detailModal.data.Keterangan)[0].dansos !== '' || parseKeterangan(detailModal.data.Keterangan)[0].keterangan_lain !== '')" class="bg-indigo-50/50 p-5 rounded-2xl border border-indigo-200 mt-2 w-full flex flex-col shadow-sm">
-                            <h4 class="font-[600] text-indigo-800 text-[14px] uppercase tracking-wide border-b border-indigo-200 pb-2 mb-3 shrink-0"><i class="fas fa-sticky-note mr-2 text-indigo-500"></i>Catatan & Historis Warga</h4>
-                            <div class="overflow-y-auto max-h-[300px] custom-scrollbar pr-1.5">
-                                <table class="w-full text-left text-[13px] text-gray-800 break-words">
-                                    <thead class="text-indigo-900 font-[600] border-b border-indigo-200 sticky top-0 bg-indigo-50 z-10">
-                                        <tr><th class="py-2.5 pr-2 w-[40px] text-center align-top">No</th><th class="py-2.5 px-3 align-top">Pertemuan RT</th><th class="py-2.5 px-3 align-top">Kegiatan Sosial</th><th class="py-2.5 px-3 align-top">Keterangan Lain</th></tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-indigo-100">
-                                        <tr v-for="(ket, i) in parseKeterangan(detailModal.data.Keterangan)" :key="i" class="hover:bg-indigo-100/50 transition-colors">
-                                            <td class="py-3 pr-2 text-center font-[600] text-indigo-500 align-top w-[40px]">{{ i + 1 }}</td>
-                                            <td class="py-3 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.pertemuan || '-' }}</td>
-                                            <td class="py-3 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.dansos || '-' }}</td>
-                                            <td class="py-3 px-3 align-top whitespace-pre-wrap font-[500]">{{ ket.keterangan_lain || '-' }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </transition>
-
-        <!-- MODAL WACANA -->
-        <transition name="fade">
-            <div v-if="wacanaModal.show" class="fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm flex justify-center items-center p-4" @click.self="wacanaModal.show = false; showTataCara = false">
-                <div class="bg-white rounded-[24px] p-6 md:p-8 max-w-2xl w-full text-center shadow-2xl relative overflow-y-auto max-h-[90vh] custom-scrollbar">
-                    <button @click="wacanaModal.show = false; showTataCara = false" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 w-9 h-9 rounded-full flex items-center justify-center transition-colors"><i class="fas fa-times text-[14px]"></i></button>
-
-                    <div v-if="!showTataCara" class="fade-enter-active">
-                        <i class="fas fa-file-invoice-dollar text-[48px] text-[#1155CC] mb-4 drop-shadow-md"></i>
-                        <h3 class="text-[18px] font-[600] text-gray-800 mb-6">Data Laporan Bulanan: <span class="text-[#0F2E70]">{{ wacanaModal.nama }}</span></h3>
-
-                        <div class="overflow-x-auto text-left mb-6 shadow-sm rounded-xl border border-gray-200">
-                            <table class="w-full border-collapse text-[13px]">
-                                <thead class="bg-blue-50 text-[#0F2E70] font-[600] border-b border-blue-100">
-                                    <tr><th class="p-3 pl-5">Bulan Tagihan</th><th class="p-3 text-center">Jimpitan</th><th class="p-3 text-center pr-5">Lainnya</th></tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-100">
-                                    <tr class="hover:bg-gray-50"><td class="p-3 pl-5 font-[600] text-gray-700">Agustus 2026</td><td class="p-3 text-emerald-600 font-[600] text-center"><i class="fas fa-check-circle"></i> Lunas</td><td class="p-3 pr-5 text-center text-gray-400">-</td></tr>
-                                    <tr class="hover:bg-gray-50"><td class="p-3 pl-5 font-[600] text-gray-700">Juli 2026</td><td class="p-3 text-emerald-600 font-[600] text-center"><i class="fas fa-check-circle"></i> Lunas</td><td class="p-3 pr-5 text-center text-gray-400">-</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <button @click="showTataCara = true" class="w-full py-3 bg-blue-50 text-[#1155CC] font-[600] rounded-xl hover:bg-blue-100 transition-colors border border-blue-200 text-[13px] flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info Cara Pembayaran</button>
-                    </div>
-
-                    <div v-else class="text-left fade-enter-active">
-                        <button @click="showTataCara = false" class="text-[#1155CC] font-[600] mb-5 hover:underline text-[13px] flex items-center gap-1.5"><i class="fas fa-arrow-left"></i> Kembali</button>
-                        <h3 class="font-[700] text-gray-900 text-[18px] mb-5 text-center">Tata Cara Pembayaran Online</h3>
-                        <div class="space-y-4 text-[13px] text-gray-600">
-                            <div class="p-5 border border-blue-200 rounded-xl bg-blue-50/50 shadow-sm">
-                                <h4 class="font-[600] text-[#1155CC] mb-2 text-[14px]">1. Transfer Bank (BCA)</h4>
-                                <p>No Rekening: <strong class="text-gray-900">1234567890</strong><br>A.N: Bendahara RT 2<br>Berita: <em class="text-gray-500">Iuran [Bulan] [Nama]</em></p>
-                            </div>
-                            <div class="p-5 border border-emerald-200 rounded-xl bg-emerald-50/50 shadow-sm">
-                                <h4 class="font-[600] text-emerald-600 mb-2 text-[14px]">2. E-Wallet (Gopay / OVO / Dana)</h4>
-                                <p>No HP: <strong class="text-gray-900">0812-3456-7890</strong><br>A.N: Bendahara RT 2</p>
-                            </div>
-                            <div class="p-5 border border-gray-200 rounded-xl bg-gray-50 text-center shadow-sm">
-                                <p class="mb-4 font-[500] text-gray-600">Setelah transfer, harap konfirmasi bukti pembayaran via WhatsApp.</p>
-                                <a href="https://wa.me/6281234567890" target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 bg-emerald-500 text-white rounded-xl font-[600] hover:bg-emerald-600 shadow-md transition-all"><i class="fab fa-whatsapp text-[16px]"></i> Chat Bendahara</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </transition>
-
-        <transition name="fade">
-            <div v-if="lightboxImage" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex justify-center items-center p-4" @click="closeLightbox">
-                <button class="absolute top-4 right-4 text-white hover:text-gray-300 w-12 h-12 bg-white/10 rounded-full flex items-center justify-center transition-colors"><i class="fas fa-times text-[18px]"></i></button>
-                <img v-if="!lightboxImage.includes('application/pdf')" crossorigin="anonymous" referrerpolicy="no-referrer" :src="lightboxImage" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" @click.stop>
-                <iframe v-else :src="lightboxImage" class="w-full max-w-5xl h-[85vh] bg-white rounded-2xl shadow-2xl" @click.stop></iframe>
-            </div>
-        </transition>
-
-        <!-- Toasts -->
         <div class="fixed top-20 right-4 z-[9999] flex flex-col gap-3 pointer-events-none">
             <transition-group name="fade" tag="div">
                 <div v-for="t in toasts" :key="t.id" class="px-5 py-4 rounded-xl shadow-2xl flex items-center text-white text-[13px] font-[600] min-w-[280px] border" :class="t.type === 'error' ? 'bg-red-500 border-red-400' : 'bg-emerald-500 border-emerald-400'">
@@ -884,73 +578,25 @@
                 </div>
             </transition-group>
         </div>
-
-        <transition name="fade">
-            <div v-if="deleteConfirm.show" class="fixed inset-0 z-[120] bg-black/70 backdrop-blur-sm flex justify-center items-center p-4" @click.self="deleteConfirm.show = false">
-                <div class="bg-white rounded-[24px] p-8 max-w-sm w-full text-center shadow-2xl">
-                    <div class="w-20 h-20 bg-red-50 border-4 border-red-100 rounded-full flex items-center justify-center mx-auto mb-5"><i class="fas fa-trash-alt text-[32px] text-red-500"></i></div>
-                    <h3 class="text-[18px] font-[700] text-gray-900 mb-2">Hapus Warga?</h3>
-                    <p class="text-gray-500 text-[14px] mb-8">Data <b class="text-gray-800">{{ deleteConfirm.nama }}</b> akan dihapus permanen dari sistem.</p>
-                    <div class="flex gap-3">
-                        <button @click="deleteConfirm.show = false" class="flex-1 py-3 bg-gray-100 text-gray-600 font-[600] rounded-xl hover:bg-gray-200 text-[13px] transition-colors">Batal</button>
-                        <button @click="executeDelete" :disabled="saving" class="flex-1 py-3 bg-red-500 text-white font-[600] rounded-xl hover:bg-red-600 flex justify-center items-center text-[13px] shadow-lg transition-colors disabled:opacity-70">Hapus Data</button>
-                    </div>
-                </div>
-            </div>
-        </transition>
     </div>
 
     <script>
         const PAGE_ROUTE = "<?= pageRoute ?>"; 
-
-        const compressImage = (base64Str, maxWidth = 500, quality = 0.7) => {
-            return new Promise((resolve) => {
-                let img = new Image();
-                img.src = base64Str;
-                img.onload = () => {
-                    let canvas = document.createElement('canvas');
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > maxWidth) {
-                        height = Math.round((height *= maxWidth / width));
-                        width = maxWidth;
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    let ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    resolve(canvas.toDataURL('image/jpeg', quality));
-                };
-                img.onerror = () => resolve(base64Str); 
-            });
-        };
-
         const { createApp, ref, computed, onMounted } = Vue;
-
         const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbynAbJ-Aw96h3yqoodhYxqGNWPP2z_CuEx7Jo9gZWFS6hYznRt5PeOIHiWemJP8Yrok6A/exec"; 
         const SECRET_TOKEN = "RT2_PASEKAN_AMAN_2026";
 
         const callAPI = async (action, payload = {}) => {
             try {
                 const response = await fetch(GAS_WEB_APP_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+                    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
                     body: JSON.stringify({ token: SECRET_TOKEN, action: action, payload: payload })
                 });
-                
                 const textResult = await response.text();
-                let result;
-                try {
-                    result = JSON.parse(textResult);
-                } catch (parseError) {
-                    throw new Error("Respons server gagal. Silakan coba simpan sekali lagi.");
-                }
-                
+                let result = JSON.parse(textResult);
                 if (result.status === "error") throw new Error(result.message);
                 return result;
-            } catch (error) { throw error; }
+            } catch (error) { throw new Error(error.message || "Kesalahan Server/Jaringan."); }
         };
 
         createApp({
@@ -970,7 +616,21 @@
                 const saving = ref(false);
                 
                 const exportModal = ref(false);
-                const printSettings = ref({ header: true, footer: true, ttl: true, pekerjaan: true, kontak: true, ronda: true });
+                const customLogoBase64 = ref('');
+                const printSettings = ref({ 
+                    header: true, 
+                    fields: { id_rumah: true, nama: true, tempat_tanggal_lahir: true, jenis_kelamin: true, gol_darah: true, agama: true, status_kawin: true, pekerjaan: true, domisili: true, no_whatsapp: true, jadwal_ronda: true }
+                });
+
+                const hasSubRow = computed(() => {
+                    const f = printSettings.value.fields;
+                    return f.tempat_tanggal_lahir || f.pekerjaan || f.domisili || f.no_whatsapp || f.jadwal_ronda;
+                });
+
+                const showCropper = ref(false);
+                const cropperSrc = ref('');
+                let cropperInst = null;
+                let cropFieldTarget = '';
 
                 const fiturWacanaOn = ref(false);
                 const wacanaModal = ref({ show: false, nama: '' });
@@ -978,14 +638,10 @@
 
                 const wargaList = ref([]);
                 const searchQuery = ref('');
-                
                 const filterJK = ref('');
                 const filterDomisili = ref('');
                 const filterRonda = ref('');
-                const filterAgama = ref('');
-                const filterGolDarah = ref('');
-                const filterStatus = ref('');
-                const sortOrder = ref('asc');
+                const sortMode = ref('id_asc'); 
 
                 const emptyForm = () => ({
                     Id_Rumah: 'rt2_', Password: '', Nama: '', Tempat_Lahir: '', Tanggal_Lahir: '', 
@@ -1029,19 +685,44 @@
                         loggedInId.value = loginIdRumah.value;
                         wargaList.value = res.data; 
                         isLoggedIn.value = true;
-                        activeMenu.value = 'list';
+                        
+                        let targetHash = res.role === 'admin' ? 'administrator' : (res.data && res.data.length > 0 ? nameToSlug(res.data[0].Nama) : loginIdRumah.value);
+                        window.location.hash = targetHash;
 
-                        let targetName = res.role === 'admin' ? 'administrator' : (res.data && res.data.length > 0 ? res.data[0].Nama : loginIdRumah.value);
-                        window.location.hash = nameToSlug(targetName);
+                        if(res.role === 'warga') {
+                            const myData = res.data.find(w => w.Id_Rumah === loggedInId.value);
+                            if(myData) editWarga(myData);
+                        } else {
+                            activeMenu.value = 'list';
+                        }
                     } catch(e) {
-                        localStorage.removeItem('rt2_user_id');
-                        localStorage.removeItem('rt2_pass');
+                        localStorage.removeItem('rt2_user_id'); localStorage.removeItem('rt2_pass');
                     } finally { loading.value = false; }
                 };
 
+                // Deteksi Data Ganda
+                const duplicateDataReport = computed(() => {
+                    if(userRole.value !== 'admin') return [];
+                    let counts = {}; let dupes = [];
+                    wargaList.value.forEach(w => { if(w.Id_Rumah) counts[w.Id_Rumah] = (counts[w.Id_Rumah] || 0) + 1; });
+                    wargaList.value.forEach(w => {
+                        if(w.Id_Rumah && counts[w.Id_Rumah] > 1) {
+                            if(!dupes.some(d => d.Id_Rumah === w.Id_Rumah)) dupes.push(w);
+                        }
+                    });
+                    return dupes;
+                });
+
+                const naturalSort = (a, b) => (a||'').localeCompare((b||''), undefined, {numeric: true, sensitivity: 'base'});
+
                 const filteredWarga = computed(() => {
                     let result = wargaList.value.filter(w => w.Nama && w.Nama.toString().trim() !== '');
-                    if (sortOrder.value === 'desc') result.reverse();
+                    
+                    if (sortMode.value === 'nama_asc') result.sort((a,b) => (a.Nama||'').localeCompare(b.Nama||''));
+                    else if (sortMode.value === 'nama_desc') result.sort((a,b) => (b.Nama||'').localeCompare(a.Nama||''));
+                    else if (sortMode.value === 'id_asc') result.sort((a,b) => naturalSort(a.Id_Rumah, b.Id_Rumah));
+                    else if (sortMode.value === 'id_desc') result.sort((a,b) => naturalSort(b.Id_Rumah, a.Id_Rumah));
+
                     if(searchQuery.value && searchQuery.value.trim() !== '') {
                         const q = searchQuery.value.toLowerCase().trim();
                         result = result.filter(w => String(w.Nama||'').toLowerCase().includes(q) || String(w.Password||'').toLowerCase().includes(q) || String(w.Id_Rumah||'').toLowerCase().includes(q));
@@ -1058,40 +739,20 @@
 
                 const applySingleFilter = (type, val) => {
                     searchQuery.value = ''; 
-                    if (type !== 'jk') filterJK.value = '';
-                    if (type !== 'domisili') filterDomisili.value = '';
-                    if (type !== 'ronda') filterRonda.value = '';
-
-                    if (type === 'jk') filterJK.value = filterJK.value === val ? '' : val;
-                    else if (type === 'domisili') filterDomisili.value = filterDomisili.value === val ? '' : val;
-                    else if (type === 'ronda') filterRonda.value = val;
+                    if (type === 'domisili') { filterDomisili.value = filterDomisili.value === val ? '' : val; filterJK.value=''; filterRonda.value=''; }
+                    else if (type === 'jk') { filterJK.value = filterJK.value === val ? '' : val; filterDomisili.value=''; filterRonda.value=''; }
+                    else if (type === 'ronda') { filterDomisili.value=''; filterJK.value=''; }
                 };
-                
-                const resetFilters = () => { filterJK.value=''; filterDomisili.value=''; filterRonda.value=''; searchQuery.value=''; sortOrder.value='asc'; };
+                const resetFilters = () => { filterJK.value=''; filterDomisili.value=''; filterRonda.value=''; searchQuery.value=''; sortMode.value='id_asc'; };
 
                 const showToast = (msg, type='success') => {
                     const id = toastId++; toasts.value.push({id, message:msg, type});
                     setTimeout(() => { toasts.value = toasts.value.filter(t => t.id !== id); }, 4000);
                 };
 
-                const getAvatar = (w) => {
-                    if (w && w.Foto_Profil) return w.Foto_Profil;
-                    return w && w.Jenis_Kelamin === 'Perempuan' 
-                        ? 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png' 
-                        : 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png';
-                };
-                
-                const formatWhatsApp = (num) => {
-                    if(!num) return ''; let f = num.toString().replace(/\D/g, '');
-                    return f.startsWith('0') ? '62' + f.substring(1) : f;
-                };
-                
-                const formatDashPhone = (num) => {
-                    if(!num) return '-'; let f = num.toString().replace(/\D/g, '');
-                    if (f.startsWith('0')) f = '62' + f.substring(1);
-                    if (f.length >= 10) return `+${f.substring(0,2)} ${f.substring(2,5)}-${f.substring(5,9)}-${f.substring(9)}`;
-                    return '+' + f;
-                };
+                const getAvatar = (w) => w && w.Foto_Profil ? w.Foto_Profil : (w && w.Jenis_Kelamin === 'Perempuan' ? 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png');
+                const formatWhatsApp = (num) => { if(!num) return ''; let f = num.toString().replace(/\D/g, ''); return f.startsWith('0') ? '62' + f.substring(1) : f; };
+                const formatDashPhone = (num) => { if(!num) return '-'; let f = num.toString().replace(/\D/g, ''); if (f.startsWith('0')) f = '62' + f.substring(1); if (f.length >= 10) return `+${f.substring(0,2)} ${f.substring(2,5)}-${f.substring(5,9)}-${f.substring(9)}`; return '+' + f; };
                 
                 const formatTTL = (w) => {
                     if(!w.Tempat_Tanggal_Lahir) return '-';
@@ -1105,22 +766,14 @@
                     return `${parts[0].trim()}, ${datePart}`;
                 };
 
-                const getHouseNumber = (id) => {
-                    if (!id) return '';
-                    const parts = id.split('_');
-                    return parts.length > 1 ? parts[1].toUpperCase() : id.toUpperCase();
-                };
-                
-                const getDisplayName = () => {
-                    return (filteredWarga.value && filteredWarga.value.length > 0) ? filteredWarga.value[0].Nama : loggedInId.value;
-                };
+                const getHouseNumber = (id) => id ? (id.split('_').length > 1 ? id.split('_')[1].toUpperCase() : id.toUpperCase()) : '';
+                const getDisplayName = () => (filteredWarga.value && filteredWarga.value.length > 0) ? filteredWarga.value[0].Nama : loggedInId.value;
 
                 const scrollTo = (pos) => {
                     const mainArea = document.querySelector('#scrollArea');
                     if(mainArea) { 
                         let targetTop = 0;
-                        if(pos === 'top') targetTop = 0;
-                        else if(pos === 'middle') targetTop = (mainArea.scrollHeight - mainArea.clientHeight) / 2;
+                        if(pos === 'middle') targetTop = (mainArea.scrollHeight - mainArea.clientHeight) / 2;
                         else if(pos === 'bottom') targetTop = mainArea.scrollHeight;
                         mainArea.scrollTo({ top: targetTop, behavior: 'smooth' }); 
                     }
@@ -1163,16 +816,21 @@
                         loggedInId.value = loginIdRumah.value;
                         wargaList.value = res.data; 
                         isLoggedIn.value = true;
-                        activeMenu.value = 'list';
                         
                         localStorage.setItem('rt2_user_id', loginIdRumah.value);
                         localStorage.setItem('rt2_pass', loginPassword.value);
 
-                        let targetName = res.role === 'admin' ? 'administrator' : (res.data && res.data.length > 0 ? res.data[0].Nama : loginIdRumah.value);
-                        window.location.hash = nameToSlug(targetName);
-                    } catch(e) {
-                        showToast(e.message || 'Gagal login.', 'error');
-                    } finally { loading.value = false; }
+                        let targetName = res.role === 'admin' ? 'administrator' : (res.data && res.data.length > 0 ? nameToSlug(res.data[0].Nama) : loginIdRumah.value);
+                        window.location.hash = targetName;
+
+                        if(res.role === 'warga') {
+                            const myData = res.data.find(w => w.Id_Rumah === loggedInId.value);
+                            if(myData) editWarga(myData);
+                        } else {
+                            activeMenu.value = 'list';
+                        }
+                    } catch(e) { showToast(e.message || 'Gagal login.', 'error'); } 
+                    finally { loading.value = false; }
                 };
 
                 const bukaHalamanRegistrasi = () => {
@@ -1180,6 +838,11 @@
                     isLoggedIn.value = true; activeMenu.value = 'register';
                     resetForm();
                     window.location.hash = "registrasi";
+                };
+
+                const handleBatal = () => {
+                    if (userRole.value === 'new_warga') logout();
+                    else changeMenu('list');
                 };
 
                 const logout = () => { 
@@ -1252,8 +915,6 @@
                 };
 
                 const saveData = async () => {
-                    if (!form.value.Foto_Profil) return showToast('Wajib Upload Foto Profil', 'error');
-
                     saving.value = true;
                     try {
                         let tglFormat = form.value.Tanggal_Lahir;
@@ -1279,19 +940,20 @@
                         });
                         
                         if(userRole.value === 'new_warga') { 
-                            const assignedId = res.newId || finalData.Id_Rumah;
-                            alert(`✅ PENDAFTARAN BERHASIL!\n\nUser ID Anda : ${assignedId}\nPassword Anda : ${finalData.Password}\n\nPENTING: Harap catat/screenshot User ID di atas untuk keperluan Login Anda.`);
-                            setTimeout(() => { logout(); }, 500); 
+                            alert(`✅ PENDAFTARAN BERHASIL!\n\nUser ID Anda : ${res.newId}\nPassword Anda : ${finalData.Password}\n\nPENTING: Harap catat/screenshot User ID di atas untuk keperluan Login Anda.`);
+                            logout();
                         } 
                         else { 
                             showToast(res.message); 
                             wargaList.value = res.data; 
-                            activeMenu.value = 'list'; 
-                            resetForm(); 
-                            scrollTo('top'); 
                             
-                            let targetName = userRole.value === 'admin' ? 'administrator' : (res.data && res.data.length > 0 ? res.data[0].Nama : loggedInId.value);
-                            window.location.hash = nameToSlug(targetName);
+                            if(userRole.value === 'admin') {
+                                activeMenu.value = 'list'; resetForm(); scrollTo('top'); 
+                                window.location.hash = 'administrator';
+                            } else {
+                                const myData = res.data.find(w => w.Id_Rumah === loggedInId.value);
+                                if(myData) editWarga(myData);
+                            }
                         }
                     } catch(e) { showToast(e.message || 'Gagal menyimpan', 'error'); } 
                     finally { saving.value = false; }
@@ -1314,6 +976,21 @@
                     finally { saving.value = false; }
                 };
 
+                const compressImage = (base64Str, maxWidth = 600, quality = 0.8) => {
+                    return new Promise((resolve) => {
+                        let img = new Image(); img.src = base64Str;
+                        img.onload = () => {
+                            let canvas = document.createElement('canvas');
+                            let width = img.width; let height = img.height;
+                            if (width > maxWidth) { height = Math.round((height *= maxWidth / width)); width = maxWidth; }
+                            canvas.width = width; canvas.height = height;
+                            let ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
+                            resolve(canvas.toDataURL('image/jpeg', quality));
+                        };
+                        img.onerror = () => resolve(base64Str); 
+                    });
+                };
+
                 const handleFileUpload = (e, field) => {
                     const file = e.target.files[0]; 
                     if(!file) return;
@@ -1324,11 +1001,41 @@
                     reader.onload = async (ev) => { 
                         let base64Data = ev.target.result;
                         if (base64Data.startsWith('data:image')) {
-                            try { base64Data = await compressImage(base64Data, 500, 0.7); } 
-                            catch (err) { console.error("Gagal kompresi", err); }
+                            if(field === 'Foto_Profil') {
+                                cropperSrc.value = base64Data; cropFieldTarget = field; showCropper.value = true;
+                                Vue.nextTick(() => {
+                                    const imgEl = document.getElementById('cropperImage');
+                                    if(cropperInst) cropperInst.destroy();
+                                    cropperInst = new Cropper(imgEl, { aspectRatio: 1, viewMode: 1, dragMode: 'move', autoCropArea: 1 });
+                                });
+                            } else {
+                                try { base64Data = await compressImage(base64Data, 600, 0.7); form.value[field] = base64Data; } 
+                                catch (err) {}
+                            }
+                        } else {
+                            form.value[field] = base64Data; // PDF
                         }
-                        form.value[field] = base64Data; 
                     };
+                    reader.readAsDataURL(file);
+                };
+
+                const applyCrop = () => {
+                    if(cropperInst) {
+                        form.value[cropFieldTarget] = cropperInst.getCroppedCanvas({width: 400, height: 400}).toDataURL('image/jpeg', 0.85);
+                        cancelCrop();
+                    }
+                };
+                const cancelCrop = () => {
+                    showCropper.value = false;
+                    if(cropperInst) { cropperInst.destroy(); cropperInst = null; }
+                    cropperSrc.value = '';
+                };
+
+                const uploadCustomLogo = (e) => {
+                    const file = e.target.files[0];
+                    if(!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (ev) => { customLogoBase64.value = ev.target.result; };
                     reader.readAsDataURL(file);
                 };
 
@@ -1337,31 +1044,33 @@
                 
                 const executeExport = async (type) => {
                     saving.value = true;
-                    const el = document.getElementById('print-area-a4');
-                    const wrapper = document.getElementById('print-container-wrapper');
-                    
-                    wrapper.style.zIndex = '1000';
-                    wrapper.style.opacity = '1';
-                    
-                    await Vue.nextTick();
-
-                    if(type === 'pdf') {
-                        html2pdf().set({
-                            margin: 10,
-                            filename: 'Data_Warga_RT2.pdf',
-                            image: { type: 'jpeg', quality: 0.98 },
-                            html2canvas: { scale: 2, useCORS: true, logging: false },
-                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
-                        }).from(el).save().then(() => {
-                            wrapper.style.zIndex = '-9999'; wrapper.style.opacity = '0';
-                            saving.value = false; closeExportModal();
+                    if (type === 'excel') {
+                        let csvContent = "data:text/csv;charset=utf-8,No,ID Rumah,Nama,L/P,TTL,Agama,Darah,Status,Pekerjaan,Domisili,WhatsApp,Ronda\n";
+                        filteredWarga.value.forEach((w, i) => {
+                            let row = [
+                                i+1, w.Id_Rumah, w.Nama, 
+                                w.Jenis_Kelamin === 'Laki-laki' ? 'L' : 'P', formatTTL(w), w.Agama, w.Gol_Darah, 
+                                w.Status_Perkawinan, w.Pekerjaan, w.Status_Domisili, w.No_Tlp, w.Ronda
+                            ].map(v => `"${(v||'').toString().replace(/"/g, '""')}"`).join(",");
+                            csvContent += row + "\r\n";
                         });
-                    } else if (type === 'jpg') {
-                        html2canvas(el, { scale: 2, useCORS: true, logging: false }).then(canvas => {
-                            const link = document.createElement('a');
-                            link.download = 'Data_Warga_RT2.jpg';
-                            link.href = canvas.toDataURL("image/jpeg", 0.98);
-                            link.click();
+                        const encodedUri = encodeURI(csvContent);
+                        const link = document.createElement("a");
+                        link.setAttribute("href", encodedUri);
+                        link.setAttribute("download", "Data_Warga_RT2.csv");
+                        document.body.appendChild(link); link.click(); document.body.removeChild(link);
+                        saving.value = false; closeExportModal();
+                    } else if (type === 'pdf') {
+                        const el = document.getElementById('print-area-a4');
+                        const wrapper = document.getElementById('print-container-wrapper');
+                        wrapper.style.zIndex = '1000'; wrapper.style.opacity = '1';
+                        await Vue.nextTick();
+
+                        html2pdf().set({
+                            margin: 8, filename: 'Data_Warga_RT2.pdf', image: { type: 'jpeg', quality: 1 },
+                            html2canvas: { scale: 2, useCORS: true, logging: false },
+                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                        }).from(el).save().then(() => {
                             wrapper.style.zIndex = '-9999'; wrapper.style.opacity = '0';
                             saving.value = false; closeExportModal();
                         });
@@ -1377,11 +1086,11 @@
                 return {
                     isLoggedIn, loginIdRumah, loginPassword, showPassword, isSetujuRegis, userRole, loggedInId, getDisplayName,
                     activeMenu, viewMode, loading, saving, wargaList, filteredWarga, searchQuery, scrollTo, getAvatar,
-                    filterJK, filterDomisili, filterRonda, filterAgama, filterGolDarah, filterStatus, sortOrder, applySingleFilter, resetFilters,
+                    filterJK, filterDomisili, filterRonda, sortMode, applySingleFilter, resetFilters, hasSubRow, duplicateDataReport,
                     isEditing, form, calculatedAge, capitalizeName, addFam, removeFam, removeFile, addKeterangan, removeKeterangan, parseKeterangan,
                     toasts, deleteConfirm, detailModal, lightboxImage, getHouseNumber, fiturWacanaOn, wacanaModal, showTataCara, openWacanaModal, 
-                    exportModal, printSettings, openExportModal, closeExportModal, executeExport,
-                    handleLogin, logout, changeMenu, bukaFormKosong, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, openDetailModal, closeDetailModal, openLightbox, closeLightbox, bukaHalamanRegistrasi, formatWhatsApp, formatDashPhone, formatTTL, handleSearchInput
+                    exportModal, printSettings, customLogoBase64, openExportModal, closeExportModal, executeExport, uploadCustomLogo,
+                    handleLogin, logout, changeMenu, bukaFormKosong, handleBatal, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, openDetailModal, closeDetailModal, openLightbox, closeLightbox, bukaHalamanRegistrasi, formatWhatsApp, formatDashPhone, formatTTL, handleSearchInput, showCropper, cropperSrc, cancelCrop, applyCrop
                 };
             }
         }).mount('#app');

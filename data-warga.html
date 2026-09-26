@@ -390,6 +390,28 @@
                                     <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Status Domisili</label><select v-model="form.Status_Domisili" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Tempat Tinggal</option><option>Kontrak / Kost</option></select></div>
                                     <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">No. WhatsApp (+62)</label><input type="text" v-model="form.No_Tlp" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none font-mono" placeholder="+62 XXX"></div>
                                     <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Jadwal Ronda</label><select v-model="form.Ronda" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option></select></div>
+                                    
+                                    <!-- TAMBAHAN KOLOM DATA LAIN & QR CODE (Tampil sebaris) -->
+                                    <div>
+                                        <label class="block text-[13px] font-[600] text-gray-700 mb-1">Dokumen/Data Lain <span class="text-[10px] text-gray-400 font-[400]">(Ops. Maks 3Mb)</span></label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="file" accept="image/*,.pdf" @change="e => handleFileUpload(e, 'Data_Lain')" class="w-full text-[11px] file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-300 rounded-xl bg-gray-50 p-1.5">
+                                            <button type="button" v-if="form.Data_Lain && form.Data_Lain.startsWith('data:')" @click.prevent.stop="removeFile('Data_Lain')" class="bg-red-500 text-white rounded-lg px-2.5 py-1.5 shrink-0"><i class="fas fa-times"></i></button>
+                                        </div>
+                                        <a v-if="form.Data_Lain && form.Data_Lain.startsWith('http')" :href="form.Data_Lain" target="_blank" class="text-[11px] text-[#1155CC] mt-1.5 inline-block font-[600] hover:underline"><i class="fas fa-external-link-alt"></i> Lihat Dokumen Tersimpan</a>
+                                    </div>
+
+                                    <div class="bg-blue-50 p-2.5 rounded-xl border border-blue-100 flex items-center gap-3 relative">
+                                        <div class="w-14 h-14 bg-white border border-gray-200 rounded-lg p-1 shrink-0 flex items-center justify-center">
+                                            <img :src="form.QR_Code && form.QR_Code.startsWith('http') ? form.QR_Code : `https://quickchart.io/qr?size=300x300&margin=2&text=${encodeURIComponent((form.Id_Rumah || 'ID') + ' - ' + (form.Nama || 'Warga'))}`" class="w-full h-full object-contain">
+                                        </div>
+                                        <div class="flex-1 min-w-0 flex flex-col justify-center">
+                                            <p class="text-[11px] font-[700] text-[#0F2E70] truncate leading-tight">{{ form.Id_Rumah || '-' }}</p>
+                                            <p class="text-[10px] text-gray-600 truncate mb-1.5">{{ form.Nama || '-' }}</p>
+                                            <button type="button" @click.prevent="downloadQR(form.Id_Rumah, form.Nama, form.QR_Code)" class="w-full py-1.5 bg-[#1155CC] text-white rounded-md text-[10px] font-[600] flex items-center justify-center gap-1 hover:bg-[#0A3688] transition-colors"><i class="fas fa-download"></i> Download PNG</button>
+                                        </div>
+                                    </div>
+                                    <!-- SELESAI TAMBAHAN -->
                                 </div>
                                 <hr class="border-gray-200 mb-6">
                                 <h4 class="font-[600] text-[15px] text-[#0F2E70] mb-4 flex items-center"><i class="fas fa-users text-orange-500 mr-2"></i> Anggota Keluarga Se-rumah</h4>
@@ -645,7 +667,7 @@
                     const pageParam = urlParams.get('page');
 
                     if (PAGE_ROUTE === 'register' || pageParam === 'register' || pageParam === 'registrasi' || hash === 'registrasi') {
-                        bukaHalamanRegistrasi();    
+                        bukaHalamanRegistrasi();   
                     } else {
                         const savedId = localStorage.getItem('rt2_user_id');
                         const savedPass = localStorage.getItem('rt2_pass');
@@ -975,7 +997,8 @@
                     const file = e.target.files[0]; 
                     if(!file) return;
                     if(file.type === 'application/pdf' && file.size > 2 * 1024 * 1024) return showToast('File PDF Maksimal 2MB', 'error');
-                    if(file.size > 5 * 1024 * 1024) return showToast('File Gambar Maksimal 5MB', 'error');
+                    if(field === 'Data_Lain' && file.size > 3 * 1024 * 1024) return showToast('Dokumen/Data Lain Maksimal 3MB', 'error');
+                    if(field === 'Foto_Profil' && file.size > 5 * 1024 * 1024) return showToast('File Gambar Maksimal 5MB', 'error');
 
                     const reader = new FileReader();
                     reader.onload = async (ev) => { 
@@ -1059,6 +1082,35 @@
                     }
                 };
 
+                const downloadQR = async (idRumah, nama, existingUrl) => {
+                    if (!idRumah || !nama) return showToast('Lengkapi ID Rumah dan Nama terlebih dahulu', 'error');
+                    const fileName = `QR_${idRumah}_${nama}.png`;
+                    let url = existingUrl;
+                    if (!url || !url.startsWith('http')) {
+                        url = `https://quickchart.io/qr?size=1000x1000&margin=2&text=${encodeURIComponent(idRumah + " - " + nama)}`;
+                    }
+                    try {
+                        const response = await fetch(url);
+                        const blob = await response.blob();
+                        const blobUrl = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = blobUrl;
+                        a.download = fileName;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(blobUrl);
+                    } catch(e) {
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = fileName;
+                        a.target = "_blank";
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }
+                };
+
                 return {
                     isLoggedIn, loginIdRumah, loginPassword, showPassword, isSetujuRegis, userRole, loggedInId, getDisplayName,
                     activeMenu, viewMode, loading, saving, wargaList, filteredWarga, searchQuery, scrollTo, getAvatar,
@@ -1066,7 +1118,7 @@
                     isEditing, form, calculatedAge, capitalizeName, addFam, removeFam, removeFile, addKeterangan, removeKeterangan, parseKeterangan,
                     toasts, deleteConfirm, showTataCara,
                     exportModal, printSettings, customLogoBase64, openExportModal, closeExportModal, executeExport, uploadCustomLogo,
-                    handleLogin, logout, changeMenu, bukaFormKosong, handleBatal, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, showCropper, cropperSrc, cancelCrop, applyCrop, formatWhatsApp, formatDashPhone, formatTTL, handleSearchInput
+                    handleLogin, logout, changeMenu, bukaFormKosong, handleBatal, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, showCropper, cropperSrc, cancelCrop, applyCrop, formatWhatsApp, formatDashPhone, formatTTL, handleSearchInput, downloadQR
                 };
             }
         }).mount('#app');

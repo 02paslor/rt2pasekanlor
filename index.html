@@ -106,65 +106,115 @@
         }
 
         /* ========================================================
-           MODAL OVERLAY (Login & Edit Profil)
+           MODAL OVERLAY (Login & Edit Profil) - SYNCHRONIZED
            ======================================================== */
         .slide-up-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 10000; 
-            display: flex; flex-direction: column; justify-content: flex-start; align-items: center; 
-            padding: 30px 16px 105px 16px; 
+            background: rgba(15, 23, 42, 0.85); /* Darker backdrop to match Data Warga */
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 10000; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            padding: 20px; 
             visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; 
         }
         .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
         
         .slide-up-content { 
-            background: #ffffff; width: 100%; max-width: 480px; height: auto; 
-            max-height: calc(100vh - 135px); 
+            width: 100%; max-width: 380px; 
             display: flex; flex-direction: column; 
-            overflow-y: auto; overflow-x: hidden; 
-            border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; 
-            transform: translateY(-100vh); 
+            position: relative; 
+            transform: translateY(30px) scale(0.95); 
             opacity: 0; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s; 
         }
         .slide-up-overlay.active .slide-up-content { 
-            transform: translateY(0); 
+            transform: translateY(0) scale(1); 
             opacity: 1; 
         }
 
-        .login-wrapper { background: #f1f5f9; width: 100%; max-width: 400px; margin: 0 auto; border-radius: 16px; padding: 24px; position: relative; }
-        .login-close-btn { position: absolute; top: 16px; right: 16px; background: #1155cc; color: #ffffff; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(17,85,204,0.3); transition: transform 0.2s; }
-        .login-close-btn:active { transform: scale(0.9); }
-        .login-title-text { font-size: 14px; font-weight: 600; color: #1155cc; margin-bottom: 12px; letter-spacing: 0.5px; }
-        .info-box-sync { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 10px; border-radius: 10px; font-size: 11.5px; font-weight: 500; margin-bottom: 20px; text-align: center; line-height: 1.4; }
+        /* MODERN LOGIN CARD (Adaptasi penuh dari Data Warga Tailwind UI) */
+        .modern-login-wrapper {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 28px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modern-login-header {
+            display: flex; align-items: center; gap: 16px; margin-bottom: 4px;
+        }
+        .modern-logo { height: 55px; width: auto; filter: drop-shadow(0 4px 3px rgba(0,0,0,0.07)); }
+        .modern-header-text { flex: 1; display: flex; flex-direction: column; }
+        .modern-header-text h2 { color: #0F2E70; font-weight: 700; font-size: 17px; margin: 0; line-height: 1.2; }
+        .modern-header-text p { color: #64748B; font-weight: 500; font-size: 10px; margin: 2px 0 0 0; line-height: 1.3; }
         
-        .login-form-grid { display: grid; grid-template-columns: 1fr 100px; gap: 12px; margin-bottom: 12px; }
-        .login-inputs { display: flex; flex-direction: column; gap: 12px; }
-        .input-icon-group { position: relative; display: flex; align-items: center; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 0 14px; height: 50px; transition: border-color 0.2s; }
-        .input-icon-group:focus-within { border-color: #1155cc; box-shadow: 0 0 0 3px rgba(17,85,204,0.1); }
-        .input-icon-group svg.left-icon { width: 22px; height: 22px; color: #64748b; flex-shrink: 0; margin-right: 8px; }
-        .input-icon-group input { border: none; background: transparent; width: 100%; font-size: 14.5px; color: #333; outline: none; font-weight: 500; }
-        .input-icon-group input::placeholder { color: #94a3b8; font-weight: 400; }
-        .input-icon-group .toggle-pw-btn { background: none; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; margin-left: 8px; }
+        .modern-close-btn {
+            width: 38px; height: 38px; flex-shrink: 0; background: #eff6ff; color: #2563eb;
+            border: 1px solid #dbeafe; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .modern-close-btn:hover { background: #dbeafe; transform: scale(1.05); }
+        .modern-close-btn:active { transform: scale(0.95); }
+        .modern-close-btn svg { width: 14px; height: 14px; }
+
+        .modern-login-form { display: flex; flex-direction: column; gap: 12px; margin: 0; }
+        .modern-input-group { position: relative; width: 100%; display: flex; align-items: center; }
+        .modern-input-group .left-icon { position: absolute; left: 16px; width: 16px; height: 16px; color: #9ca3af; pointer-events: none; }
         
-        .btn-monggo { background: #1155cc; color: #ffffff; border: none; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 13.5px; font-weight: 500; cursor: pointer; transition: transform 0.2s, background 0.2s; padding: 10px; line-height: 1.2; box-shadow: 0 4px 12px rgba(17,85,204,0.3); }
-        .btn-monggo:active { transform: scale(0.96); }
-        .login-error-msg { color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; display: none; padding: 8px; background: #fef2f2; border-radius: 10px; border: 1px solid #fecaca; margin-bottom: 16px; }
+        .modern-input {
+            width: 100%; padding: 12px 16px 12px 44px; border-radius: 12px;
+            border: 1px solid #e5e7eb; background: #ffffff; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            outline: none; font-size: 13px; font-weight: 500; color: #333; transition: all 0.2s;
+        }
+        .modern-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        .modern-input[type="password"] { font-size: 14px; letter-spacing: 2px; padding-right: 44px; }
+        .modern-input[type="password"]::placeholder { letter-spacing: normal; }
+
+        .modern-toggle-pw {
+            position: absolute; right: 16px; background: none; border: none; color: #9ca3af; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            padding: 0; transition: color 0.2s;
+        }
+        .modern-toggle-pw:hover { color: #3b82f6; }
+        .modern-toggle-pw svg { width: 18px; height: 18px; }
         
-        .reg-box { border: 2px solid #cbd5e1; border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 10px; background: transparent; }
-        .reg-left { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-        .reg-title { font-size: 12px; font-weight: 600; color: #1155cc; letter-spacing: 0.3px; }
-        .reg-toggle-row { display: flex; align-items: center; gap: 10px; }
-        .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #94a3b8; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        input:checked + .slider { background-color: #1155cc; }
-        input:checked + .slider:before { transform: translateX(18px); }
-        .reg-desc { font-size: 10px; color: #475569; line-height: 1.3; font-weight: 500; }
-        
-        .btn-reg { background: #94a3b8; color: #ffffff; border: none; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11.5px; font-weight: 500; cursor: pointer; padding: 10px; text-decoration: none; text-align: center; width: 85px; transition: background 0.2s, transform 0.2s; pointer-events: none; }
-        .btn-reg.active { background: #1155cc; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: auto; }
-        .btn-reg:active { transform: scale(0.96); }
+        .modern-submit-btn {
+            background: linear-gradient(135deg, #1155CC 0%, #0A3688 100%);
+            color: #ffffff; border: none; border-radius: 12px; padding: 12px;
+            font-size: 14px; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px;
+            cursor: pointer; transition: all 0.3s ease; margin-top: 4px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .modern-submit-btn:hover { transform: scale(1.02); box-shadow: 0 8px 15px -3px rgba(17, 85, 204, 0.3); }
+        .modern-submit-btn:active { transform: scale(0.98); }
+        .modern-submit-btn:disabled { opacity: 0.7; pointer-events: none; }
+
+        .login-error-msg {
+            color: #ef4444; font-size: 12px; font-weight: 500; text-align: center; 
+            display: none; padding: 8px; background: #fef2f2; border-radius: 10px; 
+            border: 1px solid #fecaca; margin-top: -8px; margin-bottom: 4px;
+        }
+
+        .modern-register-box {
+            background: linear-gradient(to right, #eff6ff, #e0e7ff);
+            border-radius: 12px; padding: 12px; border: 1px solid #dbeafe;
+            text-align: center; display: flex; flex-direction: column; gap: 10px;
+        }
+        .modern-register-box .reg-title {
+            color: #0F2E70; font-weight: 600; font-size: 13px; text-align: left; display: flex; align-items: center; gap: 6px; margin-bottom: 2px;
+        }
+        .modern-register-box .reg-title svg { width: 14px; height: 14px; color: #1155CC; }
+        .modern-reg-btn {
+            width: 100%; padding: 10px; border-radius: 12px; font-weight: 600; font-size: 13px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: #0F2E70; color: #ffffff; text-decoration: none;
+            transition: all 0.2s; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .modern-reg-btn:hover { background: #000000; }
+        .modern-reg-btn svg { width: 14px; height: 14px; }
 
         /* ========================================================
            PEMBARUAN FOOTER MENU: HYBRID & WARNA BIRU UTAMA
@@ -173,7 +223,7 @@
             position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
             width: 100%; max-width: 480px; 
             height: 75px;
-            background: #033387; /* Warna latar belakang sama persis dengan footer/header utama */
+            background: #033387; 
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             z-index: 2000; box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
             border-top-left-radius: 20px;
@@ -212,7 +262,6 @@
             stroke-linecap: round; stroke-linejoin: round; transition: all 0.2s ease;
         }
 
-        /* State Menu Terpilih/Teken */
         .b-nav-item.menu-tertekan { 
             background-color: #1155cc !important; 
             border-color: #1155cc !important;
@@ -230,7 +279,6 @@
             stroke: #ffffff !important; 
         }
 
-        /* Warna Khusus Kas dan Ronda jika aktif */
         .b-nav-item.btn-kas.menu-tertekan {
             background-color: #10B981 !important;
             border-color: #10B981 !important;
@@ -242,7 +290,6 @@
             box-shadow: 0 4px 12px rgba(239,68,68,0.4) !important;
         }
 
-        /* Animasi Nyala Ronda saat Idle */
         @keyframes nyalaRondaLight {
             0% { background-color: #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
             50% { background-color: #fef2f2; box-shadow: inset 0 0 8px rgba(239, 68, 68, 0.15); border-color: #fca5a5; }
@@ -256,7 +303,7 @@
         .b-nav-item.btn-ronda svg { stroke: #ef4444; }
 
         /* ========================================================
-           MODAL CARD "MENU LAINNYA" (WARNA LATAR BIRU #033387)
+           MODAL CARD "MENU LAINNYA"
            ======================================================== */
         .more-menu-card {
             position: fixed;
@@ -265,7 +312,7 @@
             right: 16px;
             margin: 0 auto;
             max-width: 448px;
-            background: #033387; /* Disamakan persis dengan warna latar footer utama */
+            background: #033387;
             border-radius: 20px;
             padding: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -297,7 +344,6 @@
         .sheet-item svg { width: 22px; height: 22px; stroke: #64748b; stroke-width: 2.5; fill: none; margin-bottom: 6px; transition: stroke 0.2s; }
         .sheet-item:active { transform: scale(0.92); background: #f8fafc; }
 
-        /* State Menu Terpilih di dalam Sheet */
         .sheet-item.menu-tertekan {
             background: #1155cc !important; border-color: #1155cc !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: none;
         }
@@ -340,61 +386,63 @@
         </header>
     </div>
 
+    <!-- AREA LOGIN TER-SINKRONISASI -->
     <div class="slide-up-overlay" id="loginModalOverlay" onclick="closeLoginModalOutside(event)">
         <div class="slide-up-content" onclick="event.stopPropagation()">
-            <div class="login-wrapper">
-                <button class="login-close-btn" onclick="closeLoginModal()" title="Tutup">X</button>
-                <div class="login-title-text">Masuk Akun Terdaftar</div>
+            
+            <div class="modern-login-wrapper">
                 
-                <div class="info-box-sync">
-                    Saat edit jika gagal simpan klik refresh/sync.
+                <div class="modern-login-header">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" class="modern-logo" alt="Logo">
+                    <div class="modern-header-text">
+                        <h2>Data Warga</h2>
+                        <p>RT 2-RW 3, Pasekan Lor<br>Gamping, Sleman</p>
+                    </div>
+                    <button class="modern-close-btn" onclick="closeLoginModal()" title="Tutup">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
                 </div>
 
-                <form id="loginForm" style="margin: 0;">
-                    <div class="login-form-grid">
-                        <div class="login-inputs">
-                            <div class="input-icon-group">
-                                <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                                <input type="text" id="loginUsername" placeholder="user" required>
-                            </div>
-                            <div class="input-icon-group">
-                                <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
-                                <input type="password" id="loginPassword" placeholder="Password" required>
-                                <button type="button" class="toggle-pw-btn" onclick="togglePasswordVisibility()">
-                                    <svg id="eyeIconPwOpen" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                                    <svg id="eyeIconPwClosed" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:block;"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
-                                </button>
-                            </div>
-                        </div>
-                        <button type="submit" id="btnSubmitLogin" class="btn-monggo">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                            <span>Masuk</span>
+                <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
+
+                <form id="loginForm" class="modern-login-form">
+                    
+                    <div class="modern-input-group">
+                        <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <input type="text" id="loginUsername" placeholder="User ID / Id Rumah" required class="modern-input">
+                    </div>
+                    
+                    <div class="modern-input-group">
+                        <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+                        <input type="password" id="loginPassword" placeholder="Password" required class="modern-input">
+                        <button type="button" class="modern-toggle-pw" onclick="togglePasswordVisibility()">
+                            <svg id="eyeIconPwOpen" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                            <svg id="eyeIconPwClosed" viewBox="0 0 24 24" fill="currentColor" style="display:block;"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
                         </button>
                     </div>
 
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px; padding-left: 2px;">
-                        <input type="radio" id="rememberPasswordRadio" name="simpan_pass" style="width: 16px; height: 16px; accent-color: #1155cc; cursor: pointer;">
-                        <label for="rememberPasswordRadio" style="font-size: 12px; color: #475569; cursor: pointer; user-select: none; font-weight: 500;">Simpan Password</label>
-                    </div>
+                    <button type="submit" id="btnSubmitLogin" class="modern-submit-btn">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                        <span>Masuk Sistem</span>
+                    </button>
 
-                    <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
-                </form>
-                <div class="reg-box">
-                    <div class="reg-left">
-                        <div class="reg-title">Pendaftaran Warga Baru</div>
-                        <div class="reg-toggle-row">
-                            <label class="switch">
-                              <input type="checkbox" id="regToggleCheck" onchange="toggleRegButton()">
-                              <span class="slider"></span>
-                            </label>
-                            <div class="reg-desc">Setuju, saya akan mengisi dengan benar.</div>
-                        </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px;">
+                        <input type="checkbox" id="rememberPasswordRadio" name="simpan_pass" style="width: 15px; height: 15px; accent-color: #1155cc; cursor: pointer;">
+                        <label for="rememberPasswordRadio" style="font-size: 11.5px; color: #475569; cursor: pointer; user-select: none; font-weight: 500;">Ingat Saya</label>
                     </div>
-                    <a href="https://rt2pasekanlor.id/data-warga#registrasi" id="btnLanjutReg" class="btn-reg" target="_blank">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                        <span>Registrasi</span>
+                </form>
+
+                <div class="modern-register-box">
+                    <div class="reg-title">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        Warga Baru?
+                    </div>
+                    <a href="https://rt2pasekanlor.id/data-warga#registrasi" target="_blank" class="modern-reg-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 14h16V6H4v12zm4-6c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-1.5c0-2.33-4.67-3.5-7-3.5zm7-7h3v2h-3V7zm0 3h3v2h-3v-2z"/></svg>
+                        Pendaftaran Warga Baru
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
@@ -466,7 +514,6 @@
             <span>INVENTARIS</span>
         </a>
 
-        <!-- TOMBOL LAINNYA -->
         <button class="b-nav-item" id="btnMoreMenu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
             <span>LAINNYA</span>
@@ -489,15 +536,13 @@
         initIframeScroll(); 
     });
 
-    // FUNGSI TOGGLE MODAL "LAINNYA" (Bisa diklik berkali-kali)
     if(btnMoreMenu && moreMenuCard) {
         btnMoreMenu.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            moreMenuCard.classList.toggle('active'); // Toggle aktif/tidak aktif
+            moreMenuCard.classList.toggle('active');
         });
 
-        // Jika mengklik di luar area modal dan tombol Lainnya, maka modal tertutup
         document.addEventListener('click', (e) => {
             if (!moreMenuCard.contains(e.target) && !btnMoreMenu.contains(e.target)) {
                 moreMenuCard.classList.remove('active');
@@ -505,28 +550,22 @@
         });
     }
 
-    // FUNGSI GANTI MENU & TANDAI AKTIF
     allMenuBtns.forEach(btn => {
         btn.addEventListener("click", function(e) {
             e.preventDefault();
             
-            // Hapus status aktif dari SEMUA tombol (yang di bawah & yang di dalam modal)
             allMenuBtns.forEach(m => m.classList.remove("menu-tertekan"));
             btnMoreMenu.classList.remove("menu-tertekan");
 
-            // Beri status aktif pada tombol yang diklik
             this.classList.add("menu-tertekan");
 
-            // Jika yang diklik adalah menu di dalam modal (Lainnya), tandai tombol "Lainnya" jadi aktif, dan tutup modal
             if (this.classList.contains('sheet-item')) {
                 btnMoreMenu.classList.add("menu-tertekan");
                 moreMenuCard.classList.remove('active');
             } else {
-                // Jika klik menu utama, pastikan modal tertutup
                 moreMenuCard.classList.remove('active');
             }
 
-            // Ganti isi iframe
             const targetUrl = this.getAttribute("data-url");
             if(targetUrl) {
                 dynamicContent.src = targetUrl;
@@ -534,9 +573,8 @@
         });
     });
 
-
     // ==========================================
-    // LOGIKA LOGIN DAN LAIN-LAIN (TIDAK DISENTUH)
+    // LOGIKA LOGIN
     // ==========================================
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
     const loginModalOverlay = document.getElementById('loginModalOverlay');
@@ -544,13 +582,7 @@
     const loginErrorMsg = document.getElementById('loginErrorMessage');
     const btnSubmitLogin = document.getElementById('btnSubmitLogin');
     const rememberPasswordRadio = document.getElementById('rememberPasswordRadio');
-    const loginBtnSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:2px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
-
-    if (rememberPasswordRadio) {
-        let wasChecked = false;
-        rememberPasswordRadio.addEventListener('mousedown', function() { wasChecked = this.checked; });
-        rememberPasswordRadio.addEventListener('click', function() { if (wasChecked) { this.checked = false; } });
-    }
+    const loginBtnSvg = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
 
     function checkLoginState() {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -599,8 +631,6 @@
         loginModalOverlay.classList.remove('active'); 
         document.body.style.overflow = 'auto'; 
         loginForm.reset(); 
-        const regToggle = document.getElementById('regToggleCheck');
-        if(regToggle) { regToggle.checked = false; toggleRegButton(); }
 
         const savedUser = localStorage.getItem('savedUsername');
         const savedPass = localStorage.getItem('savedPassword');
@@ -610,6 +640,7 @@
             if (rememberPasswordRadio) rememberPasswordRadio.checked = true;
         }
     }
+    
     function closeLoginModalOutside(e) { if (e.target === loginModalOverlay) closeLoginModal(); }
 
     function logoutWarga() {
@@ -633,15 +664,6 @@
         }
     }
     
-    window.toggleRegButton = function() {
-        const chk = document.getElementById('regToggleCheck');
-        const btn = document.getElementById('btnLanjutReg');
-        if(chk && btn) {
-            if(chk.checked) btn.classList.add('active');
-            else btn.classList.remove('active');
-        }
-    }
-
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const userInput = document.getElementById('loginUsername').value.trim();
@@ -668,13 +690,13 @@
                     localStorage.setItem('userFoto', ''); 
                     closeLoginModal(); checkLoginState();
                     if(dynamicContent && dynamicContent.contentWindow) dynamicContent.contentWindow.location.reload();
-                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>"; btnSubmitLogin.disabled = false;
+                    btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk Sistem</span>"; btnSubmitLogin.disabled = false;
                 }, 800);
             } else {
                 loginErrorMsg.innerText = "Username atau Password salah!";
                 loginErrorMsg.style.color = '#ef4444';
                 loginErrorMsg.style.display = 'block';
-                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>"; btnSubmitLogin.disabled = false;
+                btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk Sistem</span>"; btnSubmitLogin.disabled = false;
             }
             return;
         }
@@ -708,7 +730,7 @@
             loginErrorMsg.style.color = '#ef4444';
             loginErrorMsg.style.display = 'block';
         }).finally(() => {
-            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>";
+            btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk Sistem</span>";
             btnSubmitLogin.disabled = false;
         });
     });
@@ -728,9 +750,6 @@
     }
     function closeProfileConfirmOutside(e) { if(e.target === document.getElementById('profileEditConfirmModal')) closeProfileConfirmModal(); }
 
-    // ==========================================
-    // LOGIKA HIDE-ON-SCROLL HEADER & FOOTER
-    // ==========================================
     let lastScrollTop = 0; 
 
     function initIframeScroll() {
@@ -739,12 +758,12 @@
             iframeWin.addEventListener('scroll', function() {
                 let currentScroll = iframeWin.scrollY;
                 if (currentScroll > 15 && currentScroll > lastScrollTop) {
-                    appHeaderWrapper.classList.add('scrolled'); // Sembunyikan Header (naik)
-                    bottomNavBar.classList.add('scrolled-down'); // Sembunyikan Footer (turun)
-                    if(moreMenuCard) moreMenuCard.classList.remove('active'); // Pastikan modal tertutup saat scroll
+                    appHeaderWrapper.classList.add('scrolled'); 
+                    bottomNavBar.classList.add('scrolled-down'); 
+                    if(moreMenuCard) moreMenuCard.classList.remove('active'); 
                 } else {
-                    appHeaderWrapper.classList.remove('scrolled'); // Munculkan Header
-                    bottomNavBar.classList.remove('scrolled-down'); // Munculkan Footer
+                    appHeaderWrapper.classList.remove('scrolled'); 
+                    bottomNavBar.classList.remove('scrolled-down'); 
                 }
                 lastScrollTop = currentScroll;
             });

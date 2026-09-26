@@ -79,7 +79,7 @@
             </div>
         </transition>
 
-        <!-- HALAMAN LOGIN (BLURRED BACKGROUND) -->
+        <!-- HALAMAN LOGIN -->
         <transition name="fade">
             <div v-if="!isLoggedIn" class="min-h-screen flex flex-col justify-center items-center p-4 w-full absolute inset-0 z-50 overflow-y-auto" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); position: relative; overflow: hidden;">
                 <div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-500/20 rounded-full blur-[100px] pointer-events-none"></div>
@@ -135,18 +135,29 @@
                 </div>
 
                 <div v-show="activeMenu === 'list'" class="space-y-4 fade-enter-active">
+                    
+                    <button @click="openExportModal" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-[600] py-2 rounded-xl text-[12px] transition-all flex items-center justify-center gap-2 shadow-sm border border-emerald-400 mb-2">
+                        <i class="fas fa-print"></i> Export Data PDF / CSV
+                    </button>
+
+                    <div class="flex items-center justify-between bg-[#1B2B56] p-3 rounded-xl border border-[#2A3D73] mb-4">
+                        <span class="text-[#E2E8F0] text-[12px] font-[500] flex items-center gap-2"><i class="fas fa-file-invoice-dollar text-[#FBBF24]"></i> Laporan Warga</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" v-model="fiturWacanaOn" class="sr-only peer">
+                            <div class="w-8 h-4 bg-[#475569] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#10B981]"></div>
+                        </label>
+                    </div>
+
                     <div class="bg-[#1B2B56] rounded-xl flex items-center px-3 py-2.5 border border-[#2A3D73] focus-within:border-[#38BDF8] transition-colors">
                         <i class="fas fa-search text-[#64748B] text-[14px]"></i>
                         <input type="text" v-model="searchQuery" @input="handleSearchInput" placeholder="Cari Nama / ID..." class="bg-transparent border-none text-white focus:outline-none w-full ml-2.5 font-[500] text-[12px] placeholder:text-[#64748B]">
                     </div>
 
-                    <!-- TOMBOL TAMPILAN VIEW GRID & LIST -->
                     <div class="flex gap-2 p-1 bg-[#1B2B56] rounded-xl mb-4">
                         <button @click="viewMode = 'card'" class="flex-1 py-1.5 rounded-lg text-[11px] font-[600] flex items-center justify-center gap-1.5 transition-all" :class="viewMode === 'card' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635] shadow-sm'"><i class="fas fa-th-large"></i> Kartu</button>
                         <button @click="viewMode = 'table'" class="flex-1 py-1.5 rounded-lg text-[11px] font-[600] flex items-center justify-center gap-1.5 transition-all" :class="viewMode === 'table' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635] shadow-sm'"><i class="fas fa-list"></i> Tabel</button>
                     </div>
 
-                    <!-- REPORT DUPLIKAT -->
                     <div v-if="duplicateDataReport.length > 0" class="bg-red-500/10 border border-red-500/30 rounded-xl p-3">
                         <h4 class="text-red-400 font-[600] text-[11px] mb-2 flex items-center gap-1.5"><i class="fas fa-exclamation-triangle"></i> Peringatan ID Ganda</h4>
                         <ul class="text-[10px] text-red-300 space-y-1 max-h-[80px] overflow-y-auto custom-scrollbar pr-1">
@@ -178,37 +189,6 @@
                     <button @click="resetFilters" class="w-full mt-2 bg-[#EF4444]/10 text-[#EF4444] font-[600] py-2 rounded-xl text-[11px] transition-all flex items-center justify-center gap-1.5 hover:bg-[#EF4444] hover:text-white">
                         <i class="fas fa-sync-alt"></i> Reset Filter
                     </button>
-
-                    <!-- AREA PENGATURAN & EXPORT -->
-                    <div class="mt-8 pt-6 border-t border-[#2A3D73]/80">
-                        <h4 class="text-[#38BDF8] font-[600] text-[11px] uppercase tracking-wider mb-4 flex items-center gap-2"><i class="fas fa-sliders-h"></i> Area Pengaturan</h4>
-                        
-                        <div class="space-y-1.5 bg-[#1B2B56] p-2.5 rounded-xl border border-[#2A3D73] mb-3">
-                            <div v-for="(label, key) in appSettingsLabels" :key="key" class="flex items-center justify-between py-1.5 border-b border-[#2A3D73]/50 last:border-0">
-                                <span class="text-[#E2E8F0] text-[10px] font-[500] flex items-center gap-1.5 truncate pr-2">
-                                    {{ label }} <i class="fas fa-lock text-[#64748B] text-[8px]" v-if="!appSettings[key]"></i>
-                                </span>
-                                <label class="relative inline-flex items-center cursor-pointer shrink-0">
-                                    <input type="checkbox" v-model="appSettings[key]" class="sr-only peer">
-                                    <div class="w-7 h-4 bg-[#475569] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#10B981]"></div>
-                                </label>
-                            </div>
-                        </div>
-                        <button @click="saveSettings" :disabled="savingSettings" class="w-full mb-5 bg-[#38BDF8] hover:bg-[#0284C7] text-[#0A1635] font-[700] py-2 rounded-xl text-[11px] transition-all flex items-center justify-center gap-2 shadow-sm">
-                            <span v-if="savingSettings" class="spinner border-t-[#0A1635] w-3 h-3"></span>
-                            <span v-else><i class="fas fa-save"></i> Simpan Setingan</span>
-                        </button>
-
-                        <div class="flex flex-col gap-2.5">
-                            <button @click="openExportModal" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-[600] py-2.5 rounded-xl text-[11px] transition-all flex items-center justify-center gap-2 shadow-sm border border-emerald-400">
-                                <i class="fas fa-file-pdf"></i> Export Data PDF
-                            </button>
-                            <button @click="executeExport('excel')" class="w-full bg-[#10B981] hover:bg-[#059669] text-white font-[600] py-2.5 rounded-xl text-[11px] transition-all flex items-center justify-center gap-2 shadow-sm border border-[#059669]">
-                                <i class="fas fa-file-excel"></i> Export Data CSV
-                            </button>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
@@ -514,12 +494,12 @@
             </div>
         </div>
 
-        <!-- ================== MODAL EXPORT PDF/EXCEL (COMPACT SETTINGS) ================== -->
+        <!-- ================== MODAL EXPORT PDF/EXCEL ================== -->
         <transition name="fade">
             <div v-if="exportModal" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex justify-center items-center p-4" @click.self="closeExportModal">
                 <div class="bg-white rounded-[24px] w-full max-w-sm flex flex-col shadow-2xl overflow-hidden relative">
                     <div class="px-5 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                        <h3 class="font-[600] text-[15px] text-[#0F2E70]"><i class="fas fa-file-pdf mr-2 text-red-500"></i> Setelan Export PDF</h3>
+                        <h3 class="font-[600] text-[15px] text-[#0F2E70]"><i class="fas fa-print mr-2 text-blue-500"></i> Setelan Export Data</h3>
                         <button @click="closeExportModal" class="text-gray-400 hover:text-red-500 transition"><i class="fas fa-times text-[16px]"></i></button>
                     </div>
                     
@@ -548,92 +528,96 @@
                     </div>
                     
                     <div class="p-5 bg-gray-50 flex flex-col gap-2 border-t border-gray-100">
-                        <button @click="executeExport('pdf')" :disabled="saving" class="w-full py-2.5 bg-red-500 text-white font-[600] rounded-xl hover:bg-red-600 shadow-sm flex justify-center items-center gap-2 transition">
-                            <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-1"></span> <i v-else class="fas fa-file-pdf"></i> Proses PDF (A4 Portrait)
+                        <button @click="executeExport('pdf')" :disabled="saving" class="w-full py-2.5 bg-red-600 text-white font-[600] rounded-xl hover:bg-red-700 shadow-sm flex justify-center items-center gap-2 transition">
+                            <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-1"></span> <i v-else class="fas fa-file-pdf"></i> Export PDF (Landscape)
+                        </button>
+                        <button @click="executeExport('excel')" :disabled="saving" class="w-full py-2.5 bg-emerald-500 text-white font-[600] rounded-xl hover:bg-emerald-600 shadow-sm flex justify-center items-center gap-2 transition">
+                            <i class="fas fa-file-excel"></i> Export Excel (CSV)
                         </button>
                     </div>
                 </div>
             </div>
         </transition>
 
-        <!-- HIDDEN PRINT AREA A4 -->
-        <div id="print-container-wrapper" style="position: fixed; left: -9999px; top: 0; width: 794px; z-index: -9999; opacity: 0; pointer-events: none; background: white;">
-    <!-- mx-auto adalah kunci untuk membuatnya center -->
-    <div id="print-area-a4" class="w-full bg-white text-black p-6 box-border font-sans relative mx-auto" style="font-family: 'Poppins', sans-serif !important;">
+        <!-- HIDDEN PRINT AREA LANDSCAPE (1123px width untuk A4 Landscape) -->
+        <div id="print-container-wrapper" style="position: fixed; left: -9999px; top: 0; width: 1123px; z-index: -9999; opacity: 0; pointer-events: none; background: white;">
+            
+            <div id="print-area-a4" class="w-[1123px] bg-white text-black p-8 box-border font-sans relative mx-auto" style="font-family: 'Poppins', sans-serif !important;">
                 
-                <!-- HEADER PDF (Sesuai Referensi Gambar) -->
-                <div class="flex justify-between items-start pb-4 mb-4">
+                <!-- HEADER PDF -->
+                <div class="flex justify-between items-start pb-4 mb-6 border-b-[3px] border-black">
                     <div class="flex items-center gap-4">
-                        <img v-if="printSettings.header" :src="customLogoBase64 || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png'" class="h-12 w-auto object-contain">
+                        <img v-if="printSettings.header" :src="customLogoBase64 || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png'" class="h-16 w-auto object-contain">
                         <div>
-                            <h1 class="text-[22px] font-[800] leading-tight text-gray-900 tracking-tight">Data Warga RT 2/RW 3</h1>
-                            <p class="text-[12px] font-[700] leading-tight mt-1 text-gray-800">Pasekan Lor, Balecatur, Gamping,<br>Sleman, D. I. Yogyakarta</p>
+                            <h1 class="text-[26px] font-[800] leading-none text-black uppercase tracking-wider mb-1">Data Warga RT 2/RW3</h1>
+                            <p class="text-[13px] font-[600] text-gray-800">Pasekan Lor, Balecatur, Gamping, Sleman, D. I. Yogyakarta</p>
                         </div>
                     </div>
-                    <div class="text-[10px] text-right font-[500] leading-snug flex flex-col items-end">
-                        <p class="mb-3 text-gray-700">Waktu Cetak: {{ new Date().toLocaleDateString('id-ID') }} - Pukul: {{ new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}) }} WIB</p>
-                        <div class="border border-gray-500 rounded-xl px-4 py-2.5 text-[11px] flex flex-col items-end gap-1">
-                            <p>Total Warga Terdaftar: <span class="font-[700] text-gray-900">{{ filteredWarga.length }}</span></p>
-                            <p>Warga Belum Lengkap Datanya: <span class="font-[700] text-gray-900">{{ countBelumLengkap }}</span></p>
-                        </div>
+                    <div class="text-[11px] text-right font-[500] leading-snug">
+                        <p class="text-gray-800">Dicetak dari Aplikasi Data Warga</p>
+                        <p class="text-gray-800">Waktu Cetak: {{ new Date().toLocaleDateString('id-ID') }}</p>
+                        <p class="text-gray-800 mb-2">Pukul: {{ new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}) }} WIB</p>
+                        <p class="text-gray-900">Total Warga Terdaftar: <span class="font-[700]">{{ filteredWarga.length }}</span></p>
+                        <p class="text-gray-900">Warga Belum Lengkap Datanya: <span class="font-[700] text-red-600">{{ countBelumLengkap }}</span></p>
                     </div>
                 </div>
                 
-                <!-- ISI DATA PDF -->
-                <div class="flex flex-col gap-4">
-                    <div v-for="(w, index) in filteredWarga" :key="'print_'+index" class="flex gap-3 items-center" style="page-break-inside: avoid; break-inside: avoid;">
-                        <!-- Number Outsite Card -->
-                        <div class="w-6 font-[600] text-[12px] text-gray-800 self-start mt-5">{{ String(index + 1).padStart(2, '0') }}.</div>
+                <!-- ISI DATA PDF (Grid 2 Kolom Landscape) -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div v-for="(w, index) in filteredWarga" :key="'print_'+index" class="flex border border-gray-400 rounded-xl p-3 bg-white" style="page-break-inside: avoid; break-inside: avoid;">
                         
-                        <div class="flex-1 border border-gray-400 rounded-2xl p-4 flex gap-4 bg-white">
-                            <!-- Kolom Kiri: Foto & QR (MENGGUNAKAN BACKGROUND-IMAGE AGAR TIDAK GEPENG) -->
-                            <div class="w-[65px] shrink-0 flex flex-col gap-2">
-                                <div class="w-full h-[85px] border border-gray-300 rounded-xl flex justify-center items-center bg-gray-50 relative overflow-hidden">
-                                    <span v-if="!w.Foto_Profil" class="text-[10px] font-[600] text-gray-500 tracking-widest z-0">FOTO</span>
-                                    <div v-if="w.Foto_Profil" class="absolute inset-0 w-full h-full z-10" :style="{ backgroundImage: 'url(' + getAvatar(w) + ')', backgroundSize: 'cover', backgroundPosition: 'center' }"></div>
+                        <!-- Left Side: No, Foto & QR -->
+                        <div class="w-[180px] shrink-0 flex items-start gap-2">
+                            <div class="w-6 font-[700] text-[13px] text-gray-800 pt-0.5">{{ String(index + 1).padStart(2, '0') }}.</div>
+                            <div class="w-[130px] flex flex-col gap-2">
+                                <div class="w-full h-[130px] border border-gray-300 rounded bg-gray-50 relative overflow-hidden flex justify-center items-center">
+                                    <span v-if="!w.Foto_Profil" class="text-[10px] font-bold text-gray-300">FOTO</span>
+                                    <div v-if="w.Foto_Profil" class="absolute inset-0 w-full h-full" :style="{ backgroundImage: 'url(' + getAvatar(w) + ')', backgroundSize: 'cover', backgroundPosition: 'center' }"></div>
                                 </div>
-                                <div class="w-full h-[65px] border border-gray-300 rounded-xl flex justify-center items-center bg-gray-50 p-1">
+                                <div class="w-full h-[90px] border border-gray-300 rounded bg-white p-1">
                                     <div class="w-full h-full" :style="{ backgroundImage: 'url(' + (w.QR_Code && w.QR_Code.startsWith('http') ? w.QR_Code : `https://quickchart.io/qr?size=150x150&margin=1&text=${encodeURIComponent((w.Id_Rumah || 'ID') + ' - ' + (w.Nama || 'Warga'))}`) + ')', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }"></div>
                                 </div>
                             </div>
-                            
-                            <!-- Kolom Kanan: Detail Warga -->
-                            <div class="flex-1 flex flex-col">
-                                <div class="flex justify-between items-start mb-4">
-                                    <h2 class="font-[800] text-[18px] text-gray-900">{{ w.Nama }}</h2>
-                                    <div class="flex gap-2 text-[10px] font-[500] text-gray-800">
-                                        <div class="border border-gray-400 px-3 py-1.5 rounded-lg">{{ formatDashPhone(w.No_Tlp) || '-' }}</div>
-                                        <div class="border border-gray-400 px-3 py-1.5 rounded-lg">{{ w.Id_Rumah || '-' }}</div>
-                                    </div>
+                        </div>
+
+                        <!-- Content Data Landscape -->
+                        <div class="flex-1 flex flex-col pt-0.5 pl-2 min-w-0">
+                            <div class="flex justify-between items-start mb-2 border-b border-gray-200 pb-1.5">
+                                <h2 class="font-[800] text-[15px] text-gray-900 leading-tight uppercase truncate pr-1">{{ w.Nama }}</h2>
+                                <div class="text-right shrink-0">
+                                    <div class="text-[11px] font-mono font-[700] text-gray-800">{{ formatDashPhone(w.No_Tlp) || '-' }}</div>
+                                    <div class="text-[11px] font-mono font-[700] text-[#1155CC]">{{ w.Id_Rumah || '-' }}</div>
                                 </div>
-                                <div class="grid grid-cols-4 gap-x-2 gap-y-3 text-[11px] leading-snug">
-                                    <div class="flex flex-col">
-                                        <div v-if="printSettings.fields.jenis_kelamin" class="font-[800] text-gray-900 mb-0.5">J. Kelamin:</div>
-                                        <div v-if="printSettings.fields.jenis_kelamin" class="text-gray-800 mb-2">{{ w.Jenis_Kelamin || '-' }}</div>
-                                        <div v-if="printSettings.fields.tempat_tanggal_lahir" class="font-[800] text-gray-900 mb-0.5">Tempat, Tgl Lahir:</div>
-                                        <div v-if="printSettings.fields.tempat_tanggal_lahir" class="text-gray-800">{{ formatTTL(w) }}</div>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div v-if="printSettings.fields.agama" class="font-[800] text-gray-900 mb-0.5">Agama:</div>
-                                        <div v-if="printSettings.fields.agama" class="text-gray-800 mb-2">{{ w.Agama || '-' }}</div>
-                                        <div v-if="printSettings.fields.gol_darah" class="font-[800] text-gray-900 mb-0.5">Gol. Darah:</div>
-                                        <div v-if="printSettings.fields.gol_darah" class="text-gray-800">{{ w.Gol_Darah || '-' }}</div>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div v-if="printSettings.fields.status_kawin" class="font-[800] text-gray-900 mb-0.5">Status:</div>
-                                        <div v-if="printSettings.fields.status_kawin" class="text-gray-800 mb-2">{{ w.Status_Perkawinan || '-' }}</div>
-                                        <div v-if="printSettings.fields.pekerjaan" class="font-[800] text-gray-900 mb-0.5">Pekerjaan:</div>
-                                        <div v-if="printSettings.fields.pekerjaan" class="text-gray-800">{{ w.Pekerjaan || '-' }}</div>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div v-if="printSettings.fields.domisili" class="font-[800] text-gray-900 mb-0.5">Domisili:</div>
-                                        <div v-if="printSettings.fields.domisili" class="text-gray-800 mb-2">{{ w.Status_Domisili || '-' }}</div>
-                                        <div v-if="printSettings.fields.jadwal_ronda" class="font-[800] text-gray-900 mb-0.5">Ronda:</div>
-                                        <div v-if="printSettings.fields.jadwal_ronda" class="text-gray-800">{{ w.Ronda || '-' }}</div>
-                                    </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-x-3 gap-y-1.5 text-[10px] text-gray-800 leading-tight">
+                                <div v-if="printSettings.fields.jenis_kelamin">
+                                    <span class="text-gray-500">J. Kelamin:</span> <span class="font-[600]">{{ w.Jenis_Kelamin || '-' }}</span>
+                                </div>
+                                <div v-if="printSettings.fields.agama">
+                                    <span class="text-gray-500">Agama:</span> <span class="font-[600]">{{ w.Agama || '-' }}</span>
+                                </div>
+                                <div v-if="printSettings.fields.tempat_tanggal_lahir" class="col-span-2">
+                                    <span class="text-gray-500">TTL:</span> <span class="font-[600]">{{ formatTTL(w) }}</span>
+                                </div>
+                                <div v-if="printSettings.fields.gol_darah">
+                                    <span class="text-gray-500">Gol. Darah:</span> <span class="font-[700] text-red-600">{{ w.Gol_Darah || '-' }}</span>
+                                </div>
+                                <div v-if="printSettings.fields.status_kawin">
+                                    <span class="text-gray-500">Status:</span> <span class="font-[600]">{{ w.Status_Perkawinan || '-' }}</span>
+                                </div>
+                                <div v-if="printSettings.fields.pekerjaan" class="col-span-2">
+                                    <span class="text-gray-500">Pekerjaan:</span> <span class="font-[600]">{{ w.Pekerjaan || '-' }}</span>
+                                </div>
+                                <div v-if="printSettings.fields.domisili">
+                                    <span class="text-gray-500">Domisili:</span> <span class="font-[600]">{{ w.Status_Domisili || '-' }}</span>
+                                </div>
+                                <div v-if="printSettings.fields.jadwal_ronda">
+                                    <span class="text-gray-500">Ronda:</span> <span class="font-[700] text-emerald-600">{{ w.Ronda || '-' }}</span>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -700,35 +684,12 @@
                     fields: { id_rumah: true, nama: true, tempat_tanggal_lahir: true, jenis_kelamin: true, gol_darah: true, agama: true, status_kawin: true, pekerjaan: true, domisili: true, no_whatsapp: true, jadwal_ronda: true }
                 });
 
-                // Area Setting Sidebar 
-                const appSettingsLabels = {
-                    keuangan: "Keuangan",
-                    transaksiRekap: "Trx & Rekap Kas",
-                    ronda: "Jadwal Ronda",
-                    inventaris: "Inventaris",
-                    pengurus: "Pengurus",
-                    tataTertib: "Tata Tertib",
-                    lapak: "Lapak Warga",
-                    galeri: "Galeri Area",
-                    undanganWA: "Modal Undangan WA",
-                    hasilKegiatan: "Modal Hasil Kegiatan",
-                    laporanWarga: "Laporan Wacana"
-                };
-                const appSettings = ref({
-                    keuangan: true, transaksiRekap: true, ronda: true, inventaris: true,
-                    pengurus: true, tataTertib: true, lapak: true, galeri: true,
-                    undanganWA: false, hasilKegiatan: false, laporanWarga: false
-                });
-                const savingSettings = ref(false);
-
                 const showCropper = ref(false);
                 const cropperSrc = ref('');
                 let cropperInst = null;
                 let cropFieldTarget = '';
 
                 const fiturWacanaOn = ref(false);
-                const wacanaModal = ref({ show: false, nama: '' });
-                const showTataCara = ref(false);
 
                 const wargaList = ref([]);
                 const searchQuery = ref('');
@@ -776,7 +737,6 @@
                         userRole.value = res.role;
                         loggedInId.value = loginIdRumah.value;
                         wargaList.value = res.data; 
-                        if (res.settings) { appSettings.value = res.settings; }
                         isLoggedIn.value = true;
                         
                         let targetHash = res.role === 'admin' ? 'administrator' : (res.data && res.data.length > 0 ? nameToSlug(res.data[0].Nama) : loginIdRumah.value);
@@ -791,16 +751,6 @@
                     } catch(e) {
                         localStorage.removeItem('rt2_user_id'); localStorage.removeItem('rt2_pass');
                     } finally { loading.value = false; }
-                };
-
-                const saveSettings = async () => {
-                    savingSettings.value = true;
-                    try {
-                        const res = await callAPI('save_settings', { settings: appSettings.value, role: userRole.value });
-                        showToast(res.message);
-                    } catch(e) {
-                        showToast(e.message, 'error');
-                    } finally { savingSettings.value = false; }
                 };
 
                 const countBelumLengkap = computed(() => {
@@ -895,7 +845,7 @@
                     if (Array.isArray(ketStr)) return ketStr; 
                     try {
                         let parsed = JSON.parse(ketStr);
-                        if (Array.isArray(parsed)) return parsed.map(k => ({...k, keterangan_lain: k.keterangan_lain || k.kurban || ''}));
+                        if (Array.isArray(parsed)) return parsed.map(k => ({...k, keterangan_lain: k.kurban || ''}));
                     } catch (e) {}
                     return ketStr.split('\n').map(k => ({ pertemuan: k.replace(/^\d+\.\s*/, '').trim(), dansos: '', keterangan_lain: '' }));
                 };
@@ -908,7 +858,6 @@
                         userRole.value = res.role;
                         loggedInId.value = loginIdRumah.value;
                         wargaList.value = res.data; 
-                        if (res.settings) { appSettings.value = res.settings; }
                         isLoggedIn.value = true;
                         
                         localStorage.setItem('rt2_user_id', loginIdRumah.value);
@@ -1138,7 +1087,6 @@
                         const el = document.getElementById('print-area-a4');
                         const wrapper = document.getElementById('print-container-wrapper');
                         
-                        // Menampakan UI print ke layar tersembunyi
                         wrapper.style.zIndex = '1000'; wrapper.style.opacity = '1';
                         await Vue.nextTick();
                         
@@ -1147,13 +1095,15 @@
                         let fileName = `DW_RT2_Paslor_${tgl}.pdf`;
 
                         html2pdf().set({
-    margin: 10, // Margin diset 10mm rata (atas, bawah, kiri, kanan)
-    filename: fileName, 
-    image: { type: 'jpeg', quality: 1 },
-    // windowWidth mengunci batas layar render
-    html2canvas: { scale: 3, useCORS: true, logging: false, windowWidth: 794 }, 
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-})
+                            margin: 10, 
+                            filename: fileName, 
+                            image: { type: 'jpeg', quality: 0.85 },
+                            html2canvas: { scale: 2, useCORS: true, logging: false, windowWidth: 1123 }, 
+                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+                        }).from(el).save().then(() => {
+                            wrapper.style.zIndex = '-9999'; wrapper.style.opacity = '0';
+                            saving.value = false; closeExportModal();
+                        });
                     }
                 };
 
@@ -1184,10 +1134,9 @@
                     activeMenu, viewMode, loading, saving, wargaList, filteredWarga, searchQuery, scrollTo, getAvatar,
                     filterJK, filterDomisili, filterRonda, sortMode, applySingleFilter, resetFilters, duplicateDataReport,
                     isEditing, form, calculatedAge, capitalizeName, addFam, removeFam, removeFile, addKeterangan, removeKeterangan, parseKeterangan,
-                    toasts, deleteConfirm, showTataCara,
-                    appSettings, appSettingsLabels, savingSettings, countBelumLengkap,
+                    toasts, deleteConfirm, fiturWacanaOn, countBelumLengkap,
                     exportModal, printSettings, customLogoBase64, openExportModal, closeExportModal, executeExport, uploadCustomLogo,
-                    handleLogin, logout, changeMenu, bukaFormKosong, handleBatal, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, showCropper, cropperSrc, cancelCrop, applyCrop, formatWhatsApp, formatDashPhone, formatTTL, handleSearchInput, downloadQR, saveSettings
+                    handleLogin, logout, changeMenu, bukaFormKosong, handleBatal, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, showCropper, cropperSrc, cancelCrop, applyCrop, formatWhatsApp, formatDashPhone, formatTTL, handleSearchInput, downloadQR
                 };
             }
         }).mount('#app');

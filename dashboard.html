@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | RT 2 Online</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #87CEFA 100%); color: #1e293b; min-height: 100vh; display: flex; overflow-x: hidden; }
+        .glass-panel { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); }
+
+        /* --- LOGIN OVERLAY --- */
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #033387 0%, #1155cc 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .login-box { background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 24px; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .login-box img { width: 80px; margin-bottom: 20px; }
+        .login-box h2 { color: #033387; margin-bottom: 24px; font-size: 20px; }
+        .login-input { width: 100%; padding: 12px 16px; margin-bottom: 16px; border: 1.5px solid #cbd5e1; border-radius: 12px; outline: none; font-size: 14px; }
+        .login-input:focus { border-color: #1155cc; }
+        .btn-login { width: 100%; padding: 14px; background: #033387; color: #fff; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-login:hover { background: #1155cc; }
+        #loginError { color: #ef4444; font-size: 13px; margin-top: 12px; display: none; }
+
+        /* Sidebar & Main */
+        .sidebar { width: 260px; height: 100vh; position: fixed; top: 0; left: 0; display: flex; flex-direction: column; padding: 24px; z-index: 100; }
+        .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; }
+        .brand img { width: 40px; height: auto; }
+        .brand h2 { font-size: 18px; font-weight: 700; color: #033387; line-height: 1.2;}
+        .brand span { font-size: 11px; font-weight: 500; color: #64748b; }
+        .nav-links { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; text-decoration: none; color: #475569; font-weight: 500; font-size: 14px; transition: 0.3s; }
+        .nav-item:hover, .nav-item.active { background: #1155cc; color: #ffffff; box-shadow: 0 4px 15px rgba(17,85,204,0.3); transform: translateX(5px); }
+        .logout-btn { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 16px; border-radius: 12px; color: #ef4444; font-weight: 600; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); transition: 0.3s; cursor: pointer; width: 100%; margin-top: auto; }
+        .logout-btn:hover { background: #ef4444; color: #ffffff; transform: scale(0.98); }
+
+        .main-content { margin-left: 260px; padding: 24px 40px; width: calc(100% - 260px); min-height: 100vh; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 16px 24px; border-radius: 16px; }
+        .header-title h1 { font-size: 24px; color: #033387; font-weight: 700; }
+        .header-title p { font-size: 13px; color: #64748b; }
+        .admin-profile { display: flex; align-items: center; gap: 12px; }
+        .admin-profile img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #1155cc; object-fit: cover; }
+        .admin-info h4 { font-size: 14px; color: #1e293b; }
+        .admin-info p { font-size: 11px; color: #10b981; font-weight: 600; }
+
+        /* Bento Grid & Forms */
+        .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        .bento-card { border-radius: 20px; padding: 24px; transition: 0.3s ease; display: flex; flex-direction: column; gap: 16px; }
+        .card-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 12px; margin-bottom: 8px; }
+        .card-header i { color: #1155cc; }
+        .card-header h3 { font-size: 16px; font-weight: 600; color: #033387; }
+        .input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .input-group label { font-size: 12px; font-weight: 600; color: #475569; }
+        .input-group input, .input-group select { padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.7); outline: none; font-size: 13px; }
+        .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed rgba(0,0,0,0.05); }
+        .toggle-label { font-size: 13px; font-weight: 500; color: #334155; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0;}
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: #10b981; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .btn-save { background: #033387; color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; width: 100%; transition: 0.2s; }
+        .btn-save:hover { background: #1155cc; box-shadow: 0 4px 15px rgba(17,85,204,0.4); transform: scale(0.98); }
+        .btn-save:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        #loadingOverlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.8); z-index: 9998; display:none; justify-content:center; align-items:center; flex-direction:column; color: #033387; font-weight:600;}
+
+        @media (max-width: 992px) { .sidebar { transform: translateX(-100%); } .main-content { margin-left: 0; width: 100%; padding: 20px; } }
+    </style>
+</head>
+<body>
+
+    <!-- OVERLAY LOADING SAAT FETCH AWAL -->
+    <div id="loadingOverlay">
+        <i data-lucide="loader" style="animation: spin 2s linear infinite; width:40px; height:40px; margin-bottom:10px;"></i>
+        <span>Memuat Pengaturan Terkini...</span>
+    </div>
+    <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+
+    <!-- OVERLAY LOGIN -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png" alt="Logo">
+            <h2>Login Dashboard Admin</h2>
+            <input type="text" id="dashUser" class="login-input" placeholder="Username">
+            <input type="password" id="dashPass" class="login-input" placeholder="Password">
+            <button class="btn-login" onclick="checkLogin()">Masuk</button>
+            <div id="loginError">Username atau Password salah!</div>
+        </div>
+    </div>
+
+    <aside class="sidebar glass-panel">
+        <div class="brand">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png" alt="Logo">
+            <div>
+                <h2>RT 2 Admin</h2>
+                <span>Pasekan Lor Portal</span>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#tema" class="nav-item active"><i data-lucide="palette"></i> Tema & Tampilan</a>
+            <a href="#fitur" class="nav-item"><i data-lucide="toggle-left"></i> Pengaturan Fitur</a>
+            <a href="#menu" class="nav-item"><i data-lucide="menu-square"></i> Konfigurasi Menu</a>
+            <a href="https://rt2pasekanlor.id/data-warga" target="_blank" class="nav-item"><i data-lucide="users"></i> Data Warga</a>
+        </nav>
+
+        <button onclick="logoutAdmin()" class="logout-btn"><i data-lucide="log-out"></i> Keluar</button>
+    </aside>
+
+    <main class="main-content">
+        <header class="header glass-panel">
+            <div class="header-title">
+                <h1>Dashboard rt2pasekanlor.id</h1>
+                <p>Kelola visibilitas fitur, desain UI, dan komponen beranda (Sinkron Real-time)</p>
+            </div>
+            <div class="admin-profile">
+                <div class="admin-info">
+                    <h4>Admin Gaya Hehe</h4>
+                    <p>● Online</p>
+                </div>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyfuGc_fXDcYnfWzyQzcRZ6n9XwRuYCrX3D4PNthp05MIwg9VjbDoCBPtGg6jc374QSSOKKLt3jBGAkPtlwVKRSDc-PhZewr5S3X91KheaVSjIs1IDedm_zm1BR9_EyJ9CdJuFHGGu4l0pF3hF8cbMViD5lucqgvffwoxPWPQBuJfyZntChlwC1d7Ad6Q/w640-h640/favicon%20rt2.png" alt="Admin">
+            </div>
+        </header>
+
+        <div class="bento-grid">
+            <!-- Tema -->
+            <div id="tema" class="bento-card glass-panel" style="grid-row: span 2;">
+                <div class="card-header"><i data-lucide="palette"></i><h3>Tema & Tampilan</h3></div>
+                
+                <div class="input-group">
+                    <label>Tema UI Web (Themes)</label>
+                    <select id="v_tema_ui">
+                        <option value="glass">Glassmorphism (Default)</option>
+                        <option value="light">Light Mode (Bersih)</option>
+                        <option value="dark">Dark Mode (Gelap)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Mode Tampilan</label>
+                    <select id="v_mode_ui">
+                        <option value="auto">Auto (Desktop & Mobile)</option>
+                        <option value="mobile">Paksa Mode Mobile</option>
+                        <option value="desktop">Paksa Mode Desktop</option>
+                    </select>
+                </div>
+                <hr style="border:0; border-top:1px dashed rgba(0,0,0,0.1); margin: 10px 0;">
+                <div class="input-group">
+                    <label>URL Logo Header Baru</label>
+                    <input type="url" id="v_logo_url" placeholder="https://...">
+                </div>
+                <div class="input-group">
+                    <label>Nama Web</label>
+                    <input type="text" id="v_nama_web" value="RT 2 Online">
+                </div>
+                <div class="input-group">
+                    <label>Slogan (Sub-text)</label>
+                    <input type="text" id="v_slogan" value="Informasi Warga RT2 Paslor">
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Gunakan Efek Fixed-Scroll</span>
+                    <label class="switch"><input type="checkbox" id="v_fixed_scroll" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Gunakan Latar Gradasi</span>
+                    <label class="switch"><input type="checkbox" id="v_gradasi" checked><span class="slider"></span></label>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:8px;">
+                    <label class="toggle-label">Warna Solid (Jika Gradasi Mati)</label>
+                    <input type="color" id="v_warna_solid" value="#033387" style="border:none; width:35px; height:35px; cursor:pointer; background:transparent;">
+                </div>
+            </div>
+
+            <!-- Fitur -->
+            <div id="fitur" class="bento-card glass-panel" style="grid-row: span 2;">
+                <div class="card-header"><i data-lucide="toggle-left"></i><h3>Pengaturan Fitur</h3></div>
+                
+                <div class="toggle-row">
+                    <span class="toggle-label">Tombol Login Header</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_login" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Slider Poster / Banner</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_slider" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Kotak Saldo Keuangan</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_saldo" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Tombol dalam Kotak Saldo</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_saldo_btn" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Transaksi Terakhir (Mutasi)</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_mutasi" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Rekap Buku Kas</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_rekap" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Tombol Undangan WA Group</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_wa" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Hasil Kegiatan</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_hasil" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Thumbnail Gambar Kegiatan</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_thumb" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Arsip Lainnya</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_arsip" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Berita & Intermezo</span>
+                    <label class="switch"><input type="checkbox" id="v_fitur_berita" checked><span class="slider"></span></label>
+                </div>
+            </div>
+
+            <!-- Menu -->
+            <div id="menu" class="bento-card glass-panel">
+                <div class="card-header"><i data-lucide="menu-square"></i><h3>Konfigurasi Menu</h3></div>
+                
+                <div class="toggle-row">
+                    <span class="toggle-label">Menu Keuangan</span>
+                    <label class="switch"><input type="checkbox" id="v_menu_keuangan" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Menu Ronda</span>
+                    <label class="switch"><input type="checkbox" id="v_menu_ronda" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Menu Inventaris</span>
+                    <label class="switch"><input type="checkbox" id="v_menu_inventaris" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Menu Pengurus</span>
+                    <label class="switch"><input type="checkbox" id="v_menu_pengurus" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Menu Tata Tertib</span>
+                    <label class="switch"><input type="checkbox" id="v_menu_tatatertib" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Menu Lapak Warga</span>
+                    <label class="switch"><input type="checkbox" id="v_menu_lapak" checked><span class="slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Menu Galeri</span>
+                    <label class="switch"><input type="checkbox" id="v_menu_galeri" checked><span class="slider"></span></label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-save" id="btnSaveData" onclick="saveToGS()">
+            <i data-lucide="save"></i> Simpan & Terapkan ke Seluruh Web
+        </button>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // GANTI URL INI DENGAN URL API APPS SCRIPT BARU ANDA
+        const GS_API_URL = "https://script.google.com/macros/s/AKfycbxLAmpomelFC34aLHbLguJoMSE9WhWlQSEZBXrzsknEvyrLCJtCzmuNtK8zmUJ2jyR0/exec";
+
+        // 1. LOGIC LOGIN
+        function checkLogin() {
+            const user = document.getElementById('dashUser').value;
+            const pass = document.getElementById('dashPass').value;
+            if(user === 'rt2_jaya' && pass === '0203') {
+                document.getElementById('loginOverlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loginOverlay').style.display = 'none';
+                    sessionStorage.setItem('admin_logged_in', 'true');
+                    loadSettings(); // Load settingan otomatis setelah login
+                }, 500);
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+        
+        window.onload = function() {
+            if(sessionStorage.getItem('admin_logged_in') === 'true') {
+                document.getElementById('loginOverlay').style.display = 'none';
+                loadSettings(); 
+            }
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('admin_logged_in');
+            window.location.reload();
+        }
+
+        // 2. MENGAMBIL PENGATURAN SAAT INI (GET)
+        function loadSettings() {
+            if(GS_API_URL === "MASUKAN_URL_GAS_ANDA_DISINI") return; // Cegah error jika belum disetting URL
+
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            fetch(GS_API_URL + "?action=getSettings")
+            .then(res => res.json())
+            .then(res => {
+                if(res.status === "success") {
+                    const data = res.data;
+                    
+                    // Helper function: Update value if data exists
+                    const setVal = (id, key) => { if(data[key] !== undefined) document.getElementById(id).value = data[key]; };
+                    const setCheck = (id, key) => { if(data[key] !== undefined) document.getElementById(id).checked = (data[key] === true || data[key] === "true"); };
+
+                    setVal('v_tema_ui', 'tema_ui'); setVal('v_mode_ui', 'mode_ui');
+                    setVal('v_logo_url', 'logo_url'); setVal('v_nama_web', 'nama_web');
+                    setVal('v_slogan', 'slogan'); setVal('v_warna_solid', 'warna_solid');
+
+                    setCheck('v_fixed_scroll', 'fixed_scroll'); setCheck('v_gradasi', 'gradasi');
+
+                    setCheck('v_fitur_login', 'fitur_login'); setCheck('v_fitur_slider', 'fitur_slider');
+                    setCheck('v_fitur_saldo', 'fitur_saldo'); setCheck('v_fitur_saldo_btn', 'fitur_saldo_btn');
+                    setCheck('v_fitur_mutasi', 'fitur_mutasi'); setCheck('v_fitur_rekap', 'fitur_rekap');
+                    setCheck('v_fitur_wa', 'fitur_wa'); setCheck('v_fitur_hasil', 'fitur_hasil');
+                    setCheck('v_fitur_thumb', 'fitur_thumb'); setCheck('v_fitur_arsip', 'fitur_arsip');
+                    setCheck('v_fitur_berita', 'fitur_berita');
+
+                    setCheck('v_menu_keuangan', 'menu_keuangan'); setCheck('v_menu_ronda', 'menu_ronda');
+                    setCheck('v_menu_inventaris', 'menu_inventaris'); setCheck('v_menu_pengurus', 'menu_pengurus');
+                    setCheck('v_menu_tatatertib', 'menu_tatatertib'); setCheck('v_menu_lapak', 'menu_lapak');
+                    setCheck('v_menu_galeri', 'menu_galeri');
+                }
+            })
+            .catch(err => console.log("Gagal muat pengaturan", err))
+            .finally(() => {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            });
+        }
+
+        // 3. MENYIMPAN PENGATURAN BARU (POST)
+        function saveToGS() {
+            if(GS_API_URL === "MASUKAN_URL_GAS_ANDA_DISINI") {
+                alert("Anda belum memasukkan URL Google Apps Script!"); return;
+            }
+
+            const btn = document.getElementById('btnSaveData');
+            btn.disabled = true; btn.innerHTML = "Menerapkan Perubahan...";
+
+            const payload = {
+                tema_ui: document.getElementById('v_tema_ui').value,
+                mode_ui: document.getElementById('v_mode_ui').value,
+                logo_url: document.getElementById('v_logo_url').value,
+                nama_web: document.getElementById('v_nama_web').value,
+                slogan: document.getElementById('v_slogan').value,
+                fixed_scroll: document.getElementById('v_fixed_scroll').checked,
+                gradasi: document.getElementById('v_gradasi').checked,
+                warna_solid: document.getElementById('v_warna_solid').value,
+
+                fitur_login: document.getElementById('v_fitur_login').checked,
+                fitur_slider: document.getElementById('v_fitur_slider').checked,
+                fitur_saldo: document.getElementById('v_fitur_saldo').checked,
+                fitur_saldo_btn: document.getElementById('v_fitur_saldo_btn').checked,
+                fitur_mutasi: document.getElementById('v_fitur_mutasi').checked,
+                fitur_rekap: document.getElementById('v_fitur_rekap').checked,
+                fitur_wa: document.getElementById('v_fitur_wa').checked,
+                fitur_hasil: document.getElementById('v_fitur_hasil').checked,
+                fitur_thumb: document.getElementById('v_fitur_thumb').checked,
+                fitur_arsip: document.getElementById('v_fitur_arsip').checked,
+                fitur_berita: document.getElementById('v_fitur_berita').checked,
+
+                menu_keuangan: document.getElementById('v_menu_keuangan').checked,
+                menu_ronda: document.getElementById('v_menu_ronda').checked,
+                menu_inventaris: document.getElementById('v_menu_inventaris').checked,
+                menu_pengurus: document.getElementById('v_menu_pengurus').checked,
+                menu_tatatertib: document.getElementById('v_menu_tatatertib').checked,
+                menu_lapak: document.getElementById('v_menu_lapak').checked,
+                menu_galeri: document.getElementById('v_menu_galeri').checked
+            };
+
+            fetch(GS_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: "saveSettings", payload: payload })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    alert("Sukses! Pengaturan telah diupdate secara realtime ke Aplikasi Warga.");
+                } else {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(err => alert("Koneksi gagal."))
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerHTML = `<i data-lucide="save"></i> Simpan & Terapkan ke Seluruh Web`;
+                lucide.createIcons();
+            });
+        }
+    </script>
+</body>
+</html>

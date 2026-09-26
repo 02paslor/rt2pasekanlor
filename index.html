@@ -106,11 +106,11 @@
         }
 
         /* ========================================================
-           MODAL OVERLAY (Login & Edit Profil) - SYNCHRONIZED
+           MODAL OVERLAY (Login & Edit Profil & Admin) 
            ======================================================== */
         .slide-up-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(15, 23, 42, 0.85); /* Darker backdrop to match Data Warga */
+            background: rgba(15, 23, 42, 0.85); 
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 10000; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
             padding: 20px; 
@@ -130,7 +130,7 @@
             opacity: 1; 
         }
 
-        /* MODERN LOGIN CARD (Adaptasi penuh dari Data Warga Tailwind UI) */
+        /* MODERN LOGIN CARD */
         .modern-login-wrapper {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(16px);
@@ -215,6 +215,34 @@
         }
         .modern-reg-btn:hover { background: #000000; }
         .modern-reg-btn svg { width: 14px; height: 14px; }
+        
+        /* TOGGLE SWITCH UNTUK SETTING */
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: #1155cc; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .setting-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 8px;
+        }
+        .setting-label { font-size: 12px; font-weight: 600; color: #1e293b; display: flex; align-items: center; gap: 8px; }
+        .setting-label svg { width: 15px; height: 15px; color: #64748b; }
+
+        /* STATUS KUNCI PADA TOMBOL (LOCKED STATE) */
+        .b-nav-item.is-locked, .sheet-item.is-locked {
+            opacity: 0.65;
+            cursor: not-allowed !important;
+            position: relative;
+        }
+        .lock-badge {
+            position: absolute; top: 4px; right: 4px;
+            background: #ef4444; color: #fff; border-radius: 50%;
+            width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;
+            font-size: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
 
         /* ========================================================
            PEMBARUAN FOOTER MENU: HYBRID & WARNA BIRU UTAMA
@@ -312,7 +340,7 @@
             right: 16px;
             margin: 0 auto;
             max-width: 448px;
-            background: #033387;
+            background: #033387; 
             border-radius: 20px;
             padding: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -331,18 +359,40 @@
         }
 
         .sheet-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+            display: grid; 
+            grid-template-columns: 42px repeat(4, 1fr); 
+            gap: 8px;
+            align-items: center;
         }
 
         .sheet-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: #475569; font-size: 9px; font-weight: 700;
-            background: #ffffff; border-radius: 14px; padding: 12px 4px;
+            text-decoration: none; color: #475569; font-size: 8px; font-weight: 700; text-align: center;
+            background: #ffffff; border-radius: 14px; padding: 10px 2px;
             transition: all 0.2s; border: 1px solid #e2e8f0;
             box-shadow: 0 2px 6px rgba(0,0,0,0.06);
         }
-        .sheet-item svg { width: 22px; height: 22px; stroke: #64748b; stroke-width: 2.5; fill: none; margin-bottom: 6px; transition: stroke 0.2s; }
+        .sheet-item svg { width: 17px; height: 17px; stroke: #64748b; stroke-width: 2.5; fill: none; margin-bottom: 4px; transition: stroke 0.2s; }
         .sheet-item:active { transform: scale(0.92); background: #f8fafc; }
+
+        /* TOMBOL SETTING TANPA KOTAK & WARNA #1155CC */
+        .setting-icon-btn {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 6px;
+            transition: transform 0.2s;
+        }
+        .setting-icon-btn:active { transform: scale(0.9); }
+        .setting-icon-btn svg {
+            width: 26px; height: 26px;
+            stroke: #1155CC !important;
+            fill: none; margin: 0;
+        }
 
         .sheet-item.menu-tertekan {
             background: #1155cc !important; border-color: #1155cc !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: none;
@@ -386,12 +436,10 @@
         </header>
     </div>
 
-    <!-- AREA LOGIN TER-SINKRONISASI -->
+    <!-- AREA LOGIN WARGA -->
     <div class="slide-up-overlay" id="loginModalOverlay" onclick="closeLoginModalOutside(event)">
         <div class="slide-up-content" onclick="event.stopPropagation()">
-            
             <div class="modern-login-wrapper">
-                
                 <div class="modern-login-header">
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" class="modern-logo" alt="Logo">
                     <div class="modern-header-text">
@@ -406,12 +454,10 @@
                 <div id="loginErrorMessage" class="login-error-msg">Username atau Password salah!</div>
 
                 <form id="loginForm" class="modern-login-form">
-                    
                     <div class="modern-input-group">
                         <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                         <input type="text" id="loginUsername" placeholder="User ID / Id Rumah" required class="modern-input">
                     </div>
-                    
                     <div class="modern-input-group">
                         <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
                         <input type="password" id="loginPassword" placeholder="Password" required class="modern-input">
@@ -420,12 +466,10 @@
                             <svg id="eyeIconPwClosed" viewBox="0 0 24 24" fill="currentColor" style="display:block;"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
                         </button>
                     </div>
-
                     <button type="submit" id="btnSubmitLogin" class="modern-submit-btn">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
                         <span>Masuk Sistem</span>
                     </button>
-
                     <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px;">
                         <input type="checkbox" id="rememberPasswordRadio" name="simpan_pass" style="width: 15px; height: 15px; accent-color: #1155cc; cursor: pointer;">
                         <label for="rememberPasswordRadio" style="font-size: 11.5px; color: #475569; cursor: pointer; user-select: none; font-weight: 500;">Ingat Saya</label>
@@ -442,11 +486,134 @@
                         Pendaftaran Warga Baru
                     </a>
                 </div>
-
             </div>
         </div>
     </div>
 
+    <!-- MODAL AUTH ADMIN (INPUT CLEAR) -->
+    <div class="slide-up-overlay" id="adminAuthModalOverlay" onclick="closeAdminAuthOutside(event)">
+        <div class="slide-up-content" onclick="event.stopPropagation()">
+            <div class="modern-login-wrapper">
+                <div class="modern-login-header">
+                    <div class="modern-header-text">
+                        <h2 style="color: #ef4444;">Login Admin</h2>
+                        <p>Otentikasi khusus Pengurus</p>
+                    </div>
+                    <button class="modern-close-btn" style="background: #fef2f2; border-color: #fee2e2; color: #ef4444;" onclick="closeAdminAuth()" title="Tutup">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+                <div id="adminErrorMsg" class="login-error-msg">Akses Ditolak!</div>
+                <form id="adminAuthForm" class="modern-login-form" autocomplete="off">
+                    <div class="modern-input-group">
+                        <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <input type="text" id="adminUsername" placeholder="Username Admin" required class="modern-input" autocomplete="off" value="">
+                    </div>
+                    <div class="modern-input-group">
+                        <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+                        <input type="password" id="adminPassword" placeholder="Password Admin" required class="modern-input" autocomplete="new-password" value="">
+                    </div>
+                    <button type="submit" class="modern-submit-btn" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <span>Buka Pengaturan</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SETTINGS ADMIN (DENGAN TOMBOL SIMPAN & BATAL) -->
+    <div class="slide-up-overlay" id="adminSettingsModalOverlay" onclick="closeAdminSettingsOutside(event)">
+        <div class="slide-up-content" onclick="event.stopPropagation()">
+            <div class="modern-login-wrapper">
+                <div class="modern-login-header" style="margin-bottom: 5px;">
+                    <div class="modern-header-text">
+                        <h2>Kunci Fitur Sistem</h2>
+                        <p>Kunci akses agar tombol tidak bisa diklik</p>
+                    </div>
+                    <button class="modern-close-btn" onclick="closeAdminSettings()" title="Tutup">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+                
+                <div style="max-height: 45vh; overflow-y: auto; margin-right: -10px; padding-right: 10px;">
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path></svg>
+                            Menu Keuangan (Bawah)
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleKeuangan">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                            Menu Inventaris (Bawah)
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleInventaris">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            Arsip Lain (Home)
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleArsip">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            Hasil Kegiatan (Home)
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleHasil">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            Undangan WA (Home)
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleUndangan">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            Transaksi (Home)
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleTransaksi">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- TOMBOL SIMPAN & BATAL -->
+                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                    <button type="button" onclick="closeAdminSettings()" style="flex: 1; padding: 10px; border-radius: 12px; border: 1px solid #cbd5e1; background: #f1f5f9; color: #475569; font-weight: 600; cursor: pointer; font-size: 13px;">Batal</button>
+                    <button type="button" onclick="saveAdminSettings()" style="flex: 1; padding: 10px; border-radius: 12px; border: none; background: #1155cc; color: #fff; font-weight: 600; cursor: pointer; font-size: 13px; box-shadow: 0 4px 10px rgba(17,85,204,0.3);">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT PROFIL -->
     <div class="slide-up-overlay" id="profileEditConfirmModal" onclick="closeProfileConfirmOutside(event)">
         <div class="slide-up-content" onclick="event.stopPropagation()" style="background: #fff; max-width: 320px; margin: auto; padding: 24px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
             <h3 style="color: #1155cc; margin-bottom: 10px; font-weight: 700;">Profil Warga</h3>
@@ -464,9 +631,16 @@
 
 </div> 
 
-<!-- MODAL CARD (TANPA TEKS MENU LAIN, WARNA LATAR BIRU #033387) -->
+<!-- MODAL CARD MENU LAINNYA -->
 <div class="more-menu-card" id="moreMenuCard">
     <div class="sheet-grid">
+        
+        <!-- TOMBOL SETTING TANPA KOTAK & WARNA #1155CC -->
+        <button id="btnSettingsApp" class="setting-icon-btn" title="Pengaturan Sistem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1155CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+
+        <!-- 4 MENU UTAMA LAINNYA -->
         <a href="#" class="sheet-item footer-menu-btn" data-url="https://rt2pasekanlor.id/pengurus">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span>PENGURUS</span>        
@@ -509,7 +683,7 @@
             <span>RONDA</span>
         </a>
         
-        <a href="#" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/inventaris">
+        <a href="#" id="btnMenuInventaris" class="b-nav-item footer-menu-btn" data-url="https://rt2pasekanlor.id/inventaris">
             <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
             <span>INVENTARIS</span>
         </a>
@@ -534,6 +708,7 @@
 
     dynamicContent.addEventListener('load', () => {
         initIframeScroll(); 
+        applySettings(); 
     });
 
     if(btnMoreMenu && moreMenuCard) {
@@ -544,7 +719,7 @@
         });
 
         document.addEventListener('click', (e) => {
-            if (!moreMenuCard.contains(e.target) && !btnMoreMenu.contains(e.target)) {
+            if (!moreMenuCard.contains(e.target) && !btnMoreMenu.contains(e.target) && e.target.id !== 'btnSettingsApp') {
                 moreMenuCard.classList.remove('active');
             }
         });
@@ -552,8 +727,14 @@
 
     allMenuBtns.forEach(btn => {
         btn.addEventListener("click", function(e) {
+            // Cek apakah tombol dikunci
+            if(this.classList.contains('is-locked')) {
+                e.preventDefault();
+                alert("⚠️ Fitur ini dikunci. Anda harus login.");
+                return;
+            }
+
             e.preventDefault();
-            
             allMenuBtns.forEach(m => m.classList.remove("menu-tertekan"));
             btnMoreMenu.classList.remove("menu-tertekan");
 
@@ -574,7 +755,125 @@
     });
 
     // ==========================================
-    // LOGIKA LOGIN
+    // LOGIKA SETTING ADMIN & SISTEM LOCK 
+    // ==========================================
+    
+    const btnSettingsApp = document.getElementById('btnSettingsApp');
+    const adminAuthModalOverlay = document.getElementById('adminAuthModalOverlay');
+    const adminSettingsModalOverlay = document.getElementById('adminSettingsModalOverlay');
+    const adminAuthForm = document.getElementById('adminAuthForm');
+    const adminErrorMsg = document.getElementById('adminErrorMsg');
+
+    if(btnSettingsApp) {
+        btnSettingsApp.addEventListener('click', (e) => {
+            e.preventDefault(); e.stopPropagation();
+            moreMenuCard.classList.remove('active');
+            adminErrorMsg.style.display = 'none';
+            adminAuthForm.reset();
+            adminAuthModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+
+    function closeAdminAuth() {
+        adminAuthModalOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+    function closeAdminAuthOutside(e) { if(e.target === adminAuthModalOverlay) closeAdminAuth(); }
+
+    adminAuthForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const user = document.getElementById('adminUsername').value.trim();
+        const pass = document.getElementById('adminPassword').value.trim();
+        
+        if(user === 'rt2_jaya' && pass === '0203') {
+            closeAdminAuth();
+            openAdminSettings();
+        } else {
+            adminErrorMsg.style.display = 'block';
+        }
+    });
+
+    function openAdminSettings() {
+        document.getElementById('toggleKeuangan').checked = localStorage.getItem('lock_keuangan') === 'true';
+        document.getElementById('toggleInventaris').checked = localStorage.getItem('lock_inventaris') === 'true';
+        document.getElementById('toggleArsip').checked = localStorage.getItem('lock_arsip') === 'true';
+        document.getElementById('toggleHasil').checked = localStorage.getItem('lock_hasil') === 'true';
+        document.getElementById('toggleUndangan').checked = localStorage.getItem('lock_undangan') === 'true';
+        document.getElementById('toggleTransaksi').checked = localStorage.getItem('lock_transaksi') === 'true';
+        
+        adminSettingsModalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAdminSettings() {
+        adminSettingsModalOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+    function closeAdminSettingsOutside(e) { if(e.target === adminSettingsModalOverlay) closeAdminSettings(); }
+
+    function saveAdminSettings() {
+        localStorage.setItem('lock_keuangan', document.getElementById('toggleKeuangan').checked);
+        localStorage.setItem('lock_inventaris', document.getElementById('toggleInventaris').checked);
+        localStorage.setItem('lock_arsip', document.getElementById('toggleArsip').checked);
+        localStorage.setItem('lock_hasil', document.getElementById('toggleHasil').checked);
+        localStorage.setItem('lock_undangan', document.getElementById('toggleUndangan').checked);
+        localStorage.setItem('lock_transaksi', document.getElementById('toggleTransaksi').checked);
+        
+        applySettings();
+        closeAdminSettings();
+    }
+
+    function applySettings() {
+        const lockKeuangan = localStorage.getItem('lock_keuangan') === 'true';
+        const lockInventaris = localStorage.getItem('lock_inventaris') === 'true';
+        
+        const btnKas = document.querySelector('.btn-kas');
+        const btnInv = document.getElementById('btnMenuInventaris');
+
+        // Mengunci (Disable & Beri Ikon Gembok) Alih-alih Menyembunyikan
+        if(btnKas) {
+            if(lockKeuangan) {
+                btnKas.classList.add('is-locked');
+                if(!btnKas.querySelector('.lock-badge')) {
+                    btnKas.innerHTML += '<div class="lock-badge">🔒</div>';
+                }
+            } else {
+                btnKas.classList.remove('is-locked');
+                const badge = btnKas.querySelector('.lock-badge');
+                if(badge) badge.remove();
+            }
+        }
+
+        if(btnInv) {
+            if(lockInventaris) {
+                btnInv.classList.add('is-locked');
+                if(!btnInv.querySelector('.lock-badge')) {
+                    btnInv.innerHTML += '<div class="lock-badge">🔒</div>';
+                }
+            } else {
+                btnInv.classList.remove('is-locked');
+                const badge = btnInv.querySelector('.lock-badge');
+                if(badge) badge.remove();
+            }
+        }
+
+        if(dynamicContent && dynamicContent.contentWindow) {
+            dynamicContent.contentWindow.postMessage({
+                type: 'applyLocks',
+                locks: {
+                    arsip: localStorage.getItem('lock_arsip') === 'true',
+                    hasil: localStorage.getItem('lock_hasil') === 'true',
+                    undangan: localStorage.getItem('lock_undangan') === 'true',
+                    transaksi: localStorage.getItem('lock_transaksi') === 'true'
+                }
+            }, '*');
+        }
+    }
+
+
+    // ==========================================
+    // LOGIKA LOGIN DATA WARGA
     // ==========================================
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
     const loginModalOverlay = document.getElementById('loginModalOverlay');
@@ -616,7 +915,10 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", () => checkLoginState());
+    document.addEventListener("DOMContentLoaded", () => { 
+        checkLoginState();
+        applySettings(); 
+    });
 
     const btnOpenLogin = document.getElementById('openLoginModalBtn');
     if(btnOpenLogin) {
@@ -768,7 +1070,7 @@
                 lastScrollTop = currentScroll;
             });
         } catch (error) {
-            console.log("Iframe beda domain (Cross-Origin), menggunakan fallback event Listener.");
+            console.log("Iframe beda domain, menggunakan fallback event Listener.");
         }
     }
 

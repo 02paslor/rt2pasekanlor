@@ -10,9 +10,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
     <!-- html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
     <!-- Cropper.js untuk Geser Foto -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
@@ -21,9 +21,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
         body, html { font-family: 'Poppins', sans-serif !important; background-color: #F4F7F9; color: #333333; margin: 0; padding: 0; overflow: hidden; }
-        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08); }
-        .modern-card { background: #FFFFFF; border-radius: 20px; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04); border: 1px solid #F0F2F5; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease; }
-        .modern-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -4px rgba(15, 46, 112, 0.12); border-color: #E2E8F0; }
+        
+        .modern-card { background: #FFFFFF; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); border: 1px solid #E2E8F0; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease; }
+        .modern-card:hover { transform: translateY(-4px); box-shadow: 0 20px 30px -10px rgba(15, 46, 112, 0.15); border-color: #CBD5E1; }
 
         .card-list-enter-active, .card-list-leave-active { transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .card-list-enter-from { opacity: 0; transform: scale(0.6) translateY(20px); }
@@ -62,38 +62,63 @@
             </div>
         </transition>
 
-        <!-- HALAMAN LOGIN -->
+        <!-- DELETE CONFIRMATION MODAL -->
         <transition name="fade">
-            <div v-if="!isLoggedIn" class="min-h-screen flex flex-col justify-center items-center p-4 w-full absolute inset-0 z-50 overflow-y-auto" style="background: radial-gradient(circle at top right, #EBF4FF, #F4F7F9); background-image: radial-gradient(#CBD5E1 1px, transparent 1px); background-size: 30px 30px;">
+            <div v-if="deleteConfirm.show" class="fixed inset-0 z-[1000] bg-black/70 backdrop-blur-sm flex justify-center items-center p-4">
+                <div class="bg-white rounded-2xl w-full max-w-sm p-6 flex flex-col items-center text-center shadow-2xl">
+                    <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center text-3xl mb-4"><i class="fas fa-exclamation-triangle"></i></div>
+                    <h3 class="text-[18px] font-[700] text-gray-900 mb-2">Hapus Data Warga?</h3>
+                    <p class="text-[13px] text-gray-500 mb-6">Anda yakin ingin menghapus <b>{{ deleteConfirm.nama }}</b> ({{ deleteConfirm.idRumah }})? Data yang dihapus tidak bisa dikembalikan.</p>
+                    <div class="flex w-full gap-3">
+                        <button @click="deleteConfirm.show = false" class="flex-1 py-2.5 bg-gray-100 text-gray-700 font-[600] rounded-xl hover:bg-gray-200 transition">Batal</button>
+                        <button @click="executeDelete" :disabled="saving" class="flex-1 py-2.5 bg-red-600 text-white font-[600] rounded-xl hover:bg-red-700 flex justify-center items-center gap-2 transition">
+                            <span v-if="saving" class="spinner border-t-white w-4 h-4"></span> <i v-else class="fas fa-trash"></i> Hapus
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </transition>
+
+        <!-- HALAMAN LOGIN (BLURRED BACKGROUND) -->
+        <transition name="fade">
+            <div v-if="!isLoggedIn" class="min-h-screen flex flex-col justify-center items-center p-4 w-full absolute inset-0 z-50 overflow-y-auto" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); position: relative; overflow: hidden;">
+                <div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+                <div class="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+
                 <div class="w-full max-w-[380px] flex flex-col items-center my-auto relative z-10">
-                    <div class="glass-panel rounded-[28px] p-6 w-full flex flex-col relative z-10 border-t-2 border-t-white">
+                    <div class="bg-white/95 backdrop-blur-xl rounded-[28px] p-6 w-full flex flex-col relative z-10 border border-white/50 shadow-2xl">
+                        
                         <div class="flex items-center gap-4 mb-6">
-                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" class="h-[60px] w-auto drop-shadow-md">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" class="h-[55px] w-auto drop-shadow-md">
                             <div class="flex-1">
-                                <h2 class="text-[#0F2E70] font-[700] text-[18px] leading-tight">Data Warga</h2>
+                                <h2 class="text-[#0F2E70] font-[700] text-[17px] leading-tight">Data Warga</h2>
                                 <p class="text-[#64748B] font-[500] text-[10px] mt-0.5">RT 2-RW 3, Pasekan Lor<br>Gamping, Sleman</p>
                             </div>
+                            <a href="https://rt2pasekanlor.id/data-warga" title="Kembali ke Halaman Web" class="w-[38px] h-[38px] shrink-0 bg-blue-50 text-blue-600 rounded-full flex justify-center items-center hover:bg-blue-100 hover:scale-105 transition border border-blue-100">
+                                <i class="fas fa-globe text-[16px]"></i>
+                            </a>
                         </div>
 
+                        <!-- KOLOM USER & PASSWORD CLEAR -->
                         <form @submit.prevent="handleLogin" class="flex flex-col gap-3 w-full mb-5">
                             <div class="relative">
-                                <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8]"></i>
-                                <input type="text" v-model="loginIdRumah" placeholder="User ID / Id Rumah" required class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-[#E2E8F0] bg-white/70 focus:bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-[13px] font-[500]">
+                                <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" v-model="loginIdRumah" placeholder="User ID / Id Rumah" required class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-[13px] font-[500]">
                             </div>
                             <div class="relative">
-                                <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8]"></i>
-                                <input :type="showPassword ? 'text' : 'password'" v-model="loginPassword" placeholder="Password" required class="w-full pl-10 pr-10 py-2.5 rounded-xl border border-[#E2E8F0] bg-white/70 focus:bg-white focus:outline-none focus:border-[#1155CC] focus:ring-2 focus:ring-blue-100 transition-all text-[14px] tracking-widest font-[500]">
-                                <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer text-[#94A3B8]" @click="showPassword = !showPassword"><i class="fas" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i></div>
+                                <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input :type="showPassword ? 'text' : 'password'" v-model="loginPassword" placeholder="Password" required class="w-full pl-11 pr-11 py-3 rounded-xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-[14px] tracking-widest font-[500]">
+                                <div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer text-gray-400 hover:text-blue-500 transition-colors" @click="showPassword = !showPassword"><i class="fas" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i></div>
                             </div>
-                            <button type="submit" :disabled="loading" class="btn-primary w-full py-2.5 rounded-xl font-[600] text-[14px] flex justify-center items-center mt-1 disabled:opacity-70 gap-2">
+                            <button type="submit" :disabled="loading" class="btn-primary w-full py-3 rounded-xl font-[600] text-[14px] flex justify-center items-center mt-2 disabled:opacity-70 gap-2">
                                 <i v-if="!loading" class="fas fa-sign-in-alt"></i>
                                 <span v-if="loading" class="spinner border-t-white w-4 h-4 rounded-full border-2"></span>
                                 <span>{{ loading ? 'Memproses...' : 'Masuk Sistem' }}</span>
                             </button>
                         </form>
 
-                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 border border-blue-100 mb-4 text-center">
-                            <h3 class="text-[#0F2E70] font-[600] text-[13px] text-left mb-2.5"><i class="fas fa-user-plus mr-1"></i> Warga Baru?</h3>
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 border border-blue-100 text-center">
+                            <h3 class="text-[#0F2E70] font-[600] text-[13px] text-left mb-2.5"><i class="fas fa-user-plus mr-1 text-[#1155CC]"></i> Warga Baru?</h3>
                             <a href="?page=registrasi" @click.prevent="bukaHalamanRegistrasi" class="w-full py-2.5 rounded-xl font-[600] text-[13px] flex items-center justify-center gap-2 bg-[#0F2E70] text-white hover:bg-black transition-all shadow-sm cursor-pointer">
                                 <i class="fas fa-id-card text-[12px]"></i> Pendaftaran Warga Baru
                             </a>
@@ -117,15 +142,10 @@
                     </div>
 
                     <!-- TOMBOL TAMPILAN VIEW GRID & LIST -->
-                    <div class="flex gap-2 p-1 bg-[#1B2B56] rounded-xl">
+                    <div class="flex gap-2 p-1 bg-[#1B2B56] rounded-xl mb-4">
                         <button @click="viewMode = 'card'" class="flex-1 py-1.5 rounded-lg text-[11px] font-[600] flex items-center justify-center gap-1.5 transition-all" :class="viewMode === 'card' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635] shadow-sm'"><i class="fas fa-th-large"></i> Kartu</button>
                         <button @click="viewMode = 'table'" class="flex-1 py-1.5 rounded-lg text-[11px] font-[600] flex items-center justify-center gap-1.5 transition-all" :class="viewMode === 'table' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white hover:bg-[#38BDF8] hover:text-[#0A1635] shadow-sm'"><i class="fas fa-list"></i> Tabel</button>
                     </div>
-
-                    <!-- TOMBOL EXPORT DATA -->
-                    <button @click="openExportModal" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-[600] py-2 rounded-xl text-[12px] transition-all flex items-center justify-center gap-2 shadow-sm border border-emerald-400">
-                        <i class="fas fa-print"></i> Export Data PDF
-                    </button>
 
                     <!-- REPORT DUPLIKAT -->
                     <div v-if="duplicateDataReport.length > 0" class="bg-red-500/10 border border-red-500/30 rounded-xl p-3">
@@ -135,32 +155,20 @@
                         </ul>
                     </div>
 
-                    <div class="flex items-center justify-between bg-[#1B2B56] p-3 rounded-xl border border-[#2A3D73]">
-                        <span class="text-[#E2E8F0] text-[12px] font-[500] flex items-center gap-2"><i class="fas fa-file-invoice-dollar text-[#FBBF24]"></i> Laporan Warga</span>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" v-model="fiturWacanaOn" class="sr-only peer">
-                            <div class="w-8 h-4 bg-[#475569] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#10B981]"></div>
-                        </label>
-                    </div>
-
-                    <div class="w-full h-px bg-[#1B2B56] my-4"></div>
-
                     <label class="text-[#94A3B8] font-[600] text-[11px] uppercase tracking-wider mb-2 block">Urutkan Data</label>
                     <select v-model="sortMode" class="w-full pl-3 pr-6 py-2 rounded-lg bg-[#2A4178] text-white outline-none cursor-pointer mb-4 font-[500] text-[11px]">
                         <option value="id_asc">ID Rumah (Kecil - Besar)</option>
                         <option value="id_desc">ID Rumah (Besar - Kecil)</option>
                     </select>
 
-                    <label class="text-[#94A3B8] font-[600] text-[11px] uppercase tracking-wider mb-2 block">Domisili</label>
-                    <div class="grid grid-cols-2 gap-2 mb-4">
-                        <button @click="applySingleFilter('domisili', 'Tempat Tinggal')" class="py-2 rounded-lg text-[11px] font-[600] transition-all shadow-sm" :class="filterDomisili === 'Tempat Tinggal' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Tinggal</button>
-                        <button @click="applySingleFilter('domisili', 'Kontrak / Kost')" class="py-2 rounded-lg text-[11px] font-[600] transition-all shadow-sm" :class="filterDomisili === 'Kontrak / Kost' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Kontrak</button>
+                    <label class="text-[#94A3B8] font-[600] text-[11px] uppercase tracking-wider mb-2 block">Domisili & Gender</label>
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <button @click="applySingleFilter('domisili', 'Tempat Tinggal')" class="py-2 rounded-lg text-[10px] font-[600] transition-all shadow-sm" :class="filterDomisili === 'Tempat Tinggal' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Tinggal</button>
+                        <button @click="applySingleFilter('domisili', 'Kontrak / Kost')" class="py-2 rounded-lg text-[10px] font-[600] transition-all shadow-sm" :class="filterDomisili === 'Kontrak / Kost' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Kontrak</button>
                     </div>
-
-                    <label class="text-[#94A3B8] font-[600] text-[11px] uppercase tracking-wider mb-2 block">Jenis Kelamin</label>
                     <div class="grid grid-cols-2 gap-2 mb-4">
-                        <button @click="applySingleFilter('jk', 'Laki-laki')" class="py-2 rounded-lg text-[11px] font-[600] transition-all shadow-sm" :class="filterJK === 'Laki-laki' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Pria</button>
-                        <button @click="applySingleFilter('jk', 'Perempuan')" class="py-2 rounded-lg text-[11px] font-[600] transition-all shadow-sm" :class="filterJK === 'Perempuan' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Wanita</button>
+                        <button @click="applySingleFilter('jk', 'Laki-laki')" class="py-2 rounded-lg text-[10px] font-[600] transition-all shadow-sm" :class="filterJK === 'Laki-laki' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Pria</button>
+                        <button @click="applySingleFilter('jk', 'Perempuan')" class="py-2 rounded-lg text-[10px] font-[600] transition-all shadow-sm" :class="filterJK === 'Perempuan' ? 'bg-[#38BDF8] text-[#0A1635]' : 'bg-[#2A4178] text-white'">Wanita</button>
                     </div>
 
                     <label class="text-[#94A3B8] font-[600] text-[11px] uppercase tracking-wider mb-2 block">Lainnya</label>
@@ -171,9 +179,43 @@
                     <button @click="resetFilters" class="w-full mt-2 bg-[#EF4444]/10 text-[#EF4444] font-[600] py-2 rounded-xl text-[11px] transition-all flex items-center justify-center gap-1.5 hover:bg-[#EF4444] hover:text-white">
                         <i class="fas fa-sync-alt"></i> Reset Filter
                     </button>
+
+                    <!-- AREA PENGATURAN & EXPORT -->
+                    <div class="mt-8 pt-6 border-t border-[#2A3D73]/80">
+                        <h4 class="text-[#38BDF8] font-[600] text-[11px] uppercase tracking-wider mb-4 flex items-center gap-2"><i class="fas fa-sliders-h"></i> Area Pengaturan</h4>
+                        
+                        <div class="space-y-1.5 bg-[#1B2B56] p-2.5 rounded-xl border border-[#2A3D73] mb-3">
+                            <!-- Toggle List -->
+                            <div v-for="(label, key) in appSettingsLabels" :key="key" class="flex items-center justify-between py-1.5 border-b border-[#2A3D73]/50 last:border-0">
+                                <span class="text-[#E2E8F0] text-[10px] font-[500] flex items-center gap-1.5 truncate pr-2">
+                                    {{ label }} <i class="fas fa-lock text-[#64748B] text-[8px]" v-if="!appSettings[key]"></i>
+                                </span>
+                                <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                                    <input type="checkbox" v-model="appSettings[key]" class="sr-only peer">
+                                    <div class="w-7 h-4 bg-[#475569] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#10B981]"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <button @click="saveSettings" :disabled="savingSettings" class="w-full mb-5 bg-[#38BDF8] hover:bg-[#0284C7] text-[#0A1635] font-[700] py-2 rounded-xl text-[11px] transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <span v-if="savingSettings" class="spinner border-t-[#0A1635] w-3 h-3"></span>
+                            <span v-else><i class="fas fa-save"></i> Simpan Setingan</span>
+                        </button>
+
+                        <!-- Tombol Export -->
+                        <div class="flex flex-col gap-2.5">
+                            <button @click="openExportModal" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-[600] py-2.5 rounded-xl text-[11px] transition-all flex items-center justify-center gap-2 shadow-sm border border-emerald-400">
+                                <i class="fas fa-file-pdf"></i> Export Data PDF
+                            </button>
+                            <button @click="executeExport('excel')" class="w-full bg-[#10B981] hover:bg-[#059669] text-white font-[600] py-2.5 rounded-xl text-[11px] transition-all flex items-center justify-center gap-2 shadow-sm border border-[#059669]">
+                                <i class="fas fa-file-excel"></i> Export Data CSV
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
+            <!-- Bagian Bawah Profil Admin -->
             <div class="mt-auto p-4 flex flex-col gap-3 bg-[#06112E] border-t border-[#1B2B56]">
                 <div class="flex items-center gap-3">
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyfuGc_fXDcYnfWzyQzcRZ6n9XwRuYCrX3D4PNthp05MIwg9VjbDoCBPtGg6jc374QSSOKKLt3jBGAkPtlwVKRSDc-PhZewr5S3X91KheaVSjIs1IDedm_zm1BR9_EyJ9CdJuFHGGu4l0pF3hF8cbMViD5lucqgvffwoxPWPQBuJfyZntChlwC1d7Ad6Q/w640-h640/favicon%20rt2.png" class="w-10 h-10 rounded-full object-cover shadow-md border-2 border-[#38BDF8]">
@@ -207,47 +249,25 @@
                             <button @click="bukaFormKosong()" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="px-4 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex gap-2"><i class="fas fa-user-plus"></i> Tambah Baru</button>
                         </div>
                         <div class="flex gap-2" v-if="userRole === 'admin'">
-                            <!-- TOMBOL SIMPAN & BATAL DI HEADER KHUSUS ADMIN -->
                             <template v-if="activeMenu === 'register'">
                                 <button @click="changeMenu('list')" class="px-4 py-2 rounded-xl text-[12px] font-[600] text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 transition-all flex items-center shadow-sm">{{ isEditing ? 'Batal Edit' : 'Batal Daftar' }}</button>
                                 <button @click="saveData" :disabled="saving" class="px-4 py-2 rounded-xl text-[12px] font-[600] text-white bg-blue-600 hover:bg-blue-700 transition-all flex items-center shadow-sm">
                                     <span v-if="saving" class="spinner border-t-white w-3 h-3 mr-2"></span> Simpan Data
                                 </button>
                             </template>
-
                             <button @click="fetchData" class="px-4 py-2 rounded-xl text-[12px] font-[600] text-[#0F2E70] bg-blue-50 hover:bg-blue-100 transition-all flex items-center"><i class="fas fa-sync-alt text-[#1155CC]" :class="{'animate-spin': loading}"></i> <span class="ml-2">Sinkron</span></button>
-                            <button @click="logout" class="px-4 py-2 rounded-xl text-[12px] font-[600] text-red-600 bg-red-50 hover:bg-red-100 transition-all flex items-center"><i class="fas fa-sign-out-alt"></i> <span class="ml-2">Logout</span></button>
                         </div>
-                    </div>
-
-                    <div class="flex gap-2 lg:hidden" v-if="userRole === 'admin'">
-                        <template v-if="activeMenu === 'register'">
-                            <button @click="changeMenu('list')" class="w-9 h-9 rounded-xl text-gray-700 bg-gray-100 flex items-center justify-center border border-gray-300"><i class="fas fa-times"></i></button>
-                            <button @click="saveData" :disabled="saving" class="w-9 h-9 rounded-xl text-white bg-blue-600 flex items-center justify-center"><i class="fas fa-save"></i></button>
-                        </template>
-                        <template v-else>
-                            <button @click="fetchData" class="w-9 h-9 rounded-xl text-blue-600 bg-blue-50 flex items-center justify-center"><i class="fas fa-sync-alt" :class="{'animate-spin': loading}"></i></button>
-                            <button @click="logout" class="w-9 h-9 rounded-xl text-red-600 bg-red-50 flex items-center justify-center"><i class="fas fa-sign-out-alt"></i></button>
-                        </template>
                     </div>
                 </div>
             </header>
 
+            <!-- Sticky Header untuk Mobile (Khusus Warga) -->
             <div class="sticky top-0 z-20 bg-white border-b border-gray-200 shadow-sm w-full transition-all lg:hidden">
                 <div class="px-4 py-3 flex flex-wrap items-center gap-3 justify-between">
                     <div class="flex items-center gap-2 w-full">
                         <div class="flex items-center gap-1 bg-gray-100 p-1 rounded-xl shadow-inner border border-gray-200 shrink-0" v-if="userRole === 'admin' && activeMenu === 'list'">
                             <button @click="viewMode = 'card'" :class="viewMode === 'card' ? 'text-[#0F2E70] bg-white shadow-sm font-[600]' : 'text-gray-500 font-[500]'" class="px-3 py-1.5 rounded-lg transition-all"><i class="fas fa-th-large text-[14px]"></i></button>
                             <button @click="viewMode = 'table'" :class="viewMode === 'table' ? 'text-[#0F2E70] bg-white shadow-sm font-[600]' : 'text-gray-500 font-[500]'" class="px-3 py-1.5 rounded-lg transition-all"><i class="fas fa-list text-[14px]"></i></button>
-                            
-                            <button @click="openExportModal" class="px-3 py-1.5 ml-1 text-emerald-600 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-all font-[600]"><i class="fas fa-print"></i></button>
-                            
-                            <div class="flex items-center border-l border-gray-300 pl-2 ml-1" title="Laporan">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" v-model="fiturWacanaOn" class="sr-only peer">
-                                    <div class="w-9 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
-                                </label>
-                            </div>
                         </div>
 
                         <div class="flex w-full bg-gray-100 p-1.5 rounded-xl shadow-inner border border-gray-200" v-if="userRole === 'admin'">
@@ -284,7 +304,7 @@
                                     <div class="p-5 flex gap-4">
                                         <div class="shrink-0 relative">
                                             <div class="w-[64px] h-[64px] rounded-full p-1 bg-gradient-to-tr from-[#38BDF8] to-[#1155CC]">
-                                                <img :src="getAvatar(w)" class="w-full h-full rounded-full object-cover border-2 border-white bg-white" :class="!w.Foto_Profil ? 'grayscale opacity-80' : ''" @click.stop="openLightbox(getAvatar(w))">
+                                                <img :src="getAvatar(w)" class="w-full h-full rounded-full object-cover border-2 border-white bg-white" :class="!w.Foto_Profil ? 'grayscale opacity-80' : ''">
                                             </div>
                                         </div>
                                         <div class="flex-1 min-w-0 flex flex-col justify-center">
@@ -301,11 +321,11 @@
                                         </div>
                                     </div>
                                     <div class="bg-gray-50/80 px-5 py-2.5 border-t border-gray-100 flex justify-between items-center rounded-b-[20px]">
-                                        <a @click.stop :href="'https://wa.me/' + formatWhatsApp(w.No_Tlp)" target="_blank" class="flex items-center gap-1.5 text-emerald-600 font-[600] text-[11px] bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+                                        <a @click.stop :href="'https://wa.me/' + formatWhatsApp(w.No_Tlp)" target="_blank" class="flex items-center gap-1.5 text-emerald-600 font-[600] text-[11px] bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 hover:bg-emerald-100 transition">
                                             <i class="fab fa-whatsapp text-[14px]"></i> <span>{{ formatDashPhone(w.No_Tlp) }}</span>
                                         </a>
                                         <div class="flex gap-2">
-                                            <button v-if="userRole === 'admin'" @click.stop="confirmDelete(w)" class="w-7 h-7 rounded-lg bg-red-50 text-red-600 border border-red-200 flex justify-center items-center"><i class="fas fa-trash text-[11px]"></i></button>
+                                            <button v-if="userRole === 'admin'" @click.stop="confirmDelete(w)" class="w-7 h-7 rounded-lg bg-red-50 text-red-600 border border-red-200 flex justify-center items-center hover:bg-red-600 hover:text-white transition"><i class="fas fa-trash text-[11px]"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -348,6 +368,16 @@
                     <!-- FORM REGISTRASI / EDIT -->
                     <div v-show="activeMenu === 'register'" class="w-full max-w-4xl mx-auto fade-enter-active">
                         <form @submit.prevent="saveData" class="space-y-6">
+                            
+                            <!-- Boks Pesan Error Kontras untuk Warga -->
+                            <div v-if="userRole === 'warga'" class="border-l-4 border-red-500 bg-red-50/90 p-4 rounded-r-xl shadow-sm flex items-start gap-3 mt-2 mb-4">
+                                <i class="fas fa-exclamation-triangle text-red-500 text-[20px] mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-[700] text-red-700 text-[14px] uppercase mb-1">Penting!</h4>
+                                    <p class="text-[12.5px] font-[600] text-red-600 leading-tight">Saat Anda tekan Simpan, jika <span class="bg-red-200 px-1 rounded">gagal sistem/berputar lama</span>, silakan klik tombol <span class="text-black bg-yellow-300 px-1.5 py-0.5 rounded font-bold uppercase shadow-sm"><i class="fas fa-sync-alt"></i> Sinkron</span> berkali-kali sampai tampil tanda berhasil. (Harap maklum ini server gratisan hehe)</p>
+                                </div>
+                            </div>
+
                             <div class="modern-card p-6 sm:p-8">
                                 <h3 class="font-[600] text-[16px] sm:text-[18px] text-[#0F2E70] border-b-2 border-blue-100 pb-3 mb-6 flex items-center"><i class="fas" :class="isEditing ? 'fa-user-edit' : 'fa-id-card'" class="mr-2.5 text-xl text-blue-500"></i> {{ isEditing ? 'Edit Profil (' + (form.Nama || 'Warga') + ')' : 'Registrasi Identitas Baru' }}</h3>
                                 <div class="flex flex-col md:flex-row gap-8">
@@ -355,7 +385,7 @@
                                         <label class="block text-[13px] font-[600] text-gray-700 text-center w-full">Foto Profil <span class="text-red-500">*</span><br><span class="text-[10px] text-gray-400 font-[400]">(Wajib, bisa digeser)</span></label>
                                         <div class="w-36 h-36 border-2 border-[#CBD5E1] border-dashed rounded-full bg-gray-50 hover:border-[#1155CC] relative flex justify-center items-center overflow-hidden cursor-pointer group">
                                             <input type="file" accept="image/*" @change="e => handleFileUpload(e, 'Foto_Profil')" class="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full">
-                                            <button v-if="form.Foto_Profil" @click.prevent.stop="removeFile('Foto_Profil')" class="absolute top-2 right-4 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center z-20"><i class="fas fa-times text-[12px]"></i></button>
+                                            <button v-if="form.Foto_Profil" @click.prevent.stop="removeFile('Foto_Profil')" class="absolute top-2 right-4 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center z-20 hover:bg-red-600"><i class="fas fa-times text-[12px]"></i></button>
                                             <img v-if="form.Foto_Profil" :src="form.Foto_Profil" class="w-full h-full object-cover">
                                             <i v-else class="fas fa-camera text-[32px] text-gray-300 group-hover:text-[#1155CC]"></i>
                                         </div>
@@ -363,15 +393,15 @@
                                     <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-5">
                                         <div>
                                             <label class="block text-[13px] font-[600] text-gray-700 mb-1">ID Rumah <span class="text-red-500">*</span></label>
-                                            <input type="text" v-model="form.Id_Rumah" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] outline-none font-[600] text-[#0F2E70]">
+                                            <input type="text" v-model="form.Id_Rumah" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-4 focus:ring-blue-500/10 outline-none font-[600] text-[#0F2E70] transition-all">
                                         </div>
                                         <div>
                                             <label class="block text-[13px] font-[600] text-gray-700 mb-1">Buat Password <span class="text-red-500">*</span></label>
-                                            <input type="text" v-model="form.Password" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] outline-none font-mono font-[600]">
+                                            <input type="text" v-model="form.Password" required class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-4 focus:ring-blue-500/10 outline-none font-mono font-[600] transition-all">
                                         </div>
                                         <div class="md:col-span-2">
                                             <label class="block text-[13px] font-[600] text-gray-700 mb-1">Nama Lengkap Sesuai KTP <span class="text-red-500">*</span></label>
-                                            <input type="text" v-model="form.Nama" @input="capitalizeName" required class="w-full rounded-xl border border-gray-300 p-3.5 bg-gray-50 focus:bg-white focus:border-[#1155CC] outline-none font-[600] text-[16px]">
+                                            <input type="text" v-model="form.Nama" @input="capitalizeName" required class="w-full rounded-xl border border-gray-300 p-3.5 bg-gray-50 focus:bg-white focus:border-[#1155CC] focus:ring-4 focus:ring-blue-500/10 outline-none font-[600] text-[16px] transition-all">
                                         </div>
                                     </div>
                                 </div>
@@ -380,51 +410,57 @@
                             <div class="modern-card p-6 sm:p-8">
                                 <h3 class="font-[600] text-[16px] sm:text-[18px] text-[#0F2E70] border-b-2 border-blue-100 pb-3 mb-6 flex items-center"><i class="fas fa-briefcase mr-2.5 text-xl text-blue-500"></i> Profil Personal & Kontak</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Tempat Lahir</label><input type="text" v-model="form.Tempat_Lahir" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"></div>
-                                    <div class="relative"><label class="block text-[13px] font-[600] text-gray-700 mb-1">Tanggal Lahir</label><input type="date" v-model="form.Tanggal_Lahir" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none pr-16"><div v-if="calculatedAge" class="absolute right-3 top-9 text-[11px] font-[600] bg-blue-100 text-blue-700 px-2 py-1 rounded-md">{{ calculatedAge }} Thn</div></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Jenis Kelamin</label><select v-model="form.Jenis_Kelamin" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Laki-laki</option><option>Perempuan</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Gol. Darah</label><select v-model="form.Gol_Darah" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">-</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Agama</label><select v-model="form.Agama" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Islam</option><option>Kristen</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Status Kawin</label><select v-model="form.Status_Perkawinan" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Belum Menikah</option><option>Sudah Menikah</option><option>Pisah Hidup</option><option>Pisah Meninggal</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Pekerjaan</label><select v-model="form.Pekerjaan" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Karyawan Swasta</option><option>Wiraswasta / Pengusaha</option><option>Petani / Peternak</option><option>TNI / Polri</option><option>Tenaga Pendidik</option><option>Pelajar</option><option>Pensiunan</option><option>Lainnya</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Status Domisili</label><select v-model="form.Status_Domisili" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Tempat Tinggal</option><option>Kontrak / Kost</option></select></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">No. WhatsApp (+62)</label><input type="text" v-model="form.No_Tlp" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none font-mono" placeholder="+62 XXX"></div>
-                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Jadwal Ronda</label><select v-model="form.Ronda" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none"><option value="">- Pilih -</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Tempat Lahir</label><input type="text" v-model="form.Tempat_Lahir" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 focus:bg-white focus:border-blue-500 outline-none transition-all"></div>
+                                    <div class="relative"><label class="block text-[13px] font-[600] text-gray-700 mb-1">Tanggal Lahir</label><input type="date" v-model="form.Tanggal_Lahir" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none pr-16 focus:bg-white focus:border-blue-500 transition-all"><div v-if="calculatedAge" class="absolute right-3 top-9 text-[11px] font-[600] bg-blue-100 text-blue-700 px-2 py-1 rounded-md">{{ calculatedAge }} Thn</div></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Jenis Kelamin</label><select v-model="form.Jenis_Kelamin" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none focus:bg-white focus:border-blue-500 transition-all"><option value="">- Pilih -</option><option>Laki-laki</option><option>Perempuan</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Gol. Darah</label><select v-model="form.Gol_Darah" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none focus:bg-white focus:border-blue-500 transition-all"><option value="">-</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Agama</label><select v-model="form.Agama" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none focus:bg-white focus:border-blue-500 transition-all"><option value="">- Pilih -</option><option>Islam</option><option>Kristen</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Status Kawin</label><select v-model="form.Status_Perkawinan" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none focus:bg-white focus:border-blue-500 transition-all"><option value="">- Pilih -</option><option>Belum Menikah</option><option>Sudah Menikah</option><option>Pisah Hidup</option><option>Pisah Meninggal</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Pekerjaan</label><select v-model="form.Pekerjaan" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none focus:bg-white focus:border-blue-500 transition-all"><option value="">- Pilih -</option><option>Karyawan Swasta</option><option>Wiraswasta / Pengusaha</option><option>Petani / Peternak</option><option>TNI / Polri</option><option>Tenaga Pendidik</option><option>Pelajar</option><option>Pensiunan</option><option>Lainnya</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Status Domisili</label><select v-model="form.Status_Domisili" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none focus:bg-white focus:border-blue-500 transition-all"><option value="">- Pilih -</option><option>Tempat Tinggal</option><option>Kontrak / Kost</option></select></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">No. WhatsApp (+62)</label><input type="text" v-model="form.No_Tlp" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none font-mono focus:bg-white focus:border-blue-500 transition-all" placeholder="+62 XXX"></div>
+                                    <div><label class="block text-[13px] font-[600] text-gray-700 mb-1">Jadwal Ronda</label><select v-model="form.Ronda" class="w-full rounded-xl border border-gray-300 p-3 bg-gray-50 outline-none focus:bg-white focus:border-blue-500 transition-all"><option value="">- Pilih -</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option><option>Bebas Tugas</option><option>Belum ada data</option></select></div>
                                     
-                                    <!-- TAMBAHAN KOLOM DATA LAIN & QR CODE (Tampil sebaris) -->
+                                    <!-- Kolom Data Lain -->
                                     <div>
                                         <label class="block text-[13px] font-[600] text-gray-700 mb-1">Dokumen/Data Lain <span class="text-[10px] text-gray-400 font-[400]">(Ops. Maks 3Mb)</span></label>
                                         <div class="flex items-center gap-2">
                                             <input type="file" accept="image/*,.pdf" @change="e => handleFileUpload(e, 'Data_Lain')" class="w-full text-[11px] file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-300 rounded-xl bg-gray-50 p-1.5">
-                                            <button type="button" v-if="form.Data_Lain && form.Data_Lain.startsWith('data:')" @click.prevent.stop="removeFile('Data_Lain')" class="bg-red-500 text-white rounded-lg px-2.5 py-1.5 shrink-0"><i class="fas fa-times"></i></button>
+                                            <button type="button" v-if="form.Data_Lain && form.Data_Lain.startsWith('data:')" @click.prevent.stop="removeFile('Data_Lain')" class="bg-red-500 text-white rounded-lg px-2.5 py-1.5 shrink-0 hover:bg-red-600 transition"><i class="fas fa-times"></i></button>
                                         </div>
                                         <a v-if="form.Data_Lain && form.Data_Lain.startsWith('http')" :href="form.Data_Lain" target="_blank" class="text-[11px] text-[#1155CC] mt-1.5 inline-block font-[600] hover:underline"><i class="fas fa-external-link-alt"></i> Lihat Dokumen Tersimpan</a>
                                     </div>
 
-                                    <div class="bg-blue-50 p-2.5 rounded-xl border border-blue-100 flex items-center gap-3 relative">
-                                        <div class="w-14 h-14 bg-white border border-gray-200 rounded-lg p-1 shrink-0 flex items-center justify-center">
-                                            <img :src="form.QR_Code && form.QR_Code.startsWith('http') ? form.QR_Code : `https://quickchart.io/qr?size=300x300&margin=2&text=${encodeURIComponent((form.Id_Rumah || 'ID') + ' - ' + (form.Nama || 'Warga'))}`" class="w-full h-full object-contain">
+                                    <!-- QR Code Panel -->
+                                    <div class="bg-blue-50/70 p-3 rounded-xl border border-blue-200 flex flex-col justify-center relative">
+                                        <div class="flex items-center gap-3 w-full">
+                                            <div class="w-14 h-14 bg-white border border-gray-200 rounded-lg p-1 shrink-0 flex items-center justify-center">
+                                                <img :src="form.QR_Code && form.QR_Code.startsWith('http') ? form.QR_Code : `https://quickchart.io/qr?size=300x300&margin=2&text=${encodeURIComponent((form.Id_Rumah || 'ID') + ' - ' + (form.Nama || 'Warga'))}`" class="w-full h-full object-contain">
+                                            </div>
+                                            <div class="flex-1 min-w-0 flex flex-col justify-center">
+                                                <p class="text-[11px] font-[700] text-[#0F2E70] truncate leading-tight">{{ form.Id_Rumah || '-' }}</p>
+                                                <p class="text-[10px] text-gray-600 truncate mb-1.5">{{ form.Nama || '-' }}</p>
+                                                <button type="button" @click.prevent="downloadQR(form.Id_Rumah, form.Nama, form.QR_Code)" class="w-full py-1.5 bg-[#1155CC] text-white rounded-md text-[10px] font-[600] flex items-center justify-center gap-1 hover:bg-[#0A3688] transition-colors"><i class="fas fa-download"></i> Download PNG</button>
+                                            </div>
                                         </div>
-                                        <div class="flex-1 min-w-0 flex flex-col justify-center">
-                                            <p class="text-[11px] font-[700] text-[#0F2E70] truncate leading-tight">{{ form.Id_Rumah || '-' }}</p>
-                                            <p class="text-[10px] text-gray-600 truncate mb-1.5">{{ form.Nama || '-' }}</p>
-                                            <button type="button" @click.prevent="downloadQR(form.Id_Rumah, form.Nama, form.QR_Code)" class="w-full py-1.5 bg-[#1155CC] text-white rounded-md text-[10px] font-[600] flex items-center justify-center gap-1 hover:bg-[#0A3688] transition-colors"><i class="fas fa-download"></i> Download PNG</button>
-                                        </div>
+                                        <p class="text-[9px] sm:text-[10px] text-red-600 font-[600] mt-2.5 bg-red-50 p-1.5 rounded-lg border border-red-100 leading-tight">
+                                            <i class="fas fa-exclamation-circle text-red-500 mr-1"></i> Perubahan ID Rumah dan Nama Warga otomatis mengubah kode QR, Jadi jangan ubah jika tidak terpaksa.
+                                        </p>
                                     </div>
-                                    <!-- SELESAI TAMBAHAN -->
                                 </div>
+
                                 <hr class="border-gray-200 mb-6">
                                 <h4 class="font-[600] text-[15px] text-[#0F2E70] mb-4 flex items-center"><i class="fas fa-users text-orange-500 mr-2"></i> Anggota Keluarga Se-rumah</h4>
                                 <div class="space-y-4 max-w-3xl">
                                     <div v-for="(fam, index) in form.AnggotaList" :key="index" class="flex items-center gap-3 relative pb-4 border-b border-gray-100 last:border-0">
                                         <div class="w-[30px] h-[30px] shrink-0 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-[600] text-[12px] border border-blue-100">{{ index + 1 }}</div>
                                         <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                            <input type="text" v-model="fam.n" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Nama Lengkap">
-                                            <input type="text" v-model="fam.s" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Status (Istri/Anak)">
+                                            <input type="text" v-model="fam.n" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px] focus:bg-white focus:border-blue-500 transition" placeholder="Nama Lengkap">
+                                            <input type="text" v-model="fam.s" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px] focus:bg-white focus:border-blue-500 transition" placeholder="Status (Istri/Anak)">
                                         </div>
-                                        <button v-if="form.AnggotaList.length > 1" @click.prevent="removeFam(index)" class="text-red-500 hover:bg-red-100 p-2 rounded-md"><i class="fas fa-trash text-[13px]"></i></button>
+                                        <button v-if="form.AnggotaList.length > 1" @click.prevent="removeFam(index)" class="text-red-500 hover:bg-red-100 p-2 rounded-md transition"><i class="fas fa-trash text-[13px]"></i></button>
                                     </div>
-                                    <button @click.prevent="addFam" class="px-5 py-2 bg-blue-50 text-[#1155CC] font-[600] rounded-xl text-[12px] border border-blue-200"><i class="fas fa-plus mr-2"></i> Tambah Anggota</button>
+                                    <button @click.prevent="addFam" class="px-5 py-2 bg-blue-50 text-[#1155CC] font-[600] rounded-xl text-[12px] border border-blue-200 hover:bg-blue-100 transition"><i class="fas fa-plus mr-2"></i> Tambah Anggota</button>
                                 </div>
                             </div>
                             
@@ -435,44 +471,39 @@
                                     <div v-for="(ket, index) in form.KeteranganList" :key="index" class="flex flex-col sm:flex-row gap-3 pb-4 border-b border-gray-100 last:border-b-0">
                                         <div class="w-[30px] h-[30px] shrink-0 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center font-[600] text-[12px] border border-indigo-100">{{ index + 1 }}</div>
                                         <div class="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                            <textarea v-model="ket.pertemuan" rows="2" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Pertemuan RT"></textarea>
-                                            <textarea v-model="ket.dansos" rows="2" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Kegiatan Sosial"></textarea>
-                                            <textarea v-model="ket.keterangan_lain" rows="2" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px]" placeholder="Keterangan Lain"></textarea>
+                                            <textarea v-model="ket.pertemuan" rows="2" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px] focus:bg-white focus:border-indigo-500 transition" placeholder="Pertemuan RT"></textarea>
+                                            <textarea v-model="ket.dansos" rows="2" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px] focus:bg-white focus:border-indigo-500 transition" placeholder="Kegiatan Sosial"></textarea>
+                                            <textarea v-model="ket.keterangan_lain" rows="2" class="w-full rounded-lg border border-gray-300 p-2 bg-gray-50 outline-none text-[13px] focus:bg-white focus:border-indigo-500 transition" placeholder="Keterangan Lain"></textarea>
                                         </div>
-                                        <button v-if="form.KeteranganList.length > 1" @click.prevent="removeKeterangan(index)" class="text-red-500 hover:bg-red-100 p-2 rounded-md"><i class="fas fa-trash text-[13px]"></i></button>
+                                        <button v-if="form.KeteranganList.length > 1" @click.prevent="removeKeterangan(index)" class="text-red-500 hover:bg-red-100 p-2 rounded-md transition"><i class="fas fa-trash text-[13px]"></i></button>
                                     </div>
-                                    <button @click.prevent="addKeterangan" class="px-5 py-2 bg-indigo-50 text-indigo-600 font-[600] rounded-xl text-[12px] border border-indigo-200"><i class="fas fa-plus mr-2"></i> Tambah Keterangan</button>
+                                    <button @click.prevent="addKeterangan" class="px-5 py-2 bg-indigo-50 text-indigo-600 font-[600] rounded-xl text-[12px] border border-indigo-200 hover:bg-indigo-100 transition"><i class="fas fa-plus mr-2"></i> Tambah Keterangan</button>
                                 </div>
                             </div>
                             
-                            <!-- CATATAN WARGA BAWAH FORM -->
-                            <div v-if="userRole === 'warga'" class="text-center text-[11px] text-gray-500 bg-blue-50/50 p-3 rounded-xl border border-blue-100">
-                                <i class="fas fa-info-circle text-[#1155CC] mr-1"></i> Saat edit/update jika gagal sistem klik <b>sinkron</b> sampai keluar tanda sukses (harap maklum database gratisan..hehe)
-                            </div>
                         </form>
                     </div>
-
                 </main>
 
-                <!-- FOOOTER GLOBAL KHUSUS WARGA (MEMBER) 1 BARIS COMPACT -->
+                <!-- FOOOTER GLOBAL KHUSUS WARGA (MEMBER) -->
                 <div v-if="userRole === 'warga'" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex items-center justify-between px-2 sm:px-10 py-1.5 pb-safe shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
                     <a href="https://rt2pasekanlor.id/" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-[#1155CC] py-1 cursor-pointer">
                         <i class="fas fa-globe text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">Web</span>
                     </a>
-                    <button @click="handleBatal()" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-[#1155CC] py-1">
+                    <button @click="handleBatal()" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-[#1155CC] py-1 transition-colors">
                         <i class="fas fa-times text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">Batal</span>
                     </button>
                     <!-- SIMPAN TENGAH BESAR -->
                     <button @click="saveData" :disabled="saving" class="flex flex-col items-center justify-center flex-1 text-[#1155CC] transition-colors py-1 relative">
-                        <div class="w-12 h-12 bg-gradient-to-tr from-[#38BDF8] to-[#1155CC] rounded-full flex items-center justify-center -mt-6 mb-1 border-4 border-white shadow-md text-white">
+                        <div class="w-12 h-12 bg-gradient-to-tr from-[#38BDF8] to-[#1155CC] rounded-full flex items-center justify-center -mt-6 mb-1 border-4 border-white shadow-md text-white hover:scale-105 transition-transform">
                             <i v-if="!saving" class="fas fa-save text-[20px]"></i><span v-else class="spinner w-5 h-5 border-t-white border-2"></span>
                         </div>
                         <span class="text-[10px] sm:text-[11px] font-[700] leading-none text-[#0F2E70]">Simpan</span>
                     </button>
-                    <button @click="fetchData" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-[#1155CC] py-1">
+                    <button @click="fetchData" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-[#1155CC] py-1 transition-colors">
                         <i class="fas fa-sync-alt text-[18px] mb-1" :class="{'animate-spin': loading}"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">Sinkron</span>
                     </button>
-                    <button @click="logout" class="flex flex-col items-center justify-center flex-1 text-red-500 hover:text-red-700 py-1">
+                    <button @click="logout" class="flex flex-col items-center justify-center flex-1 text-red-500 hover:text-red-700 py-1 transition-colors">
                         <i class="fas fa-sign-out-alt text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">Logout</span>
                     </button>
                 </div>
@@ -480,9 +511,9 @@
                 <!-- FOOOTER FORM NEW WARGA (PENDAFTAR BARU SAJA) -->
                 <div v-if="activeMenu === 'register' && userRole === 'new_warga'" class="fixed bottom-0 sm:bottom-[37px] left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] py-3 sm:py-2.5 px-4" :class="(userRole === 'admin') ? 'lg:pl-[260px]' : ''">
                     <div class="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-2 sm:gap-3">
-                        <button type="button" @click="handleBatal()" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 font-[600] text-[12px] sm:text-[13px] border border-gray-300 shadow-sm">Batal Daftar</button>
+                        <button type="button" @click="handleBatal()" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 font-[600] text-[12px] sm:text-[13px] border border-gray-300 shadow-sm transition">Batal Daftar</button>
                         <button type="button" @click="saveData" :disabled="saving" class="px-8 py-2.5 btn-primary rounded-xl flex items-center font-[600] text-[12px] sm:text-[13px] shadow-md"><span v-if="saving" class="spinner border-t-white w-4 h-4 mr-2"></span>Simpan Data</button>
-                        <a href="https://rt2pasekanlor.id/" @click="logout" class="px-5 py-2.5 text-[#1155CC] bg-blue-50 border border-blue-100 rounded-xl font-[600] text-[12px] sm:text-[13px] flex items-center gap-1.5 shadow-sm"><i class="fas fa-globe"></i> Ke Web</a>
+                        <a href="https://rt2pasekanlor.id/" @click="logout" class="px-5 py-2.5 text-[#1155CC] bg-blue-50 border border-blue-100 rounded-xl font-[600] text-[12px] sm:text-[13px] flex items-center gap-1.5 shadow-sm hover:bg-blue-100 transition"><i class="fas fa-globe"></i> Ke Web</a>
                     </div>
                 </div>
 
@@ -494,8 +525,8 @@
             <div v-if="exportModal" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex justify-center items-center p-4" @click.self="closeExportModal">
                 <div class="bg-white rounded-[24px] w-full max-w-sm flex flex-col shadow-2xl overflow-hidden relative">
                     <div class="px-5 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                        <h3 class="font-[600] text-[15px] text-[#0F2E70]"><i class="fas fa-print mr-2 text-[#38BDF8]"></i> Setelan Export Data</h3>
-                        <button @click="closeExportModal" class="text-gray-400 hover:text-red-500"><i class="fas fa-times text-[16px]"></i></button>
+                        <h3 class="font-[600] text-[15px] text-[#0F2E70]"><i class="fas fa-file-pdf mr-2 text-red-500"></i> Setelan Export PDF</h3>
+                        <button @click="closeExportModal" class="text-gray-400 hover:text-red-500 transition"><i class="fas fa-times text-[16px]"></i></button>
                     </div>
                     
                     <div class="p-5 space-y-3 max-h-[50vh] overflow-y-auto custom-scrollbar bg-white">
@@ -508,10 +539,9 @@
                         </div>
                         <div v-if="printSettings.header" class="pl-2 border-l-2 border-emerald-500 text-[11px] text-gray-500 py-1">
                             <p class="mb-1 text-[10px]">Logo Kop Custom (Opsional)</p>
-                            <input type="file" accept="image/*" @change="uploadCustomLogo" class="text-[10px] file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                            <input type="file" accept="image/*" @change="uploadCustomLogo" class="text-[10px] file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition">
                         </div>
 
-                        <!-- Toggles Setup (iOS Style) -->
                         <template v-for="(val, key) in printSettings.fields" :key="key">
                             <div class="flex items-center justify-between py-1.5 border-b border-gray-50">
                                 <span class="text-[12px] font-[500] text-gray-700 capitalize">{{ key.replace(/_/g, ' ') }}</span>
@@ -524,55 +554,91 @@
                     </div>
                     
                     <div class="p-5 bg-gray-50 flex flex-col gap-2 border-t border-gray-100">
-                        <button @click="executeExport('pdf')" :disabled="saving" class="w-full py-2.5 bg-red-500 text-white font-[600] rounded-xl hover:bg-red-600 shadow-sm flex justify-center items-center gap-2">
-                            <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-1"></span> <i v-else class="fas fa-file-pdf"></i> Export PDF (A4 Portrait)
-                        </button>
-                        <button @click="executeExport('excel')" :disabled="saving" class="w-full py-2.5 bg-[#10B981] text-white font-[600] rounded-xl hover:bg-[#059669] shadow-sm flex justify-center items-center gap-2">
-                            <i class="fas fa-file-excel"></i> Export Excel (CSV) Lengkap
+                        <button @click="executeExport('pdf')" :disabled="saving" class="w-full py-2.5 bg-red-500 text-white font-[600] rounded-xl hover:bg-red-600 shadow-sm flex justify-center items-center gap-2 transition">
+                            <span v-if="saving" class="spinner border-t-white w-4 h-4 mr-1"></span> <i v-else class="fas fa-file-pdf"></i> Proses PDF (A4 Portrait)
                         </button>
                     </div>
                 </div>
             </div>
         </transition>
 
-        <!-- HIDDEN PRINT AREA A4 (PORTRAIT 3 KOTAK COMPACT) -->
-        <div id="print-container-wrapper" style="position: fixed; left: -9999px; top: 0; width: 794px; z-index: -9999; opacity: 0; pointer-events: none; background: white;">
-            <div id="print-area-a4" class="w-[794px] bg-white text-black p-8 box-border font-sans relative" style="font-family: 'Poppins', sans-serif !important;">
+        <!-- HIDDEN PRINT AREA A4 -->
+        <div id="print-container-wrapper" style="position: fixed; left: -9999px; top: 0; width: 800px; z-index: -9999; opacity: 0; pointer-events: none; background: white;">
+            <!-- Lebar diset persis 800px (approx dimensi A4 min margin agar pas dan tidak terpotong) -->
+            <div id="print-area-a4" class="w-[800px] bg-white text-black p-6 box-border font-sans relative" style="font-family: 'Poppins', sans-serif !important;">
                 
-                <div class="flex items-center justify-between border-b-[3px] border-black pb-3 mb-5">
-                    <div class="flex items-center">
-                        <img v-if="printSettings.header" :src="customLogoBase64 || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png'" class="h-14 mr-4 object-contain max-w-[80px]">
+                <!-- HEADER PDF (Sesuai Referensi Gambar) -->
+                <div class="flex justify-between items-start pb-4 mb-4">
+                    <div class="flex items-center gap-4">
+                        <img v-if="printSettings.header" :src="customLogoBase64 || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png'" class="h-12 w-auto object-contain">
                         <div>
-                            <h1 class="text-[18px] font-[700] uppercase tracking-wide leading-tight">Data Warga Terpadu</h1>
-                            <p class="text-[10px] font-[500] mt-0.5 text-gray-700">RT 2-RW 3, Pasekan Lor, Balecatur, Gamping, Sleman</p>
+                            <h1 class="text-[22px] font-[800] leading-tight text-gray-900 tracking-tight">Data Warga RT 2/RW 3</h1>
+                            <p class="text-[12px] font-[700] leading-tight mt-1 text-gray-800">Pasekan Lor, Balecatur, Gamping,<br>Sleman, D. I. Yogyakarta</p>
                         </div>
                     </div>
-                    <div class="text-[9px] text-gray-600 text-right">
-                        <p>Dicetak dari: <b>Aplikasi Data Warga Terpadu (rt2pasekanlor.id)</b></p>
-                        <p>Waktu Cetak: <b>{{ new Date().toLocaleString('id-ID') }}</b></p>
+                    <div class="text-[10px] text-right font-[500] leading-snug flex flex-col items-end">
+                        <p class="mb-3 text-gray-700">Waktu Cetak: {{ new Date().toLocaleDateString('id-ID') }} - Pukul: {{ new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}) }} WIB</p>
+                        <div class="border border-gray-500 rounded-xl px-4 py-2.5 text-[11px] flex flex-col items-end gap-1">
+                            <p>Total Warga Terdaftar: <span class="font-[700] text-gray-900">{{ filteredWarga.length }}</span></p>
+                            <p>Warga Belum Lengkap Datanya: <span class="font-[700] text-gray-900">{{ countBelumLengkap }}</span></p>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Kotak Grid Warga Super Compact -->
-                <div class="grid grid-cols-3 gap-3">
-                    <div v-for="(w, i) in filteredWarga" :key="'print_'+i" class="border border-black p-2 rounded-lg text-[9px] flex flex-col gap-1.5 shadow-sm" style="page-break-inside: avoid; break-inside: avoid;">
-                        <div class="border-b border-gray-300 pb-1.5 flex justify-between items-start">
-                            <div>
-                                <div class="font-[700] text-[11px] uppercase leading-tight">{{w.Nama}}</div>
-                                <div class="text-[8px] text-gray-600 font-mono mt-0.5">{{w.Id_Rumah}}</div>
-                            </div>
-                        </div>
+                <!-- ISI DATA PDF -->
+                <div class="flex flex-col gap-4">
+                    <div v-for="(w, index) in filteredWarga" :key="'print_'+index" class="flex gap-3 items-center" style="page-break-inside: avoid; break-inside: avoid;">
+                        <!-- Number Outsite Card -->
+                        <div class="w-6 font-[600] text-[12px] text-gray-800 self-start mt-5">{{ String(index + 1).padStart(2, '0') }}.</div>
                         
-                        <div class="grid grid-cols-1 gap-[2px] leading-tight">
-                            <div v-if="printSettings.fields.jenis_kelamin"><b>L/P:</b> {{w.Jenis_Kelamin === 'Laki-laki' ? 'L' : (w.Jenis_Kelamin === 'Perempuan' ? 'P' : '-')}}</div>
-                            <div v-if="printSettings.fields.tempat_tanggal_lahir"><b>TTL:</b> {{formatTTL(w)}}</div>
-                            <div v-if="printSettings.fields.agama"><b>Agama:</b> {{w.Agama || '-'}}</div>
-                            <div v-if="printSettings.fields.gol_darah"><b>Darah:</b> <span class="text-red-600 font-[700]">{{w.Gol_Darah || '-'}}</span></div>
-                            <div v-if="printSettings.fields.status_kawin"><b>Status:</b> {{w.Status_Perkawinan || '-'}}</div>
-                            <div v-if="printSettings.fields.pekerjaan"><b>Pekerjaan:</b> {{w.Pekerjaan || '-'}}</div>
-                            <div v-if="printSettings.fields.domisili"><b>Domisili:</b> {{w.Status_Domisili || '-'}}</div>
-                            <div v-if="printSettings.fields.no_whatsapp"><b>WA:</b> {{formatDashPhone(w.No_Tlp)}}</div>
-                            <div v-if="printSettings.fields.jadwal_ronda"><b>Ronda:</b> {{w.Ronda || '-'}}</div>
+                        <div class="flex-1 border border-gray-400 rounded-2xl p-4 flex gap-4 bg-white">
+                            <!-- Kolom Kiri: Foto & QR -->
+                            <div class="w-[65px] shrink-0 flex flex-col gap-2">
+                                <div class="w-full h-[85px] border border-gray-300 rounded-xl flex justify-center items-center overflow-hidden bg-gray-50 relative">
+                                    <span v-if="!w.Foto_Profil" class="text-[10px] font-[600] text-gray-500 tracking-widest">FOTO</span>
+                                    <img v-if="w.Foto_Profil" :src="getAvatar(w)" class="w-full h-full object-cover">
+                                </div>
+                                <div class="w-full h-[65px] border border-gray-300 rounded-xl flex justify-center items-center overflow-hidden bg-gray-50 p-1">
+                                    <img :src="w.QR_Code && w.QR_Code.startsWith('http') ? w.QR_Code : `https://quickchart.io/qr?size=150x150&margin=1&text=${encodeURIComponent((w.Id_Rumah || 'ID') + ' - ' + (w.Nama || 'Warga'))}`" class="w-full h-full object-contain">
+                                </div>
+                            </div>
+                            
+                            <!-- Kolom Kanan: Detail Warga -->
+                            <div class="flex-1 flex flex-col">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h2 class="font-[800] text-[18px] text-gray-900">{{ w.Nama }}</h2>
+                                    <div class="flex gap-2 text-[10px] font-[500] text-gray-800">
+                                        <div class="border border-gray-400 px-3 py-1.5 rounded-lg">{{ formatDashPhone(w.No_Tlp) || '-' }}</div>
+                                        <div class="border border-gray-400 px-3 py-1.5 rounded-lg">{{ w.Id_Rumah || '-' }}</div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-4 gap-x-2 gap-y-3 text-[11px] leading-snug">
+                                    <div class="flex flex-col">
+                                        <div v-if="printSettings.fields.jenis_kelamin" class="font-[800] text-gray-900 mb-0.5">J. Kelamin:</div>
+                                        <div v-if="printSettings.fields.jenis_kelamin" class="text-gray-800 mb-2">{{ w.Jenis_Kelamin || '-' }}</div>
+                                        <div v-if="printSettings.fields.tempat_tanggal_lahir" class="font-[800] text-gray-900 mb-0.5">Tempat, Tgl Lahir:</div>
+                                        <div v-if="printSettings.fields.tempat_tanggal_lahir" class="text-gray-800">{{ formatTTL(w) }}</div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div v-if="printSettings.fields.agama" class="font-[800] text-gray-900 mb-0.5">Agama:</div>
+                                        <div v-if="printSettings.fields.agama" class="text-gray-800 mb-2">{{ w.Agama || '-' }}</div>
+                                        <div v-if="printSettings.fields.gol_darah" class="font-[800] text-gray-900 mb-0.5">Gol. Darah:</div>
+                                        <div v-if="printSettings.fields.gol_darah" class="text-gray-800">{{ w.Gol_Darah || '-' }}</div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div v-if="printSettings.fields.status_kawin" class="font-[800] text-gray-900 mb-0.5">Status:</div>
+                                        <div v-if="printSettings.fields.status_kawin" class="text-gray-800 mb-2">{{ w.Status_Perkawinan || '-' }}</div>
+                                        <div v-if="printSettings.fields.pekerjaan" class="font-[800] text-gray-900 mb-0.5">Pekerjaan:</div>
+                                        <div v-if="printSettings.fields.pekerjaan" class="text-gray-800">{{ w.Pekerjaan || '-' }}</div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div v-if="printSettings.fields.domisili" class="font-[800] text-gray-900 mb-0.5">Domisili:</div>
+                                        <div v-if="printSettings.fields.domisili" class="text-gray-800 mb-2">{{ w.Status_Domisili || '-' }}</div>
+                                        <div v-if="printSettings.fields.jadwal_ronda" class="font-[800] text-gray-900 mb-0.5">Ronda:</div>
+                                        <div v-if="printSettings.fields.jadwal_ronda" class="text-gray-800">{{ w.Ronda || '-' }}</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -603,9 +669,18 @@
                 });
                 const textResult = await response.text();
                 let result = JSON.parse(textResult);
-                if (result.status === "error") throw new Error(result.message);
+                
+                if (result.status === "error") {
+                    let errStr = result.message;
+                    if(errStr.toLowerCase().includes("kesalahan layanan spreadsheet")) errStr = "Klik Tombol Sinkron";
+                    throw new Error(errStr);
+                }
                 return result;
-            } catch (error) { throw new Error(error.message || "Kesalahan Server/Jaringan."); }
+            } catch (error) { 
+                let msg = error.message || "Kesalahan Server/Jaringan.";
+                if(msg.toLowerCase().includes("kesalahan")) msg = "Klik Tombol Sinkron";
+                throw new Error(msg); 
+            }
         };
 
         createApp({
@@ -620,7 +695,7 @@
                 const loggedInId = ref('');
 
                 const activeMenu = ref('list');
-                const viewMode = ref('table'); // DEFAULT LIST VIEW
+                const viewMode = ref('table'); 
                 const loading = ref(false);
                 const saving = ref(false);
                 
@@ -630,6 +705,27 @@
                     header: true, 
                     fields: { id_rumah: true, nama: true, tempat_tanggal_lahir: true, jenis_kelamin: true, gol_darah: true, agama: true, status_kawin: true, pekerjaan: true, domisili: true, no_whatsapp: true, jadwal_ronda: true }
                 });
+
+                // Area Setting Sidebar 
+                const appSettingsLabels = {
+                    keuangan: "Keuangan",
+                    transaksiRekap: "Trx & Rekap Kas",
+                    ronda: "Jadwal Ronda",
+                    inventaris: "Inventaris",
+                    pengurus: "Pengurus",
+                    tataTertib: "Tata Tertib",
+                    lapak: "Lapak Warga",
+                    galeri: "Galeri Area",
+                    undanganWA: "Modal Undangan WA",
+                    hasilKegiatan: "Modal Hasil Kegiatan",
+                    laporanWarga: "Laporan Wacana"
+                };
+                const appSettings = ref({
+                    keuangan: true, transaksiRekap: true, ronda: true, inventaris: true,
+                    pengurus: true, tataTertib: true, lapak: true, galeri: true,
+                    undanganWA: false, hasilKegiatan: false, laporanWarga: false
+                });
+                const savingSettings = ref(false);
 
                 const showCropper = ref(false);
                 const cropperSrc = ref('');
@@ -686,6 +782,7 @@
                         userRole.value = res.role;
                         loggedInId.value = loginIdRumah.value;
                         wargaList.value = res.data; 
+                        if (res.settings) { appSettings.value = res.settings; }
                         isLoggedIn.value = true;
                         
                         let targetHash = res.role === 'admin' ? 'administrator' : (res.data && res.data.length > 0 ? nameToSlug(res.data[0].Nama) : loginIdRumah.value);
@@ -701,6 +798,20 @@
                         localStorage.removeItem('rt2_user_id'); localStorage.removeItem('rt2_pass');
                     } finally { loading.value = false; }
                 };
+
+                const saveSettings = async () => {
+                    savingSettings.value = true;
+                    try {
+                        const res = await callAPI('save_settings', { settings: appSettings.value, role: userRole.value });
+                        showToast(res.message);
+                    } catch(e) {
+                        showToast(e.message, 'error');
+                    } finally { savingSettings.value = false; }
+                };
+
+                const countBelumLengkap = computed(() => {
+                    return filteredWarga.value.filter(w => !w.Foto_Profil || !w.No_Tlp || !w.Pekerjaan || !w.Jenis_Kelamin || !w.Tempat_Tanggal_Lahir).length;
+                });
 
                 const duplicateDataReport = computed(() => {
                     if(userRole.value !== 'admin') return [];
@@ -718,7 +829,6 @@
 
                 const filteredWarga = computed(() => {
                     let result = wargaList.value.filter(w => w.Nama && w.Nama.toString().trim() !== '');
-                    
                     if (sortMode.value === 'id_asc') result.sort((a,b) => naturalSort(a.Id_Rumah, b.Id_Rumah));
                     else if (sortMode.value === 'id_desc') result.sort((a,b) => naturalSort(b.Id_Rumah, a.Id_Rumah));
 
@@ -732,10 +842,7 @@
                     return result;
                 });
                 
-                const handleSearchInput = () => {
-                    if(searchQuery.value) { filterJK.value = ''; filterDomisili.value = ''; filterRonda.value = ''; }
-                };
-
+                const handleSearchInput = () => { if(searchQuery.value) { filterJK.value = ''; filterDomisili.value = ''; filterRonda.value = ''; } };
                 const applySingleFilter = (type, val) => {
                     searchQuery.value = ''; 
                     if (type === 'domisili') { filterDomisili.value = filterDomisili.value === val ? '' : val; filterJK.value=''; filterRonda.value=''; }
@@ -743,7 +850,6 @@
                     else if (type === 'ronda') { filterRonda.value = val; filterDomisili.value=''; filterJK.value=''; }
                 };
                 const resetFilters = () => { filterJK.value=''; filterDomisili.value=''; filterRonda.value=''; searchQuery.value=''; sortMode.value='id_asc'; };
-
                 const showToast = (msg, type='success') => {
                     const id = toastId++; toasts.value.push({id, message:msg, type});
                     setTimeout(() => { toasts.value = toasts.value.filter(t => t.id !== id); }, 4000);
@@ -752,7 +858,6 @@
                 const getAvatar = (w) => w && w.Foto_Profil ? w.Foto_Profil : (w && w.Jenis_Kelamin === 'Perempuan' ? 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png');
                 const formatWhatsApp = (num) => { if(!num) return ''; let f = num.toString().replace(/\D/g, ''); return f.startsWith('0') ? '62' + f.substring(1) : f; };
                 const formatDashPhone = (num) => { if(!num) return '-'; let f = num.toString().replace(/\D/g, ''); if (f.startsWith('0')) f = '62' + f.substring(1); if (f.length >= 10) return `+${f.substring(0,2)} ${f.substring(2,5)}-${f.substring(5,9)}-${f.substring(9)}`; return '+' + f; };
-                
                 const formatTTL = (w) => {
                     if(!w.Tempat_Tanggal_Lahir) return '-';
                     let parts = w.Tempat_Tanggal_Lahir.split(',');
@@ -764,9 +869,7 @@
                     }
                     return `${parts[0].trim()}, ${datePart}`;
                 };
-
                 const getDisplayName = () => (filteredWarga.value && filteredWarga.value.length > 0) ? filteredWarga.value[0].Nama : loggedInId.value;
-
                 const scrollTo = (pos) => {
                     const mainArea = document.querySelector('#scrollArea');
                     if(mainArea) { 
@@ -776,7 +879,6 @@
                         mainArea.scrollTo({ top: targetTop, behavior: 'smooth' }); 
                     }
                 };
-
                 const capitalizeName = () => { if(form.value.Nama) form.value.Nama = form.value.Nama.replace(/(^\w|\s\w)/g, m => m.toUpperCase()); };
                 
                 const calculatedAge = computed(() => {
@@ -792,6 +894,7 @@
                 const removeFam = (index) => { form.value.AnggotaList.splice(index, 1); };
                 const addKeterangan = () => { form.value.KeteranganList.push({ pertemuan: '', dansos: '', keterangan_lain: '' }); };
                 const removeKeterangan = (index) => { form.value.KeteranganList.splice(index, 1); };
+                const removeFile = (field) => { form.value[field] = ''; };
 
                 const parseKeterangan = (ketStr) => {
                     if (!ketStr) return [];
@@ -803,8 +906,6 @@
                     return ketStr.split('\n').map(k => ({ pertemuan: k.replace(/^\d+\.\s*/, '').trim(), dansos: '', keterangan_lain: '' }));
                 };
 
-                const removeFile = (field) => { form.value[field] = ''; };
-
                 const handleLogin = async () => {
                     if(!loginIdRumah.value || !loginPassword.value) return showToast('Isi ID dan Password', 'error');
                     loading.value = true;
@@ -813,6 +914,7 @@
                         userRole.value = res.role;
                         loggedInId.value = loginIdRumah.value;
                         wargaList.value = res.data; 
+                        if (res.settings) { appSettings.value = res.settings; }
                         isLoggedIn.value = true;
                         
                         localStorage.setItem('rt2_user_id', loginIdRumah.value);
@@ -834,8 +936,7 @@
                 const bukaHalamanRegistrasi = () => {
                     userRole.value = 'new_warga'; loggedInId.value = 'new';
                     isLoggedIn.value = true; activeMenu.value = 'register';
-                    resetForm();
-                    window.location.hash = "registrasi";
+                    resetForm(); window.location.hash = "registrasi";
                 };
 
                 const handleBatal = () => {
@@ -848,11 +949,9 @@
                 };
 
                 const logout = () => { 
-                    localStorage.removeItem('rt2_user_id');
-                    localStorage.removeItem('rt2_pass');
+                    localStorage.removeItem('rt2_user_id'); localStorage.removeItem('rt2_pass');
                     isLoggedIn.value = false; loginIdRumah.value = ''; loginPassword.value = '';
-                    wargaList.value = []; 
-                    history.replaceState(null, null, ' '); 
+                    wargaList.value = []; history.replaceState(null, null, ' '); 
                     window.location.href = "https://rt2pasekanlor.id/";
                 };
                 
@@ -861,12 +960,7 @@
                     if(menu === 'register' && !isEditing.value) resetForm(); 
                 };
 
-                const bukaFormKosong = () => {
-                    resetForm();
-                    activeMenu.value = 'register';
-                    scrollTo('top');
-                    window.location.hash = "registrasi";
-                };
+                const bukaFormKosong = () => { resetForm(); activeMenu.value = 'register'; scrollTo('top'); window.location.hash = "registrasi"; };
                 
                 const fetchData = async () => {
                     if(userRole.value === 'new_warga') return;
@@ -880,7 +974,7 @@
                            const updatedData = wargaList.value.find(w => w.Id_Rumah === loggedInId.value);
                            if(updatedData) editWarga(updatedData);
                         }
-                    } catch(e) { showToast("Gagal memuat data", 'error'); } 
+                    } catch(e) { showToast(e.message || "Gagal memuat data", 'error'); } 
                     finally { loading.value = false; }
                 };
 
@@ -888,21 +982,17 @@
 
                 const editWarga = (w) => {
                     if (!w) return;
-                    isEditing.value = true;
-                    form.value = JSON.parse(JSON.stringify(w));
+                    isEditing.value = true; form.value = JSON.parse(JSON.stringify(w));
                     form.value.Id_Rumah_Lama = w.Id_Rumah; form.value.Nama_Lama = w.Nama;
-                    
                     if(form.value.Tempat_Tanggal_Lahir) {
                         let ttl = form.value.Tempat_Tanggal_Lahir.split(',');
                         if(ttl.length > 1) { form.value.Tempat_Lahir = ttl[0].trim(); form.value.Tanggal_Lahir = ttl[1].trim(); }
                         else { form.value.Tempat_Lahir = ttl[0]; }
                     }
-                    
                     form.value.AnggotaList = [];
                     if(form.value.Anggota_Keluarga && form.value.Anggota_Keluarga !== 'Tidak ada Data') {
                         form.value.Anggota_Keluarga.split('\n').forEach(line => {
-                            let text = line.replace(/^\d+\.\s*/, '');
-                            let parts = text.split(' - ');
+                            let parts = line.replace(/^\d+\.\s*/, '').split(' - ');
                             form.value.AnggotaList.push({ n: parts[0] || '', s: parts[1] || '' });
                         });
                     }
@@ -911,9 +1001,7 @@
                     form.value.KeteranganList = parseKeterangan(form.value.Keterangan);
                     if (form.value.KeteranganList.length === 0) form.value.KeteranganList = [{ pertemuan: '', dansos: '', keterangan_lain: '' }];
                     
-                    activeMenu.value = 'register'; 
-                    scrollTo('top');
-                    window.location.hash = nameToSlug(w.Nama);
+                    activeMenu.value = 'register'; scrollTo('top'); window.location.hash = nameToSlug(w.Nama);
                 };
 
                 const saveData = async () => {
@@ -921,7 +1009,6 @@
                     try {
                         let tglFormat = form.value.Tanggal_Lahir;
                         form.value.Tempat_Tanggal_Lahir = `${form.value.Tempat_Lahir || ''}, ${tglFormat || ''}`.trim().replace(/^,|,$/g,'').trim();
-                        
                         let famArr = [];
                         form.value.AnggotaList.forEach((f, index) => {
                             if(f.n.trim()) famArr.push(`${index + 1}. ${f.n.trim()}${f.s.trim() ? ' - '+f.s.trim() : ''}`);
@@ -935,23 +1022,15 @@
 
                         let finalData = { ...form.value }; delete finalData.AnggotaList;
 
-                        const res = await callAPI('save', { 
-                            formData: finalData, 
-                            role: userRole.value, 
-                            loggedInId: loggedInId.value 
-                        });
+                        const res = await callAPI('save', { formData: finalData, role: userRole.value, loggedInId: loggedInId.value });
                         
                         if(userRole.value === 'new_warga') { 
                             alert(`✅ PENDAFTARAN BERHASIL!\n\nUser ID Anda : ${res.newId}\nPassword Anda : ${finalData.Password}\n\nPENTING: Harap catat/screenshot User ID di atas untuk keperluan Login Anda.`);
                             logout();
-                        } 
-                        else { 
-                            showToast(res.message); 
-                            wargaList.value = res.data; 
-                            
+                        } else { 
+                            showToast(res.message); wargaList.value = res.data; 
                             if(userRole.value === 'admin') {
-                                activeMenu.value = 'list'; resetForm(); scrollTo('top'); 
-                                window.location.hash = 'administrator';
+                                activeMenu.value = 'list'; resetForm(); scrollTo('top'); window.location.hash = 'administrator';
                             } else {
                                 const myData = res.data.find(w => w.Id_Rumah === loggedInId.value);
                                 if(myData) editWarga(myData);
@@ -962,18 +1041,15 @@
                 };
 
                 const confirmDelete = (w) => { deleteConfirm.value = { show:true, nama: w.Nama, idRumah: w.Id_Rumah }; };
+                
                 const executeDelete = async () => {
                     saving.value = true;
                     try {
                         const res = await callAPI('delete', { 
-                            Nama: deleteConfirm.value.nama, 
-                            Id_Rumah: deleteConfirm.value.idRumah,
-                            role: userRole.value,
-                            loggedInId: loggedInId.value
+                            Nama: deleteConfirm.value.nama, Id_Rumah: deleteConfirm.value.idRumah,
+                            role: userRole.value, loggedInId: loggedInId.value
                         });
-                        showToast(res.message); 
-                        deleteConfirm.value.show = false; 
-                        wargaList.value = res.data;
+                        showToast(res.message); deleteConfirm.value.show = false; wargaList.value = res.data;
                     } catch(e) { showToast(e.message || 'Gagal menghapus', 'error'); } 
                     finally { saving.value = false; }
                 };
@@ -1015,9 +1091,7 @@
                                 try { base64Data = await compressImage(base64Data, 600, 0.7); form.value[field] = base64Data; } 
                                 catch (err) {}
                             }
-                        } else {
-                            form.value[field] = base64Data; // PDF
-                        }
+                        } else { form.value[field] = base64Data; }
                     };
                     reader.readAsDataURL(file);
                 };
@@ -1051,8 +1125,7 @@
                         let csvContent = "data:text/csv;charset=utf-8,No,ID Rumah,Nama,L/P,TTL,Agama,Darah,Status,Pekerjaan,Domisili,WhatsApp,Ronda\n";
                         filteredWarga.value.forEach((w, i) => {
                             let row = [
-                                i+1, w.Id_Rumah, w.Nama, 
-                                w.Jenis_Kelamin === 'Laki-laki' ? 'L' : 'P', formatTTL(w), w.Agama, w.Gol_Darah, 
+                                i+1, w.Id_Rumah, w.Nama, w.Jenis_Kelamin === 'Laki-laki' ? 'L' : 'P', formatTTL(w), w.Agama, w.Gol_Darah, 
                                 w.Status_Perkawinan, w.Pekerjaan, w.Status_Domisili, w.No_Tlp, w.Ronda
                             ].map(v => `"${(v||'').toString().replace(/"/g, '""')}"`).join(",");
                             csvContent += row + "\r\n";
@@ -1060,20 +1133,31 @@
                         const encodedUri = encodeURI(csvContent);
                         const link = document.createElement("a");
                         link.setAttribute("href", encodedUri);
-                        link.setAttribute("download", "Data_Warga_RT2.csv");
+                        
+                        let d = new Date();
+                        let tgl = d.getDate().toString().padStart(2,'0') + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getFullYear();
+                        link.setAttribute("download", `DW_RT2_Paslor_${tgl}.csv`);
+                        
                         document.body.appendChild(link); link.click(); document.body.removeChild(link);
                         saving.value = false; closeExportModal();
                     } else if (type === 'pdf') {
                         const el = document.getElementById('print-area-a4');
                         const wrapper = document.getElementById('print-container-wrapper');
+                        
+                        // Menampakan UI print ke layar tersembunyi
                         wrapper.style.zIndex = '1000'; wrapper.style.opacity = '1';
                         await Vue.nextTick();
+                        
+                        let d = new Date();
+                        let tgl = d.getDate().toString().padStart(2,'0') + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getFullYear();
+                        let fileName = `DW_RT2_Paslor_${tgl}.pdf`;
 
                         html2pdf().set({
                             margin: [10, 10, 10, 10], 
-                            filename: 'Data_Warga_RT2.pdf', 
+                            filename: fileName, 
                             image: { type: 'jpeg', quality: 1 },
-                            html2canvas: { scale: 2, useCORS: true, logging: false },
+                            // Scale 4 memperbesar render kanvas sehingga teks tajam seperti vektor
+                            html2canvas: { scale: 4, useCORS: true, logging: false }, 
                             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                         }).from(el).save().then(() => {
                             wrapper.style.zIndex = '-9999'; wrapper.style.opacity = '0';
@@ -1094,20 +1178,13 @@
                         const blob = await response.blob();
                         const blobUrl = window.URL.createObjectURL(blob);
                         const a = document.createElement('a');
-                        a.href = blobUrl;
-                        a.download = fileName;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
+                        a.href = blobUrl; a.download = fileName;
+                        document.body.appendChild(a); a.click(); document.body.removeChild(a);
                         window.URL.revokeObjectURL(blobUrl);
                     } catch(e) {
                         const a = document.createElement('a');
-                        a.href = url;
-                        a.download = fileName;
-                        a.target = "_blank";
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
+                        a.href = url; a.download = fileName; a.target = "_blank";
+                        document.body.appendChild(a); a.click(); document.body.removeChild(a);
                     }
                 };
 
@@ -1117,8 +1194,9 @@
                     filterJK, filterDomisili, filterRonda, sortMode, applySingleFilter, resetFilters, duplicateDataReport,
                     isEditing, form, calculatedAge, capitalizeName, addFam, removeFam, removeFile, addKeterangan, removeKeterangan, parseKeterangan,
                     toasts, deleteConfirm, showTataCara,
+                    appSettings, appSettingsLabels, savingSettings, countBelumLengkap,
                     exportModal, printSettings, customLogoBase64, openExportModal, closeExportModal, executeExport, uploadCustomLogo,
-                    handleLogin, logout, changeMenu, bukaFormKosong, handleBatal, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, showCropper, cropperSrc, cancelCrop, applyCrop, formatWhatsApp, formatDashPhone, formatTTL, handleSearchInput, downloadQR
+                    handleLogin, logout, changeMenu, bukaFormKosong, handleBatal, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, showCropper, cropperSrc, cancelCrop, applyCrop, formatWhatsApp, formatDashPhone, formatTTL, handleSearchInput, downloadQR, saveSettings
                 };
             }
         }).mount('#app');

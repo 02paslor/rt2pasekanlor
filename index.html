@@ -245,7 +245,7 @@
             padding: 10px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 8px;
         }
         .setting-label { font-size: 12px; font-weight: 600; color: #1e293b; display: flex; align-items: center; gap: 8px; }
-        .setting-label svg { width: 15px; height: 15px; color: #64748b; }
+        .setting-label svg { width: 15px; height: 15px; color: #64748b; flex-shrink: 0; }
 
         /* STATUS KUNCI PADA TOMBOL (ADMIN & GUEST) */
         .b-nav-item.is-locked, .sheet-item.is-locked,
@@ -564,6 +564,8 @@
                 </div>
                 
                 <div style="max-height: 45vh; overflow-y: auto; margin-right: -10px; padding-right: 10px;">
+                    
+                    <div style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin: 10px 0 6px 4px;">Menu Navigasi</div>
                     <div class="setting-row">
                         <div class="setting-label">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path></svg>
@@ -651,6 +653,64 @@
                             <span class="slider"></span>
                         </label>
                     </div>
+
+                    <div style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin: 16px 0 6px 4px;">Kunci Area Home</div>
+                    
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            Nominal Saldo Kas
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleSaldoKas">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            Transaksi Terakhir
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleTransaksiHome">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            Undangan WA
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleUndanganWA">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            Hasil Kegiatan & Thumb
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleHasilKegiatan">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            Arsip Lain
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggleArsipLain">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
                 </div>
 
                 <!-- TOMBOL SIMPAN & BATAL -->
@@ -747,7 +807,7 @@
 
 <script>
 
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbynAbJ-Aw96h3yqoodhYxqGNWPP2z_CuEx7Jo9gZWFS6hYznRt5PeOIHiWemJP8Yrok6A/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
     
     const dynamicContent = document.getElementById('dynamic-content');
     const appHeaderWrapper = document.getElementById('appHeaderWrapper');
@@ -759,6 +819,8 @@
 
     dynamicContent.addEventListener('load', () => {
         initIframeScroll(); 
+        // Beri delay sedikit untuk memastikan iframe sudah dirender sebelum mengirim perintah Lock Home
+        setTimeout(applySettings, 500); 
     });
 
     if(btnMoreMenu && moreMenuCard) {
@@ -873,6 +935,13 @@
         document.getElementById('toggleLapak').checked = localStorage.getItem('lock_lapak') === 'true';
         document.getElementById('toggleGaleri').checked = localStorage.getItem('lock_galeri') === 'true';
         document.getElementById('toggleLogin').checked = localStorage.getItem('lock_login') === 'true';
+
+        // Toggles Baru (Home)
+        document.getElementById('toggleSaldoKas').checked = localStorage.getItem('lock_saldo_kas') === 'true';
+        document.getElementById('toggleTransaksiHome').checked = localStorage.getItem('lock_transaksi_home') === 'true';
+        document.getElementById('toggleUndanganWA').checked = localStorage.getItem('lock_undangan_wa') === 'true';
+        document.getElementById('toggleHasilKegiatan').checked = localStorage.getItem('lock_hasil_kegiatan') === 'true';
+        document.getElementById('toggleArsipLain').checked = localStorage.getItem('lock_arsip_lain') === 'true';
         
         adminSettingsModalOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -900,6 +969,14 @@
                 localStorage.setItem('lock_lapak', data.data.lock_lapak);
                 localStorage.setItem('lock_galeri', data.data.lock_galeri);
                 localStorage.setItem('lock_login', data.data.lock_login);
+                
+                // Toggles Baru (Home)
+                localStorage.setItem('lock_saldo_kas', data.data.lock_saldo_kas);
+                localStorage.setItem('lock_transaksi_home', data.data.lock_transaksi_home);
+                localStorage.setItem('lock_undangan_wa', data.data.lock_undangan_wa);
+                localStorage.setItem('lock_hasil_kegiatan', data.data.lock_hasil_kegiatan);
+                localStorage.setItem('lock_arsip_lain', data.data.lock_arsip_lain);
+
                 applySettings();
             }
         }).catch(err => {
@@ -916,7 +993,13 @@
             lock_tatatertib: document.getElementById('toggleTataTertib').checked,
             lock_lapak: document.getElementById('toggleLapak').checked,
             lock_galeri: document.getElementById('toggleGaleri').checked,
-            lock_login: document.getElementById('toggleLogin').checked
+            lock_login: document.getElementById('toggleLogin').checked,
+
+            lock_saldo_kas: document.getElementById('toggleSaldoKas').checked,
+            lock_transaksi_home: document.getElementById('toggleTransaksiHome').checked,
+            lock_undangan_wa: document.getElementById('toggleUndanganWA').checked,
+            lock_hasil_kegiatan: document.getElementById('toggleHasilKegiatan').checked,
+            lock_arsip_lain: document.getElementById('toggleArsipLain').checked
         };
 
         // Simpan langsung ke penyimpanan lokal agar UI merespons cepat
@@ -995,6 +1078,20 @@
             } else {
                 btnOpenLogin.style.opacity = '1';
             }
+        }
+
+        // KIRIM SINYAL KUNCI KE IFRAME HOME
+        if(dynamicContent && dynamicContent.contentWindow) {
+            dynamicContent.contentWindow.postMessage({
+                type: 'applyLocksHome',
+                locks: {
+                    saldo: localStorage.getItem('lock_saldo_kas') === 'true',
+                    transaksi: localStorage.getItem('lock_transaksi_home') === 'true',
+                    undangan: localStorage.getItem('lock_undangan_wa') === 'true',
+                    hasil: localStorage.getItem('lock_hasil_kegiatan') === 'true',
+                    arsip: localStorage.getItem('lock_arsip_lain') === 'true'
+                }
+            }, '*');
         }
     }
 

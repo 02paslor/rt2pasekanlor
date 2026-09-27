@@ -525,7 +525,7 @@
             <div class="modern-login-wrapper">
                 <div class="modern-login-header">
                     <div class="modern-header-text">
-                        <h2 style="color: #ef4444; margin-top: 6px;">Login Admin</h2>
+                        <h2 style="color: #ef4444; margin-top: 6px; font-size: 14px;">Tidak ada apa-apa disini</h2>
                     </div>
                     <button class="modern-close-btn" style="background: #fef2f2; border-color: #fee2e2; color: #ef4444;" onclick="closeAdminAuth()" title="Tutup">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -541,9 +541,8 @@
                         <svg class="left-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
                         <input type="password" id="adminPassword" required class="modern-input" autocomplete="new-password" value="">
                     </div>
-                    <button type="submit" class="modern-submit-btn" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                        <span>Masuk Admin</span>
+                    <button type="submit" class="modern-submit-btn" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); padding: 12px 0;">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     </button>
                 </form>
             </div>
@@ -657,7 +656,7 @@
                 <!-- TOMBOL SIMPAN & BATAL -->
                 <div style="display: flex; gap: 10px; margin-top: 5px;">
                     <button type="button" onclick="closeAdminSettings()" style="flex: 1; padding: 10px; border-radius: 12px; border: 1px solid #cbd5e1; background: #f1f5f9; color: #475569; font-weight: 600; cursor: pointer; font-size: 13px;">Batal</button>
-                    <button type="button" onclick="saveAdminSettings()" style="flex: 1; padding: 10px; border-radius: 12px; border: none; background: #1155cc; color: #fff; font-weight: 600; cursor: pointer; font-size: 13px; box-shadow: 0 4px 10px rgba(17,85,204,0.3);">Simpan</button>
+                    <button type="button" id="btnSaveSettings" onclick="saveAdminSettings()" style="flex: 1; padding: 10px; border-radius: 12px; border: none; background: #1155cc; color: #fff; font-weight: 600; cursor: pointer; font-size: 13px; box-shadow: 0 4px 10px rgba(17,85,204,0.3);">Simpan</button>
                 </div>
             </div>
         </div>
@@ -748,6 +747,8 @@
 
 <script>
 
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
+    
     const dynamicContent = document.getElementById('dynamic-content');
     const appHeaderWrapper = document.getElementById('appHeaderWrapper');
     const bottomNavBar = document.getElementById('bottomNavBar');
@@ -758,7 +759,6 @@
 
     dynamicContent.addEventListener('load', () => {
         initIframeScroll(); 
-        applySettings(); 
     });
 
     if(btnMoreMenu && moreMenuCard) {
@@ -795,8 +795,10 @@
                     return;
                 }
                 
-                loginErrorMsg.style.display = 'none';
-                loginModalOverlay.classList.add('active'); 
+                const loginErrorMsg = document.getElementById('loginErrorMessage');
+                const loginModalOverlay = document.getElementById('loginModalOverlay');
+                if(loginErrorMsg) loginErrorMsg.style.display = 'none';
+                if(loginModalOverlay) loginModalOverlay.classList.add('active'); 
                 document.body.style.overflow = 'hidden'; 
                 moreMenuCard.classList.remove('active');
                 return;
@@ -823,7 +825,7 @@
     });
 
     // ==========================================
-    // LOGIKA SETTING ADMIN & SISTEM LOCK 
+    // LOGIKA SETTING ADMIN GLOBAL & SISTEM LOCK 
     // ==========================================
     
     const btnSettingsApp = document.getElementById('btnSettingsApp');
@@ -882,18 +884,80 @@
     }
     function closeAdminSettingsOutside(e) { if(e.target === adminSettingsModalOverlay) closeAdminSettings(); }
 
+    function fetchGlobalSettings() {
+        if (!GAS_API_URL) return;
+        fetch(GAS_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ token: "RT2_PASEKAN_AMAN_2026", action: "get_settings" })
+        }).then(res => res.json()).then(data => {
+            if(data.status === "success" && data.data) {
+                localStorage.setItem('lock_keuangan', data.data.lock_keuangan);
+                localStorage.setItem('lock_inventaris', data.data.lock_inventaris);
+                localStorage.setItem('lock_ronda', data.data.lock_ronda);
+                localStorage.setItem('lock_pengurus', data.data.lock_pengurus);
+                localStorage.setItem('lock_tatatertib', data.data.lock_tatatertib);
+                localStorage.setItem('lock_lapak', data.data.lock_lapak);
+                localStorage.setItem('lock_galeri', data.data.lock_galeri);
+                localStorage.setItem('lock_login', data.data.lock_login);
+                applySettings();
+            }
+        }).catch(err => {
+            console.log("Gagal memuat setting global, menggunakan cache lokal.");
+        });
+    }
+
     function saveAdminSettings() {
-        localStorage.setItem('lock_keuangan', document.getElementById('toggleKeuangan').checked);
-        localStorage.setItem('lock_inventaris', document.getElementById('toggleInventaris').checked);
-        localStorage.setItem('lock_ronda', document.getElementById('toggleRonda').checked);
-        localStorage.setItem('lock_pengurus', document.getElementById('togglePengurus').checked);
-        localStorage.setItem('lock_tatatertib', document.getElementById('toggleTataTertib').checked);
-        localStorage.setItem('lock_lapak', document.getElementById('toggleLapak').checked);
-        localStorage.setItem('lock_galeri', document.getElementById('toggleGaleri').checked);
-        localStorage.setItem('lock_login', document.getElementById('toggleLogin').checked);
-        
+        const settingsPayload = {
+            lock_keuangan: document.getElementById('toggleKeuangan').checked,
+            lock_inventaris: document.getElementById('toggleInventaris').checked,
+            lock_ronda: document.getElementById('toggleRonda').checked,
+            lock_pengurus: document.getElementById('togglePengurus').checked,
+            lock_tatatertib: document.getElementById('toggleTataTertib').checked,
+            lock_lapak: document.getElementById('toggleLapak').checked,
+            lock_galeri: document.getElementById('toggleGaleri').checked,
+            lock_login: document.getElementById('toggleLogin').checked
+        };
+
+        // Simpan langsung ke penyimpanan lokal agar UI merespons cepat
+        for (let key in settingsPayload) {
+            localStorage.setItem(key, settingsPayload[key]);
+        }
         applySettings();
-        closeAdminSettings();
+
+        // Menyimpan ke Server Global
+        const btnSave = document.getElementById('btnSaveSettings');
+        const originalText = btnSave.innerHTML;
+        btnSave.innerHTML = "Menyimpan...";
+        btnSave.disabled = true;
+
+        if (GAS_API_URL) {
+            fetch(GAS_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ 
+                    token: "RT2_PASEKAN_AMAN_2026", 
+                    action: "save_settings", 
+                    payload: settingsPayload 
+                })
+            }).then(res => res.json()).then(data => {
+                if(data.status === "success") {
+                    alert("✅ Pengaturan Global berhasil disimpan.");
+                } else {
+                    alert("✅ Pengaturan lokal tersimpan. (Sistem server belum sepenuhnya siap)");
+                }
+            }).catch(err => {
+                alert("✅ Pengaturan lokal tersimpan. (Gagal koneksi ke server global)");
+            }).finally(() => {
+                btnSave.innerHTML = originalText;
+                btnSave.disabled = false;
+                closeAdminSettings();
+            });
+        } else {
+            btnSave.innerHTML = originalText;
+            btnSave.disabled = false;
+            closeAdminSettings();
+        }
     }
 
     function applySettings() {
@@ -938,7 +1002,6 @@
     // ==========================================
     // LOGIKA LOGIN DATA WARGA
     // ==========================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
     const loginModalOverlay = document.getElementById('loginModalOverlay');
     const loginForm = document.getElementById('loginForm');
     const loginErrorMsg = document.getElementById('loginErrorMessage');
@@ -998,6 +1061,7 @@
     document.addEventListener("DOMContentLoaded", () => { 
         checkLoginState();
         applySettings(); 
+        fetchGlobalSettings(); 
     });
 
     const btnOpenLogin = document.getElementById('openLoginModalBtn');

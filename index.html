@@ -167,6 +167,7 @@
         .modern-logo { height: 55px; width: auto; filter: drop-shadow(0 4px 3px rgba(0,0,0,0.07)); }
         .modern-header-text { flex: 1; display: flex; flex-direction: column; justify-content: center;}
         .modern-header-text h2 { color: #0F2E70; font-weight: 700; font-size: 17px; margin: 0; line-height: 1.2; }
+        .modern-header-text p { color: #64748B; font-weight: 500; font-size: 10px; margin: 2px 0 0 0; line-height: 1.3; }
         
         .modern-close-btn {
             width: 38px; height: 38px; flex-shrink: 0; background: #eff6ff; color: #2563eb;
@@ -237,7 +238,8 @@
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        input:checked + .slider { background-color: #1155cc; }
+        /* HIJAU UNTUK AKTIF / TERBUKA */
+        input:checked + .slider { background-color: #10B981; }
         input:checked + .slider:before { transform: translateX(20px); }
 
         .setting-row {
@@ -262,7 +264,7 @@
         }
         .guest-lock-badge {
             position: absolute; top: 4px; right: 4px;
-            background: #f59e0b; /* Warna Amber/Kuning untuk peringatan harus login */
+            background: #f59e0b; 
             color: #fff; border-radius: 50%;
             width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;
             font-size: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 10;
@@ -549,14 +551,14 @@
         </div>
     </div>
 
-    <!-- MODAL SETTINGS ADMIN (DENGAN TOMBOL SIMPAN & BATAL) -->
+    <!-- MODAL SETTINGS ADMIN -->
     <div class="slide-up-overlay" id="adminSettingsModalOverlay" onclick="closeAdminSettingsOutside(event)">
         <div class="slide-up-content" onclick="event.stopPropagation()">
             <div class="modern-login-wrapper">
                 <div class="modern-login-header" style="margin-bottom: 5px;">
                     <div class="modern-header-text">
-                        <h2>Kunci Fitur Sistem</h2>
-                        <p>Kunci akses agar tombol tidak bisa diklik</p>
+                        <h2 style="margin-bottom: 2px;">Kunci Fitur Sistem</h2>
+                        <p style="font-size: 10px; color: #64748b; font-weight: 500; line-height: 1.3; margin: 0;">Kunci akses agar tombol tidak bisa diklik. (Default: Terbuka)</p>
                     </div>
                     <button class="modern-close-btn" onclick="closeAdminSettings()" title="Tutup">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -807,7 +809,7 @@
 
 <script>
 
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyw8-a5kurxRmLS1Wl0Czbr9r6Yo43wB3W289ODDIjNyNrUsxQhT5WQeRFM2OeoHoV6/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxGyorIHkjEkI2z6IXiOVgt9IU17yK0AKVB0Y1ExRKksbjap0ivQfbdK73OxmbJDlbpuA/exec";
     
     const dynamicContent = document.getElementById('dynamic-content');
     const appHeaderWrapper = document.getElementById('appHeaderWrapper');
@@ -819,7 +821,7 @@
 
     dynamicContent.addEventListener('load', () => {
         initIframeScroll(); 
-        // Beri delay sedikit untuk memastikan iframe sudah dirender sebelum mengirim perintah Lock Home
+        // Beri jeda sedikit agar Home sempat render sebelum dikunci
         setTimeout(applySettings, 500); 
     });
 
@@ -852,7 +854,7 @@
                 e.preventDefault();
                 alert("🔒 Silakan Masuk Sistem (Login) terlebih dahulu untuk mengakses menu ini.");
                 
-                if (localStorage.getItem('lock_login') === 'true') {
+                if (localStorage.getItem('fitur_login') === 'FALSE') {
                     alert("Sedang dalam Perbaikan");
                     return;
                 }
@@ -927,21 +929,22 @@
     });
 
     function openAdminSettings() {
-        document.getElementById('toggleKeuangan').checked = localStorage.getItem('lock_keuangan') === 'true';
-        document.getElementById('toggleInventaris').checked = localStorage.getItem('lock_inventaris') === 'true';
-        document.getElementById('toggleRonda').checked = localStorage.getItem('lock_ronda') === 'true';
-        document.getElementById('togglePengurus').checked = localStorage.getItem('lock_pengurus') === 'true';
-        document.getElementById('toggleTataTertib').checked = localStorage.getItem('lock_tatatertib') === 'true';
-        document.getElementById('toggleLapak').checked = localStorage.getItem('lock_lapak') === 'true';
-        document.getElementById('toggleGaleri').checked = localStorage.getItem('lock_galeri') === 'true';
-        document.getElementById('toggleLogin').checked = localStorage.getItem('lock_login') === 'true';
+        // Jika data kosong (belum pernah disetting), dianggap 'TRUE' (Terbuka/Diceklis)
+        document.getElementById('toggleKeuangan').checked = localStorage.getItem('menu_keuangan') !== 'FALSE';
+        document.getElementById('toggleInventaris').checked = localStorage.getItem('menu_inventaris') !== 'FALSE';
+        document.getElementById('toggleRonda').checked = localStorage.getItem('menu_ronda') !== 'FALSE';
+        document.getElementById('togglePengurus').checked = localStorage.getItem('menu_pengurus') !== 'FALSE';
+        document.getElementById('toggleTataTertib').checked = localStorage.getItem('menu_tatatertib') !== 'FALSE';
+        document.getElementById('toggleLapak').checked = localStorage.getItem('menu_lapak') !== 'FALSE';
+        document.getElementById('toggleGaleri').checked = localStorage.getItem('menu_galeri') !== 'FALSE';
+        document.getElementById('toggleLogin').checked = localStorage.getItem('fitur_login') !== 'FALSE';
 
         // Toggles Baru (Home)
-        document.getElementById('toggleSaldoKas').checked = localStorage.getItem('lock_saldo_kas') === 'true';
-        document.getElementById('toggleTransaksiHome').checked = localStorage.getItem('lock_transaksi_home') === 'true';
-        document.getElementById('toggleUndanganWA').checked = localStorage.getItem('lock_undangan_wa') === 'true';
-        document.getElementById('toggleHasilKegiatan').checked = localStorage.getItem('lock_hasil_kegiatan') === 'true';
-        document.getElementById('toggleArsipLain').checked = localStorage.getItem('lock_arsip_lain') === 'true';
+        document.getElementById('toggleSaldoKas').checked = localStorage.getItem('fitur_saldo') !== 'FALSE';
+        document.getElementById('toggleTransaksiHome').checked = localStorage.getItem('fitur_rekap') !== 'FALSE';
+        document.getElementById('toggleUndanganWA').checked = localStorage.getItem('fitur_wa') !== 'FALSE';
+        document.getElementById('toggleHasilKegiatan').checked = localStorage.getItem('fitur_hasil') !== 'FALSE';
+        document.getElementById('toggleArsipLain').checked = localStorage.getItem('fitur_arsip') !== 'FALSE';
         
         adminSettingsModalOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -961,54 +964,42 @@
             body: JSON.stringify({ token: "RT2_PASEKAN_AMAN_2026", action: "get_settings" })
         }).then(res => res.json()).then(data => {
             if(data.status === "success" && data.data) {
-                localStorage.setItem('lock_keuangan', data.data.lock_keuangan);
-                localStorage.setItem('lock_inventaris', data.data.lock_inventaris);
-                localStorage.setItem('lock_ronda', data.data.lock_ronda);
-                localStorage.setItem('lock_pengurus', data.data.lock_pengurus);
-                localStorage.setItem('lock_tatatertib', data.data.lock_tatatertib);
-                localStorage.setItem('lock_lapak', data.data.lock_lapak);
-                localStorage.setItem('lock_galeri', data.data.lock_galeri);
-                localStorage.setItem('lock_login', data.data.lock_login);
-                
-                // Toggles Baru (Home)
-                localStorage.setItem('lock_saldo_kas', data.data.lock_saldo_kas);
-                localStorage.setItem('lock_transaksi_home', data.data.lock_transaksi_home);
-                localStorage.setItem('lock_undangan_wa', data.data.lock_undangan_wa);
-                localStorage.setItem('lock_hasil_kegiatan', data.data.lock_hasil_kegiatan);
-                localStorage.setItem('lock_arsip_lain', data.data.lock_arsip_lain);
-
+                // Simpan persis sesuai keys di spreadsheet Dashboard
+                for (let key in data.data) {
+                    localStorage.setItem(key, data.data[key]);
+                }
                 applySettings();
             }
         }).catch(err => {
-            console.log("Gagal memuat setting global, menggunakan cache lokal.");
+            console.log("Gagal memuat setting global dari server.");
         });
     }
 
     function saveAdminSettings() {
+        // Format object disesuaikan dengan Kunci di spreadsheet: TRUE atau FALSE string
         const settingsPayload = {
-            lock_keuangan: document.getElementById('toggleKeuangan').checked,
-            lock_inventaris: document.getElementById('toggleInventaris').checked,
-            lock_ronda: document.getElementById('toggleRonda').checked,
-            lock_pengurus: document.getElementById('togglePengurus').checked,
-            lock_tatatertib: document.getElementById('toggleTataTertib').checked,
-            lock_lapak: document.getElementById('toggleLapak').checked,
-            lock_galeri: document.getElementById('toggleGaleri').checked,
-            lock_login: document.getElementById('toggleLogin').checked,
+            menu_keuangan: document.getElementById('toggleKeuangan').checked ? "TRUE" : "FALSE",
+            menu_inventaris: document.getElementById('toggleInventaris').checked ? "TRUE" : "FALSE",
+            menu_ronda: document.getElementById('toggleRonda').checked ? "TRUE" : "FALSE",
+            menu_pengurus: document.getElementById('togglePengurus').checked ? "TRUE" : "FALSE",
+            menu_tatatertib: document.getElementById('toggleTataTertib').checked ? "TRUE" : "FALSE",
+            menu_lapak: document.getElementById('toggleLapak').checked ? "TRUE" : "FALSE",
+            menu_galeri: document.getElementById('toggleGaleri').checked ? "TRUE" : "FALSE",
+            fitur_login: document.getElementById('toggleLogin').checked ? "TRUE" : "FALSE",
 
-            lock_saldo_kas: document.getElementById('toggleSaldoKas').checked,
-            lock_transaksi_home: document.getElementById('toggleTransaksiHome').checked,
-            lock_undangan_wa: document.getElementById('toggleUndanganWA').checked,
-            lock_hasil_kegiatan: document.getElementById('toggleHasilKegiatan').checked,
-            lock_arsip_lain: document.getElementById('toggleArsipLain').checked
+            fitur_saldo: document.getElementById('toggleSaldoKas').checked ? "TRUE" : "FALSE",
+            fitur_rekap: document.getElementById('toggleTransaksiHome').checked ? "TRUE" : "FALSE",
+            fitur_wa: document.getElementById('toggleUndanganWA').checked ? "TRUE" : "FALSE",
+            fitur_hasil: document.getElementById('toggleHasilKegiatan').checked ? "TRUE" : "FALSE",
+            fitur_arsip: document.getElementById('toggleArsipLain').checked ? "TRUE" : "FALSE"
         };
 
-        // Simpan langsung ke penyimpanan lokal agar UI merespons cepat
+        // Simpan ke local agar responsif
         for (let key in settingsPayload) {
             localStorage.setItem(key, settingsPayload[key]);
         }
         applySettings();
 
-        // Menyimpan ke Server Global
         const btnSave = document.getElementById('btnSaveSettings');
         const originalText = btnSave.innerHTML;
         btnSave.innerHTML = "Menyimpan...";
@@ -1045,17 +1036,18 @@
 
     function applySettings() {
         const lockMap = [
-            { key: 'lock_keuangan', elem: document.querySelector('.btn-kas') },
-            { key: 'lock_inventaris', elem: document.getElementById('btnMenuInventaris') },
-            { key: 'lock_ronda', elem: document.querySelector('.btn-ronda') },
-            { key: 'lock_pengurus', elem: document.querySelector('.sheet-item[data-url*="pengurus"]') },
-            { key: 'lock_tatatertib', elem: document.querySelector('.sheet-item[data-url*="tatatertib"]') },
-            { key: 'lock_lapak', elem: document.querySelector('.sheet-item[data-url*="lapak"]') },
-            { key: 'lock_galeri', elem: document.querySelector('.sheet-item[data-url*="galeri"]') }
+            { key: 'menu_keuangan', elem: document.querySelector('.btn-kas') },
+            { key: 'menu_inventaris', elem: document.getElementById('btnMenuInventaris') },
+            { key: 'menu_ronda', elem: document.querySelector('.btn-ronda') },
+            { key: 'menu_pengurus', elem: document.querySelector('.sheet-item[data-url*="pengurus"]') },
+            { key: 'menu_tatatertib', elem: document.querySelector('.sheet-item[data-url*="tatatertib"]') },
+            { key: 'menu_lapak', elem: document.querySelector('.sheet-item[data-url*="lapak"]') },
+            { key: 'menu_galeri', elem: document.querySelector('.sheet-item[data-url*="galeri"]') }
         ];
 
         lockMap.forEach(item => {
-            const isLocked = localStorage.getItem(item.key) === 'true';
+            // Jika kosong (default awal) dianggap !== 'FALSE' yaitu Terbuka.
+            const isLocked = localStorage.getItem(item.key) === 'FALSE';
             if(item.elem) {
                 if(isLocked) {
                     item.elem.classList.add('is-locked');
@@ -1070,26 +1062,25 @@
             }
         });
 
-        // Kunci Login Visibilitas Pudar
         const btnOpenLogin = document.getElementById('openLoginModalBtn');
         if (btnOpenLogin) {
-            if (localStorage.getItem('lock_login') === 'true') {
+            if (localStorage.getItem('fitur_login') === 'FALSE') {
                 btnOpenLogin.style.opacity = '0.5';
             } else {
                 btnOpenLogin.style.opacity = '1';
             }
         }
 
-        // KIRIM SINYAL KUNCI KE IFRAME HOME
+        // KIRIM SINYAL KUNCI KE IFRAME HOME (FALSE = Terkunci)
         if(dynamicContent && dynamicContent.contentWindow) {
             dynamicContent.contentWindow.postMessage({
                 type: 'applyLocksHome',
                 locks: {
-                    saldo: localStorage.getItem('lock_saldo_kas') === 'true',
-                    transaksi: localStorage.getItem('lock_transaksi_home') === 'true',
-                    undangan: localStorage.getItem('lock_undangan_wa') === 'true',
-                    hasil: localStorage.getItem('lock_hasil_kegiatan') === 'true',
-                    arsip: localStorage.getItem('lock_arsip_lain') === 'true'
+                    saldo: localStorage.getItem('fitur_saldo') === 'FALSE',
+                    transaksi: localStorage.getItem('fitur_rekap') === 'FALSE',
+                    undangan: localStorage.getItem('fitur_wa') === 'FALSE',
+                    hasil: localStorage.getItem('fitur_hasil') === 'FALSE',
+                    arsip: localStorage.getItem('fitur_arsip') === 'FALSE'
                 }
             }, '*');
         }
@@ -1157,14 +1148,14 @@
 
     document.addEventListener("DOMContentLoaded", () => { 
         checkLoginState();
-        applySettings(); 
         fetchGlobalSettings(); 
+        setTimeout(applySettings, 100); // Terapkan Default Terbuka secepatnya
     });
 
     const btnOpenLogin = document.getElementById('openLoginModalBtn');
     if(btnOpenLogin) {
         btnOpenLogin.addEventListener('click', () => {
-            if (localStorage.getItem('lock_login') === 'true') {
+            if (localStorage.getItem('fitur_login') === 'FALSE') {
                 alert("Sedang dalam Perbaikan");
                 return;
             }

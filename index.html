@@ -167,7 +167,6 @@
         .modern-logo { height: 55px; width: auto; filter: drop-shadow(0 4px 3px rgba(0,0,0,0.07)); }
         .modern-header-text { flex: 1; display: flex; flex-direction: column; justify-content: center;}
         .modern-header-text h2 { color: #0F2E70; font-weight: 700; font-size: 17px; margin: 0; line-height: 1.2; }
-        .modern-header-text p { color: #64748B; font-weight: 500; font-size: 10px; margin: 2px 0 0 0; line-height: 1.3; }
         
         .modern-close-btn {
             width: 38px; height: 38px; flex-shrink: 0; background: #eff6ff; color: #2563eb;
@@ -249,23 +248,15 @@
         .setting-label { font-size: 12px; font-weight: 600; color: #1e293b; display: flex; align-items: center; gap: 8px; }
         .setting-label svg { width: 15px; height: 15px; color: #64748b; flex-shrink: 0; }
 
-        /* STATUS KUNCI PADA TOMBOL (ADMIN & GUEST) */
-        .b-nav-item.is-locked, .sheet-item.is-locked,
-        .b-nav-item.guest-locked, .sheet-item.guest-locked {
+        /* STATUS KUNCI ADMIN PADA TOMBOL */
+        .b-nav-item.is-locked, .sheet-item.is-locked {
             position: relative;
+            opacity: 0.65; cursor: not-allowed !important; 
         }
-        .is-locked { opacity: 0.65; cursor: not-allowed !important; }
         
         .lock-badge {
             position: absolute; top: 4px; right: 4px;
             background: #ef4444; color: #fff; border-radius: 50%;
-            width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;
-            font-size: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 10;
-        }
-        .guest-lock-badge {
-            position: absolute; top: 4px; right: 4px;
-            background: #f59e0b; 
-            color: #fff; border-radius: 50%;
             width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;
             font-size: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 10;
         }
@@ -350,11 +341,11 @@
             100% { background-color: #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
         }
 
-        .b-nav-item.btn-ronda:not(.guest-locked):not(.is-locked) {
+        .b-nav-item.btn-ronda:not(.is-locked) {
             animation: nyalaRondaLight 1.5s infinite ease-in-out;
             color: #ef4444; 
         }
-        .b-nav-item.btn-ronda:not(.guest-locked):not(.is-locked) svg { stroke: #ef4444; }
+        .b-nav-item.btn-ronda:not(.is-locked) svg { stroke: #ef4444; }
 
         /* ========================================================
            MODAL CARD "MENU LAINNYA"
@@ -557,8 +548,8 @@
             <div class="modern-login-wrapper">
                 <div class="modern-login-header" style="margin-bottom: 5px;">
                     <div class="modern-header-text">
-                        <h2 style="margin-bottom: 2px;">Kunci Fitur Sistem</h2>
-                        <p style="font-size: 10px; color: #64748b; font-weight: 500; line-height: 1.3; margin: 0;">Kunci akses agar tombol tidak bisa diklik. (Default: Terbuka)</p>
+                        <h2 style="margin-bottom: 2px;">Status Fitur Sistem</h2>
+                        <p style="font-size: 10px; color: #64748b; font-weight: 500; line-height: 1.3; margin: 0;">Kunci akses agar tombol tidak bisa diklik.</p>
                     </div>
                     <button class="modern-close-btn" onclick="closeAdminSettings()" title="Tutup">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -849,25 +840,6 @@
                 return;
             }
 
-            // Cek Kunci Guest Belum Login (Gembok Kuning)
-            if(this.classList.contains('guest-locked')) {
-                e.preventDefault();
-                alert("🔒 Silakan Masuk Sistem (Login) terlebih dahulu untuk mengakses menu ini.");
-                
-                if (localStorage.getItem('fitur_login') === 'FALSE') {
-                    alert("Sedang dalam Perbaikan");
-                    return;
-                }
-                
-                const loginErrorMsg = document.getElementById('loginErrorMessage');
-                const loginModalOverlay = document.getElementById('loginModalOverlay');
-                if(loginErrorMsg) loginErrorMsg.style.display = 'none';
-                if(loginModalOverlay) loginModalOverlay.classList.add('active'); 
-                document.body.style.overflow = 'hidden'; 
-                moreMenuCard.classList.remove('active');
-                return;
-            }
-
             e.preventDefault();
             allMenuBtns.forEach(m => m.classList.remove("menu-tertekan"));
             btnMoreMenu.classList.remove("menu-tertekan");
@@ -929,7 +901,7 @@
     });
 
     function openAdminSettings() {
-        // Jika data kosong (belum pernah disetting), dianggap 'TRUE' (Terbuka/Diceklis)
+        // Jika data kosong (null), anggap TRUE (Terbuka/Diceklis) sebagai nilai awal
         document.getElementById('toggleKeuangan').checked = localStorage.getItem('menu_keuangan') !== 'FALSE';
         document.getElementById('toggleInventaris').checked = localStorage.getItem('menu_inventaris') !== 'FALSE';
         document.getElementById('toggleRonda').checked = localStorage.getItem('menu_ronda') !== 'FALSE';
@@ -964,7 +936,6 @@
             body: JSON.stringify({ token: "RT2_PASEKAN_AMAN_2026", action: "get_settings" })
         }).then(res => res.json()).then(data => {
             if(data.status === "success" && data.data) {
-                // Simpan persis sesuai keys di spreadsheet Dashboard
                 for (let key in data.data) {
                     localStorage.setItem(key, data.data[key]);
                 }
@@ -976,7 +947,6 @@
     }
 
     function saveAdminSettings() {
-        // Format object disesuaikan dengan Kunci di spreadsheet: TRUE atau FALSE string
         const settingsPayload = {
             menu_keuangan: document.getElementById('toggleKeuangan').checked ? "TRUE" : "FALSE",
             menu_inventaris: document.getElementById('toggleInventaris').checked ? "TRUE" : "FALSE",
@@ -994,7 +964,6 @@
             fitur_arsip: document.getElementById('toggleArsipLain').checked ? "TRUE" : "FALSE"
         };
 
-        // Simpan ke local agar responsif
         for (let key in settingsPayload) {
             localStorage.setItem(key, settingsPayload[key]);
         }
@@ -1046,7 +1015,7 @@
         ];
 
         lockMap.forEach(item => {
-            // Jika kosong (default awal) dianggap !== 'FALSE' yaitu Terbuka.
+            // Default adalah Terbuka (Aktif). Terkunci HANYA jika nilainya FALSE
             const isLocked = localStorage.getItem(item.key) === 'FALSE';
             if(item.elem) {
                 if(isLocked) {
@@ -1127,29 +1096,12 @@
             if(loggedInMenu) loggedInMenu.style.display = 'none';
             if(userShortNameEl) userShortNameEl.innerText = '';
         }
-
-        // Terapkan Gembok Guest (Kuning) Jika Belum Login
-        allMenuBtns.forEach(btn => {
-            const targetUrl = btn.getAttribute("data-url");
-            if (targetUrl && !targetUrl.includes('/home')) {
-                if (isLoggedIn !== 'true') {
-                    btn.classList.add('guest-locked');
-                    if(!btn.querySelector('.guest-lock-badge') && !btn.classList.contains('is-locked')) {
-                        btn.innerHTML += '<div class="guest-lock-badge">🔒</div>';
-                    }
-                } else {
-                    btn.classList.remove('guest-locked');
-                    const badge = btn.querySelector('.guest-lock-badge');
-                    if(badge) badge.remove();
-                }
-            }
-        });
     }
 
     document.addEventListener("DOMContentLoaded", () => { 
         checkLoginState();
         fetchGlobalSettings(); 
-        setTimeout(applySettings, 100); // Terapkan Default Terbuka secepatnya
+        setTimeout(applySettings, 100); 
     });
 
     const btnOpenLogin = document.getElementById('openLoginModalBtn');

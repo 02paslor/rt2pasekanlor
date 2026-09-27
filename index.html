@@ -248,15 +248,23 @@
         .setting-label { font-size: 12px; font-weight: 600; color: #1e293b; display: flex; align-items: center; gap: 8px; }
         .setting-label svg { width: 15px; height: 15px; color: #64748b; flex-shrink: 0; }
 
-        /* STATUS KUNCI ADMIN PADA TOMBOL */
-        .b-nav-item.is-locked, .sheet-item.is-locked {
+        /* STATUS KUNCI PADA TOMBOL (ADMIN & GUEST) */
+        .b-nav-item.is-locked, .sheet-item.is-locked,
+        .b-nav-item.guest-locked, .sheet-item.guest-locked {
             position: relative;
-            opacity: 0.65; cursor: not-allowed !important; 
         }
+        .is-locked { opacity: 0.65; cursor: not-allowed !important; }
         
         .lock-badge {
             position: absolute; top: 4px; right: 4px;
             background: #ef4444; color: #fff; border-radius: 50%;
+            width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;
+            font-size: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 10;
+        }
+        .guest-lock-badge {
+            position: absolute; top: 4px; right: 4px;
+            background: #f59e0b; 
+            color: #fff; border-radius: 50%;
             width: 14px; height: 14px; display: flex; align-items: center; justify-content: center;
             font-size: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 10;
         }
@@ -812,7 +820,6 @@
 
     dynamicContent.addEventListener('load', () => {
         initIframeScroll(); 
-        // Beri jeda sedikit agar Home sempat render sebelum dikunci
         setTimeout(applySettings, 500); 
     });
 
@@ -901,22 +908,21 @@
     });
 
     function openAdminSettings() {
-        // Jika data kosong (null), anggap TRUE (Terbuka/Diceklis) sebagai nilai awal
-        document.getElementById('toggleKeuangan').checked = localStorage.getItem('menu_keuangan') !== 'FALSE';
-        document.getElementById('toggleInventaris').checked = localStorage.getItem('menu_inventaris') !== 'FALSE';
-        document.getElementById('toggleRonda').checked = localStorage.getItem('menu_ronda') !== 'FALSE';
-        document.getElementById('togglePengurus').checked = localStorage.getItem('menu_pengurus') !== 'FALSE';
-        document.getElementById('toggleTataTertib').checked = localStorage.getItem('menu_tatatertib') !== 'FALSE';
-        document.getElementById('toggleLapak').checked = localStorage.getItem('menu_lapak') !== 'FALSE';
-        document.getElementById('toggleGaleri').checked = localStorage.getItem('menu_galeri') !== 'FALSE';
-        document.getElementById('toggleLogin').checked = localStorage.getItem('fitur_login') !== 'FALSE';
+        // PERBAIKAN CASE INSENSITIVE: Membaca TRUE atau FALSE dari localstorage tanpa peduli huruf besar/kecil
+        document.getElementById('toggleKeuangan').checked = String(localStorage.getItem('menu_keuangan')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleInventaris').checked = String(localStorage.getItem('menu_inventaris')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleRonda').checked = String(localStorage.getItem('menu_ronda')).toUpperCase() !== 'FALSE';
+        document.getElementById('togglePengurus').checked = String(localStorage.getItem('menu_pengurus')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleTataTertib').checked = String(localStorage.getItem('menu_tatatertib')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleLapak').checked = String(localStorage.getItem('menu_lapak')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleGaleri').checked = String(localStorage.getItem('menu_galeri')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleLogin').checked = String(localStorage.getItem('fitur_login')).toUpperCase() !== 'FALSE';
 
-        // Toggles Baru (Home)
-        document.getElementById('toggleSaldoKas').checked = localStorage.getItem('fitur_saldo') !== 'FALSE';
-        document.getElementById('toggleTransaksiHome').checked = localStorage.getItem('fitur_rekap') !== 'FALSE';
-        document.getElementById('toggleUndanganWA').checked = localStorage.getItem('fitur_wa') !== 'FALSE';
-        document.getElementById('toggleHasilKegiatan').checked = localStorage.getItem('fitur_hasil') !== 'FALSE';
-        document.getElementById('toggleArsipLain').checked = localStorage.getItem('fitur_arsip') !== 'FALSE';
+        document.getElementById('toggleSaldoKas').checked = String(localStorage.getItem('fitur_saldo')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleTransaksiHome').checked = String(localStorage.getItem('fitur_rekap')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleUndanganWA').checked = String(localStorage.getItem('fitur_wa')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleHasilKegiatan').checked = String(localStorage.getItem('fitur_hasil')).toUpperCase() !== 'FALSE';
+        document.getElementById('toggleArsipLain').checked = String(localStorage.getItem('fitur_arsip')).toUpperCase() !== 'FALSE';
         
         adminSettingsModalOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -1015,8 +1021,8 @@
         ];
 
         lockMap.forEach(item => {
-            // Default adalah Terbuka (Aktif). Terkunci HANYA jika nilainya FALSE
-            const isLocked = localStorage.getItem(item.key) === 'FALSE';
+            // PERBAIKAN: Case Insensitive (Mencegah masalah Sheets merubah "FALSE" jadi "false")
+            const isLocked = String(localStorage.getItem(item.key)).toUpperCase() === 'FALSE';
             if(item.elem) {
                 if(isLocked) {
                     item.elem.classList.add('is-locked');
@@ -1033,23 +1039,23 @@
 
         const btnOpenLogin = document.getElementById('openLoginModalBtn');
         if (btnOpenLogin) {
-            if (localStorage.getItem('fitur_login') === 'FALSE') {
+            if (String(localStorage.getItem('fitur_login')).toUpperCase() === 'FALSE') {
                 btnOpenLogin.style.opacity = '0.5';
             } else {
                 btnOpenLogin.style.opacity = '1';
             }
         }
 
-        // KIRIM SINYAL KUNCI KE IFRAME HOME (FALSE = Terkunci)
+        // KIRIM SINYAL KUNCI KE IFRAME HOME
         if(dynamicContent && dynamicContent.contentWindow) {
             dynamicContent.contentWindow.postMessage({
                 type: 'applyLocksHome',
                 locks: {
-                    saldo: localStorage.getItem('fitur_saldo') === 'FALSE',
-                    transaksi: localStorage.getItem('fitur_rekap') === 'FALSE',
-                    undangan: localStorage.getItem('fitur_wa') === 'FALSE',
-                    hasil: localStorage.getItem('fitur_hasil') === 'FALSE',
-                    arsip: localStorage.getItem('fitur_arsip') === 'FALSE'
+                    saldo: String(localStorage.getItem('fitur_saldo')).toUpperCase() === 'FALSE',
+                    transaksi: String(localStorage.getItem('fitur_rekap')).toUpperCase() === 'FALSE',
+                    undangan: String(localStorage.getItem('fitur_wa')).toUpperCase() === 'FALSE',
+                    hasil: String(localStorage.getItem('fitur_hasil')).toUpperCase() === 'FALSE',
+                    arsip: String(localStorage.getItem('fitur_arsip')).toUpperCase() === 'FALSE'
                 }
             }, '*');
         }
@@ -1107,7 +1113,7 @@
     const btnOpenLogin = document.getElementById('openLoginModalBtn');
     if(btnOpenLogin) {
         btnOpenLogin.addEventListener('click', () => {
-            if (localStorage.getItem('fitur_login') === 'FALSE') {
+            if (String(localStorage.getItem('fitur_login')).toUpperCase() === 'FALSE') {
                 alert("Sedang dalam Perbaikan");
                 return;
             }
@@ -1142,7 +1148,6 @@
         localStorage.removeItem('rt2_pass');
         checkLoginState();
         
-        // Pindah otomatis ke Home iframe agar tidak error / nyangkut
         allMenuBtns.forEach(m => m.classList.remove("menu-tertekan"));
         document.querySelector('.b-nav-item[data-url*="/home"]').classList.add("menu-tertekan");
         dynamicContent.src = "https://rt2pasekanlor.id/home";
@@ -1212,7 +1217,6 @@
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userRole', data.role); 
                 
-                // SIMPAN TOKEN AUTO LOGIN DATA WARGA
                 localStorage.setItem('rt2_user_id', userInput);
                 localStorage.setItem('rt2_pass', passInput);
 

@@ -37,8 +37,8 @@
         }
 
         /* ========================================================
-           HEADER (Hide-on-scroll)
-           ======================================================== */
+            HEADER (Hide-on-scroll)
+            ======================================================== */
         .app-header-wrapper { 
             position: fixed;
             top: 0; left: 0; right: 0; width: 100%; max-width: 480px; 
@@ -106,8 +106,8 @@
         }
 
         /* ========================================================
-           MODAL OVERLAY GLOBAL 
-           ======================================================== */
+            MODAL OVERLAY GLOBAL 
+            ======================================================== */
         .slide-up-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(15, 23, 42, 0.85); 
@@ -270,8 +270,8 @@
         }
 
         /* ========================================================
-           PEMBARUAN FOOTER MENU: HYBRID & WARNA BIRU UTAMA
-           ======================================================== */
+            PEMBARUAN FOOTER MENU: HYBRID & WARNA BIRU UTAMA
+            ======================================================== */
         .bottom-nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto;
             width: 100%; max-width: 480px; 
@@ -356,8 +356,8 @@
         .b-nav-item.btn-ronda:not(.is-locked) svg { stroke: #ef4444; }
 
         /* ========================================================
-           MODAL CARD "MENU LAINNYA"
-           ======================================================== */
+            MODAL CARD "MENU LAINNYA"
+            ======================================================== */
         .more-menu-card {
             position: fixed;
             bottom: 85px; 
@@ -840,10 +840,17 @@
     allMenuBtns.forEach(btn => {
         btn.addEventListener("click", function(e) {
             
-            // Cek Kunci Admin Global (Gembok Merah)
+            // Cek Kunci Admin & Status Login Warga
             if(this.classList.contains('is-locked')) {
                 e.preventDefault();
-                alert("⚠️ Maaf Khusus Warga Terdaftar yang Sudah Login.");
+                alert("⚠️ Anda harus login untuk mengaksesnya.");
+                
+                const loginModalOverlay = document.getElementById('loginModalOverlay');
+                if(loginModalOverlay) {
+                    document.getElementById('loginErrorMessage').style.display = 'none';
+                    loginModalOverlay.classList.add('active'); 
+                    document.body.style.overflow = 'hidden'; 
+                }
                 return;
             }
 
@@ -908,7 +915,6 @@
     });
 
     function openAdminSettings() {
-        // PERBAIKAN CASE INSENSITIVE: Membaca TRUE atau FALSE dari localstorage tanpa peduli huruf besar/kecil
         document.getElementById('toggleKeuangan').checked = String(localStorage.getItem('menu_keuangan')).toUpperCase() !== 'FALSE';
         document.getElementById('toggleInventaris').checked = String(localStorage.getItem('menu_inventaris')).toUpperCase() !== 'FALSE';
         document.getElementById('toggleRonda').checked = String(localStorage.getItem('menu_ronda')).toUpperCase() !== 'FALSE';
@@ -1010,6 +1016,9 @@
     }
 
     function applySettings() {
+        // Cek apakah warga sudah login
+        const isUserLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
         const lockMap = [
             { key: 'menu_keuangan', elem: document.querySelector('.btn-kas') },
             { key: 'menu_inventaris', elem: document.getElementById('btnMenuInventaris') },
@@ -1021,15 +1030,16 @@
         ];
 
         lockMap.forEach(item => {
-            // PERBAIKAN: Case Insensitive (Mencegah masalah Sheets merubah "FALSE" jadi "false")
-            const isLocked = String(localStorage.getItem(item.key)).toUpperCase() === 'FALSE';
+            const isAdminLocked = String(localStorage.getItem(item.key)).toUpperCase() === 'FALSE';
             if(item.elem) {
-                if(isLocked) {
+                // Jika dikunci admin DAN user belum login -> Gembok aktif
+                if(isAdminLocked && !isUserLoggedIn) {
                     item.elem.classList.add('is-locked');
                     if(!item.elem.querySelector('.lock-badge')) {
                         item.elem.innerHTML += '<div class="lock-badge">🔒</div>';
                     }
                 } else {
+                    // Jika user sudah login ATAU tidak dikunci admin -> Buka akses
                     item.elem.classList.remove('is-locked');
                     const badge = item.elem.querySelector('.lock-badge');
                     if(badge) badge.remove();
@@ -1051,11 +1061,11 @@
             dynamicContent.contentWindow.postMessage({
                 type: 'applyLocksHome',
                 locks: {
-                    saldo: String(localStorage.getItem('fitur_saldo')).toUpperCase() === 'FALSE',
-                    transaksi: String(localStorage.getItem('fitur_rekap')).toUpperCase() === 'FALSE',
-                    undangan: String(localStorage.getItem('fitur_wa')).toUpperCase() === 'FALSE',
-                    hasil: String(localStorage.getItem('fitur_hasil')).toUpperCase() === 'FALSE',
-                    arsip: String(localStorage.getItem('fitur_arsip')).toUpperCase() === 'FALSE'
+                    saldo: (String(localStorage.getItem('fitur_saldo')).toUpperCase() === 'FALSE') && !isUserLoggedIn,
+                    transaksi: (String(localStorage.getItem('fitur_rekap')).toUpperCase() === 'FALSE') && !isUserLoggedIn,
+                    undangan: (String(localStorage.getItem('fitur_wa')).toUpperCase() === 'FALSE') && !isUserLoggedIn,
+                    hasil: (String(localStorage.getItem('fitur_hasil')).toUpperCase() === 'FALSE') && !isUserLoggedIn,
+                    arsip: (String(localStorage.getItem('fitur_arsip')).toUpperCase() === 'FALSE') && !isUserLoggedIn
                 }
             }, '*');
         }
@@ -1146,7 +1156,9 @@
         localStorage.removeItem('userFoto');
         localStorage.removeItem('rt2_user_id');
         localStorage.removeItem('rt2_pass');
+        
         checkLoginState();
+        applySettings(); // Langsung terapkan kembali gembok setelah logout
         
         allMenuBtns.forEach(m => m.classList.remove("menu-tertekan"));
         document.querySelector('.b-nav-item[data-url*="/home"]').classList.add("menu-tertekan");
@@ -1194,7 +1206,9 @@
                     localStorage.setItem('rt2_user_id', userInput);
                     localStorage.setItem('rt2_pass', passInput);
 
-                    closeLoginModal(); checkLoginState();
+                    closeLoginModal(); 
+                    checkLoginState();
+                    applySettings(); // Langsung hilangkan gembok seketika tanpa jeda
                     if(dynamicContent && dynamicContent.contentWindow) dynamicContent.contentWindow.location.reload();
                     btnSubmitLogin.innerHTML = loginBtnSvg + "<span>Masuk</span>"; btnSubmitLogin.disabled = false;
                 }, 800);
@@ -1228,7 +1242,9 @@
                     localStorage.setItem('userName', warga.Nama || userInput);
                     localStorage.setItem('userFoto', warga.Foto_Profil || ''); 
                 }
-                closeLoginModal(); checkLoginState(); 
+                closeLoginModal(); 
+                checkLoginState(); 
+                applySettings(); // Langsung hilangkan gembok seketika tanpa jeda
                 if(dynamicContent && dynamicContent.contentWindow) dynamicContent.contentWindow.location.reload();
             } else {
                 loginErrorMsg.innerText = data.message || "ID Rumah atau Password salah!";

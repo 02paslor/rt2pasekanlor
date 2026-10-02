@@ -1,0 +1,1650 @@
+<!DOCTYPE html> 
+<html lang="id"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <title id="docTitle">KEMENKEU RT 2 PASLOR</title> 
+  <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyfuGc_fXDcYnfWzyQzcRZ6n9XwRuYCrX3D4PNthp05MIwg9VjbDoCBPtGg6jc374QSSOKKLt3jBGAkPtlwVKRSDc-PhZewr5S3X91KheaVSjIs1IDedm_zm1BR9_EyJ9CdJuFHGGu4l0pF3hF8cbMViD5lucqgvffwoxPWPQBuJfyZntChlwC1d7Ad6Q/w640-h640/favicon%20rt2.png">
+   
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600&family=Poppins:wght@400;600&family=Roboto:wght@400;600&display=swap" rel="stylesheet"> 
+   
+  <script src="https://cdn.tailwindcss.com"></script> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+   
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+   
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+   
+  <style> 
+    /* Global Constraints */ 
+    body { font-weight: 400; margin: 0; overflow: hidden; color: #1e293b; background-size: cover; background-position: center; background-attachment: fixed; font-family: 'Poppins', sans-serif; font-size: 14px; transition: background 0.5s ease; } 
+    strong, b, .font-semibold, .font-bold, .font-extrabold, .font-black { font-weight: 600 !important; } 
+    h1, h2, h3, h4, h5, h6 { font-weight: 600 !important; }
+     
+    :root { 
+        --theme-color: #073A8F; 
+        --sidebar-color: #073A8F;
+        --header-color: #e2e8f0;
+        
+        /* Dynamic Settings Variables */
+        --table-bg: #1155cc;
+        --table-text: #ffffff;
+        --table-btn-edit: #f59e0b;
+        --table-btn-del: #ef4444;
+        
+        --dist-txt-size: 24px;
+        --dist-txt-color: #ffffff;
+        --dist-btn-size: 12px;
+    } 
+     
+    .sidebar-custom { background: var(--sidebar-color); border-right: 1px solid rgba(255, 255, 255, 0.1); } 
+    .bg-theme { background-color: var(--theme-color) !important; } 
+    .text-theme { color: var(--theme-color) !important; } 
+    .border-theme { border-color: var(--theme-color) !important; } 
+     
+    ::-webkit-scrollbar { width: 8px; height: 8px; } 
+    ::-webkit-scrollbar-track { background: transparent; } 
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; } 
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; } 
+     
+    .btn-hover { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); } 
+     
+    /* Hover Balloon Tooltip */ 
+    .tooltip { position: relative; display: inline-block; cursor: help; } 
+    .tooltip .tooltiptext { visibility: hidden; width: max-content; background-color: #1e293b; color: #fff; text-align: center; border-radius: 6px; padding: 6px 10px; position: absolute; z-index: 50; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 12px; font-weight: 600; box-shadow: 0 4px 6px rgba(0,0,0,0.2); } 
+    .tooltip .tooltiptext::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #1e293b transparent transparent transparent; } 
+    .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; } 
+
+    .scroll-tools { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 60; } 
+    .scroll-btn { background: rgba(255,255,255,0.9); color: var(--theme-color); width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-weight: 600; transition: 0.2s; border: 1px solid #e2e8f0; font-size: 16px; } 
+    .scroll-btn:hover { background: var(--theme-color); color: white; transform: scale(1.1); } 
+
+    /* Custom Color Tabel & Vertical Lines */ 
+    .col-no { background-color: #f8fafc; border-right: 1px solid #e2e8f0; } 
+    .col-tgl { background-color: #eff6ff; border-right: 1px solid #bfdbfe; } 
+    .col-kode { background-color: #fdf4ff; border-right: 1px solid #fbcfe8; } 
+    .col-desc { background-color: #ffffff; border-right: 1px solid #e2e8f0; } 
+    .col-in { background-color: #f0fdf4; border-right: 1px solid #bbf7d0; } 
+    .col-out { background-color: #fff7ed; border-right: 1px solid #fed7aa; } 
+    .col-bal { background-color: #f0f9ff; border-right: 1px solid #bae6fd; } 
+    .col-berkas { background-color: #f8fafc; border-right: 1px solid #e2e8f0; } 
+    .col-aksi { background-color: #ffffff; } 
+
+    /* Sticky Behavior Khusus Buku Kas */
+    #cardHeaderKas { position: sticky; top: 0; z-index: 50; background-color: var(--header-color); }
+    #tableHeaderFixed th { position: sticky; z-index: 40; background-color: var(--table-bg); color: var(--table-text); }
+    
+    .btn-edit-tbl { background-color: var(--table-btn-edit); }
+    .btn-del-tbl { background-color: var(--table-btn-del); }
+
+    /* Custom Distribusi Elements */
+    .dist-val-text { font-size: var(--dist-txt-size); color: var(--dist-txt-color); }
+    .dist-btn-text { font-size: var(--dist-btn-size); }
+
+    @media (max-width: 768px) { 
+        #dataTable, #dataTable thead, #dataTable tbody, #dataTable th, #dataTable td, #dataTable tr { display: block; } 
+        #dataTable thead { display: none; } 
+        #dataTable tr { margin-bottom: 1rem; border: 1px solid #cbd5e1; border-radius: 0.75rem; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; } 
+        #dataTable td { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #f1f5f9; text-align: right; font-size: 14px; background-color: transparent !important; } 
+        #dataTable td:last-child { border-bottom: 0; justify-content: center; background-color: #f8fafc !important; } 
+        #dataTable td::before { content: attr(data-label); font-weight: 600; color: #475569; text-align: left; padding-right: 1rem; text-transform: uppercase; font-size: 12px; } 
+    } 
+  </style> 
+</head> 
+<body onload="initSettings()"> 
+
+  <!-- ==================== LOGIN SECTION ==================== --> 
+  <div id="loginSection" class="min-h-screen flex items-center justify-center p-4 relative z-50 transition-all duration-500"> 
+    <div class="bg-white/95 backdrop-blur-md p-8 rounded-[1.5rem] shadow-2xl border border-white/50 w-full max-w-sm text-center transform transition-all hover:scale-[1.01]"> 
+      <img id="appLogoLogin" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png" class="mx-auto mb-4 drop-shadow-md" style="height: 100px;" alt="Logo"> 
+       
+      <h2 class="text-2xl font-bold text-slate-800 tracking-tight leading-tight" id="dispAppTitleLogin">Kemenkeu RT 2</h2> 
+      <p class="text-sm text-slate-500 mb-6 mt-1 font-semibold uppercase tracking-wider">Aplikasi Keuangan Pasekan Lor</p> 
+       
+      <input type="text" id="username" name="username" onkeypress="if(event.key === 'Enter') login()" placeholder="Username" class="w-full px-4 py-3 mb-4 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-base font-normal"> 
+       
+      <div class="relative mb-4 w-full text-left"> 
+        <input type="password" id="password" name="password" onkeypress="if(event.key === 'Enter') login()" placeholder="Password" class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-base font-normal pr-10"> 
+        <i class="fa fa-eye absolute right-4 top-4 cursor-pointer text-slate-400 hover:text-slate-600 text-lg" id="toggleEye" onclick="togglePassword()"></i> 
+      </div> 
+
+      <div class="flex items-center justify-start mb-6 px-1"> 
+        <input type="checkbox" id="rememberMe" name="rememberMe" class="w-4 h-4 bg-slate-100 border-slate-300 rounded cursor-pointer"> 
+        <label for="rememberMe" class="ml-2 text-sm font-semibold text-slate-600 cursor-pointer">Simpan User & Password</label> 
+      </div> 
+       
+      <button onclick="login()" class="w-full bg-theme text-white font-bold py-3 rounded-xl btn-hover mb-5 text-base shadow-lg hover:opacity-90 tracking-wide">MASUK</button> 
+       
+      <div class="mt-4 border-t border-slate-200 pt-4"> 
+          <p class="text-xs text-slate-500 font-semibold uppercase">Copyright © 2026. <span class="cpyTitle"></span></p> 
+      </div> 
+    </div> 
+  </div> 
+
+  <!-- ==================== APP SECTION ==================== --> 
+  <div id="appSection" class="hidden h-screen w-full flex transition-all duration-500"> 
+      
+    <!-- Sidebar --> 
+    <aside class="sidebar-custom w-72 flex flex-col justify-between shrink-0 h-full z-40 shadow-2xl hidden md:flex"> 
+      <div> 
+        <div class="py-8 flex flex-col items-center px-4 border-b border-white/10 text-center space-y-4"> 
+          <a id="linkLogoSidebar" href="#" target="_blank" class="block">
+              <img id="appLogoSidebar" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png" class="mx-auto brightness-0 invert transition-all" style="height: 60px;"> 
+          </a>
+          <span class="font-bold text-xl text-white tracking-wide" id="dispAppTitleSide">Kemenkeu RT 2</span> 
+        </div> 
+         
+        <nav class="p-4 space-y-2 mt-2"> 
+          <button onclick="switchTab('bukukas')" id="btn-tab-bukukas" class="w-full flex items-center gap-4 text-left px-4 py-3.5 rounded-xl text-blue-100 font-semibold btn-hover hover:bg-white/10 text-base"> 
+            <i class="fa fa-book w-6 text-center text-lg"></i> <span id="dispBtnKas">Buku Kas RT 2</span>
+          </button> 
+          <button onclick="switchTab('dashboard')" id="btn-tab-dashboard" class="w-full flex items-center gap-4 text-left px-4 py-3.5 rounded-xl text-blue-100 font-semibold btn-hover hover:bg-white/10 text-base"> 
+            <i class="fa fa-chart-pie w-6 text-center text-lg"></i> <span id="dispBtnDash">Dashboard</span> 
+          </button> 
+          <button onclick="switchTab('setting')" id="btn-tab-setting" class="w-full flex items-center gap-4 text-left px-4 py-3.5 rounded-xl text-blue-100 font-semibold btn-hover hover:bg-white/10 text-base"> 
+            <i class="fa fa-cog w-6 text-center text-lg"></i> <span id="dispBtnSet">Setting</span> 
+          </button> 
+        </nav> 
+      </div> 
+
+      <!-- Footer Sidebar --> 
+      <div class="p-5 border-t border-white/10 flex flex-col items-center bg-white/5"> 
+        <img id="profileSidebar" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtCdP5nNocK6nzthO0f9MVPm_WTB7699KVBFf_BQV1geocdUY4qdgHngl1_vz8mCn9XA6JYCfxFLV2c15OnDXYuknxxHwu1LcXQLF4QFU7ABoZLu8Tz1UhFd_VKe4P7OWjgzz6yh1hVfSzHa88LnAHa9RZm8qqCdhE3wSuJh1q61k8k3Wxen0Wmgj5YEQ/w640-h640/favicon%20rt2%20-%20hosting.png" class="h-12 w-12 rounded-full border-2 border-white/30 mb-3 object-cover shadow bg-white"> 
+        <div class="mb-4 text-blue-100 w-full text-center"> 
+            <div class="text-xs font-bold uppercase tracking-widest mb-1 text-white" id="roleTitle">Administrator</div> 
+            <div id="liveDate" class="text-xs font-normal opacity-80"></div> 
+            <div id="liveClock" class="text-sm font-semibold text-white mt-1"></div> 
+        </div> 
+        <button onclick="logout()" class="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-red-400/50 text-red-300 hover:bg-red-500 hover:text-white btn-hover text-sm font-bold mb-3 shadow-sm"> 
+          <i class="fa fa-power-off"></i> KELUAR 
+        </button> 
+        <div class="text-[10px] text-blue-200/60 text-center leading-relaxed font-semibold uppercase"> 
+            Copyright © 2026.<br><span class="cpyTitle"></span> 
+        </div> 
+      </div> 
+    </aside> 
+
+    <!-- Main Content Area --> 
+    <main class="flex-1 overflow-auto relative bg-transparent flex flex-col" id="mainScroll"> 
+       
+      <div class="p-4 md:p-6 backdrop-blur-sm flex-1 flex flex-col"> 
+         
+        <!-- ================= BUKU KAS TAB ================= --> 
+        <div id="bukukasTab" class="hidden flex-col relative w-full flex-1"> 
+          
+          <div class="flex flex-col w-full bg-white rounded-xl shadow-lg border border-slate-300 overflow-visible relative flex-1">
+              
+              <!-- 1. CARD HEADER (Sticky) --> 
+              <div id="cardHeaderKas" class="z-50 transition-colors duration-300 shrink-0 rounded-t-xl shadow-sm border-b border-slate-300"> 
+                  <!-- Top Row: Big Totals & Title --> 
+                  <div id="topRowHeaderKas" class="p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-300/50">
+                      <div class="mb-2 md:mb-0" id="titleKasContainer">
+                          <div class="flex items-center gap-3">
+                              <h2 class="text-2xl font-bold text-slate-800 bg-white/70 px-2.5 py-1 rounded-lg backdrop-blur shadow-sm inline-block w-max transition-transform origin-left" id="dispContentKas">Buku Kas RT 2 Paslor</h2>
+                              <button onclick="loadData()" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1.5 rounded-lg text-sm font-semibold btn-hover shadow-sm flex items-center gap-1.5 border border-blue-200"><i class="fa fa-sync-alt"></i> Sinkron</button>
+                          </div>
+                          <div class="text-sm font-normal text-slate-500 mt-2 ml-1 flex items-center gap-2 flex-wrap">
+                              <i class="fa fa-file-excel text-green-600 text-lg"></i> Spreadsheet data by <b>RT2_KEUANGAN_BESAR</b>
+                              <span class="hidden md:inline mx-1">|</span>
+                              <i class="fab fa-google-drive text-blue-500 text-lg"></i> Berkas laporan berada di Google Drive
+                          </div>
+                      </div>
+                      
+                      <div class="flex items-center gap-4 md:gap-8 w-full md:w-auto justify-between md:justify-start" id="totalsKasContainer"> 
+                          <div> 
+                              <div class="text-xs font-semibold text-slate-500 uppercase tracking-widest">Pemasukan</div> 
+                              <div class="font-bold text-emerald-600 text-lg md:text-xl mt-1" id="totIn">Rp 0</div> 
+                          </div> 
+                          <div class="h-8 w-px bg-slate-300 hidden md:block"></div> 
+                          <div> 
+                              <div class="text-xs font-semibold text-slate-500 uppercase tracking-widest">Pengeluaran</div> 
+                              <div class="font-bold text-orange-600 text-lg md:text-xl mt-1" id="totOut">Rp 0</div> 
+                          </div> 
+                          <div class="h-10 w-px bg-slate-300 hidden md:block"></div> 
+                          <div class="text-right bg-white/60 p-3 rounded-lg border border-slate-200 md:bg-transparent md:border-none md:p-0"> 
+                              <div class="text-xs font-semibold text-slate-600 uppercase tracking-widest mb-1">Total Saldo</div> 
+                              <div class="font-bold text-theme text-2xl md:text-3xl leading-none" id="totBal">Rp 0</div> 
+                          </div> 
+                      </div> 
+                  </div> 
+
+                  <!-- Bottom Row: Controls (Filters & Buttons) --> 
+                  <div class="p-3 md:p-4 flex flex-col lg:flex-row items-center justify-between gap-3"> 
+                      <!-- Kiri: Filter Kode & Sortir --> 
+                      <div class="flex items-center gap-2 w-full lg:w-auto overflow-x-auto hide-scrollbar pb-2 lg:pb-0"> 
+                          <select id="filterKode" name="filterKode" onchange="filterData()" class="bg-white border border-slate-300 text-sm rounded-lg px-3 py-2.5 outline-none font-semibold text-slate-700 shadow-sm cursor-pointer shrink-0"> 
+                              <!-- Dinamis JS --> 
+                          </select> 
+                          <select id="sortData" name="sortData" onchange="filterData()" class="bg-white border border-slate-300 text-sm rounded-lg px-3 py-2.5 outline-none font-semibold text-theme shadow-sm cursor-pointer shrink-0"> 
+                              <option value="asc">Transaksi Awal</option> 
+                              <option value="desc">Transaksi Akhir</option> 
+                          </select> 
+                      </div> 
+
+                      <!-- Kanan: Action Area --> 
+                      <div class="flex items-center gap-2 w-full lg:w-auto justify-end shrink-0"> 
+                          <div class="flex items-center bg-white rounded-lg px-3 py-2 border border-slate-300 w-36 md:w-56 shrink-0 shadow-sm focus-within:ring-1 focus-within:ring-blue-500"> 
+                              <i class="fa fa-search text-slate-400 text-sm"></i> 
+                              <input type="text" id="inputSearch" name="inputSearch" onkeyup="quickSearch()" placeholder="Cari..." class="w-full bg-transparent outline-none ml-2 text-sm text-slate-700 font-normal"> 
+                          </div> 
+                          <button onclick="exportExcel()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-lg text-sm font-semibold btn-hover shadow-sm flex items-center gap-2 hidden md:flex"><i class="fa fa-file-excel"></i> Excel</button>
+                          <button onclick="exportExcel()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-2.5 rounded-lg text-sm font-semibold btn-hover shadow-sm md:hidden"><i class="fa fa-file-excel"></i></button>
+
+                          <button onclick="exportKasPDF()" class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2.5 rounded-lg text-sm font-semibold btn-hover shadow-sm flex items-center gap-2 hidden md:flex"><i class="fa fa-file-pdf"></i> PDF</button> 
+                          <button onclick="exportKasPDF()" class="bg-rose-500 hover:bg-rose-600 text-white px-3 py-2.5 rounded-lg text-sm font-semibold btn-hover shadow-sm md:hidden"><i class="fa fa-file-pdf"></i></button> 
+
+                          <button onclick="openModal()" class="bg-theme text-white px-4 md:px-5 py-2.5 rounded-lg text-sm font-bold btn-hover shadow transform hover:-translate-y-0.5 flex items-center gap-2"><i class="fa fa-plus"></i> Transaksi</button> 
+                      </div> 
+                  </div> 
+              </div> 
+
+              <!-- 2. TABLE AREA --> 
+              <div class="w-full relative bg-white rounded-b-xl" id="tableScrollArea"> 
+                  <table id="dataTable" class="w-full text-left text-sm md:text-base whitespace-nowrap lg:whitespace-normal"> 
+                    <thead id="tableHeaderFixed" class="transition-colors duration-300 shadow-sm font-semibold"> 
+                      <tr> 
+                        <th class="p-3 md:p-4 text-center w-12 border-b border-slate-300 border-r border-slate-300/40">No.</th> 
+                        <th class="p-3 md:p-4 w-32 border-b border-slate-300 border-r border-slate-300/40">Tanggal</th> 
+                        <th class="p-3 md:p-4 text-center w-24 border-b border-slate-300 border-r border-slate-300/40">Kode</th> 
+                        <th class="p-3 md:p-4 border-b border-slate-300 border-r border-slate-300/40">Deskripsi</th> 
+                        <th class="p-3 md:p-4 text-right w-32 border-b border-slate-300 border-r border-slate-300/40">Pemasukan</th> 
+                        <th class="p-3 md:p-4 text-right w-32 border-b border-slate-300 border-r border-slate-300/40">Pengeluaran</th> 
+                        <th class="p-3 md:p-4 text-right w-32 border-b border-slate-300 border-r border-slate-300/40">Saldo</th> 
+                        <th class="p-3 md:p-4 text-center w-24 border-b border-slate-300 border-r border-slate-300/40">Berkas</th> 
+                        <th class="p-3 md:p-4 text-center w-28 border-b border-slate-300">Aksi</th> 
+                      </tr> 
+                    </thead> 
+                    <tbody id="tableBody" class="text-slate-700 font-normal"> 
+                      <tr><td colspan="9" class="text-center p-8 bg-white text-base"><i class="fa fa-spinner fa-spin mr-2 text-theme"></i> Memuat Data...</td></tr> 
+                    </tbody> 
+                  </table> 
+              </div> 
+          </div> 
+        </div> 
+
+        <!-- ================= DASHBOARD TAB ================= --> 
+        <div id="dashboardTab" class="hidden flex-col"> 
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-4" id="dashHeaderRow"> 
+            <h2 class="text-2xl font-bold text-slate-800 bg-white/70 px-3 py-1.5 rounded-lg backdrop-blur shadow-sm inline-block w-max" id="dispContentDash">Dashboard Keuangan</h2> 
+            <div class="flex gap-2"> 
+                <button onclick="openPdfModal()" class="bg-theme text-white px-5 py-2.5 rounded-lg text-sm font-semibold btn-hover shadow flex items-center gap-2 hover:opacity-90"><i class="fa fa-file-pdf text-red-400 text-lg"></i> Export Laporan PDF</button> 
+            </div> 
+          </div> 
+            
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5" id="dashGridContainer"> 
+              <!-- Tren Chart --> 
+              <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-md flex flex-col" id="cardTren"> 
+                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Grafik Tren Keuangan Bulanan</h3> 
+                <div class="h-[250px] w-full relative"><canvas id="trendChart"></canvas></div> 
+                <div id="chartDetail" class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-600 font-normal leading-relaxed"> 
+                    Menganalisis riwayat transaksi... 
+                </div> 
+              </div> 
+
+              <!-- Rekapitulasi Berwarna --> 
+              <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-md flex flex-col" id="cardRekap"> 
+                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2" id="rekapTitle">Rekapitulasi Buku Kas</h3> 
+                <div class="overflow-x-auto flex-1 rounded-lg border border-slate-200"> 
+                  <table class="w-full text-left text-xs md:text-sm font-normal"> 
+                    <thead id="rekapHead"><tr><th>Loading...</th></tr></thead> 
+                    <tbody id="rekapBody"><tr><td class="p-4 text-center">Memuat Spreadsheet...</td></tr></tbody> 
+                  </table> 
+                </div> 
+              </div> 
+          </div> 
+
+          <!-- Distribusi Kode --> 
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-md mb-5" id="dashDistribusi"> 
+            <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Distribusi Transaksi Kategori</h3> 
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="summaryCards"></div> 
+          </div> 
+
+          <!-- AI Overview --> 
+          <div class="bg-white border border-blue-200 p-5 md:p-6 rounded-xl shadow-md flex gap-4 md:gap-5 items-start relative overflow-hidden mb-12" id="dashAICard"> 
+            <div class="absolute right-0 top-0 opacity-5 w-40 h-40 bg-blue-500 rounded-full blur-2xl"></div> 
+            <div class="bg-theme text-white p-4 rounded-xl shadow shrink-0 z-10 hidden md:block"><i class="fa fa-robot text-3xl"></i></div> 
+            <div class="text-left w-full z-10"> 
+              <div class="flex justify-between items-center mb-3 border-b border-slate-100 pb-3"> 
+                  <h3 class="text-xl font-bold text-theme flex items-center gap-2"><i class="fa fa-sparkles text-yellow-500"></i> Laporan Cerdas AI</h3> 
+                  <button onclick="openChatAI()" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow btn-hover flex items-center gap-2"> 
+                      <i class="fa fa-comments"></i> Tanya AI 
+                  </button> 
+              </div> 
+              <div id="aiText" class="text-sm md:text-base text-slate-800 leading-relaxed font-normal">Menganalisis data keuangan secara cerdas...</div> 
+            </div> 
+          </div> 
+        </div> 
+
+        <!-- ================= SETTING TAB ================= --> 
+        <div id="settingTab" class="hidden flex-col h-full w-full mx-auto mb-20 max-w-none"> 
+            <div class="flex justify-between items-center mb-4 bg-white/90 backdrop-blur-md p-4 md:p-5 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2"><i class="fa fa-cogs text-theme"></i> Pengaturan Aplikasi</h2> 
+                <button onclick="saveSettings()" class="bg-theme text-white px-6 py-2.5 rounded-lg font-bold btn-hover shadow-lg hover:opacity-90 flex items-center gap-2 text-sm shrink-0"> 
+                    <i class="fa fa-save"></i> Simpan
+                </button> 
+            </div>
+
+            <!-- GRUP PENGATURAN LATAR BELAKANG -->
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
+                <h3 class="text-base font-bold text-slate-700 mb-4 border-b pb-2"><i class="fa fa-image text-purple-500 mr-2"></i>Pengaturan Latar Belakang Aplikasi</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Tipe Latar Belakang</label>
+                        <select id="setBgType" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:ring-1 focus:ring-blue-500 outline-none" onchange="toggleBgInputs()">
+                            <option value="color">Warna Solid</option>
+                            <option value="gradient">Gradasi Warna</option>
+                            <option value="image">Gambar / Foto (Upload)</option>
+                        </select>
+                    </div>
+                    <div id="wrapBgColor">
+                        <label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Warna Solid</label>
+                        <input type="color" id="setBgColor" class="w-full h-10 cursor-pointer rounded border-0">
+                    </div>
+                    <div id="wrapBgGradient" class="hidden">
+                        <label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Warna Gradasi (Awal & Akhir)</label>
+                        <div class="flex gap-3">
+                            <input type="color" id="setBgGrad1" class="w-full h-10 cursor-pointer rounded border-0">
+                            <input type="color" id="setBgGrad2" class="w-full h-10 cursor-pointer rounded border-0">
+                        </div>
+                    </div>
+                    <div id="wrapBgImage" class="hidden">
+                        <label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Upload Gambar Latar</label>
+                        <input type="file" id="setBgImage" accept="image/*" class="w-full text-sm file:mr-2 file:py-1.5 file:px-3 file:rounded file:border-0 file:bg-purple-100 file:text-purple-700 file:font-bold text-slate-600 cursor-pointer">
+                    </div>
+                </div>
+            </div>
+             
+            <!-- GRUP 1: PENGATURAN UMUM & TEKS -->
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
+                <h3 class="text-base font-bold text-slate-700 mb-4 border-b pb-2"><i class="fa fa-font text-blue-500 mr-2"></i>Pengaturan Teks & Judul</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Judul Tab Browser</label><input type="text" id="setTxtBrowser" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:ring-1 focus:ring-blue-500 outline-none"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Judul App (Sidebar/Login)</label><input type="text" id="setTxtApp" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:ring-1 focus:ring-blue-500 outline-none"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Nama Tombol Menu 1</label><input type="text" id="setTxtMenuKas" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:ring-1 focus:ring-blue-500 outline-none"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Nama Tombol Menu 2</label><input type="text" id="setTxtMenuDash" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:ring-1 focus:ring-blue-500 outline-none"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Nama Tombol Menu 3</label><input type="text" id="setTxtMenuSet" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:ring-1 focus:ring-blue-500 outline-none"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Judul Konten Menu 1</label><input type="text" id="setTxtContentKas" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:ring-1 focus:ring-blue-500 outline-none"></div>
+                    <div class="lg:col-span-2"><label class="text-xs font-bold text-slate-500 uppercase block mb-1.5">Judul Konten Menu 2</label><input type="text" id="setTxtContentDash" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:ring-1 focus:ring-blue-500 outline-none"></div>
+                </div>
+            </div>
+
+            <!-- GRUP 2: PENGATURAN UI TABEL & DISTRIBUSI -->
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
+                <h3 class="text-base font-bold text-slate-700 mb-4 border-b pb-2"><i class="fa fa-paint-brush text-rose-500 mr-2"></i>Pengaturan Visual Khusus</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+                    <!-- Tabel Header -->
+                    <div class="lg:col-span-2 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <label class="text-xs font-bold text-slate-700 uppercase block mb-3 border-b border-slate-200 pb-1.5">Tampilan Tabel Buku Kas</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div><label class="text-[10px] font-semibold text-slate-600 block mb-1">Background Header</label><input type="color" id="setTableBg" class="w-full h-10 cursor-pointer rounded border-0"></div>
+                            <div><label class="text-[10px] font-semibold text-slate-600 block mb-1">Teks Header</label><input type="color" id="setTableTxt" class="w-full h-10 cursor-pointer rounded border-0"></div>
+                            <div><label class="text-[10px] font-semibold text-slate-600 block mb-1">Tombol Aksi 1 (Edit)</label><input type="color" id="setTableBtnEdit" class="w-full h-10 cursor-pointer rounded border-0"></div>
+                            <div><label class="text-[10px] font-semibold text-slate-600 block mb-1">Tombol Aksi 2 (Hapus)</label><input type="color" id="setTableBtnDel" class="w-full h-10 cursor-pointer rounded border-0"></div>
+                        </div>
+                    </div>
+                    <!-- Distribusi -->
+                    <div class="lg:col-span-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <label class="text-xs font-bold text-slate-700 uppercase block mb-3 border-b border-slate-200 pb-1.5">Tampilan Card Distribusi (Dashboard)</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div><label class="text-[10px] font-semibold text-slate-600 block mb-1">Warna Teks Saldo</label><input type="color" id="setDistColor" class="w-full h-10 cursor-pointer rounded border-0"></div>
+                            <div><label class="text-[10px] font-semibold text-slate-600 block mb-1">Ukuran Teks Saldo (px/rem)</label><input type="text" id="setDistSize" placeholder="24px" class="w-full p-2 border border-slate-300 rounded text-sm outline-none"></div>
+                            <div><label class="text-[10px] font-semibold text-slate-600 block mb-1">Ukuran Teks Tombol (px/rem)</label><input type="text" id="setDistBtnSize" placeholder="12px" class="w-full p-2 border border-slate-300 rounded text-sm outline-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRUP 3: INVENTARIS TOKOPEDIA -->
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h3 class="text-base font-bold text-slate-700"><i class="fa fa-shopping-bag text-green-500 mr-2"></i>Rekomendasi Pembelian Inventaris Warga</h3>
+                    <button onclick="addRekomendasi()" class="bg-green-500 text-white px-3 py-1.5 rounded text-xs font-bold btn-hover"><i class="fa fa-plus"></i> Tambah</button>
+                </div>
+                <div id="rekomendasiList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Dinamis JS -->
+                </div>
+            </div>
+
+            <!-- Pengaturan Kategori & Visual -->
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
+                <h3 class="text-base font-bold text-slate-700 mb-4 border-b pb-2"><i class="fa fa-tags text-blue-500 mr-2"></i>Nama & Warna Kode Keuangan</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="kodeSettingsForm"></div>
+            </div>
+
+            <!-- TEMA ADMIN & BENDAHARA (2 GRID LAYOUT) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5"> 
+                
+                <!-- ADMIN SETTINGS BOX --> 
+                <div class="bg-white p-5 md:p-6 border border-slate-200 rounded-xl shadow-sm flex flex-col space-y-5 relative overflow-hidden"> 
+                    <div class="absolute right-0 top-0 w-32 h-32 bg-blue-500 opacity-5 rounded-bl-[100px] pointer-events-none"></div>
+                    <h3 class="text-lg font-bold text-slate-800 border-b border-slate-200 pb-2"><i class="fa fa-user-shield text-blue-600 mr-2"></i>Tema & Akun Administrator</h3> 
+                    
+                    <!-- Kredensial -->
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Kredensial Login</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="text" id="setAdminU" name="setAdminU" placeholder="Username Admin" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-1 focus:ring-blue-500 outline-none font-normal"> 
+                            <input type="text" id="setAdminP" name="setAdminP" placeholder="Password Admin" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-1 focus:ring-blue-500 outline-none font-normal"> 
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Foto Profil -->
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Foto Profil Admin</label>
+                            <input type="file" id="setAdminPic" name="setAdminPic" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-blue-100 file:text-blue-700 file:font-semibold text-slate-600 cursor-pointer"> 
+                        </div>
+
+                        <!-- Logo Dashboard -->
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Logo Dashboard</label>
+                            <input type="file" id="setLogoAdminFile" name="setLogoAdminFile" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-blue-100 file:text-blue-700 file:font-semibold text-slate-600 mb-3 cursor-pointer"> 
+                            <div class="flex gap-2">
+                                <div class="w-1/3">
+                                    <input type="number" id="setLogoAdminSize" name="setLogoAdminSize" class="w-full p-2 border border-slate-300 rounded text-sm outline-none text-center font-normal" placeholder="Size" title="Tinggi Logo (px)">
+                                </div>
+                                <div class="w-2/3">
+                                    <input type="text" id="setLogoAdminUrl" name="setLogoAdminUrl" class="w-full p-2 border border-slate-300 rounded text-sm outline-none font-normal" placeholder="Target URL (Link)" title="URL Link Tujuan saat logo diklik">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Warna Tema Role -->
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-3 text-center border-b border-slate-200 pb-1.5">Konfigurasi Warna UI</label>
+                        <div class="grid grid-cols-3 gap-3 text-center">
+                            <div>
+                                <label class="text-[10px] font-semibold text-slate-600 block mb-1">Nuansa Aksen</label>
+                                <input type="color" id="setAdminC" name="setAdminC" class="w-12 h-12 rounded cursor-pointer border-0 shadow-sm mx-auto p-0 bg-transparent">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-semibold text-slate-600 block mb-1">Panel Sidebar</label>
+                                <input type="color" id="setAdminSidebarC" name="setAdminSidebarC" class="w-12 h-12 rounded cursor-pointer border-0 shadow-sm mx-auto p-0 bg-transparent">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-semibold text-slate-600 block mb-1">Header Data</label>
+                                <input type="color" id="setAdminHeaderC" name="setAdminHeaderC" class="w-12 h-12 rounded cursor-pointer border-0 shadow-sm mx-auto p-0 bg-transparent">
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+                <!-- BENDAHARA SETTINGS BOX --> 
+                <div class="bg-white p-5 md:p-6 border border-slate-200 rounded-xl shadow-sm flex flex-col space-y-5 relative overflow-hidden"> 
+                    <div class="absolute right-0 top-0 w-32 h-32 bg-emerald-500 opacity-5 rounded-bl-[100px] pointer-events-none"></div>
+                    <h3 class="text-lg font-bold text-slate-800 border-b border-slate-200 pb-2"><i class="fa fa-user-tie text-emerald-600 mr-2"></i>Tema & Akun Bendahara</h3> 
+                    
+                    <!-- Kredensial -->
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Kredensial Login</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="text" id="setBenU" name="setBenU" placeholder="Username Bendahara" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-1 focus:ring-emerald-500 outline-none font-normal"> 
+                            <input type="text" id="setBenP" name="setBenP" placeholder="Password Bendahara" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-1 focus:ring-emerald-500 outline-none font-normal"> 
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Foto Profil -->
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Foto Profil Bendahara</label>
+                            <input type="file" id="setBenPic" name="setBenPic" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-emerald-100 file:text-emerald-700 file:font-semibold text-slate-600 cursor-pointer"> 
+                        </div>
+
+                        <!-- Logo Dashboard -->
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Logo Dashboard</label>
+                            <input type="file" id="setLogoBenFile" name="setLogoBenFile" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-emerald-100 file:text-emerald-700 file:font-semibold text-slate-600 mb-3 cursor-pointer"> 
+                            <div class="flex gap-2">
+                                <div class="w-1/3">
+                                    <input type="number" id="setLogoBenSize" name="setLogoBenSize" class="w-full p-2 border border-slate-300 rounded text-sm outline-none text-center font-normal" placeholder="Size" title="Tinggi Logo (px)">
+                                </div>
+                                <div class="w-2/3">
+                                    <input type="text" id="setLogoBenUrl" name="setLogoBenUrl" class="w-full p-2 border border-slate-300 rounded text-sm outline-none font-normal" placeholder="Target URL (Link)" title="URL Link Tujuan saat logo diklik">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Warna Tema Role -->
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-3 text-center border-b border-slate-200 pb-1.5">Konfigurasi Warna UI</label>
+                        <div class="grid grid-cols-3 gap-3 text-center">
+                            <div>
+                                <label class="text-[10px] font-semibold text-slate-600 block mb-1">Nuansa Aksen</label>
+                                <input type="color" id="setBenC" name="setBenC" class="w-12 h-12 rounded cursor-pointer border-0 shadow-sm mx-auto p-0 bg-transparent">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-semibold text-slate-600 block mb-1">Panel Sidebar</label>
+                                <input type="color" id="setBenSidebarC" name="setBenSidebarC" class="w-12 h-12 rounded cursor-pointer border-0 shadow-sm mx-auto p-0 bg-transparent">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-semibold text-slate-600 block mb-1">Header Data</label>
+                                <input type="color" id="setBenHeaderC" name="setBenHeaderC" class="w-12 h-12 rounded cursor-pointer border-0 shadow-sm mx-auto p-0 bg-transparent">
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+            </div> 
+        </div> 
+
+      </div> 
+       
+      <!-- Tombol Scroll Utama --> 
+      <div class="scroll-tools hidden" id="scrollControls"> 
+        <div class="scroll-btn" onclick="scrollToPos('top')" title="Atas"><i class="fa fa-chevron-up text-sm"></i></div> 
+        <div class="scroll-btn" onclick="scrollToPos('mid')" title="Tengah"><i class="fa fa-minus text-sm"></i></div> 
+        <div class="scroll-btn" onclick="scrollToPos('bot')" title="Bawah"><i class="fa fa-chevron-down text-sm"></i></div> 
+      </div> 
+    </main> 
+  </div> 
+
+  <!-- ==================== MODAL TRANSAKSI & EDIT ==================== --> 
+  <div id="transaksiModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[100] flex items-center justify-center p-4 transition-all duration-300 opacity-0 pointer-events-none" onclick="closeModal()"> 
+    <div id="modalBox" class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-md overflow-hidden transform scale-95 transition-all duration-300" onclick="event.stopPropagation()"> 
+      <div id="modalHeader" class="px-6 py-4 flex justify-between items-center bg-theme"> 
+          <h3 class="text-base font-bold text-white tracking-wide flex items-center gap-2" id="modalTitle">Transaksi Baru</h3> 
+          <button onclick="closeModal()" class="text-white hover:text-red-300 transition-colors"><i class="fa fa-times text-xl"></i></button> 
+      </div> 
+       
+      <form id="formTx" onsubmit="saveData(event)" class="p-6"> 
+        <input type="hidden" id="inputRowIdx" name="rowIdx">
+        <input type="hidden" id="oldBerkas" name="oldBerkas"> 
+         
+        <div class="flex gap-3 mb-5"> 
+          <label class="flex-1 text-center cursor-pointer"> 
+            <input type="radio" name="jenis" value="pemasukan" class="peer hidden" checked onchange="updateModalTheme()"> 
+            <div class="py-2.5 rounded-lg border-2 border-slate-200 peer-checked:bg-emerald-500 peer-checked:border-emerald-600 peer-checked:text-white text-sm font-bold text-slate-500 btn-hover shadow-sm"> 
+                <i class="fa fa-arrow-down mr-2"></i> Pemasukan 
+            </div> 
+          </label> 
+          <label class="flex-1 text-center cursor-pointer"> 
+            <input type="radio" name="jenis" value="pengeluaran" class="peer hidden" onchange="updateModalTheme()"> 
+            <div class="py-2.5 rounded-lg border-2 border-slate-200 peer-checked:bg-orange-500 peer-checked:border-orange-600 peer-checked:text-white text-sm font-bold text-slate-500 btn-hover shadow-sm"> 
+                <i class="fa fa-arrow-up mr-2"></i> Pengeluaran 
+            </div> 
+          </label> 
+        </div> 
+
+        <div class="grid grid-cols-2 gap-4 mb-4"> 
+            <div> 
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Tanggal</label> 
+              <input type="date" id="inputTanggal" name="tanggal" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm bg-white focus:ring-1 focus:ring-blue-500 font-normal shadow-inner text-slate-700 outline-none" style="font-family: inherit;"> 
+            </div> 
+            <div> 
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Kode</label> 
+              <select id="inputKode" name="kode" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm bg-white focus:ring-1 focus:ring-blue-500 font-normal shadow-inner text-slate-700 outline-none cursor-pointer"> 
+                 <!-- Dinamis JS --> 
+              </select> 
+            </div> 
+        </div> 
+         
+        <div class="mb-4"> 
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Deskripsi</label> 
+          <input type="text" id="inputDesc" name="deskripsi" required class="w-full p-3 border border-slate-300 rounded-lg text-sm bg-white focus:ring-1 focus:ring-blue-500 font-normal shadow-inner placeholder-slate-400 text-slate-800 outline-none" placeholder="Keterangan transaksi..."> 
+        </div> 
+         
+        <div class="mb-5 relative"> 
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Nominal (Rp)</label> 
+          <input type="text" id="inputNominal" name="nominal" required onkeyup="formatRupiah(this)" class="w-full p-3 pl-10 border border-slate-300 rounded-lg text-lg bg-white focus:ring-1 focus:ring-blue-500 font-bold shadow-inner text-slate-800 outline-none tracking-wide" placeholder="0"> 
+          <span class="absolute left-4 top-[32px] text-sm font-semibold text-slate-400">Rp</span> 
+        </div> 
+         
+        <div class="mb-6 bg-slate-50 p-3 rounded-lg border border-slate-200"> 
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-2"><i class="fa fa-cloud-upload-alt mr-1"></i> Upload Berkas <span class="lowercase font-bold text-red-500 ml-1">- Max 5MB</span></label> 
+          <input type="file" id="inputFile" name="berkas" accept="image/*,.pdf" class="w-full text-xs text-slate-600 file:mr-2 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-theme file:text-white hover:file:opacity-90 transition-all border border-dashed border-slate-300 rounded-lg bg-white p-1.5 cursor-pointer"> 
+        </div> 
+
+        <div class="flex justify-end gap-3 pt-3 border-t border-slate-100"> 
+          <button type="button" onclick="closeModal()" class="px-5 py-2.5 bg-slate-200 text-slate-700 rounded-lg text-sm font-bold hover:bg-slate-300 btn-hover">Batal</button> 
+          <button type="submit" id="btnSubmit" class="px-5 py-2.5 bg-theme text-white rounded-lg text-sm font-bold hover:opacity-90 btn-hover shadow transition-colors">Simpan Transaksi</button> 
+        </div> 
+      </form> 
+    </div> 
+  </div> 
+
+  <!-- ==================== MODAL CETAK PDF DASHBOARD ==================== -->
+  <div id="pdfDashModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[110] flex items-center justify-center p-4 transition-all duration-300 opacity-0 pointer-events-none" onclick="closePdfModal()"> 
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-sm overflow-hidden" onclick="event.stopPropagation()"> 
+        <div class="px-5 py-4 flex justify-between items-center bg-slate-800 text-white"> 
+            <h3 class="text-base font-bold tracking-wide flex items-center gap-2"><i class="fa fa-print"></i> Cetak Laporan PDF</h3> 
+            <button onclick="closePdfModal()" class="hover:text-red-300"><i class="fa fa-times text-xl"></i></button> 
+        </div>
+        <div class="p-5">
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-2.5">Pilih Elemen (Card) yang Dicetak:</label>
+            <div class="space-y-3 mb-5 bg-slate-50 p-4 rounded-lg border border-slate-200 text-sm font-semibold text-slate-700">
+                <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="chkChart" checked class="w-5 h-5 text-blue-600"> Grafik Tren Bulanan</label>
+                <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="chkRekap" checked class="w-5 h-5 text-blue-600"> Tabel Rekapitulasi</label>
+                <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="chkDist" checked class="w-5 h-5 text-blue-600"> Distribusi Kategori</label>
+                <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="chkAI" checked class="w-5 h-5 text-blue-600"> Laporan AI & Rekomendasi</label>
+            </div>
+            
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Ukuran Kertas:</label>
+            <select id="pdfPaperSize" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm bg-white focus:ring-1 focus:ring-blue-500 font-semibold mb-5 outline-none">
+                <option value="a4">A4 (Portrait)</option>
+                <option value="legal">Legal / F4 (Portrait)</option>
+                <option value="letter">Letter (Portrait)</option>
+            </select>
+
+            <button onclick="executeDashPDF()" id="btnExecuteDash" class="w-full bg-red-500 text-white py-3 rounded-lg text-sm font-bold btn-hover shadow hover:bg-red-600 flex justify-center items-center gap-2">
+                <i class="fa fa-file-pdf"></i> Mulai Cetak PDF
+            </button>
+        </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCRIPT LOGIC ==================== --> 
+  <script> 
+    // ---------------- ANTI INSPECT / SECURITY KEY SIMPLE ----------------
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+            return false;
+        }
+    };
+
+    // ---------------- KONFIGURASI DEFAULT ---------------- 
+    let sysKode = { 1:"Kode 1 - Jimpitan", 2:"Kode 2 - Jasa Inventaris", 3:"Kode 3 - Sosial", 4:"Kode 4 - Pembangunan", 5:"Kode 5 - Lain-lain", 6:"Kode 6 - Kas Pemuda" }; 
+    let sysKodeColor = {1:'#3b82f6', 2:'#eab308', 3:'#9333ea', 4:'#ec4899', 5:'#10b981', 6:'#f97316'}; 
+    
+    // Default Texts
+    let sysTxtBrowser = "KEMENKEU RT 2 PASLOR";
+    let sysTxtApp = "Kemenkeu RT 2";
+    let sysTxtMenuKas = "Buku Kas RT 2";
+    let sysTxtMenuDash = "Dashboard";
+    let sysTxtMenuSet = "Setting";
+    let sysTxtContentKas = "Buku Kas RT 2 Paslor";
+    let sysTxtContentDash = "Dashboard Keuangan";
+
+    // Default Background Variables
+    let sysBgType = 'color'; // color, gradient, image
+    let sysBgColor = '#f1f5f9';
+    let sysBgGrad1 = '#e2e8f0';
+    let sysBgGrad2 = '#f8fafc';
+    let sysBgImage = '';
+
+    // Default Table Colors
+    let sysTableBg = "#1155cc";
+    let sysTableTxt = "#ffffff";
+    let sysTableBtnEdit = "#f59e0b";
+    let sysTableBtnDel = "#ef4444";
+
+    // Default Distribusi Styles
+    let sysDistSize = "24px";
+    let sysDistColor = "#ffffff";
+    let sysDistBtnSize = "12px";
+
+    // Default Inventaris Tokopedia
+    let sysRekomendasi = [
+        {nama: "Sendok Merk Doll", url: "https://www.tokopedia.com/search?q=sendok+doll+lusin"},
+        {nama: "Portable/Trolley Speaker", url: "https://www.tokopedia.com/search?q=trolley+speaker+portable"},
+        {nama: "Speed Bump Karet", url: "https://www.tokopedia.com/search?q=speed+bump+karet"},
+        {nama: "Sign Nomor Rumah Akrilik", url: "https://www.tokopedia.com/search?q=sign+nomor+rumah+akrilik"},
+        {nama: "Kamera CCTV Outdoor", url: "https://www.tokopedia.com/search?q=cctv+outdoor+wifi"},
+        {nama: "Tikar Merk Swan", url: "https://www.tokopedia.com/search?q=tikar+lipat+swan"},
+        {nama: "Cermin Tikungan", url: "https://www.tokopedia.com/search?q=cermin+tikungan+jalan+convex"},
+        {nama: "Cat Besi Emco", url: "https://www.tokopedia.com/search?q=cat+besi+emco"},
+        {nama: "Baja Ringan", url: "https://www.tokopedia.com/search?q=baja+ringan+kanal+c"},
+        {nama: "Besi Hollow Galvanis", url: "https://www.tokopedia.com/search?q=besi+hollow+galvanis"},
+        {nama: "Tempat Jimpitan", url: "https://www.tokopedia.com/search?q=kotak+jimpitan+uang"},
+        {nama: "Alat Scanner QR Code", url: "https://www.tokopedia.com/search?q=barcode+scanner+qr"}
+    ];
+
+    // Config Role-based (Admin & Bendahara)
+    let sysAdminU = 'rt2_jaya', sysAdminP = '0203', sysAdminC = '#073A8F', sysAdminSidebarC = '#073A8F', sysAdminHeaderC = '#e2e8f0', sysAdminPic = ''; 
+    let sysBenU = 'rt2_ben', sysBenP = 'ben0203', sysBenC = '#047857', sysBenSidebarC = '#047857', sysBenHeaderC = '#e2e8f0', sysBenPic = ''; 
+    
+    let sysLogoAdmin = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png';
+    let sysLogoAdminSize = '60', sysLogoAdminUrl = '#';
+    let sysLogoBen = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1600/Thumb%20-%20Biru.png';
+    let sysLogoBenSize = '60', sysLogoBenUrl = '#';
+
+    let kasData = [], rekapData = []; 
+    let myChart; 
+
+    // Sticky Table Header Logic
+    document.addEventListener("DOMContentLoaded", () => {
+        const headerObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                const headerHeight = entry.contentRect.height;
+                const thElements = document.querySelectorAll('#tableHeaderFixed th');
+                thElements.forEach(th => th.style.top = headerHeight + 'px');
+            }
+        });
+        const headerEl = document.getElementById('cardHeaderKas');
+        if (headerEl) headerObserver.observe(headerEl);
+    });
+
+    // Toggle Background Input Visibility
+    function toggleBgInputs() {
+        const t = document.getElementById('setBgType').value;
+        document.getElementById('wrapBgColor').style.display = (t === 'color') ? 'block' : 'none';
+        document.getElementById('wrapBgGradient').style.display = (t === 'gradient') ? 'block' : 'none';
+        document.getElementById('wrapBgImage').style.display = (t === 'image') ? 'block' : 'none';
+    }
+
+    // ---------------- INITIALIZE SETTINGS ---------------- 
+    function initSettings() { 
+        const d = JSON.parse(localStorage.getItem('rt2_settings')) || {}; 
+         
+        if(d.adminU) { 
+            sysAdminU = d.adminU; sysAdminP = d.adminP; sysAdminC = d.adminC; sysAdminPic = d.adminPic || ''; 
+            sysAdminSidebarC = d.adminSidebarC || d.adminC; sysAdminHeaderC = d.adminHeaderC || '#e2e8f0'; 
+        } 
+        if(d.benU) { 
+            sysBenU = d.benU; sysBenP = d.benP; sysBenC = d.benC; sysBenPic = d.benPic || ''; 
+            sysBenSidebarC = d.benSidebarC || d.benC; sysBenHeaderC = d.benHeaderC || '#e2e8f0'; 
+        } 
+        if(d.kode) sysKode = d.kode; 
+        if(d.kodeColor) sysKodeColor = d.kodeColor; 
+        
+        if(d.logoAdmin) sysLogoAdmin = d.logoAdmin;
+        if(d.logoAdminSize) sysLogoAdminSize = d.logoAdminSize;
+        if(d.logoAdminUrl) sysLogoAdminUrl = d.logoAdminUrl;
+
+        if(d.logoBen) sysLogoBen = d.logoBen;
+        if(d.logoBenSize) sysLogoBenSize = d.logoBenSize;
+        if(d.logoBenUrl) sysLogoBenUrl = d.logoBenUrl;
+
+        // Load New Custom Settings
+        if(d.bgType) sysBgType = d.bgType;
+        if(d.bgColor) sysBgColor = d.bgColor;
+        if(d.bgGrad1) sysBgGrad1 = d.bgGrad1;
+        if(d.bgGrad2) sysBgGrad2 = d.bgGrad2;
+        if(d.bgImage) sysBgImage = d.bgImage;
+
+        if(d.txtBrowser) sysTxtBrowser = d.txtBrowser;
+        if(d.txtApp) sysTxtApp = d.txtApp;
+        if(d.txtMenuKas) sysTxtMenuKas = d.txtMenuKas;
+        if(d.txtMenuDash) sysTxtMenuDash = d.txtMenuDash;
+        if(d.txtMenuSet) sysTxtMenuSet = d.txtMenuSet;
+        if(d.txtContentKas) sysTxtContentKas = d.txtContentKas;
+        if(d.txtContentDash) sysTxtContentDash = d.txtContentDash;
+
+        if(d.tableBg) sysTableBg = d.tableBg;
+        if(d.tableTxt) sysTableTxt = d.tableTxt;
+        if(d.tableBtnEdit) sysTableBtnEdit = d.tableBtnEdit;
+        if(d.tableBtnDel) sysTableBtnDel = d.tableBtnDel;
+
+        if(d.distSize) sysDistSize = d.distSize;
+        if(d.distColor) sysDistColor = d.distColor;
+        if(d.distBtnSize) sysDistBtnSize = d.distBtnSize;
+
+        if(d.rekomendasi) sysRekomendasi = d.rekomendasi;
+
+        applyUIData();
+
+        // Populate Forms Settings
+        document.getElementById('setBgType').value = sysBgType;
+        document.getElementById('setBgColor').value = sysBgColor;
+        document.getElementById('setBgGrad1').value = sysBgGrad1;
+        document.getElementById('setBgGrad2').value = sysBgGrad2;
+        toggleBgInputs();
+
+        document.getElementById('setTxtBrowser').value = sysTxtBrowser;
+        document.getElementById('setTxtApp').value = sysTxtApp;
+        document.getElementById('setTxtMenuKas').value = sysTxtMenuKas;
+        document.getElementById('setTxtMenuDash').value = sysTxtMenuDash;
+        document.getElementById('setTxtMenuSet').value = sysTxtMenuSet;
+        document.getElementById('setTxtContentKas').value = sysTxtContentKas;
+        document.getElementById('setTxtContentDash').value = sysTxtContentDash;
+
+        document.getElementById('setTableBg').value = sysTableBg;
+        document.getElementById('setTableTxt').value = sysTableTxt;
+        document.getElementById('setTableBtnEdit').value = sysTableBtnEdit;
+        document.getElementById('setTableBtnDel').value = sysTableBtnDel;
+
+        document.getElementById('setDistSize').value = sysDistSize;
+        document.getElementById('setDistColor').value = sysDistColor;
+        document.getElementById('setDistBtnSize').value = sysDistBtnSize;
+
+        document.getElementById('setAdminU').value = sysAdminU; document.getElementById('setAdminP').value = sysAdminP; document.getElementById('setAdminC').value = sysAdminC; 
+        document.getElementById('setAdminSidebarC').value = sysAdminSidebarC; document.getElementById('setAdminHeaderC').value = sysAdminHeaderC; 
+        
+        document.getElementById('setBenU').value = sysBenU; document.getElementById('setBenP').value = sysBenP; document.getElementById('setBenC').value = sysBenC; 
+        document.getElementById('setBenSidebarC').value = sysBenSidebarC; document.getElementById('setBenHeaderC').value = sysBenHeaderC; 
+        
+        document.getElementById('setLogoAdminSize').value = sysLogoAdminSize; document.getElementById('setLogoAdminUrl').value = sysLogoAdminUrl !== '#' ? sysLogoAdminUrl : '';
+        document.getElementById('setLogoBenSize').value = sysLogoBenSize; document.getElementById('setLogoBenUrl').value = sysLogoBenUrl !== '#' ? sysLogoBenUrl : '';
+         
+        let kodeHtml = ''; 
+        for(let i=1; i<=6; i++) { 
+            kodeHtml += ` 
+            <div class="flex items-center gap-2 mb-2 p-1.5 border border-slate-200 rounded bg-slate-50"> 
+                <input type="color" id="setC${i}" name="setC${i}" value="${sysKodeColor[i]}" class="w-8 h-8 rounded cursor-pointer border-0 shrink-0"> 
+                <span class="bg-slate-200 text-slate-700 font-bold text-xs px-2 py-1.5 rounded text-center shrink-0 uppercase tracking-widest">Kode ${i}</span> 
+                <input type="text" id="setK${i}" name="setK${i}" value="${sysKode[i]}" class="w-full p-1.5 border border-slate-300 rounded text-sm focus:ring-1 focus:ring-blue-500 outline-none font-normal"> 
+            </div>`; 
+        } 
+        document.getElementById('kodeSettingsForm').innerHTML = kodeHtml; 
+        updateKodeDropdowns(); 
+        renderSettingsRekomendasi();
+         
+        if (localStorage.getItem('rt2_autoU')) { 
+            document.getElementById('username').value = localStorage.getItem('rt2_autoU'); 
+            document.getElementById('password').value = localStorage.getItem('rt2_autoP'); 
+            document.getElementById('rememberMe').checked = true; 
+        } 
+    } 
+
+    function applyUIData() {
+        // Apply Background
+        const body = document.body;
+        if (sysBgType === 'color') {
+            body.style.background = sysBgColor;
+        } else if (sysBgType === 'gradient') {
+            body.style.background = `linear-gradient(135deg, ${sysBgGrad1}, ${sysBgGrad2})`;
+        } else if (sysBgType === 'image') {
+            if (sysBgImage) {
+                body.style.background = `url(${sysBgImage}) no-repeat center center fixed`;
+                body.style.backgroundSize = 'cover';
+            } else {
+                body.style.background = '#f1f5f9'; // Fallback
+            }
+        }
+
+        // Apply Texts
+        document.getElementById('docTitle').innerText = sysTxtBrowser;
+        document.getElementById('dispAppTitleLogin').innerText = sysTxtApp;
+        document.getElementById('dispAppTitleSide').innerText = sysTxtApp;
+        document.querySelectorAll('.cpyTitle').forEach(e => e.innerText = sysTxtApp);
+        
+        document.getElementById('dispBtnKas').innerText = sysTxtMenuKas;
+        document.getElementById('dispBtnDash').innerText = sysTxtMenuDash;
+        document.getElementById('dispBtnSet').innerText = sysTxtMenuSet;
+        document.getElementById('dispContentKas').innerText = sysTxtContentKas;
+        document.getElementById('dispContentDash').innerText = sysTxtContentDash;
+
+        // Apply CSS Vars
+        document.documentElement.style.setProperty('--table-bg', sysTableBg);
+        document.documentElement.style.setProperty('--table-text', sysTableTxt);
+        document.documentElement.style.setProperty('--table-btn-edit', sysTableBtnEdit);
+        document.documentElement.style.setProperty('--table-btn-del', sysTableBtnDel);
+
+        document.documentElement.style.setProperty('--dist-txt-size', sysDistSize);
+        document.documentElement.style.setProperty('--dist-txt-color', sysDistColor);
+        document.documentElement.style.setProperty('--dist-btn-size', sysDistBtnSize);
+    }
+
+    function renderSettingsRekomendasi() {
+        let html = '';
+        sysRekomendasi.forEach((item, index) => {
+            html += `
+            <div class="bg-slate-50 p-3 rounded border border-slate-200 flex flex-col gap-2 relative">
+                <button onclick="hapusRekomendasi(${index})" class="absolute right-2 top-2 text-red-500 hover:text-red-700 text-lg"><i class="fa fa-times-circle"></i></button>
+                <div class="w-[90%]">
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Nama Barang</label>
+                    <input type="text" id="rekName${index}" value="${item.nama}" class="w-full p-1.5 border border-slate-300 rounded text-sm font-normal focus:ring-1 outline-none">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">URL</label>
+                    <input type="text" id="rekUrl${index}" value="${item.url}" class="w-full p-1.5 border border-slate-300 rounded text-sm font-normal focus:ring-1 outline-none">
+                </div>
+            </div>`;
+        });
+        document.getElementById('rekomendasiList').innerHTML = html;
+    }
+
+    function addRekomendasi() {
+        sysRekomendasi.push({nama: "Item Baru", url: "https://www.tokopedia.com/"});
+        renderSettingsRekomendasi();
+    }
+    function hapusRekomendasi(idx) {
+        sysRekomendasi.splice(idx, 1);
+        renderSettingsRekomendasi();
+    }
+
+    function applyUserRoleLogo() {
+        const actU = document.getElementById('username').value;
+        const logoImg = document.getElementById('appLogoSidebar');
+        const logoLink = document.getElementById('linkLogoSidebar');
+
+        if(actU === sysAdminU) {
+            logoImg.src = sysLogoAdmin;
+            logoImg.style.height = sysLogoAdminSize + 'px';
+            logoLink.href = sysLogoAdminUrl !== '' ? sysLogoAdminUrl : '#';
+        } else if (actU === sysBenU) {
+            logoImg.src = sysLogoBen;
+            logoImg.style.height = sysLogoBenSize + 'px';
+            logoLink.href = sysLogoBenUrl !== '' ? sysLogoBenUrl : '#';
+        }
+    }
+
+    function getBase64(file) { 
+        return new Promise((resolve, reject) => { 
+            if(!file) resolve(null); 
+            const reader = new FileReader(); 
+            reader.readAsDataURL(file); 
+            reader.onload = () => resolve(reader.result); 
+            reader.onerror = error => reject(error); 
+        }); 
+    } 
+
+    async function saveSettings() { 
+        let newKode = {}, newColor = {}; 
+        for(let i=1; i<=6; i++) {  
+            newKode[i] = document.getElementById('setK'+i).value || `Kode ${i}`; 
+            newColor[i] = document.getElementById('setC'+i).value || '#3b82f6'; 
+        } 
+
+        let newRekomendasi = [];
+        for(let i=0; i<sysRekomendasi.length; i++) {
+            let n = document.getElementById('rekName'+i);
+            let u = document.getElementById('rekUrl'+i);
+            if(n && u) newRekomendasi.push({nama: n.value, url: u.value});
+        }
+         
+        let adminb64 = await getBase64(document.getElementById('setAdminPic').files[0]); 
+        let benb64 = await getBase64(document.getElementById('setBenPic').files[0]); 
+        let lAdminB64 = await getBase64(document.getElementById('setLogoAdminFile').files[0]);
+        let lBenB64 = await getBase64(document.getElementById('setLogoBenFile').files[0]);
+        let bgImgB64 = await getBase64(document.getElementById('setBgImage').files[0]);
+
+        const saveObj = { 
+            bgType: document.getElementById('setBgType').value,
+            bgColor: document.getElementById('setBgColor').value,
+            bgGrad1: document.getElementById('setBgGrad1').value,
+            bgGrad2: document.getElementById('setBgGrad2').value,
+            bgImage: bgImgB64 || sysBgImage,
+
+            txtBrowser: document.getElementById('setTxtBrowser').value,
+            txtApp: document.getElementById('setTxtApp').value,
+            txtMenuKas: document.getElementById('setTxtMenuKas').value,
+            txtMenuDash: document.getElementById('setTxtMenuDash').value,
+            txtMenuSet: document.getElementById('setTxtMenuSet').value,
+            txtContentKas: document.getElementById('setTxtContentKas').value,
+            txtContentDash: document.getElementById('setTxtContentDash').value,
+
+            tableBg: document.getElementById('setTableBg').value,
+            tableTxt: document.getElementById('setTableTxt').value,
+            tableBtnEdit: document.getElementById('setTableBtnEdit').value,
+            tableBtnDel: document.getElementById('setTableBtnDel').value,
+
+            distSize: document.getElementById('setDistSize').value,
+            distColor: document.getElementById('setDistColor').value,
+            distBtnSize: document.getElementById('setDistBtnSize').value,
+
+            rekomendasi: newRekomendasi,
+
+            adminU: document.getElementById('setAdminU').value, adminP: document.getElementById('setAdminP').value, adminC: document.getElementById('setAdminC').value, 
+            adminSidebarC: document.getElementById('setAdminSidebarC').value, adminHeaderC: document.getElementById('setAdminHeaderC').value, adminPic: adminb64 || sysAdminPic, 
+            
+            benU: document.getElementById('setBenU').value, benP: document.getElementById('setBenP').value, benC: document.getElementById('setBenC').value, 
+            benSidebarC: document.getElementById('setBenSidebarC').value, benHeaderC: document.getElementById('setBenHeaderC').value, benPic: benb64 || sysBenPic, 
+            
+            kode: newKode, kodeColor: newColor, 
+            logoAdmin: lAdminB64 || sysLogoAdmin, logoAdminSize: document.getElementById('setLogoAdminSize').value || '60', logoAdminUrl: document.getElementById('setLogoAdminUrl').value || '#',
+            logoBen: lBenB64 || sysLogoBen, logoBenSize: document.getElementById('setLogoBenSize').value || '60', logoBenUrl: document.getElementById('setLogoBenUrl').value || '#'
+        }; 
+
+        localStorage.setItem('rt2_settings', JSON.stringify(saveObj)); 
+        
+        // Memperbarui variabel secara real-time
+        sysBgType = saveObj.bgType; sysBgColor = saveObj.bgColor; sysBgGrad1 = saveObj.bgGrad1; sysBgGrad2 = saveObj.bgGrad2; sysBgImage = saveObj.bgImage;
+
+        sysTxtBrowser = saveObj.txtBrowser; sysTxtApp = saveObj.txtApp; sysTxtMenuKas = saveObj.txtMenuKas; sysTxtMenuDash = saveObj.txtMenuDash; sysTxtMenuSet = saveObj.txtMenuSet; sysTxtContentKas = saveObj.txtContentKas; sysTxtContentDash = saveObj.txtContentDash;
+        sysTableBg = saveObj.tableBg; sysTableTxt = saveObj.tableTxt; sysTableBtnEdit = saveObj.tableBtnEdit; sysTableBtnDel = saveObj.tableBtnDel;
+        sysDistSize = saveObj.distSize; sysDistColor = saveObj.distColor; sysDistBtnSize = saveObj.distBtnSize;
+        sysRekomendasi = saveObj.rekomendasi;
+        
+        sysKode = newKode; sysKodeColor = newColor; 
+        sysAdminU = saveObj.adminU; sysAdminP = saveObj.adminP; sysAdminC = saveObj.adminC; sysAdminSidebarC = saveObj.adminSidebarC; sysAdminHeaderC = saveObj.adminHeaderC; sysAdminPic = saveObj.adminPic; 
+        sysBenU = saveObj.benU; sysBenP = saveObj.benP; sysBenC = saveObj.benC; sysBenSidebarC = saveObj.benSidebarC; sysBenHeaderC = saveObj.benHeaderC; sysBenPic = saveObj.benPic; 
+        
+        sysLogoAdmin = saveObj.logoAdmin; sysLogoAdminSize = saveObj.logoAdminSize; sysLogoAdminUrl = saveObj.logoAdminUrl;
+        sysLogoBen = saveObj.logoBen; sysLogoBenSize = saveObj.logoBenSize; sysLogoBenUrl = saveObj.logoBenUrl;
+         
+        applyUIData();
+        applyUserRoleLogo();
+        updateKodeDropdowns(); 
+        
+        // Update variables based on active user
+        const actU = document.getElementById('username').value; 
+        if(actU === sysAdminU) { 
+            document.documentElement.style.setProperty('--theme-color', sysAdminC); 
+            document.documentElement.style.setProperty('--sidebar-color', sysAdminSidebarC); 
+            document.documentElement.style.setProperty('--header-color', sysAdminHeaderC); 
+            document.getElementById('profileSidebar').src = sysAdminPic || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtCdP5nNocK6nzthO0f9MVPm_WTB7699KVBFf_BQV1geocdUY4qdgHngl1_vz8mCn9XA6JYCfxFLV2c15OnDXYuknxxHwu1LcXQLF4QFU7ABoZLu8Tz1UhFd_VKe4P7OWjgzz6yh1hVfSzHa88LnAHa9RZm8qqCdhE3wSuJh1q61k8k3Wxen0Wmgj5YEQ/w640-h640/favicon%20rt2%20-%20hosting.png'; 
+        } 
+        if(actU === sysBenU) { 
+            document.documentElement.style.setProperty('--theme-color', sysBenC); 
+            document.documentElement.style.setProperty('--sidebar-color', sysBenSidebarC); 
+            document.documentElement.style.setProperty('--header-color', sysBenHeaderC); 
+            document.getElementById('profileSidebar').src = sysBenPic || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtCdP5nNocK6nzthO0f9MVPm_WTB7699KVBFf_BQV1geocdUY4qdgHngl1_vz8mCn9XA6JYCfxFLV2c15OnDXYuknxxHwu1LcXQLF4QFU7ABoZLu8Tz1UhFd_VKe4P7OWjgzz6yh1hVfSzHa88LnAHa9RZm8qqCdhE3wSuJh1q61k8k3Wxen0Wmgj5YEQ/w640-h640/favicon%20rt2%20-%20hosting.png'; 
+        } 
+
+        // Update tampilan saat tab aktif
+        if(!document.getElementById('dashboardTab').classList.contains('hidden')) { renderDashboard(); }
+        if(!document.getElementById('bukukasTab').classList.contains('hidden')) { filterData(); }
+
+        Swal.fire({icon:'success', title:'Tersimpan', text:'Konfigurasi berhasil diterapkan secara otomatis.', confirmButtonColor: 'var(--theme-color)', timer: 1500}); 
+    } 
+
+    function updateKodeDropdowns() { 
+        function hexToRgba(hex, alpha) { 
+            let r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); 
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`; 
+        } 
+        let modHtml = ''; 
+        let filtHtml = '<option value="all">🏷 Semua Kode</option>'; 
+        for(let i=1; i<=6; i++) {  
+            let bgL = hexToRgba(sysKodeColor[i], 0.15); 
+            let css = `background:${bgL}; color:${sysKodeColor[i]}; font-weight:600;`; 
+            modHtml += `<option value="${i}" style="${css}">${sysKode[i]}</option>`; 
+            filtHtml += `<option value="${i}" style="${css}">${sysKode[i]}</option>`; 
+        } 
+        document.getElementById('inputKode').innerHTML = modHtml; 
+        document.getElementById('filterKode').innerHTML = filtHtml; 
+    } 
+
+    // ---------------- BASIC LOGIC ---------------- 
+    setInterval(() => { 
+      const now = new Date(); 
+      document.getElementById('liveDate').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); 
+      document.getElementById('liveClock').innerText = now.toLocaleTimeString('id-ID', { hour12: false }) + ' WIB'; 
+      if(document.getElementById('rekapTitle')) document.getElementById('rekapTitle').innerText = "Rekapitulasi Buku Kas - " + now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); 
+    }, 1000); 
+
+    function togglePassword() { 
+      let x = document.getElementById("password"); 
+      let icon = document.getElementById("toggleEye"); 
+      if (x.type === "password") { x.type = "text"; icon.classList.replace('fa-eye', 'fa-eye-slash'); }  
+      else { x.type = "password"; icon.classList.replace('fa-eye-slash', 'fa-eye'); } 
+    } 
+
+    function login() { 
+      const u = document.getElementById('username').value; 
+      const p = document.getElementById('password').value; 
+       
+      let roleName = '', pic = ''; 
+      if(u === sysAdminU && p === sysAdminP) {  
+          roleName = 'Administrator';  
+          document.documentElement.style.setProperty('--theme-color', sysAdminC);  
+          document.documentElement.style.setProperty('--sidebar-color', sysAdminSidebarC);  
+          document.documentElement.style.setProperty('--header-color', sysAdminHeaderC);  
+          pic = sysAdminPic || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtCdP5nNocK6nzthO0f9MVPm_WTB7699KVBFf_BQV1geocdUY4qdgHngl1_vz8mCn9XA6JYCfxFLV2c15OnDXYuknxxHwu1LcXQLF4QFU7ABoZLu8Tz1UhFd_VKe4P7OWjgzz6yh1hVfSzHa88LnAHa9RZm8qqCdhE3wSuJh1q61k8k3Wxen0Wmgj5YEQ/w640-h640/favicon%20rt2%20-%20hosting.png'; 
+      } 
+      else if (u === sysBenU && p === sysBenP) {  
+          roleName = 'Bendahara';  
+          document.documentElement.style.setProperty('--theme-color', sysBenC);  
+          document.documentElement.style.setProperty('--sidebar-color', sysBenSidebarC);  
+          document.documentElement.style.setProperty('--header-color', sysBenHeaderC);  
+          pic = sysBenPic || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtCdP5nNocK6nzthO0f9MVPm_WTB7699KVBFf_BQV1geocdUY4qdgHngl1_vz8mCn9XA6JYCfxFLV2c15OnDXYuknxxHwu1LcXQLF4QFU7ABoZLu8Tz1UhFd_VKe4P7OWjgzz6yh1hVfSzHa88LnAHa9RZm8qqCdhE3wSuJh1q61k8k3Wxen0Wmgj5YEQ/w640-h640/favicon%20rt2%20-%20hosting.png'; 
+      } 
+       
+      if(roleName !== ''){ 
+        document.getElementById('roleTitle').innerText = roleName; 
+        document.getElementById('profileSidebar').src = pic; 
+        if (document.getElementById('rememberMe').checked) { 
+            localStorage.setItem('rt2_autoU', u); localStorage.setItem('rt2_autoP', p); 
+        } else { 
+            localStorage.removeItem('rt2_autoU'); localStorage.removeItem('rt2_autoP'); 
+        } 
+
+        document.getElementById('loginSection').classList.add('hidden'); 
+        document.getElementById('appSection').classList.remove('hidden'); 
+        
+        applyUserRoleLogo(); 
+
+        switchTab('bukukas'); 
+        loadData(); 
+      } else { 
+        if (typeof Swal !== 'undefined') Swal.fire({ icon:'error', title:'Akses Ditolak', text:'Username/Password salah!', confirmButtonColor: 'var(--theme-color)' }); 
+        else alert('Akses Ditolak!'); 
+      } 
+    } 
+    function logout() { location.reload(); } 
+
+    function switchTab(tab) { 
+      ['dashboard', 'bukukas', 'setting'].forEach(t => { 
+          document.getElementById(t + 'Tab').classList.add('hidden'); 
+          let btn = document.getElementById('btn-tab-' + t); 
+          btn.classList.remove('bg-yellow-400', 'text-blue-900', 'shadow-lg'); 
+          btn.classList.add('text-blue-100'); 
+      }); 
+      document.getElementById(tab + 'Tab').classList.remove('hidden'); 
+      document.getElementById('btn-tab-' + tab).classList.add('bg-yellow-400', 'text-blue-900', 'shadow-lg'); 
+      document.getElementById('btn-tab-' + tab).classList.remove('text-blue-100'); 
+       
+      document.getElementById('scrollControls').style.display = (tab !== 'setting') ? 'flex' : 'none'; 
+      if(tab === 'dashboard') renderDashboard(); 
+    } 
+
+    function scrollToPos(pos) { 
+      const area = document.getElementById('mainScroll'); 
+      if(pos === 'top') area.scrollTo({top: 0, behavior: 'smooth'}); 
+      if(pos === 'mid') area.scrollTo({top: area.scrollHeight / 2, behavior: 'smooth'}); 
+      if(pos === 'bot') area.scrollTo({top: area.scrollHeight, behavior: 'smooth'}); 
+    } 
+
+    const formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka); 
+    const formatAngka = (angka) => new Intl.NumberFormat('id-ID').format(angka); 
+    function formatRupiah(obj) { obj.value = obj.value.replace(/[^0-9]/g, '') ? new Intl.NumberFormat('id-ID').format(obj.value.replace(/[^0-9]/g, '')) : ''; } 
+
+    // ---------------- FETCH DATA ---------------- 
+    function loadData() { 
+      document.getElementById('tableBody').innerHTML = '<tr><td colspan="9" class="text-center p-8 bg-white text-base"><i class="fa fa-spinner fa-spin text-theme mr-2"></i> Sinkronisasi Data...</td></tr>'; 
+      if(typeof google !== 'undefined') { 
+          google.script.run.withSuccessHandler((res) => { kasData = res; filterData(); }).getKasData(); 
+          google.script.run.withSuccessHandler((res) => { rekapData = res; renderRekapTabel(); }).getRekapSpreadsheet(); 
+      } else { 
+          document.getElementById('tableBody').innerHTML = '<tr><td colspan="9" class="text-center p-8 text-red-500 bg-white font-bold text-base">Error: Google Server Terputus. (Simulasi Offline)</td></tr>'; 
+      } 
+    } 
+
+    function goToBukuKasFilter(kodeIdx) { 
+        switchTab('bukukas'); 
+        document.getElementById('filterKode').value = kodeIdx; 
+        filterData(); 
+    } 
+
+    function filterData() { 
+        const fKode = document.getElementById('filterKode').value; 
+        const sData = document.getElementById('sortData').value; 
+
+        let filtered = kasData.filter(row => { 
+            const codeMatch = fKode === 'all' || row.kode.toString() === fKode; 
+            return codeMatch; 
+        }); 
+
+        if (sData === 'desc') filtered.sort((a, b) => b.rowIdx - a.rowIdx); 
+        else filtered.sort((a, b) => a.rowIdx - b.rowIdx); 
+
+        renderTable(filtered); 
+    } 
+
+    function quickSearch() { 
+        const cariStr = document.getElementById('inputSearch').value.toLowerCase().trim(); 
+        const terms = cariStr.split(' ').filter(t => t.trim().length > 0); 
+        const trs = document.querySelectorAll('#dataTable tbody tr:not(.no-data-row)'); 
+
+        trs.forEach(tr => { 
+            const text = tr.innerText.toLowerCase(); 
+            const match = terms.every(term => text.includes(term)); 
+            tr.style.display = match || terms.length === 0 ? '' : 'none'; 
+        }); 
+    } 
+
+    function renderTable(data) { 
+      let html = '', tIn = 0, tOut = 0; 
+      data.forEach((row) => { 
+        tIn += parseFloat(row.pemasukan); tOut += parseFloat(row.pengeluaran); 
+         
+        let berkasUI = row.berkas ? `<a href="${row.berkas}" target="_blank" class="text-blue-600 hover:text-white bg-blue-100 hover:bg-blue-600 px-3 py-1.5 rounded shadow-sm font-bold inline-block btn-hover text-sm"><i class="fa fa-external-link-alt"></i></a>` : `<span class="text-xs text-slate-400 font-normal italic">Kosong</span>`; 
+        let tglObj = new Date(row.tanggalRaw); 
+        let tglFull = isNaN(tglObj) ? row.tanggalRaw : tglObj.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); 
+
+        let bgL = sysKodeColor[row.kode] || '#94a3b8'; 
+
+        html += `<tr class="hover:bg-blue-50/50 transition-colors border-b border-slate-200 text-slate-700 bg-white"> 
+          <td class="p-3 md:p-4 text-center font-normal text-slate-500 col-no">${row.no}</td> 
+          <td class="p-3 md:p-4 whitespace-nowrap font-normal col-tgl">${tglFull}</td> 
+          <td class="p-3 md:p-4 text-center col-kode"> 
+             <div class="tooltip"> 
+                 <div style="background-color: ${bgL};" class="text-white border px-2 py-1 rounded text-center shadow-sm font-bold tracking-wide text-[11px]"> 
+                     K-${row.kode} 
+                 </div> 
+                 <span class="tooltiptext">${sysKode[row.kode]}</span> 
+             </div> 
+          </td> 
+          <td class="p-3 md:p-4 whitespace-normal min-w-[200px] text-sm md:text-base font-normal text-left text-slate-800 leading-snug col-desc">${row.deskripsi}</td> 
+          <td class="p-3 md:p-4 text-right text-emerald-600 font-bold col-in">${row.pemasukan>0 ? formatAngka(row.pemasukan) : '-'}</td> 
+          <td class="p-3 md:p-4 text-right text-orange-600 font-bold col-out">${row.pengeluaran>0 ? formatAngka(row.pengeluaran) : '-'}</td> 
+          <td class="p-3 md:p-4 text-right text-theme font-bold col-bal">${row.saldo>0 ? formatAngka(row.saldo) : '-'}</td> 
+          <td class="p-3 md:p-4 text-center col-berkas">${berkasUI}</td> 
+          <td class="p-3 md:p-4 text-center whitespace-nowrap col-aksi"> 
+             <button onclick="editData(${row.rowIdx-2})" class="text-white mx-1 btn-edit-tbl hover:opacity-80 p-2 px-3 rounded shadow-sm btn-hover text-sm md:text-base"><i class="fa fa-pen"></i></button> 
+             <button onclick="hapusData(${row.rowIdx})" class="text-white mx-1 btn-del-tbl hover:opacity-80 p-2 px-3 rounded shadow-sm btn-hover text-sm md:text-base"><i class="fa fa-trash"></i></button> 
+          </td> 
+        </tr>`; 
+      }); 
+       
+      document.getElementById('tableBody').innerHTML = html || '<tr class="no-data-row"><td colspan="9" class="text-center p-8 bg-white text-slate-400 font-bold rounded shadow-sm text-base">Tidak ada transaksi ditemukan.</td></tr>'; 
+      document.getElementById('totIn').innerText = formatRp(tIn); document.getElementById('totOut').innerText = formatRp(tOut); 
+      document.getElementById('totBal').innerText = kasData.length ? formatRp(kasData[kasData.length-1].saldo) : 'Rp 0'; 
+      quickSearch(); 
+    } 
+
+    // ---------------- MODAL TRANSAKSI ---------------- 
+    function openModal() { 
+      document.getElementById('formTx').reset(); document.getElementById('inputRowIdx').value = ''; 
+      document.getElementById('oldBerkas').value = '';  
+       
+      document.getElementById('modalTitle').innerHTML = '<i class="fa fa-plus-circle mr-2"></i> Transaksi Baru'; 
+      document.getElementById('modalHeader').className = "px-6 py-4 flex justify-between items-center bg-theme text-white"; 
+      document.getElementById('btnSubmit').innerText = "Simpan Transaksi"; 
+       
+      document.getElementById('inputTanggal').valueAsDate = new Date(); 
+      updateModalTheme(); 
+      const m = document.getElementById('transaksiModal'); 
+      const b = document.getElementById('modalBox'); 
+      m.classList.remove('hidden'); 
+      setTimeout(() => { m.classList.remove('opacity-0', 'pointer-events-none'); b.classList.remove('scale-95'); }, 10); 
+    } 
+     
+    function closeModal() {  
+      const m = document.getElementById('transaksiModal'); 
+      const b = document.getElementById('modalBox'); 
+      m.classList.add('opacity-0', 'pointer-events-none'); b.classList.add('scale-95'); 
+      setTimeout(() => { m.classList.add('hidden'); }, 300); 
+    } 
+
+    function updateModalTheme() { 
+        const isMasuk = document.querySelector('input[name="jenis"]:checked').value === 'pemasukan'; 
+        const box = document.getElementById('modalBox'); 
+        if(isMasuk) { 
+            box.classList.remove('bg-orange-50', 'border-orange-200'); 
+            box.classList.add('bg-emerald-50', 'border-emerald-200'); 
+        } else { 
+            box.classList.remove('bg-emerald-50', 'border-emerald-200'); 
+            box.classList.add('bg-orange-50', 'border-orange-200'); 
+        } 
+    } 
+
+    function saveData(e) { 
+      e.preventDefault(); 
+      const btn = document.getElementById('btnSubmit'); btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Proses...'; btn.disabled = true; 
+      const fileInput = document.getElementById('inputFile').files[0]; 
+
+      if(fileInput && fileInput.size > 5 * 1024 * 1024) {  
+          Swal.fire('Oops', 'Ukuran file maksimal 5MB!', 'warning'); 
+          btn.innerHTML = document.getElementById('inputRowIdx').value ? 'Simpan Perubahan' : 'Simpan Transaksi';  
+          btn.disabled = false; return; 
+      } 
+
+      const payload = { 
+        rowIdx: document.getElementById('inputRowIdx').value, jenis: document.querySelector('input[name="jenis"]:checked').value, 
+        tanggal: document.getElementById('inputTanggal').value, kode: document.getElementById('inputKode').value, 
+        deskripsi: document.getElementById('inputDesc').value, nominal: document.getElementById('inputNominal').value, 
+        oldBerkas: document.getElementById('oldBerkas').value, fileBase64: null, fileName: null 
+      }; 
+
+      if (fileInput) { 
+        const reader = new FileReader(); 
+        reader.onload = function(e) { payload.fileBase64 = e.target.result; payload.fileName = fileInput.name; sendToGAS(payload, btn); }; 
+        reader.readAsDataURL(fileInput); 
+      } else { sendToGAS(payload, btn); } 
+    } 
+
+    function sendToGAS(payload, btn) { 
+        if(typeof google !== 'undefined') { 
+          if(payload.rowIdx) google.script.run.withSuccessHandler(()=>{finishSave(btn)}).editTransaction(payload); 
+          else google.script.run.withSuccessHandler(()=>{finishSave(btn)}).saveTransaction(payload); 
+        } 
+    } 
+    function finishSave(btn) {  
+        closeModal(); btn.disabled=false;  
+        Swal.fire({icon:'success',title:'Berhasil!',timer:1500,showConfirmButton:false});  
+        loadData();  
+    } 
+
+    function editData(arrIdx) { 
+        const row = kasData[arrIdx]; 
+        document.getElementById('inputRowIdx').value = row.rowIdx; 
+        document.getElementById('oldBerkas').value = row.berkas; 
+         
+        document.getElementById('modalTitle').innerHTML = '<i class="fa fa-pen mr-2"></i> Edit Data #' + row.no; 
+        document.getElementById('modalHeader').className = "px-6 py-4 flex justify-between items-center bg-amber-500 text-white"; 
+        document.getElementById('btnSubmit').innerText = "Simpan Perubahan"; 
+         
+        document.getElementById('inputTanggal').value = row.tanggalRaw; document.getElementById('inputKode').value = row.kode; document.getElementById('inputDesc').value = row.deskripsi; 
+        document.querySelector(`input[name="jenis"][value="${row.pemasukan>0?'pemasukan':'pengeluaran'}"]`).checked = true; 
+        document.getElementById('inputNominal').value = new Intl.NumberFormat('id-ID').format(row.pemasukan>0 ? row.pemasukan : row.pengeluaran); 
+         
+        updateModalTheme(); 
+        const m = document.getElementById('transaksiModal'); 
+        const b = document.getElementById('modalBox'); 
+        m.classList.remove('hidden'); 
+        setTimeout(() => { m.classList.remove('opacity-0', 'pointer-events-none'); b.classList.remove('scale-95'); }, 10); 
+    } 
+
+    function hapusData(rowIdx) { 
+      Swal.fire({ title: 'Hapus Transaksi?', text:'Tindakan ini tidak dapat dibatalkan.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Hapus', confirmButtonColor: '#ef4444' }).then((result) => { 
+        if (result.isConfirmed) { 
+          google.script.run.withSuccessHandler(()=>{loadData();}).deleteTransaction(rowIdx); 
+        } 
+      }); 
+    } 
+
+    // ---------------- DASHBOARD LOGIC ---------------- 
+    function renderRekapTabel() { 
+        if(rekapData && rekapData.length > 0) { 
+            let head = '<tr>', body = ''; 
+            const colColors = ['bg-blue-100', 'bg-emerald-100', 'bg-amber-100', 'bg-rose-100']; 
+             
+            rekapData.forEach((row, i) => { 
+                if(i===0) {  
+                    row.forEach((h, j) => head += `<th class="p-3 border border-slate-300 text-center ${colColors[j]} text-slate-800 font-bold uppercase tracking-wider">${h}</th>`); 
+                    head += '</tr>'; 
+                } else {  
+                    body += `<tr class="border-b border-slate-200 hover:bg-slate-100 transition-colors bg-white">`;  
+                    row.forEach((c, j) => { 
+                        if (i === 7 && j === 0) {  
+                            body += `<td class="p-2 border-r border-slate-300 bg-slate-50"></td>`;  
+                        } else if (i === 7 && j === 3) {  
+                            body += `<td class="p-3 border-r border-slate-300 bg-theme text-white font-bold text-base shadow-inner text-right">${c}</td>`; 
+                        } else { 
+                            let align = (j > 0) ? 'text-right' : 'text-left'; 
+                            let valStr = c.toString().replace(/Rp|\./g, '').trim(); 
+                            let num = parseInt(valStr) || 0; 
+                            body += `<td class="p-2.5 border-r border-slate-300 font-normal text-slate-700 px-4 ${align}">${(j>0 && i<7)?formatAngka(num):c}</td>`; 
+                        } 
+                    });  
+                    body += `</tr>`;  
+                } 
+            }); 
+            document.getElementById('rekapHead').innerHTML = head; 
+            document.getElementById('rekapBody').innerHTML = body; 
+        } else { 
+            document.getElementById('rekapBody').innerHTML = '<tr><td colspan="4" class="text-slate-400 font-bold text-center p-6 bg-white">Range I4:L11 kosong / Format belum sesuai.</td></tr>'; 
+        } 
+    } 
+
+    function renderDashboard() { 
+      let monthly = {}; 
+      let totalIn=0, totalOut=0, kodes={1:0,2:0,3:0,4:0,5:0,6:0}; 
+
+      kasData.forEach(row => { 
+          totalIn+=parseFloat(row.pemasukan); totalOut+=parseFloat(row.pengeluaran); 
+          if(row.pemasukan>0) kodes[row.kode] += parseFloat(row.pemasukan); 
+
+          let d = new Date(row.tanggalRaw); let month = d.toLocaleString('id-ID', {month:'short'}) + ' ' + d.getFullYear(); 
+          if(!monthly[month]) monthly[month] = { in: 0, out: 0 }; 
+          monthly[month].in += parseFloat(row.pemasukan); monthly[month].out += parseFloat(row.pengeluaran); 
+      }); 
+
+      const status = totalIn >= totalOut ? "Surplus (Sehat)" : "Defisit (Perhatian Khusus)"; 
+      let maxInKey = 1; let maxIn = 0; 
+      for(let k in kodes) { if(kodes[k] > maxIn) { maxIn = kodes[k]; maxInKey = k; } } 
+       
+      // Build Grid List UI for Recomendations
+      let tkpHtml = '<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 mt-4 mb-2 list-none pl-1">';
+      sysRekomendasi.forEach(item => {
+          tkpHtml += `<li class="flex items-start gap-2.5"><i class="fa fa-check-circle text-emerald-500 mt-1"></i><a href="${item.url}" target="_blank" class="text-sm md:text-base font-bold text-blue-700 hover:text-blue-500 hover:underline transition-colors leading-tight">${item.nama}</a></li>`;
+      });
+      tkpHtml += '</ul>';
+
+      let textAI = ` 
+      <div class="text-sm md:text-base font-normal text-slate-800 w-full"> 
+          <b class="text-blue-900 border-b border-yellow-400 mb-2 inline-block text-lg">Laporan Keuangan</b><br>
+          Berdasarkan analisis sistem keuangan cerdas, kondisi keuangan saat ini berstatus <b class="text-theme">${status}</b> dengan Total Saldo aktual sebesar <b class="text-theme">${formatRp(totalIn-totalOut)}</b>.<br><br> 
+          
+          <b class="text-blue-900 border-b border-yellow-400 mb-2 inline-block text-lg">Saran & Kritikan Profesional</b><br>
+          Secara keseluruhan arus kas terkelola dengan sistematis, namun terdapat catatan mendesak: <b>Solidaritas dan partisipasi ronda malam warga harus dikompakkan kembali</b>. Alokasi dana jimpitan yang menjadi tulang punggung pemasukan sangat dipengaruhi oleh keaktifan operasional pos ronda. Diperlukan konsolidasi antar warga untuk memaksimalkan jadwal jaga demi keamanan, kenyamanan, dan kestabilan kas lingkungan.<br><br>
+
+          <b class="text-blue-900 border-b border-yellow-400 mb-2 inline-block text-lg">Rekomendasi Pembelian Inventaris Warga</b><br> 
+          ${tkpHtml}
+      </div>`; 
+      document.getElementById('aiText').innerHTML = textAI; 
+
+      // CHART JS
+      const labels = Object.keys(monthly); 
+      const dataIn = labels.map(l => monthly[l].in); 
+      const dataOut = labels.map(l => monthly[l].out); 
+       
+      let maxMonthIn = labels[0] || '-', maxMonthOut = labels[0] || '-'; 
+      let mInVal = 0, mOutVal = 0; 
+      labels.forEach(l => { 
+          if(monthly[l].in > mInVal) { mInVal = monthly[l].in; maxMonthIn = l; } 
+          if(monthly[l].out > mOutVal) { mOutVal = monthly[l].out; maxMonthOut = l; } 
+      }); 
+      document.getElementById('chartDetail').innerHTML = `<i class="fa fa-info-circle text-blue-500"></i> Pemasukan terbesar: <b>${maxMonthIn}</b> (${formatRp(mInVal)}). Pengeluaran tertinggi: <b>${maxMonthOut}</b> (${formatRp(mOutVal)}).`; 
+
+      Chart.register(ChartDataLabels); 
+      if(myChart) myChart.destroy(); 
+       
+      const currentFont = document.body.style.fontFamily || 'Poppins'; 
+      Chart.defaults.font.family = currentFont; 
+       
+      myChart = new Chart(document.getElementById('trendChart'), { 
+          type: 'bar', 
+          data: {  
+              labels: labels,  
+              datasets: [  
+                  { label: 'Pemasukan', data: dataIn, backgroundColor: '#10b981', borderRadius: 4 },  
+                  { label: 'Pengeluaran', data: dataOut, backgroundColor: '#f97316', borderRadius: 4 }  
+              ]  
+          }, 
+          options: {  
+              responsive: true, maintainAspectRatio: false,  
+              plugins: {  
+                  legend: { position: 'bottom', labels: {font:{weight:'600', size: 12}} }, 
+                  datalabels: { 
+                      anchor: 'end', align: 'top', color: '#1e293b', font: { weight: '600', size: 10 }, 
+                      formatter: function(value) { return value > 0 ? formatAngka(value) : ''; } 
+                  } 
+              }, 
+              scales: { y: { beginAtZero: true, grace: '15%' } } 
+          } 
+      }); 
+
+      // Distribusi Kode
+      let sumHtml = ''; 
+      for(let k=1; k<=6; k++) { 
+          let nLengkap = sysKode[k].split(' - ')[1] || sysKode[k]; 
+          sumHtml += ` 
+          <div style="background-color: ${sysKodeColor[k]};" class="p-4 rounded-xl border border-white/20 text-center shadow flex flex-col min-h-[140px] text-white relative"> 
+              <div> 
+                  <div class="text-xs font-bold opacity-80 uppercase tracking-widest mb-1.5 border-b border-white/20 pb-1">Kode ${k}</div> 
+                  <div class="text-sm font-bold leading-tight">${nLengkap}</div> 
+              </div> 
+              <div class="flex-1 flex items-center justify-center py-2"> 
+                  <div class="font-bold drop-shadow-sm dist-val-text">${formatRp(kodes[k])}</div> 
+              </div> 
+              <button onclick="goToBukuKasFilter(${k})" class="mt-auto w-full bg-white text-slate-800 hover:bg-slate-100 rounded-lg py-2 font-bold tracking-wide transition-all shadow uppercase btn-hover dist-btn-text"><i class="fa fa-arrow-right mr-2"></i> Detail</button> 
+          </div>`; 
+      } 
+      document.getElementById('summaryCards').innerHTML = sumHtml; 
+    } 
+
+    // ---------------- CHAT AI MOCKUP ---------------- 
+    function openChatAI() { 
+        Swal.fire({ 
+            title: '<span class="text-theme font-bold text-lg"><i class="fa fa-robot mr-2"></i> Asisten AI</span>', 
+            html: ` 
+                <div class="h-64 overflow-y-auto bg-slate-50 p-4 rounded-lg border border-slate-200 text-left space-y-3 shadow-inner" id="chatBox"> 
+                    <div class="flex items-start gap-3"> 
+                        <div class="bg-theme text-white p-2 rounded text-sm"><i class="fa fa-robot"></i></div> 
+                        <div class="bg-white p-3 rounded-r-lg rounded-bl-lg shadow-sm border border-slate-200 text-sm font-normal text-slate-700">Halo, saya asisten AI profesional. Silakan tanyakan hal-hal terkait evaluasi keuangan atau akses kartu rekomendasi langsung menuju Tokopedia di Dashboard!</div> 
+                    </div> 
+                </div> 
+                <div class="mt-4 flex gap-3"> 
+                    <input type="text" id="chatInput" class="w-full p-3 border border-slate-300 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 font-normal" placeholder="Ketik pertanyaan..."> 
+                    <button onclick="sendChatAI()" class="bg-theme hover:bg-blue-900 text-white px-4 py-3 rounded-lg shadow btn-hover"><i class="fa fa-paper-plane text-lg"></i></button> 
+                </div> 
+            `, 
+            showConfirmButton: false, showCloseButton: true, width: '32rem', background: '#ffffff', 
+            didOpen: () => { 
+                document.getElementById('chatInput').addEventListener('keypress', function (e) { 
+                    if (e.key === 'Enter') sendChatAI(); 
+                }); 
+            } 
+        }); 
+    } 
+
+    function sendChatAI() { 
+        const inp = document.getElementById('chatInput'); 
+        const box = document.getElementById('chatBox'); 
+        if(!inp.value.trim()) return; 
+         
+        box.innerHTML += ` 
+        <div class="flex items-start gap-3 justify-end"> 
+            <div class="bg-blue-500 text-white p-3 rounded-l-lg rounded-br-lg shadow-sm text-sm font-normal">${inp.value}</div> 
+            <div class="bg-blue-200 text-blue-800 p-2 rounded text-xs"><i class="fa fa-user"></i></div> 
+        </div>`; 
+         
+        inp.value = ''; 
+        box.scrollTop = box.scrollHeight; 
+
+        setTimeout(() => { 
+            let res = "Silakan lihat laporan analisa lengkap serta saran di area Laporan Cerdas AI pada halaman Dashboard Anda. Jangan lupa untuk terus mengevaluasi kekompakan pos ronda ya!"; 
+             
+            box.innerHTML += ` 
+            <div class="flex items-start gap-3"> 
+                <div class="bg-theme text-white p-2 rounded text-sm"><i class="fa fa-robot"></i></div> 
+                <div class="bg-white p-3 rounded-r-lg rounded-bl-lg shadow-sm border border-slate-200 text-sm font-normal text-slate-700">${res}</div> 
+            </div>`; 
+            box.scrollTop = box.scrollHeight; 
+        }, 800); 
+    } 
+
+    // ---------------- EXPORT TOOLS ---------------- 
+    function exportExcel() { 
+        const ws = XLSX.utils.json_to_sheet(kasData.map(r => ({ No: r.no, Tanggal: r.tanggalRaw, Kode: r.kode, Deskripsi: r.deskripsi, Pemasukan: r.pemasukan, Pengeluaran: r.pengeluaran, Saldo: r.saldo, Berkas: r.berkas }))); 
+        const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "BukuKas"); 
+        XLSX.writeFile(wb, "BukuKas_RT2_Paslor.xlsx"); 
+    } 
+
+    function exportKasPDF() { 
+        const { jsPDF } = window.jspdf; const doc = new jsPDF('landscape', 'mm', 'a4'); 
+        doc.setFontSize(18); doc.setFont("helvetica", "bold"); 
+         
+        let pdfWidth = doc.internal.pageSize.getWidth(); 
+        doc.text("Laporan Buku Kas Kemenkeu RT 2 Pasekan Lor", pdfWidth/2, 18, { align: "center" }); 
+         
+        doc.setFontSize(11); doc.setFont("helvetica", "normal"); 
+        let d = new Date(); 
+        doc.text(`Dicetak: ${d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}`, 14, 26); 
+         
+        const bodyData = kasData.map(r => { 
+            let tglObj = new Date(r.tanggalRaw); 
+            let tglFull = isNaN(tglObj) ? r.tanggalRaw : tglObj.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); 
+            return [r.no, tglFull, r.kode, r.deskripsi, formatAngka(r.pemasukan), formatAngka(r.pengeluaran), formatAngka(r.saldo)]; 
+        }); 
+
+        function hexToRgb(hex) { 
+            let r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); 
+            return [r, g, b]; 
+        } 
+        let headColor = hexToRgb(document.documentElement.style.getPropertyValue('--table-bg') || '#1155cc'); 
+        let headTxt = hexToRgb(document.documentElement.style.getPropertyValue('--table-text') || '#ffffff'); 
+
+        doc.autoTable({  
+            startY: 32,  
+            head: [['No','Tanggal','Kode','Deskripsi','Pemasukan','Pengeluaran','Saldo']],  
+            body: bodyData,  
+            styles: { fontSize: 10, font: 'helvetica' }, 
+            headStyles: { halign: 'center', fillColor: headColor, textColor: headTxt }, 
+            columnStyles: { 
+                0: { halign: 'center', fillColor: [248, 250, 252] }, 
+                1: { halign: 'left' }, 
+                2: { halign: 'center', fontStyle: 'bold', fillColor: [239, 246, 255] }, 
+                3: { halign: 'left' }, 
+                4: { halign: 'right', textColor: [5, 150, 105], fontStyle: 'bold', fillColor: [240, 253, 244] }, 
+                5: { halign: 'right', textColor: [234, 88, 12], fontStyle: 'bold', fillColor: [255, 247, 237] }, 
+                6: { halign: 'right', textColor: headColor, fontStyle: 'bold', fillColor: [248, 250, 252] } 
+            } 
+        }); 
+        doc.save("BukuKas_RT2_Paslor.pdf"); 
+    } 
+
+    function openPdfModal() {
+        const m = document.getElementById('pdfDashModal');
+        m.classList.remove('hidden'); 
+        setTimeout(() => { m.classList.remove('opacity-0', 'pointer-events-none'); }, 10); 
+    }
+    
+    function closePdfModal() {
+        const m = document.getElementById('pdfDashModal');
+        m.classList.add('opacity-0', 'pointer-events-none'); 
+        setTimeout(() => { m.classList.add('hidden'); }, 300); 
+    }
+
+    async function executeDashPDF() { 
+        closePdfModal();
+        const btn = document.getElementById('btnExecuteDash');
+        
+        const paperFmt = document.getElementById('pdfPaperSize').value;
+        const chkChart = document.getElementById('chkChart').checked;
+        const chkRekap = document.getElementById('chkRekap').checked;
+        const chkDist = document.getElementById('chkDist').checked;
+        const chkAI = document.getElementById('chkAI').checked;
+
+        const dashHeaderRow = document.getElementById('dashHeaderRow');
+        const dashContent = document.getElementById('dashboardTab');
+        
+        const cardTren = document.getElementById('cardTren');
+        const cardRekap = document.getElementById('cardRekap');
+        const dashDistribusi = document.getElementById('dashDistribusi');
+        const dashAICard = document.getElementById('dashAICard');
+
+        const origTren = cardTren.style.display;
+        const origRekap = cardRekap.style.display;
+        const origDist = dashDistribusi.style.display;
+        const origAI = dashAICard.style.display;
+
+        dashHeaderRow.style.display = 'none';
+        cardTren.style.display = chkChart ? '' : 'none';
+        cardRekap.style.display = chkRekap ? '' : 'none';
+        dashDistribusi.style.display = chkDist ? '' : 'none';
+        dashAICard.style.display = chkAI ? '' : 'none';
+
+        const printHeader = document.createElement('div');
+        printHeader.className = "mb-6 mt-4 text-center";
+        const d = new Date();
+        printHeader.innerHTML = `
+            <h1 style="font-size: 24px; font-weight: bold; color: #1e293b; margin-bottom: 6px;">Laporan Dashboard Keuangan</h1>
+            <p style="font-size: 14px; color: #64748b; font-weight: 600;">Diunduh pada: ${d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} - ${d.toLocaleTimeString('id-ID')} WIB</p>
+        `;
+        dashContent.insertBefore(printHeader, dashContent.firstChild);
+
+        Swal.fire({title: 'Memproses PDF...', html: 'Mohon tunggu sebentar', allowOutsideClick: false, showConfirmButton: false, didOpen: () => {Swal.showLoading()}});
+        await new Promise(r => setTimeout(r, 500)); 
+
+        try {
+            const canvas = await html2canvas(dashContent, {
+                scale: 2, 
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            });
+
+            const { jsPDF } = window.jspdf; 
+            const doc = new jsPDF('p', 'mm', paperFmt);
+
+            let imgWidth = doc.internal.pageSize.getWidth(); 
+            let pageHeight = doc.internal.pageSize.getHeight(); 
+
+            const margin = 10;
+            const drawWidth = imgWidth - (margin * 2);
+            const imgHeight = canvas.height * drawWidth / canvas.width;
+            
+            let heightLeft = imgHeight;
+            let position = margin;
+
+            doc.addImage(canvas.toDataURL('image/jpeg', 0.98), 'JPEG', margin, position, drawWidth, imgHeight);
+            heightLeft -= (pageHeight - margin * 2);
+
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight + margin;
+                doc.addPage();
+                doc.addImage(canvas.toDataURL('image/jpeg', 0.98), 'JPEG', margin, position, drawWidth, imgHeight);
+                heightLeft -= (pageHeight - margin * 2);
+            }
+
+            doc.save(`Laporan_Dashboard_RT2_${paperFmt.toUpperCase()}.pdf`);
+            Swal.close();
+            Swal.fire({icon: 'success', title: 'Berhasil', text: 'PDF Laporan Dashboard berhasil diunduh.', timer: 1500});
+        } catch(error) {
+            console.error("Gagal cetak visual PDF:", error);
+            Swal.close();
+            alert("Terjadi kesalahan saat memproses PDF Laporan Visual.");
+        }
+
+        printHeader.remove();
+        dashHeaderRow.style.display = 'flex';
+        cardTren.style.display = origTren;
+        cardRekap.style.display = origRekap;
+        dashDistribusi.style.display = origDist;
+        dashAICard.style.display = origAI;
+    } 
+  </script> 
+</body> 
+</html>

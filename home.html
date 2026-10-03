@@ -70,9 +70,9 @@
         .kas-action-buttons { display: flex; gap: 10px; margin-top: 14px; z-index: 2; justify-content: center; }
         
         .btn-kas-small { flex: 1; padding: 6px 4px; border-radius: 50px; font-size: 11px; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 5px;}
-        .btn-kas-trx { background: #F07100; !important; border: none !important; color: white !important; }
+        .btn-kas-trx { background: #F07100; border: none !important; color: white !important; }
 
-        /* ================== MODAL ANIMASI & OVERLAY (HANYA BLUR) ================== */
+        /* ================== MODAL ANIMASI & OVERLAY ================== */
         .slide-up-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, visibility 0s 0.3s; }
         .slide-up-overlay.active { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity 0.3s ease, visibility 0s 0s; }
         .slide-up-content { background: #ffffff; width: 100%; max-width: 480px; height: auto; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); position: relative; transform: scale(0.9); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s; }
@@ -660,7 +660,9 @@
         if (inList) html += '</div>'; return html;
     }
 
-    function getStatusInfo(hariTglTeks, pukulTeks, statusAsli) {
+    function getStatusInfo(hariTglTeks, pukulTeks, statusAsli, isRegularPost = false) {
+        if (isRegularPost) return { text: 'Informasi Terkini', color: '#1155CC', type: 'info' };
+
         let isManualDone = statusAsli && statusAsli.toLowerCase().includes('selesai');
         let targetDate = null; let startHour = 0; let startMinute = 0;
         try {
@@ -685,20 +687,14 @@
         const jamSekarang = sekarang.getHours();
         
         if (isManualDone) return { text: 'Sudah Selesai', color: '#1155CC', type: 'done' };
-        
-        // Jika sudah jam 10 malam (22:00) atau lebih
         if (jamSekarang >= 22) return { text: 'Sudah Selesai', color: '#1155CC', type: 'done' };
         
-        // Jika tepat waktu jadwal sampai selesai / lewat
         if (currentTotalMinutes >= eventTotalMinutes && currentTotalMinutes <= eventTotalMinutes + 180) {
             return { text: 'Sedang Berlangsung', color: '#008A0D', type: 'ongoing' };
         }
-        
-        // Jika pada hari itu mulai jam 6 pagi (360 menit) sampai sebelum waktu acara
         if (currentTotalMinutes >= 360 && currentTotalMinutes < eventTotalMinutes) {
             return { text: 'Acara Hari Ini', color: '#FF0000', type: 'today' };
         }
-        
         if (currentTotalMinutes > eventTotalMinutes + 180) return { text: 'Sudah Selesai', color: '#1155CC', type: 'done' };
         
         return { text: 'Belum Terlaksana', color: '#FF0000', type: 'upcoming' };
@@ -706,14 +702,15 @@
 
     function renderStatusHtml(statusData) {
         let icon = '';
-        if (statusData.type === 'done') {
+        if (statusData.type === 'info') {
+            icon = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
+        } else if (statusData.type === 'done') {
             icon = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
         } else if (statusData.type === 'today') {
             icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
         } else {
             icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="${statusData.type === 'ongoing' ? 'M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01' : 'M3 4h18v18H3z"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10'}"/></svg>`;
         }
-        
         return {
             bodyHtml: `<div class="status-text-container" style="color:${statusData.color}; display:flex; align-items:center; gap:1px;">${icon} ${statusData.text}</div>`,
             headerHtml: `<span class="agenda-label-top neumorph-status" style="color:${statusData.color}; display:inline-flex; align-items:center; gap:4px;">${icon} <span style="font-weight:600; margin-top:1px;">${statusData.text}</span></span>`
@@ -723,12 +720,13 @@
     function parseBlogspotAgenda(htmlContent) {
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = htmlContent.replace(/<br\s*\/?>/gi, '\n').replace(/<\/(p|div|li|h[1-6])>/gi, '\n').replace(/<li[^>]*>/gi, '\n- ');
-        const text = (tempDiv.innerText || tempDiv.textContent).trim();
-        let data = { category: '-', hariTgl: '-', pukul: '-', tempat: '-', acara: '-', catatan: '-', status: '-', notulen: '-' };
+        
+        const plainText = (tempDiv.innerText || tempDiv.textContent).trim();
+        let data = { category: '-', hariTgl: '-', pukul: '-', tempat: '-', acara: '-', catatan: '-', status: '-', notulen: '-', rawText: plainText };
         let currentKey = null;
         const keyMap = { 'kategori': 'category', 'hari/tgl.': 'hariTgl', 'hari/tgl': 'hariTgl', 'pukul': 'pukul', 'tempat': 'tempat', 'acara': 'acara', 'catatan': 'catatan', 'status': 'status', 'hasil': 'notulen', 'hasil kegiatan': 'notulen' };
 
-        text.split('\n').forEach(line => {
+        plainText.split('\n').forEach(line => {
             const trimmedLine = line.trim(); if (!trimmedLine) return;
             const match = trimmedLine.match(/^(Kategori|Hari\/Tgl\.?|Pukul|Tempat|Acara|Catatan|Status|Hasil(?:\s+Kegiatan)?)\s*:\s*(.*)/i);
             if (match) {
@@ -739,7 +737,40 @@
             }
         });
         for(let k in data) { if(data[k] === '') data[k] = '-'; }
-        return { ...data, imgs: Array.from(tempDiv.querySelectorAll('img')).map(img => img.src) };
+
+        // MENDETEKSI GAMBAR, VIDEO, DAN YOUTUBE IFRAME
+        let mediaList = [];
+        const mediaElements = tempDiv.querySelectorAll('img, video, iframe');
+        mediaElements.forEach(el => {
+            if (el.tagName.toLowerCase() === 'img') {
+                // Hindari menarik ikon play palsu/thumbnail mentah dari script blogger
+                if(!el.src.includes('img.youtube.com') && !el.src.includes('video_play.png')) {
+                    mediaList.push({ type: 'image', src: el.src });
+                }
+            } else if (el.tagName.toLowerCase() === 'video') {
+                let src = el.src || (el.querySelector('source') ? el.querySelector('source').src : '');
+                if (src) mediaList.push({ type: 'video', src: src });
+            } else if (el.tagName.toLowerCase() === 'iframe') {
+                if (el.src && (el.src.includes('youtube.com') || el.src.includes('youtu.be') || el.src.includes('blogger.com/video'))) {
+                    mediaList.push({ type: 'iframe', src: el.src });
+                }
+            }
+        });
+
+        // Cek juga apabila warga hanya mem-paste link youtube (berbentuk text hyperlink)
+        const ytLinks = htmlContent.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/g);
+        if (ytLinks) {
+            ytLinks.forEach(link => {
+                let ytMatch = link.match(/([a-zA-Z0-9_-]{11})$/);
+                if (ytMatch) {
+                    const ytId = ytMatch[1];
+                    const isExist = mediaList.some(m => m.type === 'iframe' && m.src.includes(ytId));
+                    if (!isExist) mediaList.push({ type: 'iframe', src: `https://www.youtube.com/embed/${ytId}?rel=0` });
+                }
+            });
+        }
+
+        return { ...data, mediaList: mediaList };
     }
 
     function handleAgendaFeed(json) {
@@ -758,8 +789,11 @@
 
         globalAgendaEntries = agendaEntriesData.map(entry => {
             const parsed = parseBlogspotAgenda(entry.content ? entry.content.$t : '');
-            if (entry.media$thumbnail && parsed.imgs.length === 0) parsed.imgs.push(entry.media$thumbnail.url.replace(/\/[swh][0-9]+(-[cp])?\//, '/s1600/').replace(/=[swh][0-9]+(-[cp])?/, '=s1600'));
-            return { title: entry.title.$t, category: parsed.category, meta: { hariTgl: parsed.hariTgl, pukul: parsed.pukul, tempat: parsed.tempat, acara: parsed.acara, catatan: parsed.catatan, status: parsed.status, notulen: parsed.notulen }, imgs: parsed.imgs };
+            // Cadangan apabila tidak ada media namun Blogspot mendeteksi thumbnail
+            if (entry.media$thumbnail && parsed.mediaList.length === 0) {
+                parsed.mediaList.push({ type: 'image', src: entry.media$thumbnail.url.replace(/\/[swh][0-9]+(-[cp])?\//, '/s1600/').replace(/=[swh][0-9]+(-[cp])?/, '=s1600') });
+            }
+            return { title: entry.title.$t, category: parsed.category, meta: { hariTgl: parsed.hariTgl, pukul: parsed.pukul, tempat: parsed.tempat, acara: parsed.acara, catatan: parsed.catatan, status: parsed.status, notulen: parsed.notulen, rawText: parsed.rawText }, mediaList: parsed.mediaList };
         });
 
         globalAgendaEntries.slice(0, 4).forEach(item => mainContainer.appendChild(createInfoCardHtml(item)));
@@ -768,13 +802,13 @@
             document.getElementById('footerBtnArsipLain').style.display = 'flex';
         } else { document.getElementById('footerBtnArsipLain').style.display = 'none'; }
         
-        // Panggil re-apply lock setiap selesai render agenda karena ada tombol dinamis
         applyAllLocks();
     }
 
     function createArsipTextHtml(item, globalIndex) {
         const div = document.createElement('div');
-        div.innerHTML = `<div class="arsip-item" onclick="openAgendaDetail(${globalIndex}, true)"><span class="arsip-title">${item.title || "-"}</span><span class="arsip-date">${item.meta.hariTgl || "-"}</span></div>`;
+        const dateToShow = item.meta.hariTgl !== '-' ? item.meta.hariTgl : 'Info/Post Umum';
+        div.innerHTML = `<div class="arsip-item" onclick="openAgendaDetail(${globalIndex}, true)"><span class="arsip-title">${item.title || "-"}</span><span class="arsip-date">${dateToShow}</span></div>`;
         return div.firstElementChild;
     }
 
@@ -788,7 +822,7 @@
         document.body.style.overflow = 'hidden';
         
         document.querySelector('.modal-back-btn-absolute').style.display = openedFromList ? 'flex' : 'none';
-        applyAllLocks(); // Terapkan gembok ke card yang baru di-render
+        applyAllLocks(); 
     }
     
     function closeAgendaDetail() { 
@@ -807,43 +841,79 @@
 
     function createInfoCardHtml(item) {
         const meta = item.meta;
-        const allImgs = item.imgs && item.imgs.length > 0 ? item.imgs : ["https://placeholder.pics/svg/110x110/eaeaea/999999/No%20Image"];
-        const imgString = encodeURIComponent(JSON.stringify(allImgs)).replace(/'/g, "%27"), notulenString = encodeURIComponent(meta.notulen).replace(/'/g, "%27"), dateString = encodeURIComponent(meta.hariTgl).replace(/'/g, "%27");
+        const allMedia = item.mediaList && item.mediaList.length > 0 ? item.mediaList : [{ type: 'image', src: "https://placeholder.pics/svg/110x110/eaeaea/999999/No%20Image" }];
+        
+        const mediaString = encodeURIComponent(JSON.stringify(allMedia)).replace(/'/g, "%27");
+        const notulenString = encodeURIComponent(meta.notulen).replace(/'/g, "%27");
+        const dateString = encodeURIComponent(meta.hariTgl).replace(/'/g, "%27");
 
-        const statusRender = renderStatusHtml(getStatusInfo(meta.hariTgl, meta.pukul, meta.status));
+        const isRegularPost = (meta.hariTgl === '-' && meta.acara === '-');
+        const statusRender = renderStatusHtml(getStatusInfo(meta.hariTgl, meta.pukul, meta.status, isRegularPost));
+        
         let cat = "RONDA", hClass = "bg-ronda", hexColor = "#8b5cf6";
         const titleLower = (item.title || "").toLowerCase(), catLower = (item.category || "").toLowerCase();
 
-        if (catLower.includes('pertemuan') || titleLower.includes('pertemuan')) { cat = "Pertemuan RT 2"; hClass = "bg-pertemuan"; hexColor = "#000000"; }
-        else if (catLower.includes('bakti') || catLower.includes('kerja') || titleLower.includes('bakti') || titleLower.includes('kerja')) { cat = "Kerja Bakti"; hClass = "bg-kerjabakti"; hexColor = "#16428C"; }
-        else if (catLower.includes('ronda') || titleLower.includes('ronda')) { cat = "Ronda"; hClass = "bg-ronda"; hexColor = "#000000"; }
-        else if (item.category !== "" && item.category !== "-") { cat = item.category.toUpperCase(); hClass = "bg-lainnya"; hexColor = "#000000"; }
-        
-        const textWa = encodeURIComponent(`*Undangan Kegiatan*\n*Warga RT 2 Pasekan Lor*\n\n*Hari, Tgl. :*\n${meta.hariTgl}\n\n*Tempat :*\n${meta.tempat}\n\n*Acara :*\n${meta.acara}\n\n*Pukul :*\n${meta.pukul}\n\n*Catatan :*\n${meta.catatan}\n\nhttps://rt2pasekanlor.id/`);
+        if (isRegularPost) { 
+            cat = item.category && item.category !== "-" ? item.category.toUpperCase() : "INFORMASI"; 
+            hClass = "bg-lainnya"; hexColor = "#00997C"; 
+        } else if (catLower.includes('pertemuan') || titleLower.includes('pertemuan')) { 
+            cat = "Pertemuan RT 2"; hClass = "bg-pertemuan"; hexColor = "#000000"; 
+        } else if (catLower.includes('bakti') || catLower.includes('kerja') || titleLower.includes('bakti') || titleLower.includes('kerja')) { 
+            cat = "Kerja Bakti"; hClass = "bg-kerjabakti"; hexColor = "#16428C"; 
+        } else if (catLower.includes('ronda') || titleLower.includes('ronda')) { 
+            cat = "Ronda"; hClass = "bg-ronda"; hexColor = "#000000"; 
+        } else if (item.category !== "" && item.category !== "-") { 
+            cat = item.category.toUpperCase(); hClass = "bg-lainnya"; hexColor = "#000000"; 
+        }
 
-        const div = document.createElement('div');
-        div.innerHTML = `<div class="info-card">
-            <div class="card-header ${hClass}">${statusRender.headerHtml}<span class="category-text">${cat}</span></div>
-            <div class="info-card-body">
-                <div class="card-thumb-wrapper" onclick="openDocLightbox('${imgString}', '${notulenString}', '${dateString}', '${encodeURIComponent(hexColor).replace(/'/g, "%27")}')">
-                    <img src="${allImgs[0]}" class="card-thumb">
-                    <div class="thumb-icon-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
-                </div>
-                <div class="card-right-content"><h3 class="info-card-title">${item.title || "-"}</h3></div>
-            </div>
-            <div class="agenda-details-box">
+        // Tentukan Thumbnail dan Ikon untuk ditampilkan di depan (Mendeteksi Video/YouTube)
+        let thumbSrc = allMedia[0].src;
+        let thumbIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+        
+        if (allMedia[0].type === 'iframe') {
+            let ytMatch = thumbSrc.match(/embed\/([^"&?\/\s]{11})/i);
+            if (ytMatch) {
+                thumbSrc = `https://img.youtube.com/vi/${ytMatch[1]}/maxresdefault.jpg`;
+            } else {
+                thumbSrc = "https://placeholder.pics/svg/300x300/1155cc/ffffff/Putar%20Video";
+            }
+            thumbIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`; // Ikon Play
+        } else if (allMedia[0].type === 'video') {
+            thumbSrc = "https://placeholder.pics/svg/300x300/1155cc/ffffff/Putar%20Video";
+            thumbIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`; // Ikon Play
+        }
+        
+        let textWa = isRegularPost 
+            ? encodeURIComponent(`*Informasi / Pengumuman*\n*Warga RT 2 Pasekan Lor*\n\n*${item.title}*\n\nBaca selengkapnya di aplikasi warga:\nhttps://rt2pasekanlor.id/`)
+            : encodeURIComponent(`*Undangan Kegiatan*\n*Warga RT 2 Pasekan Lor*\n\n*Hari, Tgl. :*\n${meta.hariTgl}\n\n*Tempat :*\n${meta.tempat}\n\n*Acara :*\n${meta.acara}\n\n*Pukul :*\n${meta.pukul}\n\n*Catatan :*\n${meta.catatan}\n\nhttps://rt2pasekanlor.id/`);
+
+        let detailsHtml = isRegularPost
+            ? `<div class="agenda-details-box" style="padding: 14px 16px;"><div style="font-size: 14px; color: #383838; line-height: 1.6; white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">${meta.rawText}</div></div>`
+            : `<div class="agenda-details-box">
                 <div class="agenda-row"><span class="agenda-label">Hari/Tgl.</span><span class="agenda-colon">:</span><span class="agenda-value" style="font-weight: 600; color: ${hexColor};">${meta.hariTgl}</span></div>
                 <div class="agenda-row"><span class="agenda-label">Tempat</span><span class="agenda-colon">:</span><span class="agenda-value" style="font-weight: 600; color: ${hexColor};">${meta.tempat}</span></div>
                 <div class="agenda-row"><span class="agenda-label">Pukul</span><span class="agenda-colon">:</span><span class="agenda-value f-regular-10">${meta.pukul}</span></div>
                 <div class="agenda-row"><span class="agenda-label">Agenda</span><span class="agenda-colon">:</span><div class="agenda-value">${formatListLines(meta.acara)}</div></div>
                 <div class="agenda-row"><span class="agenda-label">Catatan</span><span class="agenda-colon">:</span><div class="agenda-value">${formatListLines(meta.catatan)}</div></div>
+            </div>`;
+
+        const div = document.createElement('div');
+        div.innerHTML = `<div class="info-card">
+            <div class="card-header ${hClass}">${statusRender.headerHtml}<span class="category-text">${cat}</span></div>
+            <div class="info-card-body">
+                <div class="card-thumb-wrapper" onclick="openDocLightbox('${mediaString}', '${notulenString}', '${dateString}', '${encodeURIComponent(hexColor).replace(/'/g, "%27")}')">
+                    <img src="${thumbSrc}" class="card-thumb">
+                    <div class="thumb-icon-overlay">${thumbIcon}</div>
+                </div>
+                <div class="card-right-content"><h3 class="info-card-title">${item.title || "-"}</h3></div>
             </div>
+            ${detailsHtml}
             <div class="info-card-footer">
                 <a href="https://api.whatsapp.com/send?text=${textWa}" target="_blank" class="btn-footer-action btn-share-wa">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>Undangan WA
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>Bagikan WA
                 </a>
-                <button class="btn-footer-action btn-doc-footer" onclick="openDocLightbox('${imgString}', '${notulenString}', '${dateString}', '${encodeURIComponent(hexColor).replace(/'/g, "%27")}')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Hasil Kegiatan
+                <button class="btn-footer-action btn-doc-footer" onclick="openDocLightbox('${mediaString}', '${notulenString}', '${dateString}', '${encodeURIComponent(hexColor).replace(/'/g, "%27")}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> ${isRegularPost ? 'Lihat File / Media' : 'Hasil Kegiatan'}
                 </button>
             </div>
         `;
@@ -855,7 +925,7 @@
     function closeListModalOutside(e) { if(e.target === document.getElementById('listModal')) closeListModal(); }
 
     const docModal = document.getElementById('docModalOverlay');
-    function openDocLightbox(encodedImages, encodedNotulen = '', encodedDate = '', encodedColor = '%2364748b') {
+    function openDocLightbox(encodedMedia, encodedNotulen = '', encodedDate = '', encodedColor = '%2364748b') {
         const c = document.getElementById('docImagesContainer'); c.innerHTML = ''; 
         const notulen = decodeURIComponent(encodedNotulen);
         
@@ -865,14 +935,34 @@
             c.appendChild(textDiv);
         }
 
-        JSON.parse(decodeURIComponent(encodedImages)).forEach(src => { 
-            const img = document.createElement('img'); img.src = src; img.className = 'doc-modal-img'; c.appendChild(img); 
+        // RENDER GAMBAR DAN VIDEO SECARA DINAMIS
+        JSON.parse(decodeURIComponent(encodedMedia)).forEach(media => { 
+            if (media.type === 'image') {
+                const img = document.createElement('img'); 
+                img.src = media.src; img.className = 'doc-modal-img'; 
+                c.appendChild(img); 
+            } else if (media.type === 'video') {
+                const vid = document.createElement('video'); 
+                vid.src = media.src; vid.controls = true; 
+                vid.className = 'doc-modal-img'; vid.style.backgroundColor = '#000'; 
+                c.appendChild(vid); 
+            } else if (media.type === 'iframe') {
+                const ifr = document.createElement('iframe'); 
+                ifr.src = media.src; 
+                ifr.className = 'doc-modal-img'; 
+                ifr.style.aspectRatio = '16/9'; ifr.style.border = 'none'; 
+                ifr.style.backgroundColor = '#000'; ifr.allowFullscreen = true; 
+                c.appendChild(ifr);
+            }
         });
         docModal.classList.add('active'); document.body.style.overflow = 'hidden';
     }
     
     function closeDocModal() { 
         docModal.classList.remove('active'); 
+        // PENTING: Kosongkan container saat ditutup agar audio video & youtube otomatis berhenti
+        document.getElementById('docImagesContainer').innerHTML = ''; 
+        
         if(!document.getElementById('listModal').classList.contains('active') && !document.getElementById('agendaDetailModal').classList.contains('active')) {
             document.body.style.overflow = 'auto'; 
         }
@@ -1194,26 +1284,40 @@
         }
     });
 
-    // Kirim event scroll kembali ke parent agar nav bar responsif (Versi Optimalisasi)
+    // ==========================================
+    // OPTIMASI SCROLL SYNC (THRESHOLD & DIRECTION)
+    // ==========================================
+    let lastScrollY = window.scrollY || document.documentElement.scrollTop;
     let scrollTicking = false;
+    const scrollThreshold = 20; // Toleransi jarak scroll (px) sebelum mengirim pesan
 
     function kirimScrollKeParent() {
         if (!scrollTicking) {
             window.requestAnimationFrame(function() {
-                window.parent.postMessage({
-                    type: 'iframeScroll',
-                    scrollTop: window.scrollY || document.documentElement.scrollTop
-                }, '*');
+                let currentScrollY = window.scrollY || document.documentElement.scrollTop;
+                let scrollDifference = Math.abs(currentScrollY - lastScrollY);
+
+                // HANYA kirim pesan jika jarak scroll melebihi threshold
+                if (scrollDifference > scrollThreshold) {
+                    let scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+                    
+                    window.parent.postMessage({
+                        type: 'iframeScroll',
+                        scrollTop: currentScrollY,
+                        direction: scrollDirection // Parent bisa langsung pakai data ini
+                    }, '*');
+                    
+                    // Update posisi terakhir
+                    lastScrollY = currentScrollY;
+                }
                 scrollTicking = false;
             });
             scrollTicking = true;
         }
     }
 
-    // Gunakan passive: true agar browser tidak menahan proses scroll layar (membuat scroll di HP jauh lebih mulus)
+    // Gunakan passive: true untuk performa mobile terbaik
     window.addEventListener('scroll', kirimScrollKeParent, { passive: true });
-    
-    // Tambahan touchmove untuk mendeteksi pergerakan jari secara realtime di perangkat mobile
     window.addEventListener('touchmove', kirimScrollKeParent, { passive: true });
 </script>
 

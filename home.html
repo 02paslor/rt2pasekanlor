@@ -1194,13 +1194,27 @@
         }
     });
 
-    // Kirim event scroll kembali ke parent agar nav bar responsif
-    window.addEventListener('scroll', function() {
-        window.parent.postMessage({
-            type: 'iframeScroll',
-            scrollTop: window.scrollY
-        }, '*');
-    });
+    // Kirim event scroll kembali ke parent agar nav bar responsif (Versi Optimalisasi)
+    let scrollTicking = false;
+
+    function kirimScrollKeParent() {
+        if (!scrollTicking) {
+            window.requestAnimationFrame(function() {
+                window.parent.postMessage({
+                    type: 'iframeScroll',
+                    scrollTop: window.scrollY || document.documentElement.scrollTop
+                }, '*');
+                scrollTicking = false;
+            });
+            scrollTicking = true;
+        }
+    }
+
+    // Gunakan passive: true agar browser tidak menahan proses scroll layar (membuat scroll di HP jauh lebih mulus)
+    window.addEventListener('scroll', kirimScrollKeParent, { passive: true });
+    
+    // Tambahan touchmove untuk mendeteksi pergerakan jari secara realtime di perangkat mobile
+    window.addEventListener('touchmove', kirimScrollKeParent, { passive: true });
 </script>
 
 </body>

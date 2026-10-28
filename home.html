@@ -114,7 +114,7 @@
 
         /* ================== KARTU LUAR & WARNA ================== */
         .dashboard-section-card { border-radius: 24px; margin: 0 16px 24px 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); position: relative; z-index: 2; }
-        .card-kegiatan { background: #728CA8; } .card-kegiatan .ds-footer { background: #728CA8; }
+        .card-kegiatan { background: #00A84E; } .card-kegiatan .ds-footer { background: #00A84E; }
         .ds-header { padding: 16px 10px; text-align: center; color: #ffffff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
         .ds-content { background-color: #f1f5f9; padding: 20px 16px; border-radius: 20px; }
         .ds-footer { padding: 16px; display: flex; justify-content: center; align-items: center; }
@@ -342,7 +342,7 @@
                         <div class="saldo-box-inner">
                             <div class="saldo-label">Saldo Kas RT 2 <div class="saldo-dot"></div></div>
                             <div class="saldo-value" id="saldoKas">Rp...</div>
-                            <div class="kas-keterangan-bawah"> Trans. Keuangan & LPJ berada <br>di Halaman Keuangan
+                            <div class="kas-keterangan-bawah"> Transaksi Keuangan & LPJ berada <br>di Halaman Keuangan
                             </div>
                         </div>
                     </div>
@@ -640,7 +640,7 @@
     let actualSaldo = "Rp...";
     async function fetchSaldoKas() {
         try {
-            const res = await fetch(`https://docs.google.com/spreadsheets/d/15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68/export?format=csv&gid=0&range=J19`);
+            const res = await fetch(`https://docs.google.com/spreadsheets/d/1PMvLzD__48J_7azz22R7xlkNZcGSn-cPrmRHQekY04Y/export?format=csv&gid=0&range=I11`);
             const text = await res.text();
             let saldo = text.replace(/['"'\r\n]+/g, '').trim();
             actualSaldo = saldo ? saldo : "Rp0";

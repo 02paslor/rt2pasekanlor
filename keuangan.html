@@ -69,7 +69,7 @@
         .title-card-right img { height: 70px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); position: absolute; right: 10px; bottom: 0; z-index: 0; }
 
         /* ================== TOMBOL & TOTAL SALDO DI DEKAT HEADER ================== */
-        .kas-action-container { padding: 0 16px 14px 16px; width: 100%; z-index: 2; position: relative; display: flex; gap: 10px; align-items: center; }
+        .kas-action-container { padding: 0 16px 14px 16px; width: 100%; z-index: 2; position: relative; display: flex; gap: 10px; align-items: stretch; }
         
         .saldo-header-box {
             background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;
@@ -269,7 +269,7 @@
         </div>
 
         <!-- Total Saldo di Kiri & Kumpulan Tombol di Kanan -->
-        <div class="kas-action-container" style="align-items: stretch;">
+        <div class="kas-action-container">
             <div class="saldo-header-box" style="justify-content: center;">
                 <span class="saldo-header-label">Total Saldo Kas</span>
                 <span class="saldo-header-value" id="headerSaldoKas">Rp...</span>
@@ -431,8 +431,9 @@
         });
     }
 
-    const sheetId = '15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68';
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Sheet1&range=B9:H`;
+    // UPDATE: URL disesuaikan dengan sheet "BukuBesar" dan range "A2:G" sesuai dengan format data yang baru dirapikan.
+    const sheetId = '1PMvLzD__48J_7azz22R7xlkNZcGSn-cPrmRHQekY04Y';
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=BukuBesar&range=A2:G`;
 
     fetch(url)
         .then(response => response.text())
@@ -452,6 +453,7 @@
                     const masukAda = row.c[4] && row.c[4].v != null;
                     const keluarAda = row.c[5] && row.c[5].v != null;
 
+                    // Syarat minimal memiliki No, Tanggal, Kode, Deskripsi, Saldo, dan (Masuk ATAU Keluar)
                     if (noAda && tglAda && kodeAda && descAda && saldoAda && (masukAda || keluarAda)) {
                         dataLaporanLengkap.push([
                             row.c[0].v,                            

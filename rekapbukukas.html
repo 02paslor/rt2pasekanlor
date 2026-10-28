@@ -85,7 +85,6 @@
              BAGIAN 1: WIDGET TRANSAKSI TERAKHIR
              ========================================================= -->
         <section class="w-full flex flex-col">
-            <!-- Judul Transaksi Terakhir (16px, Bold 600) -->
             <div class="mb-4">
                 <h2 class="text-[13px] font-[600] text-slate-900 flex items-center gap-2">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" class="text-blue-600">
@@ -98,8 +97,6 @@
                     <p class="text-xs text-slate-500 font-medium">5 transaksi terakhir</p>
                 </div>
             </div>
-
-            <!-- Kontainer Tabel Transaksi -->
             <div id="keuanganListContainer" class="w-full">
                 <div class="loading-text">Menarik data dari Spreadsheet...</div>
             </div>
@@ -112,7 +109,6 @@
              BAGIAN 2: REKAP BUKU KAS
              ========================================================= -->
         <section class="w-full flex flex-col">
-            <!-- Judul Rekap Buku Kas (16px, Bold 600) -->
             <div class="mb-4">
                 <h2 class="text-[13px] font-[600] text-slate-900 flex items-center gap-2">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" class="text-blue-600">
@@ -128,7 +124,6 @@
                 </div>
             </div>
 
-            <!-- State Loading & Error -->
             <div id="loadingState" class="flex flex-col items-center justify-center py-10 space-y-4">
                 <div class="animate-spin rounded-full h-8 w-8 border-4 border-slate-200 border-t-slate-600"></div>
                 <p class="text-slate-500 text-xs font-medium tracking-wide">Mengambil data terbaru...</p>
@@ -145,7 +140,6 @@
                 <button id="retryBtn" class="bg-slate-800 text-white hover:bg-slate-700 px-5 py-2 rounded-lg text-xs font-bold transition-colors shadow-md">Coba Lagi</button>
             </div>
 
-            <!-- Kontainer Tabel Rekap -->
             <div id="tableContainer" class="hidden w-full overflow-x-auto pb-4">
                 <table class="minimalist-table" style="table-layout: fixed;">
                     <colgroup>
@@ -171,13 +165,17 @@
          GABUNGAN JAVASCRIPT
          ========================================================= -->
     <script>
+        const sheetId = '1PMvLzD__48J_7azz22R7xlkNZcGSn-cPrmRHQekY04Y';
+        const gid = '0';
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+
         // ==========================================
         // JS BAGIAN 1: TRANSAKSI TERAKHIR
         // ==========================================
         async function fetchKeuanganData() {
             const container = document.getElementById('keuanganListContainer');
             try {
-                const res = await fetch(`https://docs.google.com/spreadsheets/d/15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68/export?format=csv&gid=0`);
+                const res = await fetch(csvUrl);
                 const csvText = await res.text();
                 
                 const rows = []; let cur = '', inQuote = false, row = [];
@@ -196,11 +194,11 @@
                 const transactions = [];
                 for(let i = 1; i < rows.length; i++) {
                     const r = rows[i];
-                    if(r.length >= 2) { 
-                        const tgl = r[2]?.trim(), ket = r[4]?.trim();       
-                        const masukStr = r[5] ? r[5].replace(/[^\d]/g, '') : '', 
-                              keluarStr = r[6] ? r[6].replace(/[^\d]/g, '') : '', 
-                              saldoStr = r[7] ? r[7].replace(/[^\d]/g, '') : '';   
+                    if(r.length >= 7) { 
+                        const tgl = r[1]?.trim(), ket = r[3]?.trim();       
+                        const masukStr = r[4] ? r[4].replace(/[^\d]/g, '') : '', 
+                              keluarStr = r[5] ? r[5].replace(/[^\d]/g, '') : '', 
+                              saldoStr = r[6] ? r[6].replace(/[^\d]/g, '') : '';   
                         
                         if(tgl && ket && (masukStr || keluarStr || saldoStr) && tgl.toLowerCase() !== 'tanggal') {
                             transactions.push({ 
@@ -213,7 +211,6 @@
                     }
                 }
                 
-                // --- REVISI: Ambil 5 transaksi terakhir ---
                 const recent5 = transactions.slice(-5);
                 
                 if(recent5.length === 0) { 
@@ -266,10 +263,6 @@
             const tableBody = document.getElementById('tableBody');
             const retryBtn = document.getElementById('retryBtn');
             const dataTimestamp = document.getElementById('dataTimestamp');
-
-            const sheetId = '15fj2WWG7HyEEoujvxEI8OkAKFFuve7yYKDfxw08IK68';
-            const gid = '0'; 
-            const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
 
             fetchSpreadsheetData();
             retryBtn.addEventListener('click', fetchSpreadsheetData);
@@ -344,10 +337,13 @@
 
                     const allData = parseCSV(csvText);
                     
-                    const startRowIdx = 11; 
-                    const endRowIdx = 18;  
-                    const startColIdx = 9; 
-                    const endColIdx = 12;  
+                    // --- PERBAIKAN: INDEX BARIS ---
+                    // Kolom I (index 8) s.d Kolom L (index 11)
+                    // Dimulai dari data "Kode 1" sampai baris Total Paling Bawah
+                    const startRowIdx = 4; 
+                    const endRowIdx = 10;  
+                    const startColIdx = 8; 
+                    const endColIdx = 11;  
 
                     const extractedData = [];
                     for (let i = startRowIdx; i <= endRowIdx; i++) {
@@ -364,6 +360,7 @@
                     renderTable(extractedData);
                     updateTimestamp();
                 } catch (error) {
+                    console.error(error);
                     simulateFallbackData();
                 }
             }
@@ -391,16 +388,18 @@
                     if (row.every(cell => cell === '')) return;
 
                     const tr = document.createElement('tr');
+                    // Karena range index di atas sudah pas (hingga index 10), data terakhir pasti merupakan baris Total
                     const isTotalRow = (index === data.length - 1) || (row[0] && row[0].toUpperCase().includes('TOTAL'));
 
                     for(let i = 0; i < 4; i++) {
                         const td = document.createElement('td');
                         const cellValue = row[i] || '';
 
-                        // --- REVISI: Teks Total Bold 600 ---
+                        // Format khusus untuk baris TOTAL
                         if (isTotalRow) {
                             if (i < 3) {
-                                td.innerHTML = (i === 0) ? `<div class="text-right font-[600] pr-2">TOTAL</div>` : '';
+                                // Mencegah teks muncul berulang-ulang, cukup di kolom pertama
+                                td.innerHTML = (i === 0) ? `<div class="text-right font-[600] pr-2 text-slate-800">TOTAL</div>` : '';
                                 td.style.borderBottom = "none";
                             } else {
                                 td.className = `bg-yellow-100 font-[600] border-t-2 border-slate-300`;
@@ -432,7 +431,6 @@
                     ["Kode 4:\nPembangunan", "2.946.000", "2.552.721", "393.279"],
                     ["Kode 5:\nLain-lain", "1.000.000", "1.000.000", "-"],
                     ["Kode 6:\nKas Pemuda", "-", "-", "-"],
-                    ["", "", "", ""],
                     ["TOTAL", "", "", "9.166.279"] 
                 ];
                 

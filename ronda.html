@@ -177,8 +177,72 @@
             100% { opacity: 1; transform: scale(1.4); }
         }
 
-        .form-section { display: flex; flex-direction: column; gap: 12px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.15); padding-bottom: 16px; }
-        .form-section:last-child { border-bottom: none; padding-bottom: 0; }
+        /* ================= TATA CARA LAPORAN (ACCORDION) ================= */
+        .tata-cara-wrapper {
+            background: #F8FAFC; 
+            border: 1.5px solid #2563EB; 
+            border-radius: 14px; 
+            margin-bottom: 12px; 
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.05);
+        }
+        .tata-cara-toggle {
+            width: 100%; display: flex; justify-content: space-between; align-items: center;
+            background: none; border: none; padding: 16px; cursor: pointer; font-family: inherit;
+        }
+        .tc-title-text { 
+            font-size: 15px; font-weight: 600; color: #666666; 
+            display: flex; align-items: center; gap: 8px; text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }
+        .tc-chevron { 
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            color: #666666; width: 22px; height: 22px; 
+        }
+        .tata-cara-wrapper.open .tc-chevron { transform: rotate(180deg); }
+
+        .tata-cara-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tata-cara-wrapper.open .tata-cara-content { grid-template-rows: 1fr; }
+        .tc-inner { overflow: hidden; padding: 0 16px 16px 16px; }
+
+        .tc-timeline { 
+            display: flex; flex-direction: column; gap: 18px; 
+            margin-left: 12px; margin-bottom: 20px; margin-top: 4px; 
+        }
+        .tc-item { display: flex; align-items: center; gap: 14px; position: relative; }
+        .tc-circle { 
+            width: 32px; height: 32px; border-radius: 50%; color: white; 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 700; font-size: 14px; z-index: 2; position: relative; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tc-text { font-size: 14px; font-weight: 600; text-transform: uppercase; color: #666666 !important; }
+        .tc-line { position: absolute; left: 15px; top: 32px; width: 2px; height: calc(100% - 10px); z-index: 1; }
+
+        .tc-red .tc-circle { background: #DC2626; }
+        .tc-line-red { background: #DC2626; }
+        .tc-blue .tc-circle { background: #2563EB; }
+        .tc-line-blue { background: #2563EB; }
+        .tc-green .tc-circle { background: #16A34A; }
+        .tc-line-green { background: #16A34A; }
+        .tc-purple .tc-circle { background: #A21CAF; }
+
+        .tc-note { 
+            font-size: 13px; color: #666666; font-weight: 500; 
+            text-align: left; line-height: 1.4; padding: 0 4px; 
+        }
+
+        /* Form Sections Backgrounds */
+        .form-section { display: flex; flex-direction: column; gap: 12px; margin-bottom: 4px; }
+        .bg-step-1 { background-color: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 16px; }
+        .bg-step-2 { background-color: #F0FDF4; border: 1.5px solid #DCFCE7; border-radius: 14px; padding: 16px; }
+        .bg-step-3 { background-color: #FEFCE8; border: 1.5px solid #FEF08A; border-radius: 14px; padding: 16px; }
+        .bg-step-4 { background-color: #EFF6FF; border: 1.5px solid #DBEAFE; border-radius: 14px; padding: 16px; }
+
         .section-label { font-size: 14px; font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 10px; }
         .sec-number-badge { width: 34px; height: 34px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
         .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
@@ -198,7 +262,7 @@
         .note-textarea:focus { border-color: #1155CC; }
 
         .btn-primary-custom, .btn-download, .btn-wa { 
-            width: 100%; padding: 12px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #25D366; color: white; transition: all 0.3s ease; 
+            width: 100%; padding: 12px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #1155CC; color: white; transition: all 0.3s ease; 
         }
         .btn-primary-custom:active, .btn-download:active, .btn-wa:active { transform: scale(0.97); }
         
@@ -224,7 +288,6 @@
         
         .presence-buttons-group { display: flex; gap: 6px; }
         
-        /* === UPDATE: Tombol Kehadiran Diperbesar Teks & Ukurannya === */
         .pres-btn { flex: 1; border: 1.5px solid rgba(17, 85, 204, 0.3); background: #FFFFFF; padding: 10px 4px; font-size: 13.5px; font-weight: 600; border-radius: 8px; cursor: pointer; color: #334155; transition: all 0.2s ease; }
         
         .pres-btn:hover { background-color: #F8FAFC; border-color: #94A3B8; }
@@ -243,55 +306,128 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .fa-spin { animation: spin 1s linear infinite; }
 
-        /* ================= AREA EXPORT STRUK ================= */
+        /* ================= AREA EXPORT STRUK DESAIN 100% BARU (SESUAI GAMBAR TERAKHIR) ================= */
         #laporan-export {
-            position: fixed; left: 0px; top: 0px; width: 450px; 
-            background: #F9FAFB; padding: 40px 30px;
-            box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
-            visibility: hidden; opacity: 0; pointer-events: none; z-index: -99999; 
+            position: fixed; left: 0px; top: 0px; z-index: -99999;
+            visibility: hidden; opacity: 0; pointer-events: none;
+            width: 420px;
+            background: #f4f5f6; /* Warna latar luar */
+            padding: 30px 20px;
+            box-sizing: border-box; 
+            font-family: 'Poppins', sans-serif;
+            color: #1e293b;
         }
-        .exp-header-main { text-align: center; margin-bottom: 20px; width: 100%; }
-        .exp-main-title { font-size: 34px; font-weight: 700; color: #1155CC; margin-bottom: 4px; }
-        .exp-sub-title { font-size: 14px; font-weight: 400; color: #64748B; }
         
-        .exp-blue-banner { background: #1155CC; border-radius: 16px; padding: 20px 24px; width: 100%; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 25px; box-sizing: border-box; }
-        .exp-banner-date { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-        .exp-banner-time { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
-        .exp-banner-amount { font-size: 42px; font-weight: 700; }
+        /* Top Header */
+        .exp-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .exp-ht-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .exp-ht-icon {
+            width: 44px; height: 44px;
+            background: #4b5563; /* Abu-abu gelap */
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+        .exp-ht-icon svg { width: 28px; height: 28px; stroke-width: 3; }
+        .exp-ht-text { display: flex; flex-direction: column; }
+        .exp-ht-title { font-size: 22px; font-weight: 800; color: #4b5563; line-height: 1.1; letter-spacing: 0.5px; }
+        .exp-ht-subtitle { font-size: 9px; font-weight: 500; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;}
         
-        .exp-section-day-title { font-size: 18px; font-weight: 700; color: #64748B; text-align: center; width: 100%; margin-bottom: 12px; }
-        .exp-section-day-title span { color: #DC2626; }
-        
-        .exp-list-kehadiran { width: 100%; display: flex; flex-direction: column; margin-bottom: 20px; border-radius: 12px; overflow: hidden; }
-        
-        .exp-warga-row { width: 100%; padding: 12px 16px; font-size: 16px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; border-bottom: 2px solid #FFF; }
-        .exp-warga-row:last-child { border-bottom: none; }
-        .exp-warga-left { display: flex; align-items: center; gap: 14px; }
-        .exp-number-circle { width: 28px; height: 28px; background: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
-        
-        .exp-warga-row.status-hadir { background-color: #D1F2D9; color: #065F46; }
-        .exp-warga-row.status-hadir .exp-number-circle { color: #065F46; }
-        .exp-warga-row.status-izin { background-color: #DBEAFE; color: #1E3A8A; } 
-        .exp-warga-row.status-izin .exp-number-circle { color: #1E3A8A; }
-        .exp-warga-row.status-absen { background-color: #FCD5CE; color: #991B1B; } 
-        .exp-warga-row.status-absen .exp-number-circle { color: #991B1B; }
-        .exp-status-text { font-size: 15px; font-weight: 700; }
-        
-        .exp-summary-pills { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; width: 100%; }
-        .exp-pill { padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 600; color: #333; }
-        .pill-hadir { background: #D1F2D9; }
-        .pill-izin { background: #DBEAFE; }
-        .pill-alpha { background: #FCD5CE; }
-        .pill-tot { background: #D1D5DB; }
+        .exp-ht-right { flex-shrink: 0; }
+        .exp-ht-time {
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 6px 12px;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 800;
+        }
 
-        .exp-catatan-section { width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
-        .exp-catatan-container { width: 100%; background: transparent; border: 1px solid #94A3B8; border-radius: 12px; padding: 16px 20px; min-height: 120px; box-sizing: border-box; }
-        .exp-catatan-content { font-size: 15px; font-weight: 600; color: #334155; white-space: pre-wrap; margin-top: -4px; min-height: 80px; }
+        /* Card Style */
+        .exp-card-v4 {
+            background: #ffffff;
+            border: 1.5px solid #94a3b8;
+            border-bottom: 4px solid #94a3b8;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
 
-        .exp-footer-info { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 4px; }
-        .exp-id-laporan-label { font-size: 14px; color: #64748B; font-weight: 400; text-align: center; }
-        .exp-id-laporan-val { font-size: 15px; color: #475569; font-weight: 700; margin-bottom: 16px; text-align: center; }
-        .exp-thanks-btn { background: #1155CC; color: #FFF; font-size: 15px; font-weight: 700; padding: 14px 20px; border-radius: 10px; width: 100%; text-align: center; box-sizing: border-box; letter-spacing: 0.5px; }
+        /* Inner Header */
+        .exp-inner-header {
+            background: #f0f9ff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .eih-title {
+            font-size: 13px; font-weight: 800; color: #4b5563; text-transform: uppercase;
+        }
+        .eih-val {
+            font-size: 30px; font-weight: 800; color: #1d4ed8; line-height: 1;
+        }
+        .eih-date {
+            font-size: 10px; font-weight: 700; color: #1d4ed8; text-align: right; line-height: 1.2; text-transform: uppercase;
+        }
+
+        /* Card 1 Body */
+        .exp-c1-body { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 16px; align-items: center; }
+        .ec1-col { display: flex; flex-direction: column; gap: 6px; }
+        .ec1-lbl { font-size: 10px; font-weight: 700; color: #4b5563; text-transform: uppercase; }
+        .ec1-val { font-size: 11px; font-weight: 800; color: #1e40af; line-height: 1.3; text-transform: uppercase;}
+        .ec1-divider { background: #cbd5e1; height: 100%; width: 1.5px; }
+        .ec1-id-wrap { text-align: left; }
+        .ec1-id {
+            background: #f0f9ff; color: #1d4ed8; padding: 6px 10px; border-radius: 6px;
+            border: 1px solid #bae6fd; font-size: 9px; font-weight: 700; display: inline-block;
+        }
+
+        /* Card 2 Body (Kehadiran) */
+        .exp-kh-body { display: flex; flex-direction: column; gap: 12px; }
+        .kh-row-v4 { display: grid; grid-template-columns: 24px 85px 12px 1fr; align-items: flex-start; }
+        
+        .kh-rect-wrap { display: flex; align-items: center; height: 18px; }
+        .kh-rect { width: 18px; height: 6px; border-radius: 1px; }
+        .bg-green { background: #16a34a; }
+        .bg-blue { background: #0ea5e9; }
+        .bg-red { background: #dc2626; }
+        
+        .kh-lbl { font-size: 12px; font-weight: 800; color: #4b5563; text-transform: uppercase; line-height: 18px;}
+        .kh-colon { font-size: 12px; font-weight: 800; color: #4b5563; line-height: 18px;}
+        .kh-names { font-size: 11px; font-weight: 500; color: #1d4ed8; line-height: 1.5; text-transform: uppercase; margin-top: 1px;}
+        
+        .exp-kh-divider { border-top: 1.5px solid #cbd5e1; margin: 16px 0; }
+        .exp-kh-summary { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; text-align: center; }
+        .kh-sum-item { font-size: 10px; font-weight: 700; border-right: 1.5px solid #cbd5e1; padding: 4px 0; }
+        .kh-sum-item:last-child { border-right: none; }
+        
+        .txt-green { color: #16a34a; }
+        .txt-blue { color: #0ea5e9; }
+        .txt-red { color: #dc2626; }
+        .txt-magenta { color: #c026d3; font-weight: 800;}
+
+        /* Card 3 Body (Catatan) */
+        .exp-ct-body { font-size: 11px; font-weight: 600; color: #1d4ed8; line-height: 1.8; text-transform: uppercase; white-space: pre-wrap; padding: 0 4px; }
+
+        /* Footer */
+        .footer-v4 { text-align: center; margin-top: 24px; }
+        .fv4-main { font-size: 11px; font-weight: 800; color: #4b5563; margin-bottom: 4px; }
+        .fv4-sub { font-size: 9px; font-weight: 500; color: #64748b; }
 
         /* ================= ISTIMEWA & CUSTOM INPUT ================= */
         .istimewa-banner {
@@ -304,44 +440,15 @@
         .istimewa-banner-title { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
         .istimewa-banner-desc { font-size: 10.5px; font-weight: 500; opacity: 0.9; }
 
-        .istimewa-input-group {
-            display: flex; gap: 8px; margin: 10px 12px;
+        .istimewa-input-group { display: flex; gap: 8px; margin: 10px 12px; }
+        .istimewa-input {
+            width: 40%; padding: 10px 14px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 14px; font-weight: 500; color: #1E293B; outline: none; transition: border-color 0.2s; height: 42px;
         }
-        
-        /* === UPDATE: Input Tambah Nama Diperkecil Ukurannya === */
-.istimewa-input {
-    width: 40%; /* Lebar kolom diatur menjadi lebih kecil (40% dari ruang) */
-    padding: 10px 14px; 
-    border: 1.5px solid #CBD5E1; 
-    border-radius: 8px; 
-    font-size: 14px; 
-    font-weight: 500; 
-    color: #1E293B; 
-    outline: none; 
-    transition: border-color 0.2s; 
-    height: 42px;
-}
-.istimewa-input:focus { border-color: #F59E0B; }
-
-/* === UPDATE: Tombol Tambah Nama Orang Diperbesar === */
-.btn-add-istimewa {
-    flex: 1; /* Tombol akan mengambil alih sisa ruang sehingga menjadi lebih besar */
-    background: #1155CC; 
-    color: white; 
-    border: none; 
-    padding: 0 16px; 
-    height: 42px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 6px; 
-    border-radius: 8px; 
-    font-size: 13.5px; 
-    font-weight: 600; 
-    cursor: pointer; 
-    transition: all 0.2s ease;
-}
-.btn-add-istimewa:hover { background: #0F47A1; }
+        .istimewa-input:focus { border-color: #F59E0B; }
+        .btn-add-istimewa {
+            flex: 1; background: #757575; color: white; border: none; padding: 0 16px; height: 42px; display: flex; align-items: center; justify-content: center; gap: 6px; border-radius: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+        }
+        .btn-add-istimewa:hover { background: #616161; }
     </style>
 </head>
 <body>
@@ -384,7 +491,7 @@
             </div>
         </div>
 
-        <!-- ==================== TITLE CARD RONDA (SERAGAM ORANGE) ==================== -->
+        <!-- ==================== TITLE CARD RONDA ==================== -->
         <div class="title-card-panel" title="Halaman Ronda">
             <div class="title-card-left">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -406,7 +513,7 @@
                         <div class="twinkle-star star-3"></div>
 
                         <div class="dt-col">
-                            <span id="current-date" class="dt-val-date">Memuat...</span>
+                            <span id="current-date" class="dt-val-date" style="color:white; font-size:14px;">Memuat...</span>
                             <span id="current-time" class="dt-val-time">00:00 WIB</span>
                         </div>
                         
@@ -414,12 +521,46 @@
                     </div>
                 </div>
 
+                <!-- TATA CARA LAPORAN (ACCORDION) -->
+                <div class="tata-cara-wrapper" id="tataCaraWrapper">
+                    <button class="tata-cara-toggle" type="button" onclick="toggleTataCara()">
+                        <div class="tc-title-text">CARA PEMBUATAN LAPORAN:</div>
+                        <svg class="tc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="tata-cara-content">
+                        <div class="tc-inner">
+                            <div class="tc-timeline">
+                                <div class="tc-item tc-red">
+                                    <div class="tc-circle">1</div>
+                                    <div class="tc-text">ISI NOMINAL JIMPITAN</div>
+                                    <div class="tc-line tc-line-red"></div>
+                                </div>
+                                <div class="tc-item tc-blue">
+                                    <div class="tc-circle">2</div>
+                                    <div class="tc-text">PILIH HARI & PRESENSI</div>
+                                    <div class="tc-line tc-line-blue"></div>
+                                </div>
+                                <div class="tc-item tc-green">
+                                    <div class="tc-circle">3</div>
+                                    <div class="tc-text">ISI CATATAN RONDA</div>
+                                    <div class="tc-line tc-line-green"></div>
+                                </div>
+                                <div class="tc-item tc-purple">
+                                    <div class="tc-circle">4</div>
+                                    <div class="tc-text">KIRIM LAPORAN KE WA</div>
+                                </div>
+                            </div>
+                            <div class="tc-note">Tombol kirim tidak akan aktif jika data laporan di atas belum lengkap.</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 1. JIMPITAN -->
-                <div class="form-section">
+                <div class="form-section bg-step-1">
                     <div class="section-label">
                         <div class="sec-number-badge">1</div>
                         <div class="sec-text-group">
-                            <span class="sec-title">ISI NOMINAL JIMPITAN & CETAK NOMINAL</span>
+                            <span class="sec-title">ISI NOMINAL JIMPITAN</span>
                             <span class="sec-subtitle">Isi nominal & jangan lupa klik cetak nominal</span>
                         </div>
                     </div>
@@ -435,12 +576,12 @@
                 </div>
 
                 <!-- 2. PILIH HARI -->
-                <div class="form-section">
+                <div class="form-section bg-step-2">
                     <div class="section-label">
                         <div class="sec-number-badge">2</div>
                         <div class="sec-text-group">
-                            <span class="sec-title">PILIH HARI RONDA (BEBAS HARI)</span>
-                            <span class="sec-subtitle">Berlaku jika melewati jam 12 malam dan berganti hari.<br>Khusus Petugas Istimewa wajib mengisi juga.</span>
+                            <span class="sec-title">PILIH HARI & PRESENSI</span>
+                            <span class="sec-subtitle">Berlaku jika melewati jam 12 malam.<br>Petugas Istimewa wajib mengisi juga.</span>
                         </div>
                     </div>
                     <div id="loading-warga" class="loading-warga">
@@ -465,12 +606,12 @@
                 </div>
 
                 <!-- 3. CATATAN -->
-                <div class="form-section">
+                <div class="form-section bg-step-3">
                     <div class="section-label">
                         <div class="sec-number-badge">3</div>
                         <div class="sec-text-group">
                             <span class="sec-title">TULIS LAPORAN</span>
-                            <span class="sec-subtitle">Tulis laporan dengan cara Pilihan cepat atau manual.</span>
+                            <span class="sec-subtitle">Tulis catatan kegiatan malam ini.</span>
                         </div>
                     </div>
                     <select id="catatan-dropdown" class="catatan-dropdown">
@@ -488,12 +629,12 @@
                 </div>
                 
                 <!-- 4. SIMPAN & KIRIM -->
-                <div class="form-section">
+                <div class="form-section bg-step-4">
                     <div class="section-label">
                         <div class="sec-number-badge">4</div>
                         <div class="sec-text-group">
                             <span class="sec-title">KIRIM LAPORAN</span>
-                            <span class="sec-subtitle">Langsung kirim hasil struk ke Grup WA</span>
+                            <span class="sec-subtitle">Kirim hasil struk ke Grup WA</span>
                         </div>
                     </div>
                     <button type="button" id="btn-download" class="btn-download" disabled>
@@ -511,7 +652,7 @@
         <!-- Ruang kosong untuk mendorong footer ke bawah -->
         <div class="main-content-space"></div>
 
-        <!-- ==================== FOOTER (BERSIH SEPERTI HALAMAN LAIN) ==================== -->
+        <!-- ==================== FOOTER ==================== -->
         <footer class="main-footer">
             <div class="footer-line f-reg">Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.</div>
         </footer>
@@ -519,35 +660,91 @@
     </div> 
 </div> 
 
-<!-- AREA EXPORT STRUK -->
+<!-- AREA EXPORT STRUK DESAIN 100% BARU (SESUAI GAMBAR TERAKHIR) -->
 <div id="laporan-export">
-    <div class="exp-header-main">
-        <div class="exp-main-title">Laporan Ronda</div>
-        <div class="exp-sub-title">RT 2 - RW 3, Pasekan Lor, Balecatur</div>
-    </div>
-
-    <div class="exp-blue-banner">
-        <div class="exp-banner-date" id="exp-tanggal">-</div>
-        <div class="exp-banner-time" id="exp-waktu">00:00 WIB</div>
-        <div class="exp-banner-amount" id="exp-total-jimpitan">Rp0</div>
-    </div>
-
-    <div class="exp-section-day-title" id="exp-judul">Kehadiran Hari <span>-</span></div>
-    <div class="exp-list-kehadiran" id="exp-grid-target"></div>
-    
-    <div class="exp-summary-pills" id="exp-summary-pills"></div>
-
-    <div class="exp-catatan-section">
-        <div class="exp-section-day-title" id="exp-catatan-judul">Catatan Hari <span>-</span></div>
-        <div class="exp-catatan-container">
-            <div class="exp-catatan-content" id="exp-catatan-target">-</div>
+    <!-- Top Header Section -->
+    <div class="exp-header-top">
+        <div class="exp-ht-left">
+            <div class="exp-ht-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div class="exp-ht-text">
+                <div class="exp-ht-title">LAPORAN RONDA</div>
+                <div class="exp-ht-subtitle">RT 2 - RW 3, PASEKAN LOR, BALECATUR</div>
+            </div>
+        </div>
+        <div class="exp-ht-right">
+            <div class="exp-ht-time" id="exp-waktu-laporan">00:00 WIB</div>
         </div>
     </div>
-    
-    <div class="exp-footer-info">
-        <div class="exp-id-laporan-label">Id Laporan Ronda :</div>
-        <div class="exp-id-laporan-val" id="exp-id-string">id_laporan</div>
-        <div class="exp-thanks-btn">TERIMA KASIH. TETAP SEMANGAT!</div>
+
+    <!-- Card 1: Jimpitan -->
+    <div class="exp-card-v4">
+        <div class="exp-inner-header">
+            <div class="eih-title">JIMPITAN RONDA</div>
+            <div class="eih-val" id="exp-jimpitan-total">0</div>
+        </div>
+        <div class="exp-c1-body">
+            <div class="ec1-col">
+                <div class="ec1-lbl">HARI LAPORAN</div>
+                <div class="ec1-val exp-dynamic-date-br">-</div>
+            </div>
+            <div class="ec1-divider"></div>
+            <div class="ec1-col ec1-id-wrap">
+                <div class="ec1-lbl">ID LAPORAN</div>
+                <div class="ec1-id" id="exp-id-laporan">-</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: Kehadiran -->
+    <div class="exp-card-v4">
+        <div class="exp-inner-header">
+            <div class="eih-title">KEHADIRAN PETUGAS</div>
+            <div class="eih-date exp-dynamic-date-br">-</div>
+        </div>
+        <div class="exp-kh-body">
+            <div class="kh-row-v4">
+                <div class="kh-rect-wrap"><div class="kh-rect bg-green"></div></div>
+                <div class="kh-lbl">HADIR</div>
+                <div class="kh-colon">:</div>
+                <div class="kh-names" id="exp-hadir-names">-</div>
+            </div>
+            <div class="kh-row-v4">
+                <div class="kh-rect-wrap"><div class="kh-rect bg-blue"></div></div>
+                <div class="kh-lbl">IZIN</div>
+                <div class="kh-colon">:</div>
+                <div class="kh-names" id="exp-izin-names">-</div>
+            </div>
+            <div class="kh-row-v4">
+                <div class="kh-rect-wrap"><div class="kh-rect bg-red"></div></div>
+                <div class="kh-lbl">TIDAK HADIR</div>
+                <div class="kh-colon">:</div>
+                <div class="kh-names" id="exp-absen-names">-</div>
+            </div>
+        </div>
+        <div class="exp-kh-divider"></div>
+        <div class="exp-kh-summary">
+            <div class="kh-sum-item txt-green" id="exp-hadir-count">HADIR: 0</div>
+            <div class="kh-sum-item txt-blue" id="exp-izin-count">IZIN: 0</div>
+            <div class="kh-sum-item txt-red" id="exp-absen-count">TIDAK HADIR: 0</div>
+            <div class="kh-sum-item txt-magenta" id="exp-total-count" style="border:none;">TOTAL: 0</div>
+        </div>
+    </div>
+
+    <!-- Card 3: Catatan -->
+    <div class="exp-card-v4">
+        <div class="exp-inner-header">
+            <div class="eih-title">CATATAN</div>
+            <div class="eih-date exp-dynamic-date-br">-</div>
+        </div>
+        <div class="exp-ct-body" id="exp-catatan-target">-</div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-v4">
+        <div class="fv4-main">TERIMA KASIH PETUGAS RONDA. TETAP SEMANGAT!</div>
+        <div class="fv4-sub">Copyright &copy; 2026 RT 2 Paslor. All rights Reserved.</div>
     </div>
 </div>
 
@@ -559,9 +756,6 @@
        ========================================================== */
     const halamanAktifSaatIni = 'ronda'; 
 
-    // ==========================================
-    // PENGATURAN LOGIN Warga
-    // ==========================================
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwxnY23ME-d7Nzv_hxkj2pslTjWnAXsufkPlA47XJZ-bYXADTr39X9BBBSDrSIh7RhyGQ/exec";
     const loginModalOverlay = document.getElementById('loginModalOverlay');
     const loginForm = document.getElementById('loginForm');
@@ -921,7 +1115,7 @@
                     <div class="presence-buttons-group">
                         <button type="button" class="pres-btn pres-btn-hadir ${activeHadir}" onclick="setPresensi('${warga}', ${idx}, 'Hadir')">Hadir</button>
                         <button type="button" class="pres-btn pres-btn-izin ${activeIzin}" onclick="setPresensi('${warga}', ${idx}, 'Izin')">Izin</button>
-                        <button type="button" class="pres-btn pres-btn-absen ${activeAbsen}" onclick="setPresensi('${warga}', ${idx}, 'Absen')">Tdk Hdr/Alpha</button>
+                        <button type="button" class="pres-btn pres-btn-absen ${activeAbsen}" onclick="setPresensi('${warga}', ${idx}, 'Absen')">Tidak Hadir</button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -974,14 +1168,13 @@
             `;
         }
 
-        // === UPDATE: Menambahkan teks ke dalam tombol Tambah Nama Orang ===
         htmlContent += `
             <div id="dynamic-warga-list"></div>
             <div class="istimewa-input-group">
-                <input type="text" id="custom-name-input" class="istimewa-input" placeholder="Isi nama baru" autocomplete="off">
+                <input type="text" id="custom-name-input" class="istimewa-input" placeholder="Nama" autocomplete="off">
                 <button type="button" id="btn-add-custom" class="btn-add-istimewa" title="Tambah">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>Tambah Nama Orang</span>
+                    <span>Tambah</span>
                 </button>
             </div>
         `;
@@ -1096,77 +1289,59 @@
             
             let cleanDay = selectedDay.replace("'", "");
             cleanDay = cleanDay === 'ISTIMEWA' ? 'ISTIMEWA' : cleanDay.charAt(0).toUpperCase() + cleanDay.slice(1).toLowerCase();
-
             const displayDay = selectedDay === 'ISTIMEWA' ? actualDay : cleanDay;
 
-            const expTanggal = document.getElementById('exp-tanggal');
-            const expWaktu = document.getElementById('exp-waktu');
-            const expTotalJimpitan = document.getElementById('exp-total-jimpitan');
+            // Memasukkan data kehadiran
+            let hadirList = [], izinList = [], absenList = [];
+            const listWarga = dataRonda[selectedDay] || [];
             
-            if (expTanggal) expTanggal.textContent = `${displayDay}, ${now.getDate()} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
-            if (expWaktu) expWaktu.textContent = `${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} WIB`;
-            if (expTotalJimpitan) expTotalJimpitan.textContent = `Rp${nominalField.value}`;
+            listWarga.forEach(warga => {
+                const status = attendanceState[warga];
+                if(status === 'Hadir') hadirList.push(warga);
+                else if(status === 'Izin') izinList.push(warga);
+                else if(status === 'Absen') absenList.push(warga);
+            });
+
+            document.getElementById('exp-jimpitan-total').textContent = nominalField.value;
+
+            // Waktu Laporan
+            const timeStrStruk = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WIB`;
+            document.getElementById('exp-waktu-laporan').textContent = timeStrStruk;
+
+            // Format tanggal yang dinamis dengan Break (<br>) untuk Card
+            const displayDateFullBr = `${displayDay.toUpperCase()},<br>${now.getDate()} ${monthNames[now.getMonth()].toUpperCase()} ${now.getFullYear()}`;
+            document.querySelectorAll('.exp-dynamic-date-br').forEach(el => el.innerHTML = displayDateFullBr);
             
-            const expJudul = document.getElementById('exp-judul');
-            const expCatatanJudul = document.getElementById('exp-catatan-judul');
-            const expCatatanTarget = document.getElementById('exp-catatan-target');
+            const displayDateFull = `${displayDay.toUpperCase()}, ${now.getDate()} ${monthNames[now.getMonth()].toUpperCase()} ${now.getFullYear()}`;
+            document.querySelectorAll('.exp-dynamic-date').forEach(el => el.innerHTML = displayDateFull);
 
-            if (expJudul) expJudul.innerHTML = selectedDay === 'ISTIMEWA' ? 'Daftar Kehadiran <span>Istimewa</span>' : `Kehadiran Hari <span>${cleanDay}</span>`;
-            if (expCatatanJudul) expCatatanJudul.innerHTML = selectedDay === 'ISTIMEWA' ? `Catatan Hari <span>${actualDay}</span>` : `Catatan Hari <span>${cleanDay}</span>`;
-            if (expCatatanTarget) expCatatanTarget.textContent = catatanTextarea.value;
+            // Format ID khusus (Misal: JUMAT-30-OKT-2026-52.000)
+            const idFormatted = `${displayDay.toUpperCase()}-${now.getDate()}-${shortMonthNames[now.getMonth()].toUpperCase()}-${now.getFullYear()}-${nominalField.value}`;
+            document.getElementById('exp-id-laporan').textContent = idFormatted;
 
-            const gridTarget = document.getElementById('exp-grid-target');
-            if (gridTarget) {
-                gridTarget.innerHTML = '';
-
-                const listWarga = dataRonda[selectedDay] || [];
-                let jmlHadir = 0, jmlIzin = 0, jmlAbsen = 0;
-
-                listWarga.forEach(warga => {
-                    const status = attendanceState[warga];
-                    let rowClass = '', statusLabel = '';
-
-                    if(status === 'Hadir') { rowClass = 'status-hadir'; statusLabel = '(HADIR)'; jmlHadir++; } 
-                    else if(status === 'Izin') { rowClass = 'status-izin'; statusLabel = '(IZIN)'; jmlIzin++; } 
-                    else if(status === 'Absen') { rowClass = 'status-absen'; statusLabel = '(ALPHA)'; jmlAbsen++; }
-
-                    const item = document.createElement('div');
-                    item.className = `exp-warga-row ${rowClass}`;
-                    item.innerHTML = `
-                        <div class="exp-warga-left">
-                            <span class="exp-number-circle">${++gridTarget.children.length}</span>
-                            <span>${warga}</span>
-                        </div>
-                        <span class="exp-status-text">${statusLabel}</span>
-                    `;
-                    gridTarget.appendChild(item);
-                });
-
-                const expSummaryPills = document.getElementById('exp-summary-pills');
-                if (expSummaryPills) {
-                    let total = jmlHadir + jmlIzin + jmlAbsen;
-                    expSummaryPills.innerHTML = `
-                        <div class="exp-pill pill-hadir">HADIR : ${jmlHadir}</div>
-                        <div class="exp-pill pill-izin">IZIN : ${jmlIzin}</div>
-                        <div class="exp-pill pill-alpha">ALPHA : ${jmlAbsen}</div>
-                        <div class="exp-pill pill-tot">TOT : ${total}</div>
-                    `;
-                }
-            }
+            // Injeksi Card Kehadiran
+            document.getElementById('exp-hadir-names').textContent = hadirList.length > 0 ? hadirList.join(", ") : "-";
+            document.getElementById('exp-hadir-count').textContent = "HADIR: " + hadirList.length;
             
-            const reportDayStr = displayDay.toLowerCase();
-            const cleanNominal = nominalField.value.replace(/\./g, '');
-            const idString = `${reportDayStr}_${now.getDate()}${shortMonthNames[now.getMonth()]}${now.getFullYear()}_${cleanNominal}`;
+            document.getElementById('exp-izin-names').textContent = izinList.length > 0 ? izinList.join(", ") : "-";
+            document.getElementById('exp-izin-count').textContent = "IZIN: " + izinList.length;
             
-            const expIdString = document.getElementById('exp-id-string');
-            if (expIdString) expIdString.textContent = idString;
+            document.getElementById('exp-absen-names').textContent = absenList.length > 0 ? absenList.join(", ") : "-";
+            document.getElementById('exp-absen-count').textContent = "TIDAK HADIR: " + absenList.length;
 
+            const totalWarga = hadirList.length + izinList.length + absenList.length;
+            document.getElementById('exp-total-count').textContent = "TOTAL: " + totalWarga;
+
+            // Injeksi Catatan 
+            document.getElementById('exp-catatan-target').textContent = catatanTextarea.value.toUpperCase();
+
+            // Mulai merender canvas
             const exportTarget = document.getElementById('laporan-export');
             if (exportTarget) {
                 exportTarget.style.visibility = 'visible'; exportTarget.style.opacity = '1';
 
                 try {
-                    const canvas = await html2canvas(exportTarget, { scale: 2, backgroundColor: '#F9FAFB', logging: false, useCORS: true });
+                    const canvas = await html2canvas(exportTarget, { scale: 2, backgroundColor: '#f4f5f6', logging: false, useCORS: true });
                     exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
                     
                     canvas.toBlob(async (blob) => {
@@ -1247,7 +1422,7 @@
             else { text += `  (Tidak ada)\n`; }
             text += `\n`;
 
-            text += `TDK HDR/ALPHA (${absenList.length})\n`;
+            text += `TIDAK HADIR (${absenList.length})\n`;
             if(absenList.length > 0) { absenList.forEach((w, i) => text += `  ${i+1}. ${w}\n`); } 
             else { text += `  (Tidak ada)\n`; }
             text += `\n`;
@@ -1271,6 +1446,25 @@
             document.body.removeChild(link);
         });
     }
+
+    // ==========================================
+    // FUNGSI TOGGLE ACCORDION TATA CARA
+    // ==========================================
+    function toggleTataCara() {
+        const wrapper = document.getElementById('tataCaraWrapper');
+        if (wrapper) {
+            wrapper.classList.toggle('open');
+        }
+    }
+    
+    // Tutup accordion saat user melakukan scroll layar
+    window.addEventListener('scroll', function() {
+        const wrapper = document.getElementById('tataCaraWrapper');
+        if (wrapper && wrapper.classList.contains('open')) {
+            wrapper.classList.remove('open');
+        }
+    });
+
 </script>
 </body>
 </html>

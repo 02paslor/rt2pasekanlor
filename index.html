@@ -55,7 +55,7 @@
         }
 
         .header-box { 
-            background-color: #033387; 
+            background: linear-gradient(135deg, #1155cc, #033387); /* GRADASI HEADER */
             border-radius: 20px; 
             display: flex; align-items: center; justify-content: space-between; 
             padding: 10px 16px; 
@@ -73,8 +73,8 @@
         .header-left-area { display: flex; align-items: center; justify-content: flex-start; gap: 10px; flex: 1; overflow: hidden;}
         .header-logo-img { width: 72px; height: auto; flex-shrink: 0;}
         .header-text-area { display: flex; flex-direction: column; line-height: 1.5; overflow: hidden;}
-        .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
-        .slogan-text-2 { color: #ffffff; font-size: 9px; font-weight: 500; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+        .slogan-text-1 { color: #ffffff; font-size: 14px; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+        .slogan-text-2 { color: #ffffff; font-size: 8px; font-weight: 400; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 
         .login-btn-wrapper { 
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -309,17 +309,28 @@
             background: #f8fafc;
         }
 
+        /* Hover & Aktif diubah menjadi hijau #3AC77C */
+        .b-nav-item:hover:not(.menu-tertekan) {
+            color: #3AC77C;
+            border-color: #3AC77C;
+        }
+        
+        .b-nav-item:hover:not(.menu-tertekan) svg {
+            stroke: #3AC77C;
+        }
+
         .b-nav-item svg { 
             width: 22px; height: 22px; 
             margin-bottom: 4px; stroke: #64748b; stroke-width: 2.5; fill: none;
             stroke-linecap: round; stroke-linejoin: round; transition: all 0.2s ease;
         }
 
+        /* Warna saat tombol Menu Aktif */
         .b-nav-item.menu-tertekan { 
-            background-color: #1155cc !important; 
-            border-color: #1155cc !important;
+            background-color: #3AC77C !important; 
+            border-color: #3AC77C !important;
             color: #ffffff !important;
-            box-shadow: 0 4px 12px rgba(17,85,204,0.4);
+            box-shadow: 0 4px 12px rgba(58,199,124,0.4);
             transform: scale(0.95); 
             pointer-events: none; 
         }
@@ -331,29 +342,6 @@
         .b-nav-item.menu-tertekan svg { 
             stroke: #ffffff !important; 
         }
-
-        .b-nav-item.btn-kas.menu-tertekan {
-            background-color: #10B981 !important;
-            border-color: #10B981 !important;
-            box-shadow: 0 4px 12px rgba(16,185,129,0.4) !important;
-        }
-        .b-nav-item.btn-ronda.menu-tertekan {
-            background-color: #ef4444 !important;
-            border-color: #ef4444 !important;
-            box-shadow: 0 4px 12px rgba(239,68,68,0.4) !important;
-        }
-
-        @keyframes nyalaRondaLight {
-            0% { background-color: #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-            50% { background-color: #fef2f2; box-shadow: inset 0 0 8px rgba(239, 68, 68, 0.15); border-color: #fca5a5; }
-            100% { background-color: #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-        }
-
-        .b-nav-item.btn-ronda:not(.is-locked) {
-            animation: nyalaRondaLight 1.5s infinite ease-in-out;
-            color: #ef4444; 
-        }
-        .b-nav-item.btn-ronda:not(.is-locked) svg { stroke: #ef4444; }
 
         /* ========================================================
             MODAL CARD "MENU LAINNYA"
@@ -400,6 +388,19 @@
         .sheet-item svg { width: 17px; height: 17px; stroke: #64748b; stroke-width: 2.5; fill: none; margin-bottom: 4px; transition: stroke 0.2s; }
         .sheet-item:active { transform: scale(0.92); background: #f8fafc; }
 
+        .sheet-item:hover:not(.menu-tertekan) {
+            color: #3AC77C;
+            border-color: #3AC77C;
+        }
+        .sheet-item:hover:not(.menu-tertekan) svg {
+            stroke: #3AC77C;
+        }
+
+        .sheet-item.menu-tertekan {
+            background: #3AC77C !important; border-color: #3AC77C !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(58,199,124,0.3); pointer-events: none;
+        }
+        .sheet-item.menu-tertekan svg { stroke: #ffffff !important; }
+
         /* TOMBOL SETTING TANPA KOTAK & WARNA #1155CC */
         .setting-icon-btn {
             background: transparent !important;
@@ -419,11 +420,6 @@
             fill: none; margin: 0;
         }
 
-        .sheet-item.menu-tertekan {
-            background: #1155cc !important; border-color: #1155cc !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(17,85,204,0.3); pointer-events: none;
-        }
-        .sheet-item.menu-tertekan svg { stroke: #ffffff !important; }
-
     </style>
 </head>
 <body>
@@ -435,7 +431,7 @@
             <div class="header-left-area">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7Qwpot6HkIF0AapmTYTZ3qz1pXD8L0h_qT3TpyJtGLoDIdxlhCjurSJXWdgCif04qf9ul_zKHrl3Y5uIyeHAUwUbPLNFa0I_WnZvIWOyO_im-1ocriSZwWiaDYZ6Bg1vT8PBcv3pfUtTrpD7_I9U8YLxQGO_Owmse0_IRLUHEEeBcEQcWuiWoe_GCXo8/s1600/Thumb%20-%20Putih.png" alt="Logo RT 2" class="header-logo-img">
                 <div class="header-text-area">
-                    <span class="slogan-text-1">RT 2 Online</span>
+                    <span class="slogan-text-1">RT 2 Paslor</span>
                     <span class="slogan-text-2">Informasi Warga RT2 Paslor</span>
                 </div>
             </div>
@@ -468,7 +464,7 @@
                 <div class="modern-login-header">
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" class="modern-logo" alt="Logo">
                     <div class="modern-header-text">
-                        <h2 style="margin-top: 8px;">Pintu Masuk Warga</h2>
+                        <h2 style="margin-top: 2px;">Portal Warga</h2>
                     </div>
                     <button class="modern-close-btn" onclick="closeLoginModal()" title="Tutup">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -526,7 +522,7 @@
             <div class="modern-login-wrapper">
                 <div class="modern-login-header">
                     <div class="modern-header-text">
-                        <h2 style="color: #ef4444; margin-top: 6px; font-size: 14px;">Tidak ada apa-apa disini</h2>
+                        <h2 style="color: #ef4444; margin-top: 6px; font-size: 20px;">Tidak ada apa-apa disini</h2>
                     </div>
                     <button class="modern-close-btn" style="background: #fef2f2; border-color: #fee2e2; color: #ef4444;" onclick="closeAdminAuth()" title="Tutup">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>

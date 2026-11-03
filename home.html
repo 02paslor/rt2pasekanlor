@@ -46,11 +46,11 @@
         .slide img, .slide video, .slide iframe { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; background-color: #000; overflow: hidden; border: none; }
         .status-msg { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 11px; color: #383838; font-weight: 500; z-index:-1;}
 
-        /* ================== KOTAK KAS SALDO ================== */
+        /* ================== KOTAK KAS SALDO & BATIK PARANG RUSAK ================== */
         .hero-kas-container { padding: 0 16px 16px 16px; width: 100%; z-index: 2; position: relative; } 
         
         .kas-card.new-kas-design { 
-            background: linear-gradient(135deg, #92359C 10%, #1155CC 100%); 
+            background: linear-gradient(-135deg, #003082 10%, #1155CC 100%); 
             color: #ffffff; 
             border-radius: 18px; 
             padding: 16px 20px; 
@@ -59,8 +59,24 @@
             position: relative; 
             overflow: hidden; 
             box-shadow: 0 8px 20px rgba(17, 85, 204, 0.25); 
-            border: 1px solid rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.15); 
         }
+
+        /* Overlay Motif Batik Parang Rusak Senada Gradasi Biru */
+        .kas-card.new-kas-design::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjqI_PeNdaJlM5xkVXjFEhsk73fokVjG4ZeLKBckLYL2MDJNH-MS0qYi8g7wuTWLxJqqAuxgoKxDU3ADyt0_VlGt4DgHWyaVoR2iHI5Rv8j2pXf32IJnRvJOC5dpAIRz9b83R56BpIhsRZ96Vm-FxE8jSfdKhAKMNUuBi37esV3q6drPbkPldEEEs_TMU/s939/parang%20rusak.png');
+            background-size: 500px auto;
+            background-repeat: no-repeat;
+            background-position: center;
+            mix-blend-mode: multiply;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
         .kas-card.new-kas-design::after { 
             content: ''; 
             position: absolute; 
@@ -71,13 +87,14 @@
             background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); 
             border-radius: 50%; 
             pointer-events: none; 
+            z-index: 1;
         }
         
-        .kas-weather-top { display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 10px; margin-bottom: 12px; width: 100%; z-index: 2; }
+        .kas-weather-top { display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 10px; margin-bottom: 12px; width: 100%; z-index: 2; position: relative; }
         .welcome-text-container { width: 100%; text-align: center; display: flex; justify-content: center; }
         .static-welcome { font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 0.3px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
         
-        .kas-body-wrapper { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; z-index: 2; }
+        .kas-body-wrapper { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; z-index: 2; position: relative; }
         .kas-left { display: flex; flex-direction: column; justify-content: center; gap: 8px; flex: 1.1; margin-top: 2px;}
         .calendar-display { display: flex; align-items: flex-start; gap: 8px; }
         .calendar-display svg { width: 18px; height: 18px; opacity: 0.9; color: #ffffff; margin-top: 1px; flex-shrink: 0; }
@@ -122,12 +139,14 @@
         .ds-pill-btn { background-color: #ffffff; color: #383838; border: none; padding: 10px 24px; border-radius: 50px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .ds-pill-btn:active { transform: scale(0.95); }
 
-        /* ================== ELEMEN AGENDA ================== */
+        /* ================== ELEMEN AGENDA & STATUS ================== */
         .cards-list { display: flex; flex-direction: column; gap: 16px; }
         .info-card { background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; width: 100%; border: 1px solid #D4D4D4; }
-        .card-header { padding: 12px 16px; color: #ffffff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-        .neumorph-status { background: #FFFFFF; border-radius: 9px; padding: 4px 10px; font-size: 10.5px;}
-        .card-header .category-text { font-size: 15px; font-weight: 600; letter-spacing: 0.1px; text-shadow: 0 1px 2px rgba(0,0,0,0.15); display: block; }
+        .card-header { padding: 10px 14px; color: #ffffff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Kotak status diperkecil */
+        .neumorph-status { background: #FFFFFF; border-radius: 6px; padding: 3px 8px; font-size: 9.5px; line-height: 1.2; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .card-header .category-text { font-size: 14px; font-weight: 600; letter-spacing: 0.1px; text-shadow: 0 1px 2px rgba(0,0,0,0.15); display: block; }
         
         .bg-pertemuan { background: #1155CC; } 
         .bg-pertemuan-ibu { background: #C868CC; }
@@ -151,10 +170,24 @@
         .list-content { flex: 1; }
         .normal-text-item { font-size: 14.5px; color: #383838; line-height: 1.5; margin-bottom: 2px; }   
         
-        .status-dot-blink { width: 8px; height: 8px; border-radius: 50%; display: inline-block; animation: pulse-status 1s infinite alternate; }
+        /* Indikator Kelip-Kelip */
+        .status-dot-blink { width: 7px; height: 7px; border-radius: 50%; display: inline-block; animation: pulse-status 1s infinite alternate; }
         .status-dot-blink.fast { animation: pulse-status-fast 0.3s infinite alternate; }
+        
+        /* Kotak Radius Kelip-Kelip Hijau #006906 */
+        .status-box-blink-green { 
+            width: 8px; 
+            height: 8px; 
+            border-radius: 3px; 
+            background-color: #006906; 
+            display: inline-block; 
+            animation: pulse-status-green 0.4s infinite alternate; 
+            box-shadow: 0 0 6px rgba(0, 105, 6, 0.7);
+        }
+
         @keyframes pulse-status { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
-        @keyframes pulse-status-fast { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.3); opacity: 1; } }
+        @keyframes pulse-status-fast { 0% { transform: scale(0.85); opacity: 0.35; } 100% { transform: scale(1.25); opacity: 1; } }
+        @keyframes pulse-status-green { 0% { transform: scale(0.85); opacity: 0.3; } 100% { transform: scale(1.25); opacity: 1; } }
 
         .info-card-footer { padding: 12px 16px; display: flex; gap: 10px; background-color: transparent; align-items: center; justify-content: space-between; }
         .btn-footer-action { padding: 8px 12px; border-radius: 10px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; border: none; transition: all 0.2s ease; width: 48%; }
@@ -171,15 +204,17 @@
         .doc-modal-text { background: #F8FAFC; color: #383838; padding: 20px; border-radius: 20px; width: 100%; border: 1px solid #e2e8f0; margin-top: 10px; }
         .loading-text { text-align: center; color: #64748b; padding: 40px; font-size: 14px; width: 100%; text-shadow: none; }
 
-        /* ================== ELEMEN BERITA ================== */
+        /* ================== ELEMEN BERITA DENGAN KURSOR POINTER ================== */
         .news-slider-container { width: calc(100% + 32px); margin: 0 -16px; overflow-x: auto; display: flex; gap: 16px; padding: 0 16px 10px 16px; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; box-sizing: border-box; }
-        .news-card { flex: 0 0 85%; width: 85%; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; flex-shrink: 0; scroll-snap-align: center; border: 1px solid #e2e8f0; }
-        .news-thumb-wrapper { position: relative; width: 100%; height: 180px; background-color: #eaeaea; overflow: hidden; }
+        .news-card { flex: 0 0 85%; width: 85%; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; flex-shrink: 0; scroll-snap-align: center; border: 1px solid #e2e8f0; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .news-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .news-card:active { transform: scale(0.98); }
+        .news-thumb-wrapper { position: relative; width: 100%; height: 180px; background-color: #eaeaea; overflow: hidden; cursor: pointer; }
         .news-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .news-body-main { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
+        .news-body-main { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1; cursor: pointer; }
         .news-title { font-size: 16px; font-weight: 600; line-height: 1.4; color: #1155cc; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.2s; }
         .card-clickable-area { cursor: pointer; display: flex; flex-direction: column; flex-grow: 1; }
-        .card-clickable-area:hover .news-title { color: #383838; }
+        .news-card:hover .news-title { color: #003082; }
         .news-snippet { font-size: 12px; font-weight: 400; line-height: 1.5; color: #383838; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         
         .article-title-detail { font-size: 18px; font-weight: 600; line-height: 1.4; color: #1155CC; margin-bottom: 14px; text-align: left; }
@@ -217,9 +252,7 @@
         svg { display: inline-block; vertical-align: middle; }
     </style>
     
-<!-- ======================================================================
-     START AREA EDIT WIDGET LAPAK WARGA 
-     ====================================================================== -->
+    <!-- STYLE LAPAK WARGA -->
     <style>
         #widget-umkm-rt2, #modal-umkm, #zoom-overlay { font-family: 'Poppins', sans-serif; color: #333; box-sizing: border-box; text-align: left; }
         #widget-umkm-rt2 { width: 100%; max-width: 800px; margin: 0 auto; padding: 0; }
@@ -312,7 +345,7 @@
             </div>
         </div>
 
-        <!-- KOTAK KAS BARU -->
+        <!-- KOTAK KAS BARU (BATIK PARANG RUSAK TRANSPARAN & SENADA) -->
         <section class="hero-kas-container" id="kotakKas">
             <div class="kas-card new-kas-design">
                 <!-- Header Sambutan / Waktu -->
@@ -350,7 +383,7 @@
             </div>
         </section>
 
-        <!-- SLIDER MODAL SLIDE DOWN PURE IMAGE (CENTER VIEW UTUH) -->
+        <!-- SLIDER MODAL SLIDE DOWN PURE IMAGE -->
         <div class="slide-down-overlay" id="psModalOverlay" onclick="closePsModalOutside(event)">
             <div class="slide-down-content" onclick="event.stopPropagation()">
                 <button class="modal-close-btn-absolute" id="psCloseModal" aria-label="Tutup" style="position: fixed; top: 20px; right: 20px; z-index: 100000; background: #fef2f2; color:#ef4444; border:none;">
@@ -478,10 +511,8 @@
             </div>
         </div>
         
-        <!-- Tombol Darurat & Copyright (Jarak 20px dari bawah) -->
+        <!-- Tombol Darurat & Copyright -->
         <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: auto; padding-top: 20px; padding-bottom: 20px;">
-            
-            <!-- Tombol Darurat -->
             <div>
                 <button class="btn-darurat-caution" id="openEmModalBtn">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
@@ -493,11 +524,9 @@
                 </button>
             </div>
 
-            <!-- Copyright dengan jarak 20px dari bawah -->
             <div style="font-size: 11px; color: #64748b; font-weight: 400; text-align: center;">
                 Copyright © 2026. Aplikasi Warga RT 2/RW 3, Pasekan Lor.
             </div>
-            
         </div>
 
     </div> 
@@ -507,16 +536,14 @@
     // ==========================================
     // PENGATURAN API SPREADSHEET APK DT WG
     // ==========================================
-      const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwPaBwOJ5Zw3TyzDYH5wT-ovy8yOo_R0togsq7XhU9frmT3zfJDaK2lWdaN8owRQ9PolA/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwPaBwOJ5Zw3TyzDYH5wT-ovy8yOo_R0togsq7XhU9frmT3zfJDaK2lWdaN8owRQ9PolA/exec";
 
     // ==========================================
     // FUNGSI MANAJEMEN SESI UNTUK MENAMPILKAN NAMA
     // ==========================================
-    
     function checkLoginState() {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         const userName = localStorage.getItem('userName');
-        
         const welcomeText = document.getElementById('liveWeather');
         
         if (isLoggedIn === 'true' && welcomeText) {
@@ -540,7 +567,7 @@
         if (e.target === emModalOverlay) { emModalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; } 
     }
 
-    // ========================================== SCRIPT BAWAAN LAINNYA ==========================================
+    // ========================================== SCRIPT BANNER SLIDER ==========================================
     const psTrack = document.getElementById('ps-slider-track');
     const psLoading = document.getElementById('ps-status-loading');
     const psModalOverlay = document.getElementById('psModalOverlay');
@@ -645,7 +672,6 @@
             let saldo = text.replace(/['"'\r\n]+/g, '').trim();
             actualSaldo = saldo ? saldo : "Rp0";
             
-            // Jangan timpa jika sedang dikunci admin
             if(!globalLocks.saldo) {
                 document.getElementById('saldoKas').innerText = actualSaldo;
             }
@@ -695,14 +721,14 @@
             if (timeMatch) { startHour = parseInt(timeMatch[1]); startMinute = parseInt(timeMatch[2]); }
         } catch(e) {}
 
-        if (!targetDate) return { text: isManualDone ? 'Sudah Selesai' : 'Belum Terlaksana', color: isManualDone ? '#64748b' : '#ef4444', type: isManualDone ? 'done' : 'upcoming' };
+        if (!targetDate) return { text: isManualDone ? 'Sudah Selesai' : 'Belum Terlaksana', color: isManualDone ? '#64748b' : '#006906', type: isManualDone ? 'done' : 'upcoming' };
         
         const sekarang = new Date(); 
         const hariIni = new Date(sekarang.getFullYear(), sekarang.getMonth(), sekarang.getDate());
         const eventDate = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
 
         if (eventDate < hariIni) return { text: 'Sudah Selesai', color: '#1155CC', type: 'done' };
-        if (eventDate > hariIni) return { text: 'Belum Terlaksana', color: '#ef4444', type: 'upcoming' };
+        if (eventDate > hariIni) return { text: 'Belum Terlaksana', color: '#006906', type: 'upcoming' };
         
         const currentTotalMinutes = sekarang.getHours() * 60 + sekarang.getMinutes();
         const eventTotalMinutes = startHour * 60 + startMinute;
@@ -719,23 +745,27 @@
         }
         if (currentTotalMinutes > eventTotalMinutes + 180) return { text: 'Sudah Selesai', color: '#1155CC', type: 'done' };
         
-        return { text: 'Belum Terlaksana', color: '#FF0000', type: 'upcoming' };
+        return { text: 'Belum Terlaksana', color: '#006906', type: 'upcoming' };
     }
 
     function renderStatusHtml(statusData) {
         let icon = '';
         if (statusData.type === 'info') {
-            icon = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
+            icon = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
         } else if (statusData.type === 'done') {
-            icon = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+            icon = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
         } else if (statusData.type === 'today') {
-            icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+            icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+        } else if (statusData.type === 'upcoming') {
+            // Kotak radius kelip-kelip warna hijau #006906
+            icon = `<span class="status-box-blink-green"></span>`;
         } else {
-            icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="${statusData.type === 'ongoing' ? 'M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01' : 'M3 4h18v18H3z"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10'}"/></svg>`;
+            icon = `<span class="status-dot-blink fast" style="background-color:${statusData.color};"></span> <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="${statusData.type === 'ongoing' ? 'M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01' : 'M3 4h18v18H3z"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10'}"/></svg>`;
         }
+
         return {
-            bodyHtml: `<div class="status-text-container" style="color:${statusData.color}; display:flex; align-items:center; gap:1px;">${icon} ${statusData.text}</div>`,
-            headerHtml: `<span class="agenda-label-top neumorph-status" style="color:${statusData.color}; display:inline-flex; align-items:center; gap:4px;">${icon} <span style="font-weight:600; margin-top:1px;">${statusData.text}</span></span>`
+            bodyHtml: `<div class="status-text-container" style="color:${statusData.color}; display:flex; align-items:center; gap:4px;">${icon} ${statusData.text}</div>`,
+            headerHtml: `<span class="agenda-label-top neumorph-status" style="color:${statusData.color}; display:inline-flex; align-items:center; gap:5px;">${icon} <span style="font-weight:600; margin-top:1px;">${statusData.text}</span></span>`
         };
     }
 
@@ -1045,12 +1075,12 @@
 </script>
 
 <!-- ======================================================================
-     START AREA EDIT WIDGET LAPAK WARGA (JAVASCRIPT)
+     WIDGET LAPAK WARGA (JAVASCRIPT)
      ====================================================================== -->
 <script>
     const svgMap = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`;
     const svgWa = `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>`;
-    const svgBox = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>`;
+    const svgBox = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 6.33 7 5.5 7z"/></svg>`;
     const svgWallet = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 7.28V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-2.28A2 2 0 0 0 22 15V9a2 2 0 0 0-1-1.72zM20 9v6h-2V9h2zM5 19V5h14v2h-6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h6v2H5z"/></svg>`;
 
     let storesData = [];
@@ -1250,21 +1280,20 @@
         if (!el) return;
         if (isLocked) {
             el.style.opacity = '0.6';
-            el.style.pointerEvents = 'none'; // Kunci klik
+            el.style.pointerEvents = 'none';
             if (!el.querySelector('.lock-badge-home')) {
                 el.style.position = 'relative';
                 el.innerHTML += '<div class="lock-badge-home" style="position:absolute; top:-6px; right:-6px; background:#ef4444; color:#fff; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; font-size:10px; z-index:10; box-shadow:0 1px 3px rgba(0,0,0,0.3);">🔒</div>';
             }
         } else {
             el.style.opacity = '1';
-            el.style.pointerEvents = 'auto'; // Buka klik
+            el.style.pointerEvents = 'auto';
             const badge = el.querySelector('.lock-badge-home');
             if (badge) badge.remove();
         }
     }
 
     function applyAllLocks() {
-        // 1. Kunci Nominal Saldo
         const saldoEl = document.getElementById('saldoKas');
         if (saldoEl) {
             if (globalLocks.saldo) {
@@ -1279,19 +1308,13 @@
             }
         }
 
-        // 3. Kunci Grup WA Darurat & Undangan WA di Agenda
         lockElement(document.getElementById('btnUndanganWA_Darurat'), globalLocks.undangan);
         document.querySelectorAll('.btn-share-wa').forEach(el => lockElement(el, globalLocks.undangan));
-
-        // 4. Kunci Hasil Kegiatan (Thumb & Tombol Bawah)
         document.querySelectorAll('.btn-doc-footer').forEach(el => lockElement(el, globalLocks.hasil));
         document.querySelectorAll('.card-thumb-wrapper').forEach(el => lockElement(el, globalLocks.hasil));
-
-        // 5. Kunci Arsip Lain
         lockElement(document.getElementById('btnArsipLain'), globalLocks.arsip);
     }
 
-    // Tangkap sinyal postMessage dari halaman induk
     window.addEventListener('message', function(e) {
         if (e.data && e.data.type === 'applyLocksHome') {
             globalLocks = e.data.locks;
@@ -1304,7 +1327,7 @@
     // ==========================================
     let lastScrollY = window.scrollY || document.documentElement.scrollTop;
     let scrollTicking = false;
-    const scrollThreshold = 20; // Toleransi jarak scroll (px) sebelum mengirim pesan
+    const scrollThreshold = 20;
 
     function kirimScrollKeParent() {
         if (!scrollTicking) {
@@ -1312,17 +1335,15 @@
                 let currentScrollY = window.scrollY || document.documentElement.scrollTop;
                 let scrollDifference = Math.abs(currentScrollY - lastScrollY);
 
-                // HANYA kirim pesan jika jarak scroll melebihi threshold
                 if (scrollDifference > scrollThreshold) {
                     let scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
                     
                     window.parent.postMessage({
                         type: 'iframeScroll',
                         scrollTop: currentScrollY,
-                        direction: scrollDirection // Parent bisa langsung pakai data ini
+                        direction: scrollDirection
                     }, '*');
                     
-                    // Update posisi terakhir
                     lastScrollY = currentScrollY;
                 }
                 scrollTicking = false;
@@ -1331,7 +1352,6 @@
         }
     }
 
-    // Gunakan passive: true untuk performa mobile terbaik
     window.addEventListener('scroll', kirimScrollKeParent, { passive: true });
     window.addEventListener('touchmove', kirimScrollKeParent, { passive: true });
 </script>

@@ -22,7 +22,28 @@
     
     <style>
         /* ======================================================================
-           AREA PENGATURAN TAMPILAN GLOBAL (DARI TEMPLATE UTAMA)
+           PANDUAN PENGATURAN UKURAN TEKS (EDIT DI SINI)
+           Ubah nilai px di bawah ini untuk memperbesar / memperkecil teks:
+           ====================================================================== */
+        :root {
+            --font-judul-header: 14px;      /* Judul banner header 'Ronda RT 2' */
+            --font-suasana-tgl: 14px;       /* Tanggal di kotak gradien suasana */
+            --font-suasana-jam: 13px;       /* Jam di kotak gradien suasana */
+            --font-accordion-title: 13px;   /* Teks judul tombol 'CARA PEMBUATAN LAPORAN:' */
+            --font-accordion-step: 12px;    /* Teks langkah 1, 2, 3, 4 di dalam tata cara */
+            --font-accordion-note: 11px;    /* Teks catatan kecil di bawah tata cara */
+            --font-section-title: 16px;   /* Judul setiap langkah formulir (1, 2, 3, 4) */
+            --font-section-subtitle: 12px;/* Penjelasan kecil di bawah judul langkah formulir */
+            --font-input-nominal: 15px;     /* Angka input nominal jimpitan */
+            --font-select-input: 12px;    /* Dropdown pilih hari & dropdown catatan cepat */
+            --font-warga-name: 14px;        /* Nama warga dalam daftar presensi */
+            --font-presensi-btn: 12px;    /* Teks tombol 'Hadir', 'Izin', 'Tidak Hadir' */
+            --font-action-btn: 13.5px;      /* Tombol 'Cetak Nominal' & 'Kirim Sekarang' */
+            --font-footer: 11px;            /* Teks hak cipta footer */
+        }
+
+        /* ======================================================================
+           PENGATURAN GLOBAL & RESET
            ====================================================================== */
         * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
         *::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
@@ -95,12 +116,12 @@
             z-index: 2; 
         }
         .footer-line { color: #64748b; line-height: 1.4; }
-        .f-reg { font-size: 11px; font-weight: 400; }
+        .f-reg { font-size: var(--font-footer); font-weight: 400; }
 
         svg { display: inline-block; vertical-align: middle; }
 
         /* ======================================================================
-           CSS KHUSUS HALAMAN RONDA
+           CSS HALAMAN RONDA
            ====================================================================== */
         .main-content-board { 
             background-color: transparent; 
@@ -119,7 +140,7 @@
             align-items: center; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
             z-index: 2; position: relative; margin: 25px 16px 20px 16px; height: 55px;
         }
-        .title-card-left { font-size: 14px; font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; z-index: 3; position: relative; }
+        .title-card-left { font-size: var(--font-judul-header); font-weight: 600; display: flex; align-items: center; letter-spacing: 0.5px; text-transform: uppercase; gap: 8px; z-index: 3; position: relative; }
         .title-card-left svg { stroke-width: 2.5; }
         
         .title-card-right { display: flex; align-items: center; justify-content: flex-end; }
@@ -150,7 +171,7 @@
             width: 100%;
         }
 
-        .header-fancy {
+        .header-fancy { 
             width: 100%;
             border-radius: 14px; padding: 14px 18px; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease;
         }
@@ -160,8 +181,8 @@
         .header-malam { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); }   
 
         .dt-col { display: flex; flex-direction: column; gap: 4px; z-index: 2; }
-        .dt-val-date { font-size: 14px; font-weight: 600; color: #FFFFFF; }
-        .dt-val-time { font-size: 13px; font-weight: 500; color: #FFFFFF; }
+        .dt-val-date { font-size: var(--font-suasana-tgl); font-weight: 600; color: #FFFFFF; }
+        .dt-val-time { font-size: var(--font-suasana-jam); font-weight: 500; color: #FFFFFF; }
 
         .time-icon-container { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; position: relative; z-index: 2; }
         .icon-sun { color: #FEF08A; }
@@ -177,21 +198,21 @@
             100% { opacity: 1; transform: scale(1.4); }
         }
 
-        /* ================= TATA CARA LAPORAN (ACCORDION) ================= */
+        /* ================= TATA CARA LAPORAN (ACCORDION - 100% BEBAS BOCOR) ================= */
         .tata-cara-wrapper {
             background: #F8FAFC; 
-            border: 1.5px solid #2563EB; 
-            border-radius: 14px; 
+            border: 1.5px solid #ABABAB; 
+            border-radius: 10px; 
             margin-bottom: 12px; 
-            overflow: hidden;
+            overflow: hidden !important;
             box-shadow: 0 4px 6px rgba(37, 99, 235, 0.05);
         }
         .tata-cara-toggle {
             width: 100%; display: flex; justify-content: space-between; align-items: center;
-            background: none; border: none; padding: 16px; cursor: pointer; font-family: inherit;
+            background: none; border: none; padding: 8px; cursor: pointer; font-family: inherit;
         }
         .tc-title-text { 
-            font-size: 15px; font-weight: 600; color: #666666; 
+            font-size: var(--font-accordion-title); font-weight: 600; color: #666666; 
             display: flex; align-items: center; gap: 8px; text-transform: uppercase; 
             letter-spacing: 0.5px;
         }
@@ -201,13 +222,27 @@
         }
         .tata-cara-wrapper.open .tc-chevron { transform: rotate(180deg); }
 
+        /* Solusi anti bocor: gunakan grid + visibility hidden saat tertutup */
         .tata-cara-content {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s ease;
+            visibility: hidden;
+            overflow: hidden !important;
         }
-        .tata-cara-wrapper.open .tata-cara-content { grid-template-rows: 1fr; }
-        .tc-inner { overflow: hidden; padding: 0 16px 16px 16px; }
+        .tata-cara-wrapper.open .tata-cara-content { 
+            grid-template-rows: 1fr; 
+            visibility: visible;
+        }
+        .tc-inner { 
+            overflow: hidden !important; 
+            padding: 0 16px 0 16px; 
+            transition: padding 0.3s ease;
+            min-height: 0;
+        }
+        .tata-cara-wrapper.open .tc-inner {
+            padding: 0 16px 16px 16px;
+        }
 
         .tc-timeline { 
             display: flex; flex-direction: column; gap: 18px; 
@@ -217,10 +252,10 @@
         .tc-circle { 
             width: 32px; height: 32px; border-radius: 50%; color: white; 
             display: flex; align-items: center; justify-content: center; 
-            font-weight: 700; font-size: 14px; z-index: 2; position: relative; 
+            font-weight: 700; font-size: var(--font-accordion-step); z-index: 2; position: relative; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .tc-text { font-size: 14px; font-weight: 600; text-transform: uppercase; color: #666666 !important; }
+        .tc-text { font-size: var(--font-accordion-step); font-weight: 600; text-transform: uppercase; color: #666666 !important; }
         .tc-line { position: absolute; left: 15px; top: 32px; width: 2px; height: calc(100% - 10px); z-index: 1; }
 
         .tc-red .tc-circle { background: #DC2626; }
@@ -232,37 +267,37 @@
         .tc-purple .tc-circle { background: #A21CAF; }
 
         .tc-note { 
-            font-size: 13px; color: #666666; font-weight: 500; 
+            font-size: var(--font-accordion-note); color: #666666; font-weight: 500; 
             text-align: left; line-height: 1.4; padding: 0 4px; 
         }
 
-        /* Form Sections Backgrounds */
+        /* Form Sections */
         .form-section { display: flex; flex-direction: column; gap: 12px; margin-bottom: 4px; }
-        .bg-step-1 { background-color: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 16px; }
-        .bg-step-2 { background-color: #F0FDF4; border: 1.5px solid #DCFCE7; border-radius: 14px; padding: 16px; }
-        .bg-step-3 { background-color: #FEFCE8; border: 1.5px solid #FEF08A; border-radius: 14px; padding: 16px; }
-        .bg-step-4 { background-color: #EFF6FF; border: 1.5px solid #DBEAFE; border-radius: 14px; padding: 16px; }
+        .bg-step-1 { background-color: #E3F6FF; border: 1.5px solid #B3B3B3; border-radius: 14px; padding: 10px; }
+        .bg-step-2 { background-color: #E6FAEE; border: 1.5px solid #B3B3B3; border-radius: 14px; padding: 10px; }
+        .bg-step-3 { background-color: #FBE8FF; border: 1.5px solid #B3B3B3; border-radius: 14px; padding: 10px; }
+        .bg-step-4 { background-color: #EFF6FF; border: 1.5px solid #B3B3B3; border-radius: 14px; padding: 10px; }
 
         .section-label { font-size: 14px; font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 10px; }
         .sec-number-badge { width: 34px; height: 34px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
         .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
-        .sec-title { font-size: 14.5px; font-weight: 600; color: #1155CC; }
-        .sec-subtitle { font-size: 11.5px; font-weight: 400; color: #64748B; margin-top: 2px; }
+        .sec-title { font-size: var(--font-section-title); font-weight: 600; color: #1155CC; }
+        .sec-subtitle { font-size: var(--font-section-subtitle); font-weight: 400; color: #64748B; margin-top: 2px; }
 
         .input-group { position: relative; }
         .input-icon-wrapper { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 600; color: #1155CC; z-index: 10; }
-        .nominal-input { width: 100%; padding: 12px 14px 12px 44px; font-size: 15px; font-weight: 600; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; transition: all 0.3s; }
+        .nominal-input { width: 100%; padding: 12px 14px 12px 44px; font-size: var(--font-input-nominal); font-weight: 600; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; transition: all 0.3s; }
         .nominal-input:focus { outline: none; border-color: #1155CC; }
         .nominal-confirmed-badge { display: none; font-size: 12.5px; font-weight: 500; color: #16A34A; margin-top: 6px; padding-left: 4px; }
         
-        .day-select, .catatan-dropdown { width: 100%; padding: 12px 14px; font-size: 13.5px; font-weight: 500; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; cursor: pointer; outline: none; transition: border-color 0.2s; }
+        .day-select, .catatan-dropdown { width: 100%; padding: 12px 14px; font-size: var(--font-select-input); font-weight: 500; color: #1E293B; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; cursor: pointer; outline: none; transition: border-color 0.2s; }
         .day-select:focus, .catatan-dropdown:focus { border-color: #1155CC; }
         
-        .note-textarea { width: 100%; padding: 12px; font-size: 13.5px; font-weight: 400; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; resize: none; min-height: 80px; line-height: 1.5; outline: none; transition: border-color 0.2s;}
+        .note-textarea { width: 100%; padding: 12px; font-size: var(--font-select-input); font-weight: 400; border: 1.5px solid #CBD5E1; border-radius: 12px; background-color: #FFFFFF; resize: none; min-height: 80px; line-height: 1.5; outline: none; transition: border-color 0.2s;}
         .note-textarea:focus { border-color: #1155CC; }
 
         .btn-primary-custom, .btn-download, .btn-wa { 
-            width: 100%; padding: 12px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #1155CC; color: white; transition: all 0.3s ease; 
+            width: 100%; padding: 12px 16px; border-radius: 12px; font-size: var(--font-action-btn); font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #1155CC; color: white; transition: all 0.3s ease; 
         }
         .btn-primary-custom:active, .btn-download:active, .btn-wa:active { transform: scale(0.97); }
         
@@ -284,11 +319,11 @@
         .warga-card { padding: 12px 14px; border-bottom: 1.5px solid rgba(17, 85, 204, 0.15); display: flex; flex-direction: column; gap: 8px; background: #FFFFFF; }
         .warga-card:nth-child(even) { background-color: #F8FAFC; }
         .warga-card:last-child { border-bottom: none; }
-        .warga-name { font-size: 14px; font-weight: 600; color: #0F172A; }
+        .warga-name { font-size: var(--font-warga-name); font-weight: 600; color: #0F172A; }
         
         .presence-buttons-group { display: flex; gap: 6px; }
         
-        .pres-btn { flex: 1; border: 1.5px solid rgba(17, 85, 204, 0.3); background: #FFFFFF; padding: 10px 4px; font-size: 13.5px; font-weight: 600; border-radius: 8px; cursor: pointer; color: #334155; transition: all 0.2s ease; }
+        .pres-btn { flex: 1; border: 1.5px solid rgba(17, 85, 204, 0.3); background: #FFFFFF; padding: 10px 4px; font-size: var(--font-presensi-btn); font-weight: 600; border-radius: 8px; cursor: pointer; color: #334155; transition: all 0.2s ease; }
         
         .pres-btn:hover { background-color: #F8FAFC; border-color: #94A3B8; }
         .pres-btn-hadir:hover:not(.active) { color: #16A34A; border-color: #22C55E; background-color: #DCFCE7; }
@@ -306,24 +341,26 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .fa-spin { animation: spin 1s linear infinite; }
 
-        /* ================= AREA EXPORT STRUK DESAIN 100% BARU (SESUAI GAMBAR TERAKHIR) ================= */
+        /* ======================================================================
+           AREA EXPORT STRUK DESAIN (PRESISI 100% SESUAI GAMBAR 3 NOV 2026)
+           ====================================================================== */
         #laporan-export {
             position: fixed; left: 0px; top: 0px; z-index: -99999;
             visibility: hidden; opacity: 0; pointer-events: none;
-            width: 420px;
-            background: #f4f5f6; /* Warna latar luar */
-            padding: 30px 20px;
+            width: 440px;
+            background: #f4f5f7;
+            padding: 30px 22px;
             box-sizing: border-box; 
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif !important;
             color: #1e293b;
         }
         
-        /* Top Header */
+        /* Header Bagian Atas */
         .exp-header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         .exp-ht-left {
             display: flex;
@@ -331,102 +368,117 @@
             gap: 12px;
         }
         .exp-ht-icon {
-            width: 44px; height: 44px;
-            background: #4b5563; /* Abu-abu gelap */
+            width: 46px; height: 46px;
+            background: #4a5568;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             color: white;
             flex-shrink: 0;
         }
-        .exp-ht-icon svg { width: 28px; height: 28px; stroke-width: 3; }
+        .exp-ht-icon svg { width: 28px; height: 28px; stroke-width: 3.5; }
         .exp-ht-text { display: flex; flex-direction: column; }
-        .exp-ht-title { font-size: 22px; font-weight: 800; color: #4b5563; line-height: 1.1; letter-spacing: 0.5px; }
-        .exp-ht-subtitle { font-size: 9px; font-weight: 500; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;}
+        .exp-ht-title { font-size: 24px; font-weight: 800; color: #475569; line-height: 1.1; letter-spacing: 0.5px; }
+        .exp-ht-subtitle { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 3px; }
         
         .exp-ht-right { flex-shrink: 0; }
         .exp-ht-time {
             background: #ffffff;
-            border: 1.5px solid #cbd5e1;
-            border-radius: 20px;
-            padding: 6px 12px;
+            border: 1.5px solid #94a3b8;
+            border-radius: 12px;
+            padding: 6px 14px;
             color: #1d4ed8;
-            font-size: 12px;
-            font-weight: 800;
+            font-size: 13.5px;
+            font-weight: 700;
         }
 
-        /* Card Style */
+        /* Kartu Container Struk */
         .exp-card-v4 {
             background: #ffffff;
-            border: 1.5px solid #94a3b8;
-            border-bottom: 4px solid #94a3b8;
-            border-radius: 12px;
-            padding: 16px;
+            border: 2px solid #64748b;
+            border-radius: 16px;
+            padding: 14px 16px 16px 16px;
             margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
 
         /* Inner Header */
         .exp-inner-header {
-            background: #f0f9ff;
+            background: #f0f7ff;
             border: 1.5px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 12px 16px;
+            border-radius: 10px;
+            padding: 8px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
+            min-height: 52px;
         }
         .eih-title {
-            font-size: 13px; font-weight: 800; color: #4b5563; text-transform: uppercase;
+            font-size: 13.5px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.3px;
         }
         .eih-val {
-            font-size: 30px; font-weight: 800; color: #1d4ed8; line-height: 1;
+            font-size: 34px; font-weight: 800; color: #1d4ed8; line-height: 1; letter-spacing: 0.5px;
         }
         .eih-date {
-            font-size: 10px; font-weight: 700; color: #1d4ed8; text-align: right; line-height: 1.2; text-transform: uppercase;
+            font-size: 11px; font-weight: 800; color: #1d4ed8; text-align: right; line-height: 1.25; text-transform: uppercase;
         }
 
-        /* Card 1 Body */
-        .exp-c1-body { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 16px; align-items: center; }
+        /* Card 1: Jimpitan */
+        .exp-c1-body { display: grid; grid-template-columns: 1fr 1px 1.1fr; gap: 14px; align-items: flex-start; padding: 2px 4px 4px 4px; }
         .ec1-col { display: flex; flex-direction: column; gap: 6px; }
-        .ec1-lbl { font-size: 10px; font-weight: 700; color: #4b5563; text-transform: uppercase; }
-        .ec1-val { font-size: 11px; font-weight: 800; color: #1e40af; line-height: 1.3; text-transform: uppercase;}
-        .ec1-divider { background: #cbd5e1; height: 100%; width: 1.5px; }
-        .ec1-id-wrap { text-align: left; }
-        .ec1-id {
-            background: #f0f9ff; color: #1d4ed8; padding: 6px 10px; border-radius: 6px;
-            border: 1px solid #bae6fd; font-size: 9px; font-weight: 700; display: inline-block;
-        }
+        .ec1-lbl { font-size: 10.5px; font-weight: 800; color: #475569; text-transform: uppercase; }
+        .ec1-val { font-size: 12.5px; font-weight: 800; color: #1d4ed8; line-height: 1.35; text-transform: uppercase; }
+        .ec1-divider { background: #cbd5e1; height: 100%; min-height: 48px; width: 1.5px; }
+        .ec1-id { font-size: 10.5px; font-weight: 700; color: #1d4ed8; word-break: break-all; margin-top: 2px; }
 
-        /* Card 2 Body (Kehadiran) */
-        .exp-kh-body { display: flex; flex-direction: column; gap: 12px; }
-        .kh-row-v4 { display: grid; grid-template-columns: 24px 85px 12px 1fr; align-items: flex-start; }
+        /* Card 2: Kehadiran Petugas */
+        .exp-kh-body { display: flex; flex-direction: column; gap: 12px; padding: 2px 4px; }
+        .kh-row-v4 { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; line-height: 1.4; }
         
-        .kh-rect-wrap { display: flex; align-items: center; height: 18px; }
-        .kh-rect { width: 18px; height: 6px; border-radius: 1px; }
+        .kh-rect { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; margin-top: 1px; }
         .bg-green { background: #16a34a; }
-        .bg-blue { background: #0ea5e9; }
+        .bg-blue { background: #0284c7; }
         .bg-red { background: #dc2626; }
         
-        .kh-lbl { font-size: 12px; font-weight: 800; color: #4b5563; text-transform: uppercase; line-height: 18px;}
-        .kh-colon { font-size: 12px; font-weight: 800; color: #4b5563; line-height: 18px;}
-        .kh-names { font-size: 11px; font-weight: 500; color: #1d4ed8; line-height: 1.5; text-transform: uppercase; margin-top: 1px;}
-        
-        .exp-kh-divider { border-top: 1.5px solid #cbd5e1; margin: 16px 0; }
-        .exp-kh-summary { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; text-align: center; }
-        .kh-sum-item { font-size: 10px; font-weight: 700; border-right: 1.5px solid #cbd5e1; padding: 4px 0; }
-        .kh-sum-item:last-child { border-right: none; }
-        
-        .txt-green { color: #16a34a; }
-        .txt-blue { color: #0ea5e9; }
-        .txt-red { color: #dc2626; }
-        .txt-magenta { color: #c026d3; font-weight: 800;}
+        .kh-lbl { font-weight: 800; color: #475569; text-transform: uppercase; min-width: 82px; flex-shrink: 0; }
+        .kh-colon { font-weight: 800; color: #475569; flex-shrink: 0; }
+        .kh-names { font-weight: 600; color: #1d4ed8; text-transform: uppercase; }
 
-        /* Card 3 Body (Catatan) */
-        .exp-ct-body { font-size: 11px; font-weight: 600; color: #1d4ed8; line-height: 1.8; text-transform: uppercase; white-space: pre-wrap; padding: 0 4px; }
+        .exp-kh-divider { border-top: 1px solid #e2e8f0; margin: 12px 0 10px 0; }
+        
+        /* Rekap Pill/Capsule Sesuai Gambar Asli */
+        .exp-kh-summary { 
+            display: flex; 
+            justify-content: space-between; 
+            gap: 6px; 
+        }
+        .kh-pill {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 5px 2px;
+            font-size: 10px;
+            font-weight: 800;
+            background: #ffffff;
+            white-space: nowrap;
+        }
+        .pill-green { color: #16a34a; }
+        .pill-blue { color: #0284c7; }
+        .pill-red { color: #dc2626; }
+        .pill-gray { color: #64748b; }
 
-        /* Footer */
-        .footer-v4 { text-align: center; margin-top: 24px; }
-        .fv4-main { font-size: 11px; font-weight: 800; color: #4b5563; margin-bottom: 4px; }
+        /* Card 3: Catatan */
+        .exp-ct-body { 
+            font-size: 12px; font-weight: 700; color: #1d4ed8; line-height: 1.8; 
+            text-transform: uppercase; white-space: pre-wrap; padding: 2px 4px; 
+        }
+
+        /* Footer Struk */
+        .footer-v4 { text-align: center; margin-top: 18px; }
+        .fv4-main { font-size: 11.5px; font-weight: 800; color: #475569; margin-bottom: 3px; letter-spacing: 0.3px; }
         .fv4-sub { font-size: 9px; font-weight: 500; color: #64748b; }
 
         /* ================= ISTIMEWA & CUSTOM INPUT ================= */
@@ -513,7 +565,7 @@
                         <div class="twinkle-star star-3"></div>
 
                         <div class="dt-col">
-                            <span id="current-date" class="dt-val-date" style="color:white; font-size:14px;">Memuat...</span>
+                            <span id="current-date" class="dt-val-date">Memuat...</span>
                             <span id="current-time" class="dt-val-time">00:00 WIB</span>
                         </div>
                         
@@ -521,7 +573,7 @@
                     </div>
                 </div>
 
-                <!-- TATA CARA LAPORAN (ACCORDION) -->
+                <!-- TATA CARA LAPORAN (ACCORDION ANTI BOCOR) -->
                 <div class="tata-cara-wrapper" id="tataCaraWrapper">
                     <button class="tata-cara-toggle" type="button" onclick="toggleTataCara()">
                         <div class="tc-title-text">CARA PEMBUATAN LAPORAN:</div>
@@ -617,7 +669,7 @@
                     <select id="catatan-dropdown" class="catatan-dropdown">
                         <option value="">- PILIH CATATAN CEPAT DISINI -</option>
                         <option value="Uang jimpitan berada di">💰 Uang jimpitan berada di ...</option>
-                        <option value="Situasi aman dan terkendali">✅ Situasi aman terkendali</option>
+                        <option value="Situasi aman dan terkendali">✅ Situasi aman</option>
                         <option value="Stok kopi habis">☕ Kopi habis</option>
                         <option value="Stok gula habis">🍚 Gula habis</option>
                         <option value="Galon air habis">💧 Galon air habis</option>
@@ -634,16 +686,16 @@
                         <div class="sec-number-badge">4</div>
                         <div class="sec-text-group">
                             <span class="sec-title">KIRIM LAPORAN</span>
-                            <span class="sec-subtitle">Kirim hasil struk ke Grup WA</span>
+                            <span class="sec-subtitle">Kirim hasil struk ke Grup WA.</span>
                         </div>
                     </div>
                     <button type="button" id="btn-download" class="btn-download" disabled>
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        Kirim Sekarang
+                        <span>Kirim Sekarang</span>
                     </button>
                     <button type="button" id="btn-wa" class="btn-wa" disabled>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                        Kirim Versi Teks
+                        <span>Kirim Versi Teks</span>
                     </button>
                 </div>
             </div>
@@ -660,13 +712,13 @@
     </div> 
 </div> 
 
-<!-- AREA EXPORT STRUK DESAIN 100% BARU (SESUAI GAMBAR TERAKHIR) -->
+<!-- AREA EXPORT STRUK DESAIN (PRESISI 100% SESUAI GAMBAR) -->
 <div id="laporan-export">
     <!-- Top Header Section -->
     <div class="exp-header-top">
         <div class="exp-ht-left">
             <div class="exp-ht-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             </div>
             <div class="exp-ht-text">
                 <div class="exp-ht-title">LAPORAN RONDA</div>
@@ -687,37 +739,37 @@
         <div class="exp-c1-body">
             <div class="ec1-col">
                 <div class="ec1-lbl">HARI LAPORAN</div>
-                <div class="ec1-val exp-dynamic-date-br">-</div>
+                <div class="ec1-val exp-dynamic-date-formatted">-</div>
             </div>
             <div class="ec1-divider"></div>
-            <div class="ec1-col ec1-id-wrap">
+            <div class="ec1-col">
                 <div class="ec1-lbl">ID LAPORAN</div>
                 <div class="ec1-id" id="exp-id-laporan">-</div>
             </div>
         </div>
     </div>
 
-    <!-- Card 2: Kehadiran -->
+    <!-- Card 2: Kehadiran Petugas -->
     <div class="exp-card-v4">
         <div class="exp-inner-header">
             <div class="eih-title">KEHADIRAN PETUGAS</div>
-            <div class="eih-date exp-dynamic-date-br">-</div>
+            <div class="eih-date exp-dynamic-date-formatted">-</div>
         </div>
         <div class="exp-kh-body">
             <div class="kh-row-v4">
-                <div class="kh-rect-wrap"><div class="kh-rect bg-green"></div></div>
+                <div class="kh-rect bg-green"></div>
                 <div class="kh-lbl">HADIR</div>
                 <div class="kh-colon">:</div>
                 <div class="kh-names" id="exp-hadir-names">-</div>
             </div>
             <div class="kh-row-v4">
-                <div class="kh-rect-wrap"><div class="kh-rect bg-blue"></div></div>
+                <div class="kh-rect bg-blue"></div>
                 <div class="kh-lbl">IZIN</div>
                 <div class="kh-colon">:</div>
                 <div class="kh-names" id="exp-izin-names">-</div>
             </div>
             <div class="kh-row-v4">
-                <div class="kh-rect-wrap"><div class="kh-rect bg-red"></div></div>
+                <div class="kh-rect bg-red"></div>
                 <div class="kh-lbl">TIDAK HADIR</div>
                 <div class="kh-colon">:</div>
                 <div class="kh-names" id="exp-absen-names">-</div>
@@ -725,10 +777,10 @@
         </div>
         <div class="exp-kh-divider"></div>
         <div class="exp-kh-summary">
-            <div class="kh-sum-item txt-green" id="exp-hadir-count">HADIR: 0</div>
-            <div class="kh-sum-item txt-blue" id="exp-izin-count">IZIN: 0</div>
-            <div class="kh-sum-item txt-red" id="exp-absen-count">TIDAK HADIR: 0</div>
-            <div class="kh-sum-item txt-magenta" id="exp-total-count" style="border:none;">TOTAL: 0</div>
+            <div class="kh-pill pill-green" id="exp-hadir-count">HADIR: 0</div>
+            <div class="kh-pill pill-blue" id="exp-izin-count">IZIN: 0</div>
+            <div class="kh-pill pill-red" id="exp-absen-count">TIDAK HADIR: 0</div>
+            <div class="kh-pill pill-gray" id="exp-total-count">TOTAL: 0</div>
         </div>
     </div>
 
@@ -736,7 +788,7 @@
     <div class="exp-card-v4">
         <div class="exp-inner-header">
             <div class="eih-title">CATATAN</div>
-            <div class="eih-date exp-dynamic-date-br">-</div>
+            <div class="eih-date exp-dynamic-date-formatted">-</div>
         </div>
         <div class="exp-ct-body" id="exp-catatan-target">-</div>
     </div>
@@ -1283,13 +1335,13 @@
             
             const now = new Date();
             const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            const shortMonthNames = ["jan", "feb", "mar", "apr", "mei", "jun", "jul", "agu", "sep", "okt", "nov", "des"];
+            const shortMonthNames = ["JAN", "FEB", "MAR", "APR", "MEI", "JUN", "JUL", "AGU", "SEP", "OKT", "NOV", "DES"];
             const actualDayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
             const actualDay = actualDayNames[now.getDay()];
             
             let cleanDay = selectedDay.replace("'", "");
-            cleanDay = cleanDay === 'ISTIMEWA' ? 'ISTIMEWA' : cleanDay.charAt(0).toUpperCase() + cleanDay.slice(1).toLowerCase();
-            const displayDay = selectedDay === 'ISTIMEWA' ? actualDay : cleanDay;
+            cleanDay = cleanDay === 'ISTIMEWA' ? 'ISTIMEWA' : cleanDay.toUpperCase();
+            const displayDay = selectedDay === 'ISTIMEWA' ? actualDay.toUpperCase() : cleanDay;
 
             // Memasukkan data kehadiran
             let hadirList = [], izinList = [], absenList = [];
@@ -1304,44 +1356,41 @@
 
             document.getElementById('exp-jimpitan-total').textContent = nominalField.value;
 
-            // Waktu Laporan
+            // Jam Laporan (Format: 23:15 WIB)
             const timeStrStruk = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WIB`;
             document.getElementById('exp-waktu-laporan').textContent = timeStrStruk;
 
-            // Format tanggal yang dinamis dengan Break (<br>) untuk Card
-            const displayDateFullBr = `${displayDay.toUpperCase()},<br>${now.getDate()} ${monthNames[now.getMonth()].toUpperCase()} ${now.getFullYear()}`;
-            document.querySelectorAll('.exp-dynamic-date-br').forEach(el => el.innerHTML = displayDateFullBr);
-            
-            const displayDateFull = `${displayDay.toUpperCase()}, ${now.getDate()} ${monthNames[now.getMonth()].toUpperCase()} ${now.getFullYear()}`;
-            document.querySelectorAll('.exp-dynamic-date').forEach(el => el.innerHTML = displayDateFull);
+            // Tanggal Bersih (Menggunakan tag <br> asli, tanpa teks literal &lt;br&gt;)
+            const dateFormattedHtml = `${displayDay},<br>${now.getDate()} ${monthNames[now.getMonth()].toUpperCase()} ${now.getFullYear()}`;
+            document.querySelectorAll('.exp-dynamic-date-formatted').forEach(el => el.innerHTML = dateFormattedHtml);
 
-            // Format ID khusus (Misal: JUMAT-30-OKT-2026-52.000)
-            const idFormatted = `${displayDay.toUpperCase()}-${now.getDate()}-${shortMonthNames[now.getMonth()].toUpperCase()}-${now.getFullYear()}-${nominalField.value}`;
+            // Format ID Laporan (Contoh: JUMAT-30-OKT-2026-52.000)
+            const idFormatted = `${displayDay}-${now.getDate()}-${shortMonthNames[now.getMonth()]}-${now.getFullYear()}-${nominalField.value}`;
             document.getElementById('exp-id-laporan').textContent = idFormatted;
 
-            // Injeksi Card Kehadiran
-            document.getElementById('exp-hadir-names').textContent = hadirList.length > 0 ? hadirList.join(", ") : "-";
+            // Format nama pemisah strip dengan spasi (" – ") sesuai gambar referensi
+            document.getElementById('exp-hadir-names').textContent = hadirList.length > 0 ? hadirList.join(" – ") : "-";
             document.getElementById('exp-hadir-count').textContent = "HADIR: " + hadirList.length;
             
-            document.getElementById('exp-izin-names').textContent = izinList.length > 0 ? izinList.join(", ") : "-";
+            document.getElementById('exp-izin-names').textContent = izinList.length > 0 ? izinList.join(" – ") : "-";
             document.getElementById('exp-izin-count').textContent = "IZIN: " + izinList.length;
             
-            document.getElementById('exp-absen-names').textContent = absenList.length > 0 ? absenList.join(", ") : "-";
+            document.getElementById('exp-absen-names').textContent = absenList.length > 0 ? absenList.join(" – ") : "-";
             document.getElementById('exp-absen-count').textContent = "TIDAK HADIR: " + absenList.length;
 
             const totalWarga = hadirList.length + izinList.length + absenList.length;
             document.getElementById('exp-total-count').textContent = "TOTAL: " + totalWarga;
 
-            // Injeksi Catatan 
+            // Catatan kegiatan
             document.getElementById('exp-catatan-target').textContent = catatanTextarea.value.toUpperCase();
 
-            // Mulai merender canvas
+            // Render ke Canvas
             const exportTarget = document.getElementById('laporan-export');
             if (exportTarget) {
                 exportTarget.style.visibility = 'visible'; exportTarget.style.opacity = '1';
 
                 try {
-                    const canvas = await html2canvas(exportTarget, { scale: 2, backgroundColor: '#f4f5f6', logging: false, useCORS: true });
+                    const canvas = await html2canvas(exportTarget, { scale: 2, backgroundColor: '#f4f5f7', logging: false, useCORS: true });
                     exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
                     
                     canvas.toBlob(async (blob) => {

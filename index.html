@@ -30,7 +30,7 @@
         .app-wrapper {
             width: 100%; max-width: 480px;
             background-color: transparent; 
-            background-image: linear-gradient(to bottom, #87CEFA 2%, #FFFFFF 25%, #FFFFFF 70%,#87CEFA 100%);
+            background-image: linear-gradient(to bottom, #87CEFA 2%, #FFFFFF 25%, #FFFFFF 70%,#87CEFA 160%);
             background-attachment: auto; background-size: cover; background-repeat: no-repeat;
             height: 100vh; position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; z-index: 1;
@@ -295,7 +295,7 @@
 
         .b-nav-item {
             flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: #475569; font-size: 9px; font-weight: 700;
+            text-decoration: none; color: #707070; font-size: 10px; font-weight: 700;
             background: #ffffff; 
             border: 1px solid #e2e8f0;
             border-radius: 14px;
@@ -311,12 +311,12 @@
 
         /* Hover & Aktif diubah menjadi hijau #3AC77C */
         .b-nav-item:hover:not(.menu-tertekan) {
-            color: #3AC77C;
-            border-color: #3AC77C;
+            color: #FF5900;
+            border-color: #FF5900;
         }
         
         .b-nav-item:hover:not(.menu-tertekan) svg {
-            stroke: #3AC77C;
+            stroke: #FF5900;
         }
 
         .b-nav-item svg { 
@@ -327,8 +327,8 @@
 
         /* Warna saat tombol Menu Aktif */
         .b-nav-item.menu-tertekan { 
-            background-color: #3AC77C !important; 
-            border-color: #3AC77C !important;
+            background-color: #FF5900 !important; 
+            border-color: #FF5900 !important;
             color: #ffffff !important;
             box-shadow: 0 4px 12px rgba(58,199,124,0.4);
             transform: scale(0.95); 
@@ -380,7 +380,7 @@
 
         .sheet-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: #475569; font-size: 8px; font-weight: 700; text-align: center;
+            text-decoration: none; color: #707070; font-size: 10px; font-weight: 700; text-align: center;
             background: #ffffff; border-radius: 14px; padding: 10px 2px;
             transition: all 0.2s; border: 1px solid #e2e8f0;
             box-shadow: 0 2px 6px rgba(0,0,0,0.06);
@@ -389,15 +389,15 @@
         .sheet-item:active { transform: scale(0.92); background: #f8fafc; }
 
         .sheet-item:hover:not(.menu-tertekan) {
-            color: #3AC77C;
-            border-color: #3AC77C;
+            color: #FF5900;
+            border-color: #FF5900;
         }
         .sheet-item:hover:not(.menu-tertekan) svg {
-            stroke: #3AC77C;
+            stroke: #FF5900;
         }
 
         .sheet-item.menu-tertekan {
-            background: #3AC77C !important; border-color: #3AC77C !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(58,199,124,0.3); pointer-events: none;
+            background: #FF5900 !important; border-color: #FF5900 !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(58,199,124,0.3); pointer-events: none;
         }
         .sheet-item.menu-tertekan svg { stroke: #ffffff !important; }
 
@@ -796,7 +796,7 @@
 
         <button class="b-nav-item" id="btnMoreMenu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
-            <span>LAINNYA</span>
+            <span>MENU LAIN</span>
         </button>
 
     </div>

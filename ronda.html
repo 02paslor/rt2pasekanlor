@@ -22,8 +22,7 @@
     
     <style>
         /* ======================================================================
-           PANDUAN PENGATURAN UKURAN TEKS (EDIT DI SINI)
-           Ubah nilai px di bawah ini untuk memperbesar / memperkecil teks:
+           PANDUAN PENGATURAN UKURAN TEKS
            ====================================================================== */
         :root {
             --font-judul-header: 14px;      /* Judul banner header 'Ronda RT 2' */
@@ -32,12 +31,12 @@
             --font-accordion-title: 13px;   /* Teks judul tombol 'CARA PEMBUATAN LAPORAN:' */
             --font-accordion-step: 12px;    /* Teks langkah 1, 2, 3, 4 di dalam tata cara */
             --font-accordion-note: 11px;    /* Teks catatan kecil di bawah tata cara */
-            --font-section-title: 16px;   /* Judul setiap langkah formulir (1, 2, 3, 4) */
-            --font-section-subtitle: 12px;/* Penjelasan kecil di bawah judul langkah formulir */
+            --font-section-title: 16px;     /* Judul setiap langkah formulir (1, 2, 3, 4) */
+            --font-section-subtitle: 12px;  /* Penjelasan kecil di bawah judul langkah formulir */
             --font-input-nominal: 15px;     /* Angka input nominal jimpitan */
-            --font-select-input: 12px;    /* Dropdown pilih hari & dropdown catatan cepat */
+            --font-select-input: 12px;      /* Dropdown pilih hari & dropdown catatan cepat */
             --font-warga-name: 14px;        /* Nama warga dalam daftar presensi */
-            --font-presensi-btn: 12px;    /* Teks tombol 'Hadir', 'Izin', 'Tidak Hadir' */
+            --font-presensi-btn: 12px;      /* Teks tombol 'Hadir', 'Izin', 'Tidak Hadir' */
             --font-action-btn: 13.5px;      /* Tombol 'Cetak Nominal' & 'Kirim Sekarang' */
             --font-footer: 11px;            /* Teks hak cipta footer */
         }
@@ -154,26 +153,26 @@
         .main-content-space { flex: 1; }
         .main-content-area { width: 100%; margin-top: 5px; padding: 0 16px; position: relative; z-index: 2; }
 
+        /* KONTEN LANGKAH FULL-WIDTH */
         .main-card { 
-            background: #FFFFFF; 
-            border-radius: 16px; 
-            padding: 16px; 
-            border: 1px solid #e2e8f0; 
+            background: transparent !important; 
+            border-radius: 0 !important; 
+            padding: 0 !important; 
+            border: none !important; 
             display: flex; 
             flex-direction: column; 
-            gap: 20px; 
+            gap: 16px; 
             margin: 0; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
-
-        .ronda-top-container {
-            display: flex;
+            box-shadow: none !important;
             width: 100%;
         }
+
+        .ronda-top-container { display: flex; width: 100%; }
 
         .header-fancy { 
             width: 100%;
             border-radius: 14px; padding: 14px 18px; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; transition: background 1s ease;
+            box-shadow: 0 4px 0px rgba(0,0,0,0.1);
         }
         .header-pagi { background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%); }   
         .header-siang { background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%); }   
@@ -198,18 +197,18 @@
             100% { opacity: 1; transform: scale(1.4); }
         }
 
-        /* ================= TATA CARA LAPORAN (ACCORDION - 100% BEBAS BOCOR) ================= */
+        /* ================= TATA CARA LAPORAN (ACCORDION) ================= */
         .tata-cara-wrapper {
             background: #F8FAFC; 
             border: 1.5px solid #ABABAB; 
-            border-radius: 10px; 
-            margin-bottom: 12px; 
+            border-radius: 12px; 
+            margin-bottom: 2px; 
             overflow: hidden !important;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.05);
+            box-shadow: 0 4px 0px #CBD5E1;
         }
         .tata-cara-toggle {
             width: 100%; display: flex; justify-content: space-between; align-items: center;
-            background: none; border: none; padding: 8px; cursor: pointer; font-family: inherit;
+            background: none; border: none; padding: 10px 12px; cursor: pointer; font-family: inherit;
         }
         .tc-title-text { 
             font-size: var(--font-accordion-title); font-weight: 600; color: #666666; 
@@ -222,7 +221,6 @@
         }
         .tata-cara-wrapper.open .tc-chevron { transform: rotate(180deg); }
 
-        /* Solusi anti bocor: gunakan grid + visibility hidden saat tertutup */
         .tata-cara-content {
             display: grid;
             grid-template-rows: 0fr;
@@ -237,7 +235,7 @@
         .tc-inner { 
             overflow: hidden !important; 
             padding: 0 16px 0 16px; 
-            transition: padding 0.3s ease;
+            transition: padding 0.3s ease; 
             min-height: 0;
         }
         .tata-cara-wrapper.open .tc-inner {
@@ -273,13 +271,13 @@
 
         /* Form Sections */
         .form-section { display: flex; flex-direction: column; gap: 12px; margin-bottom: 4px; }
-        .bg-step-1 { background-color: #E3F6FF; border: 1.5px solid #B3B3B3; border-radius: 14px; padding: 10px; }
-        .bg-step-2 { background-color: #E6FAEE; border: 1.5px solid #B3B3B3; border-radius: 14px; padding: 10px; }
-        .bg-step-3 { background-color: #FBE8FF; border: 1.5px solid #B3B3B3; border-radius: 14px; padding: 10px; }
-        .bg-step-4 { background-color: #EFF6FF; border: 1.5px solid #B3B3B3; border-radius: 14px; padding: 10px; }
+        .bg-step-1 { background-color: #E3F6FF; border: 1.5px solid #94A3B8; border-radius: 14px; padding: 14px; box-shadow: 0 4px 0px #CBD5E1; }
+        .bg-step-2 { background-color: #E6FAEE; border: 1.5px solid #94A3B8; border-radius: 14px; padding: 14px; box-shadow: 0 4px 0px #CBD5E1; }
+        .bg-step-3 { background-color: #FBE8FF; border: 1.5px solid #94A3B8; border-radius: 14px; padding: 14px; box-shadow: 0 4px 0px #CBD5E1; }
+        .bg-step-4 { background-color: #EFF6FF; border: 1.5px solid #94A3B8; border-radius: 14px; padding: 14px; box-shadow: 0 4px 0px #CBD5E1; }
 
         .section-label { font-size: 14px; font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 10px; }
-        .sec-number-badge { width: 34px; height: 34px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+        .sec-number-badge { width: 34px; height: 34px; background: #1155CC; color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; box-shadow: 0 2px 4px rgba(17,85,204,0.3); }
         .sec-text-group { display: flex; flex-direction: column; line-height: 1.2; }
         .sec-title { font-size: var(--font-section-title); font-weight: 600; color: #1155CC; }
         .sec-subtitle { font-size: var(--font-section-subtitle); font-weight: 400; color: #64748B; margin-top: 2px; }
@@ -298,18 +296,15 @@
 
         .btn-primary-custom, .btn-download, .btn-wa { 
             width: 100%; padding: 12px 16px; border-radius: 12px; font-size: var(--font-action-btn); font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: none; background: #1155CC; color: white; transition: all 0.3s ease; 
+            box-shadow: 0 4px 0px #073A8F;
         }
-        .btn-primary-custom:active, .btn-download:active, .btn-wa:active { transform: scale(0.97); }
-        
-        .btn-primary-custom:not(:disabled):hover, .btn-download:not(:disabled):hover, .btn-wa:not(:disabled):hover {
-            transform: translateY(-2px); filter: brightness(1.05);
-        }
+        .btn-primary-custom:active, .btn-download:active, .btn-wa:active { transform: translateY(2px); box-shadow: 0 2px 0px #073A8F; }
         
         .btn-download { margin-bottom: 8px; background: #1155CC; }
         .btn-wa { text-decoration: none; display: none !important; }
         
         .btn-primary-custom:disabled, .btn-download:disabled, .btn-wa:disabled { 
-            background: #CBD5E1 !important; color: #64748B !important; cursor: not-allowed; transform: none; opacity: 0.8;
+            background: #CBD5E1 !important; color: #64748B !important; cursor: not-allowed; transform: none; box-shadow: none !important; opacity: 0.8;
         }
 
         .loading-warga { font-size: 12.5px; font-weight: 500; color: #1155CC; text-align: center; padding: 10px; display: none; background: #EFF6FF; border-radius: 8px;}
@@ -342,14 +337,14 @@
         .fa-spin { animation: spin 1s linear infinite; }
 
         /* ======================================================================
-           AREA EXPORT STRUK DESAIN (PRESISI 100% SESUAI GAMBAR 3 NOV 2026)
+           AREA EXPORT STRUK DESAIN (PRESISI 100% SESUAI GAMBAR RONDA - OK)
            ====================================================================== */
         #laporan-export {
             position: fixed; left: 0px; top: 0px; z-index: -99999;
             visibility: hidden; opacity: 0; pointer-events: none;
             width: 440px;
             background: #f4f5f7;
-            padding: 30px 22px;
+            padding: 26px 20px;
             box-sizing: border-box; 
             font-family: 'Poppins', sans-serif !important;
             color: #1e293b;
@@ -360,7 +355,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         .exp-ht-left {
             display: flex;
@@ -369,16 +364,17 @@
         }
         .exp-ht-icon {
             width: 46px; height: 46px;
-            background: #4a5568;
+            background: #334155;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             color: white;
             flex-shrink: 0;
+            box-shadow: 0 3px 0px #1e293b;
         }
         .exp-ht-icon svg { width: 28px; height: 28px; stroke-width: 3.5; }
         .exp-ht-text { display: flex; flex-direction: column; }
-        .exp-ht-title { font-size: 24px; font-weight: 800; color: #475569; line-height: 1.1; letter-spacing: 0.5px; }
-        .exp-ht-subtitle { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 3px; }
+        .exp-ht-title { font-size: 24px; font-weight: 800; color: #1e293b; line-height: 1.1; letter-spacing: 0.5px; }
+        .exp-ht-subtitle { font-size: 10.5px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 4px; }
         
         .exp-ht-right { flex-shrink: 0; }
         .exp-ht-time {
@@ -389,16 +385,17 @@
             color: #1d4ed8;
             font-size: 13.5px;
             font-weight: 700;
+            box-shadow: 0 3px 0px #cbd5e1;
         }
 
-        /* Kartu Container Struk */
+        /* Kartu Container Struk Sesuai Gambar RONDA - OK */
         .exp-card-v4 {
             background: #ffffff;
             border: 2px solid #64748b;
             border-radius: 16px;
             padding: 14px 16px 16px 16px;
             margin-bottom: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 0px #94a3b8;
         }
 
         /* Inner Header */
@@ -414,10 +411,10 @@
             min-height: 52px;
         }
         .eih-title {
-            font-size: 13.5px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.3px;
+            font-size: 13.5px; font-weight: 800; color: #334155; text-transform: uppercase; letter-spacing: 0.3px;
         }
         .eih-val {
-            font-size: 34px; font-weight: 800; color: #1d4ed8; line-height: 1; letter-spacing: 0.5px;
+            font-size: 36px; font-weight: 800; color: #1d4ed8; line-height: 1; letter-spacing: 0.5px;
         }
         .eih-date {
             font-size: 11px; font-weight: 800; color: #1d4ed8; text-align: right; line-height: 1.25; text-transform: uppercase;
@@ -440,13 +437,13 @@
         .bg-blue { background: #0284c7; }
         .bg-red { background: #dc2626; }
         
-        .kh-lbl { font-weight: 800; color: #475569; text-transform: uppercase; min-width: 82px; flex-shrink: 0; }
-        .kh-colon { font-weight: 800; color: #475569; flex-shrink: 0; }
+        .kh-lbl { font-weight: 800; color: #334155; text-transform: uppercase; min-width: 95px; flex-shrink: 0; }
+        .kh-colon { font-weight: 800; color: #334155; flex-shrink: 0; margin-right: 2px; }
         .kh-names { font-weight: 600; color: #1d4ed8; text-transform: uppercase; }
 
         .exp-kh-divider { border-top: 1px solid #e2e8f0; margin: 12px 0 10px 0; }
         
-        /* Rekap Pill/Capsule Sesuai Gambar Asli */
+        /* Rekap Pill Berwarna Sesuai Desain */
         .exp-kh-summary { 
             display: flex; 
             justify-content: space-between; 
@@ -457,7 +454,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1.5px solid #cbd5e1;
             border-radius: 8px;
             padding: 5px 2px;
             font-size: 10px;
@@ -465,10 +461,10 @@
             background: #ffffff;
             white-space: nowrap;
         }
-        .pill-green { color: #16a34a; }
-        .pill-blue { color: #0284c7; }
-        .pill-red { color: #dc2626; }
-        .pill-gray { color: #64748b; }
+        .pill-green { color: #16a34a; border: 1.5px solid #22c55e; }
+        .pill-blue { color: #0284c7; border: 1.5px solid #38bdf8; }
+        .pill-red { color: #dc2626; border: 1.5px solid #ef4444; }
+        .pill-gray { color: #334155; border: 1.5px solid #94a3b8; }
 
         /* Card 3: Catatan */
         .exp-ct-body { 
@@ -478,10 +474,10 @@
 
         /* Footer Struk */
         .footer-v4 { text-align: center; margin-top: 18px; }
-        .fv4-main { font-size: 11.5px; font-weight: 800; color: #475569; margin-bottom: 3px; letter-spacing: 0.3px; }
-        .fv4-sub { font-size: 9px; font-weight: 500; color: #64748b; }
+        .fv4-main { font-size: 11.5px; font-weight: 800; color: #1e293b; margin-bottom: 3px; letter-spacing: 0.3px; }
+        .fv4-sub { font-size: 9.5px; font-weight: 500; color: #64748b; }
 
-        /* ================= ISTIMEWA & CUSTOM INPUT ================= */
+        /* Istimewa */
         .istimewa-banner {
             background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
             color: #FFFFFF; padding: 12px 14px; border-radius: 12px; margin-bottom: 12px;
@@ -556,8 +552,9 @@
 
         <!-- ==================== KONTEN UTAMA RONDA ==================== -->
         <div class="main-content-area">
+            <!-- WRAPPER KONTEN (CARD LUAR TELAH DIHILANGKAN AGAR FULL KONTEN) -->
             <div class="main-card">
-                <!-- HEADER DENGAN SUASANA WAKTU OTOMATIS PENUH -->
+                <!-- HEADER SUASANA -->
                 <div class="ronda-top-container">
                     <div class="header-fancy" id="header-suasana-box">
                         <div class="twinkle-star star-1"></div>
@@ -573,7 +570,7 @@
                     </div>
                 </div>
 
-                <!-- TATA CARA LAPORAN (ACCORDION ANTI BOCOR) -->
+                <!-- TATA CARA LAPORAN -->
                 <div class="tata-cara-wrapper" id="tataCaraWrapper">
                     <button class="tata-cara-toggle" type="button" onclick="toggleTataCara()">
                         <div class="tc-title-text">CARA PEMBUATAN LAPORAN:</div>
@@ -701,7 +698,6 @@
             </div>
         </div>
 
-        <!-- Ruang kosong untuk mendorong footer ke bawah -->
         <div class="main-content-space"></div>
 
         <!-- ==================== FOOTER ==================== -->
@@ -712,7 +708,9 @@
     </div> 
 </div> 
 
-<!-- AREA EXPORT STRUK DESAIN (PRESISI 100% SESUAI GAMBAR) -->
+<!-- ======================================================================
+     AREA EXPORT STRUK DESAIN (PRESISI 100% SESUAI GAMBAR RONDA - OK)
+     ====================================================================== -->
 <div id="laporan-export">
     <!-- Top Header Section -->
     <div class="exp-header-top">
@@ -722,7 +720,7 @@
             </div>
             <div class="exp-ht-text">
                 <div class="exp-ht-title">LAPORAN RONDA</div>
-                <div class="exp-ht-subtitle">RT 2 - RW 3, PASEKAN LOR, BALECATUR</div>
+                <div class="exp-ht-subtitle">RT 2 PASEKAN LOR, BALECATUR</div>
             </div>
         </div>
         <div class="exp-ht-right">
@@ -1251,10 +1249,7 @@
             }
         };
         
-        if (btnAdd) {
-            btnAdd.addEventListener('click', addName);
-        }
-        
+        if (btnAdd) btnAdd.addEventListener('click', addName);
         if (inputName) {
             inputName.addEventListener('keypress', (e) => {
                 if(e.key === 'Enter') { e.preventDefault(); addName(); }
@@ -1294,9 +1289,7 @@
         });
     }
     
-    if (catatanTextarea) {
-        catatanTextarea.addEventListener('input', validateForm);
-    }
+    if (catatanTextarea) catatanTextarea.addEventListener('input', validateForm);
 
     const btnDownload = document.getElementById('btn-download');
     const btnWa = document.getElementById('btn-wa');
@@ -1325,7 +1318,7 @@
     }
 
     // ==========================================
-    // TOMBOL "BAGIKAN STRUK JPG"
+    // TOMBOL "KIRIM SEKARANG" (EXPORT STRUK JPG)
     // ==========================================
     if (btnDownload) {
         btnDownload.addEventListener('click', async function() {
@@ -1360,15 +1353,15 @@
             const timeStrStruk = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WIB`;
             document.getElementById('exp-waktu-laporan').textContent = timeStrStruk;
 
-            // Tanggal Bersih (Menggunakan tag <br> asli, tanpa teks literal &lt;br&gt;)
+            // Tanggal Bersih Dua Baris
             const dateFormattedHtml = `${displayDay},<br>${now.getDate()} ${monthNames[now.getMonth()].toUpperCase()} ${now.getFullYear()}`;
             document.querySelectorAll('.exp-dynamic-date-formatted').forEach(el => el.innerHTML = dateFormattedHtml);
 
-            // Format ID Laporan (Contoh: JUMAT-30-OKT-2026-52.000)
+            // Format ID Laporan
             const idFormatted = `${displayDay}-${now.getDate()}-${shortMonthNames[now.getMonth()]}-${now.getFullYear()}-${nominalField.value}`;
             document.getElementById('exp-id-laporan').textContent = idFormatted;
 
-            // Format nama pemisah strip dengan spasi (" – ") sesuai gambar referensi
+            // Daftar Nama dengan pemisah strip (" – ")
             document.getElementById('exp-hadir-names').textContent = hadirList.length > 0 ? hadirList.join(" – ") : "-";
             document.getElementById('exp-hadir-count').textContent = "HADIR: " + hadirList.length;
             
@@ -1390,18 +1383,26 @@
                 exportTarget.style.visibility = 'visible'; exportTarget.style.opacity = '1';
 
                 try {
-                    const canvas = await html2canvas(exportTarget, { scale: 2, backgroundColor: '#f4f5f7', logging: false, useCORS: true });
-                    exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
+                    const canvas = await html2canvas(exportTarget, { 
+                        scale: 2, 
+                        backgroundColor: '#f4f5f7', 
+                        logging: false, 
+                        useCORS: true 
+                    });
+                    
+                    exportTarget.style.visibility = 'hidden'; 
+                    exportTarget.style.opacity = '0';
                     
                     canvas.toBlob(async (blob) => {
-                        const fileName = `Laporan_Ronda_${displayDay}.jpg`;
+                        const namaBulanUpper = monthNames[now.getMonth()].toUpperCase();
+                        const fileName = `Laporan_Ronda_${displayDay}_${now.getDate()}_${namaBulanUpper}_${now.getFullYear()}_${nominalField.value}.jpg`;
                         const file = new File([blob], fileName, { type: 'image/jpeg' });
                         
                         if (navigator.canShare && navigator.canShare({ files: [file] })) {
                             try {
                                 await navigator.share({
-                                    title: 'Struk Ronda',
-                                    text: 'Berikut adalah Laporan Ronda. Terima kasih dan Tetap Semangat!',
+                                    title: 'Laporan Ronda RT 2',
+                                    text: 'Berikut adalah Laporan Ronda RT 2 Pasekan Lor. Terima kasih dan Tetap Semangat!',
                                     files: [file]
                                 });
                             } catch (error) {
@@ -1416,7 +1417,8 @@
                     }, 'image/jpeg', 0.98);
                     
                 } catch (error) {
-                    exportTarget.style.visibility = 'hidden'; exportTarget.style.opacity = '0';
+                    exportTarget.style.visibility = 'hidden'; 
+                    exportTarget.style.opacity = '0';
                     console.error("Gagal membuat gambar struk:", error);
                     alert("Terjadi kesalahan saat memproses gambar.");
                 }
@@ -1501,19 +1503,15 @@
     // ==========================================
     function toggleTataCara() {
         const wrapper = document.getElementById('tataCaraWrapper');
-        if (wrapper) {
-            wrapper.classList.toggle('open');
-        }
+        if (wrapper) wrapper.classList.toggle('open');
     }
     
-    // Tutup accordion saat user melakukan scroll layar
     window.addEventListener('scroll', function() {
         const wrapper = document.getElementById('tataCaraWrapper');
         if (wrapper && wrapper.classList.contains('open')) {
             wrapper.classList.remove('open');
         }
     });
-
 </script>
 </body>
 </html>

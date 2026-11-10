@@ -91,10 +91,10 @@
                         <div class="flex items-center gap-4 mb-6">
                             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" class="h-[55px] w-auto drop-shadow-md">
                             <div class="flex-1">
-                                <h2 class="text-[#0F2E70] font-[700] text-[17px] leading-tight">Data Warga</h2>
-                                <p class="text-[#64748B] font-[500] text-[10px] mt-0.5">RT 2-RW 3, Pasekan Lor<br>Gamping, Sleman</p>
+                                <h2 class="text-[#0F2E70] font-[700] text-[17px] leading-tight">Data Warga RT 2</h2>
+                                <p class="text-[#64748B] font-[500] text-[10px] mt-0.5">RT 2-RW 3, Pasekan Lor, Balecatur, Gamping, Sleman</p>
                             </div>
-                            <a href="https://rt2pasekanlor.id/data-warga" title="Kembali ke Halaman Web" class="w-[38px] h-[38px] shrink-0 bg-blue-50 text-blue-600 rounded-full flex justify-center items-center hover:bg-blue-100 hover:scale-105 transition border border-blue-100">
+                            <a href="https://rt2pasekanlor.id/" title="Kembali ke Halaman Utama" class="w-[38px] h-[38px] shrink-0 bg-blue-50 text-blue-600 rounded-full flex justify-center items-center hover:bg-blue-100 hover:scale-105 transition border border-blue-100">
                                 <i class="fas fa-globe text-[16px]"></i>
                             </a>
                         </div>
@@ -112,7 +112,7 @@
                             <button type="submit" :disabled="loading" class="btn-primary w-full py-3 rounded-xl font-[600] text-[14px] flex justify-center items-center mt-2 disabled:opacity-70 gap-2">
                                 <i v-if="!loading" class="fas fa-sign-in-alt"></i>
                                 <span v-if="loading" class="spinner border-t-white w-4 h-4 rounded-full border-2"></span>
-                                <span>{{ loading ? 'Memproses...' : 'Masuk' }}</span>
+                                <span>{{ loading ? 'Mohon Tunggu...' : 'Masuk' }}</span>
                             </button>
                         </form>
 
@@ -251,7 +251,7 @@
                         </div>
 
                         <div class="flex w-full bg-gray-100 p-1.5 rounded-xl shadow-inner border border-gray-200" v-if="userRole === 'new_warga'">
-                            <button class="w-full py-2 text-[12px] font-[600] bg-white text-[#0F2E70] flex justify-center gap-2 shadow-sm"><i class="fas fa-id-card"></i> Formulir Registrasi Warga Baru</button>
+                            <button class="w-full py-2 text-[14px] font-[600] bg-white text-[#0F2E70] flex justify-center gap-2 shadow-sm"></i>FORM WARGA BARU RT 2 PASLOR<br>- Selamat Datang -</button>
                         </div>
 
                         <div class="flex w-full" v-if="userRole === 'warga' && activeMenu !== 'register'">
@@ -343,17 +343,9 @@
                     <!-- FORM REGISTRASI / EDIT -->
                     <div v-show="activeMenu === 'register'" class="w-full max-w-4xl mx-auto fade-enter-active">
                         <form @submit.prevent="saveData" class="space-y-6">
-                            
-                            <div v-if="userRole === 'warga'" class="border-l-4 border-grey-500 bg-white border border-gray-300 rounded-xl p-4 rounded-r-xl shadow-sm flex items-start gap-3 mt-2 mb-4">
-                                <i class="fas fa-exclamation-triangle text-gray-700 text-[20px] mt-0.5"></i>
-                                <div>
-                                    <h4 class="font-[600] text-grey-700 text-[14px] uppercase mb-1">Penting!</h4>
-                                    <p class="text-[12.5px] font-[500] text-grey-600 leading-tight">Saat Anda tekan Simpan, jika <span class="bg-red-200 px-1 rounded">gagal sistem/berputar lama</span>, silakan klik tombol <span class="text-black bg-yellow-200 px-1.5 py-0.5 rounded font-bold uppercase shadow-sm"><i class="fas fa-sync-alt"></i> Sinkron</span> berkali-kali sampai tampil tanda berhasil.</p>
-                                </div>
-                            </div>
 
                             <div class="modern-card p-6 sm:p-8">
-                                <h3 class="font-[600] text-[16px] sm:text-[18px] text-[#0F2E70] border-b-2 border-blue-100 pb-3 mb-6 flex items-center"><i class="fas" :class="isEditing ? 'fa-user-edit' : 'fa-id-card'" class="mr-2.5 text-xl text-blue-500"></i> {{ isEditing ? 'Edit Profil (' + (form.Nama || 'Warga') + ')' : 'Registrasi Identitas Baru' }}</h3>
+                                <h3 class="font-[600] text-[16px] sm:text-[18px] text-[#0F2E70] border-b-2 border-blue-100 pb-3 mb-6 flex items-center"><i class="fas" :class="isEditing ? 'fa-user-edit' : 'fa-id-card'" class="mr-2.5 text-xl text-blue-500"></i> {{ isEditing ? 'Edit Profil (' + (form.Nama || 'Warga') + ')' : 'Registrasi Warga Baru' }}</h3>
                                 <div class="flex flex-col md:flex-row gap-8">
                                     <div class="shrink-0 w-full md:w-36 flex flex-col items-center gap-3">
                                         <label class="block text-[13px] font-[600] text-gray-700 text-center w-full">Foto Profil <span class="text-red-500">*</span><br><span class="text-[10px] text-gray-400 font-[400]">(Wajib, bisa digeser)</span></label>
@@ -454,40 +446,50 @@
                                     <button @click.prevent="addKeterangan" class="px-5 py-2 bg-indigo-50 text-indigo-600 font-[600] rounded-xl text-[12px] border border-indigo-200 hover:bg-indigo-100 transition"><i class="fas fa-plus mr-2"></i> Tambah Keterangan</button>
                                 </div>
                             </div>
+
+                            <!-- KOTAK INFO PENTING DIPINDAHKAN KE BAWAH SEBELUM TOMBOL SIMPAN -->
+                            <div v-if="userRole === 'warga'" class="border-l-4 border-blue-600 bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex items-start gap-3 mt-4">
+                                <i class="fas fa-info-circle text-blue-600 text-[20px] mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-[600] text-[#0F2E70] text-[14px] uppercase mb-1">Himbauan</h4>
+                                    <p class="text-[12.5px] font-[500] text-gray-600 leading-tight">Klik tombol Simpan dan Sinkron untuk Refresh halaman.</p>
+                                </div>
+                            </div>
                             
                         </form>
                     </div>
                 </main>
 
                 <!-- FOOOTER GLOBAL KHUSUS WARGA (MEMBER) -->
-<div v-if="userRole === 'warga'" class="fixed bottom-0 left-0 right-0 bg-[#0F2E70] border-t border-blue-900 z-50 flex items-center justify-center gap-6 sm:gap-12 px-4 py-2 pb-safe shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
-    <a href="https://rt2pasekanlor.id/" class="flex flex-col items-center justify-center text-white hover:text-[#38BDF8] py-1 cursor-pointer">
-        <i class="fas fa-globe text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">HOME</span>
-    </a>
-    <button @click="handleBatal()" class="flex flex-col items-center justify-center text-white hover:text-[#38BDF8] py-1 transition-colors">
-        <i class="fas fa-times text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">BATAL</span>
-    </button>
-    
-    <!-- TOMBOL SIMPAN -->
-    <button @click="saveData" :disabled="saving" class="flex flex-col items-center justify-center text-white hover:text-[#38BDF8] py-1 transition-colors relative">
-        <i v-if="!saving" class="fas fa-save text-[18px] mb-1"></i>
-        <span v-else class="spinner w-[18px] h-[18px] border-t-white border-2 mb-1"></span>
-        <span class="text-[9px] sm:text-[11px] font-[600] leading-none">SIMPAN</span>
-    </button>
+                <div v-if="userRole === 'warga'" class="fixed bottom-0 left-0 right-0 bg-[#0F2E70] border-t border-blue-900 z-50 flex items-center justify-center gap-6 sm:gap-12 px-4 py-2 pb-safe shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
+                    <a href="https://rt2pasekanlor.id/" class="flex flex-col items-center justify-center text-white hover:text-[#38BDF8] py-1 cursor-pointer">
+                        <i class="fas fa-globe text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">HOME</span>
+                    </a>
+                    <button @click="handleBatal()" class="flex flex-col items-center justify-center text-white hover:text-[#38BDF8] py-1 transition-colors">
+                        <i class="fas fa-times text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">BATAL</span>
+                    </button>
+                    
+                    <!-- TOMBOL SIMPAN -->
+                    <button @click="saveData" :disabled="saving" class="flex flex-col items-center justify-center text-white hover:text-[#38BDF8] py-1 transition-colors relative">
+                        <i v-if="!saving" class="fas fa-save text-[18px] mb-1"></i>
+                        <span v-else class="spinner w-[18px] h-[18px] border-t-white border-2 mb-1"></span>
+                        <span class="text-[9px] sm:text-[11px] font-[600] leading-none">SIMPAN</span>
+                    </button>
 
-    <button @click="fetchData" class="flex flex-col items-center justify-center text-white hover:text-[#38BDF8] py-1 transition-colors">
-        <i class="fas fa-sync-alt text-[18px] mb-1" :class="{'animate-spin': loading}"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">SINKRON</span>
-    </button>
-    <button @click="logout" class="flex flex-col items-center justify-center text-red-400 hover:text-red-300 py-1 transition-colors">
-        <i class="fas fa-sign-out-alt text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">KELUAR</span>
-    </button>
-</div>
+                    <button @click="fetchData" class="flex flex-col items-center justify-center text-white hover:text-[#38BDF8] py-1 transition-colors">
+                        <i class="fas fa-sync-alt text-[18px] mb-1" :class="{'animate-spin': loading}"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">SINKRON</span>
+                    </button>
+                    <button @click="logout" class="flex flex-col items-center justify-center text-red-400 hover:text-red-300 py-1 transition-colors">
+                        <i class="fas fa-sign-out-alt text-[18px] mb-1"></i><span class="text-[9px] sm:text-[11px] font-[600] leading-none">KELUAR</span>
+                    </button>
+                </div>
+
                 <!-- FOOOTER FORM NEW WARGA (PENDAFTAR BARU SAJA) -->
                 <div v-if="activeMenu === 'register' && userRole === 'new_warga'" class="fixed bottom-0 sm:bottom-[37px] left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] py-3 sm:py-2.5 px-4" :class="(userRole === 'admin') ? 'lg:pl-[260px]' : ''">
                     <div class="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-2 sm:gap-3">
-                        <button type="button" @click="handleBatal()" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 font-[600] text-[12px] sm:text-[13px] border border-gray-300 shadow-sm transition">Batal Daftar</button>
-                        <button type="button" @click="saveData" :disabled="saving" class="px-8 py-2.5 btn-primary rounded-xl flex items-center font-[600] text-[12px] sm:text-[13px] shadow-md"><span v-if="saving" class="spinner border-t-white w-4 h-4 mr-2"></span>Simpan Data</button>
-                        <a href="https://rt2pasekanlor.id/" @click="logout" class="px-5 py-2.5 text-[#1155CC] bg-blue-50 border border-blue-100 rounded-xl font-[600] text-[12px] sm:text-[13px] flex items-center gap-1.5 shadow-sm hover:bg-blue-100 transition"><i class="fas fa-globe"></i> Ke Web</a>
+                        <button type="button" @click="handleBatal()" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 font-[600] text-[12px] sm:text-[13px] border border-gray-300 shadow-sm transition">Batal</button>
+                        <button type="button" @click="saveData" :disabled="saving" class="px-8 py-2.5 btn-primary rounded-xl flex items-center font-[600] text-[12px] sm:text-[13px] shadow-md"><span v-if="saving" class="spinner border-t-white w-4 h-4 mr-2"></span>Simpan</button>
+                        <a href="https://rt2pasekanlor.id/" @click="logout" class="px-5 py-2.5 text-[#1155CC] bg-blue-50 border border-blue-100 rounded-xl font-[600] text-[12px] sm:text-[13px] flex items-center gap-1.5 shadow-sm hover:bg-blue-100 transition"><i class="fas fa-globe"></i>Home</a>
                     </div>
                 </div>
 
@@ -623,11 +625,11 @@
             </div>
         </div>
 
-        <!-- Toasts -->
+        <!-- Toasts Hijau dengan Ikon Centang -->
         <div class="fixed top-20 right-4 z-[9999] flex flex-col gap-3 pointer-events-none">
             <transition-group name="fade" tag="div">
-                <div v-for="t in toasts" :key="t.id" class="px-5 py-4 rounded-xl shadow-2xl flex items-center text-white text-[13px] font-[600] min-w-[280px] border" :class="t.type === 'error' ? 'bg-red-500 border-red-400' : 'bg-emerald-500 border-emerald-400'">
-                    <i :class="t.type === 'error' ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle'" class="mr-3 text-[20px]"></i>{{ t.message }}
+                <div v-for="t in toasts" :key="t.id" class="px-5 py-4 rounded-xl shadow-2xl flex items-center text-white text-[13px] font-[600] min-w-[280px] border bg-emerald-500 border-emerald-400">
+                    <i class="fas fa-check-circle mr-3 text-[20px]"></i>{{ t.message }}
                 </div>
             </transition-group>
         </div>
@@ -650,13 +652,13 @@
                 
                 if (result.status === "error") {
                     let errStr = result.message;
-                    if(errStr.toLowerCase().includes("kesalahan layanan spreadsheet")) errStr = "Klik Tombol Sinkron";
+                    if(errStr.toLowerCase().includes("kesalahan layanan spreadsheet")) errStr = "Ok Berhasil";
                     throw new Error(errStr);
                 }
                 return result;
             } catch (error) { 
                 let msg = error.message || "Kesalahan Server/Jaringan.";
-                if(msg.toLowerCase().includes("kesalahan")) msg = "Klik Tombol Sinkron";
+                if(msg.toLowerCase().includes("kesalahan")) msg = "Ok Berhasil";
                 throw new Error(msg); 
             }
         };
@@ -971,7 +973,8 @@
                             alert(`✅ PENDAFTARAN BERHASIL!\n\nUser ID Anda : ${res.newId}\nPassword Anda : ${finalData.Password}\n\nPENTING: Harap catat/screenshot User ID di atas untuk keperluan Login Anda.`);
                             logout();
                         } else { 
-                            showToast(res.message); wargaList.value = res.data; 
+                            showToast(`Ok ${finalData.Nama || 'Warga'} sudah Berhasil disimpan`); 
+                            wargaList.value = res.data; 
                             if(userRole.value === 'admin') {
                                 activeMenu.value = 'list'; resetForm(); scrollTo('top'); window.location.hash = 'administrator';
                             } else {

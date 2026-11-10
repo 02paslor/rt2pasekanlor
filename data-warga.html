@@ -130,8 +130,24 @@
         <!-- SIDEBAR KIRI (ADMIN) -->
         <aside v-if="isLoggedIn && userRole === 'admin'" class="hidden lg:flex fixed left-0 top-0 h-screen w-[260px] bg-[#0A1635] shadow-[5px_0_30px_rgba(0,0,0,0.1)] z-40 flex-col border-r border-[#1B2B56] overflow-y-auto custom-scrollbar transition-all duration-300">
             <div class="p-5 flex flex-col flex-1">
-                <div class="flex justify-between items-center mb-6 text-white">
+                <div class="flex justify-between items-center mb-5 text-white">
                     <span class="font-[600] text-[14px] tracking-wide flex items-center gap-2"><i class="fas fa-filter text-[#38BDF8]"></i> Navigasi & Filter</span>
+                </div>
+
+                <!-- TOMBOL KEMENKEU RT 2 -->
+                <a href="https://rt2pasekanlor.id/kemenkeu" target="_blank" class="w-full bg-gradient-to-r from-[#1155CC] to-[#0A3688] hover:from-blue-600 hover:to-blue-800 text-white font-[600] py-2.5 px-3 rounded-xl text-[12px] transition-all flex items-center justify-between shadow-md border border-blue-400/30 mb-3 group">
+                    <span class="flex items-center gap-2"><i class="fas fa-wallet text-[#38BDF8] group-hover:scale-110 transition-transform"></i> Kemenkeu RT 2</span>
+                    <i class="fas fa-external-link-alt text-[10px] text-blue-200"></i>
+                </a>
+
+                <!-- TOMBOL MENU CEPAT SIDEBAR -->
+                <div class="grid grid-cols-2 gap-2 mb-4">
+                    <button @click="changeMenu('dashboard')" :class="activeMenu === 'dashboard' ? 'bg-[#38BDF8] text-[#0A1635] font-[700]' : 'bg-[#1B2B56] text-[#E2E8F0] hover:bg-[#2A3D73]'" class="py-2 px-2.5 rounded-xl text-[11px] font-[600] flex items-center justify-center gap-1.5 transition-all shadow-sm">
+                        <i class="fas fa-chart-pie"></i> Statistik
+                    </button>
+                    <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-[#38BDF8] text-[#0A1635] font-[700]' : 'bg-[#1B2B56] text-[#E2E8F0] hover:bg-[#2A3D73]'" class="py-2 px-2.5 rounded-xl text-[11px] font-[600] flex items-center justify-center gap-1.5 transition-all shadow-sm">
+                        <i class="fas fa-users"></i> Warga
+                    </button>
                 </div>
 
                 <div v-show="activeMenu === 'list'" class="space-y-4 fade-enter-active">
@@ -192,7 +208,8 @@
                 </div>
             </div>
 
-            <div class="mt-auto p-4 flex flex-col gap-3 bg-[#06112E] border-t border-[#1B2B56]">
+            <!-- FOOTER SIDEBAR DENGAN TANGGAL DAN CREATED BY ARGA -->
+            <div class="mt-auto p-4 flex flex-col gap-2.5 bg-[#06112E] border-t border-[#1B2B56]">
                 <div class="flex items-center gap-3">
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyfuGc_fXDcYnfWzyQzcRZ6n9XwRuYCrX3D4PNthp05MIwg9VjbDoCBPtGg6jc374QSSOKKLt3jBGAkPtlwVKRSDc-PhZewr5S3X91KheaVSjIs1IDedm_zm1BR9_EyJ9CdJuFHGGu4l0pF3hF8cbMViD5lucqgvffwoxPWPQBuJfyZntChlwC1d7Ad6Q/w640-h640/favicon%20rt2.png" class="w-10 h-10 rounded-full object-cover shadow-md border-2 border-[#38BDF8]">
                     <div class="flex-1 min-w-0">
@@ -200,6 +217,12 @@
                         <p class="text-[10px] text-[#94A3B8] truncate">Kendali Sistem RT 2</p>
                     </div>
                 </div>
+                
+                <div class="bg-[#0B1B44] px-3 py-2 rounded-lg border border-[#1E3266] text-center">
+                    <p class="text-[9.5px] text-[#94A3B8] font-[500] leading-tight">Update Data: <span class="text-[#38BDF8] font-[600]">{{ todayFormatted }}</span></p>
+                    <p class="text-[9px] text-[#64748B] tracking-wider mt-0.5">Created by <span class="text-gray-300 font-[600]">Arga</span></p>
+                </div>
+
                 <button @click="logout" class="w-full py-2 bg-[#EF4444]/10 text-[#EF4444] hover:bg-[#EF4444] hover:text-white rounded-lg text-[12px] font-[600] transition-colors flex justify-center items-center gap-2"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </aside>
@@ -212,17 +235,18 @@
                     <div class="flex items-center gap-3">
                         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrmjjUV-wVlsWIxwukT8cDUfQdWkzI47IsIchzOJayG-MzaIcIxz8IjrlIQgUBopLqyho8SFDjqbk6xbAmH3OU1uA1nY1VVDkPYuKs3tNfGIobdRucuwySYv0xyN13MgZ5G-3Iiz2GkZuMMOUcVcePUFF7kb8A95Snl1vHw5wlV3NF_h3L-KnbhPzJhCE/s1500/Thumb%20-%20Biru.png" class="h-9 sm:h-11 w-auto object-contain">
                         <div class="border-l-2 border-gray-200 pl-3">
-                            <h2 class="text-[15px] sm:text-[17px] font-[700] tracking-tight leading-tight text-[#0F2E70]">{{ userRole === 'admin' ? 'Dashboard Administrator' : 'Data Warga' }}</h2>
+                            <h2 class="text-[15px] sm:text-[17px] font-[700] tracking-tight leading-tight text-[#0F2E70]">{{ userRole === 'admin' ? (activeMenu === 'dashboard' ? 'Dashboard Statistik & Laporan' : 'Dashboard Administrator') : 'Data Warga' }}</h2>
                             <p class="text-[10px] sm:text-[11px] font-[500] text-gray-500 mt-0.5" v-if="userRole !== 'new_warga'">
-                                {{ userRole === 'admin' ? 'Akses Penuh Seluruh Warga' : 'Selamat Datang, ' + getDisplayName() }}
+                                {{ userRole === 'admin' ? 'Akses Penuh Seluruh Warga RT 2' : 'Selamat Datang, ' + getDisplayName() }}
                             </p>
                         </div>
                     </div>
                     
                     <div class="hidden lg:flex items-center gap-3">
                         <div v-if="userRole === 'admin'" class="flex bg-gray-100 p-1 rounded-xl border border-gray-200 mr-2">
-                            <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="px-4 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex gap-2"><i class="fas fa-users"></i> Warga</button>
-                            <button @click="bukaFormKosong()" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="px-4 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex gap-2"><i class="fas fa-user-plus"></i> Tambah Baru</button>
+                            <button @click="changeMenu('dashboard')" :class="activeMenu === 'dashboard' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="px-3.5 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex gap-1.5"><i class="fas fa-chart-pie"></i> Statistik</button>
+                            <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="px-3.5 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex gap-1.5"><i class="fas fa-users"></i> Warga</button>
+                            <button @click="bukaFormKosong()" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500'" class="px-3.5 py-1.5 rounded-lg text-[12px] font-[600] transition-all flex gap-1.5"><i class="fas fa-user-plus"></i> Tambah Baru</button>
                         </div>
                         <div class="flex gap-2" v-if="userRole === 'admin'">
                             <template v-if="activeMenu === 'register'">
@@ -246,12 +270,13 @@
                         </div>
 
                         <div class="flex w-full bg-gray-100 p-1.5 rounded-xl shadow-inner border border-gray-200" v-if="userRole === 'admin'">
-                            <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500 hover:text-gray-700'" class="flex-1 py-2 rounded-lg text-[12px] font-[600] flex justify-center gap-1.5"><i class="fas fa-users"></i> Warga</button>
-                            <button @click="bukaFormKosong()" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500 hover:text-gray-700'" class="flex-1 py-2 rounded-lg text-[12px] font-[600] flex justify-center gap-1.5"><i class="fas fa-plus"></i> Tambah</button>
+                            <button @click="changeMenu('dashboard')" :class="activeMenu === 'dashboard' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500 hover:text-gray-700'" class="flex-1 py-2 rounded-lg text-[11px] font-[600] flex justify-center gap-1"><i class="fas fa-chart-pie"></i> Stat</button>
+                            <button @click="changeMenu('list')" :class="activeMenu === 'list' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500 hover:text-gray-700'" class="flex-1 py-2 rounded-lg text-[11px] font-[600] flex justify-center gap-1"><i class="fas fa-users"></i> Warga</button>
+                            <button @click="bukaFormKosong()" :class="activeMenu === 'register' ? 'bg-white text-[#0F2E70] shadow-sm' : 'text-gray-500 hover:text-gray-700'" class="flex-1 py-2 rounded-lg text-[11px] font-[600] flex justify-center gap-1"><i class="fas fa-plus"></i> Tambah</button>
                         </div>
 
                         <div class="flex w-full bg-gray-100 p-1.5 rounded-xl shadow-inner border border-gray-200" v-if="userRole === 'new_warga'">
-                            <button class="w-full py-2 text-[14px] font-[600] bg-white text-[#0F2E70] flex justify-center gap-2 shadow-sm"></i>FORM WARGA BARU RT 2 PASLOR<br>- Selamat Datang -</button>
+                            <button class="w-full py-2 text-[14px] font-[600] bg-white text-[#0F2E70] flex justify-center gap-2 shadow-sm">FORM WARGA BARU RT 2 PASLOR<br>- Selamat Datang -</button>
                         </div>
 
                         <div class="flex w-full" v-if="userRole === 'warga' && activeMenu !== 'register'">
@@ -270,6 +295,146 @@
                         <p class="text-[#0F2E70] font-[600] text-[15px] tracking-wide">Sinkronisasi Data...</p>
                     </div>
 
+                    <!-- ==================== KONTEN DASHBOARD LAPORAN & STATISTIK ==================== -->
+                    <div v-show="activeMenu === 'dashboard' && !loading" class="w-full space-y-6 fade-enter-active">
+                        
+                        <!-- Header Banner Dashboard -->
+                        <div class="modern-card p-6 bg-gradient-to-r from-[#0F2E70] via-[#1155CC] to-[#0A3688] text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <h2 class="text-[20px] font-[700] tracking-tight">Ringkasan Demografi Warga RT 2</h2>
+                                <p class="text-[12px] text-blue-100 mt-1">Pasekan Lor, Balecatur, Gamping, Sleman • Update Terakhir: <span class="font-[600] text-[#38BDF8]">{{ todayFormatted }}</span></p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button @click="changeMenu('list')" class="px-4 py-2 bg-white text-[#0F2E70] rounded-xl text-[12px] font-[600] hover:bg-blue-50 transition shadow-sm flex items-center gap-2">
+                                    <i class="fas fa-list"></i> Lihat Daftar Warga
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 4 Kartu Metrik Utama -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="modern-card p-5 flex items-center gap-4 border-l-4 border-[#1155CC]">
+                                <div class="w-12 h-12 rounded-xl bg-blue-50 text-[#1155CC] flex items-center justify-center text-2xl shrink-0"><i class="fas fa-users"></i></div>
+                                <div>
+                                    <p class="text-[11px] font-[600] text-gray-500 uppercase tracking-wider">Total Warga</p>
+                                    <h3 class="text-[24px] font-[800] text-gray-900 leading-tight">{{ stats.total }}</h3>
+                                    <p class="text-[10px] text-gray-500 mt-0.5">Kepala Rumah / Jiwa</p>
+                                </div>
+                            </div>
+                            <div class="modern-card p-5 flex items-center gap-4 border-l-4 border-emerald-500">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl shrink-0"><i class="fas fa-venus-mars"></i></div>
+                                <div>
+                                    <p class="text-[11px] font-[600] text-gray-500 uppercase tracking-wider">Gender (L / P)</p>
+                                    <h3 class="text-[24px] font-[800] text-gray-900 leading-tight"><span class="text-blue-600">{{ stats.pria }}</span> / <span class="text-pink-600">{{ stats.wanita }}</span></h3>
+                                    <p class="text-[10px] text-gray-500 mt-0.5">{{ Math.round((stats.pria/stats.total || 0)*100) }}% Pria • {{ Math.round((stats.wanita/stats.total || 0)*100) }}% Wanita</p>
+                                </div>
+                            </div>
+                            <div class="modern-card p-5 flex items-center gap-4 border-l-4 border-amber-500">
+                                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shrink-0"><i class="fas fa-home"></i></div>
+                                <div>
+                                    <p class="text-[11px] font-[600] text-gray-500 uppercase tracking-wider">Domisili</p>
+                                    <h3 class="text-[24px] font-[800] text-gray-900 leading-tight">{{ stats.tinggal }} <span class="text-[13px] font-[500] text-gray-500">/ {{ stats.kost }} Kost</span></h3>
+                                    <p class="text-[10px] text-gray-500 mt-0.5">Rumah Tetap vs Kost</p>
+                                </div>
+                            </div>
+                            <div class="modern-card p-5 flex items-center gap-4 border-l-4 border-rose-500">
+                                <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl shrink-0"><i class="fas fa-exclamation-circle"></i></div>
+                                <div>
+                                    <p class="text-[11px] font-[600] text-gray-500 uppercase tracking-wider">Data Belum Lengkap</p>
+                                    <h3 class="text-[24px] font-[800] text-rose-600 leading-tight">{{ countBelumLengkap }}</h3>
+                                    <p class="text-[10px] text-gray-500 mt-0.5">Perlu diverifikasi kembali</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid Diagram Bar & Visual Distribusi -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            
+                            <!-- Diagram Distribusi Jadwal Ronda -->
+                            <div class="modern-card p-6">
+                                <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+                                    <h3 class="font-[700] text-[15px] text-[#0F2E70] flex items-center gap-2"><i class="fas fa-shield-alt text-emerald-500"></i> Sebaran Jadwal Ronda</h3>
+                                    <span class="text-[11px] font-[600] bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-md border border-emerald-200">7 Hari Ronda</span>
+                                </div>
+                                <div class="space-y-3.5">
+                                    <div v-for="(count, day) in stats.rondaDays" :key="day" class="flex flex-col gap-1">
+                                        <div class="flex justify-between text-[12px] font-[600]">
+                                            <span class="text-gray-700">{{ day }}</span>
+                                            <span class="text-[#0F2E70] font-mono">{{ count }} Orang ({{ Math.round((count/stats.total || 0)*100) }}%)</span>
+                                        </div>
+                                        <div class="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full rounded-full transition-all duration-500" :class="day === 'Bebas Tugas' ? 'bg-amber-400' : 'bg-gradient-to-r from-[#38BDF8] to-[#1155CC]'" :style="{ width: ((count/stats.total || 0)*100) + '%' }"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Distribusi Golongan Darah & Domisili -->
+                            <div class="space-y-6">
+                                <div class="modern-card p-6">
+                                    <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+                                        <h3 class="font-[700] text-[15px] text-[#0F2E70] flex items-center gap-2"><i class="fas fa-tint text-rose-500"></i> Golongan Darah Warga</h3>
+                                        <span class="text-[11px] font-[600] bg-rose-50 text-rose-700 px-2.5 py-1 rounded-md border border-rose-200">Kesiapan Kesehatan</span>
+                                    </div>
+                                    <div class="grid grid-cols-4 gap-3 text-center">
+                                        <div v-for="(jml, gol) in stats.golDarah" :key="gol" class="p-3 rounded-xl bg-gray-50 border border-gray-200">
+                                            <p class="text-[11px] font-[700] text-gray-500 uppercase">{{ gol }}</p>
+                                            <h4 class="text-[22px] font-[800] text-rose-600 mt-1">{{ jml }}</h4>
+                                            <p class="text-[10px] text-gray-400">{{ Math.round((jml/stats.total || 0)*100) }}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modern-card p-6">
+                                    <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                                        <h3 class="font-[700] text-[15px] text-[#0F2E70] flex items-center gap-2"><i class="fas fa-mosque text-indigo-500"></i> Agama Warga</h3>
+                                        <span class="text-[11px] font-[600] text-gray-500">Toleransi & Keberagaman</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span v-for="(jml, agm) in stats.agama" :key="agm" class="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-900 border border-indigo-100 font-[600] text-[11px] flex items-center gap-1.5">
+                                            <i class="fas fa-star text-[9px] text-indigo-400"></i> {{ agm }}: <b>{{ jml }}</b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Tabel Distribusi Profesi / Pekerjaan Warga -->
+                        <div class="modern-card p-6">
+                            <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+                                <div>
+                                    <h3 class="font-[700] text-[16px] text-[#0F2E70] flex items-center gap-2"><i class="fas fa-briefcase text-blue-600"></i> Distribusi Profesi & Pekerjaan Warga</h3>
+                                    <p class="text-[11px] text-gray-500 mt-0.5">Klasifikasi ragam aktivitas ekonomi warga RT 2</p>
+                                </div>
+                                <span class="text-[11px] font-[600] bg-blue-50 text-[#1155CC] px-3 py-1 rounded-lg border border-blue-200 font-mono">{{ Object.keys(stats.pekerjaan).length }} Bidang</span>
+                            </div>
+
+                            <div class="overflow-x-auto custom-scrollbar">
+                                <table class="w-full text-left text-[12px]">
+                                    <thead>
+                                        <tr class="bg-gray-50 text-gray-600 uppercase text-[10px] tracking-wider border-b border-gray-200">
+                                            <th class="py-3 px-4">No</th>
+                                            <th class="py-3 px-4">Bidang Pekerjaan</th>
+                                            <th class="py-3 px-4 text-center">Jumlah Warga</th>
+                                            <th class="py-3 px-4 text-right">Persentase</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 font-[500]">
+                                        <tr v-for="(count, job, idx) in stats.pekerjaan" :key="job" class="hover:bg-blue-50/40 transition-colors">
+                                            <td class="py-3 px-4 font-mono text-gray-500">{{ idx + 1 }}</td>
+                                            <td class="py-3 px-4 font-[600] text-gray-800">{{ job || 'Belum Mengisi' }}</td>
+                                            <td class="py-3 px-4 text-center font-[700] text-[#1155CC] font-mono">{{ count }} Orang</td>
+                                            <td class="py-3 px-4 text-right font-mono text-gray-600">{{ Math.round((count/stats.total || 0)*100) }}%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- ==================== KONTEN DAFTAR DATA WARGA ==================== -->
                     <div v-show="activeMenu === 'list' && !loading" class="w-full relative">
                         <transition-group name="card-list" tag="div" :class="viewMode === 'card' ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5' : 'flex flex-col gap-3'" class="w-full items-start">
                             
@@ -340,7 +505,7 @@
                         </div>
                     </div>
 
-                    <!-- FORM REGISTRASI / EDIT -->
+                    <!-- ==================== FORM REGISTRASI / EDIT ==================== -->
                     <div v-show="activeMenu === 'register'" class="w-full max-w-4xl mx-auto fade-enter-active">
                         <form @submit.prevent="saveData" class="space-y-6">
 
@@ -674,7 +839,7 @@
                 const userRole = ref('');
                 const loggedInId = ref('');
 
-                const activeMenu = ref('list');
+                const activeMenu = ref('dashboard');
                 const viewMode = ref('table'); 
                 const loading = ref(false);
                 const saving = ref(false);
@@ -699,6 +864,11 @@
                 const filterDomisili = ref('');
                 const filterRonda = ref('');
                 const sortMode = ref('id_asc'); 
+
+                const todayFormatted = computed(() => {
+                    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                    return new Date().toLocaleDateString('id-ID', options);
+                });
 
                 const emptyForm = () => ({
                     Id_Rumah: 'rt2_', Password: '', Nama: '', Tempat_Lahir: '', Tanggal_Lahir: '', 
@@ -748,7 +918,7 @@
                             const myData = res.data.find(w => w.Id_Rumah === loggedInId.value);
                             if(myData) editWarga(myData);
                         } else {
-                            activeMenu.value = 'list';
+                            activeMenu.value = 'dashboard';
                         }
                     } catch(e) {
                         localStorage.removeItem('rt2_user_id'); localStorage.removeItem('rt2_pass');
@@ -757,6 +927,40 @@
 
                 const countBelumLengkap = computed(() => {
                     return filteredWarga.value.filter(w => !w.Foto_Profil || !w.No_Tlp || !w.Pekerjaan || !w.Jenis_Kelamin || !w.Tempat_Tanggal_Lahir).length;
+                });
+
+                // METRIK & STATISTIK DASHBOARD
+                const stats = computed(() => {
+                    const list = wargaList.value.filter(w => w.Nama && w.Nama.toString().trim() !== '');
+                    const total = list.length;
+                    let pria = 0, wanita = 0, tinggal = 0, kost = 0;
+                    let rondaDays = { 'Senin': 0, 'Selasa': 0, 'Rabu': 0, 'Kamis': 0, 'Jumat': 0, 'Sabtu': 0, 'Minggu': 0, 'Bebas Tugas': 0 };
+                    let golDarah = { 'A': 0, 'B': 0, 'AB': 0, 'O': 0 };
+                    let pekerjaan = {};
+                    let agama = {};
+
+                    list.forEach(w => {
+                        if (w.Jenis_Kelamin === 'Laki-laki') pria++;
+                        else if (w.Jenis_Kelamin === 'Perempuan') wanita++;
+
+                        if (w.Status_Domisili === 'Kontrak / Kost') kost++;
+                        else tinggal++;
+
+                        const r = (w.Ronda || '').trim();
+                        if (rondaDays[r] !== undefined) rondaDays[r]++;
+                        else if (r === 'Bebas Tugas') rondaDays['Bebas Tugas']++;
+
+                        const gd = (w.Gol_Darah || '').trim().toUpperCase();
+                        if (golDarah[gd] !== undefined) golDarah[gd]++;
+
+                        const job = (w.Pekerjaan || 'Lainnya').trim();
+                        if (job) pekerjaan[job] = (pekerjaan[job] || 0) + 1;
+
+                        const agm = (w.Agama || 'Islam').trim();
+                        if (agm) agama[agm] = (agama[agm] || 0) + 1;
+                    });
+
+                    return { total, pria, wanita, tinggal, kost, rondaDays, golDarah, pekerjaan, agama };
                 });
 
                 const duplicateDataReport = computed(() => {
@@ -872,7 +1076,7 @@
                             const myData = res.data.find(w => w.Id_Rumah === loggedInId.value);
                             if(myData) editWarga(myData);
                         } else {
-                            activeMenu.value = 'list';
+                            activeMenu.value = 'dashboard';
                         }
                     } catch(e) { showToast(e.message || 'Gagal login.', 'error'); } 
                     finally { loading.value = false; }
@@ -1137,7 +1341,7 @@
                     activeMenu, viewMode, loading, saving, wargaList, filteredWarga, searchQuery, scrollTo, getAvatar,
                     filterJK, filterDomisili, filterRonda, sortMode, applySingleFilter, resetFilters, duplicateDataReport,
                     isEditing, form, calculatedAge, capitalizeName, addFam, removeFam, removeFile, addKeterangan, removeKeterangan, parseKeterangan,
-                    toasts, deleteConfirm, fiturWacanaOn, countBelumLengkap,
+                    toasts, deleteConfirm, fiturWacanaOn, countBelumLengkap, stats, todayFormatted,
                     exportModal, printSettings, customLogoBase64, openExportModal, closeExportModal, executeExport, uploadCustomLogo,
                     handleLogin, logout, changeMenu, bukaFormKosong, handleBatal, fetchData, resetForm, editWarga, saveData, confirmDelete, executeDelete, handleFileUpload, showCropper, cropperSrc, cancelCrop, applyCrop, formatWhatsApp, formatDashPhone, formatTTL, handleSearchInput, downloadQR
                 };

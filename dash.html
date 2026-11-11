@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark-grey">
+<html lang="id" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DASHBOARD - RT 2 PASLOR</title>
+  <title>DASHBOARD PUSAT - RT 2 PASLOR</title>
   
   <!-- Font Poppins Terkunci Maks 700 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,80 +16,43 @@
   <style>
     :root {
       --font-family: 'Poppins', sans-serif;
-      --sidebar-w: 270px;
+      --sidebar-w: 260px;
       --logo-tint: #ff5520;
+      --phone-scale: 1; /* Slider controller di Settings */
     }
 
-    /* 1. Dark Monokrom / Greyscale */
-    [data-theme="dark-grey"] {
-      --bg-body: #121212;
-      --bg-sidebar: #181818;
-      --bg-card: #222222;
-      --bg-card-hover: #2a2a2a;
-      --border-color: #2e2e2e;
+    /* 1. DARK THEME */
+    [data-theme="dark"] {
+      --bg-body: #101216;
+      --bg-sidebar: #16181e;
+      --bg-card: #1c1f26;
+      --bg-card-hover: #242832;
+      --border-color: rgba(255, 255, 255, 0.08);
       --accent: #ff5520;
-      --accent-contrast: #ff4500;
-      --accent-glow: rgba(255, 85, 32, 0.4);
-      --pill-soft: rgba(255, 255, 255, 0.08);
-      --text-main: #f5f5f5;
-      --text-muted: #a3a3a3;
+      --accent-contrast: #e03e0b;
+      --accent-glow: rgba(255, 85, 32, 0.35);
+      --pill-soft: rgba(255, 85, 32, 0.12);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
       --danger: #ef4444;
       --success: #10b981;
-      --iframe-bg: #1e1e1e;
     }
 
-    /* 2. Dark Ember */
-    [data-theme="dark-ember"] {
-      --bg-body: #0c0d10;
-      --bg-sidebar: #121418;
-      --bg-card: #181b22;
-      --bg-card-hover: #20242e;
-      --border-color: #242935;
-      --accent: #ff6a00;
-      --accent-contrast: #ee0979;
-      --accent-glow: rgba(255, 106, 0, 0.45);
-      --pill-soft: rgba(255, 106, 0, 0.12);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --danger: #f43f5e;
-      --success: #10b981;
-      --iframe-bg: #14171f;
-    }
-
-    /* 3. Light Clean */
-    [data-theme="light-clean"] {
-      --bg-body: #f8fafc;
+    /* 2. LIGHT THEME */
+    [data-theme="light"] {
+      --bg-body: #f4f6f9;
       --bg-sidebar: #ffffff;
       --bg-card: #ffffff;
-      --bg-card-hover: #f1f5f9;
+      --bg-card-hover: #f8fafc;
       --border-color: #e2e8f0;
       --accent: #ea580c;
       --accent-contrast: #c2410c;
-      --accent-glow: rgba(234, 88, 12, 0.25);
+      --accent-glow: rgba(234, 88, 12, 0.2);
       --pill-soft: rgba(234, 88, 12, 0.08);
       --text-main: #0f172a;
       --text-muted: #64748b;
       --danger: #ef4444;
       --success: #16a34a;
-      --iframe-bg: #f8fafc;
-    }
-
-    /* 4. Light Ocean */
-    [data-theme="light-ocean"] {
-      --bg-body: #f0f4f8;
-      --bg-sidebar: #ffffff;
-      --bg-card: #ffffff;
-      --bg-card-hover: #e8f0fe;
-      --border-color: #cbd5e1;
-      --accent: #1155cc;
-      --accent-contrast: #0d44a4;
-      --accent-glow: rgba(17, 85, 204, 0.3);
-      --pill-soft: rgba(17, 85, 204, 0.09);
-      --text-main: #0b192c;
-      --text-muted: #64748b;
-      --danger: #dc2626;
-      --success: #059669;
-      --iframe-bg: #ffffff;
     }
 
     * {
@@ -121,10 +84,22 @@
       position: relative;
     }
 
-    /* LOGO MASKING COLOR TINT */
-    .rt-logo-box {
-      width: 44px;
-      height: 44px;
+    /* LOGO BESAR & DI TENGAH */
+    .brand-center-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px 8px 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 16px;
+    }
+
+    .rt-logo-box-lg {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 12px;
       background-color: var(--logo-tint);
       -webkit-mask-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png');
       mask-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png');
@@ -135,8 +110,10 @@
       -webkit-mask-position: center;
       mask-position: center;
       flex-shrink: 0;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.25s ease, transform 0.2s ease;
+      filter: drop-shadow(0 4px 14px var(--accent-glow));
     }
+    .rt-logo-box-lg:hover { transform: scale(1.05); }
 
     .flag-indonesia {
       width: 22px;
@@ -145,7 +122,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       box-shadow: 0 1px 3px rgba(0,0,0,0.3);
       flex-shrink: 0;
     }
@@ -168,23 +145,18 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       width: 100%;
-      max-width: 430px;
-      padding: 34px;
-      border-radius: 18px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      max-width: 420px;
+      padding: 36px 30px;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      text-align: center;
       animation: springBounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .auth-brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 22px;
     }
 
     .input-group {
       position: relative;
       margin-bottom: 16px;
+      text-align: left;
     }
 
     .input-group label {
@@ -197,26 +169,23 @@
 
     .input-control {
       width: 100%;
-      padding: 10px 40px 10px 14px;
+      padding: 11px 40px 11px 14px;
       background: var(--bg-body);
       border: 1px solid var(--border-color);
-      border-radius: 9px;
+      border-radius: 10px;
       color: var(--text-main);
       outline: none;
       font-size: 0.9rem;
     }
-
     .input-control:focus { border-color: var(--accent); }
 
     .toggle-pwd {
       position: absolute;
       right: 14px;
-      bottom: 12px;
+      bottom: 13px;
       cursor: pointer;
       color: var(--text-muted);
     }
-
-    .toggle-pwd:hover { color: var(--text-main); }
 
     .btn-main {
       width: 100%;
@@ -224,7 +193,7 @@
       background: var(--accent);
       color: #ffffff;
       border: none;
-      border-radius: 9px;
+      border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
       box-shadow: 0 4px 15px var(--accent-glow);
@@ -242,7 +211,7 @@
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      padding: 20px 14px;
+      padding: 16px 12px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       user-select: none;
@@ -250,26 +219,22 @@
     }
 
     aside.collapsed {
-      width: 76px;
+      width: 80px;
     }
-
-    aside.collapsed .brand-title,
+    aside.collapsed .brand-center-container .brand-title,
+    aside.collapsed .brand-center-container .brand-sub,
     aside.collapsed .nav-text,
     aside.collapsed .user-details {
       display: none;
     }
-
+    aside.collapsed .rt-logo-box-lg {
+      width: 46px;
+      height: 46px;
+      margin-bottom: 0;
+    }
     aside.collapsed .nav-item {
       justify-content: center;
-      padding: 12px 0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-      padding: 0 6px;
+      padding: 14px 0;
     }
 
     nav {
@@ -303,13 +268,11 @@
       box-shadow: none;
       transform: scaleY(0.95);
     }
-
     .nav-indicator.locked {
       background: var(--accent);
       box-shadow: 0 8px 24px var(--accent-glow);
       transform: scaleY(1);
     }
-
     .nav-indicator.stretching {
       transform: scaleY(1.15) scaleX(0.96);
     }
@@ -327,21 +290,20 @@
       font-size: 0.9rem;
       font-weight: 500;
     }
-
     .nav-item.active {
       color: #ffffff !important;
       font-weight: 600;
     }
-
     .nav-item i {
       font-size: 1.15rem;
       width: 24px;
       text-align: center;
     }
 
+    /* USER AVATAR DISPLAY (FOTO HARUS ADA) */
     .avatar-circle {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: var(--accent);
       color: #ffffff;
@@ -349,25 +311,28 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
       border: 2px solid var(--border-color);
       flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
 
-    /* MAIN WORKSPACE */
+    /* WORKSPACE */
     main {
       flex: 1;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
       position: relative;
+      background: var(--bg-body);
     }
 
     header {
-      height: 72px;
-      padding: 0 28px;
+      height: 68px;
+      padding: 0 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -388,7 +353,7 @@
       background: transparent;
       border: none;
       color: var(--text-main);
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       cursor: pointer;
       width: 38px;
       height: 38px;
@@ -402,11 +367,11 @@
     .greeting-badge {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      padding: 8px 14px;
+      padding: 7px 14px;
       border-radius: 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: 0.85rem;
     }
 
@@ -456,189 +421,163 @@
       font-size: 0.85rem;
       font-weight: 600;
     }
-    .btn-logout-header:hover {
-      background: var(--danger);
-      color: #ffffff;
-    }
+    .btn-logout-header:hover { background: var(--danger); color: #ffffff; }
 
-    /* CONTENT TABS & STAGGER BOUNCE */
+    /* CONTENT TABS */
     .content-container {
-      padding: 24px 28px;
+      padding: 0;
       flex: 1;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+      position: relative;
     }
 
     .tab-view {
       display: none;
       flex: 1;
+      width: 100%;
+      height: 100%;
+      position: relative;
     }
     .tab-view.active {
       display: flex;
       flex-direction: column;
     }
 
-    .tab-view.active .stagger {
-      animation: springBounceIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-      animation-delay: calc(var(--i) * 0.05s);
-    }
-
-    .tab-view.leaving .stagger {
-      animation: springBounceOut 0.28s cubic-bezier(0.36, 0, 0.66, -0.56) both;
-      animation-delay: calc(var(--i) * 0.035s);
-    }
-
-    @keyframes springBounceIn {
-      0% { opacity: 0; transform: scale(0.94) translateY(16px); }
-      70% { transform: scale(1.015) translateY(-3px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    @keyframes springBounceOut {
-      0% { opacity: 1; transform: scale(1) translateY(0); }
-      30% { transform: scale(1.02) translateY(-4px); }
-      100% { opacity: 0; transform: scale(0.94) translateY(18px); }
-    }
-
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 24px;
-    }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 22px;
-    }
-
-    .card-accent {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-contrast) 100%);
-      color: #ffffff;
-      border: none;
-      box-shadow: 0 10px 25px -5px var(--accent-glow);
-    }
-
-    .card-title {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      font-weight: 500;
-    }
-
-    .card-accent .card-title {
-      color: rgba(255, 255, 255, 0.85);
-    }
-
-    .card-val {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    /* IFRAME MODERN EMBED SYSTEM */
-    .iframe-wrapper {
+    /* SEAMLESS FULL IFRAME (TANPA BINGKAI CARD) */
+    .seamless-iframe-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      flex: 1;
+      background: transparent;
       display: flex;
       flex-direction: column;
-      flex: 1;
-      height: calc(100vh - 170px);
-      min-height: 520px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     }
 
-    .iframe-toolbar {
-      height: 48px;
-      background: var(--bg-sidebar);
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      user-select: none;
-    }
-
-    .iframe-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.82rem;
-      font-weight: 600;
-    }
-
-    .iframe-url-tag {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      background: var(--bg-card);
-      padding: 3px 8px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-    }
-
-    .iframe-actions {
+    .seamless-floating-bar {
+      position: absolute;
+      top: 14px;
+      right: 20px;
+      z-index: 50;
       display: flex;
       align-items: center;
       gap: 8px;
+      background: var(--bg-sidebar);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 5px 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
     }
+    .seamless-floating-bar:hover { opacity: 1; }
 
-    .btn-iframe-tool {
+    .btn-bar-action {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 5px 10px;
+      padding: 4px 10px;
       border-radius: 6px;
       font-size: 0.75rem;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
+      text-decoration: none;
     }
-    .btn-iframe-tool:hover {
-      background: var(--bg-card-hover);
-      color: var(--accent);
-    }
+    .btn-bar-action:hover { background: var(--accent); color: #ffffff; }
 
-    .iframe-viewport-container {
-      position: relative;
-      flex: 1;
+    .seamless-iframe {
       width: 100%;
-      height: calc(100% - 48px);
-      background: var(--iframe-bg);
+      height: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      display: block;
+      flex: 1;
     }
 
-    .iframe-app {
+    /* MOCKUP IPHONE ASLI (FULL FRAME IMAGE) */
+    .phone-mockup-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+      background: radial-gradient(circle at center, rgba(255, 85, 32, 0.05) 0%, transparent 70%);
+    }
+
+    .iphone-stage {
+      position: relative;
+      /* Rasio proporsional mockup iPhone gambar asli */
+      width: calc(380px * var(--phone-scale));
+      height: calc(770px * var(--phone-scale));
+      max-width: 90vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 25px 50px rgba(0,0,0,0.55));
+      transition: width 0.2s ease, height 0.2s ease;
+    }
+
+    /* Overlay Gambar Frame iPhone Asli */
+    .iphone-frame-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    /* Screen Viewport Web tepat di balik bezel & notch gambar asli */
+    .iphone-screen-viewport {
+      position: absolute;
+      top: 2.2%;
+      bottom: 2.2%;
+      left: 4.8%;
+      right: 4.8%;
+      border-radius: calc(44px * var(--phone-scale));
+      overflow: hidden;
+      z-index: 10;
+      background: #000000;
+    }
+
+    .iphone-screen-viewport iframe {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
-      background: transparent;
     }
 
-    /* Iframe Loader Spinner */
-    .iframe-loading-overlay {
-      position: absolute;
-      inset: 0;
+    /* SETTINGS VIEW */
+    .settings-scroll-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 30px;
+    }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
       background: var(--bg-card);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      z-index: 5;
-      transition: opacity 0.3s ease;
-    }
-    .iframe-loading-overlay.loaded {
-      opacity: 0;
-      pointer-events: none;
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     }
 
-    /* User Management Table */
     .table-container {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -669,9 +608,7 @@
       border-bottom: 1px solid var(--border-color);
     }
 
-    tr:hover td {
-      background: var(--bg-card-hover);
-    }
+    tr:hover td { background: var(--bg-card-hover); }
 
     .btn-table {
       padding: 6px 10px;
@@ -702,9 +639,8 @@
       border: 1px solid var(--border-color);
       width: 100%;
       max-width: 520px;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 26px;
-      animation: springBounceIn 0.35s ease;
       max-height: 90vh;
       overflow-y: auto;
     }
@@ -715,12 +651,7 @@
       align-items: center;
       margin-bottom: 18px;
     }
-
-    .close-modal {
-      cursor: pointer;
-      color: var(--text-muted);
-      font-size: 1.25rem;
-    }
+    .close-modal { cursor: pointer; color: var(--text-muted); font-size: 1.25rem; }
 
     .pulse-live {
       width: 8px;
@@ -738,18 +669,26 @@
       100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
-    /* Fullscreen Mode for Iframe */
-    .iframe-wrapper.fullscreen-mode {
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      height: 100vh !important;
-      border-radius: 0;
-      border: none;
+    /* Staggered animations */
+    .tab-view.active .stagger {
+      animation: springBounceIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      animation-delay: calc(var(--i) * 0.05s);
+    }
+    .tab-view.leaving .stagger {
+      animation: springBounceOut 0.28s cubic-bezier(0.36, 0, 0.66, -0.56) both;
+      animation-delay: calc(var(--i) * 0.035s);
     }
 
-    @media (max-width: 1024px) {
-      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    @keyframes springBounceIn {
+      0% { opacity: 0; transform: scale(0.95) translateY(16px); }
+      70% { transform: scale(1.01) translateY(-2px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes springBounceOut {
+      0% { opacity: 1; transform: scale(1) translateY(0); }
+      30% { transform: scale(1.02) translateY(-4px); }
+      100% { opacity: 0; transform: scale(0.95) translateY(18px); }
     }
 
     @media (max-width: 768px) {
@@ -763,10 +702,9 @@
       }
       aside.open { left: 0; }
       .weton-badge { display: none; }
-      .content-container { padding: 16px; }
-      .metrics-grid { grid-template-columns: 1fr; }
       header { padding: 0 16px; }
-      .iframe-wrapper { height: calc(100vh - 140px); }
+      .phone-mockup-wrapper { padding: 10px; }
+      .iphone-stage { width: 92vw; height: calc(92vw * 2.02); }
     }
   </style>
 </head>
@@ -775,19 +713,16 @@
   <!-- 1. AUTH SCREEN -->
   <div id="auth-screen">
     <div class="auth-card">
-      <div class="auth-brand">
-        <div class="rt-logo-box"></div>
-        <div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div class="flag-indonesia">
-              <div class="flag-red"></div>
-              <div class="flag-white"></div>
-            </div>
-            <h3 class="fw-bold" style="font-size: 0.95rem; letter-spacing: -0.3px;">DASHBOARD PUSAT</h3>
-          </div>
-          <h2 class="fw-bold" style="font-size: 1.25rem; color: var(--accent);">RT 2 Paslor</h2>
+      <div class="rt-logo-box-lg"></div>
+      
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 6px;">
+        <div class="flag-indonesia">
+          <div class="flag-red"></div>
+          <div class="flag-white"></div>
         </div>
+        <h3 class="fw-bold" style="font-size: 0.95rem; letter-spacing: -0.2px;">DASHBOARD PUSAT</h3>
       </div>
+      <h2 class="fw-bold" style="font-size: 1.35rem; color: var(--accent); margin-bottom: 24px;">RT 2 Paslor</h2>
 
       <div class="input-group">
         <label>Username</label>
@@ -815,26 +750,28 @@
 
   <!-- 2. SIDEBAR -->
   <aside id="main-sidebar">
-    <div class="brand">
-      <div class="rt-logo-box"></div>
+    <!-- LOGO BESAR & DI TENGAH -->
+    <div class="brand-center-container">
+      <div class="rt-logo-box-lg"></div>
       <div class="brand-title">
-        <div style="display: flex; align-items: center; gap: 6px;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 2px;">
           <div class="flag-indonesia">
             <div class="flag-red"></div>
             <div class="flag-white"></div>
           </div>
-          <div class="fw-semi" style="font-size: 0.75rem; letter-spacing: -0.2px;">DASHBOARD PUSAT</div>
+          <span class="fw-semi" style="font-size: 0.72rem; letter-spacing: -0.2px;">DASHBOARD PUSAT</span>
         </div>
-        <div class="fw-bold" style="font-size: 1.05rem; color: var(--accent);">RT 2 PASLOR</div>
+        <div class="fw-bold" style="font-size: 1.1rem; color: var(--accent);">RT 2 PASLOR</div>
       </div>
     </div>
 
+    <!-- NAVIGATION MENU -->
     <nav id="nav-wrapper">
       <div class="nav-indicator locked" id="nav-indicator"></div>
       
-      <div class="nav-item active" data-tab="tab-overview">
-        <i class="fa-solid fa-gauge-high"></i>
-        <span class="nav-text">Overview</span>
+      <div class="nav-item active" data-tab="tab-portal">
+        <i class="fa-solid fa-mobile-screen"></i>
+        <span class="nav-text">Portal Warga</span>
       </div>
       <div class="nav-item" data-tab="tab-warga">
         <i class="fa-solid fa-people-roof"></i>
@@ -850,9 +787,10 @@
       </div>
     </nav>
 
-    <div style="padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+    <!-- FOTO PENGURUS & LOGOUT DI SIDEBAR -->
+    <div style="padding-top: 14px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
       <div class="user-details" style="display: flex; align-items: center; gap: 10px;">
-        <div class="avatar-circle" id="nav-avatar">G</div>
+        <div class="avatar-circle user-avatar-el" id="sidebar-user-avatar">G</div>
         <div>
           <div class="fw-semi" style="font-size: 0.85rem;" id="nav-user-name">Mas Gaga</div>
           <div style="font-size: 0.7rem; color: var(--text-muted);" id="nav-user-role">Administrator</div>
@@ -864,7 +802,7 @@
     </div>
   </aside>
 
-  <!-- 3. WORKSPACE -->
+  <!-- 3. WORKSPACE UTAMA -->
   <main>
     <header>
       <div class="header-left">
@@ -872,9 +810,13 @@
           <i class="fa-solid fa-bars-staggered"></i>
         </button>
 
+        <!-- FOTO & GREETING DI HEADER -->
         <div class="greeting-badge">
-          <span class="pulse-live"></span>
-          <span class="fw-semi" id="txt-welcome-greeting">Selamat Datang, Pengurus!</span>
+          <div class="avatar-circle user-avatar-el" style="width: 32px; height: 32px; font-size: 0.8rem;" id="header-user-avatar">G</div>
+          <div>
+            <span class="pulse-live"></span>
+            <span class="fw-semi" id="txt-welcome-greeting" style="margin-left: 4px;">Selamat Datang, Mas Gaga!</span>
+          </div>
         </div>
 
         <div class="weton-badge">
@@ -884,12 +826,11 @@
       </div>
 
       <div class="header-right">
-        <button class="btn-icon" id="btn-sync-live" title="Sinkronkan Ringkasan Live">
-          <i class="fa-solid fa-arrows-rotate"></i>
+        <!-- SWITCH TEMA HANYA DARK & LIGHT -->
+        <button class="btn-icon" id="btn-theme-switch" title="Ganti Mode Dark / Light">
+          <i class="fa-solid fa-moon"></i>
         </button>
-        <button class="btn-icon" id="btn-theme-quick" title="Ganti Mode Tampilan">
-          <i class="fa-solid fa-palette"></i>
-        </button>
+        <!-- LOGOUT UNIVERSAL -->
         <button class="btn-logout-header" id="btn-logout-header" title="Keluar dari Dashboard">
           <i class="fa-solid fa-power-off"></i>
           <span>Keluar</span>
@@ -899,229 +840,170 @@
 
     <div class="content-container">
 
-      <!-- TAB 1: OVERVIEW -->
-      <section id="tab-overview" class="tab-view active">
-        <div class="stagger" style="--i:1; margin-bottom: 22px;">
-          <h2 class="fw-bold" style="font-size: 1.45rem;">Pusat Ringkasan Real-Time</h2>
-          <p style="font-size: 0.82rem; color: var(--text-muted);">Monitoring data terpadu warga dan keuangan RT 2 Pasekan Lor</p>
-        </div>
-
-        <div class="metrics-grid">
-          <div class="card card-accent stagger" style="--i:2;">
-            <div class="card-title">Saldo Kas Utama</div>
-            <div class="card-val" id="metric-saldo">Rp 11.380.600</div>
-            <div style="font-size: 0.72rem; margin-top: 10px; opacity: 0.9;">
-              <i class="fa-solid fa-vault"></i> Terhubung Buku Kas Kemenkeu
+      <!-- TAB 1: PORTAL WARGA (MOCKUP SMARTPHONE MENGGUNAKAN GAMBAR ASLI PENUH) -->
+      <section id="tab-portal" class="tab-view active">
+        <div class="phone-mockup-wrapper">
+          <div class="iphone-stage" id="iphone-stage-box">
+            <!-- Frame Gambar Smartphone iPhone Asli -->
+            <img class="iphone-frame-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhc2mSTY6V0n2aOmpgETFjj2HRtjlIYbYs79STZw6D6v5Gx9Nq3V5_qG7PDUiNbdP64eH36Dw9kd0TaXBiY4dsdUZQAMf2gMBcAiecBlfp7_bKqKrNIcOEQr2ftvz5-92xONYONwQTLsXV-QYSJfJx3dhBgTooZ9xb9jMfw8BYabFCyLH6nSssyAbQKlRw/s1600/iphone_18_preview.png" alt="iPhone Frame">
+            
+            <!-- Layar Aktif Web https://rt2pasekanlor.id/ -->
+            <div class="iphone-screen-viewport">
+              <iframe id="frame-portal" src="https://rt2pasekanlor.id/" allow="geolocation; microphone; camera; clipboard-read; clipboard-write;"></iframe>
             </div>
           </div>
-          <div class="card stagger" style="--i:3;">
-            <div class="card-title">Total Warga Terdata</div>
-            <div class="card-val" id="metric-warga">46 KK / Jiwa</div>
-            <div style="font-size: 0.72rem; color: var(--accent); margin-top: 10px; font-weight: 600;">
-              <i class="fa-solid fa-address-card"></i> Database Warga Aktif
-            </div>
-          </div>
-          <div class="card stagger" style="--i:4;">
-            <div class="card-title">Pemasukan Kas</div>
-            <div class="card-val" style="color: var(--success);" id="metric-masuk">Rp 23.363.800</div>
-            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px;">
-              <i class="fa-solid fa-arrow-trend-up"></i> Total Iuran & Jimpitan
-            </div>
-          </div>
-          <div class="card stagger" style="--i:5;">
-            <div class="card-title">Petugas Ronda Malam Ini</div>
-            <div class="card-val" style="font-size: 1.05rem; line-height: 1.4;" id="metric-ronda">YULIANTO, TWENTY A., DEDI S.</div>
-            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px;">
-              <i class="fa-solid fa-person-military-pointing"></i> Pos Kamling RT 2
-            </div>
-          </div>
-        </div>
-
-        <div class="card stagger" style="--i:6; margin-top: 24px;">
-          <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 8px;">
-            <i class="fa-solid fa-circle-check" style="color: var(--success);"></i> Desain Dashboard Terpadu iFrame Aktif
-          </h3>
-          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-            Modul <b>Data Warga</b> dan <b>Kemenkeu RT</b> dimuat langsung secara mulus di dalam container iFrame tanpa meninggalkan dashboard ini. Desain bingkai, toolbar navigasi, dan skema warna diselaraskan secara otomatis dengan tema dashboard (Dark Monokrom, Dark Ember, Light Clean, dan Light Ocean).
-          </p>
         </div>
       </section>
 
-      <!-- TAB 2: DATA WARGA (IFRAME EMBED) -->
+      <!-- TAB 2: DATA WARGA (SEAMLESS FULL TANPA BINGKAI CARD & BISA SIMPAN DATA) -->
       <section id="tab-warga" class="tab-view">
-        <div class="iframe-wrapper stagger" id="wrapper-warga" style="--i:1;">
-          <div class="iframe-toolbar">
-            <div class="iframe-info">
-              <i class="fa-solid fa-people-roof" style="color: var(--accent);"></i>
-              <span>Sistem Data Warga RT 2</span>
-              <span class="iframe-url-tag">rt2pasekanlor.id/data-warga</span>
-            </div>
-            <div class="iframe-actions">
-              <button class="btn-iframe-tool" onclick="reloadIframe('frame-warga', 'loader-warga')">
-                <i class="fa-solid fa-rotate-right"></i> Reload
-              </button>
-              <button class="btn-iframe-tool" onclick="toggleFullscreenIframe('wrapper-warga')">
-                <i class="fa-solid fa-expand"></i> Fullscreen
-              </button>
-              <a href="https://rt2pasekanlor.id/data-warga" target="_blank" class="btn-iframe-tool" style="text-decoration:none;">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Tab Baru
-              </a>
-            </div>
+        <div class="seamless-iframe-container">
+          <div class="seamless-floating-bar">
+            <span style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted);"><i class="fa-solid fa-people-roof" style="color:var(--accent);"></i> Data Warga</span>
+            <button class="btn-bar-action" onclick="reloadFrame('frame-warga')"><i class="fa-solid fa-rotate-right"></i> Reload</button>
+            <a href="https://rt2pasekanlor.id/data-warga" target="_blank" class="btn-bar-action"><i class="fa-solid fa-arrow-up-right-from-square"></i> Tab Baru</a>
           </div>
-          
-          <div class="iframe-viewport-container">
-            <div class="iframe-loading-overlay" id="loader-warga">
-              <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--accent);"></i>
-              <span style="font-size: 0.85rem; color: var(--text-muted);">Memuat Sistem Data Warga...</span>
-            </div>
-            <iframe id="frame-warga" class="iframe-app" data-src="https://rt2pasekanlor.id/data-warga" allow="clipboard-read; clipboard-write; camera"></iframe>
-          </div>
+          <iframe id="frame-warga" class="seamless-iframe" src="https://rt2pasekanlor.id/data-warga" allow="geolocation; microphone; camera; clipboard-read; clipboard-write; forms; scripts; same-origin"></iframe>
         </div>
       </section>
 
-      <!-- TAB 3: KEMENKEU RT (IFRAME EMBED) -->
+      <!-- TAB 3: KEMENKEU RT (SEAMLESS FULL TANPA BINGKAI CARD) -->
       <section id="tab-kas" class="tab-view">
-        <div class="iframe-wrapper stagger" id="wrapper-kas" style="--i:1;">
-          <div class="iframe-toolbar">
-            <div class="iframe-info">
-              <i class="fa-solid fa-wallet" style="color: var(--accent);"></i>
-              <span>Sistem Keuangan Kemenkeu RT 2</span>
-              <span class="iframe-url-tag">rt2pasekanlor.id/kemenkeu</span>
-            </div>
-            <div class="iframe-actions">
-              <button class="btn-iframe-tool" onclick="reloadIframe('frame-kas', 'loader-kas')">
-                <i class="fa-solid fa-rotate-right"></i> Reload
-              </button>
-              <button class="btn-iframe-tool" onclick="toggleFullscreenIframe('wrapper-kas')">
-                <i class="fa-solid fa-expand"></i> Fullscreen
-              </button>
-              <a href="https://rt2pasekanlor.id/kemenkeu" target="_blank" class="btn-iframe-tool" style="text-decoration:none;">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Tab Baru
-              </a>
-            </div>
+        <div class="seamless-iframe-container">
+          <div class="seamless-floating-bar">
+            <span style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted);"><i class="fa-solid fa-wallet" style="color:var(--accent);"></i> Kemenkeu RT 2</span>
+            <button class="btn-bar-action" onclick="reloadFrame('frame-kas')"><i class="fa-solid fa-rotate-right"></i> Reload</button>
+            <a href="https://rt2pasekanlor.id/kemenkeu" target="_blank" class="btn-bar-action"><i class="fa-solid fa-arrow-up-right-from-square"></i> Tab Baru</a>
           </div>
-          
-          <div class="iframe-viewport-container">
-            <div class="iframe-loading-overlay" id="loader-kas">
-              <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--accent);"></i>
-              <span style="font-size: 0.85rem; color: var(--text-muted);">Memuat Sistem Kemenkeu RT 2...</span>
-            </div>
-            <iframe id="frame-kas" class="iframe-app" data-src="https://rt2pasekanlor.id/kemenkeu" allow="clipboard-read; clipboard-write; camera"></iframe>
-          </div>
+          <iframe id="frame-kas" class="seamless-iframe" src="https://rt2pasekanlor.id/kemenkeu" allow="geolocation; microphone; camera; clipboard-read; clipboard-write; forms; scripts; same-origin"></iframe>
         </div>
       </section>
 
       <!-- TAB 4: SETTINGS & AKUN -->
       <section id="tab-settings" class="tab-view">
-        <h2 class="stagger fw-bold" style="--i:1; font-size: 1.45rem; margin-bottom: 20px;">Pengaturan & Manajemen Akun</h2>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
-          
-          <!-- Box 1: Edit Profil Saya & Ganti Foto -->
-          <div class="card stagger" style="--i:2;">
-            <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 16px;">
-              <i class="fa-solid fa-user-pen" style="color: var(--accent);"></i> Profil Saya
-            </h3>
+        <div class="settings-scroll-container">
+          <div class="settings-grid">
             
-            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 18px;">
-              <div class="avatar-circle" id="my-profile-avatar-preview" style="width: 64px; height: 64px; font-size: 1.5rem;">G</div>
-              <div>
-                <label class="btn-table btn-edit" style="display: inline-block; cursor: pointer; padding: 8px 12px;">
-                  <i class="fa-solid fa-camera"></i> Unggah Foto
-                  <input type="file" id="input-upload-foto" accept="image/*" style="display: none;">
-                </label>
-                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">PNG/JPG maks 1MB</div>
-              </div>
-            </div>
-
-            <div class="input-group">
-              <label>Nama Lengkap</label>
-              <input type="text" id="my-name" class="input-control">
-            </div>
-            <div class="input-group">
-              <label>Username</label>
-              <input type="text" id="my-username" class="input-control">
-            </div>
-            <div class="input-group">
-              <label>Password Baru (Kosongkan jika tidak diganti)</label>
-              <input type="password" id="my-password" class="input-control" placeholder="••••••••">
-            </div>
-
-            <button class="btn-main" id="btn-save-my-profile" style="margin-top: 10px;">
-              <i class="fa-solid fa-floppy-disk"></i> Simpan Profil Saya
-            </button>
-          </div>
-
-          <!-- Box 2: Kustomisasi Logo & Warna -->
-          <div class="card stagger" style="--i:3;">
-            <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 14px;">
-              <i class="fa-solid fa-palette" style="color: var(--accent);"></i> Kustomisasi Logo & Tema
-            </h3>
-            
-            <div style="margin-bottom: 16px;">
-              <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Warna Logo RT 2:</label>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <input type="color" id="input-logo-color" value="#ff5520" style="width: 44px; height: 38px; border: none; cursor: pointer; border-radius: 8px; background: transparent;">
-                <div class="rt-logo-box" id="logo-preview-box"></div>
-                <span style="font-size: 0.75rem; color: var(--text-muted);">Ubah warna logo secara langsung</span>
-              </div>
-            </div>
-
-            <div style="margin-top: 18px;">
-              <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Pilihan Preset Tema Dashboard & iFrame:</label>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
-                  <input type="radio" name="theme-radio" value="dark-grey"> Dark Monokrom
-                </label>
-                <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
-                  <input type="radio" name="theme-radio" value="dark-ember"> Dark Ember
-                </label>
-                <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
-                  <input type="radio" name="theme-radio" value="light-clean"> Light Clean
-                </label>
-                <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
-                  <input type="radio" name="theme-radio" value="light-ocean"> Light Ocean
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Box 3: Tabel Manajemen Akun (Tambah, Edit, Hapus) -->
-        <div class="card stagger" id="box-manage-users" style="--i:4; margin-top: 24px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <div>
-              <h3 class="fw-semi" style="font-size: 1rem;">
-                <i class="fa-solid fa-users-gear" style="color: var(--accent);"></i> Manajemen Akun Pengurus
+            <!-- Box 1: Profil Saya & Upload Foto ke Google Drive -->
+            <div class="card stagger" style="--i:1;">
+              <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 16px;">
+                <i class="fa-solid fa-user-pen" style="color: var(--accent);"></i> Profil Saya
               </h3>
-              <p style="font-size: 0.75rem; color: var(--text-muted);">
-                Tersinkron dengan spreadsheet DB_USERS_RT2_PASLOR (Tambah, Edit, Hapus)
-              </p>
+              
+              <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 18px;">
+                <div class="avatar-circle user-avatar-el" id="my-profile-avatar-preview" style="width: 70px; height: 70px; font-size: 1.6rem;">G</div>
+                <div>
+                  <label class="btn-table btn-edit" style="display: inline-block; cursor: pointer; padding: 8px 14px; border-radius: 8px;">
+                    <i class="fa-solid fa-camera"></i> Ganti Foto Profil
+                    <input type="file" id="input-upload-foto" accept="image/*" style="display: none;">
+                  </label>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">
+                    <i class="fa-brands fa-google-drive"></i> Tersimpan otomatis ke Google Drive
+                  </div>
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="my-name" class="input-control">
+              </div>
+              <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="my-username" class="input-control">
+              </div>
+              <div class="input-group">
+                <label>Password Baru (Kosongkan jika tetap)</label>
+                <input type="password" id="my-password" class="input-control" placeholder="••••••••">
+              </div>
+
+              <button class="btn-main" id="btn-save-my-profile" style="margin-top: 10px;">
+                <i class="fa-solid fa-floppy-disk"></i> Simpan Profil Saya
+              </button>
             </div>
-            <button class="btn-main" id="btn-add-user" style="width: auto; padding: 8px 14px; font-size: 0.8rem;">
-              <i class="fa-solid fa-user-shield"></i> Tambah Akun
-            </button>
+
+            <!-- Box 2: Pengaturan Tema, Ukuran Mockup Smartphone & Warna Logo -->
+            <div class="card stagger" style="--i:2;">
+              <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 16px;">
+                <i class="fa-solid fa-palette" style="color: var(--accent);"></i> Pengaturan Tema & Mockup
+              </h3>
+              
+              <!-- Pilihan Tema Hanya 2 -->
+              <div style="margin-bottom: 20px;">
+                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Mode Tampilan (Hanya 2 Pilihan):</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <label id="theme-btn-dark" style="background: var(--bg-body); border: 2px solid var(--accent); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 600;">
+                    <input type="radio" name="theme-radio-choice" value="dark" checked>
+                    <i class="fa-solid fa-moon"></i> Dark Mode
+                  </label>
+                  <label id="theme-btn-light" style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 600;">
+                    <input type="radio" name="theme-radio-choice" value="light">
+                    <i class="fa-solid fa-sun"></i> Light Mode
+                  </label>
+                </div>
+              </div>
+
+              <!-- PENGATUR UKURAN MOCKUP SMARTPHONE -->
+              <div style="margin-bottom: 20px; padding: 14px; background: var(--bg-body); border-radius: 10px; border: 1px solid var(--border-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <label style="font-size: 0.82rem; font-weight: 600;"><i class="fa-solid fa-mobile-screen"></i> Ukuran Mockup Smartphone:</label>
+                  <span id="txt-phone-scale" style="font-size: 0.8rem; font-weight: 700; color: var(--accent);">100%</span>
+                </div>
+                <input type="range" id="input-phone-scale" min="0.7" max="1.3" step="0.05" value="1" style="width: 100%; accent-color: var(--accent); cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">
+                  <span>Kecil (70%)</span>
+                  <span>Standar (100%)</span>
+                  <span>Besar (130%)</span>
+                </div>
+              </div>
+
+              <!-- Warna Logo -->
+              <div style="margin-top: 10px;">
+                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Warna Logo RT 2:</label>
+                <div style="display: flex; align-items: center; gap: 14px;">
+                  <input type="color" id="input-logo-color" value="#ff5520" style="width: 48px; height: 42px; border: none; cursor: pointer; border-radius: 8px; background: transparent;">
+                  <div class="rt-logo-box-lg" style="width: 48px; height: 48px; margin: 0;"></div>
+                  <span style="font-size: 0.78rem; color: var(--text-muted);">Ubah warna logo secara langsung</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Foto</th>
-                  <th>Username</th>
-                  <th>Nama Pengurus</th>
-                  <th>Role</th>
-                  <th>Edit Warga</th>
-                  <th>Hapus Warga</th>
-                  <th>Edit Kas</th>
-                  <th>Hapus Kas</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-users">
-                <tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Memuat daftar akun pengurus...</td></tr>
-              </tbody>
-            </table>
+          <!-- Box 3: Manajemen Akun (Tambah, Edit, Hapus) -->
+          <div class="card stagger" id="box-manage-users" style="--i:3; max-width: 1100px; margin: 24px auto 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div>
+                <h3 class="fw-semi" style="font-size: 1rem;">
+                  <i class="fa-solid fa-users-gear" style="color: var(--accent);"></i> Manajemen Akun Pengurus
+                </h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">
+                  Sinkron dengan spreadsheet DB_USERS_RT2_PASLOR (Tambah, Edit, Hapus)
+                </p>
+              </div>
+              <button class="btn-main" id="btn-add-user" style="width: auto; padding: 8px 16px; font-size: 0.8rem;">
+                <i class="fa-solid fa-user-shield"></i> Tambah Akun
+              </button>
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Foto</th>
+                    <th>Username</th>
+                    <th>Nama Pengurus</th>
+                    <th>Role</th>
+                    <th>Edit Warga</th>
+                    <th>Hapus Warga</th>
+                    <th>Edit Kas</th>
+                    <th>Hapus Kas</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-users">
+                  <tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Memuat daftar akun pengurus...</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
@@ -1176,6 +1058,7 @@
 
   <script>
     const API_MASTER_URL = "https://script.google.com/macros/s/AKfycbzAfgeS_uKiR2XJYwLfxRnjJHLQqcOS5oQxhRDW8bZtQ1-RLMlc4geZz0mA_nCi5p8/exec";
+    const DRIVE_FOLDER_ID = "1Xs1OLonr2rckCY-zKsFMY4qFporZ2AFY";
 
     let currentUser = null;
     let localUsers = [];
@@ -1183,15 +1066,15 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       initThemesAndLogo();
+      initPhoneScale();
       initJawaCalendar();
       checkSavedCredentials();
       setupLogoutButtons();
-      setupIframeLoaders();
     });
 
-    // 1. TEMA & WARNA LOGO
+    // 1. TEMA (HANYA 2: DARK & LIGHT) & LOGO COLOR
     function initThemesAndLogo() {
-      const savedTheme = localStorage.getItem('rt2_theme') || 'dark-grey';
+      const savedTheme = localStorage.getItem('rt2_theme') || 'dark';
       applyTheme(savedTheme);
 
       const savedLogoColor = localStorage.getItem('rt2_logo_color') || '#ff5520';
@@ -1202,19 +1085,16 @@
         setLogoColor(e.target.value);
       });
 
-      const radios = document.querySelectorAll('input[name="theme-radio"]');
+      const radios = document.querySelectorAll('input[name="theme-radio-choice"]');
       radios.forEach(r => {
         if (r.value === savedTheme) r.checked = true;
         r.addEventListener('change', (e) => applyTheme(e.target.value));
       });
 
-      const themeList = ['dark-grey', 'dark-ember', 'light-clean', 'light-ocean'];
-      document.getElementById('btn-theme-quick').addEventListener('click', () => {
-        const cur = document.documentElement.getAttribute('data-theme');
-        const nextIdx = (themeList.indexOf(cur) + 1) % themeList.length;
-        applyTheme(themeList[nextIdx]);
-        const targetRadio = document.querySelector(`input[name="theme-radio"][value="${themeList[nextIdx]}"]`);
-        if (targetRadio) targetRadio.checked = true;
+      document.getElementById('btn-theme-switch').addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = cur === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
       });
     }
 
@@ -1224,24 +1104,71 @@
     }
 
     function applyTheme(themeName) {
-      document.documentElement.setAttribute('data-theme', themeName);
-      localStorage.setItem('rt2_theme', themeName);
-      const isDark = themeName.startsWith('dark');
-      document.getElementById('btn-theme-quick').innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
-      
-      // Sinkronkan tema ke iFrame child melalui postMessage & update parameter URL
-      syncThemeToIframes(themeName);
+      const targetTheme = (themeName === 'light') ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', targetTheme);
+      localStorage.setItem('rt2_theme', targetTheme);
+
+      const themeBtn = document.getElementById('btn-theme-switch');
+      if (themeBtn) {
+        themeBtn.innerHTML = targetTheme === 'dark' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+      }
+
+      const cardDark = document.getElementById('theme-btn-dark');
+      const cardLight = document.getElementById('theme-btn-light');
+      if (cardDark && cardLight) {
+        if (targetTheme === 'dark') {
+          cardDark.style.borderColor = 'var(--accent)';
+          cardLight.style.borderColor = 'var(--border-color)';
+        } else {
+          cardLight.style.borderColor = 'var(--accent)';
+          cardDark.style.borderColor = 'var(--border-color)';
+        }
+      }
+
+      const activeRadio = document.querySelector(`input[name="theme-radio-choice"][value="${targetTheme}"]`);
+      if (activeRadio) activeRadio.checked = true;
+
+      syncThemeToIframes(targetTheme);
     }
 
-    function syncThemeToIframes(themeName) {
-      ['frame-warga', 'frame-kas'].forEach(frameId => {
-        const iframe = document.getElementById(frameId);
-        if (iframe && iframe.contentWindow) {
+    // PENGATUR UKURAN MOCKUP SMARTPHONE
+    function initPhoneScale() {
+      const savedScale = localStorage.getItem('rt2_phone_scale') || '1';
+      setPhoneScale(savedScale);
+      const slider = document.getElementById('input-phone-scale');
+      if (slider) {
+        slider.value = savedScale;
+        slider.addEventListener('input', (e) => {
+          setPhoneScale(e.target.value);
+        });
+      }
+    }
+
+    function setPhoneScale(scale) {
+      document.documentElement.style.setProperty('--phone-scale', scale);
+      localStorage.setItem('rt2_phone_scale', scale);
+      const txt = document.getElementById('txt-phone-scale');
+      if (txt) txt.innerText = Math.round(scale * 100) + '%';
+    }
+
+    function syncThemeToIframes(theme) {
+      ['frame-portal', 'frame-warga', 'frame-kas'].forEach(id => {
+        const frame = document.getElementById(id);
+        if (frame && frame.contentWindow) {
           try {
-            iframe.contentWindow.postMessage({ type: 'SET_THEME', theme: themeName }, '*');
+            frame.contentWindow.postMessage({ type: 'SET_THEME', theme: theme }, '*');
           } catch(e) {}
         }
       });
+    }
+
+    function reloadFrame(id) {
+      const frame = document.getElementById(id);
+      if (frame) {
+        const src = frame.src;
+        frame.src = '';
+        setTimeout(() => { frame.src = src; }, 100);
+      }
     }
 
     // 2. KALENDER JAWA & JAM AKURAT
@@ -1275,10 +1202,10 @@
     // 3. SAPAAN PENGURUS
     function updateGreetingBanner() {
       if (!currentUser) return;
-      document.getElementById('txt-welcome-greeting').innerText = `Halo, ${currentUser.nama}!`;
+      document.getElementById('txt-welcome-greeting').innerText = `Selamat Datang, ${currentUser.nama}!`;
     }
 
-    // 4. AUTENTIKASI & LOGOUT UNIVERSAL
+    // 4. AUTENTIKASI DENGAN IKON MATA & SAVE CREDENTIALS
     document.getElementById('login-eye').addEventListener('click', function() {
       const pwdInput = document.getElementById('login-password');
       if (pwdInput.type === "password") {
@@ -1330,7 +1257,6 @@
         }
       })
       .catch(() => {
-        // Fallback default akun Mas Gaga
         if (username === "rt2_admin" && password === "0203") {
           currentUser = {
             username: "rt2_admin",
@@ -1359,6 +1285,8 @@
       document.getElementById('auth-screen').style.display = "none";
       document.getElementById('nav-user-name').innerText = currentUser.nama;
       document.getElementById('nav-user-role').innerText = currentUser.role;
+
+      // Update foto di SEMUA area (Header, Sidebar, Settings)
       updateAvatarDisplay(currentUser.foto, currentUser.nama);
 
       document.getElementById('my-name').value = currentUser.nama;
@@ -1367,25 +1295,20 @@
 
       updateGreetingBanner();
       applyPermissions();
-      fetchOverviewData();
       loadUsersList();
     }
 
-    function updateAvatarDisplay(fotoBase64, name) {
-      const avatarEl = document.getElementById('nav-avatar');
-      const previewEl = document.getElementById('my-profile-avatar-preview');
-      
-      if (fotoBase64 && fotoBase64.startsWith('data:image')) {
-        avatarEl.style.backgroundImage = `url(${fotoBase64})`;
-        avatarEl.innerText = "";
-        previewEl.style.backgroundImage = `url(${fotoBase64})`;
-        previewEl.innerText = "";
-      } else {
-        avatarEl.style.backgroundImage = "none";
-        avatarEl.innerText = name ? name.charAt(0).toUpperCase() : "U";
-        previewEl.style.backgroundImage = "none";
-        previewEl.innerText = name ? name.charAt(0).toUpperCase() : "U";
-      }
+    function updateAvatarDisplay(photoUrlOrBase64, name) {
+      const avatarElements = document.querySelectorAll('.user-avatar-el');
+      avatarElements.forEach(el => {
+        if (photoUrlOrBase64 && (photoUrlOrBase64.startsWith('http') || photoUrlOrBase64.startsWith('data:image'))) {
+          el.style.backgroundImage = `url(${photoUrlOrBase64})`;
+          el.innerText = "";
+        } else {
+          el.style.backgroundImage = "none";
+          el.innerText = name ? name.charAt(0).toUpperCase() : "U";
+        }
+      });
     }
 
     function setupLogoutButtons() {
@@ -1405,7 +1328,7 @@
       document.getElementById('box-manage-users').style.display = p.canManageUsers ? "block" : "none";
     }
 
-    // 5. SLIME LIQUID HOVER & FAST BOUNCE OUT
+    // 5. SLIME LIQUID HOVER & MENU TRANSITION
     const navItems = document.querySelectorAll('.nav-item');
     const indicator = document.getElementById('nav-indicator');
 
@@ -1443,10 +1366,6 @@
           document.getElementById('main-sidebar').classList.remove('open');
         }
 
-        // Lazy load iframe saat tab dibuka pertama kali
-        if (targetTabId === 'tab-warga') ensureIframeLoaded('frame-warga', 'loader-warga');
-        if (targetTabId === 'tab-kas') ensureIframeLoaded('frame-kas', 'loader-kas');
-
         if (currentActive) {
           currentActive.classList.add('leaving');
           setTimeout(() => {
@@ -1477,71 +1396,12 @@
       }
     });
 
-    // 6. IFRAME CONTROLLER & SINKRONISASI
-    function setupIframeLoaders() {
-      ['frame-warga', 'frame-kas'].forEach((id) => {
-        const frame = document.getElementById(id);
-        const loaderId = id === 'frame-warga' ? 'loader-warga' : 'loader-kas';
-        frame.addEventListener('load', () => {
-          document.getElementById(loaderId).classList.add('loaded');
-          // Kirim tema aktif saat iframe selesai loading
-          const curTheme = document.documentElement.getAttribute('data-theme');
-          syncThemeToIframes(curTheme);
-        });
-      });
-    }
-
-    function ensureIframeLoaded(frameId, loaderId) {
-      const frame = document.getElementById(frameId);
-      if (!frame.src || frame.src === "about:blank") {
-        const curTheme = document.documentElement.getAttribute('data-theme') || 'dark-grey';
-        const baseSrc = frame.getAttribute('data-src');
-        // Tambahkan query parameter tema agar iframe langsung merender tema senada
-        frame.src = baseSrc + "?theme=" + encodeURIComponent(curTheme);
-      }
-    }
-
-    function reloadIframe(frameId, loaderId) {
-      const frame = document.getElementById(frameId);
-      document.getElementById(loaderId).classList.remove('loaded');
-      const curTheme = document.documentElement.getAttribute('data-theme') || 'dark-grey';
-      const baseSrc = frame.getAttribute('data-src');
-      frame.src = baseSrc + "?theme=" + encodeURIComponent(curTheme) + "&t=" + new Date().getTime();
-    }
-
-    function toggleFullscreenIframe(wrapperId) {
-      const wrapper = document.getElementById(wrapperId);
-      wrapper.classList.toggle('fullscreen-mode');
-    }
-
-    // 7. RINGKASAN OVERVIEW
-    document.getElementById('btn-sync-live').addEventListener('click', () => {
-      const icon = document.querySelector('#btn-sync-live i');
-      icon.classList.add('fa-spin');
-      fetchOverviewData(() => setTimeout(() => icon.classList.remove('fa-spin'), 600));
-    });
-
-    function fetchOverviewData(cb) {
-      fetch(API_MASTER_URL + "?action=getInitialData")
-        .then(r => r.json())
-        .then(res => {
-          if (res.status === "success" && res.summary) {
-            document.getElementById('metric-saldo').innerText = "Rp " + Number(res.summary.saldoKas).toLocaleString('id-ID');
-            document.getElementById('metric-masuk').innerText = "Rp " + Number(res.summary.totalMasuk).toLocaleString('id-ID');
-            document.getElementById('metric-warga').innerText = res.summary.totalWarga + " KK / Jiwa";
-            if (res.ronda) document.getElementById('metric-ronda').innerText = res.ronda;
-          }
-          if (cb) cb();
-        })
-        .catch(() => { if (cb) cb(); });
-    }
-
-    // 8. PROFIL SAYA & UPLOAD FOTO
+    // 6. UPLOAD FOTO & PROFIL KE GOOGLE DRIVE
     document.getElementById('input-upload-foto').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
-      if (file.size > 1048576) {
-        alert("Ukuran file foto maksimal 1MB!");
+      if (file.size > 2097152) {
+        alert("Ukuran file foto maksimal 2MB!");
         return;
       }
       const reader = new FileReader();
@@ -1562,14 +1422,20 @@
         return;
       }
 
+      const saveBtn = document.getElementById('btn-save-my-profile');
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan ke Google Drive...';
+      saveBtn.disabled = true;
+
       const payload = {
-        action: "updateMyProfile",
+        action: "updateMyProfileWithDrive",
+        parentFolderId: DRIVE_FOLDER_ID,
+        folderName: "images-dashboard",
         userData: {
           originalUsername: currentUser.username,
           username: newUsername,
           password: newPassword || currentUser.password,
           nama: newName,
-          foto: uploadedProfilePhotoBase64 || currentUser.foto || ""
+          fotoBase64: uploadedProfilePhotoBase64 || ""
         }
       };
 
@@ -1579,23 +1445,32 @@
       })
       .then(r => r.json())
       .then(res => {
+        saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Profil Saya';
+        saveBtn.disabled = false;
+
         if (res.status === "success") {
           currentUser.nama = newName;
           currentUser.username = newUsername;
           if (newPassword) currentUser.password = newPassword;
-          if (uploadedProfilePhotoBase64) currentUser.foto = uploadedProfilePhotoBase64;
+          if (res.fileUrl) currentUser.foto = res.fileUrl;
+          else if (uploadedProfilePhotoBase64) currentUser.foto = uploadedProfilePhotoBase64;
           
           document.getElementById('nav-user-name').innerText = newName;
           updateGreetingBanner();
-          alert("Profil berhasil diperbarui!");
+          updateAvatarDisplay(currentUser.foto, newName);
+          alert("Profil dan foto berhasil disimpan di Google Drive 'images-dashboard'!");
         } else {
           alert("Gagal memperbarui profil: " + res.message);
         }
       })
-      .catch(() => alert("Profil diperbarui secara lokal!"));
+      .catch(() => {
+        saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Profil Saya';
+        saveBtn.disabled = false;
+        alert("Profil diperbarui di sesi lokal!");
+      });
     });
 
-    // 9. MANAJEMEN AKUN LENGKAP (TAMBAH, EDIT, HAPUS)
+    // 7. MANAJEMEN AKUN LENGKAP
     function loadUsersList() {
       if (!currentUser || !currentUser.permissions.canManageUsers) return;
 
@@ -1618,7 +1493,7 @@
         tb.innerHTML += `
           <tr>
             <td>
-              <div class="avatar-circle" style="width: 28px; height: 28px; font-size: 0.75rem; ${fotoBg}">${initial}</div>
+              <div class="avatar-circle" style="width: 32px; height: 32px; font-size: 0.8rem; ${fotoBg}">${initial}</div>
             </td>
             <td class="fw-bold">${u.username}</td>
             <td>${u.nama}</td>

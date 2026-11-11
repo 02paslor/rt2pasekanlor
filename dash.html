@@ -3,28 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LANDING PAGES RT 2 Pasekan Lor</title>
+  <title>LANDING PAGES RT 2 PASEKAN LOR</title>
   
-  <!-- Dynamic Favicon Link -->
   <link id="app-favicon" rel="shortcut icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png" type="image/x-icon">
   
-  <!-- Font Poppins Terkunci Maks 700 -->
+  <!-- Font Poppins & Space Grotesk (Brutalism Ready) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     :root {
       --font-family: 'Poppins', sans-serif;
-      --sidebar-w: 270px;
+      --sidebar-w: 275px;
       --sidebar-w-collapsed: 72px;
       --logo-tint: #ff5520;
       --logo-size: 72px;
       --bg-custom-blur: 0px;
-      --portal-bg: #e5e7eb; /* Abu-abu muda untuk konten portal warga */
+      
+      /* Smartphone Simulator Defaults */
+      --phone-scale: 1;
+      --portal-bg-custom: radial-gradient(circle at 50% 30%, #1f232b 0%, #111317 65%, #08090b 100%);
+
+      /* Brutalism Collapsed Text Settings */
+      --brutal-text: "RT 2 PASLOR";
+      --brutal-color: #ff5520;
+      --brutal-size: 15px;
+      --brutal-font: 'Space Grotesk', sans-serif;
     }
 
     /* 1. DARK THEME (#616161 & #3D3D3D) */
@@ -39,12 +45,15 @@
       --accent: #ff5520;
       --accent-contrast: #e03e0b;
       --accent-glow: rgba(255, 85, 32, 0.35);
-      --pill-soft: rgba(255, 85, 32, 0.15);
+      --pill-soft: rgba(255, 85, 32, 0.18);
       --text-main: #f9fafb;
       --text-muted: #d1d5db;
+      --text-hover: #ffffff;
       --danger: #ef4444;
       --success: #10b981;
-      --portal-bg: #e5e7eb;
+      --scrollbar-track: #1c1f24;
+      --scrollbar-thumb: #4b5563;
+      --scrollbar-thumb-hover: #ff5520;
     }
 
     /* 2. LIGHT THEME */
@@ -59,12 +68,15 @@
       --accent: #ea580c;
       --accent-contrast: #c2410c;
       --accent-glow: rgba(234, 88, 12, 0.2);
-      --pill-soft: rgba(234, 88, 12, 0.08);
+      --pill-soft: rgba(234, 88, 12, 0.12);
       --text-main: #0f172a;
       --text-muted: #64748b;
+      --text-hover: #1f2937;
       --danger: #ef4444;
       --success: #16a34a;
-      --portal-bg: #f3f4f6;
+      --scrollbar-track: #f1f5f9;
+      --scrollbar-thumb: #cbd5e1;
+      --scrollbar-thumb-hover: #ea580c;
     }
 
     * {
@@ -73,13 +85,14 @@
       padding: 0;
       font-family: var(--font-family);
       font-weight: 400;
-      /* FAST SMOOTH HOVER ANIMATION TRANSITION */
-      transition: background-color 0.16s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  border-color 0.16s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  color 0.16s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  transform 0.16s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  box-shadow 0.16s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
+
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+    ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+    * { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); }
 
     .fa, .fas, .far, .fa-solid, .fa-regular {
       font-family: "Font Awesome 6 Free" !important;
@@ -101,7 +114,6 @@
       position: relative;
     }
 
-    /* BACKGROUND UNIVERSAL */
     #custom-bg-layer {
       position: fixed;
       inset: 0;
@@ -115,7 +127,7 @@
       pointer-events: none;
     }
 
-    /* AUTH OVERLAY KEDAP */
+    /* AUTH SCREEN */
     #auth-screen {
       position: fixed;
       inset: 0;
@@ -133,9 +145,9 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       width: 100%;
-      max-width: 420px;
-      padding: 30px 26px 22px;
-      border-radius: 22px;
+      max-width: 430px;
+      padding: 32px 28px 24px;
+      border-radius: 24px;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
       text-align: center;
       position: relative;
@@ -156,13 +168,38 @@
       margin-bottom: 12px;
     }
 
+    .rt-logo-box-auth {
+      width: 90px !important;
+      height: 90px !important;
+      margin: 0 auto 12px;
+      background-color: var(--logo-tint);
+      -webkit-mask-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png');
+      mask-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png');
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      flex-shrink: 0;
+      filter: drop-shadow(0 6px 18px var(--accent-glow));
+    }
+
     .brand-title-text {
       font-size: 1.15rem;
       font-weight: 700;
       color: var(--accent);
       letter-spacing: -0.3px;
-      margin-bottom: 16px;
+      margin-bottom: 2px;
       text-transform: uppercase;
+    }
+
+    .brand-subtitle-text {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
     }
 
     .input-group {
@@ -234,8 +271,9 @@
       cursor: pointer;
       font-size: 0.85rem;
       padding: 4px;
+      transition: transform 0.3s ease;
     }
-    .btn-refresh-captcha:hover { color: var(--accent); transform: rotate(90deg); }
+    .btn-refresh-captcha:hover { color: var(--accent); transform: rotate(180deg); }
 
     .btn-main {
       width: 100%;
@@ -252,17 +290,12 @@
       justify-content: center;
       gap: 8px;
     }
-    .btn-main:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      filter: grayscale(0.5);
-    }
+    .btn-main:disabled { opacity: 0.55; cursor: not-allowed; filter: grayscale(0.5); }
     .btn-main:hover:not(:disabled) {
       background: var(--accent-contrast);
       transform: translateY(-1px);
       box-shadow: 0 6px 20px var(--accent-glow);
     }
-    .btn-main:active:not(:disabled) { transform: scale(0.98); }
 
     .btn-portal-ext {
       display: inline-flex;
@@ -285,7 +318,7 @@
       transform: translateY(-1px);
     }
 
-    /* LOGO BESAR */
+    /* SIDEBAR */
     .brand-center-container {
       display: flex;
       flex-direction: column;
@@ -314,7 +347,6 @@
       filter: drop-shadow(0 4px 14px var(--accent-glow));
     }
 
-    /* SIDEBAR COMPACT */
     aside {
       width: var(--sidebar-w);
       background: var(--bg-sidebar);
@@ -329,6 +361,38 @@
       z-index: 100;
       overflow-y: auto;
       overflow-x: hidden;
+      transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1), padding 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* TEKS VERTICAL 90 DERAJAT GAYA BRUTALISM SAAT COLLAPSED */
+    .sidebar-brutalist-rotator {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      width: 100%;
+      overflow: hidden;
+      margin: 15px 0;
+    }
+
+    .brutalist-vert-text {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: var(--brutal-font);
+      font-weight: 800;
+      font-size: var(--brutal-size);
+      color: var(--brutal-color);
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      user-select: none;
+      text-shadow: 2px 2px 0px rgba(0,0,0,0.4);
+      animation: brutalistFade 0.4s ease;
+    }
+
+    @keyframes brutalistFade {
+      0% { opacity: 0; transform: rotate(180deg) translateY(12px); }
+      100% { opacity: 1; transform: rotate(180deg) translateY(0); }
     }
 
     /* STATE: SIDEBAR COLLAPSED */
@@ -340,78 +404,68 @@
     aside.collapsed .account-meta,
     aside.collapsed .sidebar-calendar-clock-box,
     aside.collapsed .nav-text,
-    aside.collapsed .sidebar-portal-tools,
+    aside.collapsed .sidebar-nav-tools,
     aside.collapsed .copyright-text,
     aside.collapsed .footer-text-label {
       display: none !important;
+    }
+    aside.collapsed .sidebar-brutalist-rotator {
+      display: flex; /* Muncul saat menu diperkecil */
     }
     aside.collapsed .rt-logo-box-lg {
       width: 40px !important;
       height: 40px !important;
       margin-bottom: 0;
     }
-    aside.collapsed .brand-center-container {
-      padding: 6px 0 10px;
-    }
-    aside.collapsed .sidebar-account-bottom {
-      justify-content: center;
-      padding: 6px 0;
-    }
-    aside.collapsed .nav-item {
-      justify-content: center;
-      padding: 10px 0;
-    }
-    aside.collapsed .nav-item-left {
-      gap: 0;
-      justify-content: center;
-      width: 100%;
-    }
-    aside.collapsed .nav-item i {
-      margin: 0 auto;
-    }
-    aside.collapsed .sidebar-footer-actions {
-      grid-template-columns: 1fr !important;
-    }
+    aside.collapsed .brand-center-container { padding: 6px 0 10px; }
+    aside.collapsed .sidebar-account-bottom { padding: 6px 0; }
+    aside.collapsed .nav-item { justify-content: center; padding: 10px 0; }
+    aside.collapsed .nav-item-left { gap: 0; justify-content: center; width: 100%; }
+    aside.collapsed .nav-item i { margin: 0 auto; }
+    aside.collapsed .sidebar-footer-actions { grid-template-columns: 1fr !important; }
 
-    /* BOX PENULISAN KALENDER DI ATAS & JAM DI BAWAH (JAM DIBESARKAN, MENIT & WIB DIHAPUS) */
     .sidebar-calendar-clock-box {
       padding: 8px 6px 12px 6px;
       border-bottom: 1px solid var(--border-color);
       margin-bottom: 10px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 3px;
     }
 
     .calendar-large-text {
-      font-size: 0.92rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--text-main);
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 7px;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+      width: 100%;
       line-height: 1.35;
     }
-    .calendar-large-text i {
-      color: var(--accent);
-      font-size: 1.05rem;
-    }
+    .calendar-large-text i { color: var(--accent); font-size: 0.88rem; }
 
     .clock-big-text {
-      font-size: 1.85rem;
-      font-weight: 700;
+      font-size: 0.85rem;
+      font-weight: 600;
       color: var(--accent);
-      letter-spacing: -0.5px;
-      line-height: 1.1;
-      padding-left: 2px;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+      text-align: center;
+      width: 100%;
     }
 
+    /* NAV MENU & HOVER */
     nav {
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      flex: 1;
+      gap: 5px;
     }
 
     .nav-indicator {
@@ -424,8 +478,8 @@
       opacity: 0;
       pointer-events: none;
       z-index: 1;
-      box-shadow: 0 4px 15px var(--accent-glow);
-      transition: top 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.2s ease;
+      box-shadow: 0 4px 18px var(--accent-glow);
+      transition: top 0.38s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease;
     }
 
     .nav-item {
@@ -440,15 +494,20 @@
       z-index: 2;
       font-size: 0.85rem;
       font-weight: 500;
+      background: transparent;
+      transition: color 0.35s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.35s cubic-bezier(0.25, 1, 0.5, 1), transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
     }
     .nav-item:hover {
-      color: var(--text-main);
-      background: rgba(255, 255, 255, 0.05);
-      transform: translateX(2px);
+      color: var(--text-hover);
+      background-color: var(--pill-soft);
+      box-shadow: inset 0 0 0 1px rgba(255, 85, 32, 0.3);
+      transform: translateX(3px);
     }
     .nav-item.active {
       color: #ffffff !important;
       font-weight: 600;
+      background-color: transparent !important;
+      box-shadow: none !important;
       transform: none;
     }
     .nav-item-left {
@@ -462,8 +521,7 @@
       text-align: center;
     }
 
-    /* TOOLS PORTAL WARGA */
-    .sidebar-portal-tools {
+    .sidebar-nav-tools {
       display: flex;
       align-items: center;
       gap: 4px;
@@ -482,50 +540,61 @@
       font-size: 0.72rem;
       cursor: pointer;
       text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
     }
     .btn-tool-inline:hover {
       background: var(--accent);
       color: #ffffff;
       border-color: var(--accent);
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
 
-    /* AREA AKUN DI BAWAH (FRAMELESS COMPACT) */
     .sidebar-account-bottom {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 10px;
-      padding: 10px 6px 8px 6px;
+      justify-content: center;
+      text-align: center;
+      gap: 6px;
+      padding: 12px 6px 10px 6px;
       border-top: 1px solid var(--border-color);
       margin-top: 6px;
+      width: 100%;
     }
 
     .account-meta {
-      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
       min-width: 0;
     }
 
     .account-name-line {
-      display: flex;
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      font-size: 0.83rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--text-main);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 100%;
     }
 
     .account-sub-line {
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
     .avatar-circle {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: var(--accent);
       color: #ffffff;
@@ -533,11 +602,12 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 0.88rem;
+      font-size: 0.95rem;
       background-size: cover;
       background-position: center;
       border: 2px solid var(--border-color);
       flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
     }
 
     .pulse-live {
@@ -556,7 +626,6 @@
       100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
-    /* FOOTER SIDEBAR */
     .sidebar-footer {
       padding-top: 8px;
       border-top: 1px solid var(--border-color);
@@ -584,9 +653,11 @@
       border: 1px solid var(--border-color);
       background: var(--bg-card);
       color: var(--text-main);
+      transition: all 0.25s ease;
     }
     .btn-sidebar-action:hover {
       background: var(--bg-card-hover);
+      color: var(--text-hover);
       transform: translateY(-1px);
     }
 
@@ -603,24 +674,23 @@
 
     .btn-toggle-collapse {
       width: 100%;
+      height: 34px;
       background: rgba(0, 0, 0, 0.2);
       border: 1px solid var(--border-color);
       color: var(--text-muted);
       border-radius: 8px;
-      padding: 7px 10px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      font-size: 0.76rem;
-      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     }
     .btn-toggle-collapse:hover {
       background: var(--accent);
       color: #ffffff;
       border-color: var(--accent);
-      transform: translateY(-1px);
+      transform: scale(1.03);
     }
 
     .copyright-text {
@@ -662,22 +732,189 @@
       position: relative;
       background: transparent;
     }
+
+    /* FAST SMOOTH BOUNCE STAGGERED ANIMATION FOR CONTENT */
     .tab-view.active {
       display: flex;
       flex-direction: column;
     }
+    .tab-view.active .bounce-stagger {
+      animation: fastSmoothBounceIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      animation-delay: calc(var(--stagger-i, 1) * 0.055s);
+    }
+    .tab-view.leaving .bounce-stagger {
+      animation: fastSmoothBounceOut 0.25s cubic-bezier(0.36, 0, 0.66, -0.56) both;
+      animation-delay: calc(var(--stagger-i, 1) * 0.04s);
+    }
 
-    /* PORTAL WARGA BACKGROUND ABU-ABU MUDA */
-    .portal-tab-wrapper {
-      background-color: var(--portal-bg) !important;
-      border-radius: 0;
+    @keyframes fastSmoothBounceIn {
+      0% { opacity: 0; transform: scale(0.96) translateY(20px); }
+      70% { transform: scale(1.008) translateY(-3px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes fastSmoothBounceOut {
+      0% { opacity: 1; transform: scale(1) translateY(0); }
+      30% { transform: scale(1.01) translateY(-4px); }
+      100% { opacity: 0; transform: scale(0.96) translateY(22px); }
+    }
+
+    /* PORTAL MOCKUP STAGE DENGAN LIVE SWITCHER BAR */
+    .portal-mockup-stage {
+      background: var(--portal-bg-custom) !important;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       flex: 1;
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      overflow: auto;
+      padding: 16px 20px 30px;
+      box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.85);
+      position: relative;
     }
+
+    /* LIVE DEVICE BAR DI ATAS MOCKUP */
+    .live-device-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(14px);
+      padding: 5px 8px;
+      border-radius: 26px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      z-index: 30;
+    }
+
+    .btn-device-chip {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.22s ease;
+    }
+    .btn-device-chip:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .btn-device-chip.active {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 2px 10px var(--accent-glow);
+    }
+
+    .smartphone-wrapper-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: scale(var(--phone-scale));
+      transform-origin: top center;
+      transition: transform 0.3s ease;
+    }
+
+    /* PRESET TEMA SMARTPHONE: IPHONE 17 PRO */
+    .smartphone-3d-box {
+      width: 380px;
+      height: 760px;
+      max-width: 90vw;
+      background: #1c1d22;
+      border-radius: 50px;
+      padding: 12px;
+      position: relative;
+      border: 4px solid #4a4f5a;
+      box-shadow: 
+        0 25px 60px -10px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        inset 0 0 4px rgba(255, 255, 255, 0.25);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* PRESET TEMA: SAMSUNG S25 ULTRA */
+    .smartphone-3d-box.theme-samsung {
+      border-radius: 20px;
+      border: 4px solid #2b2e35;
+      padding: 10px;
+    }
+    .smartphone-3d-box.theme-samsung .smartphone-screen-inner {
+      border-radius: 12px;
+    }
+    .smartphone-3d-box.theme-samsung .smartphone-notch {
+      width: 14px;
+      height: 14px;
+      top: 15px;
+      border-radius: 50%;
+    }
+
+    /* PRESET TEMA: XIAOMI 15 ULTRA */
+    .smartphone-3d-box.theme-xiaomi {
+      border-radius: 40px;
+      border: 3.5px solid #ff6900;
+      padding: 10px;
+    }
+    .smartphone-3d-box.theme-xiaomi .smartphone-screen-inner {
+      border-radius: 30px;
+    }
+    .smartphone-3d-box.theme-xiaomi .smartphone-notch {
+      width: 12px;
+      height: 12px;
+      top: 14px;
+      border-radius: 50%;
+    }
+
+    .smartphone-notch {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 105px;
+      height: 24px;
+      background: #000000;
+      border-radius: 20px;
+      z-index: 25;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      transition: all 0.3s ease;
+    }
+
+    .smartphone-screen-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 40px;
+      overflow: hidden;
+      background: #000000;
+      position: relative;
+    }
+
+    .mockup-bottom-badge {
+      margin-top: 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.65);
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+    }
+    .mockup-bottom-badge i { color: var(--accent); }
 
     .seamless-iframe-container {
       width: 100%;
@@ -708,7 +945,7 @@
 
     .settings-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
       gap: 18px;
       max-width: 1100px;
       margin: 0 auto;
@@ -720,10 +957,9 @@
       border-radius: 16px;
       padding: 20px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transition: box-shadow 0.25s ease;
     }
-    .card:hover {
-      box-shadow: 0 6px 24px rgba(0,0,0,0.22);
-    }
+    .card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.22); }
 
     .table-container {
       background: var(--bg-card);
@@ -750,11 +986,7 @@
       white-space: nowrap;
     }
 
-    td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
+    td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); }
     tr:hover td { background: var(--bg-card-hover); }
 
     .btn-table {
@@ -823,15 +1055,15 @@
         bottom: 0;
         width: 280px;
         box-shadow: 10px 0 30px rgba(0,0,0,0.6);
-        transition: left 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
       }
       aside.open { left: 0; }
+      .smartphone-3d-box { width: 100%; height: 95%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- BACKGROUND UNIVERSAL -->
   <div id="custom-bg-layer"></div>
 
   <!-- BAR MOBILE -->
@@ -845,38 +1077,41 @@
     <div class="avatar-circle user-avatar-el" style="width:28px; height:28px; font-size:0.75rem;">G</div>
   </div>
 
-  <!-- 1. AUTH SCREEN KEDAP -->
+  <!-- 1. AUTH SCREEN -->
   <div id="auth-screen">
     <div class="auth-card-glass">
       <div class="security-badge-top">
         <i class="fa-solid fa-shield-halved"></i> Protected Portal • 256-Bit SSL
       </div>
 
-      <div class="rt-logo-box-lg"></div>
+      <div class="rt-logo-box-auth"></div>
       
       <div class="brand-title-text">
-        LANDING PAGES RT 2 Pasekan Lor
+        LANDING PAGES RT 2 PASEKAN LOR
+      </div>
+      <div class="brand-subtitle-text">
+        Satu Halaman Untuk Semua
       </div>
 
       <div class="input-group">
         <label>
           <span><i class="fa-solid fa-user-shield"></i> Username Pengurus</span>
         </label>
-        <input type="text" id="login-username" class="input-control" placeholder="cth: rt2_admin" autocomplete="off" spellcheck="false">
+        <input type="text" id="login-username" class="input-control login-input-field" placeholder="cth: rt2_admin" autocomplete="off" spellcheck="false">
       </div>
 
       <div class="input-group">
         <label>
           <span><i class="fa-solid fa-key"></i> Password</span>
         </label>
-        <input type="password" id="login-password" class="input-control" placeholder="••••••••" autocomplete="current-password">
+        <input type="password" id="login-password" class="input-control login-input-field" placeholder="••••••••" autocomplete="current-password">
         <i class="fa-solid fa-eye toggle-pwd" id="login-eye"></i>
       </div>
 
       <!-- SECURITY MATH CAPTCHA -->
       <div class="captcha-container">
         <div class="captcha-badge" id="captcha-display">0 + 0 = ?</div>
-        <input type="number" id="login-captcha-input" class="input-control" placeholder="Jawaban..." style="padding: 8px 10px; font-size: 0.85rem;" autocomplete="off">
+        <input type="number" id="login-captcha-input" class="input-control login-input-field" placeholder="Jawaban..." style="padding: 8px 10px; font-size: 0.85rem;" autocomplete="off">
         <button type="button" class="btn-refresh-captcha" id="btn-refresh-captcha" title="Muat Ulang Soal">
           <i class="fa-solid fa-rotate"></i>
         </button>
@@ -900,12 +1135,12 @@
       </div>
       
       <a href="https://rt2pasekanlor.id" target="_blank" class="btn-portal-ext">
-        <i class="fa-solid fa-earth-americas"></i> Kunjungi rt2pasekanlor.id
+        <i class="fa-solid fa-earth-americas"></i>rt2pasekanlor.id
       </a>
     </div>
   </div>
 
-  <!-- 2. SIDEBAR TERPADU (KALENDER ATAS, JAM BESAR, AKUN PINDAH BAWAH) -->
+  <!-- 2. SIDEBAR TERPADU -->
   <aside id="main-sidebar">
     <div class="brand-center-container">
       <div class="rt-logo-box-lg"></div>
@@ -913,31 +1148,32 @@
         <div class="fw-bold" style="font-size: 0.95rem; color: var(--accent); letter-spacing: -0.2px;">
           LANDING PAGES RT 2
         </div>
-        <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500;">Pasekan Lor</div>
+        <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500;">Satu Halaman Untuk Semua</div>
       </div>
     </div>
 
-    <!-- AREA KALENDER DI ATAS & JAM BESAR (TANPA MENIT & WIB) -->
+    <!-- AREA KALENDER & JAM -->
     <div class="sidebar-calendar-clock-box">
       <div class="calendar-large-text">
         <i class="fa-solid fa-calendar-day"></i>
         <span id="txt-calendar-jawa">Memuat...</span>
       </div>
       <div class="clock-big-text" id="txt-clock-hour">
-        --:00
+        --:-- WIB
       </div>
     </div>
 
-    <!-- NAVIGASI MENU (KONTROL RELOAD & TAB DI SINI) -->
+    <!-- NAVIGASI MENU -->
     <nav id="nav-wrapper">
       <div class="nav-indicator" id="nav-indicator"></div>
       
+      <!-- MENU 1: PORTAL WARGA -->
       <div class="nav-item active" data-tab="tab-portal">
         <div class="nav-item-left">
           <i class="fa-solid fa-globe"></i>
           <span class="nav-text">Portal Warga</span>
         </div>
-        <div class="sidebar-portal-tools">
+        <div class="sidebar-nav-tools">
           <button type="button" class="btn-tool-inline" onclick="reloadFrame('frame-portal')" title="Reload Portal Warga">
             <i class="fa-solid fa-rotate-right"></i>
           </button>
@@ -947,20 +1183,39 @@
         </div>
       </div>
 
+      <!-- MENU 2: DATA WARGA -->
       <div class="nav-item" data-tab="tab-warga">
         <div class="nav-item-left">
           <i class="fa-solid fa-people-roof"></i>
           <span class="nav-text">Data Warga</span>
         </div>
+        <div class="sidebar-nav-tools">
+          <button type="button" class="btn-tool-inline" onclick="reloadFrame('frame-warga')" title="Reload Data Warga">
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+          <a href="https://rt2pasekanlor.id/data-warga" target="_blank" class="btn-tool-inline" title="Buka di Tab Baru">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
       </div>
 
+      <!-- MENU 3: KEMENKEU RT -->
       <div class="nav-item" data-tab="tab-kas">
         <div class="nav-item-left">
           <i class="fa-solid fa-wallet"></i>
           <span class="nav-text">Kemenkeu RT</span>
         </div>
+        <div class="sidebar-nav-tools">
+          <button type="button" class="btn-tool-inline" onclick="reloadFrame('frame-kas')" title="Reload Kemenkeu RT">
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+          <a href="https://rt2pasekanlor.id/kemenkeu" target="_blank" class="btn-tool-inline" title="Buka di Tab Baru">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
       </div>
 
+      <!-- MENU 4: SETTINGS & AKUN -->
       <div class="nav-item" data-tab="tab-settings">
         <div class="nav-item-left">
           <i class="fa-solid fa-sliders"></i>
@@ -969,7 +1224,12 @@
       </div>
     </nav>
 
-    <!-- AREA PROFIL AKUN DI BAWAH (FRAMELESS COMPACT) -->
+    <!-- AREA KOSONG TENGAH SIDEBAR SAAT COLLAPSED: TEKS BRUTALISM 90 DERAJAT -->
+    <div class="sidebar-brutalist-rotator" id="sidebar-brutalist-box">
+      <div class="brutalist-vert-text" id="display-brutalist-text">RT 2 PASLOR</div>
+    </div>
+
+    <!-- AREA PROFIL AKUN DI BAWAH (CENTER LURUS) -->
     <div class="sidebar-account-bottom">
       <div class="avatar-circle user-avatar-el" id="sidebar-user-avatar">G</div>
       <div class="account-meta">
@@ -992,10 +1252,9 @@
         </button>
       </div>
 
-      <!-- TOMBOL TOGGLE COLLAPSE SIDEBAR -->
-      <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="Collapse / Expand Sidebar">
+      <!-- TOMBOL TOGGLE COLLAPSE -->
+      <button type="button" class="btn-toggle-collapse" id="btn-toggle-collapse" title="Perkecil / Perluas Menu">
         <i class="fa-solid fa-angles-left" id="icon-toggle-collapse"></i>
-        <span class="footer-text-label" id="txt-toggle-collapse">Perkecil Menu</span>
       </button>
 
       <div class="copyright-text" style="margin-top: 2px;">
@@ -1008,25 +1267,51 @@
   <main id="main-workspace">
     <div class="content-container">
 
-      <!-- TAB 1: PORTAL WARGA (BACKGROUND ABU-ABU MUDA) -->
+      <!-- TAB 1: PORTAL WARGA DENGAN LIVE DEVICE SWITCHER DI ATAS MOCKUP -->
       <section id="tab-portal" class="tab-view active">
-        <div class="portal-tab-wrapper">
-          <div class="seamless-iframe-container">
-            <iframe id="frame-portal" class="seamless-iframe" allow="geolocation; microphone; camera; clipboard-read; clipboard-write; forms; scripts; same-origin"></iframe>
+        <div class="portal-mockup-stage bounce-stagger" style="--stagger-i: 1;" id="portal-mockup-stage-box">
+          
+          <!-- LIVE DEVICE SWITCHER BAR -->
+          <div class="live-device-bar bounce-stagger" style="--stagger-i: 2;">
+            <button type="button" class="btn-device-chip active" data-device="iphone" onclick="switchLiveDevice('iphone')">
+              <i class="fa-brands fa-apple"></i> iPhone 17 Pro
+            </button>
+            <button type="button" class="btn-device-chip" data-device="samsung" onclick="switchLiveDevice('samsung')">
+              <i class="fa-solid fa-mobile"></i> Samsung S25 Ultra
+            </button>
+            <button type="button" class="btn-device-chip" data-device="xiaomi" onclick="switchLiveDevice('xiaomi')">
+              <i class="fa-solid fa-mobile-screen-button"></i> Xiaomi 15 Ultra
+            </button>
           </div>
+
+          <!-- SMARTPHONE MOCKUP 3D -->
+          <div class="smartphone-wrapper-container bounce-stagger" style="--stagger-i: 3;" id="phone-outer-wrapper">
+            <div class="smartphone-3d-box" id="smartphone-device-box">
+              <div class="smartphone-notch" id="smartphone-notch-el"></div>
+              <div class="smartphone-screen-inner">
+                <iframe id="frame-portal" class="seamless-iframe" allow="geolocation; microphone; camera; clipboard-read; clipboard-write; forms; scripts; same-origin"></iframe>
+              </div>
+            </div>
+            
+            <div class="mockup-bottom-badge" id="display-badge-mockup">
+              <i class="fa-solid fa-circle-check"></i>
+              <span id="txt-badge-mockup-label">Created by Arga</span>
+            </div>
+          </div>
+
         </div>
       </section>
 
       <!-- TAB 2: DATA WARGA -->
       <section id="tab-warga" class="tab-view">
-        <div class="seamless-iframe-container">
+        <div class="seamless-iframe-container bounce-stagger" style="--stagger-i: 1;">
           <iframe id="frame-warga" class="seamless-iframe" allow="geolocation; microphone; camera; clipboard-read; clipboard-write; forms; scripts; same-origin"></iframe>
         </div>
       </section>
 
       <!-- TAB 3: KEMENKEU RT -->
       <section id="tab-kas" class="tab-view">
-        <div class="seamless-iframe-container">
+        <div class="seamless-iframe-container bounce-stagger" style="--stagger-i: 1;">
           <iframe id="frame-kas" class="seamless-iframe" allow="geolocation; microphone; camera; clipboard-read; clipboard-write; forms; scripts; same-origin"></iframe>
         </div>
       </section>
@@ -1036,8 +1321,8 @@
         <div class="settings-scroll-container">
           <div class="settings-grid">
             
-            <!-- Box 1: Profil Saya & Upload Foto ke Google Drive -->
-            <div class="card">
+            <!-- Box 1: Profil Saya & Upload Foto -->
+            <div class="card bounce-stagger" style="--stagger-i: 1;">
               <h3 class="fw-semi" style="font-size: 0.95rem; margin-bottom: 14px;">
                 <i class="fa-solid fa-user-pen" style="color: var(--accent);"></i> Profil Saya
               </h3>
@@ -1073,13 +1358,12 @@
               </button>
             </div>
 
-            <!-- Box 2: Pengaturan Tema, Ukuran Logo, Favicon, Warna & Background Blur -->
-            <div class="card">
+            <!-- Box 2: Pengaturan Tema & Background Universal -->
+            <div class="card bounce-stagger" style="--stagger-i: 2;">
               <h3 class="fw-semi" style="font-size: 0.95rem; margin-bottom: 14px;">
                 <i class="fa-solid fa-palette" style="color: var(--accent);"></i> Pengaturan Tema & Tampilan
               </h3>
               
-              <!-- Pilihan Tema -->
               <div style="margin-bottom: 14px;">
                 <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Mode Tampilan:</label>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -1118,12 +1402,11 @@
                 </div>
               </div>
 
-              <!-- BACKGROUND UNIVERSAL, GAMBAR & BLUR -->
+              <!-- BACKGROUND UNIVERSAL & BLUR -->
               <div style="padding: 10px; background: rgba(0,0,0,0.15); border-radius: 8px; border: 1px solid var(--border-color);">
                 <label style="font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 6px;">
                   <i class="fa-solid fa-image"></i> Background Dashboard & Login:
                 </label>
-                
                 <div style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
                   <div>
                     <label style="font-size: 0.68rem; color: var(--text-muted); display: block; margin-bottom: 3px;">Warna BG:</label>
@@ -1135,53 +1418,135 @@
                   </div>
                   <button class="btn-table btn-delete" id="btn-reset-bg" title="Reset Background" style="align-self: flex-end; padding: 8px 10px;">Reset</button>
                 </div>
-
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
-                  <label style="font-size: 0.72rem; color: var(--text-muted);">Efek Blur (Tembus di Dashboard & Login):</label>
+                  <label style="font-size: 0.72rem; color: var(--text-muted);">Efek Blur:</label>
                   <span id="txt-bg-blur" style="font-size: 0.72rem; font-weight: 700; color: var(--accent);">0px</span>
                 </div>
                 <input type="range" id="input-bg-blur" min="0" max="25" step="1" value="0" style="width: 100%; accent-color: var(--accent); cursor: pointer;">
               </div>
-
             </div>
-          </div>
 
-          <!-- Box 3: Manajemen Akun Pengurus -->
-          <div class="card" id="box-manage-users" style="max-width: 1100px; margin: 18px auto 0;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-              <div>
-                <h3 class="fw-semi" style="font-size: 0.95rem;">
-                  <i class="fa-solid fa-users-gear" style="color: var(--accent);"></i> Manajemen Akun Pengurus
-                </h3>
-                <p style="font-size: 0.72rem; color: var(--text-muted);">
-                  Sinkron dengan Spreadsheet DB_USERS_RT2_PASLOR (Kolom J Foto)
-                </p>
+            <!-- Box 3: Simulator Smartphone & Latar Portal -->
+            <div class="card bounce-stagger" style="--stagger-i: 3;">
+              <h3 class="fw-semi" style="font-size: 0.95rem; margin-bottom: 14px;">
+                <i class="fa-solid fa-mobile-screen-button" style="color: var(--accent);"></i> Simulator Smartphone & Portal
+              </h3>
+
+              <div class="input-group">
+                <label>Pilih Tema Device Smartphone:</label>
+                <select id="select-phone-theme" class="input-control" style="cursor: pointer;">
+                  <option value="iphone">iPhone 17 Pro (Apple Titanium)</option>
+                  <option value="samsung">Samsung Galaxy S25 Ultra (Punch-Hole Sharp)</option>
+                  <option value="xiaomi">Xiaomi 15 Ultra (Compact Punch-Hole)</option>
+                </select>
               </div>
-              <button class="btn-main" id="btn-add-user" style="width: auto; padding: 7px 14px; font-size: 0.78rem;">
-                <i class="fa-solid fa-user-shield"></i> Tambah Akun
-              </button>
+
+              <div style="margin-bottom: 14px; padding: 10px; background: rgba(0,0,0,0.15); border-radius: 8px; border: 1px solid var(--border-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                  <label style="font-size: 0.78rem; font-weight: 600;"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Skala Ukuran Smartphone:</label>
+                  <span id="txt-phone-scale-val" style="font-size: 0.78rem; font-weight: 700; color: var(--accent);">100%</span>
+                </div>
+                <input type="range" id="input-phone-scale" min="0.7" max="1.3" step="0.05" value="1" style="width: 100%; accent-color: var(--accent); cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-muted); margin-top: 3px;">
+                  <span>Kecil (70%)</span>
+                  <span>Standar (100%)</span>
+                  <span>Besar (130%)</span>
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label>Teks Label di Bawah Mockup:</label>
+                <input type="text" id="input-badge-mockup-text" class="input-control" value="Created by Arga" placeholder="cth: Created by Arga">
+              </div>
+
+              <div style="padding: 10px; background: rgba(0,0,0,0.15); border-radius: 8px; border: 1px solid var(--border-color); margin-top: 10px;">
+                <label style="font-size: 0.78rem; font-weight: 600; display: block; margin-bottom: 6px;">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Latar Belakang Etalase Portal:
+                </label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.75rem;">
+                  <button type="button" class="btn-table" style="background: #111317; color: #fff; border: 1px solid var(--border-color);" onclick="setPortalBackgroundPreset('dark')">Dark Radial</button>
+                  <button type="button" class="btn-table" style="background: #1e1e24; color: #fff; border: 1px solid var(--border-color);" onclick="setPortalBackgroundPreset('luxury')">Black Solid</button>
+                  <button type="button" class="btn-table" style="background: #2a201a; color: #fff; border: 1px solid var(--border-color);" onclick="setPortalBackgroundPreset('warm')">Warm Sunset</button>
+                  <button type="button" class="btn-table" style="background: #11222e; color: #fff; border: 1px solid var(--border-color);" onclick="setPortalBackgroundPreset('ocean')">Deep Ocean</button>
+                </div>
+              </div>
             </div>
 
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Foto</th>
-                    <th>Username</th>
-                    <th>Nama Pengurus</th>
-                    <th>Role</th>
-                    <th>Edit Warga</th>
-                    <th>Hapus Warga</th>
-                    <th>Edit Kas</th>
-                    <th>Hapus Kas</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody id="tbody-users">
-                  <tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Memuat daftar akun pengurus...</td></tr>
-                </tbody>
-              </table>
+            <!-- Box 4: Kustomisasi Teks Vertikal Brutalism (Saat Perkecil Menu) -->
+            <div class="card bounce-stagger" style="--stagger-i: 4;">
+              <h3 class="fw-semi" style="font-size: 0.95rem; margin-bottom: 14px;">
+                <i class="fa-solid fa-text-height" style="color: var(--accent);"></i> Teks 90° Brutalism (Perkecil Menu)
+              </h3>
+
+              <div class="input-group">
+                <label>Isian Teks Vertikal:</label>
+                <input type="text" id="input-brutal-text" class="input-control" value="RT 2 PASLOR" placeholder="cth: RT 2 PASLOR">
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+                <div>
+                  <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 5px;">Warna Teks:</label>
+                  <input type="color" id="input-brutal-color" value="#ff5520" style="width: 100%; height: 36px; border: none; cursor: pointer; border-radius: 6px; background: transparent;">
+                </div>
+                <div>
+                  <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 5px;">Pilihan Font Brutalism:</label>
+                  <select id="select-brutal-font" class="input-control" style="cursor: pointer;">
+                    <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+                    <option value="'Poppins', sans-serif">Poppins Bold</option>
+                    <option value="'Courier New', monospace">Courier Mono</option>
+                    <option value="Impact, fantasy">Impact</option>
+                    <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 10px; padding: 10px; background: rgba(0,0,0,0.15); border-radius: 8px; border: 1px solid var(--border-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                  <label style="font-size: 0.78rem; font-weight: 600;"><i class="fa-solid fa-font"></i> Ukuran Font Teks 90°:</label>
+                  <span id="txt-brutal-size-val" style="font-size: 0.78rem; font-weight: 700; color: var(--accent);">15px</span>
+                </div>
+                <input type="range" id="input-brutal-size" min="11" max="22" step="1" value="15" style="width: 100%; accent-color: var(--accent); cursor: pointer;">
+              </div>
             </div>
+
+            <!-- Box 5: Manajemen Akun Pengurus -->
+            <div class="card bounce-stagger" id="box-manage-users" style="grid-column: 1 / -1; --stagger-i: 5;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <div>
+                  <h3 class="fw-semi" style="font-size: 0.95rem;">
+                    <i class="fa-solid fa-users-gear" style="color: var(--accent);"></i> Manajemen Akun Pengurus
+                  </h3>
+                  <p style="font-size: 0.72rem; color: var(--text-muted);">
+                    Sinkron dengan Spreadsheet DB_USERS_RT2_PASLOR (Kolom J Foto)
+                  </p>
+                </div>
+                <button class="btn-main" id="btn-add-user" style="width: auto; padding: 7px 14px; font-size: 0.78rem;">
+                  <i class="fa-solid fa-user-shield"></i> Tambah Akun
+                </button>
+              </div>
+
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Foto</th>
+                      <th>Username</th>
+                      <th>Nama Pengurus</th>
+                      <th>Role</th>
+                      <th>Edit Warga</th>
+                      <th>Hapus Warga</th>
+                      <th>Edit Kas</th>
+                      <th>Hapus Kas</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbody-users">
+                    <tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Memuat daftar akun pengurus...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -1242,7 +1607,6 @@
     let localUsers = [];
     let uploadedProfilePhotoBase64 = "";
 
-    // VARIABLE KEAMANAN ANTI-BRUTE FORCE
     let captchaAnswer = 0;
     let failedAttempts = 0;
     const MAX_FAILED_ATTEMPTS = 3;
@@ -1254,8 +1618,11 @@
       initLogoSize();
       initFavicon();
       initBackgroundCustomizer();
+      initSmartphoneSimulatorControls();
+      initBrutalistSettings();
       initJawaCalendar();
       generateCaptcha();
+      setupEnterKeyLogin();
       checkSavedCredentials();
       setupLogoutButtons();
       setupMobileSidebar();
@@ -1274,7 +1641,20 @@
 
     document.getElementById('btn-refresh-captcha').addEventListener('click', generateCaptcha);
 
-    // 2. TEMA & LOGO
+    // 2. SUPPORT ENTER KEY
+    function setupEnterKeyLogin() {
+      const inputs = document.querySelectorAll('.login-input-field');
+      inputs.forEach(input => {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('btn-login-submit').click();
+          }
+        });
+      });
+    }
+
+    // 3. TEMA & LOGO
     function initThemesAndLogo() {
       const savedTheme = localStorage.getItem('rt2_theme') || 'dark';
       applyTheme(savedTheme);
@@ -1335,7 +1715,7 @@
       syncThemeToIframes(targetTheme);
     }
 
-    // 3. UKURAN LOGO RT 2
+    // 4. UKURAN LOGO RT 2
     function initLogoSize() {
       const savedSize = localStorage.getItem('rt2_logo_size') || '72';
       setLogoSize(savedSize);
@@ -1353,7 +1733,7 @@
       if (txt) txt.innerText = val + 'px';
     }
 
-    // 4. UPLOAD & GANTI FAVICON
+    // 5. UPLOAD & GANTI FAVICON
     function initFavicon() {
       const savedFavicon = localStorage.getItem('rt2_custom_favicon');
       if (savedFavicon) {
@@ -1378,7 +1758,7 @@
       });
     }
 
-    // 5. BACKGROUND UNIVERSAL
+    // 6. BACKGROUND UNIVERSAL
     function initBackgroundCustomizer() {
       const bgLayer = document.getElementById('custom-bg-layer');
       const savedBgColor = localStorage.getItem('rt2_custom_bg_color');
@@ -1437,6 +1817,137 @@
       if (txt) txt.innerText = val + 'px';
     }
 
+    // 7. KONTROL SIMULATOR SMARTPHONE & LIVE DEVICE SWITCHER
+    function initSmartphoneSimulatorControls() {
+      const savedTheme = localStorage.getItem('rt2_phone_device_theme') || 'iphone';
+      switchLiveDevice(savedTheme);
+
+      const themeSelect = document.getElementById('select-phone-theme');
+      if (themeSelect) {
+        themeSelect.value = savedTheme;
+        themeSelect.addEventListener('change', (e) => switchLiveDevice(e.target.value));
+      }
+
+      // Slider Skala
+      const scaleSlider = document.getElementById('input-phone-scale');
+      const scaleTxt = document.getElementById('txt-phone-scale-val');
+      const savedScale = localStorage.getItem('rt2_phone_scale_val') || '1';
+
+      setDeviceScale(savedScale);
+      scaleSlider.value = savedScale;
+
+      scaleSlider.addEventListener('input', (e) => setDeviceScale(e.target.value));
+
+      function setDeviceScale(val) {
+        document.documentElement.style.setProperty('--phone-scale', val);
+        localStorage.setItem('rt2_phone_scale_val', val);
+        if (scaleTxt) scaleTxt.innerText = Math.round(val * 100) + '%';
+      }
+
+      // Teks Bawah Mockup
+      const badgeInput = document.getElementById('input-badge-mockup-text');
+      const badgeLabel = document.getElementById('txt-badge-mockup-label');
+      const savedBadge = localStorage.getItem('rt2_phone_badge_text') || 'Created by Arga';
+
+      badgeLabel.innerText = savedBadge;
+      badgeInput.value = savedBadge;
+
+      badgeInput.addEventListener('input', (e) => {
+        const val = e.target.value.trim() || 'Created by Arga';
+        badgeLabel.innerText = val;
+        localStorage.setItem('rt2_phone_badge_text', val);
+      });
+
+      // Latar Portal
+      const savedPortalBg = localStorage.getItem('rt2_portal_bg_preset');
+      if (savedPortalBg) {
+        document.documentElement.style.setProperty('--portal-bg-custom', savedPortalBg);
+      }
+    }
+
+    function switchLiveDevice(theme) {
+      const phoneBox = document.getElementById('smartphone-device-box');
+      const themeSelect = document.getElementById('select-phone-theme');
+      const chips = document.querySelectorAll('.btn-device-chip');
+
+      phoneBox.classList.remove('theme-samsung', 'theme-xiaomi');
+      if (theme === 'samsung') phoneBox.classList.add('theme-samsung');
+      else if (theme === 'xiaomi') phoneBox.classList.add('theme-xiaomi');
+
+      chips.forEach(c => {
+        if (c.getAttribute('data-device') === theme) c.classList.add('active');
+        else c.classList.remove('active');
+      });
+
+      if (themeSelect && themeSelect.value !== theme) {
+        themeSelect.value = theme;
+      }
+      localStorage.setItem('rt2_phone_device_theme', theme);
+    }
+
+    function setPortalBackgroundPreset(type) {
+      let bgStyle = "radial-gradient(circle at 50% 30%, #1f232b 0%, #111317 65%, #08090b 100%)";
+      if (type === 'luxury') bgStyle = "#0e1013";
+      else if (type === 'warm') bgStyle = "radial-gradient(circle at 50% 30%, #2f1e16 0%, #170f0b 70%, #0a0604 100%)";
+      else if (type === 'ocean') bgStyle = "radial-gradient(circle at 50% 30%, #0e273c 0%, #081521 70%, #04090f 100%)";
+
+      document.documentElement.style.setProperty('--portal-bg-custom', bgStyle);
+      localStorage.setItem('rt2_portal_bg_preset', bgStyle);
+    }
+
+    // 8. KONTROL TEKS 90 DERAJAT GAYA BRUTALISM
+    function initBrutalistSettings() {
+      const vertTextEl = document.getElementById('display-brutalist-text');
+      const textInput = document.getElementById('input-brutal-text');
+      const colorInput = document.getElementById('input-brutal-color');
+      const fontSelect = document.getElementById('select-brutal-font');
+      const sizeSlider = document.getElementById('input-brutal-size');
+      const sizeTxt = document.getElementById('txt-brutal-size-val');
+
+      const savedText = localStorage.getItem('rt2_brutal_text') || 'RT 2 PASLOR';
+      const savedColor = localStorage.getItem('rt2_brutal_color') || '#ff5520';
+      const savedFont = localStorage.getItem('rt2_brutal_font') || "'Space Grotesk', sans-serif";
+      const savedSize = localStorage.getItem('rt2_brutal_size') || '15';
+
+      applyBrutalistProps(savedText, savedColor, savedFont, savedSize);
+
+      textInput.value = savedText;
+      colorInput.value = savedColor;
+      fontSelect.value = savedFont;
+      sizeSlider.value = savedSize;
+      sizeTxt.innerText = savedSize + 'px';
+
+      textInput.addEventListener('input', (e) => {
+        const val = e.target.value.trim() || 'RT 2 PASLOR';
+        vertTextEl.innerText = val;
+        localStorage.setItem('rt2_brutal_text', val);
+      });
+
+      colorInput.addEventListener('input', (e) => {
+        document.documentElement.style.setProperty('--brutal-color', e.target.value);
+        localStorage.setItem('rt2_brutal_color', e.target.value);
+      });
+
+      fontSelect.addEventListener('change', (e) => {
+        document.documentElement.style.setProperty('--brutal-font', e.target.value);
+        localStorage.setItem('rt2_brutal_font', e.target.value);
+      });
+
+      sizeSlider.addEventListener('input', (e) => {
+        const px = e.target.value;
+        document.documentElement.style.setProperty('--brutal-size', px + 'px');
+        sizeTxt.innerText = px + 'px';
+        localStorage.setItem('rt2_brutal_size', px);
+      });
+
+      function applyBrutalistProps(t, c, f, s) {
+        vertTextEl.innerText = t;
+        document.documentElement.style.setProperty('--brutal-color', c);
+        document.documentElement.style.setProperty('--brutal-font', f);
+        document.documentElement.style.setProperty('--brutal-size', s + 'px');
+      }
+    }
+
     function syncThemeToIframes(theme) {
       ['frame-portal', 'frame-warga', 'frame-kas'].forEach(id => {
         const frame = document.getElementById(id);
@@ -1457,7 +1968,7 @@
       }
     }
 
-    // 6. PENULISAN KALENDER JAWA BESAR DI ATAS & JAM DI BAWAH (HANYA ANGKA JAM, TANPA MENIT & WIB)
+    // 9. PENULISAN KALENDER & JAM CENTER
     function initJawaCalendar() {
       function update() {
         const now = new Date();
@@ -1476,24 +1987,23 @@
         const year = now.getFullYear();
 
         const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
 
-        // Update Kalender Besar di Atas
         const elCal = document.getElementById('txt-calendar-jawa');
         if (elCal) {
           elCal.innerHTML = `${dName} ${pName}, ${dateNum} ${mName} ${year}`;
         }
 
-        // Update Jam Besar di Bawah (Hanya angka jam, tanpa menit dan tanpa WIB)
         const elClock = document.getElementById('txt-clock-hour');
         if (elClock) {
-          elClock.innerHTML = `${hh}:00`;
+          elClock.innerHTML = `${hh}:${mm} WIB`;
         }
       }
       update();
       setInterval(update, 1000);
     }
 
-    // 7. LOGIN & RATE-LIMITING KEAMANAN
+    // 10. LOGIN & RATE-LIMITING
     document.getElementById('login-eye').addEventListener('click', function() {
       const pwdInput = document.getElementById('login-password');
       if (pwdInput.type === "password") {
@@ -1669,7 +2179,7 @@
       document.getElementById('box-manage-users').style.display = p.canManageUsers ? "block" : "none";
     }
 
-    // 8. NAVIGASI
+    // 11. NAVIGASI DENGAN EFEK BOUNCE STAGGERED
     function initNavIndicator() {
       const navItems = document.querySelectorAll('.nav-item');
       const indicator = document.getElementById('nav-indicator');
@@ -1685,17 +2195,27 @@
 
       navItems.forEach(item => {
         item.addEventListener('click', (e) => {
-          if (e.target.closest('.sidebar-portal-tools')) return;
+          if (e.target.closest('.sidebar-nav-tools')) return;
           if (item.classList.contains('active')) return;
+
+          const currentActive = document.querySelector('.tab-view.active');
+          const targetTabId = item.getAttribute('data-tab');
+          const targetTab = document.getElementById(targetTabId);
 
           navItems.forEach(n => n.classList.remove('active'));
           item.classList.add('active');
           snapIndicator(item);
 
-          const targetTabId = item.getAttribute('data-tab');
-          document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
-          const targetTab = document.getElementById(targetTabId);
-          if (targetTab) targetTab.classList.add('active');
+          // Fast smooth staggered exit & enter animation
+          if (currentActive) {
+            currentActive.classList.add('leaving');
+            setTimeout(() => {
+              currentActive.classList.remove('active', 'leaving');
+              if (targetTab) targetTab.classList.add('active');
+            }, 220);
+          } else {
+            if (targetTab) targetTab.classList.add('active');
+          }
 
           if (window.innerWidth <= 820) {
             document.getElementById('main-sidebar').classList.remove('open');
@@ -1714,12 +2234,32 @@
       }
     }
 
-    // 9. LOGIKA TOGGLE COLLAPSE SIDEBAR
+    // 12. TOGGLE COLLAPSE SIDEBAR
+    function applyCollapseState(collapse) {
+      const sidebar = document.getElementById('main-sidebar');
+      const iconToggle = document.getElementById('icon-toggle-collapse');
+
+      if (collapse) {
+        sidebar.classList.add('collapsed');
+        iconToggle.className = 'fa-solid fa-angles-right';
+      } else {
+        sidebar.classList.remove('collapsed');
+        iconToggle.className = 'fa-solid fa-angles-left';
+      }
+
+      setTimeout(() => {
+        const activeItem = document.querySelector('.nav-item.active');
+        const indicator = document.getElementById('nav-indicator');
+        if (activeItem && indicator) {
+          indicator.style.top = activeItem.offsetTop + 'px';
+          indicator.style.height = activeItem.offsetHeight + 'px';
+        }
+      }, 350);
+    }
+
     function initCollapseSidebar() {
       const sidebar = document.getElementById('main-sidebar');
       const btnToggle = document.getElementById('btn-toggle-collapse');
-      const iconToggle = document.getElementById('icon-toggle-collapse');
-      const txtToggle = document.getElementById('txt-toggle-collapse');
 
       const isCollapsed = localStorage.getItem('rt2_sidebar_collapsed') === 'true';
       if (isCollapsed) {
@@ -1731,32 +2271,9 @@
         applyCollapseState(willCollapse);
         localStorage.setItem('rt2_sidebar_collapsed', willCollapse ? 'true' : 'false');
       });
-
-      function applyCollapseState(collapse) {
-        if (collapse) {
-          sidebar.classList.add('collapsed');
-          iconToggle.classList.replace('fa-angles-left', 'fa-angles-right');
-          txtToggle.innerText = '';
-          btnToggle.title = 'Perluas Menu Sidebar';
-        } else {
-          sidebar.classList.remove('collapsed');
-          iconToggle.classList.replace('fa-angles-right', 'fa-angles-left');
-          txtToggle.innerText = 'Perkecil Menu';
-          btnToggle.title = 'Perkecil Menu Sidebar';
-        }
-
-        setTimeout(() => {
-          const activeItem = document.querySelector('.nav-item.active');
-          const indicator = document.getElementById('nav-indicator');
-          if (activeItem && indicator) {
-            indicator.style.top = activeItem.offsetTop + 'px';
-            indicator.style.height = activeItem.offsetHeight + 'px';
-          }
-        }, 220);
-      }
     }
 
-    // 10. UPLOAD FOTO PROFIL KE GOOGLE DRIVE & SPREADSHEET KOLOM J
+    // 13. UPLOAD FOTO PROFIL
     document.getElementById('input-upload-foto').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1838,7 +2355,7 @@
       });
     });
 
-    // 11. MANAJEMEN AKUN
+    // 14. MANAJEMEN AKUN
     function loadUsersList() {
       if (!currentUser || !currentUser.permissions.canManageUsers) return;
 

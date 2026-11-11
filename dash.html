@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard RT2 Paslor</title>
-  
-  <!-- Font Poppins (Terkunci maks 700) -->
+  <title>Kementerian Dalam Negeri - RT 2 Paslor</title>
+  <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1500/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
+  <!-- Font Poppins Terkunci Maks 700 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Font Awesome CDN Terverifikasi (v6.5.1) -->
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-    /* ================= TEMA PRESET SYSTEM ================= */
     :root {
       --font-family: 'Poppins', sans-serif;
-      --sidebar-w: 260px;
+      --sidebar-w: 270px;
+      --logo-tint: #ff5520; /* Default tint untuk logo transparan */
     }
 
     /* 1. Dark Monokrom / Greyscale */
@@ -37,7 +37,7 @@
       --success: #10b981;
     }
 
-    /* 2. Dark Ember (Fintech Oranye) */
+    /* 2. Dark Ember */
     [data-theme="dark-ember"] {
       --bg-body: #0c0d10;
       --bg-sidebar: #121418;
@@ -54,7 +54,7 @@
       --success: #10b981;
     }
 
-    /* 3. Light Clean Minimal */
+    /* 3. Light Clean */
     [data-theme="light-clean"] {
       --bg-body: #f8fafc;
       --bg-sidebar: #ffffff;
@@ -71,7 +71,7 @@
       --success: #16a34a;
     }
 
-    /* 4. Light Ocean / Royal */
+    /* 4. Light Ocean */
     [data-theme="light-ocean"] {
       --bg-body: #f0f4f8;
       --bg-sidebar: #ffffff;
@@ -88,7 +88,6 @@
       --success: #059669;
     }
 
-    /* Perbaikan font & proteksi ikon Font Awesome agar tidak tertimpa Poppins */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -98,8 +97,8 @@
       transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
 
-    .fa, .fas, .far, .fal, .fad, .fab, .fa-solid, .fa-regular, .fa-brands {
-      font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+    .fa, .fas, .far, .fa-solid, .fa-regular {
+      font-family: "Font Awesome 6 Free" !important;
       display: inline-block;
       text-rendering: auto;
       -webkit-font-smoothing: antialiased;
@@ -115,9 +114,42 @@
       display: flex;
       height: 100vh;
       overflow: hidden;
+      position: relative;
     }
 
-    /* ================= LOGIN SCREEN OVERLAY ================= */
+    /* ================= LOGO MASKING COLOR TINT ================= */
+    .rt-logo-box {
+      width: 44px;
+      height: 44px;
+      background-color: var(--logo-tint);
+      -webkit-mask-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png');
+      mask-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png');
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      flex-shrink: 0;
+      transition: background-color 0.2s ease;
+    }
+
+    /* Bendera Indonesia */
+    .flag-indonesia {
+      width: 22px;
+      height: 15px;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+    }
+    .flag-red { background: #e11d48; flex: 1; }
+    .flag-white { background: #ffffff; flex: 1; }
+
+    /* ================= LOGIN OVERLAY ================= */
     #auth-screen {
       position: fixed;
       inset: 0;
@@ -133,37 +165,23 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       width: 100%;
-      max-width: 420px;
-      padding: 36px;
+      max-width: 430px;
+      padding: 34px;
       border-radius: 18px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      animation: springBounceIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: springBounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .auth-logo {
+    .auth-brand {
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 24px;
-    }
-
-    .logo-badge {
-      width: 44px;
-      height: 44px;
-      background: var(--accent);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 1.15rem;
-      box-shadow: 0 4px 15px var(--accent-glow);
+      margin-bottom: 22px;
     }
 
     .input-group {
       position: relative;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .input-group label {
@@ -176,7 +194,7 @@
 
     .input-control {
       width: 100%;
-      padding: 11px 42px 11px 14px;
+      padding: 10px 40px 10px 14px;
       background: var(--bg-body);
       border: 1px solid var(--border-color);
       border-radius: 9px;
@@ -185,9 +203,7 @@
       font-size: 0.9rem;
     }
 
-    .input-control:focus {
-      border-color: var(--accent);
-    }
+    .input-control:focus { border-color: var(--accent); }
 
     .toggle-pwd {
       position: absolute;
@@ -195,7 +211,6 @@
       bottom: 12px;
       cursor: pointer;
       color: var(--text-muted);
-      font-size: 1rem;
     }
 
     .toggle-pwd:hover { color: var(--text-main); }
@@ -215,21 +230,20 @@
       justify-content: center;
       gap: 8px;
     }
-
     .btn-main:active { transform: scale(0.98); }
 
-    /* ================= SIDEBAR & LIQUID PILL ================= */
+    /* ================= SIDEBAR & NAVIGATION ================= */
     aside {
       width: var(--sidebar-w);
       background: var(--bg-sidebar);
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      padding: 24px 14px;
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 20px 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       user-select: none;
-      z-index: 10;
+      z-index: 100;
     }
 
     aside.collapsed {
@@ -251,8 +265,8 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 28px;
-      padding: 0 8px;
+      margin-bottom: 24px;
+      padding: 0 6px;
     }
 
     nav {
@@ -263,7 +277,6 @@
       flex: 1;
     }
 
-    /* Efek Slime Liquid Indicator */
     .nav-indicator {
       position: absolute;
       left: 0;
@@ -323,28 +336,50 @@
       text-align: center;
     }
 
-    /* ================= MAIN CONTENT ================= */
+    /* Profile Avatar Icon */
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    /* ================= MAIN CONTAINER ================= */
     main {
       flex: 1;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      position: relative;
     }
 
     header {
       height: 72px;
-      padding: 0 32px;
+      padding: 0 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border-color);
       background: var(--bg-sidebar);
+      position: sticky;
+      top: 0;
+      z-index: 40;
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .btn-toggle-sidebar {
@@ -353,24 +388,24 @@
       color: var(--text-main);
       font-size: 1.15rem;
       cursor: pointer;
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 8px;
     }
-
     .btn-toggle-sidebar:hover { background: var(--bg-card-hover); }
 
     .greeting-badge {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      padding: 8px 16px;
+      padding: 8px 14px;
       border-radius: 12px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      font-size: 0.85rem;
     }
 
     .weton-badge {
@@ -379,7 +414,7 @@
       gap: 8px;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      padding: 6px 16px;
+      padding: 6px 14px;
       border-radius: 20px;
       font-size: 0.8rem;
     }
@@ -387,7 +422,7 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .btn-icon {
@@ -403,19 +438,36 @@
       justify-content: center;
       font-size: 1rem;
     }
-
     .btn-icon:hover { background: var(--bg-card-hover); }
 
-    /* ================= CONTENT ANIMATIONS ================= */
+    .btn-logout-header {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: var(--danger);
+      padding: 0 14px;
+      height: 40px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .btn-logout-header:hover {
+      background: var(--danger);
+      color: #ffffff;
+    }
+
+    /* ================= CONTENT & STAGGER ANIMATIONS ================= */
     .content-container {
-      padding: 32px;
+      padding: 28px;
       flex: 1;
     }
 
     .tab-view {
       display: none;
     }
-
     .tab-view.active {
       display: block;
     }
@@ -442,11 +494,11 @@
       100% { opacity: 0; transform: scale(0.94) translateY(18px); }
     }
 
-    /* Cards */
+    /* Grid & Cards */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 18px;
       margin-bottom: 24px;
     }
 
@@ -476,12 +528,12 @@
     }
 
     .card-val {
-      font-size: 1.65rem;
+      font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: -0.5px;
     }
 
-    /* Table Container */
+    /* Tables */
     .table-container {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -495,11 +547,12 @@
       border-collapse: collapse;
       text-align: left;
       font-size: 0.85rem;
+      min-width: 600px;
     }
 
     th {
       background: var(--bg-sidebar);
-      padding: 14px 18px;
+      padding: 14px 16px;
       border-bottom: 1px solid var(--border-color);
       color: var(--text-muted);
       font-weight: 600;
@@ -507,7 +560,7 @@
     }
 
     td {
-      padding: 14px 18px;
+      padding: 14px 16px;
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -516,14 +569,13 @@
     }
 
     .btn-table {
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 6px;
       border: none;
       cursor: pointer;
       font-size: 0.75rem;
       font-weight: 600;
     }
-
     .btn-edit { background: rgba(255, 85, 32, 0.15); color: var(--accent); }
     .btn-delete { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
 
@@ -538,7 +590,6 @@
       z-index: 1000;
       padding: 20px;
     }
-
     .modal-overlay.active { display: flex; }
 
     .modal-box {
@@ -547,15 +598,17 @@
       width: 100%;
       max-width: 520px;
       border-radius: 16px;
-      padding: 28px;
+      padding: 26px;
       animation: springBounceIn 0.35s ease;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .close-modal {
@@ -579,6 +632,39 @@
       70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
       100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
+
+    /* ================= RESPONSIVE MEDIA QUERIES ================= */
+    @media (max-width: 1024px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      aside {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        height: 100vh;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+      }
+      aside.open {
+        left: 0;
+      }
+      .weton-badge {
+        display: none;
+      }
+      .content-container {
+        padding: 18px;
+      }
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+      header {
+        padding: 0 16px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -586,11 +672,17 @@
   <!-- ================= 1. AUTH SCREEN ================= -->
   <div id="auth-screen">
     <div class="auth-card">
-      <div class="auth-logo">
-        <div class="logo-badge"><i class="fa-solid fa-layer-group"></i></div>
+      <div class="auth-brand">
+        <div class="rt-logo-box"></div>
         <div>
-          <h2 class="fw-bold" style="font-size: 1.25rem;">Dashboard RT2 Paslor</h2>
-          <p style="font-size: 0.75rem; color: var(--text-muted);">Pusat Kontrol Terpadu Pasekan Lor</p>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="flag-indonesia">
+              <div class="flag-red"></div>
+              <div class="flag-white"></div>
+            </div>
+            <h3 class="fw-bold" style="font-size: 0.95rem; letter-spacing: -0.3px;">Kementerian Dalam Negeri</h3>
+          </div>
+          <h2 class="fw-bold" style="font-size: 1.25rem; color: var(--accent);">RT 2 Paslor</h2>
         </div>
       </div>
 
@@ -605,7 +697,7 @@
         <i class="fa-solid fa-eye toggle-pwd" id="login-eye"></i>
       </div>
 
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
         <label style="font-size: 0.8rem; display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted);">
           <input type="checkbox" id="login-remember"> Simpan Akun (Auto-login)
         </label>
@@ -618,13 +710,19 @@
     </div>
   </div>
 
-  <!-- ================= 2. SIDEBAR NAVIGATION ================= -->
+  <!-- ================= 2. SIDEBAR ================= -->
   <aside id="main-sidebar">
     <div class="brand">
-      <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="rt-logo-box"></div>
       <div class="brand-title">
-        <div class="fw-bold" style="font-size: 1rem;">RT2 Paslor</div>
-        <div style="font-size: 0.7rem; color: var(--text-muted);">Pasekan Lor 02/03</div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <div class="flag-indonesia">
+            <div class="flag-red"></div>
+            <div class="flag-white"></div>
+          </div>
+          <div class="fw-semi" style="font-size: 0.75rem; letter-spacing: -0.2px;">Kemendagri</div>
+        </div>
+        <div class="fw-bold" style="font-size: 1.05rem; color: var(--accent);">RT 2 Paslor</div>
       </div>
     </div>
 
@@ -649,16 +747,16 @@
       </div>
     </nav>
 
-    <!-- User Profile Footer -->
+    <!-- User Profile Footer & Tombol Logout Sidebar -->
     <div style="padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
       <div class="user-details" style="display: flex; align-items: center; gap: 10px;">
-        <div class="logo-badge" style="width: 34px; height: 34px; font-size: 0.85rem;" id="nav-avatar">G</div>
+        <div class="avatar-circle" id="nav-avatar">G</div>
         <div>
           <div class="fw-semi" style="font-size: 0.85rem;" id="nav-user-name">Mas Gaga</div>
           <div style="font-size: 0.7rem; color: var(--text-muted);" id="nav-user-role">Administrator</div>
         </div>
       </div>
-      <button class="btn-icon" id="btn-logout" title="Keluar / Logout" style="border: none; background: transparent; color: var(--danger);">
+      <button class="btn-icon" id="btn-logout-sidebar" title="Keluar / Logout" style="border: none; background: transparent; color: var(--danger);">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
     </div>
@@ -668,13 +766,13 @@
   <main>
     <header>
       <div class="header-left">
-        <button class="btn-toggle-sidebar" id="sidebar-toggle-btn" title="Ciutkan / Lebarkan Sidebar">
+        <button class="btn-toggle-sidebar" id="sidebar-toggle-btn" title="Toggle Menu">
           <i class="fa-solid fa-bars-staggered"></i>
         </button>
 
         <div class="greeting-badge">
           <span class="pulse-live"></span>
-          <span class="fw-semi" id="txt-welcome-greeting" style="font-size: 0.85rem;">Sugeng Rawuh, Pengurus!</span>
+          <span class="fw-semi" id="txt-welcome-greeting">Selamat Datang, Pengurus!</span>
         </div>
 
         <div class="weton-badge">
@@ -684,13 +782,16 @@
       </div>
 
       <div class="header-right">
-        <!-- Live Sync Manual -->
-        <button class="btn-icon" id="btn-sync-live" title="Sinkronkan Data Live Sekarang">
+        <button class="btn-icon" id="btn-sync-live" title="Sinkronkan Data Live">
           <i class="fa-solid fa-arrows-rotate"></i>
         </button>
-        <!-- Quick Theme Switcher -->
-        <button class="btn-icon" id="btn-theme-quick" title="Ganti Mode Tampilan Cepat">
+        <button class="btn-icon" id="btn-theme-quick" title="Ganti Mode Tampilan">
           <i class="fa-solid fa-palette"></i>
+        </button>
+        <!-- Tombol Logout Universal di Header (Bisa diklik dari mana saja) -->
+        <button class="btn-logout-header" id="btn-logout-header" title="Keluar dari Dashboard">
+          <i class="fa-solid fa-power-off"></i>
+          <span>Keluar</span>
         </button>
       </div>
     </header>
@@ -701,7 +802,7 @@
       <section id="tab-overview" class="tab-view active">
         <div class="stagger" style="--i:1; margin-bottom: 22px;">
           <h2 class="fw-bold" style="font-size: 1.45rem;">Pusat Ringkasan Real-Time</h2>
-          <p style="font-size: 0.82rem; color: var(--text-muted);">Data terupdate live otomatis setiap 30 detik dari Google Sheets</p>
+          <p style="font-size: 0.82rem; color: var(--text-muted);">Monitoring data terpadu warga dan keuangan RT 2 Pasekan Lor</p>
         </div>
 
         <div class="metrics-grid">
@@ -740,7 +841,7 @@
             <i class="fa-solid fa-circle-check" style="color: var(--success);"></i> Multi-Exec API Terhubung
           </h3>
           <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-            Seluruh data ditarik secara terdistribusi dari masing-masing script: Exec Data Warga, Exec Keuangan, dan Exec User Role. Tambah, edit, dan hapus dapat dieksekusi secara instan dari dashboard ini sesuai hak akses akun Anda.
+            Seluruh data ditarik secara terdistribusi dari masing-masing script: Exec Data Warga, Exec Keuangan, dan Exec User Role. Operasi CRUD berjalan real-time tanpa iframe.
           </p>
         </div>
       </section>
@@ -812,52 +913,87 @@
       <section id="tab-settings" class="tab-view">
         <h2 class="stagger fw-bold" style="--i:1; font-size: 1.45rem; margin-bottom: 20px;">Pengaturan & Manajemen Akun</h2>
 
-        <!-- Box 1: Pilihan Tema -->
-        <div class="card stagger" style="--i:2; max-width: 850px; margin-bottom: 24px;">
-          <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 12px;">
-            <i class="fa-solid fa-paintbrush" style="color: var(--accent);"></i> Pilihan Tema Tampilan
-          </h3>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
-            <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
-              <input type="radio" name="theme-radio" value="dark-grey">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+          
+          <!-- Box 1: Edit Profil Saya & Ganti Foto -->
+          <div class="card stagger" style="--i:2;">
+            <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 16px;">
+              <i class="fa-solid fa-user-pen" style="color: var(--accent);"></i> Profil Saya
+            </h3>
+            
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 18px;">
+              <div class="avatar-circle" id="my-profile-avatar-preview" style="width: 64px; height: 64px; font-size: 1.5rem;">G</div>
               <div>
-                <div class="fw-semi" style="font-size: 0.85rem;">Dark Monokrom</div>
-                <div style="font-size: 0.7rem; color: var(--text-muted);">Greyscale netral</div>
+                <label class="btn-table btn-edit" style="display: inline-block; cursor: pointer; padding: 8px 12px;">
+                  <i class="fa-solid fa-camera"></i> Unggah Foto
+                  <input type="file" id="input-upload-foto" accept="image/*" style="display: none;">
+                </label>
+                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">PNG/JPG maks 1MB</div>
               </div>
-            </label>
-            <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
-              <input type="radio" name="theme-radio" value="dark-ember">
-              <div>
-                <div class="fw-semi" style="font-size: 0.85rem;">Dark Ember</div>
-                <div style="font-size: 0.7rem; color: var(--text-muted);">Fintech oranye modern</div>
+            </div>
+
+            <div class="input-group">
+              <label>Nama Lengkap</label>
+              <input type="text" id="my-name" class="input-control">
+            </div>
+            <div class="input-group">
+              <label>Username</label>
+              <input type="text" id="my-username" class="input-control">
+            </div>
+            <div class="input-group">
+              <label>Password Baru (Kosongkan jika tidak diganti)</label>
+              <input type="password" id="my-password" class="input-control" placeholder="••••••••">
+            </div>
+
+            <button class="btn-main" id="btn-save-my-profile" style="margin-top: 10px;">
+              <i class="fa-solid fa-floppy-disk"></i> Simpan Profil Saya
+            </button>
+          </div>
+
+          <!-- Box 2: Kustomisasi Logo & Warna -->
+          <div class="card stagger" style="--i:3;">
+            <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 14px;">
+              <i class="fa-solid fa-palette" style="color: var(--accent);"></i> Kustomisasi Logo & Tema
+            </h3>
+            
+            <div style="margin-bottom: 16px;">
+              <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Warna Logo RT 2:</label>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <input type="color" id="input-logo-color" value="#ff5520" style="width: 44px; height: 38px; border: none; cursor: pointer; border-radius: 8px; background: transparent;">
+                <div class="rt-logo-box" id="logo-preview-box"></div>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Ubah warna logo secara langsung</span>
               </div>
-            </label>
-            <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
-              <input type="radio" name="theme-radio" value="light-clean">
-              <div>
-                <div class="fw-semi" style="font-size: 0.85rem;">Light Clean</div>
-                <div style="font-size: 0.7rem; color: var(--text-muted);">Minimalist terang</div>
+            </div>
+
+            <div style="margin-top: 18px;">
+              <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Pilihan Preset Tema:</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
+                  <input type="radio" name="theme-radio" value="dark-grey"> Dark Monokrom
+                </label>
+                <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
+                  <input type="radio" name="theme-radio" value="dark-ember"> Dark Ember
+                </label>
+                <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
+                  <input type="radio" name="theme-radio" value="light-clean"> Light Clean
+                </label>
+                <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
+                  <input type="radio" name="theme-radio" value="light-ocean"> Light Ocean
+                </label>
               </div>
-            </label>
-            <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
-              <input type="radio" name="theme-radio" value="light-ocean">
-              <div>
-                <div class="fw-semi" style="font-size: 0.85rem;">Light Ocean</div>
-                <div style="font-size: 0.7rem; color: var(--text-muted);">Royal blue clean</div>
-              </div>
-            </label>
+            </div>
           </div>
         </div>
 
-        <!-- Box 2: Tabel Manajemen Akun (Sinkron ke SS DB_USERS_RT2_PASLOR) -->
-        <div class="card stagger" style="--i:3; max-width: 850px;">
+        <!-- Box 3: Tabel Manajemen Akun (Tambah, Edit, Hapus) -->
+        <div class="card stagger" id="box-manage-users" style="--i:4; margin-top: 24px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <div>
               <h3 class="fw-semi" style="font-size: 1rem;">
-                <i class="fa-solid fa-users-gear" style="color: var(--accent);"></i> Akun Pengurus Terdaftar
+                <i class="fa-solid fa-users-gear" style="color: var(--accent);"></i> Manajemen Akun Pengurus
               </h3>
               <p style="font-size: 0.75rem; color: var(--text-muted);">
-                Tersinkron dengan spreadsheet DB_USERS_RT2_PASLOR
+                Tersinkron dengan spreadsheet DB_USERS_RT2_PASLOR (Tambah, Edit, Hapus)
               </p>
             </div>
             <button class="btn-main" id="btn-add-user" style="width: auto; padding: 8px 14px; font-size: 0.8rem;">
@@ -869,6 +1005,7 @@
             <table>
               <thead>
                 <tr>
+                  <th>Foto</th>
                   <th>Username</th>
                   <th>Nama Pengurus</th>
                   <th>Role</th>
@@ -880,7 +1017,7 @@
                 </tr>
               </thead>
               <tbody id="tbody-users">
-                <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">Memuat daftar akun pengurus...</td></tr>
+                <tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Memuat daftar akun pengurus...</td></tr>
               </tbody>
             </table>
           </div>
@@ -999,33 +1136,39 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // 3 URL EXEC KHUSUS DARI MAS GAGA
     const API_WARGA_URL = "https://script.google.com/macros/s/AKfycbwPaBwOJ5Zw3TyzDYH5wT-ovy8yOo_R0togsq7XhU9frmT3zfJDaK2lWdaN8owRQ9PolA/exec";
     const API_KAS_URL   = "https://script.google.com/macros/s/AKfycbyPpRjprntu4xdfCcsZXBKArcx8uiaTviQwoEV3eX1nrQ289LeIwQe2D3TPOAmweuWp/exec";
     const API_USER_URL  = "https://script.google.com/macros/s/AKfycbzAfgeS_uKiR2XJYwLfxRnjJHLQqcOS5oQxhRDW8bZtQ1-RLMlc4geZz0mA_nCi5p8/exec";
 
-    // STATE MANAGEMENT
     let currentUser = null;
     let localData = { warga: [], kas: [], users: [] };
     let liveRefreshTimer = null;
+    let uploadedProfilePhotoBase64 = "";
 
     window.addEventListener('DOMContentLoaded', () => {
-      initThemes();
+      initThemesAndLogo();
       initJawaCalendar();
       checkSavedCredentials();
+      setupLogoutButtons();
     });
 
-    // 1. TEMA PRESET
-    function initThemes() {
+    // 1. TEMA & WARNA LOGO EDITABLE
+    function initThemesAndLogo() {
       const savedTheme = localStorage.getItem('rt2_theme') || 'dark-grey';
       applyTheme(savedTheme);
+
+      const savedLogoColor = localStorage.getItem('rt2_logo_color') || '#ff5520';
+      setLogoColor(savedLogoColor);
+      document.getElementById('input-logo-color').value = savedLogoColor;
+
+      document.getElementById('input-logo-color').addEventListener('input', (e) => {
+        setLogoColor(e.target.value);
+      });
 
       const radios = document.querySelectorAll('input[name="theme-radio"]');
       radios.forEach(r => {
         if (r.value === savedTheme) r.checked = true;
-        r.addEventListener('change', (e) => {
-          applyTheme(e.target.value);
-        });
+        r.addEventListener('change', (e) => applyTheme(e.target.value));
       });
 
       const themeList = ['dark-grey', 'dark-ember', 'light-clean', 'light-ocean'];
@@ -1038,6 +1181,11 @@
       });
     }
 
+    function setLogoColor(color) {
+      document.documentElement.style.setProperty('--logo-tint', color);
+      localStorage.setItem('rt2_logo_color', color);
+    }
+
     function applyTheme(themeName) {
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('rt2_theme', themeName);
@@ -1045,7 +1193,7 @@
       document.getElementById('btn-theme-quick').innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
     }
 
-    // 2. KALENDER JAWA & JAM AKURAT
+    // 2. KALENDER JAWA & JAM
     function initJawaCalendar() {
       function update() {
         const now = new Date();
@@ -1068,24 +1216,18 @@
         const ss = String(now.getSeconds()).padStart(2, '0');
 
         document.getElementById('txt-calendar-jawa').innerText = `${dName} ${pName}, ${dateNum} ${mName} ${year} • ${hh}:${mm}:${ss} WIB`;
-        updateGreetingBanner();
       }
       update();
       setInterval(update, 1000);
     }
 
+    // 3. SAPAAN SELAMAT DATANG
     function updateGreetingBanner() {
       if (!currentUser) return;
-      const hour = new Date().getHours();
-      let salam = "Sugeng Enjang";
-      if (hour >= 11 && hour < 15) salam = "Sugeng Siang";
-      else if (hour >= 15 && hour < 18) salam = "Sugeng Sonten";
-      else if (hour >= 18 || hour < 4) salam = "Sugeng Dalu";
-
-      document.getElementById('txt-welcome-greeting').innerText = `${salam}, ${currentUser.nama}!`;
+      document.getElementById('txt-welcome-greeting').innerText = `Selamat Datang, ${currentUser.nama}!`;
     }
 
-    // 3. TOGGLE PASSWORD DENGAN IKON MATA
+    // 4. AUTENTIKASI & UNIVERSAL LOGOUT
     document.getElementById('login-eye').addEventListener('click', function() {
       const pwdInput = document.getElementById('login-password');
       if (pwdInput.type === "password") {
@@ -1133,17 +1275,18 @@
           currentUser = res.user;
           onLoginGranted(username, password, remember);
         } else {
-          msg.innerText = res.message || "Gagal masuk. Cek akun kembali.";
+          msg.innerText = res.message || "Gagal login.";
         }
       })
       .catch(() => {
-        // Fallback testing local jika offline
         if (username === "rt2_admin" && password === "0203") {
           currentUser = {
             username: "rt2_admin",
+            password: "0203",
             nama: "Mas Gaga",
             role: "Admin",
-            permissions: { canEditWarga: true, canDeleteWarga: true, canEditKas: true, canDeleteKas: true, canManageUsers: true }
+            permissions: { canEditWarga: true, canDeleteWarga: true, canEditKas: true, canDeleteKas: true, canManageUsers: true },
+            foto: ""
           };
           onLoginGranted(username, password, remember);
         } else {
@@ -1164,7 +1307,12 @@
       document.getElementById('auth-screen').style.display = "none";
       document.getElementById('nav-user-name').innerText = currentUser.nama;
       document.getElementById('nav-user-role').innerText = currentUser.role;
-      document.getElementById('nav-avatar').innerText = currentUser.nama.charAt(0);
+      updateAvatarDisplay(currentUser.foto, currentUser.nama);
+
+      // Isi form Profil Saya di Settings
+      document.getElementById('my-name').value = currentUser.nama;
+      document.getElementById('my-username').value = currentUser.username;
+      document.getElementById('my-password').value = "";
 
       updateGreetingBanner();
       applyPermissions();
@@ -1174,23 +1322,45 @@
       liveRefreshTimer = setInterval(fetchLiveData, 30000);
     }
 
-    document.getElementById('btn-logout').addEventListener('click', () => {
-      if (confirm("Keluar dari Dashboard RT2?")) {
-        currentUser = null;
-        if (liveRefreshTimer) clearInterval(liveRefreshTimer);
-        document.getElementById('auth-screen').style.display = "flex";
-        document.getElementById('login-msg').innerText = "";
+    function updateAvatarDisplay(fotoBase64, name) {
+      const avatarEl = document.getElementById('nav-avatar');
+      const previewEl = document.getElementById('my-profile-avatar-preview');
+      
+      if (fotoBase64 && fotoBase64.startsWith('data:image')) {
+        avatarEl.style.backgroundImage = `url(${fotoBase64})`;
+        avatarEl.innerText = "";
+        previewEl.style.backgroundImage = `url(${fotoBase64})`;
+        previewEl.innerText = "";
+      } else {
+        avatarEl.style.backgroundImage = "none";
+        avatarEl.innerText = name ? name.charAt(0).toUpperCase() : "U";
+        previewEl.style.backgroundImage = "none";
+        previewEl.innerText = name ? name.charAt(0).toUpperCase() : "U";
       }
-    });
+    }
+
+    function setupLogoutButtons() {
+      const logoutHandler = () => {
+        if (confirm("Keluar dari Dashboard RT 2?")) {
+          currentUser = null;
+          if (liveRefreshTimer) clearInterval(liveRefreshTimer);
+          document.getElementById('auth-screen').style.display = "flex";
+          document.getElementById('login-msg').innerText = "";
+        }
+      };
+
+      document.getElementById('btn-logout-sidebar').addEventListener('click', logoutHandler);
+      document.getElementById('btn-logout-header').addEventListener('click', logoutHandler);
+    }
 
     function applyPermissions() {
       const p = currentUser.permissions;
       document.getElementById('btn-add-warga').style.display = p.canEditWarga ? "flex" : "none";
       document.getElementById('btn-add-kas').style.display = p.canEditKas ? "flex" : "none";
-      document.querySelector('[data-tab="tab-settings"]').style.display = p.canManageUsers ? "flex" : "none";
+      document.getElementById('box-manage-users').style.display = p.canManageUsers ? "block" : "none";
     }
 
-    // 4. EFEK SLIME LIQUID HOVER & FAST BOUNCE OUT
+    // 5. SLIME LIQUID HOVER & FAST BOUNCE OUT
     const navItems = document.querySelectorAll('.nav-item');
     const indicator = document.getElementById('nav-indicator');
 
@@ -1223,6 +1393,10 @@
         item.classList.add('active');
         snapIndicator(item, 'locked');
 
+        if (window.innerWidth <= 768) {
+          document.getElementById('main-sidebar').classList.remove('open');
+        }
+
         if (currentActive) {
           currentActive.classList.add('leaving');
           setTimeout(() => {
@@ -1240,27 +1414,88 @@
       if (active) snapIndicator(active, 'locked');
     });
 
-    // 5. SIDEBAR COLLAPSE
+    // Toggle Sidebar Desktop & Mobile Drawer
     document.getElementById('sidebar-toggle-btn').addEventListener('click', () => {
       const aside = document.getElementById('main-sidebar');
-      aside.classList.toggle('collapsed');
-      setTimeout(() => {
-        const active = document.querySelector('.nav-item.active');
-        if (active) snapIndicator(active, 'locked');
-      }, 300);
+      if (window.innerWidth <= 768) {
+        aside.classList.toggle('open');
+      } else {
+        aside.classList.toggle('collapsed');
+        setTimeout(() => {
+          const active = document.querySelector('.nav-item.active');
+          if (active) snapIndicator(active, 'locked');
+        }, 300);
+      }
     });
 
-    // 6. MULTI-EXEC LIVE DATA FETCHING
+    // 6. UPLOAD FOTO PROFIL & UPDATE MY PROFILE
+    document.getElementById('input-upload-foto').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 1048576) {
+        alert("Ukuran file foto maksimal 1MB!");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        uploadedProfilePhotoBase64 = evt.target.result;
+        updateAvatarDisplay(uploadedProfilePhotoBase64, currentUser.nama);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById('btn-save-my-profile').addEventListener('click', () => {
+      const newName = document.getElementById('my-name').value.trim();
+      const newUsername = document.getElementById('my-username').value.trim();
+      const newPassword = document.getElementById('my-password').value.trim();
+
+      if (!newName || !newUsername) {
+        alert("Nama dan Username tidak boleh kosong!");
+        return;
+      }
+
+      const payload = {
+        action: "updateMyProfile",
+        userData: {
+          originalUsername: currentUser.username,
+          username: newUsername,
+          password: newPassword || currentUser.password,
+          nama: newName,
+          foto: uploadedProfilePhotoBase64 || currentUser.foto || ""
+        }
+      };
+
+      fetch(API_USER_URL, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.status === "success") {
+          currentUser.nama = newName;
+          currentUser.username = newUsername;
+          if (newPassword) currentUser.password = newPassword;
+          if (uploadedProfilePhotoBase64) currentUser.foto = uploadedProfilePhotoBase64;
+          
+          document.getElementById('nav-user-name').innerText = newName;
+          updateGreetingBanner();
+          alert("Profil berhasil diperbarui!");
+        } else {
+          alert("Gagal memperbarui profil: " + res.message);
+        }
+      })
+      .catch(() => alert("Profil diperbarui di sesi lokal!"));
+    });
+
+    // 7. MULTI-EXEC LIVE FETCHING
     document.getElementById('btn-sync-live').addEventListener('click', () => {
       const icon = document.querySelector('#btn-sync-live i');
       icon.classList.add('fa-spin');
-      fetchLiveData(() => {
-        setTimeout(() => icon.classList.remove('fa-spin'), 600);
-      });
+      fetchLiveData(() => setTimeout(() => icon.classList.remove('fa-spin'), 600));
     });
 
     function fetchLiveData(callback) {
-      // 1. Fetch Warga & Ronda
+      // Fetch Warga
       fetch(API_WARGA_URL + "?action=getInitialData")
         .then(r => r.json())
         .then(res => {
@@ -1270,9 +1505,9 @@
             if (res.ronda) document.getElementById('metric-ronda').innerText = res.ronda;
             renderWargaTable();
           }
-        }).catch(err => console.error("Error warga:", err));
+        }).catch(err => console.error(err));
 
-      // 2. Fetch Keuangan
+      // Fetch Kas
       fetch(API_KAS_URL + "?action=getInitialData")
         .then(r => r.json())
         .then(res => {
@@ -1284,9 +1519,9 @@
             document.getElementById('metric-masuk').innerText = "Rp " + Number(masuk).toLocaleString('id-ID');
             renderKasTable();
           }
-        }).catch(err => console.error("Error kas:", err));
+        }).catch(err => console.error(err));
 
-      // 3. Fetch Users (Jika Admin)
+      // Fetch Users
       if (currentUser && currentUser.permissions.canManageUsers) {
         fetch(API_USER_URL + "?action=getUsers")
           .then(r => r.json())
@@ -1295,23 +1530,21 @@
               localData.users = res.users || [];
               renderUsersTable();
             }
-          }).catch(err => console.error("Error users:", err));
+          }).catch(err => console.error(err));
       }
 
       if (callback) callback();
     }
 
     function renderWargaTable() {
-      const tbWarga = document.getElementById('tbody-warga');
-      tbWarga.innerHTML = "";
+      const tb = document.getElementById('tbody-warga');
+      tb.innerHTML = "";
       if (localData.warga.length === 0) {
-        tbWarga.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Belum ada data warga</td></tr>';
+        tb.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Belum ada data warga</td></tr>';
         return;
       }
       localData.warga.forEach(w => {
-        const canDel = currentUser.permissions.canDeleteWarga;
-        const canEdit = currentUser.permissions.canEditWarga;
-        tbWarga.innerHTML += `
+        tb.innerHTML += `
           <tr>
             <td>${w.id}</td>
             <td class="fw-bold">${w.nama}</td>
@@ -1321,8 +1554,8 @@
             <td><span style="font-size: 0.72rem; background: var(--bg-card-hover); padding: 4px 8px; border-radius: 4px;">${w.status}</span></td>
             <td>
               <div style="display: flex; gap: 6px;">
-                ${canEdit ? `<button class="btn-table btn-edit" onclick="editWarga('${w.id}')"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
-                ${canDel ? `<button class="btn-table btn-delete" onclick="hapusWarga('${w.id}')"><i class="fa-solid fa-trash-can"></i></button>` : ''}
+                ${currentUser.permissions.canEditWarga ? `<button class="btn-table btn-edit" onclick="editWarga('${w.id}')"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
+                ${currentUser.permissions.canDeleteWarga ? `<button class="btn-table btn-delete" onclick="hapusWarga('${w.id}')"><i class="fa-solid fa-trash-can"></i></button>` : ''}
               </div>
             </td>
           </tr>
@@ -1331,16 +1564,14 @@
     }
 
     function renderKasTable() {
-      const tbKas = document.getElementById('tbody-kas');
-      tbKas.innerHTML = "";
+      const tb = document.getElementById('tbody-kas');
+      tb.innerHTML = "";
       if (localData.kas.length === 0) {
-        tbKas.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Belum ada catatan kas</td></tr>';
+        tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Belum ada catatan kas</td></tr>';
         return;
       }
       localData.kas.forEach(k => {
-        const canDel = currentUser.permissions.canDeleteKas;
-        const canEdit = currentUser.permissions.canEditKas;
-        tbKas.innerHTML += `
+        tb.innerHTML += `
           <tr>
             <td>${k.tanggal}</td>
             <td class="fw-bold">${k.keterangan}</td>
@@ -1349,8 +1580,8 @@
             <td style="color: var(--danger); font-weight: 600;">${k.keluar ? 'Rp ' + Number(k.keluar).toLocaleString('id-ID') : '-'}</td>
             <td>
               <div style="display: flex; gap: 6px;">
-                ${canEdit ? `<button class="btn-table btn-edit" onclick="editKas('${k.id}')"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
-                ${canDel ? `<button class="btn-table btn-delete" onclick="hapusKas('${k.id}')"><i class="fa-solid fa-trash-can"></i></button>` : ''}
+                ${currentUser.permissions.canEditKas ? `<button class="btn-table btn-edit" onclick="editKas('${k.id}')"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
+                ${currentUser.permissions.canDeleteKas ? `<button class="btn-table btn-delete" onclick="hapusKas('${k.id}')"><i class="fa-solid fa-trash-can"></i></button>` : ''}
               </div>
             </td>
           </tr>
@@ -1359,11 +1590,16 @@
     }
 
     function renderUsersTable() {
-      const tbUser = document.getElementById('tbody-users');
-      tbUser.innerHTML = "";
+      const tb = document.getElementById('tbody-users');
+      tb.innerHTML = "";
       localData.users.forEach(u => {
-        tbUser.innerHTML += `
+        const fotoBg = u.foto ? `background-image: url(${u.foto})` : '';
+        const initial = u.foto ? '' : (u.nama ? u.nama.charAt(0) : 'U');
+        tb.innerHTML += `
           <tr>
+            <td>
+              <div class="avatar-circle" style="width: 28px; height: 28px; font-size: 0.75rem; ${fotoBg}">${initial}</div>
+            </td>
             <td class="fw-bold">${u.username}</td>
             <td>${u.nama}</td>
             <td><span style="background: var(--bg-card-hover); padding: 3px 8px; border-radius: 4px;">${u.role}</span></td>
@@ -1372,7 +1608,10 @@
             <td>${u.canEditKas ? '<i class="fa-solid fa-check" style="color:var(--success)"></i>' : '-'}</td>
             <td>${u.canDeleteKas ? '<i class="fa-solid fa-check" style="color:var(--success)"></i>' : '-'}</td>
             <td>
-              <button class="btn-table btn-edit" onclick="editUser('${u.username}')"><i class="fa-solid fa-user-pen"></i></button>
+              <div style="display: flex; gap: 6px;">
+                <button class="btn-table btn-edit" onclick="editUser('${u.username}')" title="Edit Akun"><i class="fa-solid fa-user-pen"></i></button>
+                <button class="btn-table btn-delete" onclick="hapusUser('${u.username}')" title="Hapus Akun"><i class="fa-solid fa-trash-can"></i></button>
+              </div>
             </td>
           </tr>
         `;
@@ -1383,7 +1622,7 @@
       document.getElementById(id).classList.remove('active');
     }
 
-    // 7. USER AKUN HANDLER
+    // 8. CRUD USER AKUN (TAMBAH, EDIT, HAPUS)
     document.getElementById('btn-add-user').addEventListener('click', () => {
       document.getElementById('modal-user-title').innerText = "Tambah Akun Pengurus";
       document.getElementById('user-uname').value = "";
@@ -1436,7 +1675,19 @@
       closeModal('modal-user');
     });
 
-    // 8. CRUD WARGA & KAS HANDLERS
+    function hapusUser(uname) {
+      if (uname === currentUser.username) {
+        alert("Anda tidak bisa menghapus akun yang sedang Anda gunakan!");
+        return;
+      }
+      if (!confirm("Yakin ingin menghapus akun pengurus: " + uname + "?")) return;
+      fetch(API_USER_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "deleteUser", username: uname })
+      }).then(() => fetchLiveData());
+    }
+
+    // 9. CRUD WARGA & KAS
     document.getElementById('btn-add-warga').addEventListener('click', () => {
       document.getElementById('modal-warga-title').innerText = "Tambah Warga Baru";
       document.getElementById('warga-id').value = "";
@@ -1469,7 +1720,6 @@
         status: "Tetap"
       };
       if (!data.nama) return alert("Nama wajib diisi!");
-
       fetch(API_WARGA_URL, {
         method: "POST",
         body: JSON.stringify({ action: "saveWarga", data: data })
@@ -1517,7 +1767,6 @@
         kategori: "Kas Operasional"
       };
       if (!data.keterangan) return alert("Keterangan wajib diisi!");
-
       fetch(API_KAS_URL, {
         method: "POST",
         body: JSON.stringify({ action: "saveKas", data: data })

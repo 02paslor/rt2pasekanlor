@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kementerian Dalam Negeri - RT 2 Paslor</title>
-  <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgts8Z8ULlzHECZwbgW2Fhko2jphS0jPOfWDQIVCFCt1gVqeztjQd4GjEfOwHeq_qPnKtsrPzJ6Q1DzGYRpr_DEdb5hPSEdS7Xtw2NMZQdnEb2iC6MFvdnr9nzzmzTiy8d2S-_ajbkdULYiwtVz7pSJZrS-ypqy1zfN1g5GOzQzflFoXRYVL8XqhJymXik/s1500/IKON%20RT%202%20PASEKAN%20LOR%20(300%20PX).png">
+  <title>DASHBOARD - RT 2 PASLOR</title>
+  
   <!-- Font Poppins Terkunci Maks 700 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
     :root {
       --font-family: 'Poppins', sans-serif;
       --sidebar-w: 270px;
-      --logo-tint: #ff5520; /* Default tint untuk logo transparan */
+      --logo-tint: #ff5520;
     }
 
     /* 1. Dark Monokrom / Greyscale */
@@ -35,6 +35,7 @@
       --text-muted: #a3a3a3;
       --danger: #ef4444;
       --success: #10b981;
+      --iframe-bg: #1e1e1e;
     }
 
     /* 2. Dark Ember */
@@ -52,6 +53,7 @@
       --text-muted: #94a3b8;
       --danger: #f43f5e;
       --success: #10b981;
+      --iframe-bg: #14171f;
     }
 
     /* 3. Light Clean */
@@ -69,6 +71,7 @@
       --text-muted: #64748b;
       --danger: #ef4444;
       --success: #16a34a;
+      --iframe-bg: #f8fafc;
     }
 
     /* 4. Light Ocean */
@@ -86,6 +89,7 @@
       --text-muted: #64748b;
       --danger: #dc2626;
       --success: #059669;
+      --iframe-bg: #ffffff;
     }
 
     * {
@@ -117,7 +121,7 @@
       position: relative;
     }
 
-    /* ================= LOGO MASKING COLOR TINT ================= */
+    /* LOGO MASKING COLOR TINT */
     .rt-logo-box {
       width: 44px;
       height: 44px;
@@ -134,7 +138,6 @@
       transition: background-color 0.2s ease;
     }
 
-    /* Bendera Indonesia */
     .flag-indonesia {
       width: 22px;
       height: 15px;
@@ -149,7 +152,7 @@
     .flag-red { background: #e11d48; flex: 1; }
     .flag-white { background: #ffffff; flex: 1; }
 
-    /* ================= LOGIN OVERLAY ================= */
+    /* AUTH OVERLAY */
     #auth-screen {
       position: fixed;
       inset: 0;
@@ -232,7 +235,7 @@
     }
     .btn-main:active { transform: scale(0.98); }
 
-    /* ================= SIDEBAR & NAVIGATION ================= */
+    /* SIDEBAR */
     aside {
       width: var(--sidebar-w);
       background: var(--bg-sidebar);
@@ -336,7 +339,6 @@
       text-align: center;
     }
 
-    /* Profile Avatar Icon */
     .avatar-circle {
       width: 36px;
       height: 36px;
@@ -354,7 +356,7 @@
       flex-shrink: 0;
     }
 
-    /* ================= MAIN CONTAINER ================= */
+    /* MAIN WORKSPACE */
     main {
       flex: 1;
       display: flex;
@@ -459,17 +461,21 @@
       color: #ffffff;
     }
 
-    /* ================= CONTENT & STAGGER ANIMATIONS ================= */
+    /* CONTENT TABS & STAGGER BOUNCE */
     .content-container {
-      padding: 28px;
+      padding: 24px 28px;
       flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .tab-view {
       display: none;
+      flex: 1;
     }
     .tab-view.active {
-      display: block;
+      display: flex;
+      flex-direction: column;
     }
 
     .tab-view.active .stagger {
@@ -494,7 +500,6 @@
       100% { opacity: 0; transform: scale(0.94) translateY(18px); }
     }
 
-    /* Grid & Cards */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -533,7 +538,107 @@
       letter-spacing: -0.5px;
     }
 
-    /* Tables */
+    /* IFRAME MODERN EMBED SYSTEM */
+    .iframe-wrapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      height: calc(100vh - 170px);
+      min-height: 520px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .iframe-toolbar {
+      height: 48px;
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      user-select: none;
+    }
+
+    .iframe-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .iframe-url-tag {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: var(--bg-card);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .iframe-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-iframe-tool {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-iframe-tool:hover {
+      background: var(--bg-card-hover);
+      color: var(--accent);
+    }
+
+    .iframe-viewport-container {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: calc(100% - 48px);
+      background: var(--iframe-bg);
+    }
+
+    .iframe-app {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: transparent;
+    }
+
+    /* Iframe Loader Spinner */
+    .iframe-loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      z-index: 5;
+      transition: opacity 0.3s ease;
+    }
+    .iframe-loading-overlay.loaded {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* User Management Table */
     .table-container {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -633,11 +738,18 @@
       100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
-    /* ================= RESPONSIVE MEDIA QUERIES ================= */
+    /* Fullscreen Mode for Iframe */
+    .iframe-wrapper.fullscreen-mode {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      height: 100vh !important;
+      border-radius: 0;
+      border: none;
+    }
+
     @media (max-width: 1024px) {
-      .metrics-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 768px) {
@@ -649,27 +761,18 @@
         height: 100vh;
         box-shadow: 10px 0 30px rgba(0,0,0,0.5);
       }
-      aside.open {
-        left: 0;
-      }
-      .weton-badge {
-        display: none;
-      }
-      .content-container {
-        padding: 18px;
-      }
-      .metrics-grid {
-        grid-template-columns: 1fr;
-      }
-      header {
-        padding: 0 16px;
-      }
+      aside.open { left: 0; }
+      .weton-badge { display: none; }
+      .content-container { padding: 16px; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      header { padding: 0 16px; }
+      .iframe-wrapper { height: calc(100vh - 140px); }
     }
   </style>
 </head>
 <body>
 
-  <!-- ================= 1. AUTH SCREEN ================= -->
+  <!-- 1. AUTH SCREEN -->
   <div id="auth-screen">
     <div class="auth-card">
       <div class="auth-brand">
@@ -680,7 +783,7 @@
               <div class="flag-red"></div>
               <div class="flag-white"></div>
             </div>
-            <h3 class="fw-bold" style="font-size: 0.95rem; letter-spacing: -0.3px;">Kementerian Dalam Negeri</h3>
+            <h3 class="fw-bold" style="font-size: 0.95rem; letter-spacing: -0.3px;">DASHBOARD PUSAT</h3>
           </div>
           <h2 class="fw-bold" style="font-size: 1.25rem; color: var(--accent);">RT 2 Paslor</h2>
         </div>
@@ -710,7 +813,7 @@
     </div>
   </div>
 
-  <!-- ================= 2. SIDEBAR ================= -->
+  <!-- 2. SIDEBAR -->
   <aside id="main-sidebar">
     <div class="brand">
       <div class="rt-logo-box"></div>
@@ -720,9 +823,9 @@
             <div class="flag-red"></div>
             <div class="flag-white"></div>
           </div>
-          <div class="fw-semi" style="font-size: 0.75rem; letter-spacing: -0.2px;">Kemendagri</div>
+          <div class="fw-semi" style="font-size: 0.75rem; letter-spacing: -0.2px;">DASHBOARD PUSAT</div>
         </div>
-        <div class="fw-bold" style="font-size: 1.05rem; color: var(--accent);">RT 2 Paslor</div>
+        <div class="fw-bold" style="font-size: 1.05rem; color: var(--accent);">RT 2 PASLOR</div>
       </div>
     </div>
 
@@ -747,7 +850,6 @@
       </div>
     </nav>
 
-    <!-- User Profile Footer & Tombol Logout Sidebar -->
     <div style="padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
       <div class="user-details" style="display: flex; align-items: center; gap: 10px;">
         <div class="avatar-circle" id="nav-avatar">G</div>
@@ -762,7 +864,7 @@
     </div>
   </aside>
 
-  <!-- ================= 3. WORKSPACE AREA ================= -->
+  <!-- 3. WORKSPACE -->
   <main>
     <header>
       <div class="header-left">
@@ -782,13 +884,12 @@
       </div>
 
       <div class="header-right">
-        <button class="btn-icon" id="btn-sync-live" title="Sinkronkan Data Live">
+        <button class="btn-icon" id="btn-sync-live" title="Sinkronkan Ringkasan Live">
           <i class="fa-solid fa-arrows-rotate"></i>
         </button>
         <button class="btn-icon" id="btn-theme-quick" title="Ganti Mode Tampilan">
           <i class="fa-solid fa-palette"></i>
         </button>
-        <!-- Tombol Logout Universal di Header (Bisa diklik dari mana saja) -->
         <button class="btn-logout-header" id="btn-logout-header" title="Keluar dari Dashboard">
           <i class="fa-solid fa-power-off"></i>
           <span>Keluar</span>
@@ -798,7 +899,7 @@
 
     <div class="content-container">
 
-      <!-- ================= TAB: OVERVIEW ================= -->
+      <!-- TAB 1: OVERVIEW -->
       <section id="tab-overview" class="tab-view active">
         <div class="stagger" style="--i:1; margin-bottom: 22px;">
           <h2 class="fw-bold" style="font-size: 1.45rem;">Pusat Ringkasan Real-Time</h2>
@@ -808,28 +909,28 @@
         <div class="metrics-grid">
           <div class="card card-accent stagger" style="--i:2;">
             <div class="card-title">Saldo Kas Utama</div>
-            <div class="card-val" id="metric-saldo">Rp --</div>
+            <div class="card-val" id="metric-saldo">Rp 11.380.600</div>
             <div style="font-size: 0.72rem; margin-top: 10px; opacity: 0.9;">
               <i class="fa-solid fa-vault"></i> Terhubung Buku Kas Kemenkeu
             </div>
           </div>
           <div class="card stagger" style="--i:3;">
             <div class="card-title">Total Warga Terdata</div>
-            <div class="card-val" id="metric-warga">--</div>
+            <div class="card-val" id="metric-warga">46 KK / Jiwa</div>
             <div style="font-size: 0.72rem; color: var(--accent); margin-top: 10px; font-weight: 600;">
               <i class="fa-solid fa-address-card"></i> Database Warga Aktif
             </div>
           </div>
           <div class="card stagger" style="--i:4;">
             <div class="card-title">Pemasukan Kas</div>
-            <div class="card-val" style="color: var(--success);" id="metric-masuk">Rp --</div>
+            <div class="card-val" style="color: var(--success);" id="metric-masuk">Rp 23.363.800</div>
             <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px;">
               <i class="fa-solid fa-arrow-trend-up"></i> Total Iuran & Jimpitan
             </div>
           </div>
           <div class="card stagger" style="--i:5;">
             <div class="card-title">Petugas Ronda Malam Ini</div>
-            <div class="card-val" style="font-size: 1.05rem; line-height: 1.4;" id="metric-ronda">Memuat...</div>
+            <div class="card-val" style="font-size: 1.05rem; line-height: 1.4;" id="metric-ronda">YULIANTO, TWENTY A., DEDI S.</div>
             <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px;">
               <i class="fa-solid fa-person-military-pointing"></i> Pos Kamling RT 2
             </div>
@@ -838,78 +939,79 @@
 
         <div class="card stagger" style="--i:6; margin-top: 24px;">
           <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 8px;">
-            <i class="fa-solid fa-circle-check" style="color: var(--success);"></i> Multi-Exec API Terhubung
+            <i class="fa-solid fa-circle-check" style="color: var(--success);"></i> Desain Dashboard Terpadu iFrame Aktif
           </h3>
           <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-            Seluruh data ditarik secara terdistribusi dari masing-masing script: Exec Data Warga, Exec Keuangan, dan Exec User Role. Operasi CRUD berjalan real-time tanpa iframe.
+            Modul <b>Data Warga</b> dan <b>Kemenkeu RT</b> dimuat langsung secara mulus di dalam container iFrame tanpa meninggalkan dashboard ini. Desain bingkai, toolbar navigasi, dan skema warna diselaraskan secara otomatis dengan tema dashboard (Dark Monokrom, Dark Ember, Light Clean, dan Light Ocean).
           </p>
         </div>
       </section>
 
-      <!-- ================= TAB: DATA WARGA ================= -->
+      <!-- TAB 2: DATA WARGA (IFRAME EMBED) -->
       <section id="tab-warga" class="tab-view">
-        <div style="display: flex; justify-content: space-between; align-items: center;" class="stagger" style="--i:1;">
-          <div>
-            <h2 class="fw-bold" style="font-size: 1.45rem;">Database Warga RT 2</h2>
-            <p style="font-size: 0.82rem; color: var(--text-muted);">Data warga terintegrasi dan live edit</p>
+        <div class="iframe-wrapper stagger" id="wrapper-warga" style="--i:1;">
+          <div class="iframe-toolbar">
+            <div class="iframe-info">
+              <i class="fa-solid fa-people-roof" style="color: var(--accent);"></i>
+              <span>Sistem Data Warga RT 2</span>
+              <span class="iframe-url-tag">rt2pasekanlor.id/data-warga</span>
+            </div>
+            <div class="iframe-actions">
+              <button class="btn-iframe-tool" onclick="reloadIframe('frame-warga', 'loader-warga')">
+                <i class="fa-solid fa-rotate-right"></i> Reload
+              </button>
+              <button class="btn-iframe-tool" onclick="toggleFullscreenIframe('wrapper-warga')">
+                <i class="fa-solid fa-expand"></i> Fullscreen
+              </button>
+              <a href="https://rt2pasekanlor.id/data-warga" target="_blank" class="btn-iframe-tool" style="text-decoration:none;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Tab Baru
+              </a>
+            </div>
           </div>
-          <button class="btn-main" id="btn-add-warga" style="width: auto; padding: 10px 18px; font-size: 0.85rem;">
-            <i class="fa-solid fa-user-plus"></i> Tambah Warga
-          </button>
-        </div>
-
-        <div class="table-container stagger" style="--i:2;">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nama Lengkap</th>
-                <th>NIK</th>
-                <th>Alamat Rumah</th>
-                <th>WhatsApp</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-warga">
-              <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Mengambil data warga live...</td></tr>
-            </tbody>
-          </table>
+          
+          <div class="iframe-viewport-container">
+            <div class="iframe-loading-overlay" id="loader-warga">
+              <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--accent);"></i>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Memuat Sistem Data Warga...</span>
+            </div>
+            <iframe id="frame-warga" class="iframe-app" data-src="https://rt2pasekanlor.id/data-warga" allow="clipboard-read; clipboard-write; camera"></iframe>
+          </div>
         </div>
       </section>
 
-      <!-- ================= TAB: KAS KEMENKEU ================= -->
+      <!-- TAB 3: KEMENKEU RT (IFRAME EMBED) -->
       <section id="tab-kas" class="tab-view">
-        <div style="display: flex; justify-content: space-between; align-items: center;" class="stagger" style="--i:1;">
-          <div>
-            <h2 class="fw-bold" style="font-size: 1.45rem;">Buku Kas Kemenkeu RT 2</h2>
-            <p style="font-size: 0.82rem; color: var(--text-muted);">Catatan pembukuan keuangan & jimpitan warga</p>
+        <div class="iframe-wrapper stagger" id="wrapper-kas" style="--i:1;">
+          <div class="iframe-toolbar">
+            <div class="iframe-info">
+              <i class="fa-solid fa-wallet" style="color: var(--accent);"></i>
+              <span>Sistem Keuangan Kemenkeu RT 2</span>
+              <span class="iframe-url-tag">rt2pasekanlor.id/kemenkeu</span>
+            </div>
+            <div class="iframe-actions">
+              <button class="btn-iframe-tool" onclick="reloadIframe('frame-kas', 'loader-kas')">
+                <i class="fa-solid fa-rotate-right"></i> Reload
+              </button>
+              <button class="btn-iframe-tool" onclick="toggleFullscreenIframe('wrapper-kas')">
+                <i class="fa-solid fa-expand"></i> Fullscreen
+              </button>
+              <a href="https://rt2pasekanlor.id/kemenkeu" target="_blank" class="btn-iframe-tool" style="text-decoration:none;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Tab Baru
+              </a>
+            </div>
           </div>
-          <button class="btn-main" id="btn-add-kas" style="width: auto; padding: 10px 18px; font-size: 0.85rem;">
-            <i class="fa-solid fa-circle-plus"></i> Catat Transaksi
-          </button>
-        </div>
-
-        <div class="table-container stagger" style="--i:2;">
-          <table>
-            <thead>
-              <tr>
-                <th>Tanggal</th>
-                <th>Keterangan</th>
-                <th>Kategori</th>
-                <th>Masuk (Rp)</th>
-                <th>Keluar (Rp)</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-kas">
-              <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Mengambil data kas live...</td></tr>
-            </tbody>
-          </table>
+          
+          <div class="iframe-viewport-container">
+            <div class="iframe-loading-overlay" id="loader-kas">
+              <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--accent);"></i>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Memuat Sistem Kemenkeu RT 2...</span>
+            </div>
+            <iframe id="frame-kas" class="iframe-app" data-src="https://rt2pasekanlor.id/kemenkeu" allow="clipboard-read; clipboard-write; camera"></iframe>
+          </div>
         </div>
       </section>
 
-      <!-- ================= TAB: SETTINGS & AKUN ================= -->
+      <!-- TAB 4: SETTINGS & AKUN -->
       <section id="tab-settings" class="tab-view">
         <h2 class="stagger fw-bold" style="--i:1; font-size: 1.45rem; margin-bottom: 20px;">Pengaturan & Manajemen Akun</h2>
 
@@ -966,7 +1068,7 @@
             </div>
 
             <div style="margin-top: 18px;">
-              <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Pilihan Preset Tema:</label>
+              <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Pilihan Preset Tema Dashboard & iFrame:</label>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                 <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
                   <input type="radio" name="theme-radio" value="dark-grey"> Dark Monokrom
@@ -1027,69 +1129,7 @@
     </div>
   </main>
 
-  <!-- ================= MODAL WARGA ================= -->
-  <div class="modal-overlay" id="modal-warga">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 class="fw-bold" id="modal-warga-title">Data Warga</h3>
-        <i class="fa-solid fa-xmark close-modal" onclick="closeModal('modal-warga')"></i>
-      </div>
-      <input type="hidden" id="warga-id">
-      <div class="input-group">
-        <label>Nama Lengkap</label>
-        <input type="text" id="warga-nama" class="input-control">
-      </div>
-      <div class="input-group">
-        <label>NIK</label>
-        <input type="text" id="warga-nik" class="input-control">
-      </div>
-      <div class="input-group">
-        <label>Alamat / Blok Rumah</label>
-        <input type="text" id="warga-alamat" class="input-control">
-      </div>
-      <div class="input-group">
-        <label>No WhatsApp</label>
-        <input type="text" id="warga-hp" class="input-control">
-      </div>
-      <button class="btn-main" id="btn-save-warga">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Data Warga
-      </button>
-    </div>
-  </div>
-
-  <!-- ================= MODAL KAS ================= -->
-  <div class="modal-overlay" id="modal-kas">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 class="fw-bold" id="modal-kas-title">Pencatatan Transaksi</h3>
-        <i class="fa-solid fa-xmark close-modal" onclick="closeModal('modal-kas')"></i>
-      </div>
-      <input type="hidden" id="kas-id">
-      <div class="input-group">
-        <label>Tanggal</label>
-        <input type="date" id="kas-tanggal" class="input-control">
-      </div>
-      <div class="input-group">
-        <label>Keterangan Transaksi</label>
-        <input type="text" id="kas-keterangan" class="input-control">
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-        <div class="input-group">
-          <label>Masuk (Rp)</label>
-          <input type="number" id="kas-masuk" class="input-control" value="0">
-        </div>
-        <div class="input-group">
-          <label>Keluar (Rp)</label>
-          <input type="number" id="kas-keluar" class="input-control" value="0">
-        </div>
-      </div>
-      <button class="btn-main" id="btn-save-kas">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Transaksi
-      </button>
-    </div>
-  </div>
-
-  <!-- ================= MODAL USER AKUN ================= -->
+  <!-- MODAL USER AKUN -->
   <div class="modal-overlay" id="modal-user">
     <div class="modal-box">
       <div class="modal-header">
@@ -1134,15 +1174,11 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT ================= -->
   <script>
-    const API_WARGA_URL = "https://script.google.com/macros/s/AKfycbwPaBwOJ5Zw3TyzDYH5wT-ovy8yOo_R0togsq7XhU9frmT3zfJDaK2lWdaN8owRQ9PolA/exec";
-    const API_KAS_URL   = "https://script.google.com/macros/s/AKfycbyPpRjprntu4xdfCcsZXBKArcx8uiaTviQwoEV3eX1nrQ289LeIwQe2D3TPOAmweuWp/exec";
-    const API_USER_URL  = "https://script.google.com/macros/s/AKfycbzAfgeS_uKiR2XJYwLfxRnjJHLQqcOS5oQxhRDW8bZtQ1-RLMlc4geZz0mA_nCi5p8/exec";
+    const API_MASTER_URL = "https://script.google.com/macros/s/AKfycbzAfgeS_uKiR2XJYwLfxRnjJHLQqcOS5oQxhRDW8bZtQ1-RLMlc4geZz0mA_nCi5p8/exec";
 
     let currentUser = null;
-    let localData = { warga: [], kas: [], users: [] };
-    let liveRefreshTimer = null;
+    let localUsers = [];
     let uploadedProfilePhotoBase64 = "";
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -1150,9 +1186,10 @@
       initJawaCalendar();
       checkSavedCredentials();
       setupLogoutButtons();
+      setupIframeLoaders();
     });
 
-    // 1. TEMA & WARNA LOGO EDITABLE
+    // 1. TEMA & WARNA LOGO
     function initThemesAndLogo() {
       const savedTheme = localStorage.getItem('rt2_theme') || 'dark-grey';
       applyTheme(savedTheme);
@@ -1191,9 +1228,23 @@
       localStorage.setItem('rt2_theme', themeName);
       const isDark = themeName.startsWith('dark');
       document.getElementById('btn-theme-quick').innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+      
+      // Sinkronkan tema ke iFrame child melalui postMessage & update parameter URL
+      syncThemeToIframes(themeName);
     }
 
-    // 2. KALENDER JAWA & JAM
+    function syncThemeToIframes(themeName) {
+      ['frame-warga', 'frame-kas'].forEach(frameId => {
+        const iframe = document.getElementById(frameId);
+        if (iframe && iframe.contentWindow) {
+          try {
+            iframe.contentWindow.postMessage({ type: 'SET_THEME', theme: themeName }, '*');
+          } catch(e) {}
+        }
+      });
+    }
+
+    // 2. KALENDER JAWA & JAM AKURAT
     function initJawaCalendar() {
       function update() {
         const now = new Date();
@@ -1221,13 +1272,13 @@
       setInterval(update, 1000);
     }
 
-    // 3. SAPAAN SELAMAT DATANG
+    // 3. SAPAAN PENGURUS
     function updateGreetingBanner() {
       if (!currentUser) return;
-      document.getElementById('txt-welcome-greeting').innerText = `Selamat Datang, ${currentUser.nama}!`;
+      document.getElementById('txt-welcome-greeting').innerText = `Halo, ${currentUser.nama}!`;
     }
 
-    // 4. AUTENTIKASI & UNIVERSAL LOGOUT
+    // 4. AUTENTIKASI & LOGOUT UNIVERSAL
     document.getElementById('login-eye').addEventListener('click', function() {
       const pwdInput = document.getElementById('login-password');
       if (pwdInput.type === "password") {
@@ -1265,7 +1316,7 @@
       }
       msg.innerText = "Memverifikasi hak akses...";
 
-      fetch(API_USER_URL, {
+      fetch(API_MASTER_URL, {
         method: "POST",
         body: JSON.stringify({ action: "login", username: username, password: password })
       })
@@ -1275,10 +1326,11 @@
           currentUser = res.user;
           onLoginGranted(username, password, remember);
         } else {
-          msg.innerText = res.message || "Gagal login.";
+          msg.innerText = res.message || "Gagal masuk.";
         }
       })
       .catch(() => {
+        // Fallback default akun Mas Gaga
         if (username === "rt2_admin" && password === "0203") {
           currentUser = {
             username: "rt2_admin",
@@ -1290,7 +1342,7 @@
           };
           onLoginGranted(username, password, remember);
         } else {
-          msg.innerText = "Koneksi ke Exec User Role terputus.";
+          msg.innerText = "Koneksi ke backend Apps Script terputus.";
         }
       });
     }
@@ -1309,17 +1361,14 @@
       document.getElementById('nav-user-role').innerText = currentUser.role;
       updateAvatarDisplay(currentUser.foto, currentUser.nama);
 
-      // Isi form Profil Saya di Settings
       document.getElementById('my-name').value = currentUser.nama;
       document.getElementById('my-username').value = currentUser.username;
       document.getElementById('my-password').value = "";
 
       updateGreetingBanner();
       applyPermissions();
-      fetchLiveData();
-
-      if (liveRefreshTimer) clearInterval(liveRefreshTimer);
-      liveRefreshTimer = setInterval(fetchLiveData, 30000);
+      fetchOverviewData();
+      loadUsersList();
     }
 
     function updateAvatarDisplay(fotoBase64, name) {
@@ -1343,20 +1392,16 @@
       const logoutHandler = () => {
         if (confirm("Keluar dari Dashboard RT 2?")) {
           currentUser = null;
-          if (liveRefreshTimer) clearInterval(liveRefreshTimer);
           document.getElementById('auth-screen').style.display = "flex";
           document.getElementById('login-msg').innerText = "";
         }
       };
-
       document.getElementById('btn-logout-sidebar').addEventListener('click', logoutHandler);
       document.getElementById('btn-logout-header').addEventListener('click', logoutHandler);
     }
 
     function applyPermissions() {
       const p = currentUser.permissions;
-      document.getElementById('btn-add-warga').style.display = p.canEditWarga ? "flex" : "none";
-      document.getElementById('btn-add-kas').style.display = p.canEditKas ? "flex" : "none";
       document.getElementById('box-manage-users').style.display = p.canManageUsers ? "block" : "none";
     }
 
@@ -1387,7 +1432,8 @@
         if (item.classList.contains('active')) return;
 
         const currentActive = document.querySelector('.tab-view.active');
-        const targetTab = document.getElementById(item.getAttribute('data-tab'));
+        const targetTabId = item.getAttribute('data-tab');
+        const targetTab = document.getElementById(targetTabId);
 
         navItems.forEach(n => n.classList.remove('active'));
         item.classList.add('active');
@@ -1396,6 +1442,10 @@
         if (window.innerWidth <= 768) {
           document.getElementById('main-sidebar').classList.remove('open');
         }
+
+        // Lazy load iframe saat tab dibuka pertama kali
+        if (targetTabId === 'tab-warga') ensureIframeLoaded('frame-warga', 'loader-warga');
+        if (targetTabId === 'tab-kas') ensureIframeLoaded('frame-kas', 'loader-kas');
 
         if (currentActive) {
           currentActive.classList.add('leaving');
@@ -1414,7 +1464,6 @@
       if (active) snapIndicator(active, 'locked');
     });
 
-    // Toggle Sidebar Desktop & Mobile Drawer
     document.getElementById('sidebar-toggle-btn').addEventListener('click', () => {
       const aside = document.getElementById('main-sidebar');
       if (window.innerWidth <= 768) {
@@ -1428,7 +1477,66 @@
       }
     });
 
-    // 6. UPLOAD FOTO PROFIL & UPDATE MY PROFILE
+    // 6. IFRAME CONTROLLER & SINKRONISASI
+    function setupIframeLoaders() {
+      ['frame-warga', 'frame-kas'].forEach((id) => {
+        const frame = document.getElementById(id);
+        const loaderId = id === 'frame-warga' ? 'loader-warga' : 'loader-kas';
+        frame.addEventListener('load', () => {
+          document.getElementById(loaderId).classList.add('loaded');
+          // Kirim tema aktif saat iframe selesai loading
+          const curTheme = document.documentElement.getAttribute('data-theme');
+          syncThemeToIframes(curTheme);
+        });
+      });
+    }
+
+    function ensureIframeLoaded(frameId, loaderId) {
+      const frame = document.getElementById(frameId);
+      if (!frame.src || frame.src === "about:blank") {
+        const curTheme = document.documentElement.getAttribute('data-theme') || 'dark-grey';
+        const baseSrc = frame.getAttribute('data-src');
+        // Tambahkan query parameter tema agar iframe langsung merender tema senada
+        frame.src = baseSrc + "?theme=" + encodeURIComponent(curTheme);
+      }
+    }
+
+    function reloadIframe(frameId, loaderId) {
+      const frame = document.getElementById(frameId);
+      document.getElementById(loaderId).classList.remove('loaded');
+      const curTheme = document.documentElement.getAttribute('data-theme') || 'dark-grey';
+      const baseSrc = frame.getAttribute('data-src');
+      frame.src = baseSrc + "?theme=" + encodeURIComponent(curTheme) + "&t=" + new Date().getTime();
+    }
+
+    function toggleFullscreenIframe(wrapperId) {
+      const wrapper = document.getElementById(wrapperId);
+      wrapper.classList.toggle('fullscreen-mode');
+    }
+
+    // 7. RINGKASAN OVERVIEW
+    document.getElementById('btn-sync-live').addEventListener('click', () => {
+      const icon = document.querySelector('#btn-sync-live i');
+      icon.classList.add('fa-spin');
+      fetchOverviewData(() => setTimeout(() => icon.classList.remove('fa-spin'), 600));
+    });
+
+    function fetchOverviewData(cb) {
+      fetch(API_MASTER_URL + "?action=getInitialData")
+        .then(r => r.json())
+        .then(res => {
+          if (res.status === "success" && res.summary) {
+            document.getElementById('metric-saldo').innerText = "Rp " + Number(res.summary.saldoKas).toLocaleString('id-ID');
+            document.getElementById('metric-masuk').innerText = "Rp " + Number(res.summary.totalMasuk).toLocaleString('id-ID');
+            document.getElementById('metric-warga').innerText = res.summary.totalWarga + " KK / Jiwa";
+            if (res.ronda) document.getElementById('metric-ronda').innerText = res.ronda;
+          }
+          if (cb) cb();
+        })
+        .catch(() => { if (cb) cb(); });
+    }
+
+    // 8. PROFIL SAYA & UPLOAD FOTO
     document.getElementById('input-upload-foto').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1465,7 +1573,7 @@
         }
       };
 
-      fetch(API_USER_URL, {
+      fetch(API_MASTER_URL, {
         method: "POST",
         body: JSON.stringify(payload)
       })
@@ -1484,115 +1592,27 @@
           alert("Gagal memperbarui profil: " + res.message);
         }
       })
-      .catch(() => alert("Profil diperbarui di sesi lokal!"));
+      .catch(() => alert("Profil diperbarui secara lokal!"));
     });
 
-    // 7. MULTI-EXEC LIVE FETCHING
-    document.getElementById('btn-sync-live').addEventListener('click', () => {
-      const icon = document.querySelector('#btn-sync-live i');
-      icon.classList.add('fa-spin');
-      fetchLiveData(() => setTimeout(() => icon.classList.remove('fa-spin'), 600));
-    });
+    // 9. MANAJEMEN AKUN LENGKAP (TAMBAH, EDIT, HAPUS)
+    function loadUsersList() {
+      if (!currentUser || !currentUser.permissions.canManageUsers) return;
 
-    function fetchLiveData(callback) {
-      // Fetch Warga
-      fetch(API_WARGA_URL + "?action=getInitialData")
+      fetch(API_MASTER_URL + "?action=getUsers")
         .then(r => r.json())
         .then(res => {
           if (res.status === "success") {
-            localData.warga = res.warga || [];
-            document.getElementById('metric-warga').innerText = (res.summary ? res.summary.totalWarga : localData.warga.length) + " Jiwa";
-            if (res.ronda) document.getElementById('metric-ronda').innerText = res.ronda;
-            renderWargaTable();
+            localUsers = res.users || [];
+            renderUsersTable();
           }
-        }).catch(err => console.error(err));
-
-      // Fetch Kas
-      fetch(API_KAS_URL + "?action=getInitialData")
-        .then(r => r.json())
-        .then(res => {
-          if (res.status === "success") {
-            localData.kas = res.kas || [];
-            const saldo = res.summary ? res.summary.saldoKas : 0;
-            const masuk = res.summary ? res.summary.totalMasuk : 0;
-            document.getElementById('metric-saldo').innerText = "Rp " + Number(saldo).toLocaleString('id-ID');
-            document.getElementById('metric-masuk').innerText = "Rp " + Number(masuk).toLocaleString('id-ID');
-            renderKasTable();
-          }
-        }).catch(err => console.error(err));
-
-      // Fetch Users
-      if (currentUser && currentUser.permissions.canManageUsers) {
-        fetch(API_USER_URL + "?action=getUsers")
-          .then(r => r.json())
-          .then(res => {
-            if (res.status === "success") {
-              localData.users = res.users || [];
-              renderUsersTable();
-            }
-          }).catch(err => console.error(err));
-      }
-
-      if (callback) callback();
-    }
-
-    function renderWargaTable() {
-      const tb = document.getElementById('tbody-warga');
-      tb.innerHTML = "";
-      if (localData.warga.length === 0) {
-        tb.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Belum ada data warga</td></tr>';
-        return;
-      }
-      localData.warga.forEach(w => {
-        tb.innerHTML += `
-          <tr>
-            <td>${w.id}</td>
-            <td class="fw-bold">${w.nama}</td>
-            <td>${w.nik}</td>
-            <td>${w.alamat}</td>
-            <td>${w.noHp}</td>
-            <td><span style="font-size: 0.72rem; background: var(--bg-card-hover); padding: 4px 8px; border-radius: 4px;">${w.status}</span></td>
-            <td>
-              <div style="display: flex; gap: 6px;">
-                ${currentUser.permissions.canEditWarga ? `<button class="btn-table btn-edit" onclick="editWarga('${w.id}')"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
-                ${currentUser.permissions.canDeleteWarga ? `<button class="btn-table btn-delete" onclick="hapusWarga('${w.id}')"><i class="fa-solid fa-trash-can"></i></button>` : ''}
-              </div>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    function renderKasTable() {
-      const tb = document.getElementById('tbody-kas');
-      tb.innerHTML = "";
-      if (localData.kas.length === 0) {
-        tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Belum ada catatan kas</td></tr>';
-        return;
-      }
-      localData.kas.forEach(k => {
-        tb.innerHTML += `
-          <tr>
-            <td>${k.tanggal}</td>
-            <td class="fw-bold">${k.keterangan}</td>
-            <td>${k.kategori}</td>
-            <td style="color: var(--success); font-weight: 600;">${k.masuk ? 'Rp ' + Number(k.masuk).toLocaleString('id-ID') : '-'}</td>
-            <td style="color: var(--danger); font-weight: 600;">${k.keluar ? 'Rp ' + Number(k.keluar).toLocaleString('id-ID') : '-'}</td>
-            <td>
-              <div style="display: flex; gap: 6px;">
-                ${currentUser.permissions.canEditKas ? `<button class="btn-table btn-edit" onclick="editKas('${k.id}')"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
-                ${currentUser.permissions.canDeleteKas ? `<button class="btn-table btn-delete" onclick="hapusKas('${k.id}')"><i class="fa-solid fa-trash-can"></i></button>` : ''}
-              </div>
-            </td>
-          </tr>
-        `;
-      });
+        });
     }
 
     function renderUsersTable() {
       const tb = document.getElementById('tbody-users');
       tb.innerHTML = "";
-      localData.users.forEach(u => {
+      localUsers.forEach(u => {
         const fotoBg = u.foto ? `background-image: url(${u.foto})` : '';
         const initial = u.foto ? '' : (u.nama ? u.nama.charAt(0) : 'U');
         tb.innerHTML += `
@@ -1622,7 +1642,6 @@
       document.getElementById(id).classList.remove('active');
     }
 
-    // 8. CRUD USER AKUN (TAMBAH, EDIT, HAPUS)
     document.getElementById('btn-add-user').addEventListener('click', () => {
       document.getElementById('modal-user-title').innerText = "Tambah Akun Pengurus";
       document.getElementById('user-uname').value = "";
@@ -1638,7 +1657,7 @@
     });
 
     function editUser(uname) {
-      const u = localData.users.find(x => x.username === uname);
+      const u = localUsers.find(x => x.username === uname);
       if (!u) return;
       document.getElementById('modal-user-title').innerText = "Edit Akun: " + u.username;
       document.getElementById('user-uname').value = u.username;
@@ -1668,10 +1687,10 @@
 
       if (!uData.username || !uData.password) return alert("Username & Password wajib diisi!");
 
-      fetch(API_USER_URL, {
+      fetch(API_MASTER_URL, {
         method: "POST",
         body: JSON.stringify({ action: "saveUser", userData: uData })
-      }).then(() => fetchLiveData());
+      }).then(() => loadUsersList());
       closeModal('modal-user');
     });
 
@@ -1681,105 +1700,10 @@
         return;
       }
       if (!confirm("Yakin ingin menghapus akun pengurus: " + uname + "?")) return;
-      fetch(API_USER_URL, {
+      fetch(API_MASTER_URL, {
         method: "POST",
         body: JSON.stringify({ action: "deleteUser", username: uname })
-      }).then(() => fetchLiveData());
-    }
-
-    // 9. CRUD WARGA & KAS
-    document.getElementById('btn-add-warga').addEventListener('click', () => {
-      document.getElementById('modal-warga-title').innerText = "Tambah Warga Baru";
-      document.getElementById('warga-id').value = "";
-      document.getElementById('warga-nama').value = "";
-      document.getElementById('warga-nik').value = "";
-      document.getElementById('warga-alamat').value = "";
-      document.getElementById('warga-hp').value = "";
-      document.getElementById('modal-warga').classList.add('active');
-    });
-
-    function editWarga(id) {
-      const w = localData.warga.find(x => x.id === id);
-      if (!w) return;
-      document.getElementById('modal-warga-title').innerText = "Edit Data Warga";
-      document.getElementById('warga-id').value = w.id;
-      document.getElementById('warga-nama').value = w.nama;
-      document.getElementById('warga-nik').value = w.nik;
-      document.getElementById('warga-alamat').value = w.alamat;
-      document.getElementById('warga-hp').value = w.noHp;
-      document.getElementById('modal-warga').classList.add('active');
-    }
-
-    document.getElementById('btn-save-warga').addEventListener('click', () => {
-      const data = {
-        id: document.getElementById('warga-id').value,
-        nama: document.getElementById('warga-nama').value,
-        nik: document.getElementById('warga-nik').value,
-        alamat: document.getElementById('warga-alamat').value,
-        noHp: document.getElementById('warga-hp').value,
-        status: "Tetap"
-      };
-      if (!data.nama) return alert("Nama wajib diisi!");
-      fetch(API_WARGA_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "saveWarga", data: data })
-      }).then(() => fetchLiveData());
-      closeModal('modal-warga');
-    });
-
-    function hapusWarga(id) {
-      if (!confirm("Hapus data warga dengan ID: " + id + "?")) return;
-      fetch(API_WARGA_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "deleteWarga", id: id })
-      }).then(() => fetchLiveData());
-    }
-
-    document.getElementById('btn-add-kas').addEventListener('click', () => {
-      document.getElementById('modal-kas-title').innerText = "Pencatatan Transaksi Kas";
-      document.getElementById('kas-id').value = "";
-      document.getElementById('kas-tanggal').value = new Date().toISOString().split('T')[0];
-      document.getElementById('kas-keterangan').value = "";
-      document.getElementById('kas-masuk').value = 0;
-      document.getElementById('kas-keluar').value = 0;
-      document.getElementById('modal-kas').classList.add('active');
-    });
-
-    function editKas(id) {
-      const k = localData.kas.find(x => x.id === id);
-      if (!k) return;
-      document.getElementById('modal-kas-title').innerText = "Edit Catatan Kas";
-      document.getElementById('kas-id').value = k.id;
-      document.getElementById('kas-tanggal').value = k.tanggal;
-      document.getElementById('kas-keterangan').value = k.keterangan;
-      document.getElementById('kas-masuk').value = k.masuk;
-      document.getElementById('kas-keluar').value = k.keluar;
-      document.getElementById('modal-kas').classList.add('active');
-    }
-
-    document.getElementById('btn-save-kas').addEventListener('click', () => {
-      const data = {
-        id: document.getElementById('kas-id').value,
-        tanggal: document.getElementById('kas-tanggal').value,
-        keterangan: document.getElementById('kas-keterangan').value,
-        masuk: Number(document.getElementById('kas-masuk').value) || 0,
-        keluar: Number(document.getElementById('kas-keluar').value) || 0,
-        kategori: "Kas Operasional"
-      };
-      if (!data.keterangan) return alert("Keterangan wajib diisi!");
-      fetch(API_KAS_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "saveKas", data: data })
-      }).then(() => fetchLiveData());
-      closeModal('modal-kas');
-    });
-
-    function hapusKas(id) {
-      if (!confirm("Hapus transaksi kas ID: " + id + "?")) return;
-      fetch(API_KAS_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "deleteKas", id: id })
-      }).then(() => fetchLiveData());
+      }).then(() => loadUsersList());
     }
   </script>
 </body>

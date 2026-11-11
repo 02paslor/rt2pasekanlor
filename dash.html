@@ -11,29 +11,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     :root {
       --font-family: 'Poppins', sans-serif;
-      --sidebar-w: 260px;
+      --sidebar-w: 280px;
       --logo-tint: #ff5520;
-      --phone-scale: 1; /* Slider controller di Settings */
+      --logo-size: 72px;
+      --bg-custom-overlay: transparent;
+      --bg-custom-blur: 0px;
     }
 
-    /* 1. DARK THEME */
+    /* 1. DARK THEME DENGAN KOMBINASI #616161 & #3D3D3D */
     [data-theme="dark"] {
-      --bg-body: #101216;
-      --bg-sidebar: #16181e;
-      --bg-card: #1c1f26;
-      --bg-card-hover: #242832;
-      --border-color: rgba(255, 255, 255, 0.08);
+      --bg-body: #3D3D3D;
+      --bg-sidebar: #2B2B2B;
+      --bg-card: #616161;
+      --bg-card-hover: #4F4F4F;
+      --border-color: rgba(255, 255, 255, 0.12);
       --accent: #ff5520;
       --accent-contrast: #e03e0b;
       --accent-glow: rgba(255, 85, 32, 0.35);
-      --pill-soft: rgba(255, 85, 32, 0.12);
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
+      --pill-soft: rgba(255, 85, 32, 0.15);
+      --text-main: #f9fafb;
+      --text-muted: #d1d5db;
       --danger: #ef4444;
       --success: #10b981;
     }
@@ -84,6 +86,20 @@
       position: relative;
     }
 
+    /* BACKGROUND OVERLAY & BLUR DINAMIS */
+    #custom-bg-layer {
+      position: fixed;
+      inset: 0;
+      background-color: transparent;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(var(--bg-custom-blur));
+      transform: scale(1.03); /* Mencegah pinggiran putih saat di-blur */
+      z-index: 0;
+      pointer-events: none;
+    }
+
     /* LOGO BESAR & DI TENGAH */
     .brand-center-container {
       display: flex;
@@ -91,15 +107,15 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 18px 8px 24px;
+      padding: 10px 8px 16px;
       border-bottom: 1px solid var(--border-color);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .rt-logo-box-lg {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 12px;
+      width: var(--logo-size);
+      height: var(--logo-size);
+      margin: 0 auto 10px;
       background-color: var(--logo-tint);
       -webkit-mask-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png');
       mask-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimiwjiYldlCKj-DN2qiUM7EG4Rtj4MQMmN01ogcVsye7s3bKrrqweTewbjn3yvDyIID6S2Diw5X3QuiEztrXKy0xeW9SFCSo0VUNZ32ck1R6Nx1Iar7AH8AoIWm5zECVSeYRUftfO5uQD2tV85tugKkNrQ7XIl6uoy0-XQzJgvBxacBgCHRpdtuMDs9RM/s1600/Thumb%20-%20Putih.png');
@@ -110,10 +126,9 @@
       -webkit-mask-position: center;
       mask-position: center;
       flex-shrink: 0;
-      transition: background-color 0.25s ease, transform 0.2s ease;
+      transition: width 0.2s ease, height 0.2s ease, background-color 0.25s ease;
       filter: drop-shadow(0 4px 14px var(--accent-glow));
     }
-    .rt-logo-box-lg:hover { transform: scale(1.05); }
 
     .flag-indonesia {
       width: 22px;
@@ -146,11 +161,10 @@
       border: 1px solid var(--border-color);
       width: 100%;
       max-width: 420px;
-      padding: 36px 30px;
+      padding: 36px 30px 24px;
       border-radius: 20px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
       text-align: center;
-      animation: springBounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .input-group {
@@ -170,7 +184,7 @@
     .input-control {
       width: 100%;
       padding: 11px 40px 11px 14px;
-      background: var(--bg-body);
+      background: rgba(0, 0, 0, 0.2);
       border: 1px solid var(--border-color);
       border-radius: 10px;
       color: var(--text-main);
@@ -204,37 +218,46 @@
     }
     .btn-main:active { transform: scale(0.98); }
 
-    /* SIDEBAR */
+    /* SIDEBAR LEBIH LENGKAP */
     aside {
       width: var(--sidebar-w);
       background: var(--bg-sidebar);
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      padding: 16px 12px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 14px 12px;
       position: relative;
       user-select: none;
       z-index: 100;
+      overflow-y: auto;
     }
 
-    aside.collapsed {
-      width: 80px;
+    /* WIDGET GREETING, JAM & KALENDER DI SIDEBAR */
+    .sidebar-user-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    aside.collapsed .brand-center-container .brand-title,
-    aside.collapsed .brand-center-container .brand-sub,
-    aside.collapsed .nav-text,
-    aside.collapsed .user-details {
-      display: none;
+
+    .sidebar-user-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
     }
-    aside.collapsed .rt-logo-box-lg {
-      width: 46px;
-      height: 46px;
-      margin-bottom: 0;
-    }
-    aside.collapsed .nav-item {
-      justify-content: center;
-      padding: 14px 0;
+
+    .sidebar-time-box {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      border: 1px solid var(--border-color);
+      line-height: 1.4;
     }
 
     nav {
@@ -256,32 +279,14 @@
       pointer-events: none;
       z-index: 1;
       box-shadow: 0 6px 20px var(--accent-glow);
-      transition: top 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                  height 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-                  background 0.25s ease,
-                  transform 0.28s ease,
-                  box-shadow 0.25s ease;
-    }
-
-    .nav-indicator.hovering {
-      background: var(--pill-soft);
-      box-shadow: none;
-      transform: scaleY(0.95);
-    }
-    .nav-indicator.locked {
-      background: var(--accent);
-      box-shadow: 0 8px 24px var(--accent-glow);
-      transform: scaleY(1);
-    }
-    .nav-indicator.stretching {
-      transform: scaleY(1.15) scaleX(0.96);
+      transition: top 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.2s ease;
     }
 
     .nav-item {
       position: relative;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       padding: 12px 14px;
       border-radius: 12px;
       color: var(--text-muted);
@@ -300,10 +305,9 @@
       text-align: center;
     }
 
-    /* USER AVATAR DISPLAY (FOTO HARUS ADA) */
     .avatar-circle {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: var(--accent);
       color: #ffffff;
@@ -314,10 +318,64 @@
       font-size: 0.9rem;
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
       border: 2px solid var(--border-color);
       flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .pulse-live {
+      width: 8px;
+      height: 8px;
+      background-color: var(--success);
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+      animation: livePulse 2s infinite;
+    }
+
+    @keyframes livePulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* FOOTER SIDEBAR */
+    .sidebar-footer {
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-sidebar-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+    .btn-sidebar-action:hover { background: var(--bg-card-hover); }
+
+    .btn-sidebar-logout {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    .btn-sidebar-logout:hover { background: var(--danger); color: #fff; }
+
+    .copyright-text {
+      font-size: 0.68rem;
+      text-align: center;
+      color: var(--text-muted);
+      line-height: 1.4;
+      padding-top: 4px;
     }
 
     /* WORKSPACE */
@@ -327,105 +385,11 @@
       flex-direction: column;
       overflow-y: auto;
       position: relative;
-      background: var(--bg-body);
-    }
-
-    header {
-      height: 68px;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
-      background: var(--bg-sidebar);
-      position: sticky;
-      top: 0;
-      z-index: 40;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .btn-toggle-sidebar {
       background: transparent;
-      border: none;
-      color: var(--text-main);
-      font-size: 1.2rem;
-      cursor: pointer;
-      width: 38px;
-      height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-    }
-    .btn-toggle-sidebar:hover { background: var(--bg-card-hover); }
-
-    .greeting-badge {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 7px 14px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.85rem;
+      z-index: 10;
     }
 
-    .weton-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn-icon {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-    }
-    .btn-icon:hover { background: var(--bg-card-hover); }
-
-    .btn-logout-header {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.25);
-      color: var(--danger);
-      padding: 0 14px;
-      height: 40px;
-      border-radius: 10px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    .btn-logout-header:hover { background: var(--danger); color: #ffffff; }
-
-    /* CONTENT TABS */
     .content-container {
-      padding: 0;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -445,13 +409,12 @@
       flex-direction: column;
     }
 
-    /* SEAMLESS FULL IFRAME (TANPA BINGKAI CARD) */
+    /* SEAMLESS FULL IFRAME */
     .seamless-iframe-container {
       width: 100%;
       height: 100%;
       position: relative;
       flex: 1;
-      background: transparent;
       display: flex;
       flex-direction: column;
     }
@@ -470,10 +433,7 @@
       padding: 5px 8px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       backdrop-filter: blur(8px);
-      opacity: 0.85;
-      transition: opacity 0.2s ease;
     }
-    .seamless-floating-bar:hover { opacity: 1; }
 
     .btn-bar-action {
       background: var(--bg-card);
@@ -500,72 +460,17 @@
       flex: 1;
     }
 
-    /* MOCKUP IPHONE ASLI (FULL FRAME IMAGE) */
-    .phone-mockup-wrapper {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      overflow-y: auto;
-      background: radial-gradient(circle at center, rgba(255, 85, 32, 0.05) 0%, transparent 70%);
-    }
-
-    .iphone-stage {
-      position: relative;
-      /* Rasio proporsional mockup iPhone gambar asli */
-      width: calc(380px * var(--phone-scale));
-      height: calc(770px * var(--phone-scale));
-      max-width: 90vw;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      filter: drop-shadow(0 25px 50px rgba(0,0,0,0.55));
-      transition: width 0.2s ease, height 0.2s ease;
-    }
-
-    /* Overlay Gambar Frame iPhone Asli */
-    .iphone-frame-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: fill;
-      pointer-events: none;
-      z-index: 30;
-    }
-
-    /* Screen Viewport Web tepat di balik bezel & notch gambar asli */
-    .iphone-screen-viewport {
-      position: absolute;
-      top: 2.2%;
-      bottom: 2.2%;
-      left: 4.8%;
-      right: 4.8%;
-      border-radius: calc(44px * var(--phone-scale));
-      overflow: hidden;
-      z-index: 10;
-      background: #000000;
-    }
-
-    .iphone-screen-viewport iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
     /* SETTINGS VIEW */
     .settings-scroll-container {
       flex: 1;
       overflow-y: auto;
-      padding: 30px;
+      padding: 24px;
     }
 
     .settings-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
+      gap: 20px;
       max-width: 1100px;
       margin: 0 auto;
     }
@@ -574,8 +479,8 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      padding: 22px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
 
     .table-container {
@@ -596,7 +501,7 @@
 
     th {
       background: var(--bg-sidebar);
-      padding: 14px 16px;
+      padding: 12px 14px;
       border-bottom: 1px solid var(--border-color);
       color: var(--text-muted);
       font-weight: 600;
@@ -604,7 +509,7 @@
     }
 
     td {
-      padding: 14px 16px;
+      padding: 12px 14px;
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -640,7 +545,7 @@
       width: 100%;
       max-width: 520px;
       border-radius: 18px;
-      padding: 26px;
+      padding: 24px;
       max-height: 90vh;
       overflow-y: auto;
     }
@@ -653,76 +558,62 @@
     }
     .close-modal { cursor: pointer; color: var(--text-muted); font-size: 1.25rem; }
 
-    .pulse-live {
-      width: 8px;
-      height: 8px;
-      background-color: var(--success);
-      border-radius: 50%;
-      display: inline-block;
-      box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
-      animation: livePulse 2s infinite;
+    /* Mobile Responsive */
+    #mobile-menu-bar {
+      display: none;
+      background: var(--bg-sidebar);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
     }
 
-    @keyframes livePulse {
-      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-    }
-
-    /* Staggered animations */
-    .tab-view.active .stagger {
-      animation: springBounceIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-      animation-delay: calc(var(--i) * 0.05s);
-    }
-    .tab-view.leaving .stagger {
-      animation: springBounceOut 0.28s cubic-bezier(0.36, 0, 0.66, -0.56) both;
-      animation-delay: calc(var(--i) * 0.035s);
-    }
-
-    @keyframes springBounceIn {
-      0% { opacity: 0; transform: scale(0.95) translateY(16px); }
-      70% { transform: scale(1.01) translateY(-2px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    @keyframes springBounceOut {
-      0% { opacity: 1; transform: scale(1) translateY(0); }
-      30% { transform: scale(1.02) translateY(-4px); }
-      100% { opacity: 0; transform: scale(0.95) translateY(18px); }
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 820px) {
+      body { flex-direction: column; }
+      #mobile-menu-bar { display: flex; }
       aside {
         position: fixed;
         left: -100%;
         top: 0;
         bottom: 0;
-        height: 100vh;
-        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+        width: 290px;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.6);
+        transition: left 0.3s ease;
       }
       aside.open { left: 0; }
-      .weton-badge { display: none; }
-      header { padding: 0 16px; }
-      .phone-mockup-wrapper { padding: 10px; }
-      .iphone-stage { width: 92vw; height: calc(92vw * 2.02); }
     }
   </style>
 </head>
 <body>
+
+  <!-- BACKGROUND OVERLAY UNTUK WARNA / GAMBAR & BLUR -->
+  <div id="custom-bg-layer"></div>
+
+  <!-- BAR MOBILE HANYA SAAT LAYAR KECIL -->
+  <div id="mobile-menu-bar">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button id="btn-open-sidebar-mobile" style="background:none; border:none; color:var(--text-main); font-size:1.2rem; cursor:pointer;">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <span class="fw-bold" style="font-size:0.95rem; color:var(--accent);">DASHBOARD RT 2 PASLOR</span>
+    </div>
+    <div class="avatar-circle user-avatar-el" style="width:30px; height:30px; font-size:0.75rem;">G</div>
+  </div>
 
   <!-- 1. AUTH SCREEN -->
   <div id="auth-screen">
     <div class="auth-card">
       <div class="rt-logo-box-lg"></div>
       
-      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 6px;">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 4px;">
         <div class="flag-indonesia">
           <div class="flag-red"></div>
           <div class="flag-white"></div>
         </div>
-        <h3 class="fw-bold" style="font-size: 0.95rem; letter-spacing: -0.2px;">DASHBOARD PUSAT</h3>
+        <h3 class="fw-bold" style="font-size: 0.95rem;">DASHBOARD PUSAT</h3>
       </div>
-      <h2 class="fw-bold" style="font-size: 1.35rem; color: var(--accent); margin-bottom: 24px;">RT 2 Paslor</h2>
+      <h2 class="fw-bold" style="font-size: 1.35rem; color: var(--accent); margin-bottom: 20px;">RT 2 Paslor</h2>
 
       <div class="input-group">
         <label>Username</label>
@@ -735,7 +626,7 @@
         <i class="fa-solid fa-eye toggle-pwd" id="login-eye"></i>
       </div>
 
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
         <label style="font-size: 0.8rem; display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted);">
           <input type="checkbox" id="login-remember"> Simpan Akun (Auto-login)
         </label>
@@ -744,11 +635,15 @@
       <button class="btn-main" id="btn-login-submit">
         <i class="fa-solid fa-right-to-bracket"></i> Masuk Dashboard
       </button>
-      <div id="login-msg" style="font-size: 0.8rem; color: var(--danger); margin-top: 12px; text-align: center;"></div>
+      <div id="login-msg" style="font-size: 0.8rem; color: var(--danger); margin-top: 10px; text-align: center;"></div>
+
+      <div class="copyright-text" style="margin-top: 20px;">
+        Copyright Dashboard © 2026. Created by Arga.
+      </div>
     </div>
   </div>
 
-  <!-- 2. SIDEBAR -->
+  <!-- 2. SIDEBAR TERPADU -->
   <aside id="main-sidebar">
     <!-- LOGO BESAR & DI TENGAH -->
     <div class="brand-center-container">
@@ -759,18 +654,43 @@
             <div class="flag-red"></div>
             <div class="flag-white"></div>
           </div>
-          <span class="fw-semi" style="font-size: 0.72rem; letter-spacing: -0.2px;">DASHBOARD PUSAT</span>
+          <span class="fw-semi" style="font-size: 0.72rem;">DASHBOARD PUSAT</span>
         </div>
-        <div class="fw-bold" style="font-size: 1.1rem; color: var(--accent);">RT 2 PASLOR</div>
+        <div class="fw-bold" style="font-size: 1.05rem; color: var(--accent);">RT 2 PASLOR</div>
       </div>
     </div>
 
-    <!-- NAVIGATION MENU -->
+    <!-- PANEL PENGURUS, SAPAAN, JAM & KALENDER JAWA -->
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-top">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="avatar-circle user-avatar-el" id="sidebar-user-avatar">G</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="pulse-live"></span>
+              <span class="fw-bold" style="font-size: 0.82rem;" id="nav-user-name">Mas Gaga</span>
+            </div>
+            <div style="font-size: 0.7rem; color: var(--text-muted);" id="nav-user-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size: 0.75rem; color: var(--accent); font-weight: 600;" id="txt-welcome-greeting">
+        Selamat Datang, Mas Gaga!
+      </div>
+
+      <div class="sidebar-time-box">
+        <i class="fa-solid fa-calendar-day" style="color: var(--accent); margin-right: 4px;"></i>
+        <span id="txt-calendar-jawa">Memuat penanggalan...</span>
+      </div>
+    </div>
+
+    <!-- NAVIGASI MENU -->
     <nav id="nav-wrapper">
-      <div class="nav-indicator locked" id="nav-indicator"></div>
+      <div class="nav-indicator" id="nav-indicator"></div>
       
       <div class="nav-item active" data-tab="tab-portal">
-        <i class="fa-solid fa-mobile-screen"></i>
+        <i class="fa-solid fa-globe"></i>
         <span class="nav-text">Portal Warga</span>
       </div>
       <div class="nav-item" data-tab="tab-warga">
@@ -787,75 +707,40 @@
       </div>
     </nav>
 
-    <!-- FOTO PENGURUS & LOGOUT DI SIDEBAR -->
-    <div style="padding-top: 14px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
-      <div class="user-details" style="display: flex; align-items: center; gap: 10px;">
-        <div class="avatar-circle user-avatar-el" id="sidebar-user-avatar">G</div>
-        <div>
-          <div class="fw-semi" style="font-size: 0.85rem;" id="nav-user-name">Mas Gaga</div>
-          <div style="font-size: 0.7rem; color: var(--text-muted);" id="nav-user-role">Administrator</div>
-        </div>
+    <!-- FOOTER SIDEBAR DENGAN SWITCH TEMA & LOGOUT -->
+    <div class="sidebar-footer">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <button class="btn-sidebar-action" id="btn-theme-switch" title="Ganti Mode Dark / Light">
+          <i class="fa-solid fa-moon"></i> <span>Tema</span>
+        </button>
+        <button class="btn-sidebar-action btn-sidebar-logout" id="btn-logout-sidebar" title="Keluar">
+          <i class="fa-solid fa-power-off"></i> <span>Keluar</span>
+        </button>
       </div>
-      <button class="btn-icon" id="btn-logout-sidebar" title="Keluar / Logout" style="border: none; background: transparent; color: var(--danger);">
-        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-      </button>
+
+      <div class="copyright-text">
+        Copyright Dashboard © 2026. Created by Arga.
+      </div>
     </div>
   </aside>
 
   <!-- 3. WORKSPACE UTAMA -->
   <main>
-    <header>
-      <div class="header-left">
-        <button class="btn-toggle-sidebar" id="sidebar-toggle-btn" title="Toggle Menu">
-          <i class="fa-solid fa-bars-staggered"></i>
-        </button>
-
-        <!-- FOTO & GREETING DI HEADER -->
-        <div class="greeting-badge">
-          <div class="avatar-circle user-avatar-el" style="width: 32px; height: 32px; font-size: 0.8rem;" id="header-user-avatar">G</div>
-          <div>
-            <span class="pulse-live"></span>
-            <span class="fw-semi" id="txt-welcome-greeting" style="margin-left: 4px;">Selamat Datang, Mas Gaga!</span>
-          </div>
-        </div>
-
-        <div class="weton-badge">
-          <i class="fa-solid fa-calendar-day" style="color: var(--accent);"></i>
-          <span id="txt-calendar-jawa">Memuat Penanggalan...</span>
-        </div>
-      </div>
-
-      <div class="header-right">
-        <!-- SWITCH TEMA HANYA DARK & LIGHT -->
-        <button class="btn-icon" id="btn-theme-switch" title="Ganti Mode Dark / Light">
-          <i class="fa-solid fa-moon"></i>
-        </button>
-        <!-- LOGOUT UNIVERSAL -->
-        <button class="btn-logout-header" id="btn-logout-header" title="Keluar dari Dashboard">
-          <i class="fa-solid fa-power-off"></i>
-          <span>Keluar</span>
-        </button>
-      </div>
-    </header>
-
     <div class="content-container">
 
-      <!-- TAB 1: PORTAL WARGA (MOCKUP SMARTPHONE MENGGUNAKAN GAMBAR ASLI PENUH) -->
+      <!-- TAB 1: PORTAL WARGA (SEAMLESS FULL IFRAME TANPA BINGKAI SMARTPHONE) -->
       <section id="tab-portal" class="tab-view active">
-        <div class="phone-mockup-wrapper">
-          <div class="iphone-stage" id="iphone-stage-box">
-            <!-- Frame Gambar Smartphone iPhone Asli -->
-            <img class="iphone-frame-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhc2mSTY6V0n2aOmpgETFjj2HRtjlIYbYs79STZw6D6v5Gx9Nq3V5_qG7PDUiNbdP64eH36Dw9kd0TaXBiY4dsdUZQAMf2gMBcAiecBlfp7_bKqKrNIcOEQr2ftvz5-92xONYONwQTLsXV-QYSJfJx3dhBgTooZ9xb9jMfw8BYabFCyLH6nSssyAbQKlRw/s1600/iphone_18_preview.png" alt="iPhone Frame">
-            
-            <!-- Layar Aktif Web https://rt2pasekanlor.id/ -->
-            <div class="iphone-screen-viewport">
-              <iframe id="frame-portal" src="https://rt2pasekanlor.id/" allow="geolocation; microphone; camera; clipboard-read; clipboard-write;"></iframe>
-            </div>
+        <div class="seamless-iframe-container">
+          <div class="seamless-floating-bar">
+            <span style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted);"><i class="fa-solid fa-globe" style="color:var(--accent);"></i> Portal Warga</span>
+            <button class="btn-bar-action" onclick="reloadFrame('frame-portal')"><i class="fa-solid fa-rotate-right"></i> Reload</button>
+            <a href="https://rt2pasekanlor.id" target="_blank" class="btn-bar-action"><i class="fa-solid fa-arrow-up-right-from-square"></i> Tab Baru</a>
           </div>
+          <iframe id="frame-portal" class="seamless-iframe" src="https://rt2pasekanlor.id" allow="geolocation; microphone; camera; clipboard-read; clipboard-write; forms; scripts; same-origin"></iframe>
         </div>
       </section>
 
-      <!-- TAB 2: DATA WARGA (SEAMLESS FULL TANPA BINGKAI CARD & BISA SIMPAN DATA) -->
+      <!-- TAB 2: DATA WARGA (SEAMLESS FULL IFRAME) -->
       <section id="tab-warga" class="tab-view">
         <div class="seamless-iframe-container">
           <div class="seamless-floating-bar">
@@ -867,7 +752,7 @@
         </div>
       </section>
 
-      <!-- TAB 3: KEMENKEU RT (SEAMLESS FULL TANPA BINGKAI CARD) -->
+      <!-- TAB 3: KEMENKEU RT (SEAMLESS FULL IFRAME) -->
       <section id="tab-kas" class="tab-view">
         <div class="seamless-iframe-container">
           <div class="seamless-floating-bar">
@@ -885,7 +770,7 @@
           <div class="settings-grid">
             
             <!-- Box 1: Profil Saya & Upload Foto ke Google Drive -->
-            <div class="card stagger" style="--i:1;">
+            <div class="card">
               <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 16px;">
                 <i class="fa-solid fa-user-pen" style="color: var(--accent);"></i> Profil Saya
               </h3>
@@ -898,7 +783,7 @@
                     <input type="file" id="input-upload-foto" accept="image/*" style="display: none;">
                   </label>
                   <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">
-                    <i class="fa-brands fa-google-drive"></i> Tersimpan otomatis ke Google Drive
+                    <i class="fa-brands fa-google-drive"></i> Terupload langsung ke Google Drive
                   </div>
                 </div>
               </div>
@@ -921,62 +806,87 @@
               </button>
             </div>
 
-            <!-- Box 2: Pengaturan Tema, Ukuran Mockup Smartphone & Warna Logo -->
-            <div class="card stagger" style="--i:2;">
+            <!-- Box 2: Pengaturan Tema, Ukuran Logo, Warna & Background Blur -->
+            <div class="card">
               <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 16px;">
-                <i class="fa-solid fa-palette" style="color: var(--accent);"></i> Pengaturan Tema & Mockup
+                <i class="fa-solid fa-palette" style="color: var(--accent);"></i> Pengaturan Tema & Tampilan
               </h3>
               
-              <!-- Pilihan Tema Hanya 2 -->
-              <div style="margin-bottom: 20px;">
-                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Mode Tampilan (Hanya 2 Pilihan):</label>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                  <label id="theme-btn-dark" style="background: var(--bg-body); border: 2px solid var(--accent); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 600;">
+              <!-- Pilihan Tema: Dark (#616161 & #3D3D3D) & Light -->
+              <div style="margin-bottom: 18px;">
+                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Mode Tampilan:</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                  <label id="theme-btn-dark" style="background: #3D3D3D; border: 2px solid var(--accent); color: #fff; padding: 10px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600;">
                     <input type="radio" name="theme-radio-choice" value="dark" checked>
                     <i class="fa-solid fa-moon"></i> Dark Mode
                   </label>
-                  <label id="theme-btn-light" style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 600;">
+                  <label id="theme-btn-light" style="background: #f4f6f9; border: 1px solid var(--border-color); color: #000; padding: 10px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600;">
                     <input type="radio" name="theme-radio-choice" value="light">
                     <i class="fa-solid fa-sun"></i> Light Mode
                   </label>
                 </div>
               </div>
 
-              <!-- PENGATUR UKURAN MOCKUP SMARTPHONE -->
-              <div style="margin-bottom: 20px; padding: 14px; background: var(--bg-body); border-radius: 10px; border: 1px solid var(--border-color);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <label style="font-size: 0.82rem; font-weight: 600;"><i class="fa-solid fa-mobile-screen"></i> Ukuran Mockup Smartphone:</label>
-                  <span id="txt-phone-scale" style="font-size: 0.8rem; font-weight: 700; color: var(--accent);">100%</span>
+              <!-- PENGATUR UKURAN LOGO RT 2 -->
+              <div style="margin-bottom: 18px; padding: 12px; background: rgba(0,0,0,0.15); border-radius: 10px; border: 1px solid var(--border-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <label style="font-size: 0.82rem; font-weight: 600;"><i class="fa-solid fa-maximize"></i> Ukuran Logo RT 2:</label>
+                  <span id="txt-logo-size" style="font-size: 0.8rem; font-weight: 700; color: var(--accent);">72px</span>
                 </div>
-                <input type="range" id="input-phone-scale" min="0.7" max="1.3" step="0.05" value="1" style="width: 100%; accent-color: var(--accent); cursor: pointer;">
+                <input type="range" id="input-logo-size" min="40" max="120" step="2" value="72" style="width: 100%; accent-color: var(--accent); cursor: pointer;">
                 <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">
-                  <span>Kecil (70%)</span>
-                  <span>Standar (100%)</span>
-                  <span>Besar (130%)</span>
+                  <span>Kecil (40px)</span>
+                  <span>Standar (72px)</span>
+                  <span>Besar (120px)</span>
                 </div>
               </div>
 
-              <!-- Warna Logo -->
-              <div style="margin-top: 10px;">
-                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Warna Logo RT 2:</label>
-                <div style="display: flex; align-items: center; gap: 14px;">
-                  <input type="color" id="input-logo-color" value="#ff5520" style="width: 48px; height: 42px; border: none; cursor: pointer; border-radius: 8px; background: transparent;">
-                  <div class="rt-logo-box-lg" style="width: 48px; height: 48px; margin: 0;"></div>
+              <!-- WARNA LOGO -->
+              <div style="margin-bottom: 18px;">
+                <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Warna Logo RT 2:</label>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <input type="color" id="input-logo-color" value="#ff5520" style="width: 44px; height: 38px; border: none; cursor: pointer; border-radius: 8px; background: transparent;">
                   <span style="font-size: 0.78rem; color: var(--text-muted);">Ubah warna logo secara langsung</span>
                 </div>
               </div>
+
+              <!-- BACKGROUND COLOR, GAMBAR & SETELAN BLUR -->
+              <div style="padding: 12px; background: rgba(0,0,0,0.15); border-radius: 10px; border: 1px solid var(--border-color);">
+                <label style="font-size: 0.82rem; font-weight: 600; display: block; margin-bottom: 8px;">
+                  <i class="fa-solid fa-image"></i> Kustomisasi Background Dashboard:
+                </label>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 12px; align-items: center;">
+                  <div>
+                    <label style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Warna BG:</label>
+                    <input type="color" id="input-bg-color" value="#3D3D3D" style="width: 44px; height: 36px; border: none; cursor: pointer; border-radius: 6px;">
+                  </div>
+                  <div style="flex: 1;">
+                    <label style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Upload Gambar BG:</label>
+                    <input type="file" id="input-bg-image" accept="image/*" class="input-control" style="padding: 6px; font-size: 0.75rem;">
+                  </div>
+                  <button class="btn-table btn-delete" id="btn-reset-bg" title="Reset Background" style="align-self: flex-end; padding: 9px 12px;">Reset</button>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <label style="font-size: 0.75rem; color: var(--text-muted);">Efek Blur Background:</label>
+                  <span id="txt-bg-blur" style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">0px</span>
+                </div>
+                <input type="range" id="input-bg-blur" min="0" max="25" step="1" value="0" style="width: 100%; accent-color: var(--accent); cursor: pointer;">
+              </div>
+
             </div>
           </div>
 
-          <!-- Box 3: Manajemen Akun (Tambah, Edit, Hapus) -->
-          <div class="card stagger" id="box-manage-users" style="--i:3; max-width: 1100px; margin: 24px auto 0;">
+          <!-- Box 3: Manajemen Akun Pengurus -->
+          <div class="card" id="box-manage-users" style="max-width: 1100px; margin: 20px auto 0;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
                 <h3 class="fw-semi" style="font-size: 1rem;">
                   <i class="fa-solid fa-users-gear" style="color: var(--accent);"></i> Manajemen Akun Pengurus
                 </h3>
                 <p style="font-size: 0.75rem; color: var(--text-muted);">
-                  Sinkron dengan spreadsheet DB_USERS_RT2_PASLOR (Tambah, Edit, Hapus)
+                  Sinkron dengan spreadsheet DB_USERS_RT2_PASLOR
                 </p>
               </div>
               <button class="btn-main" id="btn-add-user" style="width: auto; padding: 8px 16px; font-size: 0.8rem;">
@@ -1066,13 +976,16 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       initThemesAndLogo();
-      initPhoneScale();
+      initLogoSize();
+      initBackgroundCustomizer();
       initJawaCalendar();
       checkSavedCredentials();
       setupLogoutButtons();
+      setupMobileSidebar();
+      initNavIndicator();
     });
 
-    // 1. TEMA (HANYA 2: DARK & LIGHT) & LOGO COLOR
+    // 1. TEMA (DARK #616161 & #3D3D3D VS LIGHT) & LOGO COLOR
     function initThemesAndLogo() {
       const savedTheme = localStorage.getItem('rt2_theme') || 'dark';
       applyTheme(savedTheme);
@@ -1110,7 +1023,9 @@
 
       const themeBtn = document.getElementById('btn-theme-switch');
       if (themeBtn) {
-        themeBtn.innerHTML = targetTheme === 'dark' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+        themeBtn.innerHTML = targetTheme === 'dark' 
+          ? '<i class="fa-solid fa-moon"></i> <span>Dark</span>' 
+          : '<i class="fa-solid fa-sun"></i> <span>Light</span>';
       }
 
       const cardDark = document.getElementById('theme-btn-dark');
@@ -1131,24 +1046,81 @@
       syncThemeToIframes(targetTheme);
     }
 
-    // PENGATUR UKURAN MOCKUP SMARTPHONE
-    function initPhoneScale() {
-      const savedScale = localStorage.getItem('rt2_phone_scale') || '1';
-      setPhoneScale(savedScale);
-      const slider = document.getElementById('input-phone-scale');
+    // 2. UKURAN LOGO RT 2
+    function initLogoSize() {
+      const savedSize = localStorage.getItem('rt2_logo_size') || '72';
+      setLogoSize(savedSize);
+      const slider = document.getElementById('input-logo-size');
       if (slider) {
-        slider.value = savedScale;
-        slider.addEventListener('input', (e) => {
-          setPhoneScale(e.target.value);
-        });
+        slider.value = savedSize;
+        slider.addEventListener('input', (e) => setLogoSize(e.target.value));
       }
     }
 
-    function setPhoneScale(scale) {
-      document.documentElement.style.setProperty('--phone-scale', scale);
-      localStorage.setItem('rt2_phone_scale', scale);
-      const txt = document.getElementById('txt-phone-scale');
-      if (txt) txt.innerText = Math.round(scale * 100) + '%';
+    function setLogoSize(val) {
+      document.documentElement.style.setProperty('--logo-size', val + 'px');
+      localStorage.setItem('rt2_logo_size', val);
+      const txt = document.getElementById('txt-logo-size');
+      if (txt) txt.innerText = val + 'px';
+    }
+
+    // 3. KUSTOMISASI BACKGROUND WARNA, GAMBAR & BLUR
+    function initBackgroundCustomizer() {
+      const bgLayer = document.getElementById('custom-bg-layer');
+      const savedBgColor = localStorage.getItem('rt2_custom_bg_color');
+      const savedBgImg = localStorage.getItem('rt2_custom_bg_img');
+      const savedBgBlur = localStorage.getItem('rt2_custom_bg_blur') || '0';
+
+      if (savedBgColor) {
+        bgLayer.style.backgroundColor = savedBgColor;
+        document.getElementById('input-bg-color').value = savedBgColor;
+      }
+      if (savedBgImg) {
+        bgLayer.style.backgroundImage = `url(${savedBgImg})`;
+      }
+      setBgBlur(savedBgBlur);
+
+      document.getElementById('input-bg-color').addEventListener('input', (e) => {
+        bgLayer.style.backgroundColor = e.target.value;
+        localStorage.setItem('rt2_custom_bg_color', e.target.value);
+      });
+
+      document.getElementById('input-bg-image').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          bgLayer.style.backgroundImage = `url(${evt.target.result})`;
+          try {
+            localStorage.setItem('rt2_custom_bg_img', evt.target.result);
+          } catch(err) {
+            console.warn("Gambar latar terlalu besar untuk localStorage");
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+
+      const blurSlider = document.getElementById('input-bg-blur');
+      blurSlider.value = savedBgBlur;
+      blurSlider.addEventListener('input', (e) => setBgBlur(e.target.value));
+
+      document.getElementById('btn-reset-bg').addEventListener('click', () => {
+        bgLayer.style.backgroundColor = 'transparent';
+        bgLayer.style.backgroundImage = 'none';
+        setBgBlur('0');
+        localStorage.removeItem('rt2_custom_bg_color');
+        localStorage.removeItem('rt2_custom_bg_img');
+        localStorage.removeItem('rt2_custom_bg_blur');
+        document.getElementById('input-bg-image').value = '';
+        blurSlider.value = 0;
+      });
+    }
+
+    function setBgBlur(val) {
+      document.documentElement.style.setProperty('--bg-custom-blur', val + 'px');
+      localStorage.setItem('rt2_custom_bg_blur', val);
+      const txt = document.getElementById('txt-bg-blur');
+      if (txt) txt.innerText = val + 'px';
     }
 
     function syncThemeToIframes(theme) {
@@ -1171,7 +1143,7 @@
       }
     }
 
-    // 2. KALENDER JAWA & JAM AKURAT
+    // 4. PENANGGALAN JAWA & JAM AKURAT
     function initJawaCalendar() {
       function update() {
         const now = new Date();
@@ -1193,19 +1165,16 @@
         const mm = String(now.getMinutes()).padStart(2, '0');
         const ss = String(now.getSeconds()).padStart(2, '0');
 
-        document.getElementById('txt-calendar-jawa').innerText = `${dName} ${pName}, ${dateNum} ${mName} ${year} • ${hh}:${mm}:${ss} WIB`;
+        const el = document.getElementById('txt-calendar-jawa');
+        if (el) {
+          el.innerHTML = `${dName} ${pName}, ${dateNum} ${mName} ${year}<br><b>${hh}:${mm}:${ss} WIB</b>`;
+        }
       }
       update();
       setInterval(update, 1000);
     }
 
-    // 3. SAPAAN PENGURUS
-    function updateGreetingBanner() {
-      if (!currentUser) return;
-      document.getElementById('txt-welcome-greeting').innerText = `Selamat Datang, ${currentUser.nama}!`;
-    }
-
-    // 4. AUTENTIKASI DENGAN IKON MATA & SAVE CREDENTIALS
+    // 5. AUTENTIKASI DENGAN PASSWORD MATA
     document.getElementById('login-eye').addEventListener('click', function() {
       const pwdInput = document.getElementById('login-password');
       if (pwdInput.type === "password") {
@@ -1243,9 +1212,14 @@
       }
       msg.innerText = "Memverifikasi hak akses...";
 
+      // Menggunakan x-www-form-urlencoded untuk Apps Script
+      const params = new URLSearchParams();
+      params.append('data', JSON.stringify({ action: "login", username: username, password: password }));
+
       fetch(API_MASTER_URL, {
         method: "POST",
-        body: JSON.stringify({ action: "login", username: username, password: password })
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString()
       })
       .then(r => r.json())
       .then(res => {
@@ -1285,15 +1259,14 @@
       document.getElementById('auth-screen').style.display = "none";
       document.getElementById('nav-user-name').innerText = currentUser.nama;
       document.getElementById('nav-user-role').innerText = currentUser.role;
+      document.getElementById('txt-welcome-greeting').innerText = `Selamat Datang, ${currentUser.nama}!`;
 
-      // Update foto di SEMUA area (Header, Sidebar, Settings)
       updateAvatarDisplay(currentUser.foto, currentUser.nama);
 
       document.getElementById('my-name').value = currentUser.nama;
       document.getElementById('my-username').value = currentUser.username;
       document.getElementById('my-password').value = "";
 
-      updateGreetingBanner();
       applyPermissions();
       loadUsersList();
     }
@@ -1312,15 +1285,13 @@
     }
 
     function setupLogoutButtons() {
-      const logoutHandler = () => {
+      document.getElementById('btn-logout-sidebar').addEventListener('click', () => {
         if (confirm("Keluar dari Dashboard RT 2?")) {
           currentUser = null;
           document.getElementById('auth-screen').style.display = "flex";
           document.getElementById('login-msg').innerText = "";
         }
-      };
-      document.getElementById('btn-logout-sidebar').addEventListener('click', logoutHandler);
-      document.getElementById('btn-logout-header').addEventListener('click', logoutHandler);
+      });
     }
 
     function applyPermissions() {
@@ -1328,75 +1299,51 @@
       document.getElementById('box-manage-users').style.display = p.canManageUsers ? "block" : "none";
     }
 
-    // 5. SLIME LIQUID HOVER & MENU TRANSITION
-    const navItems = document.querySelectorAll('.nav-item');
-    const indicator = document.getElementById('nav-indicator');
+    // 6. NAVIGASI TAB & MOBILE SIDEBAR
+    function initNavIndicator() {
+      const navItems = document.querySelectorAll('.nav-item');
+      const indicator = document.getElementById('nav-indicator');
 
-    function snapIndicator(el, state) {
-      indicator.style.opacity = '1';
-      indicator.style.top = el.offsetTop + 'px';
-      indicator.style.height = el.offsetHeight + 'px';
+      function snapIndicator(el) {
+        indicator.style.opacity = '1';
+        indicator.style.top = el.offsetTop + 'px';
+        indicator.style.height = el.offsetHeight + 'px';
+      }
 
-      if (state === 'hover') {
-        indicator.classList.remove('locked');
-        indicator.classList.add('hovering');
-      } else if (state === 'locked') {
-        indicator.classList.remove('hovering');
-        indicator.classList.add('locked');
-        indicator.classList.add('stretching');
-        setTimeout(() => indicator.classList.remove('stretching'), 280);
+      const activeInitial = document.querySelector('.nav-item.active');
+      if (activeInitial) snapIndicator(activeInitial);
+
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          if (item.classList.contains('active')) return;
+
+          navItems.forEach(n => n.classList.remove('active'));
+          item.classList.add('active');
+          snapIndicator(item);
+
+          const targetTabId = item.getAttribute('data-tab');
+          document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
+          const targetTab = document.getElementById(targetTabId);
+          if (targetTab) targetTab.classList.add('active');
+
+          if (window.innerWidth <= 820) {
+            document.getElementById('main-sidebar').classList.remove('open');
+          }
+        });
+      });
+    }
+
+    function setupMobileSidebar() {
+      const btnOpen = document.getElementById('btn-open-sidebar-mobile');
+      const sidebar = document.getElementById('main-sidebar');
+      if (btnOpen) {
+        btnOpen.addEventListener('click', () => {
+          sidebar.classList.toggle('open');
+        });
       }
     }
 
-    navItems.forEach(item => {
-      item.addEventListener('mouseenter', () => snapIndicator(item, 'hover'));
-
-      item.addEventListener('click', () => {
-        if (item.classList.contains('active')) return;
-
-        const currentActive = document.querySelector('.tab-view.active');
-        const targetTabId = item.getAttribute('data-tab');
-        const targetTab = document.getElementById(targetTabId);
-
-        navItems.forEach(n => n.classList.remove('active'));
-        item.classList.add('active');
-        snapIndicator(item, 'locked');
-
-        if (window.innerWidth <= 768) {
-          document.getElementById('main-sidebar').classList.remove('open');
-        }
-
-        if (currentActive) {
-          currentActive.classList.add('leaving');
-          setTimeout(() => {
-            currentActive.classList.remove('active', 'leaving');
-            targetTab.classList.add('active');
-          }, 240);
-        } else {
-          targetTab.classList.add('active');
-        }
-      });
-    });
-
-    document.getElementById('nav-wrapper').addEventListener('mouseleave', () => {
-      const active = document.querySelector('.nav-item.active');
-      if (active) snapIndicator(active, 'locked');
-    });
-
-    document.getElementById('sidebar-toggle-btn').addEventListener('click', () => {
-      const aside = document.getElementById('main-sidebar');
-      if (window.innerWidth <= 768) {
-        aside.classList.toggle('open');
-      } else {
-        aside.classList.toggle('collapsed');
-        setTimeout(() => {
-          const active = document.querySelector('.nav-item.active');
-          if (active) snapIndicator(active, 'locked');
-        }, 300);
-      }
-    });
-
-    // 6. UPLOAD FOTO & PROFIL KE GOOGLE DRIVE
+    // 7. UPLOAD FOTO & PROFIL KE GOOGLE DRIVE (MENGATASI REQUEST KOSONG)
     document.getElementById('input-upload-foto').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1423,10 +1370,10 @@
       }
 
       const saveBtn = document.getElementById('btn-save-my-profile');
-      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan ke Google Drive...';
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengupload ke Drive...';
       saveBtn.disabled = true;
 
-      const payload = {
+      const payloadObj = {
         action: "updateMyProfileWithDrive",
         parentFolderId: DRIVE_FOLDER_ID,
         folderName: "images-dashboard",
@@ -1439,9 +1386,14 @@
         }
       };
 
-      fetch(API_MASTER_URL, {
+      // Mengirim payload dalam format form-urlencoded dan query string fallback agar Apps Script tidak menerima 'Request kosong'
+      const formParams = new URLSearchParams();
+      formParams.append('data', JSON.stringify(payloadObj));
+
+      fetch(API_MASTER_URL + "?action=updateMyProfileWithDrive", {
         method: "POST",
-        body: JSON.stringify(payload)
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formParams.toString()
       })
       .then(r => r.json())
       .then(res => {
@@ -1456,21 +1408,27 @@
           else if (uploadedProfilePhotoBase64) currentUser.foto = uploadedProfilePhotoBase64;
           
           document.getElementById('nav-user-name').innerText = newName;
-          updateGreetingBanner();
+          document.getElementById('txt-welcome-greeting').innerText = `Selamat Datang, ${newName}!`;
           updateAvatarDisplay(currentUser.foto, newName);
-          alert("Profil dan foto berhasil disimpan di Google Drive 'images-dashboard'!");
+          alert("Profil dan foto berhasil tersimpan di Google Drive 'images-dashboard'!");
         } else {
-          alert("Gagal memperbarui profil: " + res.message);
+          alert("Gagal memperbarui profil: " + (res.message || "Kesalahan respon server"));
         }
       })
-      .catch(() => {
+      .catch((err) => {
         saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Profil Saya';
         saveBtn.disabled = false;
-        alert("Profil diperbarui di sesi lokal!");
+        // Fallback update lokal
+        currentUser.nama = newName;
+        currentUser.username = newUsername;
+        if (newPassword) currentUser.password = newPassword;
+        if (uploadedProfilePhotoBase64) currentUser.foto = uploadedProfilePhotoBase64;
+        updateAvatarDisplay(currentUser.foto, newName);
+        alert("Profil telah diperbarui pada sesi lokal saat ini.");
       });
     });
 
-    // 7. MANAJEMEN AKUN LENGKAP
+    // 8. MANAJEMEN AKUN
     function loadUsersList() {
       if (!currentUser || !currentUser.permissions.canManageUsers) return;
 
@@ -1562,9 +1520,13 @@
 
       if (!uData.username || !uData.password) return alert("Username & Password wajib diisi!");
 
+      const p = new URLSearchParams();
+      p.append('data', JSON.stringify({ action: "saveUser", userData: uData }));
+
       fetch(API_MASTER_URL, {
         method: "POST",
-        body: JSON.stringify({ action: "saveUser", userData: uData })
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: p.toString()
       }).then(() => loadUsersList());
       closeModal('modal-user');
     });
@@ -1575,9 +1537,14 @@
         return;
       }
       if (!confirm("Yakin ingin menghapus akun pengurus: " + uname + "?")) return;
+      
+      const p = new URLSearchParams();
+      p.append('data', JSON.stringify({ action: "deleteUser", username: uname }));
+
       fetch(API_MASTER_URL, {
         method: "POST",
-        body: JSON.stringify({ action: "deleteUser", username: uname })
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: p.toString()
       }).then(() => loadUsersList());
     }
   </script>

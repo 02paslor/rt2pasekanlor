@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark-grey">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard RT2 Paslor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ================= TEMA PRESET SYSTEM ================= */
+    :root {
+      --font-family: 'Poppins', sans-serif;
+      --sidebar-w: 260px;
+    }
+
+    /* 1. Dark Monokrom / Greyscale */
+    [data-theme="dark-grey"] {
+      --bg-body: #121212;
+      --bg-sidebar: #181818;
+      --bg-card: #222222;
+      --bg-card-hover: #2a2a2a;
+      --border-color: #2e2e2e;
+      --accent: #ff5520;
+      --accent-contrast: #ff4500;
+      --accent-glow: rgba(255, 85, 32, 0.4);
+      --pill-soft: rgba(255, 255, 255, 0.08);
+      --text-main: #f5f5f5;
+      --text-muted: #a3a3a3;
+      --danger: #ef4444;
+      --success: #10b981;
+    }
+
+    /* 2. Dark Ember (Sesuai Referensi Fintech) */
+    [data-theme="dark-ember"] {
+      --bg-body: #0c0d10;
+      --bg-sidebar: #121418;
+      --bg-card: #181b22;
+      --bg-card-hover: #20242e;
+      --border-color: #242935;
+      --accent: #ff6a00;
+      --accent-contrast: #ee0979;
+      --accent-glow: rgba(255, 106, 0, 0.45);
+      --pill-soft: rgba(255, 106, 0, 0.12);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --danger: #f43f5e;
+      --success: #10b981;
+    }
+
+    /* 3. Light Clean Minimal */
+    [data-theme="light-clean"] {
+      --bg-body: #f8fafc;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --accent: #ea580c;
+      --accent-contrast: #c2410c;
+      --accent-glow: rgba(234, 88, 12, 0.25);
+      --pill-soft: rgba(234, 88, 12, 0.08);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --danger: #ef4444;
+      --success: #16a34a;
+    }
+
+    /* 4. Light Ocean / Royal */
+    [data-theme="light-ocean"] {
+      --bg-body: #f0f4f8;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #e8f0fe;
+      --border-color: #cbd5e1;
+      --accent: #1155cc;
+      --accent-contrast: #0d44a4;
+      --accent-glow: rgba(17, 85, 204, 0.3);
+      --pill-soft: rgba(17, 85, 204, 0.09);
+      --text-main: #0b192c;
+      --text-muted: #64748b;
+      --danger: #dc2626;
+      --success: #059669;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family) !important;
+      font-weight: 400;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    b, strong, .fw-bold { font-weight: 700 !important; }
+    .fw-med { font-weight: 500 !important; }
+    .fw-semi { font-weight: 600 !important; }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ================= LOGIN OVERLAY ================= */
+    #auth-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-body);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      width: 100%;
+      max-width: 420px;
+      padding: 36px;
+      border-radius: 18px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: springBounceIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .logo-badge {
+      width: 44px;
+      height: 44px;
+      background: var(--accent);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .input-control {
+      width: 100%;
+      padding: 11px 42px 11px 14px;
+      background: var(--bg-body);
+      border: 1px solid var(--border-color);
+      border-radius: 9px;
+      color: var(--text-main);
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .input-control:focus {
+      border-color: var(--accent);
+    }
+
+    .toggle-pwd {
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .toggle-pwd:hover { color: var(--text-main); }
+
+    .btn-main {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 9px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--accent-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-main:active { transform: scale(0.98); }
+
+    /* ================= SIDEBAR & LIQUID PILL ================= */
+    aside {
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 14px;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      user-select: none;
+      z-index: 10;
+    }
+
+    aside.collapsed {
+      width: 76px;
+    }
+
+    aside.collapsed .brand-title,
+    aside.collapsed .nav-text,
+    aside.collapsed .user-details,
+    aside.collapsed .menu-cat-title {
+      display: none;
+    }
+
+    aside.collapsed .nav-item {
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding: 0 8px;
+    }
+
+    nav {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    /* Moving Slime / Liquid Indicator */
+    .nav-indicator {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--accent);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      box-shadow: 0 6px 20px var(--accent-glow);
+      /* Transisi menyerupai tarikan cairan */
+      transition: top 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                  height 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                  background 0.25s ease,
+                  transform 0.28s ease,
+                  box-shadow 0.25s ease;
+    }
+
+    /* Saat sedang hover preview menu lain: soft tint */
+    .nav-indicator.hovering {
+      background: var(--pill-soft);
+      box-shadow: none;
+      transform: scaleY(0.95);
+    }
+
+    /* Saat sudah diklik dan terkunci aktif: warna kontras & stretch liquid bounce */
+    .nav-indicator.locked {
+      background: var(--accent);
+      box-shadow: 0 8px 24px var(--accent-glow);
+      transform: scaleY(1);
+    }
+
+    .nav-indicator.stretching {
+      transform: scaleY(1.15) scaleX(0.96);
+    }
+
+    .nav-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      z-index: 2;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .nav-item.active {
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+
+    .nav-item i {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    /* ================= MAIN CONTAINER ================= */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    header {
+      height: 72px;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-sidebar);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .btn-toggle-sidebar {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.15rem;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+
+    .btn-toggle-sidebar:hover { background: var(--bg-card-hover); }
+
+    .weton-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-icon {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-icon:hover { background: var(--bg-card-hover); }
+
+    /* Welcome Banner Badge */
+    .greeting-badge {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ================= CONTENT & STAGGERED BOUNCE ================= */
+    .content-container {
+      padding: 32px;
+      flex: 1;
+    }
+
+    .tab-view {
+      display: none;
+    }
+
+    .tab-view.active {
+      display: block;
+    }
+
+    .tab-view.active .stagger {
+      animation: springBounceIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      animation-delay: calc(var(--i) * 0.05s);
+    }
+
+    .tab-view.leaving .stagger {
+      animation: springBounceOut 0.28s cubic-bezier(0.36, 0, 0.66, -0.56) both;
+      animation-delay: calc(var(--i) * 0.035s);
+    }
+
+    @keyframes springBounceIn {
+      0% { opacity: 0; transform: scale(0.94) translateY(16px); }
+      70% { transform: scale(1.015) translateY(-3px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes springBounceOut {
+      0% { opacity: 1; transform: scale(1) translateY(0); }
+      30% { transform: scale(1.02) translateY(-4px); }
+      100% { opacity: 0; transform: scale(0.94) translateY(18px); }
+    }
+
+    /* ================= METRICS & CARDS ================= */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .card-accent {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-contrast) 100%);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 10px 25px -5px var(--accent-glow);
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .card-accent .card-title {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .card-val {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    /* ================= TABLES ================= */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      overflow-x: auto;
+      margin-top: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    th {
+      background: var(--bg-sidebar);
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tr:hover td {
+      background: var(--bg-card-hover);
+    }
+
+    .btn-table {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .btn-edit { background: rgba(255, 85, 32, 0.15); color: var(--accent); }
+    .btn-delete { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+    /* ================= MODAL DIALOGS ================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      width: 100%;
+      max-width: 520px;
+      border-radius: 16px;
+      padding: 28px;
+      animation: springBounceIn 0.35s ease;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .close-modal {
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+    }
+
+    /* Live pulse animation */
+    .pulse-live {
+      width: 8px;
+      height: 8px;
+      background-color: var(--success);
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+      animation: livePulse 2s infinite;
+    }
+
+    @keyframes livePulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= 1. AUTH SCREEN ================= -->
+  <div id="auth-screen">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-badge"><i class="fa-solid fa-layer-group"></i></div>
+        <div>
+          <h2 class="fw-bold" style="font-size: 1.25rem;">Dashboard RT2 Paslor</h2>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Pusat Kontrol Terpadu Pasekan Lor</p>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Username</label>
+        <input type="text" id="login-username" class="input-control" placeholder="Contoh: rt2_admin">
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="login-password" class="input-control" placeholder="••••••••">
+        <i class="fa-regular fa-eye toggle-pwd" id="login-eye"></i>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px;">
+        <label style="font-size: 0.8rem; display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted);">
+          <input type="checkbox" id="login-remember"> Simpan Akun (Auto-login)
+        </label>
+      </div>
+
+      <button class="btn-main" id="btn-login-submit">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i> Masuk Dashboard
+      </button>
+      <div id="login-msg" style="font-size: 0.8rem; color: var(--danger); margin-top: 12px; text-align: center;"></div>
+    </div>
+  </div>
+
+  <!-- ================= 2. SIDEBAR NAVIGATION ================= -->
+  <aside id="main-sidebar">
+    <div class="brand">
+      <div class="logo-badge"><i class="fa-solid fa-house-chimney"></i></div>
+      <div class="brand-title">
+        <div class="fw-bold" style="font-size: 1rem;">RT2 Paslor</div>
+        <div style="font-size: 0.7rem; color: var(--text-muted);">Pasekan Lor 02/03</div>
+      </div>
+    </div>
+
+    <nav id="nav-wrapper">
+      <div class="nav-indicator locked" id="nav-indicator"></div>
+      
+      <div class="nav-item active" data-tab="tab-overview">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span class="nav-text">Overview</span>
+      </div>
+      <div class="nav-item" data-tab="tab-warga">
+        <i class="fa-solid fa-users"></i>
+        <span class="nav-text">Data Warga</span>
+      </div>
+      <div class="nav-item" data-tab="tab-kas">
+        <i class="fa-solid fa-wallet"></i>
+        <span class="nav-text">Kemenkeu RT</span>
+      </div>
+      <div class="nav-item" data-tab="tab-settings">
+        <i class="fa-solid fa-gear"></i>
+        <span class="nav-text">Settings & Akun</span>
+      </div>
+    </nav>
+
+    <!-- User Profile Footer -->
+    <div style="padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+      <div class="user-details" style="display: flex; align-items: center; gap: 10px;">
+        <div class="logo-badge" style="width: 34px; height: 34px; font-size: 0.85rem;" id="nav-avatar">G</div>
+        <div>
+          <div class="fw-semi" style="font-size: 0.85rem;" id="nav-user-name">Mas Gaga</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted);" id="nav-user-role">Administrator</div>
+        </div>
+      </div>
+      <button class="btn-icon" id="btn-logout" title="Keluar / Logout" style="border: none; background: transparent; color: var(--danger);">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= 3. WORKSPACE AREA ================= -->
+  <main>
+    <header>
+      <div class="header-left">
+        <button class="btn-toggle-sidebar" id="sidebar-toggle-btn" title="Ciutkan / Lebarkan Sidebar">
+          <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+
+        <div class="greeting-badge">
+          <span class="pulse-live"></span>
+          <span class="fw-semi" id="txt-welcome-greeting" style="font-size: 0.85rem;">Sugeng Rawuh, Pengurus!</span>
+        </div>
+
+        <div class="weton-badge">
+          <i class="fa-regular fa-calendar-days" style="color: var(--accent);"></i>
+          <span id="txt-calendar-jawa">Memuat Penanggalan...</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Manual Sync Button -->
+        <button class="btn-icon" id="btn-sync-live" title="Sinkronkan Data Live Sekarang">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+        <!-- Quick Theme Switcher -->
+        <button class="btn-icon" id="btn-theme-quick" title="Ganti Mode Tampilan Cepat">
+          <i class="fa-solid fa-palette"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-container">
+
+      <!-- ================= TAB: OVERVIEW ================= -->
+      <section id="tab-overview" class="tab-view active">
+        <div class="stagger" style="--i:1; margin-bottom: 22px;">
+          <h2 class="fw-bold" style="font-size: 1.45rem;">Pusat Ringkasan Real-Time</h2>
+          <p style="font-size: 0.82rem; color: var(--text-muted);">Data terupdate live otomatis setiap 30 detik dari Google Sheets</p>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="card card-accent stagger" style="--i:2;">
+            <div class="card-title">Saldo Kas Utama</div>
+            <div class="card-val" id="metric-saldo">Rp --</div>
+            <div style="font-size: 0.72rem; margin-top: 10px; opacity: 0.9;">
+              <i class="fa-solid fa-vault"></i> Terhubung Buku Kas Kemenkeu
+            </div>
+          </div>
+          <div class="card stagger" style="--i:3;">
+            <div class="card-title">Total Warga Terdata</div>
+            <div class="card-val" id="metric-warga">--</div>
+            <div style="font-size: 0.72rem; color: var(--accent); margin-top: 10px; font-weight: 600;">
+              <i class="fa-solid fa-id-card"></i> Database Warga Aktif
+            </div>
+          </div>
+          <div class="card stagger" style="--i:4;">
+            <div class="card-title">Pemasukan Bulan Ini</div>
+            <div class="card-val" style="color: var(--success);" id="metric-masuk">Rp --</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px;">
+              <i class="fa-solid fa-arrow-down-long"></i> Total Iuran & Jimpitan
+            </div>
+          </div>
+          <div class="card stagger" style="--i:5;">
+            <div class="card-title">Petugas Ronda Malam Ini</div>
+            <div class="card-val" style="font-size: 1.05rem; line-height: 1.4;" id="metric-ronda">Memuat...</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px;">
+              <i class="fa-solid fa-person-shelter"></i> Pos Kamling RT 2
+            </div>
+          </div>
+        </div>
+
+        <div class="card stagger" style="--i:6; margin-top: 24px;">
+          <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 8px;">
+            <i class="fa-solid fa-circle-check" style="color: var(--success);"></i> Sistem Sinkronisasi Langsung Aktif
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            Seluruh data ditarik langsung secara komparatif dari spreadsheet Data Warga & Buku Kas Kemenkeu tanpa iframe. Operasi tambah, ubah, dan hapus dapat dieksekusi secara instan dari landing page ini sesuai hak akses akun Anda.
+          </p>
+        </div>
+      </section>
+
+      <!-- ================= TAB: DATA WARGA ================= -->
+      <section id="tab-warga" class="tab-view">
+        <div style="display: flex; justify-content: space-between; align-items: center;" class="stagger" style="--i:1;">
+          <div>
+            <h2 class="fw-bold" style="font-size: 1.45rem;">Database Warga RT 2</h2>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Data warga terintegrasi dan live edit</p>
+          </div>
+          <button class="btn-main" id="btn-add-warga" style="width: auto; padding: 10px 18px; font-size: 0.85rem;">
+            <i class="fa-solid fa-user-plus"></i> Tambah Warga
+          </button>
+        </div>
+
+        <div class="table-container stagger" style="--i:2;">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nama Lengkap</th>
+                <th>NIK</th>
+                <th>Alamat Rumah</th>
+                <th>WhatsApp</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-warga">
+              <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Mengambil data warga live...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================= TAB: KAS KEMENKEU ================= -->
+      <section id="tab-kas" class="tab-view">
+        <div style="display: flex; justify-content: space-between; align-items: center;" class="stagger" style="--i:1;">
+          <div>
+            <h2 class="fw-bold" style="font-size: 1.45rem;">Buku Kas Kemenkeu RT 2</h2>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Catatan pembukuan keuangan & jimpitan warga</p>
+          </div>
+          <button class="btn-main" id="btn-add-kas" style="width: auto; padding: 10px 18px; font-size: 0.85rem;">
+            <i class="fa-solid fa-plus-circle"></i> Catat Transaksi
+          </button>
+        </div>
+
+        <div class="table-container stagger" style="--i:2;">
+          <table>
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+                <th>Kategori</th>
+                <th>Masuk (Rp)</th>
+                <th>Keluar (Rp)</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-kas">
+              <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Mengambil data kas live...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================= TAB: SETTINGS & AKUN ================= -->
+      <section id="tab-settings" class="tab-view">
+        <h2 class="stagger fw-bold" style="--i:1; font-size: 1.45rem; margin-bottom: 20px;">Pengaturan & Manajemen Akun</h2>
+
+        <!-- Box 1: Pilihan Tema -->
+        <div class="card stagger" style="--i:2; max-width: 850px; margin-bottom: 24px;">
+          <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 12px;">
+            <i class="fa-solid fa-brush" style="color: var(--accent);"></i> Pilihan Tema Tampilan
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
+            <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+              <input type="radio" name="theme-radio" value="dark-grey">
+              <div>
+                <div class="fw-semi" style="font-size: 0.85rem;">Dark Monokrom</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">Greyscale netral</div>
+              </div>
+            </label>
+            <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+              <input type="radio" name="theme-radio" value="dark-ember">
+              <div>
+                <div class="fw-semi" style="font-size: 0.85rem;">Dark Ember</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">Fintech oranye modern</div>
+              </div>
+            </label>
+            <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+              <input type="radio" name="theme-radio" value="light-clean">
+              <div>
+                <div class="fw-semi" style="font-size: 0.85rem;">Light Clean</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">Minimalist terang</div>
+              </div>
+            </label>
+            <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+              <input type="radio" name="theme-radio" value="light-ocean">
+              <div>
+                <div class="fw-semi" style="font-size: 0.85rem;">Light Ocean</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">Royal blue clean</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Box 2: Tabel Manajemen Akun (Sinkron ke SS DB_USERS_RT2_PASLOR) -->
+        <div class="card stagger" style="--i:3; max-width: 850px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <h3 class="fw-semi" style="font-size: 1rem;">
+                <i class="fa-solid fa-users-gear" style="color: var(--accent);"></i> Akun Pengurus Terdaftar
+              </h3>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">
+                Tersinkron dengan spreadsheet DB_USERS_RT2_PASLOR
+              </p>
+            </div>
+            <button class="btn-main" id="btn-add-user" style="width: auto; padding: 8px 14px; font-size: 0.8rem;">
+              <i class="fa-solid fa-user-shield"></i> Tambah Akun
+            </button>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Nama Pengurus</th>
+                  <th>Role</th>
+                  <th>Edit Warga</th>
+                  <th>Hapus Warga</th>
+                  <th>Edit Kas</th>
+                  <th>Hapus Kas</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-users">
+                <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">Memuat daftar akun pengurus...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ================= MODAL WARGA ================= -->
+  <div class="modal-overlay" id="modal-warga">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="fw-bold" id="modal-warga-title">Data Warga</h3>
+        <i class="fa-solid fa-xmark close-modal" onclick="closeModal('modal-warga')"></i>
+      </div>
+      <input type="hidden" id="warga-id">
+      <div class="input-group">
+        <label>Nama Lengkap</label>
+        <input type="text" id="warga-nama" class="input-control">
+      </div>
+      <div class="input-group">
+        <label>NIK</label>
+        <input type="text" id="warga-nik" class="input-control">
+      </div>
+      <div class="input-group">
+        <label>Alamat / Blok Rumah</label>
+        <input type="text" id="warga-alamat" class="input-control">
+      </div>
+      <div class="input-group">
+        <label>No WhatsApp</label>
+        <input type="text" id="warga-hp" class="input-control">
+      </div>
+      <button class="btn-main" id="btn-save-warga">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Data Warga
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= MODAL KAS ================= -->
+  <div class="modal-overlay" id="modal-kas">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="fw-bold" id="modal-kas-title">Pencatatan Transaksi</h3>
+        <i class="fa-solid fa-xmark close-modal" onclick="closeModal('modal-kas')"></i>
+      </div>
+      <input type="hidden" id="kas-id">
+      <div class="input-group">
+        <label>Tanggal</label>
+        <input type="date" id="kas-tanggal" class="input-control">
+      </div>
+      <div class="input-group">
+        <label>Keterangan Transaksi</label>
+        <input type="text" id="kas-keterangan" class="input-control">
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="input-group">
+          <label>Masuk (Rp)</label>
+          <input type="number" id="kas-masuk" class="input-control" value="0">
+        </div>
+        <div class="input-group">
+          <label>Keluar (Rp)</label>
+          <input type="number" id="kas-keluar" class="input-control" value="0">
+        </div>
+      </div>
+      <button class="btn-main" id="btn-save-kas">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Transaksi
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= MODAL USER AKUN ================= -->
+  <div class="modal-overlay" id="modal-user">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="fw-bold" id="modal-user-title">Kelola Akun Pengurus</h3>
+        <i class="fa-solid fa-xmark close-modal" onclick="closeModal('modal-user')"></i>
+      </div>
+      <div class="input-group">
+        <label>Username</label>
+        <input type="text" id="user-uname" class="input-control">
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="text" id="user-pwd" class="input-control">
+      </div>
+      <div class="input-group">
+        <label>Nama Pengurus</label>
+        <input type="text" id="user-name" class="input-control">
+      </div>
+      <div class="input-group">
+        <label>Role Jabatan</label>
+        <select id="user-role-select" class="input-control">
+          <option value="Admin">Admin</option>
+          <option value="Ketua RT">Ketua RT</option>
+          <option value="Bendahara">Bendahara</option>
+          <option value="Sekretaris">Sekretaris</option>
+        </select>
+      </div>
+
+      <div style="margin: 16px 0;">
+        <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 8px;">Hak Akses:</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem;">
+          <label><input type="checkbox" id="perm-edit-warga"> Edit Warga</label>
+          <label><input type="checkbox" id="perm-del-warga"> Hapus Warga</label>
+          <label><input type="checkbox" id="perm-edit-kas"> Edit Kas</label>
+          <label><input type="checkbox" id="perm-del-kas"> Hapus Kas</label>
+        </div>
+      </div>
+
+      <button class="btn-main" id="btn-save-user-submit">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Akun
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // MASUKKAN LINK HASIL DEPLOYMENT WEB APP APPS SCRIPT DI SINI:
+    const GS_EXEC_URL = "URL_EXEC_WEBAPP_KAMU_DISINI";
+
+    // 1. STATE MANAGEMENT
+    let currentUser = null;
+    let localData = { warga: [], kas: [], users: [], summary: {} };
+    let liveRefreshTimer = null;
+
+    // Inisialisasi awal saat halaman dibuka
+    window.addEventListener('DOMContentLoaded', () => {
+      initThemes();
+      initJawaCalendar();
+      checkSavedCredentials();
+    });
+
+    // 2. TEMA PRESET MANAGER
+    function initThemes() {
+      const savedTheme = localStorage.getItem('rt2_theme') || 'dark-grey';
+      applyTheme(savedTheme);
+
+      const radios = document.querySelectorAll('input[name="theme-radio"]');
+      radios.forEach(r => {
+        if (r.value === savedTheme) r.checked = true;
+        r.addEventListener('change', (e) => {
+          applyTheme(e.target.value);
+        });
+      });
+
+      // Quick Theme Switcher Button
+      const themeList = ['dark-grey', 'dark-ember', 'light-clean', 'light-ocean'];
+      document.getElementById('btn-theme-quick').addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const nextIdx = (themeList.indexOf(cur) + 1) % themeList.length;
+        applyTheme(themeList[nextIdx]);
+        const targetRadio = document.querySelector(`input[name="theme-radio"][value="${themeList[nextIdx]}"]`);
+        if (targetRadio) targetRadio.checked = true;
+      });
+    }
+
+    function applyTheme(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('rt2_theme', themeName);
+      const isDark = themeName.startsWith('dark');
+      document.getElementById('btn-theme-quick').innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+    }
+
+    // 3. KALENDER JAWA & JAM AKURAT
+    function initJawaCalendar() {
+      function update() {
+        const now = new Date();
+        const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const pasarans = ["Legi", "Pahing", "Pon", "Wage", "Kliwon"];
+
+        const baseDate = new Date(1970, 0, 1);
+        const diffDays = Math.floor((now - baseDate) / (1000 * 60 * 60 * 24));
+        const pasaranIdx = ((diffDays % 5) + 3 + 5) % 5;
+
+        const dName = days[now.getDay()];
+        const pName = pasarans[pasaranIdx];
+        const dateNum = now.getDate();
+        const mName = months[now.getMonth()];
+        const year = now.getFullYear();
+
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+
+        document.getElementById('txt-calendar-jawa').innerText = `${dName} ${pName}, ${dateNum} ${mName} ${year} • ${hh}:${mm}:${ss} WIB`;
+        updateGreetingBanner();
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    // 4. SAPAAN SELAMAT DATANG PERSONAL
+    function updateGreetingBanner() {
+      if (!currentUser) return;
+      const hour = new Date().getHours();
+      let salam = "Sugeng Enjang"; // Pagi
+      if (hour >= 11 && hour < 15) salam = "Sugeng Siang";
+      else if (hour >= 15 && hour < 18) salam = "Sugeng Sonten";
+      else if (hour >= 18 || hour < 4) salam = "Sugeng Dalu";
+
+      document.getElementById('txt-welcome-greeting').innerText = `${salam}, ${currentUser.nama}!`;
+    }
+
+    // 5. AUTENTIKASI DENGAN IKON MATA & SAVE CREDENTIALS
+    document.getElementById('login-eye').addEventListener('click', function() {
+      const pwdInput = document.getElementById('login-password');
+      if (pwdInput.type === "password") {
+        pwdInput.type = "text";
+        this.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        pwdInput.type = "password";
+        this.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    });
+
+    function checkSavedCredentials() {
+      const savedUser = localStorage.getItem('rt2_saved_user');
+      const savedPass = localStorage.getItem('rt2_saved_pass');
+      if (savedUser && savedPass) {
+        document.getElementById('login-username').value = savedUser;
+        document.getElementById('login-password').value = savedPass;
+        document.getElementById('login-remember').checked = true;
+        executeLogin(savedUser, savedPass, true);
+      }
+    }
+
+    document.getElementById('btn-login-submit').addEventListener('click', () => {
+      const u = document.getElementById('login-username').value.trim();
+      const p = document.getElementById('login-password').value.trim();
+      const remember = document.getElementById('login-remember').checked;
+      executeLogin(u, p, remember);
+    });
+
+    function executeLogin(username, password, remember) {
+      const msg = document.getElementById('login-msg');
+      if (!username || !password) {
+        msg.innerText = "Lengkapi username dan password.";
+        return;
+      }
+      msg.innerText = "Memverifikasi hak akses dari DB_USERS...";
+
+      if (GS_EXEC_URL === "URL_EXEC_WEBAPP_KAMU_DISINI") {
+        // Fallback mockup jika belum pasang URL Web App
+        currentUser = {
+          username: username,
+          nama: username === 'rt2_admin' ? "Mas Gaga" : "Pengurus RT 2",
+          role: username === 'rt2_admin' ? "Admin" : "Ketua RT",
+          permissions: { canEditWarga: true, canDeleteWarga: true, canEditKas: true, canDeleteKas: true, canManageUsers: true }
+        };
+        onLoginGranted(username, password, remember);
+        return;
+      }
+
+      fetch(GS_EXEC_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "login", username: username, password: password })
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.status === "success") {
+          currentUser = res.user;
+          onLoginGranted(username, password, remember);
+        } else {
+          msg.innerText = res.message;
+        }
+      })
+      .catch(() => {
+        msg.innerText = "Gagal menghubungi Apps Script. Cek koneksi / URL Exec.";
+      });
+    }
+
+    function onLoginGranted(username, password, remember) {
+      if (remember) {
+        localStorage.setItem('rt2_saved_user', username);
+        localStorage.setItem('rt2_saved_pass', password);
+      } else {
+        localStorage.removeItem('rt2_saved_user');
+        localStorage.removeItem('rt2_saved_pass');
+      }
+
+      document.getElementById('auth-screen').style.display = "none";
+      document.getElementById('nav-user-name').innerText = currentUser.nama;
+      document.getElementById('nav-user-role').innerText = currentUser.role;
+      document.getElementById('nav-avatar').innerText = currentUser.nama.charAt(0);
+
+      updateGreetingBanner();
+      applyPermissions();
+      fetchLiveData();
+
+      // Mulai Auto Live Refresh tiap 30 detik
+      if (liveRefreshTimer) clearInterval(liveRefreshTimer);
+      liveRefreshTimer = setInterval(fetchLiveData, 30000);
+    }
+
+    document.getElementById('btn-logout').addEventListener('click', () => {
+      if (confirm("Keluar dari Dashboard RT2?")) {
+        currentUser = null;
+        if (liveRefreshTimer) clearInterval(liveRefreshTimer);
+        document.getElementById('auth-screen').style.display = "flex";
+        document.getElementById('login-msg').innerText = "";
+      }
+    });
+
+    function applyPermissions() {
+      const p = currentUser.permissions;
+      document.getElementById('btn-add-warga').style.display = p.canEditWarga ? "flex" : "none";
+      document.getElementById('btn-add-kas').style.display = p.canEditKas ? "flex" : "none";
+      document.querySelector('[data-tab="tab-settings"]').style.display = p.canManageUsers ? "flex" : "none";
+    }
+
+    // 6. SLIME / LIQUID HOVER & FAST BOUNCE OUT
+    const navItems = document.querySelectorAll('.nav-item');
+    const indicator = document.getElementById('nav-indicator');
+
+    function snapIndicator(el, state) {
+      indicator.style.opacity = '1';
+      indicator.style.top = el.offsetTop + 'px';
+      indicator.style.height = el.offsetHeight + 'px';
+
+      if (state === 'hover') {
+        indicator.classList.remove('locked');
+        indicator.classList.add('hovering');
+      } else if (state === 'locked') {
+        indicator.classList.remove('hovering');
+        indicator.classList.add('locked');
+        // Efek cairan teregang saat snap
+        indicator.classList.add('stretching');
+        setTimeout(() => indicator.classList.remove('stretching'), 280);
+      }
+    }
+
+    navItems.forEach(item => {
+      // Hover warna soft
+      item.addEventListener('mouseenter', () => snapIndicator(item, 'hover'));
+
+      // Klik: Efek terseret cairan & terkunci warna kontras
+      item.addEventListener('click', () => {
+        if (item.classList.contains('active')) return;
+
+        const currentActive = document.querySelector('.tab-view.active');
+        const targetTab = document.getElementById(item.getAttribute('data-tab'));
+
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        snapIndicator(item, 'locked');
+
+        // Transisi Staggered Bounce Out
+        if (currentActive) {
+          currentActive.classList.add('leaving');
+          setTimeout(() => {
+            currentActive.classList.remove('active', 'leaving');
+            targetTab.classList.add('active');
+          }, 240);
+        } else {
+          targetTab.classList.add('active');
+        }
+      });
+    });
+
+    document.getElementById('nav-wrapper').addEventListener('mouseleave', () => {
+      const active = document.querySelector('.nav-item.active');
+      if (active) snapIndicator(active, 'locked');
+    });
+
+    // 7. SIDEBAR COLLAPSE TOGGLE
+    document.getElementById('sidebar-toggle-btn').addEventListener('click', () => {
+      const aside = document.getElementById('main-sidebar');
+      aside.classList.toggle('collapsed');
+      setTimeout(() => {
+        const active = document.querySelector('.nav-item.active');
+        if (active) snapIndicator(active, 'locked');
+      }, 300);
+    });
+
+    // 8. FETCH DATA SECARA LIVE
+    document.getElementById('btn-sync-live').addEventListener('click', () => {
+      const icon = document.querySelector('#btn-sync-live i');
+      icon.classList.add('fa-spin');
+      fetchLiveData(() => {
+        setTimeout(() => icon.classList.remove('fa-spin'), 600);
+      });
+    });
+
+    function fetchLiveData(callback) {
+      if (GS_EXEC_URL === "URL_EXEC_WEBAPP_KAMU_DISINI") {
+        // Mock data
+        localData.warga = [
+          { id: "W-1", nama: "Bambang Sugeng", nik: "3404XXXXXXXX0001", alamat: "RT 02 / RW 03", noHp: "08123456789", status: "Tetap" },
+          { id: "W-2", nama: "Joko Santoso", nik: "3404XXXXXXXX0002", alamat: "RT 02 / RW 03", noHp: "08987654321", status: "Tetap" }
+        ];
+        localData.kas = [
+          { id: "KAS-1", tanggal: "2026-11-01", keterangan: "Jimpitan Malam Minggu", kategori: "Jimpitan", masuk: 120000, keluar: 0 },
+          { id: "KAS-2", tanggal: "2026-11-03", keterangan: "Beli Bohlam Pos Ronda", kategori: "Operasional", masuk: 0, keluar: 45000 }
+        ];
+        localData.users = [
+          { username: "rt2_admin", nama: "Mas Gaga", role: "Admin", canEditWarga: true, canDeleteWarga: true, canEditKas: true, canDeleteKas: true, canManageUsers: true },
+          { username: "rt2_ketua", nama: "Ketua RT 2", role: "Ketua RT", canEditWarga: true, canDeleteWarga: false, canEditKas: false, canDeleteKas: false, canManageUsers: false }
+        ];
+        renderOverviewMetrics(14250000, 186, 2500000, "Pak RT, Mas Gaga, Bpk Joko");
+        renderTables();
+        if (callback) callback();
+        return;
+      }
+
+      fetch(GS_EXEC_URL + "?action=getInitialData")
+        .then(r => r.json())
+        .then(res => {
+          if (res.status === "success") {
+            localData.warga = res.warga;
+            localData.kas = res.kas;
+            renderOverviewMetrics(res.summary.saldoKas, res.summary.totalWarga, res.summary.totalMasuk, res.ronda);
+            renderTables();
+          }
+          if (callback) callback();
+        });
+
+      if (currentUser && currentUser.permissions.canManageUsers) {
+        fetch(GS_EXEC_URL + "?action=getUsers")
+          .then(r => r.json())
+          .then(res => {
+            if (res.status === "success") {
+              localData.users = res.users;
+              renderUsersTable();
+            }
+          });
+      }
+    }
+
+    function renderOverviewMetrics(saldo, warga, masuk, ronda) {
+      document.getElementById('metric-saldo').innerText = "Rp " + Number(saldo).toLocaleString('id-ID');
+      document.getElementById('metric-warga').innerText = warga + " Jiwa";
+      document.getElementById('metric-masuk').innerText = "Rp " + Number(masuk).toLocaleString('id-ID');
+      document.getElementById('metric-ronda').innerText = ronda;
+    }
+
+    function renderTables() {
+      // Warga Table
+      const tbWarga = document.getElementById('tbody-warga');
+      tbWarga.innerHTML = "";
+      localData.warga.forEach(w => {
+        const canDel = currentUser.permissions.canDeleteWarga;
+        const canEdit = currentUser.permissions.canEditWarga;
+        tbWarga.innerHTML += `
+          <tr>
+            <td>${w.id}</td>
+            <td class="fw-bold">${w.nama}</td>
+            <td>${w.nik}</td>
+            <td>${w.alamat}</td>
+            <td>${w.noHp}</td>
+            <td><span style="font-size: 0.72rem; background: var(--bg-card-hover); padding: 4px 8px; border-radius: 4px;">${w.status}</span></td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                ${canEdit ? `<button class="btn-table btn-edit" onclick="editWarga('${w.id}')"><i class="fa-solid fa-pen"></i></button>` : ''}
+                ${canDel ? `<button class="btn-table btn-delete" onclick="hapusWarga('${w.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+
+      // Kas Table
+      const tbKas = document.getElementById('tbody-kas');
+      tbKas.innerHTML = "";
+      localData.kas.forEach(k => {
+        const canDel = currentUser.permissions.canDeleteKas;
+        const canEdit = currentUser.permissions.canEditKas;
+        tbKas.innerHTML += `
+          <tr>
+            <td>${k.tanggal}</td>
+            <td class="fw-bold">${k.keterangan}</td>
+            <td>${k.kategori}</td>
+            <td style="color: var(--success); font-weight: 600;">${k.masuk ? 'Rp ' + Number(k.masuk).toLocaleString('id-ID') : '-'}</td>
+            <td style="color: var(--danger); font-weight: 600;">${k.keluar ? 'Rp ' + Number(k.keluar).toLocaleString('id-ID') : '-'}</td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                ${canEdit ? `<button class="btn-table btn-edit" onclick="editKas('${k.id}')"><i class="fa-solid fa-pen"></i></button>` : ''}
+                ${canDel ? `<button class="btn-table btn-delete" onclick="hapusKas('${k.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function renderUsersTable() {
+      const tbUser = document.getElementById('tbody-users');
+      tbUser.innerHTML = "";
+      localData.users.forEach(u => {
+        tbUser.innerHTML += `
+          <tr>
+            <td class="fw-bold">${u.username}</td>
+            <td>${u.nama}</td>
+            <td><span style="background: var(--bg-card-hover); padding: 3px 8px; border-radius: 4px;">${u.role}</span></td>
+            <td>${u.canEditWarga ? '<i class="fa-solid fa-check" style="color:var(--success)"></i>' : '-'}</td>
+            <td>${u.canDeleteWarga ? '<i class="fa-solid fa-check" style="color:var(--success)"></i>' : '-'}</td>
+            <td>${u.canEditKas ? '<i class="fa-solid fa-check" style="color:var(--success)"></i>' : '-'}</td>
+            <td>${u.canDeleteKas ? '<i class="fa-solid fa-check" style="color:var(--success)"></i>' : '-'}</td>
+            <td>
+              <button class="btn-table btn-edit" onclick="editUser('${u.username}')"><i class="fa-solid fa-user-pen"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    // Modal Control
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // 9. AKUN MANAGEMENT MODAL HANDLER
+    document.getElementById('btn-add-user').addEventListener('click', () => {
+      document.getElementById('modal-user-title').innerText = "Tambah Akun Pengurus";
+      document.getElementById('user-uname').value = "";
+      document.getElementById('user-uname').disabled = false;
+      document.getElementById('user-pwd').value = "";
+      document.getElementById('user-name').value = "";
+      document.getElementById('user-role-select').value = "Sekretaris";
+      document.getElementById('perm-edit-warga').checked = true;
+      document.getElementById('perm-del-warga').checked = false;
+      document.getElementById('perm-edit-kas').checked = false;
+      document.getElementById('perm-del-kas').checked = false;
+      document.getElementById('modal-user').classList.add('active');
+    });
+
+    function editUser(uname) {
+      const u = localData.users.find(x => x.username === uname);
+      if (!u) return;
+      document.getElementById('modal-user-title').innerText = "Edit Akun: " + u.username;
+      document.getElementById('user-uname').value = u.username;
+      document.getElementById('user-uname').disabled = true;
+      document.getElementById('user-pwd').value = u.password || "";
+      document.getElementById('user-name').value = u.nama;
+      document.getElementById('user-role-select').value = u.role;
+      document.getElementById('perm-edit-warga').checked = u.canEditWarga;
+      document.getElementById('perm-del-warga').checked = u.canDeleteWarga;
+      document.getElementById('perm-edit-kas').checked = u.canEditKas;
+      document.getElementById('perm-del-kas').checked = u.canDeleteKas;
+      document.getElementById('modal-user').classList.add('active');
+    }
+
+    document.getElementById('btn-save-user-submit').addEventListener('click', () => {
+      const uData = {
+        username: document.getElementById('user-uname').value.trim(),
+        password: document.getElementById('user-pwd').value.trim(),
+        nama: document.getElementById('user-name').value.trim(),
+        role: document.getElementById('user-role-select').value,
+        canEditWarga: document.getElementById('perm-edit-warga').checked,
+        canDeleteWarga: document.getElementById('perm-del-warga').checked,
+        canEditKas: document.getElementById('perm-edit-kas').checked,
+        canDeleteKas: document.getElementById('perm-del-kas').checked,
+        canManageUsers: document.getElementById('user-role-select').value === "Admin"
+      };
+
+      if (!uData.username || !uData.password) return alert("Username & Password wajib diisi!");
+
+      if (GS_EXEC_URL !== "URL_EXEC_WEBAPP_KAMU_DISINI") {
+        fetch(GS_EXEC_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "saveUser", userData: uData })
+        }).then(() => fetchLiveData());
+      } else {
+        const idx = localData.users.findIndex(x => x.username === uData.username);
+        if (idx >= 0) localData.users[idx] = uData;
+        else localData.users.push(uData);
+        renderUsersTable();
+      }
+      closeModal('modal-user');
+    });
+
+    // 10. CRUD WARGA & KAS HANDLERS
+    document.getElementById('btn-add-warga').addEventListener('click', () => {
+      document.getElementById('modal-warga-title').innerText = "Tambah Warga Baru";
+      document.getElementById('warga-id').value = "";
+      document.getElementById('warga-nama').value = "";
+      document.getElementById('warga-nik').value = "";
+      document.getElementById('warga-alamat').value = "";
+      document.getElementById('warga-hp').value = "";
+      document.getElementById('modal-warga').classList.add('active');
+    });
+
+    function editWarga(id) {
+      const w = localData.warga.find(x => x.id === id);
+      if (!w) return;
+      document.getElementById('modal-warga-title').innerText = "Edit Data Warga";
+      document.getElementById('warga-id').value = w.id;
+      document.getElementById('warga-nama').value = w.nama;
+      document.getElementById('warga-nik').value = w.nik;
+      document.getElementById('warga-alamat').value = w.alamat;
+      document.getElementById('warga-hp').value = w.noHp;
+      document.getElementById('modal-warga').classList.add('active');
+    }
+
+    document.getElementById('btn-save-warga').addEventListener('click', () => {
+      const data = {
+        id: document.getElementById('warga-id').value,
+        nama: document.getElementById('warga-nama').value,
+        nik: document.getElementById('warga-nik').value,
+        alamat: document.getElementById('warga-alamat').value,
+        noHp: document.getElementById('warga-hp').value,
+        status: "Tetap"
+      };
+      if (!data.nama) return alert("Nama wajib diisi!");
+
+      if (GS_EXEC_URL !== "https://script.google.com/macros/s/AKfycbwPaBwOJ5Zw3TyzDYH5wT-ovy8yOo_R0togsq7XhU9frmT3zfJDaK2lWdaN8owRQ9PolA/exec") {
+        fetch(GS_EXEC_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "saveWarga", data: data })
+        }).then(() => fetchLiveData());
+      } else {
+        if (!data.id) data.id = "W-" + (localData.warga.length + 1);
+        const idx = localData.warga.findIndex(x => x.id === data.id);
+        if (idx >= 0) localData.warga[idx] = data;
+        else localData.warga.push(data);
+        renderTables();
+      }
+      closeModal('modal-warga');
+    });
+
+    function hapusWarga(id) {
+      if (!confirm("Hapus warga dengan ID: " + id + "?")) return;
+      if (GS_EXEC_URL !== "URL_EXEC_WEBAPP_KAMU_DISINI") {
+        fetch(GS_EXEC_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "deleteWarga", id: id })
+        }).then(() => fetchLiveData());
+      } else {
+        localData.warga = localData.warga.filter(x => x.id !== id);
+        renderTables();
+      }
+    }
+
+    document.getElementById('btn-add-kas').addEventListener('click', () => {
+      document.getElementById('modal-kas-title').innerText = "Pencatatan Transaksi Kas";
+      document.getElementById('kas-id').value = "";
+      document.getElementById('kas-tanggal').value = new Date().toISOString().split('T')[0];
+      document.getElementById('kas-keterangan').value = "";
+      document.getElementById('kas-masuk').value = 0;
+      document.getElementById('kas-keluar').value = 0;
+      document.getElementById('modal-kas').classList.add('active');
+    });
+
+    function editKas(id) {
+      const k = localData.kas.find(x => x.id === id);
+      if (!k) return;
+      document.getElementById('modal-kas-title').innerText = "Edit Catatan Kas";
+      document.getElementById('kas-id').value = k.id;
+      document.getElementById('kas-tanggal').value = k.tanggal;
+      document.getElementById('kas-keterangan').value = k.keterangan;
+      document.getElementById('kas-masuk').value = k.masuk;
+      document.getElementById('kas-keluar').value = k.keluar;
+      document.getElementById('modal-kas').classList.add('active');
+    }
+
+    document.getElementById('btn-save-kas').addEventListener('click', () => {
+      const data = {
+        id: document.getElementById('kas-id').value,
+        tanggal: document.getElementById('kas-tanggal').value,
+        keterangan: document.getElementById('kas-keterangan').value,
+        masuk: Number(document.getElementById('kas-masuk').value) || 0,
+        keluar: Number(document.getElementById('kas-keluar').value) || 0,
+        kategori: "Kas Operasional"
+      };
+      if (!data.keterangan) return alert("Keterangan wajib diisi!");
+
+      if (GS_EXEC_URL !== "URL_EXEC_WEBAPP_KAMU_DISINI") {
+        fetch(GS_EXEC_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "saveKas", data: data })
+        }).then(() => fetchLiveData());
+      } else {
+        if (!data.id) data.id = "KAS-" + (localData.kas.length + 1);
+        const idx = localData.kas.findIndex(x => x.id === data.id);
+        if (idx >= 0) localData.kas[idx] = data;
+        else localData.kas.push(data);
+        renderTables();
+      }
+      closeModal('modal-kas');
+    });
+
+    function hapusKas(id) {
+      if (!confirm("Hapus transaksi kas ID: " + id + "?")) return;
+      if (GS_EXEC_URL !== "URL_EXEC_WEBAPP_KAMU_DISINI") {
+        fetch(GS_EXEC_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "deleteKas", id: id })
+        }).then(() => fetchLiveData());
+      } else {
+        localData.kas = localData.kas.filter(x => x.id !== id);
+        renderTables();
+      }
+    }
+  </script>
+</body>
+</html>

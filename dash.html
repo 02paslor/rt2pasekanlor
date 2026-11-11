@@ -4,10 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard RT2 Paslor</title>
+  
+  <!-- Font Poppins (Terkunci maks 700) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Font Awesome CDN Terverifikasi (v6.5.1) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
     /* ================= TEMA PRESET SYSTEM ================= */
@@ -33,7 +37,7 @@
       --success: #10b981;
     }
 
-    /* 2. Dark Ember (Sesuai Referensi Fintech) */
+    /* 2. Dark Ember (Fintech Oranye) */
     [data-theme="dark-ember"] {
       --bg-body: #0c0d10;
       --bg-sidebar: #121418;
@@ -84,13 +88,21 @@
       --success: #059669;
     }
 
+    /* Perbaikan font & proteksi ikon Font Awesome agar tidak tertimpa Poppins */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: var(--font-family) !important;
+      font-family: var(--font-family);
       font-weight: 400;
       transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .fa, .fas, .far, .fal, .fad, .fab, .fa-solid, .fa-regular, .fa-brands {
+      font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+      display: inline-block;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
     }
 
     b, strong, .fw-bold { font-weight: 700 !important; }
@@ -105,7 +117,7 @@
       overflow: hidden;
     }
 
-    /* ================= LOGIN OVERLAY ================= */
+    /* ================= LOGIN SCREEN OVERLAY ================= */
     #auth-screen {
       position: fixed;
       inset: 0;
@@ -183,6 +195,7 @@
       bottom: 12px;
       cursor: pointer;
       color: var(--text-muted);
+      font-size: 1rem;
     }
 
     .toggle-pwd:hover { color: var(--text-main); }
@@ -225,8 +238,7 @@
 
     aside.collapsed .brand-title,
     aside.collapsed .nav-text,
-    aside.collapsed .user-details,
-    aside.collapsed .menu-cat-title {
+    aside.collapsed .user-details {
       display: none;
     }
 
@@ -251,7 +263,7 @@
       flex: 1;
     }
 
-    /* Moving Slime / Liquid Indicator */
+    /* Efek Slime Liquid Indicator */
     .nav-indicator {
       position: absolute;
       left: 0;
@@ -263,7 +275,6 @@
       pointer-events: none;
       z-index: 1;
       box-shadow: 0 6px 20px var(--accent-glow);
-      /* Transisi menyerupai tarikan cairan */
       transition: top 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), 
                   height 0.25s cubic-bezier(0.4, 0, 0.2, 1),
                   background 0.25s ease,
@@ -271,14 +282,12 @@
                   box-shadow 0.25s ease;
     }
 
-    /* Saat sedang hover preview menu lain: soft tint */
     .nav-indicator.hovering {
       background: var(--pill-soft);
       box-shadow: none;
       transform: scaleY(0.95);
     }
 
-    /* Saat sudah diklik dan terkunci aktif: warna kontras & stretch liquid bounce */
     .nav-indicator.locked {
       background: var(--accent);
       box-shadow: 0 8px 24px var(--accent-glow);
@@ -309,12 +318,12 @@
     }
 
     .nav-item i {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       width: 24px;
       text-align: center;
     }
 
-    /* ================= MAIN CONTAINER ================= */
+    /* ================= MAIN CONTENT ================= */
     main {
       flex: 1;
       display: flex;
@@ -335,7 +344,7 @@
     .header-left {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
 
     .btn-toggle-sidebar {
@@ -354,6 +363,16 @@
 
     .btn-toggle-sidebar:hover { background: var(--bg-card-hover); }
 
+    .greeting-badge {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .weton-badge {
       display: flex;
       align-items: center;
@@ -368,7 +387,7 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .btn-icon {
@@ -382,22 +401,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1rem;
     }
 
     .btn-icon:hover { background: var(--bg-card-hover); }
 
-    /* Welcome Banner Badge */
-    .greeting-badge {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 8px 16px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    /* ================= CONTENT & STAGGERED BOUNCE ================= */
+    /* ================= CONTENT ANIMATIONS ================= */
     .content-container {
       padding: 32px;
       flex: 1;
@@ -433,7 +442,7 @@
       100% { opacity: 0; transform: scale(0.94) translateY(18px); }
     }
 
-    /* ================= METRICS & CARDS ================= */
+    /* Cards */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -472,7 +481,7 @@
       letter-spacing: -0.5px;
     }
 
-    /* ================= TABLES ================= */
+    /* Table Container */
     .table-container {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -518,7 +527,7 @@
     .btn-edit { background: rgba(255, 85, 32, 0.15); color: var(--accent); }
     .btn-delete { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
 
-    /* ================= MODAL DIALOGS ================= */
+    /* Modals */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -555,7 +564,6 @@
       font-size: 1.25rem;
     }
 
-    /* Live pulse animation */
     .pulse-live {
       width: 8px;
       height: 8px;
@@ -588,13 +596,13 @@
 
       <div class="input-group">
         <label>Username</label>
-        <input type="text" id="login-username" class="input-control" placeholder="Contoh: rt2_admin">
+        <input type="text" id="login-username" class="input-control" placeholder="cth: rt2_admin">
       </div>
 
       <div class="input-group">
         <label>Password</label>
         <input type="password" id="login-password" class="input-control" placeholder="••••••••">
-        <i class="fa-regular fa-eye toggle-pwd" id="login-eye"></i>
+        <i class="fa-solid fa-eye toggle-pwd" id="login-eye"></i>
       </div>
 
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px;">
@@ -604,7 +612,7 @@
       </div>
 
       <button class="btn-main" id="btn-login-submit">
-        <i class="fa-solid fa-arrow-right-to-bracket"></i> Masuk Dashboard
+        <i class="fa-solid fa-right-to-bracket"></i> Masuk Dashboard
       </button>
       <div id="login-msg" style="font-size: 0.8rem; color: var(--danger); margin-top: 12px; text-align: center;"></div>
     </div>
@@ -613,7 +621,7 @@
   <!-- ================= 2. SIDEBAR NAVIGATION ================= -->
   <aside id="main-sidebar">
     <div class="brand">
-      <div class="logo-badge"><i class="fa-solid fa-house-chimney"></i></div>
+      <div class="logo-badge"><i class="fa-solid fa-shield-halved"></i></div>
       <div class="brand-title">
         <div class="fw-bold" style="font-size: 1rem;">RT2 Paslor</div>
         <div style="font-size: 0.7rem; color: var(--text-muted);">Pasekan Lor 02/03</div>
@@ -624,11 +632,11 @@
       <div class="nav-indicator locked" id="nav-indicator"></div>
       
       <div class="nav-item active" data-tab="tab-overview">
-        <i class="fa-solid fa-chart-simple"></i>
+        <i class="fa-solid fa-gauge-high"></i>
         <span class="nav-text">Overview</span>
       </div>
       <div class="nav-item" data-tab="tab-warga">
-        <i class="fa-solid fa-users"></i>
+        <i class="fa-solid fa-people-roof"></i>
         <span class="nav-text">Data Warga</span>
       </div>
       <div class="nav-item" data-tab="tab-kas">
@@ -636,7 +644,7 @@
         <span class="nav-text">Kemenkeu RT</span>
       </div>
       <div class="nav-item" data-tab="tab-settings">
-        <i class="fa-solid fa-gear"></i>
+        <i class="fa-solid fa-sliders"></i>
         <span class="nav-text">Settings & Akun</span>
       </div>
     </nav>
@@ -651,7 +659,7 @@
         </div>
       </div>
       <button class="btn-icon" id="btn-logout" title="Keluar / Logout" style="border: none; background: transparent; color: var(--danger);">
-        <i class="fa-solid fa-right-from-bracket"></i>
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
     </div>
   </aside>
@@ -670,15 +678,15 @@
         </div>
 
         <div class="weton-badge">
-          <i class="fa-regular fa-calendar-days" style="color: var(--accent);"></i>
+          <i class="fa-solid fa-calendar-day" style="color: var(--accent);"></i>
           <span id="txt-calendar-jawa">Memuat Penanggalan...</span>
         </div>
       </div>
 
       <div class="header-right">
-        <!-- Manual Sync Button -->
+        <!-- Live Sync Manual -->
         <button class="btn-icon" id="btn-sync-live" title="Sinkronkan Data Live Sekarang">
-          <i class="fa-solid fa-rotate"></i>
+          <i class="fa-solid fa-arrows-rotate"></i>
         </button>
         <!-- Quick Theme Switcher -->
         <button class="btn-icon" id="btn-theme-quick" title="Ganti Mode Tampilan Cepat">
@@ -708,31 +716,31 @@
             <div class="card-title">Total Warga Terdata</div>
             <div class="card-val" id="metric-warga">--</div>
             <div style="font-size: 0.72rem; color: var(--accent); margin-top: 10px; font-weight: 600;">
-              <i class="fa-solid fa-id-card"></i> Database Warga Aktif
+              <i class="fa-solid fa-address-card"></i> Database Warga Aktif
             </div>
           </div>
           <div class="card stagger" style="--i:4;">
-            <div class="card-title">Pemasukan Bulan Ini</div>
+            <div class="card-title">Pemasukan Kas</div>
             <div class="card-val" style="color: var(--success);" id="metric-masuk">Rp --</div>
             <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px;">
-              <i class="fa-solid fa-arrow-down-long"></i> Total Iuran & Jimpitan
+              <i class="fa-solid fa-arrow-trend-up"></i> Total Iuran & Jimpitan
             </div>
           </div>
           <div class="card stagger" style="--i:5;">
             <div class="card-title">Petugas Ronda Malam Ini</div>
             <div class="card-val" style="font-size: 1.05rem; line-height: 1.4;" id="metric-ronda">Memuat...</div>
             <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px;">
-              <i class="fa-solid fa-person-shelter"></i> Pos Kamling RT 2
+              <i class="fa-solid fa-person-military-pointing"></i> Pos Kamling RT 2
             </div>
           </div>
         </div>
 
         <div class="card stagger" style="--i:6; margin-top: 24px;">
           <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 8px;">
-            <i class="fa-solid fa-circle-check" style="color: var(--success);"></i> Sistem Sinkronisasi Langsung Aktif
+            <i class="fa-solid fa-circle-check" style="color: var(--success);"></i> Multi-Exec API Terhubung
           </h3>
           <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-            Seluruh data ditarik langsung secara komparatif dari spreadsheet Data Warga & Buku Kas Kemenkeu tanpa iframe. Operasi tambah, ubah, dan hapus dapat dieksekusi secara instan dari landing page ini sesuai hak akses akun Anda.
+            Seluruh data ditarik secara terdistribusi dari masing-masing script: Exec Data Warga, Exec Keuangan, dan Exec User Role. Tambah, edit, dan hapus dapat dieksekusi secara instan dari dashboard ini sesuai hak akses akun Anda.
           </p>
         </div>
       </section>
@@ -777,7 +785,7 @@
             <p style="font-size: 0.82rem; color: var(--text-muted);">Catatan pembukuan keuangan & jimpitan warga</p>
           </div>
           <button class="btn-main" id="btn-add-kas" style="width: auto; padding: 10px 18px; font-size: 0.85rem;">
-            <i class="fa-solid fa-plus-circle"></i> Catat Transaksi
+            <i class="fa-solid fa-circle-plus"></i> Catat Transaksi
           </button>
         </div>
 
@@ -807,7 +815,7 @@
         <!-- Box 1: Pilihan Tema -->
         <div class="card stagger" style="--i:2; max-width: 850px; margin-bottom: 24px;">
           <h3 class="fw-semi" style="font-size: 1rem; margin-bottom: 12px;">
-            <i class="fa-solid fa-brush" style="color: var(--accent);"></i> Pilihan Tema Tampilan
+            <i class="fa-solid fa-paintbrush" style="color: var(--accent);"></i> Pilihan Tema Tampilan
           </h3>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
             <label style="background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
@@ -991,22 +999,23 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // MASUKKAN LINK HASIL DEPLOYMENT WEB APP APPS SCRIPT DI SINI:
-    const GS_EXEC_URL = "URL_EXEC_WEBAPP_KAMU_DISINI";
+    // 3 URL EXEC KHUSUS DARI MAS GAGA
+    const API_WARGA_URL = "https://script.google.com/macros/s/AKfycbwPaBwOJ5Zw3TyzDYH5wT-ovy8yOo_R0togsq7XhU9frmT3zfJDaK2lWdaN8owRQ9PolA/exec";
+    const API_KAS_URL   = "https://script.google.com/macros/s/AKfycbyPpRjprntu4xdfCcsZXBKArcx8uiaTviQwoEV3eX1nrQ289LeIwQe2D3TPOAmweuWp/exec";
+    const API_USER_URL  = "https://script.google.com/macros/s/AKfycbzAfgeS_uKiR2XJYwLfxRnjJHLQqcOS5oQxhRDW8bZtQ1-RLMlc4geZz0mA_nCi5p8/exec";
 
-    // 1. STATE MANAGEMENT
+    // STATE MANAGEMENT
     let currentUser = null;
-    let localData = { warga: [], kas: [], users: [], summary: {} };
+    let localData = { warga: [], kas: [], users: [] };
     let liveRefreshTimer = null;
 
-    // Inisialisasi awal saat halaman dibuka
     window.addEventListener('DOMContentLoaded', () => {
       initThemes();
       initJawaCalendar();
       checkSavedCredentials();
     });
 
-    // 2. TEMA PRESET MANAGER
+    // 1. TEMA PRESET
     function initThemes() {
       const savedTheme = localStorage.getItem('rt2_theme') || 'dark-grey';
       applyTheme(savedTheme);
@@ -1019,7 +1028,6 @@
         });
       });
 
-      // Quick Theme Switcher Button
       const themeList = ['dark-grey', 'dark-ember', 'light-clean', 'light-ocean'];
       document.getElementById('btn-theme-quick').addEventListener('click', () => {
         const cur = document.documentElement.getAttribute('data-theme');
@@ -1037,7 +1045,7 @@
       document.getElementById('btn-theme-quick').innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
     }
 
-    // 3. KALENDER JAWA & JAM AKURAT
+    // 2. KALENDER JAWA & JAM AKURAT
     function initJawaCalendar() {
       function update() {
         const now = new Date();
@@ -1066,11 +1074,10 @@
       setInterval(update, 1000);
     }
 
-    // 4. SAPAAN SELAMAT DATANG PERSONAL
     function updateGreetingBanner() {
       if (!currentUser) return;
       const hour = new Date().getHours();
-      let salam = "Sugeng Enjang"; // Pagi
+      let salam = "Sugeng Enjang";
       if (hour >= 11 && hour < 15) salam = "Sugeng Siang";
       else if (hour >= 15 && hour < 18) salam = "Sugeng Sonten";
       else if (hour >= 18 || hour < 4) salam = "Sugeng Dalu";
@@ -1078,7 +1085,7 @@
       document.getElementById('txt-welcome-greeting').innerText = `${salam}, ${currentUser.nama}!`;
     }
 
-    // 5. AUTENTIKASI DENGAN IKON MATA & SAVE CREDENTIALS
+    // 3. TOGGLE PASSWORD DENGAN IKON MATA
     document.getElementById('login-eye').addEventListener('click', function() {
       const pwdInput = document.getElementById('login-password');
       if (pwdInput.type === "password") {
@@ -1114,21 +1121,9 @@
         msg.innerText = "Lengkapi username dan password.";
         return;
       }
-      msg.innerText = "Memverifikasi hak akses dari DB_USERS...";
+      msg.innerText = "Memverifikasi hak akses...";
 
-      if (GS_EXEC_URL === "URL_EXEC_WEBAPP_KAMU_DISINI") {
-        // Fallback mockup jika belum pasang URL Web App
-        currentUser = {
-          username: username,
-          nama: username === 'rt2_admin' ? "Mas Gaga" : "Pengurus RT 2",
-          role: username === 'rt2_admin' ? "Admin" : "Ketua RT",
-          permissions: { canEditWarga: true, canDeleteWarga: true, canEditKas: true, canDeleteKas: true, canManageUsers: true }
-        };
-        onLoginGranted(username, password, remember);
-        return;
-      }
-
-      fetch(GS_EXEC_URL, {
+      fetch(API_USER_URL, {
         method: "POST",
         body: JSON.stringify({ action: "login", username: username, password: password })
       })
@@ -1138,11 +1133,22 @@
           currentUser = res.user;
           onLoginGranted(username, password, remember);
         } else {
-          msg.innerText = res.message;
+          msg.innerText = res.message || "Gagal masuk. Cek akun kembali.";
         }
       })
       .catch(() => {
-        msg.innerText = "Gagal menghubungi Apps Script. Cek koneksi / URL Exec.";
+        // Fallback testing local jika offline
+        if (username === "rt2_admin" && password === "0203") {
+          currentUser = {
+            username: "rt2_admin",
+            nama: "Mas Gaga",
+            role: "Admin",
+            permissions: { canEditWarga: true, canDeleteWarga: true, canEditKas: true, canDeleteKas: true, canManageUsers: true }
+          };
+          onLoginGranted(username, password, remember);
+        } else {
+          msg.innerText = "Koneksi ke Exec User Role terputus.";
+        }
       });
     }
 
@@ -1164,7 +1170,6 @@
       applyPermissions();
       fetchLiveData();
 
-      // Mulai Auto Live Refresh tiap 30 detik
       if (liveRefreshTimer) clearInterval(liveRefreshTimer);
       liveRefreshTimer = setInterval(fetchLiveData, 30000);
     }
@@ -1185,7 +1190,7 @@
       document.querySelector('[data-tab="tab-settings"]').style.display = p.canManageUsers ? "flex" : "none";
     }
 
-    // 6. SLIME / LIQUID HOVER & FAST BOUNCE OUT
+    // 4. EFEK SLIME LIQUID HOVER & FAST BOUNCE OUT
     const navItems = document.querySelectorAll('.nav-item');
     const indicator = document.getElementById('nav-indicator');
 
@@ -1200,17 +1205,14 @@
       } else if (state === 'locked') {
         indicator.classList.remove('hovering');
         indicator.classList.add('locked');
-        // Efek cairan teregang saat snap
         indicator.classList.add('stretching');
         setTimeout(() => indicator.classList.remove('stretching'), 280);
       }
     }
 
     navItems.forEach(item => {
-      // Hover warna soft
       item.addEventListener('mouseenter', () => snapIndicator(item, 'hover'));
 
-      // Klik: Efek terseret cairan & terkunci warna kontras
       item.addEventListener('click', () => {
         if (item.classList.contains('active')) return;
 
@@ -1221,7 +1223,6 @@
         item.classList.add('active');
         snapIndicator(item, 'locked');
 
-        // Transisi Staggered Bounce Out
         if (currentActive) {
           currentActive.classList.add('leaving');
           setTimeout(() => {
@@ -1239,7 +1240,7 @@
       if (active) snapIndicator(active, 'locked');
     });
 
-    // 7. SIDEBAR COLLAPSE TOGGLE
+    // 5. SIDEBAR COLLAPSE
     document.getElementById('sidebar-toggle-btn').addEventListener('click', () => {
       const aside = document.getElementById('main-sidebar');
       aside.classList.toggle('collapsed');
@@ -1249,7 +1250,7 @@
       }, 300);
     });
 
-    // 8. FETCH DATA SECARA LIVE
+    // 6. MULTI-EXEC LIVE DATA FETCHING
     document.getElementById('btn-sync-live').addEventListener('click', () => {
       const icon = document.querySelector('#btn-sync-live i');
       icon.classList.add('fa-spin');
@@ -1259,61 +1260,54 @@
     });
 
     function fetchLiveData(callback) {
-      if (GS_EXEC_URL === "URL_EXEC_WEBAPP_KAMU_DISINI") {
-        // Mock data
-        localData.warga = [
-          { id: "W-1", nama: "Bambang Sugeng", nik: "3404XXXXXXXX0001", alamat: "RT 02 / RW 03", noHp: "08123456789", status: "Tetap" },
-          { id: "W-2", nama: "Joko Santoso", nik: "3404XXXXXXXX0002", alamat: "RT 02 / RW 03", noHp: "08987654321", status: "Tetap" }
-        ];
-        localData.kas = [
-          { id: "KAS-1", tanggal: "2026-11-01", keterangan: "Jimpitan Malam Minggu", kategori: "Jimpitan", masuk: 120000, keluar: 0 },
-          { id: "KAS-2", tanggal: "2026-11-03", keterangan: "Beli Bohlam Pos Ronda", kategori: "Operasional", masuk: 0, keluar: 45000 }
-        ];
-        localData.users = [
-          { username: "rt2_admin", nama: "Mas Gaga", role: "Admin", canEditWarga: true, canDeleteWarga: true, canEditKas: true, canDeleteKas: true, canManageUsers: true },
-          { username: "rt2_ketua", nama: "Ketua RT 2", role: "Ketua RT", canEditWarga: true, canDeleteWarga: false, canEditKas: false, canDeleteKas: false, canManageUsers: false }
-        ];
-        renderOverviewMetrics(14250000, 186, 2500000, "Pak RT, Mas Gaga, Bpk Joko");
-        renderTables();
-        if (callback) callback();
-        return;
-      }
-
-      fetch(GS_EXEC_URL + "?action=getInitialData")
+      // 1. Fetch Warga & Ronda
+      fetch(API_WARGA_URL + "?action=getInitialData")
         .then(r => r.json())
         .then(res => {
           if (res.status === "success") {
-            localData.warga = res.warga;
-            localData.kas = res.kas;
-            renderOverviewMetrics(res.summary.saldoKas, res.summary.totalWarga, res.summary.totalMasuk, res.ronda);
-            renderTables();
+            localData.warga = res.warga || [];
+            document.getElementById('metric-warga').innerText = (res.summary ? res.summary.totalWarga : localData.warga.length) + " Jiwa";
+            if (res.ronda) document.getElementById('metric-ronda').innerText = res.ronda;
+            renderWargaTable();
           }
-          if (callback) callback();
-        });
+        }).catch(err => console.error("Error warga:", err));
 
+      // 2. Fetch Keuangan
+      fetch(API_KAS_URL + "?action=getInitialData")
+        .then(r => r.json())
+        .then(res => {
+          if (res.status === "success") {
+            localData.kas = res.kas || [];
+            const saldo = res.summary ? res.summary.saldoKas : 0;
+            const masuk = res.summary ? res.summary.totalMasuk : 0;
+            document.getElementById('metric-saldo').innerText = "Rp " + Number(saldo).toLocaleString('id-ID');
+            document.getElementById('metric-masuk').innerText = "Rp " + Number(masuk).toLocaleString('id-ID');
+            renderKasTable();
+          }
+        }).catch(err => console.error("Error kas:", err));
+
+      // 3. Fetch Users (Jika Admin)
       if (currentUser && currentUser.permissions.canManageUsers) {
-        fetch(GS_EXEC_URL + "?action=getUsers")
+        fetch(API_USER_URL + "?action=getUsers")
           .then(r => r.json())
           .then(res => {
             if (res.status === "success") {
-              localData.users = res.users;
+              localData.users = res.users || [];
               renderUsersTable();
             }
-          });
+          }).catch(err => console.error("Error users:", err));
       }
+
+      if (callback) callback();
     }
 
-    function renderOverviewMetrics(saldo, warga, masuk, ronda) {
-      document.getElementById('metric-saldo').innerText = "Rp " + Number(saldo).toLocaleString('id-ID');
-      document.getElementById('metric-warga').innerText = warga + " Jiwa";
-      document.getElementById('metric-masuk').innerText = "Rp " + Number(masuk).toLocaleString('id-ID');
-      document.getElementById('metric-ronda').innerText = ronda;
-    }
-
-    function renderTables() {
-      // Warga Table
+    function renderWargaTable() {
       const tbWarga = document.getElementById('tbody-warga');
       tbWarga.innerHTML = "";
+      if (localData.warga.length === 0) {
+        tbWarga.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Belum ada data warga</td></tr>';
+        return;
+      }
       localData.warga.forEach(w => {
         const canDel = currentUser.permissions.canDeleteWarga;
         const canEdit = currentUser.permissions.canEditWarga;
@@ -1327,17 +1321,22 @@
             <td><span style="font-size: 0.72rem; background: var(--bg-card-hover); padding: 4px 8px; border-radius: 4px;">${w.status}</span></td>
             <td>
               <div style="display: flex; gap: 6px;">
-                ${canEdit ? `<button class="btn-table btn-edit" onclick="editWarga('${w.id}')"><i class="fa-solid fa-pen"></i></button>` : ''}
-                ${canDel ? `<button class="btn-table btn-delete" onclick="hapusWarga('${w.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+                ${canEdit ? `<button class="btn-table btn-edit" onclick="editWarga('${w.id}')"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
+                ${canDel ? `<button class="btn-table btn-delete" onclick="hapusWarga('${w.id}')"><i class="fa-solid fa-trash-can"></i></button>` : ''}
               </div>
             </td>
           </tr>
         `;
       });
+    }
 
-      // Kas Table
+    function renderKasTable() {
       const tbKas = document.getElementById('tbody-kas');
       tbKas.innerHTML = "";
+      if (localData.kas.length === 0) {
+        tbKas.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Belum ada catatan kas</td></tr>';
+        return;
+      }
       localData.kas.forEach(k => {
         const canDel = currentUser.permissions.canDeleteKas;
         const canEdit = currentUser.permissions.canEditKas;
@@ -1350,8 +1349,8 @@
             <td style="color: var(--danger); font-weight: 600;">${k.keluar ? 'Rp ' + Number(k.keluar).toLocaleString('id-ID') : '-'}</td>
             <td>
               <div style="display: flex; gap: 6px;">
-                ${canEdit ? `<button class="btn-table btn-edit" onclick="editKas('${k.id}')"><i class="fa-solid fa-pen"></i></button>` : ''}
-                ${canDel ? `<button class="btn-table btn-delete" onclick="hapusKas('${k.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+                ${canEdit ? `<button class="btn-table btn-edit" onclick="editKas('${k.id}')"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
+                ${canDel ? `<button class="btn-table btn-delete" onclick="hapusKas('${k.id}')"><i class="fa-solid fa-trash-can"></i></button>` : ''}
               </div>
             </td>
           </tr>
@@ -1380,12 +1379,11 @@
       });
     }
 
-    // Modal Control
     function closeModal(id) {
       document.getElementById(id).classList.remove('active');
     }
 
-    // 9. AKUN MANAGEMENT MODAL HANDLER
+    // 7. USER AKUN HANDLER
     document.getElementById('btn-add-user').addEventListener('click', () => {
       document.getElementById('modal-user-title').innerText = "Tambah Akun Pengurus";
       document.getElementById('user-uname').value = "";
@@ -1431,21 +1429,14 @@
 
       if (!uData.username || !uData.password) return alert("Username & Password wajib diisi!");
 
-      if (GS_EXEC_URL !== "URL_EXEC_WEBAPP_KAMU_DISINI") {
-        fetch(GS_EXEC_URL, {
-          method: "POST",
-          body: JSON.stringify({ action: "saveUser", userData: uData })
-        }).then(() => fetchLiveData());
-      } else {
-        const idx = localData.users.findIndex(x => x.username === uData.username);
-        if (idx >= 0) localData.users[idx] = uData;
-        else localData.users.push(uData);
-        renderUsersTable();
-      }
+      fetch(API_USER_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "saveUser", userData: uData })
+      }).then(() => fetchLiveData());
       closeModal('modal-user');
     });
 
-    // 10. CRUD WARGA & KAS HANDLERS
+    // 8. CRUD WARGA & KAS HANDLERS
     document.getElementById('btn-add-warga').addEventListener('click', () => {
       document.getElementById('modal-warga-title').innerText = "Tambah Warga Baru";
       document.getElementById('warga-id').value = "";
@@ -1479,32 +1470,19 @@
       };
       if (!data.nama) return alert("Nama wajib diisi!");
 
-      if (GS_EXEC_URL !== "https://script.google.com/macros/s/AKfycbwPaBwOJ5Zw3TyzDYH5wT-ovy8yOo_R0togsq7XhU9frmT3zfJDaK2lWdaN8owRQ9PolA/exec") {
-        fetch(GS_EXEC_URL, {
-          method: "POST",
-          body: JSON.stringify({ action: "saveWarga", data: data })
-        }).then(() => fetchLiveData());
-      } else {
-        if (!data.id) data.id = "W-" + (localData.warga.length + 1);
-        const idx = localData.warga.findIndex(x => x.id === data.id);
-        if (idx >= 0) localData.warga[idx] = data;
-        else localData.warga.push(data);
-        renderTables();
-      }
+      fetch(API_WARGA_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "saveWarga", data: data })
+      }).then(() => fetchLiveData());
       closeModal('modal-warga');
     });
 
     function hapusWarga(id) {
-      if (!confirm("Hapus warga dengan ID: " + id + "?")) return;
-      if (GS_EXEC_URL !== "URL_EXEC_WEBAPP_KAMU_DISINI") {
-        fetch(GS_EXEC_URL, {
-          method: "POST",
-          body: JSON.stringify({ action: "deleteWarga", id: id })
-        }).then(() => fetchLiveData());
-      } else {
-        localData.warga = localData.warga.filter(x => x.id !== id);
-        renderTables();
-      }
+      if (!confirm("Hapus data warga dengan ID: " + id + "?")) return;
+      fetch(API_WARGA_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "deleteWarga", id: id })
+      }).then(() => fetchLiveData());
     }
 
     document.getElementById('btn-add-kas').addEventListener('click', () => {
@@ -1540,32 +1518,19 @@
       };
       if (!data.keterangan) return alert("Keterangan wajib diisi!");
 
-      if (GS_EXEC_URL !== "URL_EXEC_WEBAPP_KAMU_DISINI") {
-        fetch(GS_EXEC_URL, {
-          method: "POST",
-          body: JSON.stringify({ action: "saveKas", data: data })
-        }).then(() => fetchLiveData());
-      } else {
-        if (!data.id) data.id = "KAS-" + (localData.kas.length + 1);
-        const idx = localData.kas.findIndex(x => x.id === data.id);
-        if (idx >= 0) localData.kas[idx] = data;
-        else localData.kas.push(data);
-        renderTables();
-      }
+      fetch(API_KAS_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "saveKas", data: data })
+      }).then(() => fetchLiveData());
       closeModal('modal-kas');
     });
 
     function hapusKas(id) {
       if (!confirm("Hapus transaksi kas ID: " + id + "?")) return;
-      if (GS_EXEC_URL !== "URL_EXEC_WEBAPP_KAMU_DISINI") {
-        fetch(GS_EXEC_URL, {
-          method: "POST",
-          body: JSON.stringify({ action: "deleteKas", id: id })
-        }).then(() => fetchLiveData());
-      } else {
-        localData.kas = localData.kas.filter(x => x.id !== id);
-        renderTables();
-      }
+      fetch(API_KAS_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "deleteKas", id: id })
+      }).then(() => fetchLiveData());
     }
   </script>
 </body>

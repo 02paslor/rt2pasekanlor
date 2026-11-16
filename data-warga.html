@@ -81,7 +81,7 @@
 
         <!-- HALAMAN LOGIN -->
         <transition name="fade">
-            <div v-if="!isLoggedIn" class="min-h-screen flex flex-col justify-center items-center p-4 w-full absolute inset-0 z-50 overflow-y-auto" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); position: relative; overflow: hidden;">
+            <div v-if="!isLoggedIn" class="min-h-screen flex flex-col justify-center items-center p-4 w-full absolute inset-0 z-50 overflow-y-auto" style="background: linear-gradient(135deg,  0%, #1e1b4b 100%); position: relative; overflow: hidden;">
                 <div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-500/20 rounded-full blur-[100px] pointer-events-none"></div>
                 <div class="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -267,7 +267,7 @@
                     
                     <div v-if="loading" class="flex flex-col items-center justify-center py-32">
                         <div class="spinner mb-4 w-12 h-12 border-t-[#0F2E70]"></div>
-                        <p class="text-[#0F2E70] font-[600] text-[15px] tracking-wide">Sedang sinkronisasi data Anda</p>
+                        <p class="text-[#0F2E70] font-[600] text-[15px] tracking-wide">Sinkronisasi Data...</p>
                     </div>
 
                     <div v-show="activeMenu === 'list' && !loading" class="w-full relative">
@@ -652,13 +652,13 @@
                 
                 if (result.status === "error") {
                     let errStr = result.message;
-                    if(errStr.toLowerCase().includes("kesalahan layanan spreadsheet")) errStr = "Ok Berhasil-Klik Sinkron Sekarang";
+                    if(errStr.toLowerCase().includes("kesalahan layanan spreadsheet")) errStr = "Ok Berhasil";
                     throw new Error(errStr);
                 }
                 return result;
             } catch (error) { 
                 let msg = error.message || "Kesalahan Server/Jaringan.";
-                if(msg.toLowerCase().includes("kesalahan")) msg = "Ok Berhasil-Klik Sinkron Sekarang";
+                if(msg.toLowerCase().includes("kesalahan")) msg = "Ok Berhasil";
                 throw new Error(msg); 
             }
         };

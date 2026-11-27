@@ -125,14 +125,23 @@
       display: flex;
       flex-direction: column;
       min-height: 0;
-      margin-top: 2.2mm;
-      margin-bottom: 2.2mm;
+      margin-top: 2mm;
+      margin-bottom: 2mm;
+      overflow: hidden;
+    }
+
+    .jimpitan-table-box {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
     }
 
     .jimpitan-table {
       width: 100%;
       height: 100%;
+      flex: 1 1 auto;
       border-collapse: separate;
       border-spacing: 0;
       table-layout: fixed;
@@ -143,7 +152,13 @@
     }
 
     .jimpitan-table tbody {
-      height: 100%;
+      height: auto;
+    }
+
+    .jimpitan-table td,
+    .jimpitan-table th {
+      line-height: 1;
+      vertical-align: middle;
     }
 
     /* Penyesuaian Print A4 Presisi Tanpa Margin & Tanpa Terpotong */
@@ -486,12 +501,26 @@
           <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-3.5 space-y-3">
             <div class="flex items-center justify-between">
               <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
-                <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Kolom Bulan & Kalender
+                <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Kolom Bulan &amp; Kalender
               </h3>
-              <select id="cfg-monthMode" onchange="updateState('monthMode', this.value)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 focus:outline-none">
-                <option value="show">Tampil Bulan & Tanggal</option>
-                <option value="blank">Kosong / Blank</option>
-              </select>
+            </div>
+
+            <!-- 2 Centang Terpisah: Bulan Header vs Tanggal Tabel -->
+            <div class="bg-white dark:bg-slate-900/70 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700/60 space-y-2">
+              <label class="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer">
+                <input type="checkbox" id="cfg-showMonthHeader" onchange="updateState('showMonthHeader', this.checked)" class="rounded accent-emerald-500">
+                <span>1. Tampilkan teks <b>Bulan &amp; Tahun</b> di kotak header</span>
+              </label>
+
+              <label class="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer">
+                <input type="checkbox" id="cfg-showDatesInTable" onchange="updateState('showDatesInTable', this.checked)" class="rounded accent-emerald-500">
+                <span>2. Tampilkan isi <b>Tanggal</b> di dalam tabel</span>
+              </label>
+
+              <label class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 cursor-pointer pl-5">
+                <input type="checkbox" id="cfg-showDayInTable" onchange="updateState('showDayInTable', this.checked)" class="rounded accent-emerald-500">
+                <span>Sertakan nama hari pada tanggal tabel (contoh: <b>SELASA,</b> 1 DESEMBER)</span>
+              </label>
             </div>
 
             <div class="grid grid-cols-2 gap-2">
@@ -534,7 +563,7 @@
               </div>
             </div>
 
-            <label class="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer pt-1">
+            <label class="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer">
               <input type="checkbox" id="cfg-autoFitRows" onchange="updateState('autoFitRows', this.checked)" class="rounded accent-emerald-500">
               <span>Auto-Fit tinggi baris tabel (menyesuaikan hari &amp; catatan)</span>
             </label>
@@ -882,10 +911,12 @@
       pairIndex: 0,
       leftHouseManual: '1',
       rightHouseManual: '2',
-      monthMode: 'show',
+      showMonthHeader: true,
+      showDatesInTable: true,
       monthLabel: 'BULAN',
       month: nowInit.getMonth(),
       year: nowInit.getFullYear(),
+      showDayInTable: true,
       autoFitRows: true,
       // Tabel
       tableBorderStyle: 'solid',
@@ -970,16 +1001,16 @@
     // 4. HELPER TANGGAL AKURAT & GENERATOR LEMBAR JIMPITAN (KALENDER INDONESIA)
     // =========================================================================
     function isKabisat(tahun) {
-      const y = Number(tahun);
+      const y = parseInt(tahun, 10);
       return (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0);
     }
 
     function getDaysInMonth(year, monthIndex) {
-      const y = Number(year);
-      const m = Number(monthIndex);
+      const y = parseInt(year, 10);
+      const m = parseInt(monthIndex, 10);
       const HARI_PER_BULAN = [
         31,                       // 0: Januari
-        isKabisat(y) ? 29 : 28,   // 1: Februari (29 jika tahun kabisat, selain itu 28)
+        isKabisat(y) ? 29 : 28,   // 1: Februari (29 jika kabisat, selain itu 28)
         31,                       // 2: Maret
         30,                       // 3: April
         31,                       // 4: Mei
@@ -991,22 +1022,25 @@
         30,                       // 10: November
         31                        // 11: Desember
       ];
-      return HARI_PER_BULAN[m] || 31;
+      return m >= 0 && m <= 11 ? HARI_PER_BULAN[m] : 31;
     }
 
     function generateMonthRows(year, monthIndex) {
-      const y = Number(year);
-      const m = Number(monthIndex);
+      const y = parseInt(year, 10);
+      const m = parseInt(monthIndex, 10);
       const totalDays = getDaysInMonth(y, m);
       const monthName = NAMA_BULAN[m] || 'DESEMBER';
       const rows = [];
       for (let day = 1; day <= totalDays; day++) {
-        // Gunakan pukul 12:00:00 waktu lokal (WIB / UTC+7) agar kebal terhadap pergeseran UTC/DST
+        // Waktu lokal pukul 12:00:00 (WIB / UTC+7) mencegah pergeseran hari lintas zona waktu
         const dateObj = new Date(y, m, day, 12, 0, 0);
         const dayName = NAMA_HARI[dateObj.getDay()];
+        const tanggalFormatted = state.showDayInTable
+          ? `${dayName}, ${day} ${monthName} ${y}`
+          : `${day} ${monthName} ${y}`;
         rows.push({
           no: `${day}.`,
-          tanggal: `${dayName}, ${day} ${monthName} ${y}`
+          tanggal: tanggalFormatted
         });
       }
       return rows;
@@ -1018,162 +1052,167 @@
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
 
-    // Render 1 Slip Jimpitan (Ukuran Presisi 10.5cm x 29.7cm)
-    function renderSingleSlipHTML(houseNumberText) {
-      const monthName = NAMA_BULAN[state.month] || 'DESEMBER';
-      const bulanTahunText = state.monthMode === 'show' ? `${monthName} ${state.year}` : '&nbsp;';
-      const nomorRumahText = state.houseMode === 'show' ? escapeHtml(houseNumberText) : '&nbsp;';
+    // Helper Konversi Warna Hex ke CSS Filter untuk pewarnaan gambar logo hitam
+    function getLogoColorFilter(hexColor) {
+      if (!hexColor || hexColor.toLowerCase() === '#000000' || hexColor.toLowerCase() === '#000') {
+        return 'none';
+      }
+      const hex = hexColor.replace('#', '');
+      if (hex.length !== 6) return 'none';
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
 
+      // Konversi RGB ke HSL untuk mendapatkan Hue, Saturation, Lightness akurat
+      const rNorm = r / 255;
+      const gNorm = g / 255;
+      const bNorm = b / 255;
+      const max = Math.max(rNorm, gNorm, bNorm);
+      const min = Math.min(rNorm, gNorm, bNorm);
+      const l = (max + min) / 2;
+      let h = 0;
+      let s = 0;
+
+      if (max !== min) {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
+          case gNorm: h = (bNorm - rNorm) / d + 2; break;
+          case bNorm: h = (rNorm - gNorm) / d + 4; break;
+        }
+        h /= 6;
+      }
+
+      const hueDeg = Math.round(h * 360) - 38;
+      const satPct = Math.round(s * 1000) + 150;
+      const lightPct = Math.round(l * 140) + 25;
+      return `invert(15%) sepia(95%) saturate(${satPct}%) hue-rotate(${hueDeg}deg) brightness(${lightPct}%) contrast(105%)`;
+    }
+
+    // Render 1 Lembar Jimpitan (10.5cm x 29.7cm)
+    function renderSingleSlipHTML(houseValue) {
       const rows = generateMonthRows(state.year, state.month);
       const totalDays = rows.length;
 
-      // Auto-Fit tinggi baris mengisi 100% sisa ruang vertikal tabel
+      // Auto-Fit: biarkan table-layout: fixed + height: 100% membagi sisa tinggi tbody secara merata ke seluruh N baris
+      // Tanpa memakai calc(100% / N) pada <tr> yang sering membuat browser melebihi tinggi thead + tbody dan memotong baris terakhir
       const rowHeightStyle = state.autoFitRows
-        ? `height: calc(100% / ${totalDays});`
-        : `height: 6.0mm;`;
+        ? `height: auto;`
+        : `height: 5.5mm;`;
 
       // Logo HTML dengan dukungan Upload, Default URL Resmi, & Pewarnaan Logo (Default Hitam)
-      let logoHTML = '';
-      if (state.logoVisible) {
-        const activeLogoSrc = state.customLogoDataUrl || DEFAULT_LOGO_URL;
-        const isBlack = !state.logoColor || state.logoColor.toLowerCase() === '#000000';
+      const activeLogoSrc = state.customLogoDataUrl || DEFAULT_LOGO_URL;
+      const logoFilterStyle = state.customLogoDataUrl ? 'none' : getLogoColorFilter(state.logoColor);
+      const logoTransform = `translate(${state.logoOffsetX}px, ${state.logoOffsetY}px)`;
 
-        let logoRenderInner = '';
-        if (isBlack) {
-          logoRenderInner = `<img src="${activeLogoSrc}" alt="Logo RT 2" class="w-full h-auto object-contain block" />`;
-        } else {
-          // Gunakan CSS mask-image agar logo hitam transparan berubah warna presisi & tetap tajam saat dicetak
-          logoRenderInner = `
-            <div style="position: relative; width: 100%;">
-              <img src="${activeLogoSrc}" alt="Logo RT 2" class="w-full h-auto object-contain block" style="opacity: 0;" />
-              <div style="
-                position: absolute;
-                inset: 0;
-                background-color: ${state.logoColor};
-                -webkit-mask-image: url('${activeLogoSrc}');
-                mask-image: url('${activeLogoSrc}');
-                -webkit-mask-size: contain;
-                mask-size: contain;
-                -webkit-mask-repeat: no-repeat;
-                mask-repeat: no-repeat;
-                -webkit-mask-position: center;
-                mask-position: center;
-              "></div>
-            </div>
-          `;
-        }
+      const logoImgHTML = state.logoVisible
+        ? `<div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center; transform: ${logoTransform};">
+             <img src="${activeLogoSrc}" alt="Logo RT" crossorigin="anonymous"
+                  style="width: ${state.logoWidth}px; height: auto; max-height: 58px; object-fit: contain; filter: ${logoFilterStyle};" />
+           </div>`
+        : '';
 
-        logoHTML = `
-          <div style="width: ${state.logoWidth}px; transform: translate(${state.logoOffsetX}px, ${state.logoOffsetY}px); flex-shrink: 0;">
-            ${logoRenderInner}
-          </div>
-        `;
-      }
-
-      // Judul HTML
-      const titleBlockHTML = `
-        <div style="text-align: ${state.titleAlign}; flex: 1; min-width: 0; line-height: 1.15;">
-          <div style="font-size: ${state.title1Size}px; font-weight: 700; letter-spacing: 0.2px; color: #000000;">
-            ${escapeHtml(state.title1)}
-          </div>
-          <div style="font-size: ${state.title2Size}px; font-weight: 700; letter-spacing: 0.2px; color: #000000; margin-top: 1px;">
-            ${escapeHtml(state.title2)}
-          </div>
-          <div style="font-size: ${state.title3Size}px; font-weight: 700; letter-spacing: 0.2px; color: #000000; margin-top: 1.5px;">
-            ${escapeHtml(state.title3)}
-          </div>
+      // Judul 3 Baris
+      const titlesHTML = `
+        <div style="flex: 1; text-align: ${state.titleAlign}; line-height: 1.15; color: #000000;">
+          <div style="font-size: ${state.title1Size}px; font-weight: 700; letter-spacing: 0.2px;">${escapeHtml(state.title1)}</div>
+          <div style="font-size: ${state.title2Size}px; font-weight: 700; letter-spacing: 0.3px; margin: 1px 0;">${escapeHtml(state.title2)}</div>
+          <div style="font-size: ${state.title3Size}px; font-weight: 700; letter-spacing: 0.2px;">${escapeHtml(state.title3)}</div>
         </div>
       `;
 
-      // Susunan Header (Kiri, Atas, Kanan)
+      // Tata Letak Header sesuai posisi logo (Kiri / Atas Tengah / Kanan)
       let headerLayoutHTML = '';
       if (state.logoPosition === 'top') {
         headerLayoutHTML = `
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; margin-bottom: 2.2mm;">
-            ${logoHTML}
-            <div style="width: 100%;">${titleBlockHTML}</div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; margin-bottom: 5px;">
+            ${logoImgHTML}
+            ${titlesHTML}
           </div>
         `;
       } else if (state.logoPosition === 'right') {
         headerLayoutHTML = `
-          <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2.2mm;">
-            ${titleBlockHTML}
-            ${logoHTML}
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 5px;">
+            ${titlesHTML}
+            ${logoImgHTML}
           </div>
         `;
       } else {
         headerLayoutHTML = `
-          <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2.2mm;">
-            ${logoHTML}
-            ${titleBlockHTML}
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 5px;">
+            ${logoImgHTML}
+            ${titlesHTML}
           </div>
         `;
       }
 
-      // Kotak Pill Info (NO. RUMAH & BULAN) mengikuti radius
-      const radiusVal = Number(state.tableRadius);
-      const innerRadiusVal = Math.max(0, radiusVal - 1);
-      const pillBorder = `${state.outerBorderWidth}px solid ${state.borderColor}`;
+      // Kotak Kapsul NO. RUMAH & BULAN
+      const displayHouseText = state.houseMode === 'show' ? escapeHtml(houseValue || '') : '&nbsp;';
+      const isMonthHeaderVisible = state.showMonthHeader !== false && state.monthMode !== 'blank';
+      const isDatesTableVisible = state.showDatesInTable !== false && state.monthMode !== 'blank';
+      const displayMonthText = isMonthHeaderVisible
+        ? `${NAMA_BULAN[state.month]} ${state.year}`
+        : '&nbsp;';
 
+      const pillBorder = `1.2px solid ${state.borderColor}`;
       const infoPillsHTML = `
-        <div style="display: flex; flex-direction: column; gap: 1.5mm;">
-          <div style="display: flex; gap: 1.5mm; height: 7.2mm;">
-            <div style="width: 34%; border: ${pillBorder}; border-radius: ${radiusVal}px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; letter-spacing: 0.2px;">
+        <div style="display: flex; flex-direction: column; gap: 3.5px;">
+          <div style="display: grid; grid-template-columns: 38% 1fr; gap: 4px;">
+            <div style="border: ${pillBorder}; border-radius: 999px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; letter-spacing: 0.3px;">
               ${escapeHtml(state.houseLabel)}
             </div>
-            <div style="flex: 1; border: ${pillBorder}; border-radius: ${radiusVal}px; display: flex; align-items: center; justify-content: center; font-size: ${state.houseFontSize}px; font-weight: 700;">
-              ${nomorRumahText}
+            <div style="border: ${pillBorder}; border-radius: 999px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: ${state.houseFontSize}px; font-weight: 700;">
+              ${displayHouseText}
             </div>
           </div>
-          <div style="display: flex; gap: 1.5mm; height: 7.2mm;">
-            <div style="width: 34%; border: ${pillBorder}; border-radius: ${radiusVal}px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; letter-spacing: 0.2px;">
+          <div style="display: grid; grid-template-columns: 38% 1fr; gap: 4px;">
+            <div style="border: ${pillBorder}; border-radius: 999px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; letter-spacing: 0.3px;">
               ${escapeHtml(state.monthLabel)}
             </div>
-            <div style="flex: 1; border: ${pillBorder}; border-radius: ${radiusVal}px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 700; letter-spacing: 0.3px;">
-              ${bulanTahunText}
+            <div style="border: ${pillBorder}; border-radius: 999px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 700; letter-spacing: 0.3px;">
+              ${displayMonthText}
             </div>
           </div>
         </div>
       `;
 
-      // Tabel Utama dengan Radius Sudut Otomatis Sinkron di Keempat Pojok
-      const innerBorder = `${state.tableBorderWidth}px ${state.tableBorderStyle} ${state.borderColor}`;
+      // Konstruksi Garis, Radius Otomatis & Blok Warna Tabel
       const outerBorder = `${state.outerBorderWidth}px solid ${state.borderColor}`;
+      const innerBorder = `${state.tableBorderWidth}px ${state.tableBorderStyle} ${state.borderColor}`;
+      const radiusVal = Number(state.tableRadius) || 0;
+      const innerRadiusVal = Math.max(0, radiusVal - 1);
 
-      const tbodyRowsHTML = rows.map((r, idx) => {
-        const isLast = idx === rows.length - 1;
-        const rowBg = idx % 2 === 1 ? state.zebraBgColor : '#ffffff';
-        const bottomBorder = isLast ? 'none' : innerBorder;
-        const bottomLeftRadius = isLast ? `border-bottom-left-radius: ${innerRadiusVal}px;` : '';
-        const bottomRightRadius = isLast ? `border-bottom-right-radius: ${innerRadiusVal}px;` : '';
+      const tbodyRowsHTML = rows.map((row, idx) => {
+        const isLast = idx === totalDays - 1;
+        const isEven = idx % 2 === 1;
+        const rowBg = isEven ? state.zebraBgColor : '#ffffff';
+        const nominalBg = state.nominalBgColor !== '#ffffff' ? state.nominalBgColor : rowBg;
+        const bottomBorderRule = isLast ? 'none' : innerBorder;
+        const blRadius = isLast ? `border-bottom-left-radius: ${innerRadiusVal}px;` : '';
+        const brRadius = isLast ? `border-bottom-right-radius: ${innerRadiusVal}px;` : '';
+        const dateCellText = isDatesTableVisible ? row.tanggal : '&nbsp;';
 
         return `
           <tr style="${rowHeightStyle} background-color: ${rowBg};">
-            <td style="width: 9%; border-right: ${innerBorder}; border-bottom: ${bottomBorder}; text-align: center; font-size: ${state.tableFontSize}px; font-weight: 500; padding: 0 2px; ${bottomLeftRadius}">
-              ${r.no}
-            </td>
-            <td style="width: 47%; border-right: ${innerBorder}; border-bottom: ${bottomBorder}; text-align: left; font-size: ${state.tableFontSize}px; font-weight: 500; padding: 0 5px; white-space: nowrap; overflow: hidden;">
-              ${r.tanggal}
-            </td>
-            <td style="width: 23%; border-right: ${innerBorder}; border-bottom: ${bottomBorder}; background-color: ${state.nominalBgColor}; padding: 0 3px;">
-              &nbsp;
-            </td>
-            <td style="width: 21%; border-bottom: ${bottomBorder}; padding: 0 3px; ${bottomRightRadius}">
-              &nbsp;
-            </td>
+            <td style="border-right: ${innerBorder}; border-bottom: ${bottomBorderRule}; text-align: center; font-size: ${state.tableFontSize}px; font-weight: 500; padding: 0 2px; ${blRadius}">${row.no}</td>
+            <td style="border-right: ${innerBorder}; border-bottom: ${bottomBorderRule}; text-align: left; font-size: ${state.tableFontSize}px; font-weight: 500; padding: 0 5px; white-space: nowrap; overflow: hidden;">${dateCellText}</td>
+            <td style="border-right: ${innerBorder}; border-bottom: ${bottomBorderRule}; background-color: ${nominalBg}; padding: 0 3px;"></td>
+            <td style="border-bottom: ${bottomBorderRule}; padding: 0 3px; ${brRadius}"></td>
           </tr>
         `;
       }).join('');
 
       const tableHTML = `
         <div class="jimpitan-table-wrapper">
-          <div style="width: 100%; height: 100%; border: ${outerBorder}; border-radius: ${radiusVal}px; overflow: hidden; display: flex; flex-direction: column;">
+          <div class="jimpitan-table-box" style="border: ${outerBorder}; border-radius: ${radiusVal}px;">
             <table class="jimpitan-table">
               <thead>
-                <tr style="height: 7.2mm; background-color: ${state.headerBgColor};">
+                <tr style="height: 6.8mm; background-color: ${state.headerBgColor};">
                   <th style="width: 9%; border-right: ${innerBorder}; border-bottom: 2.2px solid ${state.borderColor}; font-size: 9.5px; font-weight: 700; text-align: center; border-top-left-radius: ${innerRadiusVal}px;">NO.</th>
                   <th style="width: 47%; border-right: ${innerBorder}; border-bottom: 2.2px solid ${state.borderColor}; font-size: 9.5px; font-weight: 700; text-align: center;">TANGGAL</th>
                   <th style="width: 23%; border-right: ${innerBorder}; border-bottom: 2.2px solid ${state.borderColor}; font-size: 9.5px; font-weight: 700; text-align: center;">NOMINAL</th>
@@ -1344,10 +1383,14 @@
 
       populateHouseDropdowns();
 
-      document.getElementById('cfg-monthMode').value = state.monthMode;
+      document.getElementById('cfg-showMonthHeader').checked = state.showMonthHeader !== false && state.monthMode !== 'blank';
+      document.getElementById('cfg-showDatesInTable').checked = state.showDatesInTable !== false && state.monthMode !== 'blank';
       document.getElementById('cfg-month').value = state.month;
       document.getElementById('cfg-year').value = state.year;
       document.getElementById('cfg-monthLabel').value = state.monthLabel;
+      const showDayCb = document.getElementById('cfg-showDayInTable');
+      showDayCb.checked = state.showDayInTable !== false;
+      showDayCb.disabled = !(state.showDatesInTable !== false && state.monthMode !== 'blank');
       document.getElementById('cfg-autoFitRows').checked = state.autoFitRows;
 
       // Tab 3: Tabel

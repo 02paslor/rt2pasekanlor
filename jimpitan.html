@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jimpitan CMS by Gaga — RT 2 / RW 3 Pasekan Lor</title>
+  <title>Dashboard Jimpitan CMS by Gaga — RT 2 / RW 3 Pasekan Lor</title>
   <!-- Google Font: Space Grotesk Locked -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -77,32 +77,36 @@
       color: #000000 !important;
       display: flex;
       flex-direction: row;
+      justify-content: center;
+      align-items: center;
       position: relative;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
       overflow: hidden;
       flex-shrink: 0;
     }
 
-    /* Setengah Lembar Jimpitan (10.5cm x 29.7cm = 105mm x 297mm) dengan Safe Margin */
+    /* Setengah Lembar Jimpitan (10.5cm x 29.7cm = 105mm x 297mm) dengan Safe Margin Simetris */
     .jimpitan-slip {
       width: 105mm;
       height: 297mm;
-      padding: 7mm 6.2mm 7mm 6.2mm;
+      padding: 7mm 6.5mm;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      align-items: stretch;
       position: relative;
       background: #ffffff !important;
       color: #000000 !important;
       overflow: hidden;
     }
 
-    /* Garis Potong Tengah A4 (105mm) */
+    /* Garis Potong Tengah A4 (105mm / 50%) */
     .cut-guide {
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 105mm;
+      left: 50%;
+      transform: translateX(-50%);
       width: 0;
       border-left: 1px dashed #94a3b8;
       z-index: 20;
@@ -151,63 +155,103 @@
       display: table-header-group;
     }
 
-    .jimpitan-table tbody {
-      height: auto;
-    }
-
-    .jimpitan-table td,
-    .jimpitan-table th {
-      line-height: 1;
-      vertical-align: middle;
-    }
-
-    /* Penyesuaian Print A4 Presisi Tanpa Margin & Tanpa Terpotong */
+    /* Penyesuaian Print A4 Presisi Center & Margin Simetris */
     @media print {
       @page {
+        size: A4 portrait;
         size: 210mm 297mm;
         margin: 0mm !important;
+        padding: 0mm !important;
       }
 
       html, body {
-        width: 210mm !important;
+        width: 100% !important;
+        min-width: 210mm !important;
         height: auto !important;
+        min-height: 0 !important;
         background: #ffffff !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
         padding: 0 !important;
         overflow: visible !important;
+        display: block !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
+      /* Sembunyikan seluruh elemen UI CMS */
+      header.no-print,
+      aside.no-print,
       .no-print {
         display: none !important;
       }
 
+      /* Lepas pembungkus flex/overflow layar dan posisikan selalu center di kertas */
+      body > div,
+      main,
+      #canvas-viewport,
+      #zoom-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: #ffffff !important;
+        transform: none !important;
+      }
+
       #print-container {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
         position: static !important;
         width: 210mm !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
         padding: 0 !important;
         transform: none !important;
       }
 
       .a4-sheet {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
         width: 210mm !important;
-        height: 297mm !important;
+        height: 296.8mm !important;
+        min-height: 296.8mm !important;
+        max-height: 296.8mm !important;
         box-shadow: none !important;
-        margin: 0 !important;
-        page-break-after: always;
-        break-after: page;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        border: none !important;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-after: always !important;
+        break-after: page !important;
       }
 
       .a4-sheet:last-child {
-        page-break-after: auto;
-        break-after: auto;
+        page-break-after: auto !important;
+        break-after: auto !important;
       }
 
       .jimpitan-slip {
-        padding: 7.5mm 6.5mm 7.5mm 6.5mm !important;
+        width: 105mm !important;
+        height: 296.8mm !important;
+        padding: 6.5mm 6mm !important;
+        margin: 0 !important;
+        flex: 0 0 105mm !important;
+      }
+
+      .cut-guide {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
       }
     }
   </style>
@@ -228,14 +272,14 @@
       <div class="min-w-0">
         <div class="flex items-center gap-2">
           <h1 class="text-sm sm:text-base font-bold tracking-tight text-slate-900 dark:text-white truncate">
-            Jimpitan CMS <span class="text-emerald-600 dark:text-emerald-400">by Gaga</span>
+            DASHBOARD JIMPITAN <span class="text-emerald-600 dark:text-emerald-400">(by Gaga)</span>
           </h1>
           <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
             A4 2-UP (10.5 × 29.7 cm)
           </span>
         </div>
         <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block truncate">
-          RT 2 / RW 3 Pasekan Lor, Balecatur • Font: Space Grotesk Locked
+          RT 2 / RW 3 Pasekan Lor, Balecatur
         </p>
       </div>
     </div>
@@ -278,23 +322,23 @@
       <div class="grid grid-cols-5 bg-slate-100 dark:bg-slate-950/70 p-1.5 gap-1 border-b border-slate-200 dark:border-slate-800 shrink-0">
         <button onclick="switchTab('header')" id="tab-btn-header" class="tab-btn active flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
           <i data-lucide="layout-template" class="w-3.5 h-3.5 mb-0.5"></i>
-          <span>1. Header</span>
+          <span>1. HEADER</span>
         </button>
         <button onclick="switchTab('rumah')" id="tab-btn-rumah" class="tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
           <i data-lucide="home" class="w-3.5 h-3.5 mb-0.5"></i>
-          <span>2. Rumah/Bln</span>
+          <span>2. SUB HEADER</span>
         </button>
         <button onclick="switchTab('tabel')" id="tab-btn-tabel" class="tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
           <i data-lucide="table" class="w-3.5 h-3.5 mb-0.5"></i>
-          <span>3. Tabel</span>
+          <span>3. TABEL</span>
         </button>
         <button onclick="switchTab('catatan')" id="tab-btn-catatan" class="tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
           <i data-lucide="file-text" class="w-3.5 h-3.5 mb-0.5"></i>
-          <span>4. Catatan</span>
+          <span>4. CATATAN</span>
         </button>
         <button onclick="switchTab('cetak')" id="tab-btn-cetak" class="tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
           <i data-lucide="printer" class="w-3.5 h-3.5 mb-0.5"></i>
-          <span>5. Cetak</span>
+          <span>5. CETAK</span>
         </button>
       </div>
 

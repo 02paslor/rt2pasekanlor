@@ -1,1 +1,1640 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jimpitan CMS by Gaga — RT 2 / RW 3 Pasekan Lor</title>
+  <!-- Google Font: Space Grotesk Locked -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Space Grotesk"', 'sans-serif'],
+            grotesk: ['"Space Grotesk"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Kunci Font Space Grotesk di seluruh halaman & hasil cetak */
+    * {
+      font-family: 'Space Grotesk', sans-serif !important;
+      box-sizing: border-box;
+    }
 
+    body {
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Custom Scrollbar untuk Panel CMS (Adaptif Dark & Light) */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    html.dark ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    html.dark ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    html:not(.dark) ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    html:not(.dark) ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    /* Logo Header Dashboard adaptif Dark & Light */
+    .navbar-brand-logo {
+      transition: filter 0.25s ease;
+    }
+    html.dark .navbar-brand-logo {
+      filter: brightness(0) invert(1);
+    }
+    html:not(.dark) .navbar-brand-logo {
+      filter: none;
+    }
+
+    /* Kanvas Kertas A4 (210mm x 297mm) */
+    .a4-sheet {
+      width: 210mm;
+      height: 297mm;
+      background: #ffffff !important;
+      color: #000000 !important;
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* Setengah Lembar Jimpitan (10.5cm x 29.7cm = 105mm x 297mm) dengan Safe Margin */
+    .jimpitan-slip {
+      width: 105mm;
+      height: 297mm;
+      padding: 7mm 6.2mm 7mm 6.2mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      background: #ffffff !important;
+      color: #000000 !important;
+      overflow: hidden;
+    }
+
+    /* Garis Potong Tengah A4 (105mm) */
+    .cut-guide {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 105mm;
+      width: 0;
+      border-left: 1px dashed #94a3b8;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .cut-guide::after {
+      content: '✂';
+      position: absolute;
+      top: 3mm;
+      left: -6.5px;
+      font-size: 10px;
+      color: #64748b;
+      background: #ffffff;
+      padding: 1px 0;
+    }
+
+    /* Tabel Utama Auto-Fit Tinggi Baris (Flex 1 mengisi sisa ruang antara Info Box & Catatan) */
+    .jimpitan-table-wrapper {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      margin-top: 2.2mm;
+      margin-bottom: 2.2mm;
+      overflow: hidden;
+    }
+
+    .jimpitan-table {
+      width: 100%;
+      height: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+    }
+
+    .jimpitan-table thead {
+      display: table-header-group;
+    }
+
+    .jimpitan-table tbody {
+      height: 100%;
+    }
+
+    /* Penyesuaian Print A4 Presisi Tanpa Margin & Tanpa Terpotong */
+    @media print {
+      @page {
+        size: 210mm 297mm;
+        margin: 0mm !important;
+      }
+
+      html, body {
+        width: 210mm !important;
+        height: auto !important;
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      #print-container {
+        display: block !important;
+        position: static !important;
+        width: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: none !important;
+      }
+
+      .a4-sheet {
+        width: 210mm !important;
+        height: 297mm !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .a4-sheet:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+
+      .jimpitan-slip {
+        padding: 7.5mm 6.5mm 7.5mm 6.5mm !important;
+      }
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden select-none bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+
+  <!-- TOP NAVBAR (NO PRINT) -->
+  <header class="no-print h-14 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-4 flex items-center justify-between shrink-0 z-30 transition-colors">
+    <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+      <!-- Logo Dashboard CMS Otomatis Adaptif Dark & Light -->
+      <div class="h-10 px-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0">
+        <img
+          src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjrGd1eACcTK4SjEQwLwG5tJh3TTauuJjvxGWrSuesNynUKJ9GrwIkrS6bMUDBrmM6UuvG7jBcnLk_t3ih2viJBv3RES-whevoxBf0IIqx5jwyPOtjZlPwVU1-XVuXeJWEsm7suyNO7vHPGLui7qD4erc_MIuSgedTb1M5DLlRc18W25pR02tslOPuZVGo/s1600/Thumb%20-%20Hitam.png"
+          alt="Logo RT 2 Pasekan Lor"
+          class="h-8 w-auto object-contain navbar-brand-logo"
+        />
+      </div>
+      <div class="min-w-0">
+        <div class="flex items-center gap-2">
+          <h1 class="text-sm sm:text-base font-bold tracking-tight text-slate-900 dark:text-white truncate">
+            Jimpitan CMS <span class="text-emerald-600 dark:text-emerald-400">by Gaga</span>
+          </h1>
+          <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+            A4 2-UP (10.5 × 29.7 cm)
+          </span>
+        </div>
+        <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block truncate">
+          RT 2 / RW 3 Pasekan Lor, Balecatur • Font: Space Grotesk Locked
+        </p>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+      <!-- Theme Toggle Switch (Dark / Light Mode) -->
+      <button onclick="toggleTheme()" id="theme-toggle-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer" title="Ganti Mode Gelap / Terang">
+        <i data-lucide="sun" id="icon-sun" class="w-3.5 h-3.5 text-amber-500 hidden dark:block"></i>
+        <i data-lucide="moon" id="icon-moon" class="w-3.5 h-3.5 text-slate-700 block dark:hidden"></i>
+        <span id="theme-label" class="hidden sm:inline">Light</span>
+      </button>
+
+      <button onclick="saveConfig(true)" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 text-xs font-medium flex items-center gap-1.5 transition cursor-pointer" title="Simpan ke Browser">
+        <i data-lucide="save" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
+        <span class="hidden md:inline">Simpan</span>
+      </button>
+
+      <button onclick="openResetModal()" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-rose-50 dark:bg-slate-800 dark:hover:bg-rose-950/60 text-slate-700 hover:text-rose-600 dark:text-slate-300 dark:hover:text-rose-300 border border-slate-300 dark:border-slate-700 hover:border-rose-300 dark:hover:border-rose-800 text-xs font-medium flex items-center gap-1.5 transition cursor-pointer" title="Reset Default">
+        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+        <span class="hidden md:inline">Reset</span>
+      </button>
+
+      <div class="h-5 w-[1px] bg-slate-300 dark:bg-slate-700 mx-0.5"></div>
+
+      <button onclick="triggerPrint()" class="px-3 sm:px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-emerald-600/20 transition cursor-pointer">
+        <i data-lucide="printer" class="w-4 h-4"></i>
+        <span>Print / PDF</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+
+    <!-- LEFT SIDEBAR: CMS CONTROLS (NO PRINT) -->
+    <aside class="no-print w-full lg:w-[415px] xl:w-[445px] bg-white dark:bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 h-[48vh] lg:h-full z-20 transition-colors">
+      
+      <!-- Navigation Tabs -->
+      <div class="grid grid-cols-5 bg-slate-100 dark:bg-slate-950/70 p-1.5 gap-1 border-b border-slate-200 dark:border-slate-800 shrink-0">
+        <button onclick="switchTab('header')" id="tab-btn-header" class="tab-btn active flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
+          <i data-lucide="layout-template" class="w-3.5 h-3.5 mb-0.5"></i>
+          <span>1. Header</span>
+        </button>
+        <button onclick="switchTab('rumah')" id="tab-btn-rumah" class="tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
+          <i data-lucide="home" class="w-3.5 h-3.5 mb-0.5"></i>
+          <span>2. Rumah/Bln</span>
+        </button>
+        <button onclick="switchTab('tabel')" id="tab-btn-tabel" class="tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
+          <i data-lucide="table" class="w-3.5 h-3.5 mb-0.5"></i>
+          <span>3. Tabel</span>
+        </button>
+        <button onclick="switchTab('catatan')" id="tab-btn-catatan" class="tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
+          <i data-lucide="file-text" class="w-3.5 h-3.5 mb-0.5"></i>
+          <span>4. Catatan</span>
+        </button>
+        <button onclick="switchTab('cetak')" id="tab-btn-cetak" class="tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer">
+          <i data-lucide="printer" class="w-3.5 h-3.5 mb-0.5"></i>
+          <span>5. Cetak</span>
+        </button>
+      </div>
+
+      <!-- Scrollable Tab Content -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+
+        <!-- TAB 1: HEADER & LOGO -->
+        <div id="tab-header" class="tab-panel space-y-4">
+          <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-3.5 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                <i data-lucide="shield" class="w-3.5 h-3.5"></i> Pengaturan Logo RT
+              </h3>
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-700 dark:text-slate-300 cursor-pointer">
+                <input type="checkbox" id="cfg-logoVisible" onchange="updateState('logoVisible', this.checked)" class="rounded accent-emerald-500">
+                <span>Tampilkan</span>
+              </label>
+            </div>
+
+            <!-- Letak Logo -->
+            <div>
+              <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Letak / Posisi Logo</label>
+              <div class="grid grid-cols-3 gap-1.5">
+                <button type="button" onclick="updateState('logoPosition', 'left')" id="logo-pos-left" class="logo-pos-btn py-1.5 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer">Kiri (Template)</button>
+                <button type="button" onclick="updateState('logoPosition', 'top')" id="logo-pos-top" class="logo-pos-btn py-1.5 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer">Atas Tengah</button>
+                <button type="button" onclick="updateState('logoPosition', 'right')" id="logo-pos-right" class="logo-pos-btn py-1.5 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer">Kanan</button>
+              </div>
+            </div>
+
+            <!-- Ukuran & Offset Logo -->
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <div class="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1">
+                  <span>Ukuran</span>
+                  <span id="val-logoWidth" class="text-slate-800 dark:text-slate-200 font-semibold">105px</span>
+                </div>
+                <input type="range" id="cfg-logoWidth" min="50" max="175" value="105" oninput="updateState('logoWidth', Number(this.value))" class="w-full accent-emerald-500 cursor-pointer">
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1">
+                  <span>Geser X</span>
+                  <span id="val-logoOffsetX" class="text-slate-800 dark:text-slate-200 font-semibold">0px</span>
+                </div>
+                <input type="range" id="cfg-logoOffsetX" min="-30" max="30" value="0" oninput="updateState('logoOffsetX', Number(this.value))" class="w-full accent-emerald-500 cursor-pointer">
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1">
+                  <span>Geser Y</span>
+                  <span id="val-logoOffsetY" class="text-slate-800 dark:text-slate-200 font-semibold">0px</span>
+                </div>
+                <input type="range" id="cfg-logoOffsetY" min="-20" max="20" value="0" oninput="updateState('logoOffsetY', Number(this.value))" class="w-full accent-emerald-500 cursor-pointer">
+              </div>
+            </div>
+
+            <!-- Pengaturan Warna Logo (Default Hitam) -->
+            <div class="pt-2 border-t border-slate-200 dark:border-slate-700/70 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-medium text-slate-600 dark:text-slate-300">Warna Logo (Default Hitam)</span>
+                <div class="flex items-center gap-1.5">
+                  <button type="button" onclick="updateState('logoColor', '#000000')" class="w-5 h-5 rounded-full bg-black border-2 border-slate-400 cursor-pointer" title="Default Hitam (#000000)"></button>
+                  <button type="button" onclick="updateState('logoColor', '#ab0000')" class="w-5 h-5 rounded-full bg-[#ab0000] border border-slate-300 cursor-pointer" title="Merah Maroon (#ab0000)"></button>
+                  <button type="button" onclick="updateState('logoColor', '#065f46')" class="w-5 h-5 rounded-full bg-emerald-800 border border-slate-300 cursor-pointer" title="Hijau Tua"></button>
+                  <button type="button" onclick="updateState('logoColor', '#1e3a8a')" class="w-5 h-5 rounded-full bg-blue-900 border border-slate-300 cursor-pointer" title="Biru Tua"></button>
+                  <input type="color" id="cfg-logoColor" onchange="updateState('logoColor', this.value)" class="w-6 h-6 rounded cursor-pointer bg-transparent border-0" title="Pilih Warna Custom">
+                </div>
+              </div>
+            </div>
+
+            <!-- Upload Logo Kustom / Reset ke Logo Resmi RT 2 -->
+            <div class="pt-2 border-t border-slate-200 dark:border-slate-700/70 flex items-center justify-between gap-2">
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 truncate" id="logo-source-label">Logo Default Resmi RT 2</span>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <label class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-[11px] font-semibold text-slate-800 dark:text-white cursor-pointer transition flex items-center gap-1">
+                  <i data-lucide="upload" class="w-3 h-3"></i>
+                  <span>Upload Logo</span>
+                  <input type="file" accept="image/*" onchange="handleLogoUpload(event)" class="hidden">
+                </label>
+                <button type="button" id="btn-reset-logo" onclick="resetLogoToDefault()" class="hidden px-2 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 dark:bg-rose-900/60 dark:hover:bg-rose-800 text-[11px] font-semibold text-rose-700 dark:text-rose-200 cursor-pointer">
+                  Default
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Teks Judul Satu Per Satu -->
+          <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-3.5 space-y-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+              <i data-lucide="type" class="w-3.5 h-3.5"></i> Teks Judul Lembaran (Edit Per Baris)
+            </h3>
+
+            <!-- Baris 1 -->
+            <div class="space-y-1.5 bg-white dark:bg-slate-900/60 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700/50">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Judul Baris 1</span>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 dark:text-slate-400">Size: <b id="val-title1Size" class="text-slate-900 dark:text-white">11.5px</b></span>
+                  <input type="range" id="cfg-title1Size" min="8" max="18" step="0.5" value="11.5" oninput="updateState('title1Size', Number(this.value))" class="w-20 accent-emerald-500">
+                </div>
+              </div>
+              <input type="text" id="cfg-title1" oninput="updateState('title1', this.value)" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-semibold focus:outline-none focus:border-emerald-500">
+            </div>
+
+            <!-- Baris 2 -->
+            <div class="space-y-1.5 bg-white dark:bg-slate-900/60 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700/50">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Judul Baris 2</span>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 dark:text-slate-400">Size: <b id="val-title2Size" class="text-slate-900 dark:text-white">16.5px</b></span>
+                  <input type="range" id="cfg-title2Size" min="10" max="24" step="0.5" value="16.5" oninput="updateState('title2Size', Number(this.value))" class="w-20 accent-emerald-500">
+                </div>
+              </div>
+              <input type="text" id="cfg-title2" oninput="updateState('title2', this.value)" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-bold focus:outline-none focus:border-emerald-500">
+            </div>
+
+            <!-- Baris 3 -->
+            <div class="space-y-1.5 bg-white dark:bg-slate-900/60 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700/50">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Judul Baris 3</span>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 dark:text-slate-400">Size: <b id="val-title3Size" class="text-slate-900 dark:text-white">9.5px</b></span>
+                  <input type="range" id="cfg-title3Size" min="7" max="15" step="0.5" value="9.5" oninput="updateState('title3Size', Number(this.value))" class="w-20 accent-emerald-500">
+                </div>
+              </div>
+              <input type="text" id="cfg-title3" oninput="updateState('title3', this.value)" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-semibold focus:outline-none focus:border-emerald-500">
+            </div>
+
+            <!-- Alignment Judul -->
+            <div>
+              <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">Perataan Teks Judul</label>
+              <div class="grid grid-cols-3 gap-1.5">
+                <button type="button" onclick="updateState('titleAlign', 'left')" id="title-align-left" class="title-align-btn py-1 rounded-lg text-xs font-medium border transition cursor-pointer">Rata Kiri</button>
+                <button type="button" onclick="updateState('titleAlign', 'center')" id="title-align-center" class="title-align-btn py-1 rounded-lg text-xs font-medium border transition cursor-pointer">Tengah</button>
+                <button type="button" onclick="updateState('titleAlign', 'right')" id="title-align-right" class="title-align-btn py-1 rounded-lg text-xs font-medium border transition cursor-pointer">Rata Kanan</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: NOMOR RUMAH & BULAN -->
+        <div id="tab-rumah" class="tab-panel hidden space-y-4">
+          
+          <!-- Pengaturan Kolom Nomor Rumah -->
+          <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-3.5 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                <i data-lucide="hash" class="w-3.5 h-3.5"></i> Kolom Nomor Rumah
+              </h3>
+              <select id="cfg-houseMode" onchange="updateState('houseMode', this.value)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 focus:outline-none">
+                <option value="show">Tampil Isi Otomatis/Manual</option>
+                <option value="blank">Kosong / Blank (Tulis Tangan)</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Label Kotak Kiri</label>
+                <input type="text" id="cfg-houseLabel" oninput="updateState('houseLabel', this.value)" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-bold">
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1">
+                  <span>Ukuran Font Nomor</span>
+                  <span id="val-houseFontSize" class="text-slate-900 dark:text-white font-semibold">15px</span>
+                </div>
+                <input type="range" id="cfg-houseFontSize" min="11" max="22" step="0.5" value="15" oninput="updateState('houseFontSize', Number(this.value))" class="w-full accent-emerald-500 mt-1.5">
+              </div>
+            </div>
+
+            <!-- Pilihan Preview Lembar Kiri & Kanan -->
+            <div class="bg-white dark:bg-slate-900/70 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700/60 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Preview Lembar Kiri & Kanan</span>
+                <div class="flex items-center gap-1">
+                  <button type="button" onclick="stepPreviewPair(-2)" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 cursor-pointer" title="Pasangan Sebelumnya">◀ Prev</button>
+                  <button type="button" onclick="stepPreviewPair(2)" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 cursor-pointer" title="Pasangan Berikutnya">Next ▶</button>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold mb-1">Slot Kiri (10.5cm)</label>
+                  <input type="text" id="cfg-leftHouseManual" oninput="updateState('leftHouseManual', this.value)" placeholder="Contoh: 1" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-xs text-slate-900 dark:text-white font-bold mb-1">
+                  <select id="select-left-house" onchange="selectHouseSlot('left', this.value)" class="w-full px-2 py-1 rounded bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-[11px] text-slate-700 dark:text-slate-300"></select>
+                </div>
+                <div>
+                  <label class="block text-[10px] text-sky-600 dark:text-sky-400 font-semibold mb-1">Slot Kanan (10.5cm)</label>
+                  <input type="text" id="cfg-rightHouseManual" oninput="updateState('rightHouseManual', this.value)" placeholder="Contoh: 2" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-xs text-slate-900 dark:text-white font-bold mb-1">
+                  <select id="select-right-house" onchange="selectHouseSlot('right', this.value)" class="w-full px-2 py-1 rounded bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-[11px] text-slate-700 dark:text-slate-300"></select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Editor Daftar Nomor Rumah Otomatis -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between">
+                <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Daftar Antrean Nomor Rumah (<span id="house-count-badge" class="text-emerald-600 dark:text-emerald-400">71</span> rumah)</label>
+                <button type="button" onclick="resetDefaultHouseList()" class="text-[10px] text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer font-semibold">Reset 1-50, A1-C7</button>
+              </div>
+              <textarea id="cfg-houseListRaw" rows="3" onchange="updateHouseListFromText(this.value)" class="w-full p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-[11px] text-slate-800 dark:text-slate-200 leading-relaxed focus:outline-none focus:border-emerald-500" placeholder="Pisahkan dengan koma..."></textarea>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">Otomatis: <b>1 s/d 50</b>, lalu <b>A-1 s/d A-7</b>, <b>B-1 s/d B-7</b>, <b>C-1 s/d C-7</b>. Bisa ditambah/edit manual dipisah koma.</p>
+            </div>
+          </div>
+
+          <!-- Pengaturan Kolom Bulan & Tanggal -->
+          <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-3.5 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Kolom Bulan & Kalender
+              </h3>
+              <select id="cfg-monthMode" onchange="updateState('monthMode', this.value)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 focus:outline-none">
+                <option value="show">Tampil Bulan & Tanggal</option>
+                <option value="blank">Kosong / Blank</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Pilih Bulan</label>
+                <select id="cfg-month" onchange="updateState('month', Number(this.value))" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-semibold">
+                  <option value="0">JANUARI (31 Hari)</option>
+                  <option value="1">FEBRUARI (28/29 Hari)</option>
+                  <option value="2">MARET (31 Hari)</option>
+                  <option value="3">APRIL (30 Hari)</option>
+                  <option value="4">MEI (31 Hari)</option>
+                  <option value="5">JUNI (30 Hari)</option>
+                  <option value="6">JULI (31 Hari)</option>
+                  <option value="7">AGUSTUS (31 Hari)</option>
+                  <option value="8">SEPTEMBER (30 Hari)</option>
+                  <option value="9">OKTOBER (31 Hari)</option>
+                  <option value="10">NOVEMBER (30 Hari)</option>
+                  <option value="11">DESEMBER (31 Hari)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Tahun</label>
+                <div class="flex gap-1">
+                  <input type="number" id="cfg-year" min="2020" max="2099" onchange="updateState('year', Number(this.value))" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-semibold">
+                  <button type="button" onclick="setLiveMonth()" class="px-2 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold shrink-0 cursor-pointer" title="Ikuti Bulan Saat Ini">
+                    Live
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 items-center">
+              <div>
+                <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Label Kotak Kiri</label>
+                <input type="text" id="cfg-monthLabel" oninput="updateState('monthLabel', this.value)" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-bold">
+              </div>
+              <div class="bg-white dark:bg-slate-900/80 p-2 rounded-lg border border-slate-200 dark:border-slate-700/60 text-[11px]">
+                <span class="text-slate-500 dark:text-slate-400 block">Jumlah Hari Akurat:</span>
+                <span id="month-days-info" class="text-emerald-600 dark:text-emerald-400 font-bold">31 Hari (Auto-Fit)</span>
+              </div>
+            </div>
+
+            <label class="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer pt-1">
+              <input type="checkbox" id="cfg-autoFitRows" onchange="updateState('autoFitRows', this.checked)" class="rounded accent-emerald-500">
+              <span>Auto-Fit tinggi baris tabel (menyesuaikan hari &amp; catatan)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- TAB 3: GARIS & WARNA TABEL -->
+        <div id="tab-tabel" class="tab-panel hidden space-y-4">
+          <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-3.5 space-y-3.5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+              <i data-lucide="grid" class="w-3.5 h-3.5"></i> Pengaturan Garis, Radius &amp; Blok Warna
+            </h3>
+
+            <!-- Jenis Garis -->
+            <div>
+              <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1.5">Jenis Garis Dalam Tabel</label>
+              <div class="grid grid-cols-3 gap-1.5">
+                <button type="button" onclick="updateState('tableBorderStyle', 'solid')" id="border-style-solid" class="border-style-btn py-2 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer">
+                  ─── Garis Lurus
+                </button>
+                <button type="button" onclick="updateState('tableBorderStyle', 'dotted')" id="border-style-dotted" class="border-style-btn py-2 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer">
+                  ••••• Titik (Dot)
+                </button>
+                <button type="button" onclick="updateState('tableBorderStyle', 'dashed')" id="border-style-dashed" class="border-style-btn py-2 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer">
+                  - - - Putus-putus
+                </button>
+              </div>
+            </div>
+
+            <!-- Ketebalan Garis & Radius Sudut -->
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <div class="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 mb-1">
+                  <span>Garis Dalam</span>
+                  <span id="val-tableBorderWidth" class="text-slate-900 dark:text-white font-semibold">0.8px</span>
+                </div>
+                <input type="range" id="cfg-tableBorderWidth" min="0.5" max="2.5" step="0.1" value="0.8" oninput="updateState('tableBorderWidth', Number(this.value))" class="w-full accent-emerald-500">
+              </div>
+              <div>
+                <div class="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 mb-1">
+                  <span>Garis Luar</span>
+                  <span id="val-outerBorderWidth" class="text-slate-900 dark:text-white font-semibold">1.2px</span>
+                </div>
+                <input type="range" id="cfg-outerBorderWidth" min="0.5" max="3" step="0.1" value="1.2" oninput="updateState('outerBorderWidth', Number(this.value))" class="w-full accent-emerald-500">
+              </div>
+              <div>
+                <div class="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 mb-1">
+                  <span>Radius Sudut</span>
+                  <span id="val-tableRadius" class="text-slate-900 dark:text-white font-semibold">9px</span>
+                </div>
+                <input type="range" id="cfg-tableRadius" min="0" max="16" step="1" value="9" oninput="updateState('tableRadius', Number(this.value))" class="w-full accent-emerald-500">
+              </div>
+            </div>
+
+            <!-- Warna Garis & Blok Warna -->
+            <div class="pt-2 border-t border-slate-200 dark:border-slate-700/70 space-y-2.5">
+              <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Warna Garis &amp; Warna Blok Sel</h4>
+              
+              <div class="grid grid-cols-2 gap-2.5">
+                <div class="bg-white dark:bg-slate-900/70 p-2 rounded-lg border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-700 dark:text-slate-300">Warna Garis</span>
+                  <input type="color" id="cfg-borderColor" onchange="updateState('borderColor', this.value)" class="w-7 h-7 rounded cursor-pointer bg-transparent border-0">
+                </div>
+                <div class="bg-white dark:bg-slate-900/70 p-2 rounded-lg border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-700 dark:text-slate-300">Blok Header Tabel</span>
+                  <input type="color" id="cfg-headerBgColor" onchange="updateState('headerBgColor', this.value)" class="w-7 h-7 rounded cursor-pointer bg-transparent border-0">
+                </div>
+                <div class="bg-white dark:bg-slate-900/70 p-2 rounded-lg border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-700 dark:text-slate-300">Blok Baris Genap</span>
+                  <input type="color" id="cfg-zebraBgColor" onchange="updateState('zebraBgColor', this.value)" class="w-7 h-7 rounded cursor-pointer bg-transparent border-0">
+                </div>
+                <div class="bg-white dark:bg-slate-900/70 p-2 rounded-lg border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-700 dark:text-slate-300">Blok Kolom Nominal</span>
+                  <input type="color" id="cfg-nominalBgColor" onchange="updateState('nominalBgColor', this.value)" class="w-7 h-7 rounded cursor-pointer bg-transparent border-0">
+                </div>
+              </div>
+
+              <!-- Preset Warna Cepat -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <button type="button" onclick="applyColorPreset('classic')" class="px-2.5 py-1 rounded-md bg-white hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-[10px] font-semibold text-slate-700 dark:text-slate-200 cursor-pointer">Klasik Hitam-Putih</button>
+                <button type="button" onclick="applyColorPreset('zebra')" class="px-2.5 py-1 rounded-md bg-white hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-[10px] font-semibold text-slate-700 dark:text-slate-200 cursor-pointer">Abu Zebra Lembut</button>
+                <button type="button" onclick="applyColorPreset('emerald')" class="px-2.5 py-1 rounded-md bg-white hover:bg-emerald-50 dark:bg-slate-900 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300 cursor-pointer">Blok Hijau Mint</button>
+              </div>
+            </div>
+
+            <!-- Ukuran Font Isi Tanggal -->
+            <div class="pt-2 border-t border-slate-200 dark:border-slate-700/70">
+              <div class="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1">
+                <span>Ukuran Font Tanggal Tabel</span>
+                <span id="val-tableFontSize" class="text-slate-900 dark:text-white font-semibold">8.2px</span>
+              </div>
+              <input type="range" id="cfg-tableFontSize" min="6.5" max="10.5" step="0.1" value="8.2" oninput="updateState('tableFontSize', Number(this.value))" class="w-full accent-emerald-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: CATATAN & FOOTER -->
+        <div id="tab-catatan" class="tab-panel hidden space-y-4">
+          <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-3.5 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                <i data-lucide="list-ordered" class="w-3.5 h-3.5"></i> Pengaturan Teks Catatan
+              </h3>
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-700 dark:text-slate-300 cursor-pointer">
+                <input type="checkbox" id="cfg-notesVisible" onchange="updateState('notesVisible', this.checked)" class="rounded accent-emerald-500">
+                <span>Tampil</span>
+              </label>
+            </div>
+
+            <div class="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 rounded-lg p-2 text-[10px] text-emerald-800 dark:text-emerald-300">
+              Otomatis: Ketika baris catatan ditambah/dikurangi, tinggi baris tabel di atasnya ikut menyesuaikan otomatis agar kertas tidak terpotong.
+            </div>
+
+            <!-- Judul Catatan -->
+            <div>
+              <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Judul Catatan</label>
+              <input type="text" id="cfg-notesTitle" oninput="updateState('notesTitle', this.value)" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-bold">
+            </div>
+
+            <!-- Gaya List & Letak -->
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Jenis List</label>
+                <select id="cfg-notesListStyle" onchange="updateState('notesListStyle', this.value)" class="w-full px-2 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-medium">
+                  <option value="number">Number (1. 2. 3.)</option>
+                  <option value="bullet">Bullet (• • •)</option>
+                  <option value="none">Tanpa Simbol</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Letak / Perataan</label>
+                <select id="cfg-notesAlign" onchange="updateState('notesAlign', this.value)" class="w-full px-2 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-medium">
+                  <option value="left">Rata Kiri</option>
+                  <option value="center">Tengah</option>
+                  <option value="right">Rata Kanan</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Ukuran Font Catatan -->
+            <div>
+              <div class="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1">
+                <span>Ukuran Font Catatan</span>
+                <span id="val-notesFontSize" class="text-slate-900 dark:text-white font-semibold">8.5px</span>
+              </div>
+              <input type="range" id="cfg-notesFontSize" min="6.5" max="12" step="0.5" value="8.5" oninput="updateState('notesFontSize', Number(this.value))" class="w-full accent-emerald-500">
+            </div>
+
+            <!-- Daftar Poin Catatan Dinamis -->
+            <div class="space-y-2 pt-1 border-t border-slate-200 dark:border-slate-700/70">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Isi Poin Catatan</span>
+                <button type="button" onclick="addNoteItem()" class="px-2 py-1 rounded-md bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 text-[11px] font-semibold flex items-center gap-1 cursor-pointer">
+                  <i data-lucide="plus" class="w-3 h-3"></i> Tambah Baris
+                </button>
+              </div>
+              <div id="notes-editor-list" class="space-y-1.5">
+                <!-- Rendered via JS -->
+              </div>
+            </div>
+
+            <!-- Website / Footer Bawah -->
+            <div class="pt-2 border-t border-slate-200 dark:border-slate-700/70">
+              <label class="block text-[11px] text-slate-500 dark:text-slate-400 mb-1">Teks Website / Footer Bawah</label>
+              <input type="text" id="cfg-footerUrl" oninput="updateState('footerUrl', this.value)" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-bold">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: CETAK & BATCH PDF -->
+        <div id="tab-cetak" class="tab-panel hidden space-y-4">
+          <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 rounded-xl p-3.5 space-y-3.5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+              <i data-lucide="printer" class="w-3.5 h-3.5"></i> Pengaturan Cetak A4 (2-UP)
+            </h3>
+
+            <label class="flex items-center justify-between bg-white dark:bg-slate-900/70 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700/60 cursor-pointer">
+              <div>
+                <span class="text-xs font-semibold text-slate-800 dark:text-slate-200 block">Garis Potong Tengah (10.5cm)</span>
+                <span class="text-[10px] text-slate-500 dark:text-slate-400">Tampilkan garis putus-putus &amp; ikon gunting pemotong</span>
+              </div>
+              <input type="checkbox" id="cfg-showCutLine" onchange="updateState('showCutLine', this.checked)" class="w-4 h-4 rounded accent-emerald-500">
+            </label>
+
+            <!-- Mode Cetak -->
+            <div class="space-y-2">
+              <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300">Pilih Mode Print / Export PDF</label>
+              
+              <label class="flex items-start gap-2.5 p-2.5 rounded-xl border cursor-pointer transition bg-white dark:bg-slate-900/70 border-slate-200 dark:border-slate-700 hover:border-emerald-500/50">
+                <input type="radio" name="printMode" value="preview" onchange="updateState('printMode', 'preview')" class="mt-0.5 accent-emerald-500">
+                <div>
+                  <span class="text-xs font-bold text-slate-900 dark:text-white block">1. Halaman Preview Saat Ini (1 Lembar A4)</span>
+                  <span class="text-[10px] text-slate-500 dark:text-slate-400">Hanya mencetak 2 lembar jimpitan yang sedang tampil di layar preview.</span>
+                </div>
+              </label>
+
+              <label class="flex items-start gap-2.5 p-2.5 rounded-xl border cursor-pointer transition bg-white dark:bg-slate-900/70 border-slate-200 dark:border-slate-700 hover:border-emerald-500/50">
+                <input type="radio" name="printMode" value="batch" onchange="updateState('printMode', 'batch')" class="mt-0.5 accent-emerald-500">
+                <div>
+                  <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 block">2. Batch Semua Daftar Nomor Rumah</span>
+                  <span class="text-[10px] text-slate-500 dark:text-slate-400" id="batch-summary-text">Otomatis menyusun semua 71 rumah menjadi 36 halaman A4 (2 lembar/halaman).</span>
+                </div>
+              </label>
+            </div>
+
+            <div class="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 rounded-xl p-3 text-[11px] text-emerald-900 dark:text-emerald-200 space-y-1">
+              <p class="font-bold flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i> Anti-Terpotong &amp; Siap Cetak:
+              </p>
+              <ul class="list-disc pl-4 space-y-0.5 text-emerald-800 dark:text-emerald-200/90 text-[10px]">
+                <li>Ukuran kertas otomatis terkunci ke <b>A4 (210 × 297 mm)</b> dengan margin aman 7mm.</li>
+                <li>Tiap kolom berukuran pas <b>10.5 × 29.7 cm</b> (tinggal potong tengah).</li>
+                <li>Saat dialog Print muncul, pilih <b>Save as PDF</b> atau langsung ke Printer.</li>
+              </ul>
+            </div>
+
+            <button type="button" onclick="triggerPrint()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition cursor-pointer">
+              <i data-lucide="printer" class="w-4 h-4"></i>
+              <span>Cetak / Simpan PDF Sekarang</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- RIGHT WORKSPACE: LIVE A4 PREVIEW CANVAS -->
+    <main class="flex-1 bg-slate-200/80 dark:bg-slate-950 flex flex-col overflow-hidden relative transition-colors">
+      
+      <!-- Canvas Toolbar (No Print) -->
+      <div class="no-print h-11 bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 px-4 flex items-center justify-between shrink-0 z-10 transition-colors">
+        <div class="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="font-semibold">Live Preview A4</span>
+          <span class="hidden sm:inline text-slate-400 dark:text-slate-600">|</span>
+          <span id="preview-info-badge" class="hidden sm:inline text-[11px] text-slate-500 dark:text-slate-400">Kiri: No. 1 • Kanan: No. 2</span>
+        </div>
+
+        <!-- Zoom Controls -->
+        <div class="flex items-center gap-1.5">
+          <button type="button" onclick="changeZoom(-0.1)" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 cursor-pointer" title="Perkecil">
+            <i data-lucide="zoom-out" class="w-3.5 h-3.5"></i>
+          </button>
+          <span id="zoom-label" class="text-xs font-bold text-slate-800 dark:text-slate-200 w-11 text-center">80%</span>
+          <button type="button" onclick="changeZoom(0.1)" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 cursor-pointer" title="Perbesar">
+            <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i>
+          </button>
+          <button type="button" onclick="fitZoomToScreen()" class="ml-1 px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[11px] font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
+            Fit
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Paper Stage -->
+      <div id="canvas-viewport" class="flex-1 overflow-auto p-6 flex justify-center items-start">
+        <div id="zoom-wrapper" style="transform-origin: top center; transition: transform 0.15s ease;">
+          <!-- PRINT CONTAINER (Rendered dynamically) -->
+          <div id="print-container"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-box" class="no-print fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 dark:bg-slate-800 border border-emerald-500/50 text-white px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 text-xs font-semibold">
+      <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+      <span id="toast-message">Pengaturan tersimpan!</span>
+    </div>
+  </div>
+
+  <!-- CUSTOM RESET CONFIRMATION MODAL (No confirm() used) -->
+  <div id="reset-modal" class="no-print hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-600 dark:text-rose-400">
+          <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white">Reset ke Template Awal?</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Semua perubahan teks, warna, dan ukuran akan dikembalikan ke default RT 2.</p>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeResetModal()" class="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">Batal</button>
+        <button type="button" onclick="confirmReset()" class="px-3.5 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-xs font-bold text-white cursor-pointer">Ya, Reset Default</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. KONSTANTA & DATA KALENDER INDONESIA
+    // =========================================================================
+    const DEFAULT_LOGO_URL = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjrGd1eACcTK4SjEQwLwG5tJh3TTauuJjvxGWrSuesNynUKJ9GrwIkrS6bMUDBrmM6UuvG7jBcnLk_t3ih2viJBv3RES-whevoxBf0IIqx5jwyPOtjZlPwVU1-XVuXeJWEsm7suyNO7vHPGLui7qD4erc_MIuSgedTb1M5DLlRc18W25pR02tslOPuZVGo/s1600/Thumb%20-%20Hitam.png';
+
+    const NAMA_BULAN = [
+      'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI',
+      'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'
+    ];
+
+    const NAMA_HARI = [
+      'MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'
+    ];
+
+    function generateDefaultHouseList() {
+      const list = [];
+      for (let i = 1; i <= 50; i++) list.push(String(i));
+      for (let i = 1; i <= 7; i++) list.push(`A-${i}`);
+      for (let i = 1; i <= 7; i++) list.push(`B-${i}`);
+      for (let i = 1; i <= 7; i++) list.push(`C-${i}`);
+      return list;
+    }
+
+    // =========================================================================
+    // 2. DEFAULT STATE & INISIALISASI PENYIMPANAN
+    // =========================================================================
+    const nowInit = new Date();
+    const DEFAULT_HOUSE_LIST = generateDefaultHouseList();
+
+    const DEFAULT_STATE = {
+      theme: 'light',
+      zoom: 0.8,
+      // Header & Logo
+      logoVisible: true,
+      logoPosition: 'left',
+      logoWidth: 105,
+      logoOffsetX: 0,
+      logoOffsetY: 0,
+      logoColor: '#000000',
+      customLogoDataUrl: null,
+      title1: 'LEMBAR BUKTI JIMPITAN',
+      title1Size: 11.5,
+      title2: 'RT 2 / RW 3',
+      title2Size: 16.5,
+      title3: 'PASEKAN LOR, BALECATUR',
+      title3Size: 9.5,
+      titleAlign: 'left',
+      // Rumah & Bulan
+      houseMode: 'show',
+      houseLabel: 'NO. RUMAH',
+      houseFontSize: 15,
+      houseList: DEFAULT_HOUSE_LIST,
+      pairIndex: 0,
+      leftHouseManual: '1',
+      rightHouseManual: '2',
+      monthMode: 'show',
+      monthLabel: 'BULAN',
+      month: nowInit.getMonth(),
+      year: nowInit.getFullYear(),
+      autoFitRows: true,
+      // Tabel
+      tableBorderStyle: 'solid',
+      tableBorderWidth: 0.8,
+      outerBorderWidth: 1.2,
+      tableRadius: 9,
+      borderColor: '#000000',
+      headerBgColor: '#ffffff',
+      zebraBgColor: '#ffffff',
+      nominalBgColor: '#ffffff',
+      tableFontSize: 8.2,
+      // Catatan & Footer
+      notesVisible: true,
+      notesTitle: 'CATATAN:',
+      notesListStyle: 'number',
+      notesAlign: 'left',
+      notesFontSize: 8.5,
+      notesItems: [
+        'Petugas mohon mengisi saat mengambil jimpitan.',
+        'Mengumpulkan lembar ini di setiap akhir bulan.',
+        'Mohon menjaga lembaran ini sebaik-baiknya.'
+      ],
+      footerUrl: 'www.rt2pasekanlor.id',
+      // Cetak
+      showCutLine: true,
+      printMode: 'preview'
+    };
+
+    function loadSavedState() {
+      try {
+        const raw = localStorage.getItem('jimpitan_cms_gaga_v2');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          return Object.assign({}, JSON.parse(JSON.stringify(DEFAULT_STATE)), parsed);
+        }
+      } catch (e) {
+        console.warn('Gagal memuat konfigurasi tersimpan:', e);
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_STATE));
+    }
+
+    let state = loadSavedState();
+
+    function saveConfig(notify = false) {
+      try {
+        localStorage.setItem('jimpitan_cms_gaga_v2', JSON.stringify(state));
+        if (notify) {
+          showToast('Pengaturan berhasil disimpan di browser!');
+        }
+      } catch (e) {
+        if (notify) {
+          showToast('Gagal menyimpan (ukuran logo mungkin terlalu besar).');
+        }
+      }
+    }
+
+    // =========================================================================
+    // 3. PENGATURAN TEMA (DARK & LIGHT MODE)
+    // =========================================================================
+    function applyTheme(mode) {
+      const targetMode = mode || state.theme || 'light';
+      state.theme = targetMode;
+      const htmlEl = document.documentElement;
+      const labelEl = document.getElementById('theme-label');
+
+      if (targetMode === 'dark') {
+        htmlEl.classList.add('dark');
+        if (labelEl) labelEl.textContent = 'Dark';
+      } else {
+        htmlEl.classList.remove('dark');
+        if (labelEl) labelEl.textContent = 'Light';
+      }
+    }
+
+    function toggleTheme() {
+      const nextTheme = state.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      saveConfig(false);
+    }
+
+    // =========================================================================
+    // 4. HELPER TANGGAL AKURAT & GENERATOR LEMBAR JIMPITAN (KALENDER INDONESIA)
+    // =========================================================================
+    function isKabisat(tahun) {
+      const y = Number(tahun);
+      return (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0);
+    }
+
+    function getDaysInMonth(year, monthIndex) {
+      const y = Number(year);
+      const m = Number(monthIndex);
+      const HARI_PER_BULAN = [
+        31,                       // 0: Januari
+        isKabisat(y) ? 29 : 28,   // 1: Februari (29 jika tahun kabisat, selain itu 28)
+        31,                       // 2: Maret
+        30,                       // 3: April
+        31,                       // 4: Mei
+        30,                       // 5: Juni
+        31,                       // 6: Juli
+        31,                       // 7: Agustus
+        30,                       // 8: September
+        31,                       // 9: Oktober
+        30,                       // 10: November
+        31                        // 11: Desember
+      ];
+      return HARI_PER_BULAN[m] || 31;
+    }
+
+    function generateMonthRows(year, monthIndex) {
+      const y = Number(year);
+      const m = Number(monthIndex);
+      const totalDays = getDaysInMonth(y, m);
+      const monthName = NAMA_BULAN[m] || 'DESEMBER';
+      const rows = [];
+      for (let day = 1; day <= totalDays; day++) {
+        // Gunakan pukul 12:00:00 waktu lokal (WIB / UTC+7) agar kebal terhadap pergeseran UTC/DST
+        const dateObj = new Date(y, m, day, 12, 0, 0);
+        const dayName = NAMA_HARI[dateObj.getDay()];
+        rows.push({
+          no: `${day}.`,
+          tanggal: `${dayName}, ${day} ${monthName} ${y}`
+        });
+      }
+      return rows;
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // Render 1 Slip Jimpitan (Ukuran Presisi 10.5cm x 29.7cm)
+    function renderSingleSlipHTML(houseNumberText) {
+      const monthName = NAMA_BULAN[state.month] || 'DESEMBER';
+      const bulanTahunText = state.monthMode === 'show' ? `${monthName} ${state.year}` : '&nbsp;';
+      const nomorRumahText = state.houseMode === 'show' ? escapeHtml(houseNumberText) : '&nbsp;';
+
+      const rows = generateMonthRows(state.year, state.month);
+      const totalDays = rows.length;
+
+      // Auto-Fit tinggi baris mengisi 100% sisa ruang vertikal tabel
+      const rowHeightStyle = state.autoFitRows
+        ? `height: calc(100% / ${totalDays});`
+        : `height: 6.0mm;`;
+
+      // Logo HTML dengan dukungan Upload, Default URL Resmi, & Pewarnaan Logo (Default Hitam)
+      let logoHTML = '';
+      if (state.logoVisible) {
+        const activeLogoSrc = state.customLogoDataUrl || DEFAULT_LOGO_URL;
+        const isBlack = !state.logoColor || state.logoColor.toLowerCase() === '#000000';
+
+        let logoRenderInner = '';
+        if (isBlack) {
+          logoRenderInner = `<img src="${activeLogoSrc}" alt="Logo RT 2" class="w-full h-auto object-contain block" />`;
+        } else {
+          // Gunakan CSS mask-image agar logo hitam transparan berubah warna presisi & tetap tajam saat dicetak
+          logoRenderInner = `
+            <div style="position: relative; width: 100%;">
+              <img src="${activeLogoSrc}" alt="Logo RT 2" class="w-full h-auto object-contain block" style="opacity: 0;" />
+              <div style="
+                position: absolute;
+                inset: 0;
+                background-color: ${state.logoColor};
+                -webkit-mask-image: url('${activeLogoSrc}');
+                mask-image: url('${activeLogoSrc}');
+                -webkit-mask-size: contain;
+                mask-size: contain;
+                -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+                -webkit-mask-position: center;
+                mask-position: center;
+              "></div>
+            </div>
+          `;
+        }
+
+        logoHTML = `
+          <div style="width: ${state.logoWidth}px; transform: translate(${state.logoOffsetX}px, ${state.logoOffsetY}px); flex-shrink: 0;">
+            ${logoRenderInner}
+          </div>
+        `;
+      }
+
+      // Judul HTML
+      const titleBlockHTML = `
+        <div style="text-align: ${state.titleAlign}; flex: 1; min-width: 0; line-height: 1.15;">
+          <div style="font-size: ${state.title1Size}px; font-weight: 700; letter-spacing: 0.2px; color: #000000;">
+            ${escapeHtml(state.title1)}
+          </div>
+          <div style="font-size: ${state.title2Size}px; font-weight: 700; letter-spacing: 0.2px; color: #000000; margin-top: 1px;">
+            ${escapeHtml(state.title2)}
+          </div>
+          <div style="font-size: ${state.title3Size}px; font-weight: 700; letter-spacing: 0.2px; color: #000000; margin-top: 1.5px;">
+            ${escapeHtml(state.title3)}
+          </div>
+        </div>
+      `;
+
+      // Susunan Header (Kiri, Atas, Kanan)
+      let headerLayoutHTML = '';
+      if (state.logoPosition === 'top') {
+        headerLayoutHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; margin-bottom: 2.2mm;">
+            ${logoHTML}
+            <div style="width: 100%;">${titleBlockHTML}</div>
+          </div>
+        `;
+      } else if (state.logoPosition === 'right') {
+        headerLayoutHTML = `
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2.2mm;">
+            ${titleBlockHTML}
+            ${logoHTML}
+          </div>
+        `;
+      } else {
+        headerLayoutHTML = `
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2.2mm;">
+            ${logoHTML}
+            ${titleBlockHTML}
+          </div>
+        `;
+      }
+
+      // Kotak Pill Info (NO. RUMAH & BULAN) mengikuti radius
+      const radiusVal = Number(state.tableRadius);
+      const innerRadiusVal = Math.max(0, radiusVal - 1);
+      const pillBorder = `${state.outerBorderWidth}px solid ${state.borderColor}`;
+
+      const infoPillsHTML = `
+        <div style="display: flex; flex-direction: column; gap: 1.5mm;">
+          <div style="display: flex; gap: 1.5mm; height: 7.2mm;">
+            <div style="width: 34%; border: ${pillBorder}; border-radius: ${radiusVal}px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; letter-spacing: 0.2px;">
+              ${escapeHtml(state.houseLabel)}
+            </div>
+            <div style="flex: 1; border: ${pillBorder}; border-radius: ${radiusVal}px; display: flex; align-items: center; justify-content: center; font-size: ${state.houseFontSize}px; font-weight: 700;">
+              ${nomorRumahText}
+            </div>
+          </div>
+          <div style="display: flex; gap: 1.5mm; height: 7.2mm;">
+            <div style="width: 34%; border: ${pillBorder}; border-radius: ${radiusVal}px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; letter-spacing: 0.2px;">
+              ${escapeHtml(state.monthLabel)}
+            </div>
+            <div style="flex: 1; border: ${pillBorder}; border-radius: ${radiusVal}px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 700; letter-spacing: 0.3px;">
+              ${bulanTahunText}
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Tabel Utama dengan Radius Sudut Otomatis Sinkron di Keempat Pojok
+      const innerBorder = `${state.tableBorderWidth}px ${state.tableBorderStyle} ${state.borderColor}`;
+      const outerBorder = `${state.outerBorderWidth}px solid ${state.borderColor}`;
+
+      const tbodyRowsHTML = rows.map((r, idx) => {
+        const isLast = idx === rows.length - 1;
+        const rowBg = idx % 2 === 1 ? state.zebraBgColor : '#ffffff';
+        const bottomBorder = isLast ? 'none' : innerBorder;
+        const bottomLeftRadius = isLast ? `border-bottom-left-radius: ${innerRadiusVal}px;` : '';
+        const bottomRightRadius = isLast ? `border-bottom-right-radius: ${innerRadiusVal}px;` : '';
+
+        return `
+          <tr style="${rowHeightStyle} background-color: ${rowBg};">
+            <td style="width: 9%; border-right: ${innerBorder}; border-bottom: ${bottomBorder}; text-align: center; font-size: ${state.tableFontSize}px; font-weight: 500; padding: 0 2px; ${bottomLeftRadius}">
+              ${r.no}
+            </td>
+            <td style="width: 47%; border-right: ${innerBorder}; border-bottom: ${bottomBorder}; text-align: left; font-size: ${state.tableFontSize}px; font-weight: 500; padding: 0 5px; white-space: nowrap; overflow: hidden;">
+              ${r.tanggal}
+            </td>
+            <td style="width: 23%; border-right: ${innerBorder}; border-bottom: ${bottomBorder}; background-color: ${state.nominalBgColor}; padding: 0 3px;">
+              &nbsp;
+            </td>
+            <td style="width: 21%; border-bottom: ${bottomBorder}; padding: 0 3px; ${bottomRightRadius}">
+              &nbsp;
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      const tableHTML = `
+        <div class="jimpitan-table-wrapper">
+          <div style="width: 100%; height: 100%; border: ${outerBorder}; border-radius: ${radiusVal}px; overflow: hidden; display: flex; flex-direction: column;">
+            <table class="jimpitan-table">
+              <thead>
+                <tr style="height: 7.2mm; background-color: ${state.headerBgColor};">
+                  <th style="width: 9%; border-right: ${innerBorder}; border-bottom: 2.2px solid ${state.borderColor}; font-size: 9.5px; font-weight: 700; text-align: center; border-top-left-radius: ${innerRadiusVal}px;">NO.</th>
+                  <th style="width: 47%; border-right: ${innerBorder}; border-bottom: 2.2px solid ${state.borderColor}; font-size: 9.5px; font-weight: 700; text-align: center;">TANGGAL</th>
+                  <th style="width: 23%; border-right: ${innerBorder}; border-bottom: 2.2px solid ${state.borderColor}; font-size: 9.5px; font-weight: 700; text-align: center;">NOMINAL</th>
+                  <th style="width: 21%; border-bottom: 2.2px solid ${state.borderColor}; font-size: 9.5px; font-weight: 700; text-align: center; border-top-right-radius: ${innerRadiusVal}px;">PARAF</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${tbodyRowsHTML}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      // Bagian Catatan & Footer URL (flex-shrink: 0 -> Otomatis menekan tinggi tabel di atasnya saat bertambah)
+      let notesSectionHTML = '';
+      if (state.notesVisible) {
+        const renderedNotes = state.notesItems.map((item, i) => {
+          let prefix = '';
+          if (state.notesListStyle === 'number') prefix = `${i + 1}. `;
+          else if (state.notesListStyle === 'bullet') prefix = `• `;
+          return `<div style="line-height: 1.3;">${prefix}${escapeHtml(item)}</div>`;
+        }).join('');
+
+        notesSectionHTML = `
+          <div style="text-align: ${state.notesAlign}; color: #000000; flex-shrink: 0;">
+            <div style="font-size: ${state.notesFontSize + 1}px; font-weight: 700; margin-bottom: 1.5px;">
+              ${escapeHtml(state.notesTitle)}
+            </div>
+            <div style="font-size: ${state.notesFontSize}px; font-weight: 500;">
+              ${renderedNotes}
+            </div>
+            ${state.footerUrl ? `
+              <div style="font-size: ${state.notesFontSize + 1.2}px; font-weight: 700; margin-top: 2px;">
+                ${escapeHtml(state.footerUrl)}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      } else if (state.footerUrl) {
+        notesSectionHTML = `
+          <div style="text-align: ${state.notesAlign}; font-size: ${state.notesFontSize + 1.2}px; font-weight: 700; color: #000000; flex-shrink: 0;">
+            ${escapeHtml(state.footerUrl)}
+          </div>
+        `;
+      }
+
+      return `
+        <div class="jimpitan-slip">
+          <div style="flex-shrink: 0;">
+            ${headerLayoutHTML}
+            ${infoPillsHTML}
+          </div>
+          ${tableHTML}
+          ${notesSectionHTML}
+        </div>
+      `;
+    }
+
+    // Render 1 Halaman A4 (2 Lembar Kiri & Kanan)
+    function renderA4SheetHTML(leftHouse, rightHouse) {
+      const cutLineHTML = state.showCutLine ? `<div class="cut-guide"></div>` : '';
+      return `
+        <div class="a4-sheet">
+          ${renderSingleSlipHTML(leftHouse)}
+          ${cutLineHTML}
+          ${renderSingleSlipHTML(rightHouse)}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 5. RENDER WORKSPACE & SINKRONISASI KONTROL UI
+    // =========================================================================
+    function renderCanvas() {
+      const container = document.getElementById('print-container');
+      const totalDays = getDaysInMonth(state.year, state.month);
+      const isLeap = isKabisat(state.year);
+
+      const daysInfoEl = document.getElementById('month-days-info');
+      if (daysInfoEl) {
+        const monthCapitalized = NAMA_BULAN[state.month].charAt(0) + NAMA_BULAN[state.month].slice(1).toLowerCase();
+        const leapNote = state.month === 1 && isLeap ? ' • Kabisat' : '';
+        daysInfoEl.textContent = `${monthCapitalized} ${state.year} (${totalDays} Hari${leapNote})`;
+      }
+
+      const badgeEl = document.getElementById('preview-info-badge');
+      if (badgeEl) {
+        badgeEl.textContent = `Kiri: ${state.leftHouseManual || '-'} • Kanan: ${state.rightHouseManual || '-'} (${NAMA_BULAN[state.month]} ${state.year} • ${totalDays} Hari)`;
+      }
+
+      if (state.printMode === 'batch') {
+        const list = state.houseList.length > 0 ? state.houseList : ['1', '2'];
+        const sheets = [];
+        for (let i = 0; i < list.length; i += 2) {
+          const leftH = list[i] !== undefined ? list[i] : '';
+          const rightH = list[i + 1] !== undefined ? list[i + 1] : '';
+          sheets.push(renderA4SheetHTML(leftH, rightH));
+        }
+        container.innerHTML = `<div class="flex flex-col gap-6 print:gap-0">${sheets.join('')}</div>`;
+      } else {
+        container.innerHTML = renderA4SheetHTML(state.leftHouseManual, state.rightHouseManual);
+      }
+
+      saveConfig(false);
+    }
+
+    function syncUIFromState() {
+      // Tab 1: Header & Logo
+      document.getElementById('cfg-logoVisible').checked = state.logoVisible;
+      document.getElementById('cfg-logoWidth').value = state.logoWidth;
+      document.getElementById('val-logoWidth').textContent = `${state.logoWidth}px`;
+      document.getElementById('cfg-logoOffsetX').value = state.logoOffsetX;
+      document.getElementById('val-logoOffsetX').textContent = `${state.logoOffsetX}px`;
+      document.getElementById('cfg-logoOffsetY').value = state.logoOffsetY;
+      document.getElementById('val-logoOffsetY').textContent = `${state.logoOffsetY}px`;
+      document.getElementById('cfg-logoColor').value = state.logoColor || '#000000';
+
+      ['left', 'top', 'right'].forEach(pos => {
+        const btn = document.getElementById(`logo-pos-${pos}`);
+        if (state.logoPosition === pos) {
+          btn.className = 'logo-pos-btn py-1.5 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/50';
+        } else {
+          btn.className = 'logo-pos-btn py-1.5 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700 hover:text-slate-900 dark:hover:text-slate-200';
+        }
+      });
+
+      const resetLogoBtn = document.getElementById('btn-reset-logo');
+      const logoSourceLbl = document.getElementById('logo-source-label');
+      if (state.customLogoDataUrl) {
+        resetLogoBtn.classList.remove('hidden');
+        logoSourceLbl.textContent = 'Menggunakan Logo Kustom';
+      } else {
+        resetLogoBtn.classList.add('hidden');
+        logoSourceLbl.textContent = 'Logo Default Resmi RT 2';
+      }
+
+      document.getElementById('cfg-title1').value = state.title1;
+      document.getElementById('cfg-title1Size').value = state.title1Size;
+      document.getElementById('val-title1Size').textContent = `${state.title1Size}px`;
+
+      document.getElementById('cfg-title2').value = state.title2;
+      document.getElementById('cfg-title2Size').value = state.title2Size;
+      document.getElementById('val-title2Size').textContent = `${state.title2Size}px`;
+
+      document.getElementById('cfg-title3').value = state.title3;
+      document.getElementById('cfg-title3Size').value = state.title3Size;
+      document.getElementById('val-title3Size').textContent = `${state.title3Size}px`;
+
+      ['left', 'center', 'right'].forEach(al => {
+        const btn = document.getElementById(`title-align-${al}`);
+        if (state.titleAlign === al) {
+          btn.className = 'title-align-btn py-1 rounded-lg text-xs font-medium border transition cursor-pointer bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/50';
+        } else {
+          btn.className = 'title-align-btn py-1 rounded-lg text-xs font-medium border transition cursor-pointer bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700 hover:text-slate-900 dark:hover:text-slate-200';
+        }
+      });
+
+      // Tab 2: Rumah & Bulan
+      document.getElementById('cfg-houseMode').value = state.houseMode;
+      document.getElementById('cfg-houseLabel').value = state.houseLabel;
+      document.getElementById('cfg-houseFontSize').value = state.houseFontSize;
+      document.getElementById('val-houseFontSize').textContent = `${state.houseFontSize}px`;
+      document.getElementById('cfg-leftHouseManual').value = state.leftHouseManual;
+      document.getElementById('cfg-rightHouseManual').value = state.rightHouseManual;
+      document.getElementById('cfg-houseListRaw').value = state.houseList.join(', ');
+      document.getElementById('house-count-badge').textContent = state.houseList.length;
+
+      populateHouseDropdowns();
+
+      document.getElementById('cfg-monthMode').value = state.monthMode;
+      document.getElementById('cfg-month').value = state.month;
+      document.getElementById('cfg-year').value = state.year;
+      document.getElementById('cfg-monthLabel').value = state.monthLabel;
+      document.getElementById('cfg-autoFitRows').checked = state.autoFitRows;
+
+      // Tab 3: Tabel
+      ['solid', 'dotted', 'dashed'].forEach(st => {
+        const btn = document.getElementById(`border-style-${st}`);
+        if (state.tableBorderStyle === st) {
+          btn.className = 'border-style-btn py-2 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/50';
+        } else {
+          btn.className = 'border-style-btn py-2 px-2 rounded-lg text-xs font-semibold border transition cursor-pointer bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700 hover:text-slate-900 dark:hover:text-slate-200';
+        }
+      });
+
+      document.getElementById('cfg-tableBorderWidth').value = state.tableBorderWidth;
+      document.getElementById('val-tableBorderWidth').textContent = `${state.tableBorderWidth}px`;
+      document.getElementById('cfg-outerBorderWidth').value = state.outerBorderWidth;
+      document.getElementById('val-outerBorderWidth').textContent = `${state.outerBorderWidth}px`;
+      document.getElementById('cfg-tableRadius').value = state.tableRadius;
+      document.getElementById('val-tableRadius').textContent = `${state.tableRadius}px`;
+      document.getElementById('cfg-borderColor').value = state.borderColor;
+      document.getElementById('cfg-headerBgColor').value = state.headerBgColor;
+      document.getElementById('cfg-zebraBgColor').value = state.zebraBgColor;
+      document.getElementById('cfg-nominalBgColor').value = state.nominalBgColor;
+      document.getElementById('cfg-tableFontSize').value = state.tableFontSize;
+      document.getElementById('val-tableFontSize').textContent = `${state.tableFontSize}px`;
+
+      // Tab 4: Catatan
+      document.getElementById('cfg-notesVisible').checked = state.notesVisible;
+      document.getElementById('cfg-notesTitle').value = state.notesTitle;
+      document.getElementById('cfg-notesListStyle').value = state.notesListStyle;
+      document.getElementById('cfg-notesAlign').value = state.notesAlign;
+      document.getElementById('cfg-notesFontSize').value = state.notesFontSize;
+      document.getElementById('val-notesFontSize').textContent = `${state.notesFontSize}px`;
+      document.getElementById('cfg-footerUrl').value = state.footerUrl;
+      renderNotesEditorList();
+
+      // Tab 5: Cetak
+      document.getElementById('cfg-showCutLine').checked = state.showCutLine;
+      const radios = document.getElementsByName('printMode');
+      radios.forEach(r => {
+        r.checked = (r.value === state.printMode);
+      });
+      const totalPages = Math.ceil(state.houseList.length / 2);
+      document.getElementById('batch-summary-text').textContent =
+        `Otomatis menyusun semua ${state.houseList.length} rumah menjadi ${totalPages} halaman A4 (2 lembar/halaman).`;
+
+      // Refresh active tab button styling
+      const activePanel = document.querySelector('.tab-panel:not(.hidden)');
+      const activeTabName = activePanel ? activePanel.id.replace('tab-', '') : 'header';
+      refreshTabButtons(activeTabName);
+
+      applyZoomUI();
+    }
+
+    // =========================================================================
+    // 6. EVENT HANDLERS & INTERAKSI CMS
+    // =========================================================================
+    function updateState(key, value) {
+      state[key] = value;
+      syncUIFromState();
+      renderCanvas();
+    }
+
+    function refreshTabButtons(activeTabName) {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        const isThisActive = b.id === `tab-btn-${activeTabName}`;
+        if (isThisActive) {
+          b.className = 'tab-btn active flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/40';
+        } else {
+          b.className = 'tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-lg text-[10px] font-semibold transition cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 border border-transparent';
+        }
+      });
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+      refreshTabButtons(tabName);
+    }
+
+    function populateHouseDropdowns() {
+      const selLeft = document.getElementById('select-left-house');
+      const selRight = document.getElementById('select-right-house');
+      const optionsHTML = `<option value="">-- Pilih dari Daftar --</option>` +
+        state.houseList.map(h => `<option value="${escapeHtml(h)}">Rumah No. ${escapeHtml(h)}</option>`).join('');
+      selLeft.innerHTML = optionsHTML;
+      selRight.innerHTML = optionsHTML;
+    }
+
+    function selectHouseSlot(side, val) {
+      if (!val) return;
+      if (side === 'left') state.leftHouseManual = val;
+      else state.rightHouseManual = val;
+      syncUIFromState();
+      renderCanvas();
+    }
+
+    function stepPreviewPair(delta) {
+      const len = state.houseList.length;
+      if (len === 0) return;
+      state.pairIndex = (state.pairIndex + delta + len) % len;
+      state.leftHouseManual = state.houseList[state.pairIndex] || '';
+      state.rightHouseManual = state.houseList[(state.pairIndex + 1) % len] || '';
+      syncUIFromState();
+      renderCanvas();
+    }
+
+    function updateHouseListFromText(rawText) {
+      const parsed = rawText
+        .split(',')
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
+      state.houseList = parsed;
+      if (parsed.length > 0) {
+        state.leftHouseManual = parsed[0];
+        state.rightHouseManual = parsed[1] || '';
+      }
+      syncUIFromState();
+      renderCanvas();
+      showToast(`Daftar rumah diperbarui (${parsed.length} rumah)`);
+    }
+
+    function resetDefaultHouseList() {
+      state.houseList = generateDefaultHouseList();
+      state.pairIndex = 0;
+      state.leftHouseManual = state.houseList[0];
+      state.rightHouseManual = state.houseList[1];
+      syncUIFromState();
+      renderCanvas();
+      showToast('Daftar rumah direset ke 1-50, A1-A7, B1-B7, C1-C7');
+    }
+
+    function setLiveMonth() {
+      // Gunakan waktu lokal perangkat (WIB / UTC+7) tanpa konversi UTC
+      const now = new Date();
+      state.month = now.getMonth();
+      state.year = now.getFullYear();
+      syncUIFromState();
+      renderCanvas();
+      const totalDays = getDaysInMonth(state.year, state.month);
+      showToast(`Mengikuti bulan live: ${NAMA_BULAN[state.month]} ${state.year} (${totalDays} Hari)`);
+    }
+
+    function applyColorPreset(preset) {
+      if (preset === 'classic') {
+        state.borderColor = '#000000';
+        state.headerBgColor = '#ffffff';
+        state.zebraBgColor = '#ffffff';
+        state.nominalBgColor = '#ffffff';
+      } else if (preset === 'zebra') {
+        state.borderColor = '#000000';
+        state.headerBgColor = '#f1f5f9';
+        state.zebraBgColor = '#f8fafc';
+        state.nominalBgColor = '#ffffff';
+      } else if (preset === 'emerald') {
+        state.borderColor = '#064e3b';
+        state.headerBgColor = '#d1fae5';
+        state.zebraBgColor = '#f0fdf4';
+        state.nominalBgColor = '#ecfdf5';
+      }
+      syncUIFromState();
+      renderCanvas();
+    }
+
+    // Notes Dynamic Editor
+    function renderNotesEditorList() {
+      const container = document.getElementById('notes-editor-list');
+      container.innerHTML = state.notesItems.map((text, idx) => `
+        <div class="flex items-center gap-1.5">
+          <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 w-4">${idx + 1}.</span>
+          <input type="text" value="${escapeHtml(text)}" oninput="editNoteItem(${idx}, this.value)"
+            class="flex-1 px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500">
+          <button type="button" onclick="removeNoteItem(${idx})" class="p-1.5 rounded-lg bg-white hover:bg-rose-50 dark:bg-slate-900 dark:hover:bg-rose-950 text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 border border-slate-300 dark:border-slate-700 cursor-pointer" title="Hapus Baris">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function editNoteItem(index, value) {
+      state.notesItems[index] = value;
+      renderCanvas();
+    }
+
+    function addNoteItem() {
+      state.notesItems.push('Catatan tambahan baru...');
+      syncUIFromState();
+      renderCanvas();
+    }
+
+    function removeNoteItem(index) {
+      state.notesItems.splice(index, 1);
+      syncUIFromState();
+      renderCanvas();
+    }
+
+    // Upload Logo Kustom
+    function handleLogoUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        state.customLogoDataUrl = e.target.result;
+        syncUIFromState();
+        renderCanvas();
+        showToast('Logo kustom berhasil diupload!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetLogoToDefault() {
+      state.customLogoDataUrl = null;
+      state.logoColor = '#000000';
+      syncUIFromState();
+      renderCanvas();
+      showToast('Logo dikembalikan ke Logo Resmi RT 2 (Hitam)');
+    }
+
+    // Zoom Controls
+    function changeZoom(delta) {
+      state.zoom = Math.min(1.3, Math.max(0.4, Number((state.zoom + delta).toFixed(2))));
+      applyZoomUI();
+    }
+
+    function fitZoomToScreen() {
+      const viewport = document.getElementById('canvas-viewport');
+      if (!viewport) return;
+      const availableWidth = viewport.clientWidth - 48;
+      const idealZoom = Math.min(1.0, Math.max(0.45, Number((availableWidth / 794).toFixed(2))));
+      state.zoom = idealZoom;
+      applyZoomUI();
+    }
+
+    function applyZoomUI() {
+      const wrapper = document.getElementById('zoom-wrapper');
+      const label = document.getElementById('zoom-label');
+      if (wrapper) wrapper.style.transform = `scale(${state.zoom})`;
+      if (label) label.textContent = `${Math.round(state.zoom * 100)}%`;
+    }
+
+    // Print / Export PDF
+    function triggerPrint() {
+      window.print();
+    }
+
+    // Reset Modal & Toast
+    function openResetModal() {
+      document.getElementById('reset-modal').classList.remove('hidden');
+    }
+
+    function closeResetModal() {
+      document.getElementById('reset-modal').classList.add('hidden');
+    }
+
+    function confirmReset() {
+      localStorage.removeItem('jimpitan_cms_gaga_v2');
+      const currentTheme = state.theme;
+      state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      state.theme = currentTheme;
+      closeResetModal();
+      syncUIFromState();
+      renderCanvas();
+      showToast('Berhasil di-reset ke Template Default!');
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const box = document.getElementById('toast-box');
+      const text = document.getElementById('toast-message');
+      text.textContent = msg;
+      box.classList.remove('translate-y-20', 'opacity-0');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        box.classList.add('translate-y-20', 'opacity-0');
+      }, 2600);
+    }
+
+    // =========================================================================
+    // 7. INISIALISASI APLIKASI
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      applyTheme();
+      lucide.createIcons();
+      syncUIFromState();
+      renderCanvas();
+      setTimeout(fitZoomToScreen, 100);
+    });
+  </script>
+</body>
+</html>
